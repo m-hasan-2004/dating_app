@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers, serializers, viewsets
-from django.contrib.auth.models import User
+from users.models import User
 
 
 urlpatterns = [

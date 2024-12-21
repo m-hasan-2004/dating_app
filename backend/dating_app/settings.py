@@ -14,14 +14,14 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
+# See https://docs.djangoproject.com/en/4.2/howto/deploymeget
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django_filters',
     'debug_toolbar',
     'rest_framework',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
@@ -94,8 +95,8 @@ DATABASES = {
         'NAME': os.getenv('DB_NAME'),
         'USER': os.getenv('DB_USER'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': 'localhost',  # Use '127.0.0.1' for IPv4
-        'PORT': '5432',       # Default PostgreSQL port
+        'HOST': os.getenv("DB_HOST"),  # Use '127.0.0.1' for IPv4
+        'PORT': os.getenv("DB_PORT"),  # Default PostgreSQL port
     }
 }
 
@@ -151,7 +152,7 @@ WEBPACK_LOADER = {
         'STATS_FILE': os.path.join(BASE_DIR, 'frontend', 'my-frontend', 'webpack-stats.json'),
         'POLL_INTERVAL': 0.1,
         'TIMEOUT': None,
-        'IGNORE': ['.+\.hot-update.js', '.+\.map']
+        'IGNORE': [r'.+\.hot-update.js', r'.+\.map'],  # Use raw strings to avoid escape sequence warning
     }
 }
 
@@ -183,3 +184,10 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend'
     ],
 }
+
+AUTH_USER_MODEL = "users.User"
+
+AUTHENTICATION_BACKENDS = [
+    'users.backends.AccessCodeAuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
