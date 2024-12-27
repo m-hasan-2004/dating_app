@@ -191,3 +191,5 @@ AUTHENTICATION_BACKENDS = [
     'users.backends.AccessCodeAuthenticationBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+TIME_ZONE = 'Asia/Tehran'

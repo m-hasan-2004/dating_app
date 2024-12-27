@@ -85,7 +85,7 @@ class AccessCodeManager(models.Manager):
 
     def expire_code(self, code):
         code.is_used = True
-        code.date_used = timezone.now()
+        code.date_used = timezone.localtime()
         code.save()
 
 
@@ -143,7 +143,7 @@ class User(AbstractBaseUser, PermissionsMixin):
             "Unselect this instead of deleting accounts."
         ),
     )
-    date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
+    date_joined = models.DateTimeField(_("date joined"), default=timezone.localtime())
 
     objects = UserManager()
 
