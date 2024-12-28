@@ -4,6 +4,17 @@ from django.utils.translation import gettext_lazy as _
 from .models import User, AccessCode, IdentityInfo, BirthCertificateInfo
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 
+class IdentityInfoInline(admin.StackedInline):
+    model = IdentityInfo
+    fk_name = "user"
+    extra = 1
+    
+
+class BirthCertificateInfoInline(admin.StackedInline):
+    model = BirthCertificateInfo
+    extra = 1
+
+
 class UserAdmin(auth_admin.UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
@@ -24,6 +35,7 @@ class UserAdmin(auth_admin.UserAdmin):
     search_fields = ("username", "email", "first_name", "last_name", "phone_number")
     ordering = ("date_joined",)
     actions = ["deactivate_users", "reactivate_users"]
+    inlines = [BirthCertificateInfoInline, IdentityInfoInline]
 
     fieldsets = (
         (_("Login Info"), {"fields": ("username", "password", "access_code")}),
