@@ -1,31 +1,15 @@
-from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
-from django.utils.translation import gettext_lazy as _
+from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.validators import UnicodeUsernameValidator
+from uuid import uuid4
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
+from django.utils.translation import gettext_lazy as _
+from django.db import models
 from django.utils import timezone
 from django.core.mail import send_mail
 from django.urls import reverse
-from uuid import uuid4
-from phonenumber_field.modelfields import PhoneNumberField
+from .access_code_model import AccessCode, validate_active_access_code
 from django.core.exceptions import ValidationError
 
-def validate_active_access_code(code):
-    # Don't validate if code is None (for updates)
-    if code is None:
-        return
-    
-    try:
-        access_code = AccessCode.objects.get(code=code)
-        if not access_code.active:
-            raise ValidationError(
-                _("The provided access code is inactive or expired."),
-                params={"code": code},
-            )
-    except AccessCode.DoesNotExist:
-        raise ValidationError(
-            _("The provided access code does not exist."),
-            params={"code": code},
-        )
 
 
 class UserManager(BaseUserManager):
@@ -72,21 +56,6 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-class AccessCodeManager(models.Manager):
-    def generate_code(self, user):
-        return self.create(used_by_who=user)
-
-    def validate_code(self, user, code):
-        try:
-            access_code = self.get(code=code, used_by_who=user, is_used=False)
-            return access_code
-        except self.model.DoesNotExist:
-            return None
-
-    def expire_code(self, code):
-        code.is_used = True
-        code.date_used = timezone.localtime()
-        code.save()
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -183,18 +152,3 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_absolute_url(self):
         return reverse("User_detail", kwargs={"pk": self.pk})
 
-
-class AccessCode(models.Model):
-    code = models.UUIDField(_("Access Code"), default=uuid4, editable=False)
-    active = models.BooleanField(_("Active"), default=True)
-    date_created = models.DateTimeField(_("Date created"), auto_now=False, auto_now_add=True)
-
-    class Meta:
-        verbose_name = _("AccessCode")
-        verbose_name_plural = _("AccessCodes")
-
-    def __str__(self):
-        return str(self.code)
-
-    def get_absolute_url(self):
-        return reverse("AccessCode_detail", kwargs={"pk": self.pk})
