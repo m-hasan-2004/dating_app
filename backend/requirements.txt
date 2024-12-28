@@ -1,13 +1,18 @@
+asgiref==3.8.1
 Django==4.2.13
-djangorestframework>=3.14,<4.0
-psycopg2-binary>=2.9,<3.0
-python-dotenv>=0.19,<1.0
-djangorestframework-simplejwt>=5.0,<6.0
-gunicorn>=20.1,<21.0  # For production WSGI server
-django-debug-toolbar>=3.2,<4.0  # Debugging tool for Django
-django-filter>=23.1,<24.0  # For easy filtering of querysets in Django views
-django-extensions>=3.2,<4.0  # Provides additional management commands and too
-django-webpack-loader
-django-phonenumber-field
-phonenumbers
+django-extensions==3.2.3
+django-filter==23.5
+django-multiselectfield==0.1.13
+django-phonenumber-field==8.0.0
+django-webpack-loader==3.1.1
+django_debug_toolbar==3.8.1
+djangorestframework==3.15.2
+djangorestframework-simplejwt==5.3.1
+gunicorn==20.1.0
+phonenumbers==8.13.52
+psycopg2-binary==2.9.10
+PyJWT==2.10.1
+python-dotenv==0.21.1
+setuptools==75.6.0
+sqlparse==0.5.3
 
