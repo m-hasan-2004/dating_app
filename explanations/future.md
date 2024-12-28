@@ -6,3 +6,12 @@
 - 3*4 Pic
 - Income Certificate
 - Education Certificate
+
+
+# ChoiceFields
+- Birth Certificate Location (all)
+
+
+
+# Other
+- min and max validator for weight and height
