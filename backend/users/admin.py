@@ -1,18 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth import admin as auth_admin
 from django.utils.translation import gettext_lazy as _
-from .models import User, AccessCode
-from django.contrib.auth.forms import UserChangeForm, UserCreationForm
-
-class CustomUserCreationForm(UserCreationForm):
-    class Meta(UserCreationForm.Meta):
-        model = User
-        fields = ("username", "email", "access_code", "password1", "password2")
-
-class CustomUserChangeForm(UserChangeForm):
-    class Meta(UserChangeForm.Meta):
-        model = User
-        fields = ("username", "email", "access_code", "password")
+from .models import User, AccessCode, IdentityInfo, BirthCertificateInfo
+from .forms import CustomUserChangeForm, CustomUserCreationForm
 
 class UserAdmin(auth_admin.UserAdmin):
     add_form = CustomUserCreationForm
@@ -100,5 +90,19 @@ class AccessCodeAdmin(admin.ModelAdmin):
         self.message_user(request, _("Selected access codes have been reactivated."))
     reactivate_access_codes.short_description = _("Reactivate selected access codes")
 
+class IdentityInfoAdmin(admin.ModelAdmin):
+    model = IdentityInfo
+    list_display = ("first_name", "last_name", "father_name", "eitta_number", "landline_phone", "mother_phone", "father_phone", "home_address", "work_address", "originality", "education", "job", "insurance", "income", "assets", "weight", "height", "introduced_subjects", "prefered_meeting_time", "type_of_payment", "user")
+    search_fields = ("first_name", "last_name", "father_name", "eitta_number", "landline_phone", "mother_phone", "father_phone", "home_address", "work_address", "originality", "education", "job", "insurance", "income", "assets", "weight", "height", "introduced_subjects", "prefered_meeting_time", "type_of_payment", "user")
+    list_filter = ("job", "insurance", "type_of_payment")
+
+class BirthCertificateInfoAdmin(admin.ModelAdmin):
+    model = BirthCertificateInfo
+    list_display = ("national_code", "birth_certificate_serial", "birth_certificate_location", "marriage_experince", "contract_date", "marriage_status", "marriage_date", "divorce_date", "husband_death_date", "birth_date", "children", "children_custody", "user")
+    search_fields = ("national_code", "birth_certificate_serial", "birth_certificate_location", "marriage_experince", "contract_date", "marriage_status", "marriage_date", "divorce_date", "husband_death_date", "birth_date", "children", "children_custody", "user")
+    list_filter = ("marriage_experince", "marriage_status", "children", "children_custody")
+
 admin.site.register(User, UserAdmin)
 admin.site.register(AccessCode, AccessCodeAdmin)
+admin.site.register(IdentityInfo, IdentityInfoAdmin)
+admin.site.register(BirthCertificateInfo, BirthCertificateInfoAdmin)

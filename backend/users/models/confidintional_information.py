@@ -25,18 +25,18 @@ class IdentityInfo(models.Model):
     work_address = models.CharField(_("Work Address"), max_length=150)
     originality = models.CharField(_("Originality"), max_length=80)
     education = models.CharField(_("Education"), max_length=80)
-    job = MultiSelectField(_("Job"), choices=Choices.JOB_OPTIONS)
-    insurance = MultiSelectField(_("Insurance"), choices=Choices.INSURANCE_OPTIONS)
+    job = models.CharField(_("Job"), max_length=50, choices=Choices.JOB_OPTIONS)
+    insurance = models.CharField(_("Insurance"), max_length=50, choices=Choices.INSURANCE_OPTIONS)
     income = models.BigIntegerField(_("Income in Rials"))
     assets = models.CharField(_("Assets"), max_length=150)
     weight = models.DecimalField(_("Weight (in kg)"), max_digits=5, decimal_places=2)   
     height = models.DecimalField(_("Height (in cm)"), max_digits=5, decimal_places=2)
     introduced_subjects = models.ForeignKey(
         "users.User", verbose_name=_("Introduced Subjects"),
-        on_delete=models.PROTECT, related_name="confidintional_info_subjects"
+        on_delete=models.PROTECT, related_name="confidintional_info_subjects", blank=True, null=True
     )
     prefered_meeting_time = models.CharField(_("Prefered Meeting Time"), max_length=150)
-    type_of_payment = MultiSelectField(_("Type of payment"), choices=Choices.TYPE_OF_PAYMENT_OPTIONS)
+    type_of_payment = models.CharField(_("Type of payment"), max_length=20, choices=Choices.TYPE_OF_PAYMENT_OPTIONS)
     user = models.OneToOneField("users.User", verbose_name=_("User"), on_delete=models.CASCADE, related_name="confidintional_info_user")
 
 
@@ -55,15 +55,15 @@ class BirthCertificateInfo(models.Model):
     national_code = models.CharField(_("National Code"), unique=True, max_length=10) 
     birth_certificate_serial = models.CharField(_("Birth Certificate Serial"), max_length=10)
     birth_certificate_location = models.CharField(_("Birth Certificate Location"), max_length=50)
-    marriage_experince = MultiSelectField(_("Marriage Experince"), choices=Choices.MARRIAGE_EXPERINCE_OPTION)
+    marriage_experince = models.CharField(_("Marriage Experince"), max_length=50, choices=Choices.MARRIAGE_EXPERINCE_OPTION)
     contract_date = models.DateTimeField(_("Contract Date"), auto_now=False, auto_now_add=False, blank=True, null=True)
-    marriage_status = MultiSelectField(_("Marriage Status"), choices=Choices.MARRIAGE_STATUS_OPTIONS)
+    marriage_status = models.CharField(_("Marriage Status"), max_length=50 ,choices=Choices.MARRIAGE_STATUS_OPTIONS)
     marriage_date = models.DateTimeField(_("Marriage Date"), auto_now=False, auto_now_add=False, blank=True, null=True)
     divorce_date = models.DateTimeField(_("Divorce Date"), auto_now=False, auto_now_add=False, blank=True, null=True)
     husband_death_date = models.DateTimeField(_("Husband Death Date"), auto_now=False, auto_now_add=False, blank=True, null=True)
     birth_date = models.DateTimeField(_("Birth Date"), auto_now=False, auto_now_add=False)
     children = MultiSelectField(_("Children"), choices=Choices.CHILDREN_OPTIONS)
-    children_custody = MultiSelectField(_("Children Custody"), choices=Choices.CHILDREN_CUSTODY_OPTIONS)
+    children_custody = models.CharField(_("Children Custody"), max_length=50, choices=Choices.CHILDREN_CUSTODY_OPTIONS)
     user = models.OneToOneField("users.User", verbose_name=_("User"), on_delete=models.CASCADE, related_name="birth_certificate_info")
     
     class Meta:
