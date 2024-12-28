@@ -68,7 +68,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     username_validator = UnicodeUsernameValidator()
 
-    id = models.UUIDField(_("id"), primary_key=True, default=uuid4, editable=False) 
+    id = models.UUIDField(_("id"), primary_key=True, default=uuid4, editable=False, help_text=_("Unique identifier for the user."))
     access_code = models.CharField(
         _("Access code"), 
         max_length=50, 
@@ -77,7 +77,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         validators=[validate_active_access_code],
         help_text=_("Required access code for initial user creation.")
     )
-    middle_man_code = models.UUIDField(_("Middle man code"), blank=True, null=True)
+    middle_man_code = models.UUIDField(_("Middle man code"), blank=True, null=True, help_text=_("Optional code for middle man reference."))
     username = models.CharField(
         _("username"),
         max_length=150,
@@ -94,11 +94,11 @@ class User(AbstractBaseUser, PermissionsMixin):
             "invalid": _("Username is invalid.")
         },
     )
-    first_name = models.CharField(_("first name"), max_length=150, blank=True)
-    last_name = models.CharField(_("last name"), max_length=150, blank=True)
-    date_created = models.DateTimeField(_("Date created"), auto_now=False, auto_now_add=True)
-    phone_number = PhoneNumberField(_("Phone Number"), unique=True, region="IR")
-    email = models.EmailField(_("email address"), blank=True)
+    first_name = models.CharField(_("first name"), max_length=150, blank=True, help_text=_("Optional. 150 characters or fewer."))
+    last_name = models.CharField(_("last name"), max_length=150, blank=True, help_text=_("Optional. 150 characters or fewer."))
+    date_created = models.DateTimeField(_("Date created"), auto_now=False, auto_now_add=True, help_text=_("The date and time when the user was created."))
+    phone_number = PhoneNumberField(_("Phone Number"), unique=True, region="IR", help_text=_("Required. +98 or 09** format accepted."))
+    email = models.EmailField(_("email address"), blank=True, help_text=_("Required. Email format accepted."))
     is_staff = models.BooleanField(
         _("staff status"),
         default=False,
@@ -112,7 +112,7 @@ class User(AbstractBaseUser, PermissionsMixin):
             "Unselect this instead of deleting accounts."
         ),
     )
-    date_joined = models.DateTimeField(_("date joined"), default=timezone.localtime())
+    date_joined = models.DateTimeField(_("date joined"), default=timezone.localtime, help_text=_("The date and time when the user joined."))
 
     objects = UserManager()
 

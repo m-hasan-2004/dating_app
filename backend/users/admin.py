@@ -36,6 +36,7 @@ class UserAdmin(auth_admin.UserAdmin):
     ordering = ("date_joined",)
     actions = ["deactivate_users", "reactivate_users"]
     inlines = [BirthCertificateInfoInline, IdentityInfoInline]
+    save_on_top = True
 
     fieldsets = (
         (_("Login Info"), {"fields": ("username", "password", "access_code")}),
@@ -91,6 +92,7 @@ class AccessCodeAdmin(admin.ModelAdmin):
     list_filter = ("active",)
     ordering = ("-id",)
     actions = ["expire_access_codes", "reactivate_access_codes"]
+    save_on_top = True
 
     def expire_access_codes(self, request, queryset):
         queryset.update(active=False)
@@ -107,12 +109,14 @@ class IdentityInfoAdmin(admin.ModelAdmin):
     list_display = ("first_name", "last_name", "father_name", "eitta_number", "landline_phone", "mother_phone", "father_phone", "home_address", "work_address", "originality", "education", "job", "insurance", "income", "assets", "weight", "height", "introduced_subjects", "prefered_meeting_time", "type_of_payment", "user")
     search_fields = ("first_name", "last_name", "father_name", "eitta_number", "landline_phone", "mother_phone", "father_phone", "home_address", "work_address", "originality", "education", "job", "insurance", "income", "assets", "weight", "height", "introduced_subjects", "prefered_meeting_time", "type_of_payment", "user")
     list_filter = ("job", "insurance", "type_of_payment")
+    save_on_top = True
 
 class BirthCertificateInfoAdmin(admin.ModelAdmin):
     model = BirthCertificateInfo
     list_display = ("national_code", "birth_certificate_serial", "birth_certificate_location", "marriage_experince", "contract_date", "marriage_status", "marriage_date", "divorce_date", "husband_death_date", "birth_date", "children", "children_custody", "user")
     search_fields = ("national_code", "birth_certificate_serial", "birth_certificate_location", "marriage_experince", "contract_date", "marriage_status", "marriage_date", "divorce_date", "husband_death_date", "birth_date", "children", "children_custody", "user")
     list_filter = ("marriage_experince", "marriage_status", "children", "children_custody")
+    save_on_top = True
 
 admin.site.register(User, UserAdmin)
 admin.site.register(AccessCode, AccessCodeAdmin)

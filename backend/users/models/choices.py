@@ -37,6 +37,7 @@ class Choices:
         ("blank_birth_certificate", _("Blank Birth Certificate"))
     )
     CHILDREN_OPTIONS = (
+        ("none", _("None")),
         ("one_boy", _("One Boy")),
         ("two_boys", _("Two Boys")),
         ("three_boys", _("Three Boys")),

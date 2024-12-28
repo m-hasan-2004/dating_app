@@ -43,9 +43,9 @@ class AccessCodeManager(models.Manager):
 
 
 class AccessCode(models.Model):
-    code = models.UUIDField(_("Access Code"), default=uuid4, editable=False)
-    active = models.BooleanField(_("Active"), default=True)
-    date_created = models.DateTimeField(_("Date created"), auto_now=False, auto_now_add=True)
+    code = models.UUIDField(_("Access Code"), default=uuid4, editable=False, help_text=_("Unique access code for user creation."))
+    active = models.BooleanField(_("Active"), default=True, help_text=_("Indicates whether the access code is active."))
+    date_created = models.DateTimeField(_("Date created"), auto_now=False, auto_now_add=True, help_text=_("The date and time when the access code was created."))
 
     class Meta:
         verbose_name = _("AccessCode")
