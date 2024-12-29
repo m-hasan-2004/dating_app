@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.db import models
 from uuid import uuid4
 from django.utils import timezone
+from .error_messages import AccessCodeErrorMessages
 
 
 def validate_active_access_code(code):
@@ -43,9 +44,26 @@ class AccessCodeManager(models.Manager):
 
 
 class AccessCode(models.Model):
-    code = models.UUIDField(_("Access Code"), default=uuid4, editable=False, help_text=_("Unique access code for user creation."))
-    active = models.BooleanField(_("Active"), default=True, help_text=_("Indicates whether the access code is active."))
-    date_created = models.DateTimeField(_("Date created"), auto_now=False, auto_now_add=True, help_text=_("The date and time when the access code was created."))
+    code = models.UUIDField(
+        _("Access Code"),
+        default=uuid4,
+        editable=False,
+        help_text=_("Unique access code for user creation."),
+        error_messages=AccessCodeErrorMessages.CODE,
+    )
+    active = models.BooleanField(
+        _("Active"),
+        default=True,
+        help_text=_("Indicates whether the access code is active."),
+        error_messages=AccessCodeErrorMessages.ACTIVE,
+    )
+    date_created = models.DateTimeField(
+        _("Date created"),
+        auto_now=False,
+        auto_now_add=True,
+        help_text=_("The date and time when the access code was created."),
+        error_messages=AccessCodeErrorMessages.DATE_CREATED,
+    )
 
     class Meta:
         verbose_name = _("AccessCode")

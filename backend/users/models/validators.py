@@ -1,4 +1,5 @@
 from django.core.validators import RegexValidator
+from django.contrib.auth.validators import UnicodeUsernameValidator
 
 class LandlineNumberValidator:
     def landline_number_validator(number: str):

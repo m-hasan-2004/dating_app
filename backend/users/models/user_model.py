@@ -4,12 +4,12 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
+from .error_messages import UserErrorMessages
 from django.core.mail import send_mail
 from django.utils import timezone
 from django.urls import reverse
 from django.db import models
 from uuid import uuid4
-
 
 
 class UserManager(BaseUserManager):
@@ -75,9 +75,16 @@ class User(AbstractBaseUser, PermissionsMixin):
         null=False,
         blank=False,
         validators=[validate_active_access_code],
-        help_text=_("Required access code for initial user creation.")
+        help_text=_("Required access code for initial user creation."),
+        error_messages=UserErrorMessages.ACCESS_CODE,
     )
-    middle_man_code = models.UUIDField(_("Middle man code"), blank=True, null=True, help_text=_("Optional code for middle man reference."))
+    middle_man_code = models.UUIDField(
+        _("Middle man code"),
+        blank=True,
+        null=True,
+        help_text=_("Optional code for middle man reference."),
+        error_messages=UserErrorMessages.MIDDLE_MAN_CODE,
+    )
     username = models.CharField(
         _("username"),
         max_length=150,
@@ -86,23 +93,47 @@ class User(AbstractBaseUser, PermissionsMixin):
             "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
         ),
         validators=[username_validator],
-        error_messages={
-            "unique": _("This username is already taken."),
-            "blank": _("Username cannot be blank."),
-            "null": _("Username cannot be null."),
-            "max_length": _("Username cannot exceed 150 characters."),
-            "invalid": _("Username is invalid.")
-        },
+        error_messages=UserErrorMessages.USERNAME,
     )
-    first_name = models.CharField(_("first name"), max_length=150, blank=True, help_text=_("Optional. 150 characters or fewer."))
-    last_name = models.CharField(_("last name"), max_length=150, blank=True, help_text=_("Optional. 150 characters or fewer."))
-    date_created = models.DateTimeField(_("Date created"), auto_now=False, auto_now_add=True, help_text=_("The date and time when the user was created."))
-    phone_number = PhoneNumberField(_("Phone Number"), unique=True, region="IR", help_text=_("Required. +98 or 09** format accepted."))
-    email = models.EmailField(_("email address"), blank=True, help_text=_("Required. Email format accepted."))
+    first_name = models.CharField(
+        _("first name"),
+        max_length=150,
+        blank=True,
+        help_text=_("Optional. 150 characters or fewer."),
+        error_messages=UserErrorMessages.FIRST_NAME,
+    )
+    last_name = models.CharField(
+        _("last name"),
+        max_length=150,
+        blank=True,
+        help_text=_("Optional. 150 characters or fewer."),
+        error_messages=UserErrorMessages.LAST_NAME,
+    )
+    date_created = models.DateTimeField(
+        _("Date created"),
+        auto_now=False,
+        auto_now_add=True,
+        help_text=_("The date and time when the user was created."),
+        error_messages=UserErrorMessages.DATE_CREATED,
+    )
+    phone_number = PhoneNumberField(
+        _("Phone Number"),
+        unique=True,
+        region="IR",
+        help_text=_("Required. +98 or 09** format accepted."),
+        error_messages=UserErrorMessages.PHONE_NUMBER,
+    )
+    email = models.EmailField(
+        _("email address"),
+        blank=True,
+        help_text=_("Required. Email format accepted."),
+        error_messages=UserErrorMessages.EMAIL,
+    )
     is_staff = models.BooleanField(
         _("staff status"),
         default=False,
         help_text=_("Designates whether the user can log into this admin site."),
+        error_messages=UserErrorMessages.IS_STAFF,
     )
     is_active = models.BooleanField(
         _("active"),
@@ -111,8 +142,14 @@ class User(AbstractBaseUser, PermissionsMixin):
             "Designates whether this user should be treated as active. "
             "Unselect this instead of deleting accounts."
         ),
+        error_messages=UserErrorMessages.IS_ACTIVE,
     )
-    date_joined = models.DateTimeField(_("date joined"), default=timezone.localtime, help_text=_("The date and time when the user joined."))
+    date_joined = models.DateTimeField(
+        _("date joined"),
+        default=timezone.localtime,
+        help_text=_("The date and time when the user joined."),
+        error_messages=UserErrorMessages.DATE_JOINED,
+    )
 
     objects = UserManager()
 
