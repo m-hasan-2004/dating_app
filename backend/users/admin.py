@@ -106,8 +106,8 @@ class AccessCodeAdmin(admin.ModelAdmin):
 
 class IdentityInfoAdmin(admin.ModelAdmin):
     model = IdentityInfo
-    list_display = ("first_name", "last_name", "father_name", "eitta_number", "landline_phone", "mother_phone", "father_phone", "home_address", "work_address", "originality", "education", "job", "insurance", "income", "assets", "weight", "height", "introduced_subjects", "prefered_meeting_time", "type_of_payment", "user")
-    search_fields = ("first_name", "last_name", "father_name", "eitta_number", "landline_phone", "mother_phone", "father_phone", "home_address", "work_address", "originality", "education", "job", "insurance", "income", "assets", "weight", "height", "introduced_subjects", "prefered_meeting_time", "type_of_payment", "user")
+    list_display = ("first_name", "last_name", "father_name", "eitta_number", "landline_phone", "mother_phone", "father_phone", "home_address", "work_address", "originality", "education", "job", "insurance", "income", "assets", "weight", "height", "prefered_meeting_time", "type_of_payment", "user")
+    search_fields = ("first_name", "last_name", "father_name", "eitta_number", "landline_phone", "mother_phone", "father_phone", "home_address", "work_address", "originality", "education", "job", "insurance", "income", "assets", "weight", "height", "prefered_meeting_time", "type_of_payment", "user")
     list_filter = ("job", "insurance", "type_of_payment")
     save_on_top = True
 

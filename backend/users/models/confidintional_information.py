@@ -129,13 +129,11 @@ class IdentityInfo(models.Model):
         help_text=_("Enter the height of the user in centimeters."),
         error_messages=IdentityInfoErrorMessages.HEIGHT,
     )
-    introduced_subjects = models.ForeignKey(
+    introduced_subjects = models.ManyToManyField(
         "users.User",
         verbose_name=_("Introduced Subjects"),
-        on_delete=models.PROTECT,
         related_name="confidintional_info_subjects",
         blank=True,
-        null=True,
         help_text=_("Select the user who introduced the subjects."),
         error_messages=IdentityInfoErrorMessages.INTRODUCED_SUBJECTS,
     )
