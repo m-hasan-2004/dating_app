@@ -167,3 +167,28 @@ class Choices:
         ("Satisfied", _("Satisfied")),
         ("None", _("None")),
     )
+    AVERAGE_FAMILY_EDUCATION_CHOICES = (
+        ("Under Diploma", _("Under Diploma")),
+        ("Diploma", _("Diploma")),
+        ("Associate Degree", _("Associate Degree")),
+        ("Bachelor's", _("Bachelor's")),
+        ("Master's", _("Master's")),
+        ("Ph.D.", _("Ph.D.")),
+        ("Hoze", _("Hoze")),
+    )
+    AVERAGE_FAMILY_FINANCE_CHOICES = (
+        ("Perfect", _("Perfect")),
+        ("Good", _("Good")),
+        ("Average", _("Average")),
+        ("Weak", _("Weak")),
+    )
+    ENGAGEMENT_OR_WEDDING_STATUS_CHOICES = (
+        ("Engagement", _("Engagement")),
+        ("Contract", _("Contract")),
+        ("Wedding", _("Wedding")),
+        ("None", _("None")),
+    )
+    CUSTODY_CHOICES = (
+        ("Father", _("Father")),
+        ("Mother", _("Mother")),
+    )

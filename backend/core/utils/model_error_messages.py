@@ -367,3 +367,43 @@ class PhysicalInfoErrorMessages:
     USER = {
         "required": _("User is required."),
     }
+
+class FamilyInfoErrorMessages:
+    AVERAGE_FAMILY_EDUCATION = {
+        "required": _("Average family education is required."),
+        "invalid_choice": _("Invalid choice for average family education."),
+    }
+    AVERAGE_FAMILY_FINANCE = {
+        "required": _("Average family finance is required."),
+        "invalid_choice": _("Invalid choice for average family finance."),
+    }
+    FAMILY_DIVORCE_HISTORY = {
+        "required": _("Family divorce history is required."),
+    }
+    FAMILY_DIVORCE_REASON = {
+        "max_length": _("Family divorce reason cannot exceed 150 characters."),
+    }
+    CONTACT_WITH_FAMILY = {
+        "required": _("Contact with family is required."),
+        "max_length": _("Contact with family cannot exceed 50 characters."),
+    }
+    ENGAGEMENT_OR_WEDDING_STATUS = {
+        "required": _("Engagement or wedding status is required."),
+        "invalid_choice": _("Invalid choice for engagement or wedding status."),
+    }
+    EX_HUSBAND_CHILD_STATUS = {
+        "required": _("Ex-husband child status is required."),
+    }
+    GIRL_BIRTH_DATE = {
+        "invalid": _("Invalid girl birth date."),
+    }
+    BOY_BIRTH_DATE = {
+        "invalid": _("Invalid boy birth date."),
+    }
+    CUSTODY = {
+        "required": _("Custody is required."),
+        "invalid_choice": _("Invalid choice for custody."),
+    }
+    LIVING_LOCATION = {
+        "max_length": _("Living location cannot exceed 50 characters."),
+    }
