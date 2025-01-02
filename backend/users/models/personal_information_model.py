@@ -1,11 +1,10 @@
 from django.db import models
-from django.contrib.auth.models import User
 from .model_choices import Choices
 from .model_error_messages import PersonalInfoErrorMessages
 
 class PersonalInformation(models.Model):
     gender = models.CharField(
-        max_length=1,
+        max_length=50,
         choices=Choices.GENDER_CHOICES,
         error_messages=PersonalInfoErrorMessages.GENDER
     )
@@ -20,17 +19,17 @@ class PersonalInformation(models.Model):
         error_messages=PersonalInfoErrorMessages.BIRTH_LOCATION
     )
     education = models.CharField(
-        max_length=2,
+        max_length=50,
         choices=Choices.EDUCATION_CHOICES,
         error_messages=PersonalInfoErrorMessages.EDUCATION
     )
     degree = models.CharField(
-        max_length=2,
+        max_length=50,
         choices=Choices.DEGREE_CHOICES,
         error_messages=PersonalInfoErrorMessages.DEGREE
     )
     military_status = models.CharField(
-        max_length=2,
+        max_length=50,
         choices=Choices.MILITARY_STATUS_CHOICES,
         error_messages=PersonalInfoErrorMessages.MILITARY_STATUS
     )
@@ -45,7 +44,7 @@ class PersonalInformation(models.Model):
         error_messages=PersonalInfoErrorMessages.DEPOSIT
     )
     insurance_type = models.CharField(
-        max_length=2,
+        max_length=50,
         choices=Choices.INSURANCE_TYPE_CHOICES,
         error_messages=PersonalInfoErrorMessages.INSURANCE_TYPE
     )
@@ -53,12 +52,12 @@ class PersonalInformation(models.Model):
         error_messages=PersonalInfoErrorMessages.INSURANCE_YEARS
     )
     leisure_type = models.CharField(
-        max_length=2,
+        max_length=50,
         choices=Choices.LEISURE_TYPE_CHOICES,
         error_messages=PersonalInfoErrorMessages.LEISURE_TYPE
     )
     usage_cases = models.CharField(
-        max_length=2,
+        max_length=50,
         choices=Choices.USAGE_CASES_CHOICES,
         error_messages=PersonalInfoErrorMessages.USAGE_CASES
     )
@@ -72,11 +71,10 @@ class PersonalInformation(models.Model):
         error_messages=PersonalInfoErrorMessages.CONVICTION_REASON
     )
     user = models.OneToOneField(
-        User,
+        "users.User",
         on_delete=models.CASCADE,
         error_messages=PersonalInfoErrorMessages.USER
     )
-    id = models.AutoField(primary_key=True)
 
     def __str__(self):
         return f"{self.user.username}'s Personal Information"

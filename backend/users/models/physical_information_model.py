@@ -1,7 +1,6 @@
 from django.db import models
 from .model_choices import Choices
 from .model_error_messages import PhysicalInfoErrorMessages
-from django.contrib.auth.models import User
 
 class PhysicalInformation(models.Model):
     height = models.BigIntegerField(
@@ -53,11 +52,10 @@ class PhysicalInformation(models.Model):
         error_messages=PhysicalInfoErrorMessages.MEDICATION_SURGERY_DISEASE_TYPE
     )
     user = models.OneToOneField(
-        User,
+        "users.User",
         on_delete=models.CASCADE,
         error_messages=PhysicalInfoErrorMessages.USER
     )
-    id = models.AutoField(primary_key=True)
 
     def __str__(self):
         return f"{self.user.username}'s Physical Information"
