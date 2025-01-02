@@ -1,18 +1,19 @@
 from django.db import models
 from core.utils.model_choices import Choices
 from core.utils.model_error_messages import PhysicalInfoErrorMessages
+from core.utils.help_text import PhysicalInfoHelpText
 from django.utils.translation import gettext_lazy as _
 
 class PhysicalInformation(models.Model):
     height = models.BigIntegerField(
         _("Height"),
         error_messages=PhysicalInfoErrorMessages.HEIGHT,
-        help_text=_("Enter the height of the user in centimeters."),
+        help_text=PhysicalInfoHelpText.HEIGHT,
     )
     weight = models.BigIntegerField(
         _("Weight"),
         error_messages=PhysicalInfoErrorMessages.WEIGHT,
-        help_text=_("Enter the weight of the user in kilograms."),
+        help_text=PhysicalInfoHelpText.WEIGHT,
     )
     skin_color = models.CharField(
         _("Skin Color"),
@@ -40,13 +41,15 @@ class PhysicalInformation(models.Model):
     )
     glasses = models.BooleanField(
         _("Glasses"),
-        error_messages=PhysicalInfoErrorMessages.GLASSES
+        error_messages=PhysicalInfoErrorMessages.GLASSES,
+        help_text=PhysicalInfoHelpText.GLASSES,
     )
     glasses_size = models.IntegerField(
         _("Glasses Size"),
         blank=True,
         null=True,
-        error_messages=PhysicalInfoErrorMessages.GLASSES_SIZE
+        error_messages=PhysicalInfoErrorMessages.GLASSES_SIZE,
+        help_text=PhysicalInfoHelpText.GLASSES_SIZE,
     )
     body_and_face = models.CharField(
         _("Body and Face"),
@@ -56,14 +59,16 @@ class PhysicalInformation(models.Model):
     )
     disease_or_surgery = models.BooleanField(
         _("Disease or Surgery"),
-        error_messages=PhysicalInfoErrorMessages.DISEASE_OR_SURGERY
+        error_messages=PhysicalInfoErrorMessages.DISEASE_OR_SURGERY,
+        help_text=PhysicalInfoHelpText.DISEASE_OR_SURGERY,
     )
     medication_surgery_disease_type = models.CharField(
         _("Medication/Surgery/Disease Type"),
         max_length=100,
         blank=True,
         null=True,
-        error_messages=PhysicalInfoErrorMessages.MEDICATION_SURGERY_DISEASE_TYPE
+        error_messages=PhysicalInfoErrorMessages.MEDICATION_SURGERY_DISEASE_TYPE,
+        help_text=PhysicalInfoHelpText.MEDICATION_SURGERY_DISEASE_TYPE,
     )
     user = models.OneToOneField(
         "users.User",

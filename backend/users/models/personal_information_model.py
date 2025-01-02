@@ -1,6 +1,7 @@
 from django.db import models
 from core.utils.model_choices import Choices
 from core.utils.model_error_messages import PersonalInfoErrorMessages
+from core.utils.help_text import PersonalInfoHelpText
 from django.utils.translation import gettext_lazy as _
 
 class PersonalInformation(models.Model):
@@ -9,7 +10,7 @@ class PersonalInformation(models.Model):
         max_length=50,
         choices=Choices.GENDER_CHOICES,
         error_messages=PersonalInfoErrorMessages.GENDER,
-        help_text=_("Select the gender of the user."),
+        help_text=PersonalInfoHelpText.GENDER,
     )
     sadat = models.BooleanField(
         _("Sadat"),
@@ -46,15 +47,17 @@ class PersonalInformation(models.Model):
         _("Military Status Explanation"),
         blank=True,
         null=True,
-        help_text=_("Provide an explanation for the military status if applicable."),
+        help_text=PersonalInfoHelpText.MILITARY_STATUS_EXPLANATION,
     )
     income = models.BigIntegerField(
         _("Income"),
-        error_messages=PersonalInfoErrorMessages.INCOME
+        error_messages=PersonalInfoErrorMessages.INCOME,
+        help_text=PersonalInfoHelpText.INCOME,
     )
     deposit = models.BigIntegerField(
         _("Deposit"),
-        error_messages=PersonalInfoErrorMessages.DEPOSIT
+        error_messages=PersonalInfoErrorMessages.DEPOSIT,
+        help_text=PersonalInfoHelpText.DEPOSIT,
     )
     insurance_type = models.CharField(
         _("Insurance Type"),
@@ -64,7 +67,8 @@ class PersonalInformation(models.Model):
     )
     insurance_years = models.PositiveIntegerField(
         _("Insurance Years"),
-        error_messages=PersonalInfoErrorMessages.INSURANCE_YEARS
+        error_messages=PersonalInfoErrorMessages.INSURANCE_YEARS,
+        help_text=PersonalInfoHelpText.INSURANCE_YEARS,
     )
     leisure_type = models.CharField(
         _("Leisure Type"),
@@ -80,14 +84,16 @@ class PersonalInformation(models.Model):
     )
     conviction_or_arrest_history = models.BooleanField(
         _("Conviction or Arrest History"),
-        error_messages=PersonalInfoErrorMessages.CONVICTION_OR_ARREST_HISTORY
+        error_messages=PersonalInfoErrorMessages.CONVICTION_OR_ARREST_HISTORY,
+        help_text=PersonalInfoHelpText.CONVICTION_OR_ARREST_HISTORY,
     )
     conviction_reason = models.CharField(
         _("Conviction Reason"),
         max_length=150,
         blank=True,
         null=True,
-        error_messages=PersonalInfoErrorMessages.CONVICTION_REASON
+        error_messages=PersonalInfoErrorMessages.CONVICTION_REASON,
+        help_text=PersonalInfoHelpText.CONVICTION_REASON,
     )
     user = models.OneToOneField(
         "users.User",
