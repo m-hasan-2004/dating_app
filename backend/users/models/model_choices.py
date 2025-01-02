@@ -58,3 +58,64 @@ class Choices:
         ("father", _("Father")),
         ("mother", _("Mother"))
     )
+    GENDER_CHOICES = (
+        ("Man", _("Man")),
+        ("Woman", _("Woman")),
+    )
+    EDUCATION_CHOICES = (
+        ("Unlettered", _("Unlettered")),
+        ("Under Diploma", _("Under Diploma")),
+        ("Diploma", _("Diploma")),
+        ("Associate Degree", _("Associate Degree")),
+        ("Bachelor's Degree", _("Bachelor's Degree")),
+        ("Master's Degree", _("Master's Degree")),
+        ("Ph.D.", _("Ph.D.")),
+        ("Hoze (Islamic Seminary) LVL 1", _("Hoze (Islamic Seminary) LVL 1")),
+        ("Hoze (Islamic Seminary) LVL 2", _("Hoze (Islamic Seminary) LVL 2")),
+        ("Hoze (Islamic Seminary) LVL 3", _("Hoze (Islamic Seminary) LVL 3")),
+        ("Hoze (Islamic Seminary) LVL 4", _("Hoze (Islamic Seminary) LVL 4")),
+        ("School & Quranic", _("School & Quranic")),
+    )
+    DEGREE_CHOICES = (
+        ("Medical", _("Medical")),
+        ("Engineer", _("Engineer")),
+        ("Human Science", _("Human Science")),
+        ("Hoze Molabas", _("Hoze Molabas")),
+        ("Hoze Not Molabas", _("Hoze Not Molabas")),
+        ("Art", _("Art")),
+        ("Other", _("Other")),
+    )
+    MILITARY_STATUS_CHOICES = (
+        ("Exemption", _("Exemption")),
+        ("Mother Sponsorship", _("Mother Sponsorship")),
+        ("Father Sponsorship", _("Father Sponsorship")),
+        ("Educational Exemption", _("Educational Exemption")),
+        ("Medical Exemption", _("Medical Exemption")),
+        ("End of Service", _("End of Service")),
+    )
+    INSURANCE_TYPE_CHOICES = (
+        ("Takmili", _("Takmili")),
+        ("Darmani", _("Darmani")),
+        ("Niro Mosalah (Military Insurance)", _("Niro Mosalah (Military Insurance)")),
+        ("Ommi", _("Ommi")),
+    )
+    LEISURE_TYPE_CHOICES = (
+        ("Park", _("Park")),
+        ("Trip", _("Trip")),
+        ("Family", _("Family")),
+        ("Television", _("Television")),
+        ("Mobile Reading", _("Mobile Reading")),
+        ("Shrine", _("Shrine")),
+        ("Jankaran", _("Jankaran")),
+        ("Cinema", _("Cinema")),
+        ("Working in Home", _("Working in Home")),
+        ("Gym", _("Gym")),
+        ("Poem", _("Poem")),
+        ("Garden", _("Garden")),
+    )
+    USAGE_CASES_CHOICES = (
+        ("Alcoholic Drinks", _("Alcoholic Drinks")),
+        ("Drugs", _("Drugs")),
+        ("Cigarettes", _("Cigarettes")),
+        ("Hookah", _("Hookah")),
+    )

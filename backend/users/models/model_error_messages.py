@@ -256,3 +256,67 @@ class BirthCertificateInfoErrorMessages:
         "null": _("User cannot be null."),
         "invalid": _("User is invalid.")
     }
+
+class PersonalInfoErrorMessages:
+    GENDER = {
+        "required": _("Gender is required."),
+        "invalid_choice": _("Invalid choice for gender."),
+    }
+    SADAT = {
+        "required": _("Sadat field is required."),
+    }
+    BIRTH_DATE = {
+        "required": _("Birth date is required."),
+        "invalid": _("Invalid birth date format."),
+    }
+    BIRTH_LOCATION = {
+        "required": _("Birth location is required."),
+        "max_length": _("Birth location cannot exceed 50 characters."),
+    }
+    EDUCATION = {
+        "required": _("Education is required."),
+        "invalid_choice": _("Invalid choice for education."),
+    }
+    DEGREE = {
+        "required": _("Degree is required."),
+        "invalid_choice": _("Invalid choice for degree."),
+    }
+    MILITARY_STATUS = {
+        "required": _("Military status is required."),
+        "invalid_choice": _("Invalid choice for military status."),
+    }
+    INCOME = {
+        "required": _("Income is required."),
+        "invalid": _("Invalid income value."),
+    }
+    DEPOSIT = {
+        "required": _("Deposit is required."),
+        "invalid": _("Invalid deposit value."),
+    }
+    INSURANCE_TYPE = {
+        "required": _("Insurance type is required."),
+        "invalid_choice": _("Invalid choice for insurance type."),
+    }
+    INSURANCE_YEARS = {
+        "required": _("Insurance years are required."),
+        "invalid": _("Invalid insurance years value."),
+        "max_value": _("Insurance years cannot exceed 60."),
+    }
+    LEISURE_TYPE = {
+        "required": _("Leisure type is required."),
+        "invalid_choice": _("Invalid choice for leisure type."),
+    }
+    USAGE_CASES = {
+        "required": _("Usage cases are required."),
+        "invalid_choice": _("Invalid choice for usage cases."),
+    }
+    CONVICTION_OR_ARREST_HISTORY = {
+        "required": _("Conviction or arrest history is required."),
+    }
+    CONVICTION_REASON = {
+        "required": _("Conviction reason is required."),
+        "max_length": _("Conviction reason cannot exceed 150 characters."),
+    }
+    USER = {
+        "required": _("User is required."),
+    }
