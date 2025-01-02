@@ -5,7 +5,7 @@ from django.utils import timezone
 
 
 class Command(BaseCommand):
-    help = "Creates single Access Code and sends to a choosen destination (optional)"
+    help = "Creates Access Code in numbers"
 
     def add_arguments(self, parser):
         parser.add_argument("numbers", type=int)

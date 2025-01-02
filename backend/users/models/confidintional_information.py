@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from multiselectfield import MultiSelectField
 from django.urls import reverse
 from django.db import models
-from .choices import Choices
+from .model_choices import Choices
 from .error_messages import IdentityInfoErrorMessages, BirthCertificateInfoErrorMessages
 
 
