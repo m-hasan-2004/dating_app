@@ -1,17 +1,72 @@
 from django.contrib import admin
 from django.contrib.auth import admin as auth_admin
 from django.utils.translation import gettext_lazy as _
-from .models import User, AccessCode, IdentityInfo, BirthCertificateInfo
+from .models import User, AccessCode, IdentityInformation, BirthCertificateInformation, PersonalInformation, PhysicalInformation, FamilyInformation, EngagementOrWeddingStatus, ExHusbandChildStatus, Sister, Brother, Groom, BrideOrWife, Mother, Father
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 
 class IdentityInfoInline(admin.StackedInline):
-    model = IdentityInfo
+    model = IdentityInformation
     fk_name = "user"
     extra = 1
     
 
 class BirthCertificateInfoInline(admin.StackedInline):
-    model = BirthCertificateInfo
+    model = BirthCertificateInformation
+    extra = 1
+
+class PersonalInfoInline(admin.StackedInline):
+    model = PersonalInformation
+    fk_name = "user"
+    extra = 1
+
+class PhysicalInfoInline(admin.StackedInline):
+    model = PhysicalInformation
+    fk_name = "user"
+    extra = 1
+
+class FamilyInfoInline(admin.StackedInline):
+    model = FamilyInformation
+    fk_name = "user"
+    extra = 1
+
+class EngagementOrWeddingStatusInline(admin.StackedInline):
+    model = EngagementOrWeddingStatus
+    fk_name = "user"
+    extra = 1
+
+class ExHusbandChildStatusInline(admin.StackedInline):
+    model = ExHusbandChildStatus
+    fk_name = "user"
+    extra = 1
+
+class SisterInline(admin.StackedInline):
+    model = Sister
+    fk_name = "user"
+    extra = 1
+
+class BrotherInline(admin.StackedInline):
+    model = Brother
+    fk_name = "user"
+    extra = 1
+
+class GroomInline(admin.StackedInline):
+    model = Groom
+    fk_name = "user"
+    extra = 1
+
+class BrideOrWifeInline(admin.StackedInline):
+    model = BrideOrWife
+    fk_name = "user"
+    extra = 1
+
+class MotherInline(admin.StackedInline):
+    model = Mother
+    fk_name = "user"
+    extra = 1
+
+class FatherInline(admin.StackedInline):
+    model = Father
+    fk_name = "user"
     extra = 1
 
 
@@ -35,7 +90,21 @@ class UserAdmin(auth_admin.UserAdmin):
     search_fields = ("username", "email", "first_name", "last_name", "phone_number")
     ordering = ("date_joined",)
     actions = ["deactivate_users", "reactivate_users"]
-    inlines = [BirthCertificateInfoInline, IdentityInfoInline]
+    inlines = [
+        BirthCertificateInfoInline, 
+        IdentityInfoInline, 
+        PersonalInfoInline, 
+        PhysicalInfoInline, 
+        FamilyInfoInline, 
+        EngagementOrWeddingStatusInline, 
+        ExHusbandChildStatusInline, 
+        SisterInline, 
+        BrotherInline, 
+        GroomInline, 
+        BrideOrWifeInline, 
+        MotherInline, 
+        FatherInline
+    ]
     save_on_top = True
 
     fieldsets = (
@@ -105,14 +174,14 @@ class AccessCodeAdmin(admin.ModelAdmin):
     reactivate_access_codes.short_description = _("Reactivate selected access codes")
 
 class IdentityInfoAdmin(admin.ModelAdmin):
-    model = IdentityInfo
+    model = IdentityInformation
     list_display = ("first_name", "last_name", "father_name", "eitta_number", "landline_phone", "mother_phone", "father_phone", "home_address", "work_address", "originality", "education", "job", "insurance", "income", "assets", "weight", "height", "prefered_meeting_time", "type_of_payment", "user")
     search_fields = ("first_name", "last_name", "father_name", "eitta_number", "landline_phone", "mother_phone", "father_phone", "home_address", "work_address", "originality", "education", "job", "insurance", "income", "assets", "weight", "height", "prefered_meeting_time", "type_of_payment", "user")
     list_filter = ("job", "insurance", "type_of_payment")
     save_on_top = True
 
 class BirthCertificateInfoAdmin(admin.ModelAdmin):
-    model = BirthCertificateInfo
+    model = BirthCertificateInformation
     list_display = ("national_code", "birth_certificate_serial", "birth_certificate_location", "marriage_experince", "contract_date", "marriage_status", "marriage_date", "divorce_date", "husband_death_date", "birth_date", "children", "children_custody", "user")
     search_fields = ("national_code", "birth_certificate_serial", "birth_certificate_location", "marriage_experince", "contract_date", "marriage_status", "marriage_date", "divorce_date", "husband_death_date", "birth_date", "children", "children_custody", "user")
     list_filter = ("marriage_experince", "marriage_status", "children", "children_custody")
@@ -120,5 +189,16 @@ class BirthCertificateInfoAdmin(admin.ModelAdmin):
 
 admin.site.register(User, UserAdmin)
 admin.site.register(AccessCode, AccessCodeAdmin)
-admin.site.register(IdentityInfo, IdentityInfoAdmin)
-admin.site.register(BirthCertificateInfo, BirthCertificateInfoAdmin)
+admin.site.register(IdentityInformation)
+admin.site.register(BirthCertificateInformation)
+admin.site.register(PersonalInformation)
+admin.site.register(PhysicalInformation)
+admin.site.register(FamilyInformation)
+admin.site.register(EngagementOrWeddingStatus)
+admin.site.register(ExHusbandChildStatus)
+admin.site.register(Sister)
+admin.site.register(Brother)
+admin.site.register(Groom)
+admin.site.register(BrideOrWife)
+admin.site.register(Mother)
+admin.site.register(Father)

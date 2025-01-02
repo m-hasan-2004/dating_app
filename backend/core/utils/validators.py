@@ -5,13 +5,10 @@ from users.models import AccessCode
 from django.utils.translation import gettext_lazy as _
 
 class LandlineNumberValidator:
-    def landline_number_validator(number: str):
-        RegexValidator(
+    landline_number_validator = RegexValidator(
             regex=r'^\d{3}-\d{8}$', 
             message=_('Phone number must be in the format XXX-XXXXXXXX.'),
-            help_text=_('Enter a valid landline number in the format XXX-XXXXXXXX.'),
-            verbose_name=_('Landline Number')
-        )
+    )
 
 # min and max validator for weight and height
 class WeightValidator:

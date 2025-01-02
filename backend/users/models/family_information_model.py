@@ -34,17 +34,8 @@ class FamilyInformation(models.Model):
         max_length=50,
         error_messages=FamilyInfoErrorMessages.CONTACT_WITH_FAMILY,
     )
-    engagement_or_wedding_status = models.OneToOneField(
-        "EngagementOrWeddingStatus",
-        on_delete=models.CASCADE,
-        error_messages=FamilyInfoErrorMessages.ENGAGEMENT_OR_WEDDING_STATUS,
-    )
-    ex_husband_child_status = models.OneToOneField(
-        "ExHusbandChildStatus",
-        on_delete=models.CASCADE,
-        error_messages=FamilyInfoErrorMessages.EX_HUSBAND_CHILD_STATUS,
-    )
-
+    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE)
+    
     class Meta:
         verbose_name = _("Family Information")
         verbose_name_plural = _("Family Informations")
@@ -90,6 +81,7 @@ class EngagementOrWeddingStatus(models.Model):
         blank=True,
         null=True,
     )
+    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = _("Engagement or Wedding Status")
@@ -120,6 +112,7 @@ class ExHusbandChildStatus(models.Model):
         blank=True,
         null=True,
     )
+    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = _("Ex-Husband Child Status")
@@ -139,6 +132,7 @@ class FamilyMember(models.Model):
         max_length=50,
         choices=Choices.JOB_OPTIONS,
     )
+    user = models.ForeignKey("users.user", verbose_name=_("User"), on_delete=models.CASCADE)
     
     class Meta:
         abstract = True
@@ -146,28 +140,24 @@ class FamilyMember(models.Model):
         verbose_name_plural = _("Family Members")
 
 class Sister(FamilyMember):
-    family_information = models.ForeignKey(FamilyInformation, on_delete=models.CASCADE, related_name="sisters")
     
     class Meta:
         verbose_name = _("Sister")
         verbose_name_plural = _("Sisters")
 
 class Brother(FamilyMember):
-    family_information = models.ForeignKey(FamilyInformation, on_delete=models.CASCADE, related_name="brothers")
     
     class Meta:
         verbose_name = _("Brother")
         verbose_name_plural = _("Brothers")
 
 class Groom(FamilyMember):
-    family_information = models.ForeignKey(FamilyInformation, on_delete=models.CASCADE, related_name="grooms")
     
     class Meta:
         verbose_name = _("Groom")
         verbose_name_plural = _("Grooms")
 
 class BrideOrWife(FamilyMember):
-    family_information = models.ForeignKey(FamilyInformation, on_delete=models.CASCADE, related_name="brides_or_wives")
     
     class Meta:
         verbose_name = _("Bride or Wife")
@@ -203,6 +193,8 @@ class Parent(models.Model):
         blank=True,
         null=True,
     )
+    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE)
+
 
     class Meta:
         abstract = True
@@ -210,14 +202,12 @@ class Parent(models.Model):
         verbose_name_plural = _("Parents")
 
 class Mother(Parent):
-    family_information = models.ForeignKey(FamilyInformation, on_delete=models.CASCADE, related_name="mothers")
     
     class Meta:
         verbose_name = _("Mother")
         verbose_name_plural = _("Mothers")
 
 class Father(Parent):
-    family_information = models.ForeignKey(FamilyInformation, on_delete=models.CASCADE, related_name="fathers")
     
     class Meta:
         verbose_name = _("Father")
