@@ -4,7 +4,7 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
-from .error_messages import UserErrorMessages
+from .model_error_messages import UserErrorMessages
 from django.core.mail import send_mail
 from django.utils import timezone
 from django.urls import reverse

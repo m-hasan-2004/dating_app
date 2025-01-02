@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.db import models
 from uuid import uuid4
 from django.utils import timezone
-from .error_messages import AccessCodeErrorMessages
+from .model_error_messages import AccessCodeErrorMessages
 
 
 def validate_active_access_code(code):

@@ -6,7 +6,7 @@ from multiselectfield import MultiSelectField
 from django.urls import reverse
 from django.db import models
 from .model_choices import Choices
-from .error_messages import IdentityInfoErrorMessages, BirthCertificateInfoErrorMessages
+from .model_error_messages import IdentityInfoErrorMessages, BirthCertificateInfoErrorMessages
 
 
 class IdentityInfo(models.Model):
