@@ -119,3 +119,51 @@ class Choices:
         ("Cigarettes", _("Cigarettes")),
         ("Hookah", _("Hookah")),
     )
+    SKIN_COLOR_CHOICES = (
+        ("Very Bright", _("Very Bright")),
+        ("Fair", _("Fair")),
+        ("White", _("White")),
+        ("Wheat", _("Wheat")),
+        ("Date", _("Date")),
+        ("Green", _("Green")),
+        ("Dark", _("Dark")),
+    )
+    EYES_COLOR_CHOICES = (
+        ("Green", _("Green")),
+        ("Light Blue", _("Light Blue")),
+        ("Hazel", _("Hazel")),
+        ("Darken Blue", _("Darken Blue")),
+        ("Grey", _("Grey")),
+        ("Honey", _("Honey")),
+        ("Purple", _("Purple")),
+        ("Brown", _("Brown")),
+        ("Black", _("Black")),
+    )
+    BLOOD_TYPE_CHOICES = (
+        ("O+", _("O+")),
+        ("O-", _("O-")),
+        ("A+", _("A+")),
+        ("A-", _("A-")),
+        ("B+", _("B+")),
+        ("B-", _("B-")),
+        ("AB+", _("AB+")),
+        ("AB-", _("AB-")),
+    )
+    CHARACTER_AND_TEMPERAMENT_CHOICES = (
+        ("Safravi", _("Safravi (Hot & Dry)")),
+        ("Damvi", _("Damvi (Hot & Wet)")),
+        ("Sodavi", _("Sodavi (Cold & Dry)")),
+        ("Balghami", _("Balghami (Cold & Wet)")),
+    )
+    BODY_AND_FACE_CHOICES = (
+        ("Excellent", _("Excellent")),
+        ("Good", _("Good")),
+        ("Average", _("Average")),
+        ("Suitable", _("Suitable")),
+        ("Nice Face", _("Nice Face")),
+        ("Nice Body", _("Nice Body")),
+        ("Looks Older", _("Looks Older")),
+        ("Looks Younger", _("Looks Younger")),
+        ("Satisfied", _("Satisfied")),
+        ("None", _("None")),
+    )

@@ -320,3 +320,50 @@ class PersonalInfoErrorMessages:
     USER = {
         "required": _("User is required."),
     }
+
+class PhysicalInfoErrorMessages:
+    HEIGHT = {
+        "required": _("Height is required."),
+        "invalid": _("Invalid height value."),
+        "max_value": _("Height cannot exceed 260 cm."),
+    }
+    WEIGHT = {
+        "required": _("Weight is required."),
+        "invalid": _("Invalid weight value."),
+        "max_value": _("Weight cannot exceed 300 kg."),
+    }
+    SKIN_COLOR = {
+        "required": _("Skin color is required."),
+        "invalid_choice": _("Invalid choice for skin color."),
+    }
+    EYES_COLOR = {
+        "required": _("Eyes color is required."),
+        "invalid_choice": _("Invalid choice for eyes color."),
+    }
+    BLOOD_TYPE = {
+        "required": _("Blood type is required."),
+        "invalid_choice": _("Invalid choice for blood type."),
+    }
+    CHARACTER_AND_TEMPERAMENT = {
+        "required": _("Character and temperament is required."),
+        "invalid_choice": _("Invalid choice for character and temperament."),
+    }
+    GLASSES = {
+        "required": _("Glasses field is required."),
+    }
+    GLASSES_SIZE = {
+        "invalid": _("Invalid glasses size value."),
+    }
+    BODY_AND_FACE = {
+        "required": _("Body and face is required."),
+        "invalid_choice": _("Invalid choice for body and face."),
+    }
+    DISEASE_OR_SURGERY = {
+        "required": _("Disease or surgery field is required."),
+    }
+    MEDICATION_SURGERY_DISEASE_TYPE = {
+        "max_length": _("Medication, surgery, or disease type cannot exceed 100 characters."),
+    }
+    USER = {
+        "required": _("User is required."),
+    }
