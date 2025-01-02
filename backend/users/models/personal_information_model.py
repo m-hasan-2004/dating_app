@@ -3,6 +3,7 @@ from core.utils.model_choices import Choices
 from core.utils.model_error_messages import PersonalInfoErrorMessages
 from core.utils.help_text import PersonalInfoHelpText
 from django.utils.translation import gettext_lazy as _
+from multiselectfield import MultiSelectField
 
 class PersonalInformation(models.Model):
     gender = models.CharField(
@@ -59,9 +60,8 @@ class PersonalInformation(models.Model):
         error_messages=PersonalInfoErrorMessages.DEPOSIT,
         help_text=PersonalInfoHelpText.DEPOSIT,
     )
-    insurance_type = models.CharField(
+    insurance_type = MultiSelectField(
         _("Insurance Type"),
-        max_length=50,
         choices=Choices.INSURANCE_TYPE_CHOICES,
         error_messages=PersonalInfoErrorMessages.INSURANCE_TYPE
     )
@@ -70,15 +70,13 @@ class PersonalInformation(models.Model):
         error_messages=PersonalInfoErrorMessages.INSURANCE_YEARS,
         help_text=PersonalInfoHelpText.INSURANCE_YEARS,
     )
-    leisure_type = models.CharField(
+    leisure_type = MultiSelectField(
         _("Leisure Type"),
-        max_length=50,
         choices=Choices.LEISURE_TYPE_CHOICES,
         error_messages=PersonalInfoErrorMessages.LEISURE_TYPE
     )
-    usage_cases = models.CharField(
+    usage_cases = MultiSelectField(
         _("Usage Cases"),
-        max_length=50,
         choices=Choices.USAGE_CASES_CHOICES,
         error_messages=PersonalInfoErrorMessages.USAGE_CASES
     )

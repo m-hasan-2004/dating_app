@@ -9,7 +9,7 @@ from core.utils.model_choices import Choices
 from core.utils.model_error_messages import IdentityInfoErrorMessages, BirthCertificateInfoErrorMessages
 
 
-class IdentityInfo(models.Model):
+class IdentityInformation(models.Model):
     first_name = models.CharField(
         _("First Name"),
         max_length=80,
@@ -169,7 +169,7 @@ class IdentityInfo(models.Model):
         return reverse("IdentityInfo_detail", kwargs={"pk": self.pk})
     
     
-class BirthCertificateInfo(models.Model):
+class BirthCertificateInformation(models.Model):
     national_code = models.CharField(
         _("National Code"),
         unique=True,
