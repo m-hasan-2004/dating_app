@@ -79,3 +79,7 @@ class PhysicalInformation(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s Physical Information"
+
+    class Meta:
+        verbose_name = 'ModelName'
+        verbose_name_plural = 'ModelNames'
