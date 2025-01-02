@@ -1,12 +1,12 @@
-from .validators import LandlineNumberValidator
+from core.utils.validators import LandlineNumberValidator
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 from multiselectfield import MultiSelectField
 from django.urls import reverse
 from django.db import models
-from .model_choices import Choices
-from .model_error_messages import IdentityInfoErrorMessages, BirthCertificateInfoErrorMessages
+from core.utils.model_choices import Choices
+from core.utils.model_error_messages import IdentityInfoErrorMessages, BirthCertificateInfoErrorMessages
 
 
 class IdentityInfo(models.Model):
@@ -131,7 +131,6 @@ class IdentityInfo(models.Model):
     )
     introduced_subjects = models.ManyToManyField(
         "users.User",
-        verbose_name=_("Introduced Subjects"),
         related_name="confidintional_info_subjects",
         blank=True,
         help_text=_("Select the user who introduced the subjects."),
@@ -152,7 +151,6 @@ class IdentityInfo(models.Model):
     )
     user = models.OneToOneField(
         "users.User",
-        verbose_name=_("User"),
         on_delete=models.CASCADE,
         related_name="confidintional_info_user",
         help_text=_("Select the user associated with this identity information."),
@@ -265,7 +263,6 @@ class BirthCertificateInfo(models.Model):
     )
     user = models.OneToOneField(
         "users.User",
-        verbose_name=_("User"),
         on_delete=models.CASCADE,
         related_name="birth_certificate_info",
         help_text=_("Select the user associated with this birth certificate information."),

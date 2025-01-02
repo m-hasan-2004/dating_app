@@ -1,29 +1,9 @@
 from django.utils.translation import gettext_lazy as _
-from django.core.exceptions import ValidationError
 from django.urls import reverse
 from django.db import models
 from uuid import uuid4
 from django.utils import timezone
-from .model_error_messages import AccessCodeErrorMessages
-
-
-def validate_active_access_code(code):
-    # Don't validate if code is None (for updates)
-    if code is None:
-        return
-    
-    try:
-        access_code = AccessCode.objects.get(code=code)
-        if not access_code.active:
-            raise ValidationError(
-                _("The provided access code is inactive or expired."),
-                params={"code": code},
-            )
-    except AccessCode.DoesNotExist:
-        raise ValidationError(
-            _("The provided access code does not exist."),
-            params={"code": code},
-        )
+from core.utils.model_error_messages import AccessCodeErrorMessages
 
 
 class AccessCodeManager(models.Manager):

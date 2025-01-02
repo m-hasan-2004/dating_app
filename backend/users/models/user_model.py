@@ -1,10 +1,11 @@
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
-from .access_code_model import AccessCode, validate_active_access_code
+from core.utils.validators import validate_active_access_code
+from users.models import AccessCode
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
-from .model_error_messages import UserErrorMessages
+from core.utils.model_error_messages import UserErrorMessages
 from django.core.mail import send_mail
 from django.utils import timezone
 from django.urls import reverse

@@ -6,8 +6,7 @@ from django.db import migrations, models
 import django.db.models.deletion
 import multiselectfield.db.fields
 import phonenumber_field.modelfields
-import users.models.validators
-
+from core.utils import validators
 
 class Migration(migrations.Migration):
 
@@ -29,7 +28,7 @@ class Migration(migrations.Migration):
                 ('last_name', models.CharField(max_length=50, verbose_name='Last Name')),
                 ('father_name', models.CharField(max_length=80, verbose_name="Father's Name")),
                 ('eitta_number', phonenumber_field.modelfields.PhoneNumberField(max_length=128, region='IR', unique=True, verbose_name='Eitta Number')),
-                ('landline_phone', models.CharField(help_text='Enter a landline number in the format: 025-32305083', max_length=12, validators=[users.models.validators.LandlineNumberValidator], verbose_name='Landline Phone')),
+                ('landline_phone', models.CharField(help_text='Enter a landline number in the format: 025-32305083', max_length=12, validators=[validators.LandlineNumberValidator], verbose_name='Landline Phone')),
                 ('mother_phone', phonenumber_field.modelfields.PhoneNumberField(max_length=128, region='IR', unique=True, verbose_name="Mother's Phone")),
                 ('father_phone', phonenumber_field.modelfields.PhoneNumberField(max_length=128, region='IR', unique=True, verbose_name="Father's Phone")),
                 ('home_address', models.CharField(max_length=150, verbose_name='Home Address')),
