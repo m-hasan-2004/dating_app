@@ -6,6 +6,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 from core.utils.model_error_messages import UserErrorMessages
+from core.utils.help_text import UserHelpText
 from django.core.mail import send_mail
 from django.utils import timezone
 from django.urls import reverse
@@ -69,30 +70,28 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     username_validator = UnicodeUsernameValidator()
 
-    id = models.UUIDField(_("id"), primary_key=True, default=uuid4, editable=False, help_text=_("Unique identifier for the user."))
+    id = models.UUIDField(_("id"), primary_key=True, default=uuid4, editable=False, help_text=UserHelpText.ID)
     access_code = models.CharField(
         _("Access code"), 
         max_length=50, 
         null=False,
         blank=False,
         validators=[validate_active_access_code],
-        help_text=_("Required access code for initial user creation."),
+        help_text=UserHelpText.ACCESS_CODE,
         error_messages=UserErrorMessages.ACCESS_CODE,
     )
     middle_man_code = models.UUIDField(
         _("Middle man code"),
         blank=True,
         null=True,
-        help_text=_("Optional code for middle man reference."),
+        help_text=UserHelpText.MIDDLE_MAN_CODE,
         error_messages=UserErrorMessages.MIDDLE_MAN_CODE,
     )
     username = models.CharField(
         _("username"),
         max_length=150,
         unique=True,
-        help_text=_(
-            "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
-        ),
+        help_text=UserHelpText.USERNAME,
         validators=[username_validator],
         error_messages=UserErrorMessages.USERNAME,
     )
@@ -100,55 +99,52 @@ class User(AbstractBaseUser, PermissionsMixin):
         _("first name"),
         max_length=150,
         blank=True,
-        help_text=_("Optional. 150 characters or fewer."),
+        help_text=UserHelpText.FIRST_NAME,
         error_messages=UserErrorMessages.FIRST_NAME,
     )
     last_name = models.CharField(
         _("last name"),
         max_length=150,
         blank=True,
-        help_text=_("Optional. 150 characters or fewer."),
+        help_text=UserHelpText.LAST_NAME,
         error_messages=UserErrorMessages.LAST_NAME,
     )
     date_created = models.DateTimeField(
         _("Date created"),
         auto_now=False,
         auto_now_add=True,
-        help_text=_("The date and time when the user was created."),
+        help_text=UserHelpText.DATE_CREATED,
         error_messages=UserErrorMessages.DATE_CREATED,
     )
     phone_number = PhoneNumberField(
         _("Phone Number"),
         unique=True,
         region="IR",
-        help_text=_("Required. +98 or 09** format accepted."),
+        help_text=UserHelpText.PHONE_NUMBER,
         error_messages=UserErrorMessages.PHONE_NUMBER,
     )
     email = models.EmailField(
         _("email address"),
         blank=True,
-        help_text=_("Required. Email format accepted."),
+        help_text=UserHelpText.EMAIL,
         error_messages=UserErrorMessages.EMAIL,
     )
     is_staff = models.BooleanField(
         _("staff status"),
         default=False,
-        help_text=_("Designates whether the user can log into this admin site."),
+        help_text=UserHelpText.IS_STAFF,
         error_messages=UserErrorMessages.IS_STAFF,
     )
     is_active = models.BooleanField(
         _("active"),
         default=True,
-        help_text=_(
-            "Designates whether this user should be treated as active. "
-            "Unselect this instead of deleting accounts."
-        ),
+        help_text=UserHelpText.IS_ACTIVE,
         error_messages=UserErrorMessages.IS_ACTIVE,
     )
     date_joined = models.DateTimeField(
         _("date joined"),
         default=timezone.localtime,
-        help_text=_("The date and time when the user joined."),
+        help_text=UserHelpText.DATE_JOINED,
         error_messages=UserErrorMessages.DATE_JOINED,
     )
 

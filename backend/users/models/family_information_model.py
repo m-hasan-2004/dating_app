@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from core.utils.model_choices import Choices
 from core.utils.model_error_messages import FamilyInfoErrorMessages
+from core.utils.help_text import FamilyInfoHelpText
 from django.urls import reverse
 from multiselectfield import MultiSelectField
 
@@ -11,16 +12,19 @@ class FamilyInformation(models.Model):
         max_length=50,
         choices=Choices.AVERAGE_FAMILY_EDUCATION_CHOICES,
         error_messages=FamilyInfoErrorMessages.AVERAGE_FAMILY_EDUCATION,
+        help_text=FamilyInfoHelpText.AVERAGE_FAMILY_EDUCATION
     )
     average_family_finance = models.CharField(
         _("Average Family Finance"),
         max_length=50,
         choices=Choices.AVERAGE_FAMILY_FINANCE_CHOICES,
         error_messages=FamilyInfoErrorMessages.AVERAGE_FAMILY_FINANCE,
+        help_text=FamilyInfoHelpText.AVERAGE_FAMILY_FINANCE
     )
     family_divorce_history = models.BooleanField(
         _("Family Divorce History"),
         error_messages=FamilyInfoErrorMessages.FAMILY_DIVORCE_HISTORY,
+        help_text=FamilyInfoHelpText.FAMILY_DIVORCE_HISTORY
     )
     family_divorce_reason = models.CharField(
         _("Family Divorce Reason"),
@@ -28,13 +32,15 @@ class FamilyInformation(models.Model):
         blank=True,
         null=True,
         error_messages=FamilyInfoErrorMessages.FAMILY_DIVORCE_REASON,
+        help_text=FamilyInfoHelpText.FAMILY_DIVORCE_REASON
     )
     contact_with_family = models.CharField(
         _("Contact with Family"),
         max_length=50,
         error_messages=FamilyInfoErrorMessages.CONTACT_WITH_FAMILY,
+        help_text=FamilyInfoHelpText.CONTACT_WITH_FAMILY
     )
-    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE)
+    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=FamilyInfoHelpText.USER)
     
     class Meta:
         verbose_name = _("Family Information")
@@ -52,36 +58,42 @@ class EngagementOrWeddingStatus(models.Model):
         max_length=50,
         choices=Choices.ENGAGEMENT_OR_WEDDING_STATUS_CHOICES,
         error_messages=FamilyInfoErrorMessages.ENGAGEMENT_OR_WEDDING_STATUS,
+        help_text=FamilyInfoHelpText.STATUS
     )
     contract_length = models.CharField(
         _("Contract Length"),
         max_length=50,
         blank=True,
         null=True,
+        help_text=FamilyInfoHelpText.CONTRACT_LENGTH
     )
     living_length = models.CharField(
         _("Living Length"),
         max_length=50,
         blank=True,
         null=True,
+        help_text=FamilyInfoHelpText.LIVING_LENGTH
     )
     death_date = models.TimeField(
         _("Death Date"),
         blank=True,
         null=True,
+        help_text=FamilyInfoHelpText.DEATH_DATE
     )
     divorce_date = models.TimeField(
         _("Divorce Date"),
         blank=True,
         null=True,
+        help_text=FamilyInfoHelpText.DIVORCE_DATE
     )
     reason_for_divorce_or_death = models.CharField(
         _("Reason for Divorce or Death"),
         max_length=100,
         blank=True,
         null=True,
+        help_text=FamilyInfoHelpText.REASON_FOR_DIVORCE_OR_DEATH
     )
-    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE)
+    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=FamilyInfoHelpText.USER)
 
     class Meta:
         verbose_name = _("Engagement or Wedding Status")
@@ -90,29 +102,34 @@ class EngagementOrWeddingStatus(models.Model):
 class ExHusbandChildStatus(models.Model):
     status = models.BooleanField(
         _("Status"),
+        help_text=FamilyInfoHelpText.EX_HUSBAND_CHILD_STATUS
     )
     girl_birth_date = models.TimeField(
         _("Girl Birth Date"),
         blank=True,
         null=True,
+        help_text=FamilyInfoHelpText.GIRL_BIRTH_DATE
     )
     boy_birth_date = models.TimeField(
         _("Boy Birth Date"),
         blank=True,
         null=True,
+        help_text=FamilyInfoHelpText.BOY_BIRTH_DATE
     )
     custody = models.CharField(
         _("Custody"),
         max_length=50,
         choices=Choices.CUSTODY_CHOICES,
+        help_text=FamilyInfoHelpText.CUSTODY
     )
     living_location = models.CharField(
         _("Living Location"),
         max_length=50,
         blank=True,
         null=True,
+        help_text=FamilyInfoHelpText.LIVING_LOCATION
     )
-    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE)
+    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=FamilyInfoHelpText.USER)
 
     class Meta:
         verbose_name = _("Ex-Husband Child Status")
@@ -121,18 +138,21 @@ class ExHusbandChildStatus(models.Model):
 class FamilyMember(models.Model):
     status = models.BooleanField(
         _("Status"),
+        help_text=FamilyInfoHelpText.STATUS
     )
     education = models.CharField(
         _("Education"),
         max_length=50,
         choices=Choices.EDUCATION_CHOICES,
+        help_text=FamilyInfoHelpText.EDUCATION
     )
     job = models.CharField(
         _("Job"),
         max_length=50,
         choices=Choices.JOB_OPTIONS,
+        help_text=FamilyInfoHelpText.JOB
     )
-    user = models.ForeignKey("users.user", verbose_name=_("User"), on_delete=models.CASCADE)
+    user = models.ForeignKey("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=FamilyInfoHelpText.USER)
     
     class Meta:
         abstract = True
@@ -167,34 +187,40 @@ class Parent(models.Model):
     language = models.CharField(
         _("Language"),
         max_length=50,
+        help_text=FamilyInfoHelpText.LANGUAGE
     )
     birth_date = models.DateField(
         _("Birth Date"),
+        help_text=FamilyInfoHelpText.BIRTH_DATE
     )
     job = models.CharField(
         _("Job"),
         max_length=50,
         choices=Choices.JOB_OPTIONS,
+        help_text=FamilyInfoHelpText.JOB
     )
     originality = models.CharField(
         _("Originality"),
         max_length=80,
+        help_text=FamilyInfoHelpText.ORIGINALITY
     )
     education = models.CharField(
         _("Education"),
         max_length=50,
         choices=Choices.EDUCATION_CHOICES,
+        help_text=FamilyInfoHelpText.EDUCATION
     )
     alive = models.BooleanField(
         _("Alive"),
+        help_text=FamilyInfoHelpText.ALIVE
     )
     death_date = models.DateField(
         _("Death Date"),
         blank=True,
         null=True,
+        help_text=FamilyInfoHelpText.DEATH_DATE_PARENT
     )
-    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE)
-
+    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=FamilyInfoHelpText.USER)
 
     class Meta:
         abstract = True

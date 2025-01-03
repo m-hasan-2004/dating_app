@@ -407,3 +407,53 @@ class FamilyInfoErrorMessages:
     LIVING_LOCATION = {
         "max_length": _("Living location cannot exceed 50 characters."),
     }
+
+class FinancialInformationErrorMessages:
+    CURRENT_RESIDENCE_STATUS_ERROR_MESSAGES = {
+        'required': "Current residence status is required.",
+        'invalid_choice': "Invalid choice for current residence status.",
+    }
+    OWNERSHIP_STATUS_ERROR_MESSAGES = {
+        'required': "Ownership status is required.",
+        'invalid_choice': "Invalid choice for ownership status.",
+    }
+    RENT_AMOUNT_ERROR_MESSAGES = {
+        'required': "Rent amount is required.",
+        'invalid': "Invalid value for rent amount.",
+    }
+    MORTGAGE_AMOUNT_ERROR_MESSAGES = {
+        'required': "Mortgage amount is required.",
+        'invalid': "Invalid value for mortgage amount.",
+    }
+    CAPITAL_ERROR_MESSAGES = {
+        'required': "Capital is required.",
+        'invalid_choice': "Invalid choice for capital.",
+    }
+    AFTER_MARRIAGE_RESIDENCE_STATUS_ERROR_MESSAGES = {
+        'required': "After marriage residence status is required.",
+        'invalid_choice': "Invalid choice for after marriage residence status.",
+    }
+    EX_SPOUSE_FINANCIAL_STATUS_ERROR_MESSAGES = {
+        'required': "Ex-spouse financial status is required.",
+        'invalid_choice': "Invalid choice for ex-spouse financial status.",
+    }
+    EX_SPOUSE_FINANCIAL_AMOUNT_ERROR_MESSAGES = {
+        'required': "Ex-spouse financial amount is required.",
+        'max_length': "Ex-spouse financial amount cannot exceed 50 characters.",
+    }
+    EX_SPOUSE_FINANCIAL_PAY_STATUS_ERROR_MESSAGES = {
+        'required': "Ex-spouse financial pay status is required.",
+        'invalid_choice': "Invalid choice for ex-spouse financial pay status.",
+    }
+    DOWRY_TYPE_ERROR_MESSAGES = {
+        'required': "Dowry type is required.",
+        'invalid_choice': "Invalid choice for dowry type.",
+    }
+    DOWRY_AMOUNT_ERROR_MESSAGES = {
+        'required': "Dowry amount is required.",
+        'max_length': "Dowry amount cannot exceed 50 characters.",
+    }
+    TOCHER_ERROR_MESSAGES = {
+        'required': "Tocher is required.",
+        'invalid_choice': "Invalid choice for tocher.",
+    }

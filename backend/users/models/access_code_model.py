@@ -4,6 +4,7 @@ from django.db import models
 from uuid import uuid4
 from django.utils import timezone
 from core.utils.model_error_messages import AccessCodeErrorMessages
+from core.utils.help_text import AccessCodeHelpText
 
 
 class AccessCodeManager(models.Manager):
@@ -28,21 +29,21 @@ class AccessCode(models.Model):
         _("Access Code"),
         default=uuid4,
         editable=False,
-        help_text=_("Unique access code for user creation."),
         error_messages=AccessCodeErrorMessages.CODE,
+        help_text=AccessCodeHelpText.CODE
     )
     active = models.BooleanField(
         _("Active"),
         default=True,
-        help_text=_("Indicates whether the access code is active."),
         error_messages=AccessCodeErrorMessages.ACTIVE,
+        help_text=AccessCodeHelpText.ACTIVE
     )
     date_created = models.DateTimeField(
         _("Date created"),
         auto_now=False,
         auto_now_add=True,
-        help_text=_("The date and time when the access code was created."),
         error_messages=AccessCodeErrorMessages.DATE_CREATED,
+        help_text=AccessCodeHelpText.DATE_CREATED
     )
 
     class Meta:
