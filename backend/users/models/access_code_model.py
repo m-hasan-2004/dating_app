@@ -46,8 +46,8 @@ class AccessCode(models.Model):
     )
 
     class Meta:
-        verbose_name = _("AccessCode")
-        verbose_name_plural = _("AccessCodes")
+        verbose_name = _("Access Code Information")
+        verbose_name_plural = _("Access Codes Information")
 
     def __str__(self):
         return str(self.code)

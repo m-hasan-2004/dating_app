@@ -38,7 +38,7 @@ class FamilyInformation(models.Model):
     
     class Meta:
         verbose_name = _("Family Information")
-        verbose_name_plural = _("Family Informations")
+        verbose_name_plural = _("Families Information")
 
     def __str__(self):
         return f"Family Information for {self.id}"
@@ -85,7 +85,7 @@ class EngagementOrWeddingStatus(models.Model):
 
     class Meta:
         verbose_name = _("Engagement or Wedding Status")
-        verbose_name_plural = _("Engagement or Wedding Statuses")
+        verbose_name_plural = _("Engagements or Weddings Statuse")
 
 class ExHusbandChildStatus(models.Model):
     status = models.BooleanField(
@@ -116,7 +116,7 @@ class ExHusbandChildStatus(models.Model):
 
     class Meta:
         verbose_name = _("Ex-Husband Child Status")
-        verbose_name_plural = _("Ex-Husband Child Statuses")
+        verbose_name_plural = _("Ex-Husbands Child Status")
 
 class FamilyMember(models.Model):
     status = models.BooleanField(

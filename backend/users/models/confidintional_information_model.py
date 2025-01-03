@@ -159,8 +159,8 @@ class IdentityInformation(models.Model):
 
 
     class Meta:
-        verbose_name = _("IdentityInfo")
-        verbose_name_plural = _("IdentityInfos")
+        verbose_name = _("Identities Information")
+        verbose_name_plural = _("Identities Information")
 
     def __str__(self):
         return self.first_name
@@ -270,8 +270,8 @@ class BirthCertificateInformation(models.Model):
     )
     
     class Meta:
-        verbose_name = _("BirthCertificateInfo")
-        verbose_name_plural = _("BirthCertificateInfos")
+        verbose_name = _("Birth Certificate Information")
+        verbose_name_plural = _("Birth Certificates Information")
 
     def __str__(self):
         return self.national_code

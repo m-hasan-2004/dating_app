@@ -114,4 +114,4 @@ class PersonalInformation(models.Model):
 
     class Meta:
         verbose_name = _("Personal Information")
-        verbose_name_plural = _("Personal Informations")
+        verbose_name_plural = _("Personals Information")

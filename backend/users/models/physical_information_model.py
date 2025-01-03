@@ -81,5 +81,5 @@ class PhysicalInformation(models.Model):
         return f"{self.user.username}'s Physical Information"
 
     class Meta:
-        verbose_name = 'ModelName'
-        verbose_name_plural = 'ModelNames'
+        verbose_name = 'Physical Information'
+        verbose_name_plural = 'Physical Informations'
