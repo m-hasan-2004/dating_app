@@ -6,7 +6,7 @@ import django.db.models.deletion
 import django.utils.timezone
 import multiselectfield.db.fields
 import phonenumber_field.modelfields
-import users.models.access_code_model
+import users.user_related_models.access_code_model
 from core.utils import validators
 import uuid
 

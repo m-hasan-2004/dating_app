@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from users.models import AccessCode as Code
+from users.user_related_models import AccessCode as Code
 from django.utils import timezone
 
 

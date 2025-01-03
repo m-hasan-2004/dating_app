@@ -1,7 +1,7 @@
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.core.exceptions import ValidationError
-from users.models import AccessCode
+from users.user_related_models import AccessCode
 from django.utils.translation import gettext_lazy as _
 
 class LandlineNumberValidator:

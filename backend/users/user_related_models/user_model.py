@@ -1,6 +1,6 @@
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 from core.utils.validators import validate_active_access_code
-from users.models import AccessCode
+from users.user_related_models import AccessCode
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.translation import gettext_lazy as _

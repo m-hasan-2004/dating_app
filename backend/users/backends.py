@@ -1,5 +1,5 @@
 from django.contrib.auth.backends import ModelBackend
-from users.models import User, AccessCode
+from users.user_related_models import User, AccessCode
 
 class AccessCodeAuthenticationBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, access_code=None, **kwargs):
