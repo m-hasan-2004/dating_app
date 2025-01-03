@@ -192,3 +192,63 @@ class Choices:
         ("Father", _("Father")),
         ("Mother", _("Mother")),
     )
+
+class FinancialInformationChoices:
+    CURRENT_RESIDENCE_STATUS_CHOICES = (
+        ('fathers_house', "Father's House"),
+        ('mothers_house', "Mother's House"),
+        ('other', "Other"),
+    )
+    OWNERSHIP_STATUS_CHOICES = (
+        ('owner', "Owner"),
+        ('rent', "Rent"),
+    )
+    CAPITAL_CHOICES = (
+        ('house', "House"),
+        ('shop', "Shop"),
+        ('land', "Land"),
+        ('garden', "Garden"),
+        ('factory', "Factory"),
+        ('company', "Company"),
+        ('motorcycle', "Motorcycle"),
+        ('car', "Car"),
+        ('other', "Other"),
+    )
+    AFTER_MARRIAGE_RESIDENCE_STATUS_CHOICES = (
+        ('owner', "Owner"),
+        ('mortgage', "Mortgage"),
+        ('fathers_house', "Father's House"),
+        ('mothers_house', "Mother's House"),
+        ('other', "Other"),
+    )
+    EX_SPOUSE_FINANCIAL_STATUS_CHOICES = (
+        ('does', "Does"),
+        ('doesnt', "Doesn't"),
+        ('wants', "Wants"),
+        ('doesnt_want', "Doesn't Want"),
+        ('man_should_help', "Man Should Help"),
+        ('agreement', "Agreement"),
+    )
+    EX_SPOUSE_FINANCIAL_PAY_STATUS_CHOICES = (
+        ('monthly', "Monthly"),
+        ('yearly', "Yearly"),
+        ('two_years', "Two Years"),
+    )
+    DOWRY_TYPE_CHOICES = (
+        ('cash', "Cash"),
+        ('rights', "Rights"),
+        ('settled', "Settled"),
+        ('creditor', "Creditor"),
+        ('debtor', "Debtor"),
+    )
+    TOCHER_CHOICES = (
+        ('mecca', "Mecca"),
+        ('gifts_from_iraq', "Gifts from Iraq"),
+        ('gifts_from_syria', "Gifts from Syria"),
+        ('gold_coin', "Gold Coin"),
+        ('money', "Money"),
+        ('land', "Land"),
+        ('car', "Car"),
+        ('garden', "Garden"),
+        ('agreement', "Agreement"),
+    )
