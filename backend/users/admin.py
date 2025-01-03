@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth import admin as auth_admin
 from django.utils.translation import gettext_lazy as _
-from .models import User, AccessCode, IdentityInformation, BirthCertificateInformation, PersonalInformation, PhysicalInformation, FamilyInformation, EngagementOrWeddingStatus, ExHusbandChildStatus, Sister, Brother, Groom, BrideOrWife, Mother, Father
+from .models import User, AccessCode, IdentityInformation, BirthCertificateInformation, PersonalInformation, PhysicalInformation, FamilyInformation, EngagementOrWeddingStatus, ExHusbandChildStatus, Sister, Brother, Groom, BrideOrWife, Mother, Father, FinancialInformation
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 
 class IdentityInfoInline(admin.StackedInline):
@@ -69,6 +69,10 @@ class FatherInline(admin.StackedInline):
     fk_name = "user"
     extra = 1
 
+class FinancialInfoInline(admin.StackedInline):
+    model = FinancialInformation
+    fk_name = "user"
+    extra = 1
 
 class UserAdmin(auth_admin.UserAdmin):
     add_form = CustomUserCreationForm
@@ -103,7 +107,8 @@ class UserAdmin(auth_admin.UserAdmin):
         GroomInline, 
         BrideOrWifeInline, 
         MotherInline, 
-        FatherInline
+        FatherInline,
+        FinancialInfoInline
     ]
     save_on_top = True
 
@@ -187,10 +192,18 @@ class BirthCertificateInfoAdmin(admin.ModelAdmin):
     list_filter = ("marriage_experince", "marriage_status", "children", "children_custody")
     save_on_top = True
 
+class FinancialInfoAdmin(admin.ModelAdmin):
+    model = FinancialInformation
+    list_display = ("current_residence_status", "ownership_status", "rent_amount", "mortgage_amount", "capital", "after_marriage_residence_status", "ex_spouse_financial_status", "ex_spouse_financial_amount", "ex_spouse_financial_pay_status", "dowry_type", "dowry_amount", "tocher", "agreement_id", "user")
+    search_fields = ("current_residence_status", "ownership_status", "rent_amount", "mortgage_amount", "capital", "after_marriage_residence_status", "ex_spouse_financial_status", "ex_spouse_financial_amount", "ex_spouse_financial_pay_status", "dowry_type", "dowry_amount", "tocher", "agreement_id", "user")
+    list_filter = ("current_residence_status", "ownership_status", "capital", "after_marriage_residence_status", "ex_spouse_financial_status", "ex_spouse_financial_pay_status", "dowry_type", "tocher")
+    save_on_top = True
+
 admin.site.register(User, UserAdmin)
 admin.site.register(AccessCode, AccessCodeAdmin)
-admin.site.register(IdentityInformation)
-admin.site.register(BirthCertificateInformation)
+admin.site.register(IdentityInformation, IdentityInfoAdmin)
+admin.site.register(BirthCertificateInformation, BirthCertificateInfoAdmin)
+admin.site.register(FinancialInformation, FinancialInfoAdmin)
 admin.site.register(PersonalInformation)
 admin.site.register(PhysicalInformation)
 admin.site.register(FamilyInformation)
