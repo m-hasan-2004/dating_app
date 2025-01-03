@@ -59,7 +59,6 @@ class UserManager(BaseUserManager):
         return user
 
 
-
 class User(AbstractBaseUser, PermissionsMixin):
     """
     User Model Based on  abstract base class implementing a fully featured User model with

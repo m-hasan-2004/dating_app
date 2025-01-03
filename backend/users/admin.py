@@ -1,15 +1,15 @@
 from django.contrib import admin
 from django.contrib.auth import admin as auth_admin
 from django.utils.translation import gettext_lazy as _
-from .user_related_models import User, AccessCode, IdentityInformation, BirthCertificateInformation, PersonalInformation, PhysicalInformation, FamilyInformation, EngagementOrWeddingStatus, ExHusbandChildStatus, Sister, Brother, Groom, BrideOrWife, Mother, Father, FinancialInformation
+from users.user_related_models import User, AccessCode, IdentityInformation, BirthCertificateInformation, PersonalInformation, PhysicalInformation, FamilyInformation, EngagementOrWeddingStatus, ExHusbandChildStatus, Sister, Brother, Groom, BrideOrWife, Mother, Father, FinancialInformation
 from .forms import CustomUserChangeForm, CustomUserCreationForm
+from users.preferred_wife_models import PreferredWifeExtraInformation, PreferredWifePhysicalInformation, PreferredWifePersonalInformation, PreferredWifeIntellectualInformation 
 
 class IdentityInfoInline(admin.StackedInline):
     model = IdentityInformation
     fk_name = "user"
     extra = 1
     
-
 class BirthCertificateInfoInline(admin.StackedInline):
     model = BirthCertificateInformation
     extra = 1
@@ -73,6 +73,26 @@ class FinancialInfoInline(admin.StackedInline):
     model = FinancialInformation
     fk_name = "user"
     extra = 1
+    
+class PreferredWifeIntellectualInformationInLine(admin.StackedInline):
+    model = PreferredWifeIntellectualInformation
+    fk_name = "user"
+    extra = 1    
+
+class PreferredWifePersonalInformationInLine(admin.StackedInline):
+    model = PreferredWifePersonalInformation
+    fk_name = "user"
+    extra = 1    
+    
+class PreferredWifePhysicalInformationInLine(admin.StackedInline):
+    model = PreferredWifePhysicalInformation
+    fk_name = "user"
+    extra = 1    
+    
+class PreferredWifeExtraInformationInLine(admin.StackedInline):
+    model = PreferredWifeExtraInformation
+    fk_name = "user"
+    extra = 1    
 
 class UserAdmin(auth_admin.UserAdmin):
     add_form = CustomUserCreationForm
@@ -108,8 +128,13 @@ class UserAdmin(auth_admin.UserAdmin):
         BrideOrWifeInline, 
         MotherInline, 
         FatherInline,
-        FinancialInfoInline
+        FinancialInfoInline,
+        PreferredWifeExtraInformationInLine,
+        PreferredWifeIntellectualInformationInLine,
+        PreferredWifePersonalInformationInLine,
+        PreferredWifePhysicalInformationInLine
     ]
+    
     save_on_top = True
 
     fieldsets = (
@@ -158,7 +183,6 @@ class UserAdmin(auth_admin.UserAdmin):
         self.message_user(request, _("Selected users have been reactivated."))
     reactivate_users.short_description = _("Reactivate selected users")
 
-
 class AccessCodeAdmin(admin.ModelAdmin):
     model = AccessCode
     list_display = ("code", "active", "date_created")
@@ -166,7 +190,6 @@ class AccessCodeAdmin(admin.ModelAdmin):
     list_filter = ("active",)
     ordering = ("-id",)
     actions = ["expire_access_codes", "reactivate_access_codes"]
-    save_on_top = True
 
     def expire_access_codes(self, request, queryset):
         queryset.update(active=False)
@@ -201,17 +224,3 @@ class FinancialInfoAdmin(admin.ModelAdmin):
 
 admin.site.register(User, UserAdmin)
 admin.site.register(AccessCode, AccessCodeAdmin)
-admin.site.register(IdentityInformation, IdentityInfoAdmin)
-admin.site.register(BirthCertificateInformation, BirthCertificateInfoAdmin)
-admin.site.register(FinancialInformation, FinancialInfoAdmin)
-admin.site.register(PersonalInformation)
-admin.site.register(PhysicalInformation)
-admin.site.register(FamilyInformation)
-admin.site.register(EngagementOrWeddingStatus)
-admin.site.register(ExHusbandChildStatus)
-admin.site.register(Sister)
-admin.site.register(Brother)
-admin.site.register(Groom)
-admin.site.register(BrideOrWife)
-admin.site.register(Mother)
-admin.site.register(Father)
