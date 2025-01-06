@@ -178,6 +178,9 @@ class IdentityInfoErrorMessages:
         "null": _("Type of payment cannot be null."),
         "invalid": _("Type of payment is invalid.")
     }
+    PAYMENT_PROOF = {
+        "invalid": _("Invalid file type. Only PDF, JPG, JPEG, and PNG files are allowed.")
+    }
     INTRODUCED_SUBJECTS = {
         "blank": _("Introduced subjects cannot be blank."),
         "null": _("Introduced subjects cannot be null."),
@@ -320,6 +323,9 @@ class PersonalInfoErrorMessages:
     USER = {
         "required": _("User is required."),
     }
+    TATTO = _("Invalid value for the tattoo field.")
+    TATTO_DESCRIPTION = _("Invalid description provided for tattoos.")
+    USAGE_CASE_DESCRIPTION = _("Invalid usage case description.")
 
 class PhysicalInfoErrorMessages:
     HEIGHT = {
@@ -429,6 +435,9 @@ class FinancialInformationErrorMessages:
         'required': "Capital is required.",
         'invalid_choice': "Invalid choice for capital.",
     }
+    OTHER_CAPTIAL_ERROR_MESSAGES = {
+        'max_length': "Other Captial cannot exceed 150 characters.",
+    }
     AFTER_MARRIAGE_RESIDENCE_STATUS_ERROR_MESSAGES = {
         'required': "After marriage residence status is required.",
         'invalid_choice': "Invalid choice for after marriage residence status.",
@@ -453,7 +462,77 @@ class FinancialInformationErrorMessages:
         'required': "Dowry amount is required.",
         'max_length': "Dowry amount cannot exceed 50 characters.",
     }
-    TOCHER_ERROR_MESSAGES = {
-        'required': "Tocher is required.",
-        'invalid_choice': "Invalid choice for tocher.",
+    JAHIZIYEH_ERROR_MESSAGES = {
+        'required': "Dowry type is required.",
+        'invalid_choice': "Invalid choice for dowry type.",
+    }
+
+class IntellectualInfoErrorMessages:
+    MARRIAGE_GOALS = {
+        "required": _("Marriage goals and purposes cannot be empty."),
+        "max_length": _("Marriage goals should not exceed 1000 characters."),
+    }
+    OPINION_WOMAN_JOB = {
+        "required": _("Please provide your opinion about a woman's job."),
+        "invalid_choice": _("The selected option for a woman's job is not valid."),
+    }
+    OPINION_WOMAN_EDU = {
+        "required": _("Please provide your opinion about a woman's education."),
+        "invalid_choice": _("The selected option for a woman's education is not valid."),
+    }
+    PROS_OF_YOURSELF = {
+        "required": _("Please list some of your positive attributes."),
+        "max_length": _("Your pros should not exceed 1000 characters."),
+    }
+    CONS_OF_YOURSELF = {
+        "required": _("Please list some of your negative attributes."),
+        "max_length": _("Your cons should not exceed 1000 characters."),
+    }
+    TYPE_CONNECTION_FRIENDS = {
+        "required": _("Please specify the type of connection you have with friends."),
+        "invalid_choice": _("Invalid selection for type of friends' connection."),
+    }
+    FRIENDS_CONNECTION_REASON = {
+        "required": _("Please explain why you maintain connections with your friends."),
+        "max_length": _("Your explanation should not exceed 500 characters."),
+    }
+    POLITICAL_ORIENTATION = {
+        "required": _("Please specify your political orientation."),
+        "invalid": _("Invalid input for political orientation."),
+    }
+    OPINION_VELAYAT_FAQIH = {
+        "required": _("Please share your opinion about Velayat Faqih."),
+        "invalid_choice": _("Invalid selection for opinion about Velayat Faqih."),
+    }
+    OPINION_CHILD_QUANTITY = {
+        "required": _("Please specify your opinion about the number of children."),
+        "invalid_choice": _("Invalid selection for child quantity preference."),
+    }
+    CONTRACT_HOW = {
+        "required": _("Please specify how you prefer the marriage contract."),
+        "invalid_choice": _("Invalid selection for contract preferences."),
+    }
+    WEDDING_HOW = {
+        "required": _("Please specify how you prefer the wedding."),
+        "invalid_choice": _("Invalid selection for wedding preferences."),
+    }
+    WORSHIP_PRAYER = {
+        "required": _("Please describe your worship and prayer habits."),
+        "invalid_choice": _("Invalid selection for worship and prayer habits."),
+    }
+    FASTING = {
+        "required": _("Please specify your fasting habits."),
+        "invalid_choice": _("Invalid selection for fasting habits."),
+    }
+    COVER_TYPE_HOUSE = {
+        "required": _("Please specify the type of covering you use at home."),
+        "invalid_choice": _("Invalid selection for house covering type."),
+    }
+    COVER_TYPE_SOCIETY = {
+        "required": _("Please specify the type of covering you use in society and workplace."),
+        "invalid_choice": _("Invalid selection for society and workplace covering type."),
+    }
+    UNIQUE_ID = {
+        "required": _("A unique ID is required."),
+        "unique": _("This ID already exists. Please use a different one."),
     }

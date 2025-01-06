@@ -11,6 +11,10 @@ class PreferredWifeExtraInformation(models.Model):
     )
     user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=ExtraInfoHelpText.USER)
 
+
+    def __str__(self):
+        return f"اطالاعات کاربر: {self.user.last_name}"
+    
     class Meta:
         verbose_name = _("Preferred Wife Extra Information")
         verbose_name_plural = _("Preferred Wife Extra Information")

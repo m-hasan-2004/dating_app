@@ -1,14 +1,13 @@
 from core.utils.validators import LandlineNumberValidator
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.translation import gettext_lazy as _
-from django.core.exceptions import ValidationError
 from multiselectfield import MultiSelectField
 from django.urls import reverse
 from django.db import models
-from core.utils.model_choices import Choices
+from core.utils.model_choices import Choices, FinancialInformationChoices
 from core.utils.model_error_messages import IdentityInfoErrorMessages, BirthCertificateInfoErrorMessages
 from core.utils.help_text import IdentityInfoHelpText, BirthCertificateInfoHelpText
-
+from django.core.validators import FileExtensionValidator
 
 class IdentityInformation(models.Model):
     first_name = models.CharField(
@@ -16,12 +15,14 @@ class IdentityInformation(models.Model):
         max_length=80,
         error_messages=IdentityInfoErrorMessages.FIRST_NAME,
         help_text=IdentityInfoHelpText.FIRST_NAME,
+        db_index=True,
     )
     last_name = models.CharField(
         _("Last Name"),
         max_length=50,
         error_messages=IdentityInfoErrorMessages.LAST_NAME,
         help_text=IdentityInfoHelpText.LAST_NAME,
+        db_index=True,
     )
     father_name = models.CharField(
         _("Father's Name"),
@@ -33,10 +34,9 @@ class IdentityInformation(models.Model):
         _("Eitta Number"),
         unique=True,
         region="IR",
-        blank=True,
-        null=True,
         error_messages=IdentityInfoErrorMessages.EITTA_NUMBER,
         help_text=IdentityInfoHelpText.EITTA_NUMBER,
+        db_index=True,
     )
     landline_phone = models.CharField(
         _("Landline Phone"),
@@ -55,6 +55,7 @@ class IdentityInformation(models.Model):
         null=True,
         error_messages=IdentityInfoErrorMessages.MOTHER_PHONE,
         help_text=IdentityInfoHelpText.MOTHER_PHONE,
+        db_index=True,
     )
     father_phone = PhoneNumberField(
         _("Father's Phone"),
@@ -64,6 +65,7 @@ class IdentityInformation(models.Model):
         null=True,
         error_messages=IdentityInfoErrorMessages.FATHER_PHONE,
         help_text=IdentityInfoHelpText.FATHER_PHONE,
+        db_index=True,
     )
     home_address = models.CharField(
         _("Home Address"),
@@ -87,14 +89,13 @@ class IdentityInformation(models.Model):
     )
     education = models.CharField(
         _("Education"),
-        max_length=80,
+        choices=Choices.EDUCATION_CHOICES,
         error_messages=IdentityInfoErrorMessages.EDUCATION,
         help_text=IdentityInfoHelpText.EDUCATION,
     )
     job = models.CharField(
         _("Job"),
-        max_length=50,
-        choices=Choices.JOB_OPTIONS,
+        max_length=100,
         error_messages=IdentityInfoErrorMessages.JOB,
         help_text=IdentityInfoHelpText.JOB,
     )
@@ -105,14 +106,15 @@ class IdentityInformation(models.Model):
         error_messages=IdentityInfoErrorMessages.INSURANCE,
         help_text=IdentityInfoHelpText.INSURANCE,
     )
-    income = models.BigIntegerField(
-        _("Income in Rials"),
+    income = models.CharField(
+        _("Income in Tooman"),
+        choices=Choices.INCOME_OPTIONS,
         error_messages=IdentityInfoErrorMessages.INCOME,
         help_text=IdentityInfoHelpText.INCOME,
     )
-    assets = models.CharField(
-        _("Assets"),
-        max_length=150,
+    assets = MultiSelectField(
+        _("Capital"),
+        choices=FinancialInformationChoices.CAPITAL_CHOICES,
         error_messages=IdentityInfoErrorMessages.ASSETS,
         help_text=IdentityInfoHelpText.ASSETS,
     )
@@ -132,10 +134,18 @@ class IdentityInformation(models.Model):
     )
     introduced_subjects = models.ManyToManyField(
         "users.User",
+        verbose_name=_("Introduced Subjects"),
         related_name="confidintional_info_subjects",
         blank=True,
         error_messages=IdentityInfoErrorMessages.INTRODUCED_SUBJECTS,
         help_text=IdentityInfoHelpText.INTRODUCED_SUBJECTS,
+    )
+    introduced_subjects_explantions = models.TextField(
+        _("Introduced Subjects Explanations"),
+        error_messages=IdentityInfoErrorMessages.INTRODUCED_SUBJECTS,
+        help_text=IdentityInfoHelpText.INTRODUCED_SUBJECTS_EXPLANTIONS,
+        blank=True,
+        null=True,
     )
     prefered_meeting_time = models.CharField(
         _("Prefered Meeting Time"),
@@ -150,21 +160,30 @@ class IdentityInformation(models.Model):
         error_messages=IdentityInfoErrorMessages.TYPE_OF_PAYMENT,
         help_text=IdentityInfoHelpText.TYPE_OF_PAYMENT,
     )
+    payment_proof = models.FileField(
+        _("Proof Of Payment"),
+        upload_to="payment_proofs/%Y/%m/%d/",
+        null=True,
+        blank=True,
+        validators=[FileExtensionValidator(allowed_extensions=['pdf', 'jpg', 'jpeg', 'png'], 
+        message=IdentityInfoErrorMessages.PAYMENT_PROOF)],
+        help_text=IdentityInfoHelpText.PAYMENT_PROOF
+    )
     user = models.OneToOneField(
         "users.User",
         on_delete=models.CASCADE,
         related_name="confidintional_info_user",
         error_messages=IdentityInfoErrorMessages.USER,
         help_text=IdentityInfoHelpText.USER,
+        db_index=True
     )
-
 
     class Meta:
         verbose_name = _("Identities Information")
         verbose_name_plural = _("Identities Information")
 
     def __str__(self):
-        return self.first_name
+        return self.last_name
 
     def get_absolute_url(self):
         return reverse("IdentityInfo_detail", kwargs={"pk": self.pk})
@@ -177,10 +196,11 @@ class BirthCertificateInformation(models.Model):
         max_length=10,
         error_messages=BirthCertificateInfoErrorMessages.NATIONAL_CODE,
         help_text=BirthCertificateInfoHelpText.NATIONAL_CODE,
+        db_index=True,
     )
     birth_certificate_serial = models.CharField(
         _("Birth Certificate Serial"),
-        max_length=10,
+        max_length=15,
         error_messages=BirthCertificateInfoErrorMessages.BIRTH_CERTIFICATE_SERIAL,
         help_text=BirthCertificateInfoHelpText.BIRTH_CERTIFICATE_SERIAL,
     )
@@ -197,7 +217,7 @@ class BirthCertificateInformation(models.Model):
         error_messages=BirthCertificateInfoErrorMessages.MARRIAGE_EXPERINCE,
         help_text=BirthCertificateInfoHelpText.MARRIAGE_EXPERINCE,
     )
-    contract_date = models.DateTimeField(
+    contract_date = models.DateField(
         _("Contract Date"),
         auto_now=False,
         auto_now_add=False,
@@ -213,7 +233,7 @@ class BirthCertificateInformation(models.Model):
         error_messages=BirthCertificateInfoErrorMessages.MARRIAGE_STATUS,
         help_text=BirthCertificateInfoHelpText.MARRIAGE_STATUS,
     )
-    marriage_date = models.DateTimeField(
+    marriage_date = models.DateField(
         _("Marriage Date"),
         auto_now=False,
         auto_now_add=False,
@@ -222,7 +242,7 @@ class BirthCertificateInformation(models.Model):
         error_messages=BirthCertificateInfoErrorMessages.MARRIAGE_DATE,
         help_text=BirthCertificateInfoHelpText.MARRIAGE_DATE,
     )
-    divorce_date = models.DateTimeField(
+    divorce_date = models.DateField(
         _("Divorce Date"),
         auto_now=False,
         auto_now_add=False,
@@ -231,7 +251,7 @@ class BirthCertificateInformation(models.Model):
         error_messages=BirthCertificateInfoErrorMessages.DIVORCE_DATE,
         help_text=BirthCertificateInfoHelpText.DIVORCE_DATE,
     )
-    husband_death_date = models.DateTimeField(
+    husband_death_date = models.DateField(
         _("Husband Death Date"),
         auto_now=False,
         auto_now_add=False,
@@ -240,7 +260,7 @@ class BirthCertificateInformation(models.Model):
         error_messages=BirthCertificateInfoErrorMessages.HUSBAND_DEATH_DATE,
         help_text=BirthCertificateInfoHelpText.HUSBAND_DEATH_DATE,
     )
-    birth_date = models.DateTimeField(
+    birth_date = models.DateField(
         _("Birth Date"),
         auto_now=False,
         auto_now_add=False,
@@ -268,15 +288,16 @@ class BirthCertificateInformation(models.Model):
         related_name="birth_certificate_info",
         error_messages=BirthCertificateInfoErrorMessages.USER,
         help_text=BirthCertificateInfoHelpText.USER,
+        db_index=True
     )
+    
+    def __str__(self):
+        return f"اطالاعات کاربر: {self.user.last_name}"
+
+    def get_absolute_url(self):
+        return reverse("BirthCertificateInfo_detail", kwargs={"pk": self.pk})
     
     class Meta:
         verbose_name = _("Birth Certificate Information")
         verbose_name_plural = _("Birth Certificates Information")
-
-    def __str__(self):
-        return self.national_code
-
-    def get_absolute_url(self):
-        return reverse("BirthCertificateInfo_detail", kwargs={"pk": self.pk})
 

@@ -2,7 +2,7 @@ from django.utils.translation import gettext_lazy as _
 
 class PersonalInfoHelpText:
     EDUCATION = _("Select the education level of the preferred wife.")
-    DEGREE = _("Select the degree of the preferred wife.")
+    FIELD_OF_STUDY = _("Select the degree of the preferred wife.")
     FUTURE_SPOUSE_JOB = _("Select the future spouse job of the preferred wife.")
     CURRENT_RESIDENCE_LOCATION = _("Select the current residence location of the preferred wife.")
     AFTER_MARRIAGE_RESIDENCE_LOCATION = _("Select the after marriage residence location of the preferred wife.")

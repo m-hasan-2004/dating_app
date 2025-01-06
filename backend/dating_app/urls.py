@@ -18,11 +18,12 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers, serializers, viewsets
 from users.user_related_models import User
+from django.conf.urls.i18n import i18n_patterns
 
 
-urlpatterns = [
+urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
-]
+)
 
 # Serializers define the API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):

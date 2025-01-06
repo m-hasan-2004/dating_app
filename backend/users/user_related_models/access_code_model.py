@@ -45,13 +45,14 @@ class AccessCode(models.Model):
         error_messages=AccessCodeErrorMessages.DATE_CREATED,
         help_text=AccessCodeHelpText.DATE_CREATED
     )
+    
+    def __str__(self):
+        return f"Access Code: {str(self.code)}"
+
+    def get_absolute_url(self):
+        return reverse("AccessCode_detail", kwargs={"pk": self.pk})
 
     class Meta:
         verbose_name = _("Access Code Management")
         verbose_name_plural = _("Access Codes Management")
 
-    def __str__(self):
-        return str(self.code)
-
-    def get_absolute_url(self):
-        return reverse("AccessCode_detail", kwargs={"pk": self.pk})

@@ -22,6 +22,7 @@ class PersonalInformation(models.Model):
         _("Birth Date"),
         error_messages=PersonalInfoErrorMessages.BIRTH_DATE,
         help_text=_("Enter the birth date of the user."),
+        db_index=True,
     )
     birth_location = models.CharField(
         _("Birth Location"),
@@ -38,14 +39,12 @@ class PersonalInformation(models.Model):
     )
     degree = models.CharField(
         _("Degree"),
-        max_length=50,
         choices=Choices.DEGREE_CHOICES,
         error_messages=PersonalInfoErrorMessages.DEGREE,
         help_text=_("Select the degree of the user."),
     )
     military_status = models.CharField(
         _("Military Status"),
-        max_length=50,
         choices=Choices.MILITARY_STATUS_CHOICES,
         error_messages=PersonalInfoErrorMessages.MILITARY_STATUS,
         help_text=_("Select the military status of the user."),
@@ -56,19 +55,22 @@ class PersonalInformation(models.Model):
         null=True,
         help_text=PersonalInfoHelpText.MILITARY_STATUS_EXPLANATION,
     )
-    income = models.BigIntegerField(
+    income = models.CharField(
         _("Income"),
+        choices=Choices.INCOME_OPTIONS,
         error_messages=PersonalInfoErrorMessages.INCOME,
         help_text=PersonalInfoHelpText.INCOME,
+        db_index=True,
     )
-    deposit = models.BigIntegerField(
+    deposit = models.CharField(
         _("Deposit"),
+        choices=Choices.DEPOSIT_OPTIONS,
         error_messages=PersonalInfoErrorMessages.DEPOSIT,
         help_text=PersonalInfoHelpText.DEPOSIT,
     )
     insurance_type = MultiSelectField(
         _("Insurance Type"),
-        choices=Choices.INSURANCE_TYPE_CHOICES,
+        choices=Choices.INSURANCE_OPTIONS,
         error_messages=PersonalInfoErrorMessages.INSURANCE_TYPE,
         help_text=_("Select the type of insurance the user has."),
     )
@@ -87,7 +89,29 @@ class PersonalInformation(models.Model):
         _("Usage Cases"),
         choices=Choices.USAGE_CASES_CHOICES,
         error_messages=PersonalInfoErrorMessages.USAGE_CASES,
-        help_text=_("Select the usage cases applicable to the user."),
+        help_text=PersonalInfoHelpText.USAGE_CASES,
+        db_index=True,
+    )
+    usage_case_description = models.TextField(
+        _("Usage Case Description"),
+        blank=True,
+        null=True,
+        error_messages=PersonalInfoErrorMessages.USAGE_CASE_DESCRIPTION,
+        help_text=PersonalInfoHelpText.USAGE_CASE_DESCRIPTION,
+    )
+    tatoo = models.BooleanField(
+        _("Tatto"),  # verbose name updated via gettext
+        db_index=True,
+        error_messages=PersonalInfoErrorMessages.TATTO,
+        help_text=PersonalInfoHelpText.TATTO,
+        default=False,
+    )
+    tatto_description = models.TextField(
+        _("Tatto Description"),
+        blank=True,
+        null=True,
+        error_messages=PersonalInfoErrorMessages.TATTO_DESCRIPTION,
+        help_text=PersonalInfoHelpText.TATTO_DESCRIPTION,
     )
     conviction_or_arrest_history = models.BooleanField(
         _("Conviction or Arrest History"),
@@ -107,10 +131,11 @@ class PersonalInformation(models.Model):
         on_delete=models.CASCADE,
         error_messages=PersonalInfoErrorMessages.USER,
         help_text=_("The user associated with this personal information."),
+        db_index=True
     )
 
     def __str__(self):
-        return f"{self.user.username}'s Personal Information"
+        return f"اطالاعات کاربر: {self.user.last_name}"
 
     class Meta:
         verbose_name = _("Personal Information")

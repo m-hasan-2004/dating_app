@@ -5,46 +5,58 @@ from core.utils.help_text import PhysicalInfoHelpText
 from django.utils.translation import gettext_lazy as _
 
 class PhysicalInformation(models.Model):
-    height = models.BigIntegerField(
+    height = models.DecimalField(
         _("Height"),
+        max_digits=5,
+        decimal_places=2,
         error_messages=PhysicalInfoErrorMessages.HEIGHT,
         help_text=PhysicalInfoHelpText.HEIGHT,
+        db_index=True,
     )
-    weight = models.BigIntegerField(
+    weight = models.DecimalField(
         _("Weight"),
+        max_digits=5,
+        decimal_places=2,
         error_messages=PhysicalInfoErrorMessages.WEIGHT,
         help_text=PhysicalInfoHelpText.WEIGHT,
+        db_index=True,
     )
     skin_color = models.CharField(
         _("Skin Color"),
         max_length=20,
         choices=Choices.SKIN_COLOR_CHOICES,
-        error_messages=PhysicalInfoErrorMessages.SKIN_COLOR
+        error_messages=PhysicalInfoErrorMessages.SKIN_COLOR,
+        help_text=PhysicalInfoHelpText.SKIN_COLOR,
+        db_index=True,
     )
     eyes_color = models.CharField(
         _("Eyes Color"),
         max_length=20,
         choices=Choices.EYES_COLOR_CHOICES,
-        error_messages=PhysicalInfoErrorMessages.EYES_COLOR
+        error_messages=PhysicalInfoErrorMessages.EYES_COLOR,
+        help_text=PhysicalInfoHelpText.EYES_COLOR,
     )
     blood_type = models.CharField(
         _("Blood Type"),
         max_length=3,
         choices=Choices.BLOOD_TYPE_CHOICES,
-        error_messages=PhysicalInfoErrorMessages.BLOOD_TYPE
+        error_messages=PhysicalInfoErrorMessages.BLOOD_TYPE,
+        help_text=PhysicalInfoHelpText.BLOOD_TYPE,
     )
     character_and_temperament = models.CharField(
         _("Character and Temperament"),
         max_length=20,
         choices=Choices.CHARACTER_AND_TEMPERAMENT_CHOICES,
-        error_messages=PhysicalInfoErrorMessages.CHARACTER_AND_TEMPERAMENT
+        error_messages=PhysicalInfoErrorMessages.CHARACTER_AND_TEMPERAMENT,
+        help_text=PhysicalInfoHelpText.CHARACTER_AND_TEMPERAMENT,
     )
     glasses = models.BooleanField(
         _("Glasses"),
         error_messages=PhysicalInfoErrorMessages.GLASSES,
         help_text=PhysicalInfoHelpText.GLASSES,
+        db_index=True,
     )
-    glasses_size = models.IntegerField(
+    glasses_size = models.CharField(
         _("Glasses Size"),
         blank=True,
         null=True,
@@ -55,10 +67,11 @@ class PhysicalInformation(models.Model):
         _("Body and Face"),
         max_length=20,
         choices=Choices.BODY_AND_FACE_CHOICES,
-        error_messages=PhysicalInfoErrorMessages.BODY_AND_FACE
+        error_messages=PhysicalInfoErrorMessages.BODY_AND_FACE,
+        help_text=PhysicalInfoHelpText.BODY_AND_FACE,
     )
     disease_or_surgery = models.BooleanField(
-        _("Disease or Surgery"),
+        _("Disease or Surgery History"),
         error_messages=PhysicalInfoErrorMessages.DISEASE_OR_SURGERY,
         help_text=PhysicalInfoHelpText.DISEASE_OR_SURGERY,
     )
@@ -74,12 +87,14 @@ class PhysicalInformation(models.Model):
         "users.User",
         verbose_name=_("User"),
         on_delete=models.CASCADE,
-        error_messages=PhysicalInfoErrorMessages.USER
+        error_messages=PhysicalInfoErrorMessages.USER,
+        help_text=PhysicalInfoHelpText.USER,
+        db_index=True
     )
 
     def __str__(self):
-        return f"{self.user.username}'s Physical Information"
+        return f"اطالاعات کاربر: {self.user.last_name}"
 
     class Meta:
-        verbose_name = 'Physical Information'
-        verbose_name_plural = 'Physical Informations'
+        verbose_name = _('Physical Information')
+        verbose_name_plural = _('Physical Informations')

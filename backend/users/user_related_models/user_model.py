@@ -71,7 +71,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     id = models.UUIDField(_("id"), primary_key=True, default=uuid4, editable=False, help_text=UserHelpText.ID)
     access_code = models.CharField(
-        _("Access code"), 
+        _("User Access Code"), 
         max_length=50, 
         null=False,
         blank=False,
@@ -79,8 +79,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         help_text=UserHelpText.ACCESS_CODE,
         error_messages=UserErrorMessages.ACCESS_CODE,
     )
-    middle_man_code = models.UUIDField(
+    middle_man_code = models.CharField(
         _("Middle man code"),
+        max_length=100,
         blank=True,
         null=True,
         help_text=UserHelpText.MIDDLE_MAN_CODE,
@@ -97,14 +98,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(
         _("first name"),
         max_length=150,
-        blank=True,
         help_text=UserHelpText.FIRST_NAME,
         error_messages=UserErrorMessages.FIRST_NAME,
     )
     last_name = models.CharField(
         _("last name"),
         max_length=150,
-        blank=True,
         help_text=UserHelpText.LAST_NAME,
         error_messages=UserErrorMessages.LAST_NAME,
     )
@@ -125,6 +124,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         _("email address"),
         blank=True,
+        null=True,
         help_text=UserHelpText.EMAIL,
         error_messages=UserErrorMessages.EMAIL,
     )
@@ -152,10 +152,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     EMAIL_FIELD = "email"
     USERNAME_FIELD = "username"
     REQUIRED_FIELDS = ["email"]
-
-    class Meta:
-        verbose_name = _("User")
-        verbose_name_plural = _("Users")
 
     def clean(self):
         super().clean()
@@ -187,5 +183,5 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     class Meta:
         verbose_name = _("User")
-        verbose_name_plural = _("Users")
+        verbose_name_plural = _("Users Management")
 

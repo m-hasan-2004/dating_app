@@ -4,7 +4,8 @@ from core.utils.model_choices import Choices
 from core.utils.model_error_messages import FamilyInfoErrorMessages
 from core.utils.help_text import FamilyInfoHelpText
 from django.urls import reverse
-from multiselectfield import MultiSelectField
+from django.utils import timezone
+
 
 class FamilyInformation(models.Model):
     average_family_education = models.CharField(
@@ -12,14 +13,16 @@ class FamilyInformation(models.Model):
         max_length=50,
         choices=Choices.AVERAGE_FAMILY_EDUCATION_CHOICES,
         error_messages=FamilyInfoErrorMessages.AVERAGE_FAMILY_EDUCATION,
-        help_text=FamilyInfoHelpText.AVERAGE_FAMILY_EDUCATION
+        help_text=FamilyInfoHelpText.AVERAGE_FAMILY_EDUCATION,
+        db_index=True,
     )
     average_family_finance = models.CharField(
         _("Average Family Finance"),
         max_length=50,
         choices=Choices.AVERAGE_FAMILY_FINANCE_CHOICES,
         error_messages=FamilyInfoErrorMessages.AVERAGE_FAMILY_FINANCE,
-        help_text=FamilyInfoHelpText.AVERAGE_FAMILY_FINANCE
+        help_text=FamilyInfoHelpText.AVERAGE_FAMILY_FINANCE,
+        db_index=True,
     )
     family_divorce_history = models.BooleanField(
         _("Family Divorce History"),
@@ -36,29 +39,30 @@ class FamilyInformation(models.Model):
     )
     contact_with_family = models.CharField(
         _("Contact with Family"),
-        max_length=50,
+        max_length=150,
         error_messages=FamilyInfoErrorMessages.CONTACT_WITH_FAMILY,
         help_text=FamilyInfoHelpText.CONTACT_WITH_FAMILY
     )
-    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=FamilyInfoHelpText.USER)
+    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=FamilyInfoHelpText.USER, db_index=True)
+    
+    def __str__(self):
+        return f"اطالاعات کاربر: {self.user.last_name}"
+
+    def get_absolute_url(self):
+        return reverse("FamilyInformation_detail", kwargs={"pk": self.pk})
     
     class Meta:
         verbose_name = _("Family Information")
         verbose_name_plural = _("Families Information")
 
-    def __str__(self):
-        return f"Family Information for {self.id}"
-
-    def get_absolute_url(self):
-        return reverse("FamilyInformation_detail", kwargs={"pk": self.pk})
-
 class EngagementOrWeddingStatus(models.Model):
     status = models.CharField(
-        _("Status"),
+        _("Person Status"),
         max_length=50,
         choices=Choices.ENGAGEMENT_OR_WEDDING_STATUS_CHOICES,
         error_messages=FamilyInfoErrorMessages.ENGAGEMENT_OR_WEDDING_STATUS,
-        help_text=FamilyInfoHelpText.STATUS
+        help_text=FamilyInfoHelpText.PERSON_STATUS,
+        db_index=True,
     )
     contract_length = models.CharField(
         _("Contract Length"),
@@ -74,14 +78,15 @@ class EngagementOrWeddingStatus(models.Model):
         null=True,
         help_text=FamilyInfoHelpText.LIVING_LENGTH
     )
-    death_date = models.TimeField(
+    death_date = models.DateField(
         _("Death Date"),
         blank=True,
         null=True,
         help_text=FamilyInfoHelpText.DEATH_DATE
     )
-    divorce_date = models.TimeField(
+    divorce_date = models.DateField(
         _("Divorce Date"),
+        default=timezone.localtime,
         blank=True,
         null=True,
         help_text=FamilyInfoHelpText.DIVORCE_DATE
@@ -93,8 +98,11 @@ class EngagementOrWeddingStatus(models.Model):
         null=True,
         help_text=FamilyInfoHelpText.REASON_FOR_DIVORCE_OR_DEATH
     )
-    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=FamilyInfoHelpText.USER)
-
+    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=FamilyInfoHelpText.USER, db_index=True)
+    
+    def __str__(self):
+        return f"اطالاعات کاربر: {self.user.last_name}"
+    
     class Meta:
         verbose_name = _("Engagement or Wedding Status")
         verbose_name_plural = _("Engagements or Weddings Statuse")
@@ -102,19 +110,14 @@ class EngagementOrWeddingStatus(models.Model):
 class ExHusbandChildStatus(models.Model):
     status = models.BooleanField(
         _("Status"),
-        help_text=FamilyInfoHelpText.EX_HUSBAND_CHILD_STATUS
+        help_text=FamilyInfoHelpText.EX_HUSBAND_CHILD_STATUS,
+        db_index=True,
     )
-    girl_birth_date = models.TimeField(
-        _("Girl Birth Date"),
+    birth_date = models.DateField(
+        _("Child Birth Date"),
         blank=True,
         null=True,
-        help_text=FamilyInfoHelpText.GIRL_BIRTH_DATE
-    )
-    boy_birth_date = models.TimeField(
-        _("Boy Birth Date"),
-        blank=True,
-        null=True,
-        help_text=FamilyInfoHelpText.BOY_BIRTH_DATE
+        help_text=FamilyInfoHelpText.BIRTH_DATE
     )
     custody = models.CharField(
         _("Custody"),
@@ -129,15 +132,18 @@ class ExHusbandChildStatus(models.Model):
         null=True,
         help_text=FamilyInfoHelpText.LIVING_LOCATION
     )
-    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=FamilyInfoHelpText.USER)
+    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=FamilyInfoHelpText.USER, db_index=True)
 
+    def __str__(self):
+        return f"اطالاعات کاربر: {self.user.last_name}"
+    
     class Meta:
         verbose_name = _("Ex-Husband Child Status")
         verbose_name_plural = _("Ex-Husbands Child Status")
 
 class FamilyMember(models.Model):
     status = models.BooleanField(
-        _("Status"),
+        _("Alive"),
         help_text=FamilyInfoHelpText.STATUS
     )
     education = models.CharField(
@@ -148,11 +154,13 @@ class FamilyMember(models.Model):
     )
     job = models.CharField(
         _("Job"),
-        max_length=50,
-        choices=Choices.JOB_OPTIONS,
+        max_length=100,
         help_text=FamilyInfoHelpText.JOB
     )
-    user = models.ForeignKey("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=FamilyInfoHelpText.USER)
+    user = models.ForeignKey("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=FamilyInfoHelpText.USER, db_index=True)
+    
+    def __str__(self):
+        return f"اطالاعات کاربر: {self.user.last_name}"
     
     class Meta:
         abstract = True
@@ -195,8 +203,7 @@ class Parent(models.Model):
     )
     job = models.CharField(
         _("Job"),
-        max_length=50,
-        choices=Choices.JOB_OPTIONS,
+        max_length=100,
         help_text=FamilyInfoHelpText.JOB
     )
     originality = models.CharField(
@@ -220,8 +227,11 @@ class Parent(models.Model):
         null=True,
         help_text=FamilyInfoHelpText.DEATH_DATE_PARENT
     )
-    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=FamilyInfoHelpText.USER)
+    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=FamilyInfoHelpText.USER, db_index=True)
 
+    def __str__(self):
+        return f"اطالاعات کاربر: {self.user.last_name}"
+    
     class Meta:
         abstract = True
         verbose_name = _("Parent")

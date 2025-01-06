@@ -14,7 +14,7 @@ class Choices:
         ("Hoze LVL4", _("Hoze LVL4")),
         ("School & Quranic", _("School & Quranic")),
     )
-    DEGREE_CHOICES = (
+    FIELD_OF_STUDY_CHOICES = (
         ("Medical", _("Medical")),
         ("Engineer", _("Engineer")),
         ("Human Science", _("Human Science")),
@@ -23,25 +23,13 @@ class Choices:
         ("Art", _("Art")),
         ("Other", _("Other")),
     )
-    JOB_OPTIONS = (
-        ("Free", _("Free")),
-        ("Military", _("Military")),
-        ("Administrative", _("Administrative")),
-        ("Teacher", _("Teacher")),
-        ("Hoze Mobtadas", _("Hoze Mobtadas")),
-        ("Hoze Not Mobtadas", _("Hoze Not Mobtadas")),
-        ("Nurse Status", _("Nurse Status")),
-        ("Womanly Job", _("Womanly Job")),
-        ("No Job", _("No Job")),
-        ("Doesn’t Matter", _("Doesn’t Matter")),
-        ("Other", _("Other")),
-    )
     RESIDENCE_LOCATION_CHOICES = (
         ("Exactly Qom", _("Exactly Qom")),
         ("Near Qom", _("Near Qom")),
         ("Mecca City", _("Mecca City")),
         ("Anywhere in Iran", _("Anywhere in Iran")),
         ("Villages Near Qom", _("Villages Near Qom")),
+        ("Foreign Country", _("Foreign Country")),
         ("Agreement", _("Agreement")),
     )
     SKIN_COLOR_CHOICES = (
@@ -49,7 +37,6 @@ class Choices:
         ("Fair", _("Fair")),
         ("White", _("White")),
         ("Wheat", _("Wheat")),
-        ("Date", _("Date")),
         ("Green", _("Green")),
         ("Olive", _("Olive")),
         ("Darken", _("Darken")),
@@ -95,10 +82,6 @@ class Choices:
         ("Have Children", _("Have Children")),
         ("Have Boy", _("Have Boy")),
         ("Have Girl", _("Have Girl")),
-    )
-    ORIGINALITY_CHOICES = (
-        ("Doesn’t Matter", _("Doesn’t Matter")),
-        ("Other", _("Other")),
     )
     MARRIAGE_WITH_DISABLED_CHOICES = (
         ("Yes", _("Yes")),

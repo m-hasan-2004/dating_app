@@ -1,31 +1,55 @@
 from django.utils.translation import gettext_lazy as _
 
 class Choices:
-    JOB_OPTIONS = (
-        ("freelancer", _("Freelancer")),
-        ("military", _("Military")),
-        ("administrative", _("Administrative")),
-        ("teacher", _("Teacher")),
-        ("hoze_molabas", _("Hoze Molabas")),
-        ("hoze_none_molabas", _("Hoze None Molabas")),
-        ("hoze_sisters", _("Hoze Sisters")),
-        ("womanly_job", _("Womanly Job")),
-        ("no_job", _("No Job")),
-        ("housekeeper", _("Housekeeper")),
-        ("doesnt_matter", _("Doesn't matter")),
-        ("other", _("Other")),
-    )
     INSURANCE_OPTIONS = (
         ("tamin", _("Tamin")),
         ("takmili", _("Takmili")),
         ("darmani", _("Darmani")),
         ("niroo_mosalah", _("Niroo Mosalah")),
         ("ommr", _("Ommr")),
-        ("other", _("Other")),
+        ("iran", _("Iran")),
+        ("asia", _("Asia")),
+        ("dana", _("Dana")),
+        ("moalem", _("Moalem")),
+        ("parsian", _("Parsian")),
+        ("pasargad", _("Pasargad")),
+        ("Saman", _("Saman")),
+        ("melat", _("Melat")),
+        ("ma", _("Ma")),
+        ("alborz", _("Alborz")),
+        ("kosar", _("Kosar")),
+        ("karafarin", _("Karafarin")),
+        ("novin", _("Novin")),
+        ("day", _("Day")),
+        ("sarmad", _("Sarmad")),
+        ("Razi", _("Razi")),
+        ("taavon", _("Taavon")),
+        ("hafez", _("Hafez")),
+        ("etkayii", _("Etkayii Iranian")),
+        ("tejaratno", _("Tejarat No")),
+        ("khavermiane", _("Khavermiane")),
+        ("hekmat", _("Hekmat Saba")),
+        ("tosehe", _("Tosehe")),
     )
     TYPE_OF_PAYMENT_OPTIONS = (
         ("cash", _("Cash")),
         ("online", _("Online"))
+    )
+    INCOME_OPTIONS = (
+        ("-10", _("Under 10M")),
+        ("10-20", _("Between 10M to 20M")),
+        ("20-30", _("Between 20M to 30M")),
+        ("30-40", _("Between 30M to 40M")),
+        ("40-50", _("Between 40M to 50M")),
+        ("50-100", _("Between 50M to 100M")),
+        ("+100", _("Plus 100"))
+    )
+    DEPOSIT_OPTIONS = (
+        ("-50", _("Under 50M")),
+        ("50-100", _("Between 50M to 100M")),
+        ("100-200", _("Between 100M to 200M")),
+        ("200-500", _("Between 200M to 500M")),
+        ("+500", _("Plus 500M")),
     )
     MARRIAGE_EXPERINCE_OPTION = (
         ("yes", _("Yes")),
@@ -44,15 +68,6 @@ class Choices:
         ("one_girl", _("One Girl")),
         ("two_girls", _("Two Girls")),
         ("three_girls", _("Three Girls")),
-        ("one_boy_one_girl", _("One Boy, One Girl")),
-        ("one_boy_two_girls", _("One Boy, Two Girls")),
-        ("two_boys_one_girl", _("Two Boys, One Girl")),
-        ("two_boys_two_girls", _("Two Boys, Two Girls")),
-        ("three_boys_one_girl", _("Three Boys, One Girl")),
-        ("one_boy_three_girls", _("One Boy, Three Girls")),
-        ("three_boys_two_girls", _("Three Boys, Two Girls")),
-        ("two_boys_three_girls", _("Two Boys, Three Girls")),
-        ("three_boys_three_girls", _("Three Boys, Three Girls")),
     )
     CHILDREN_CUSTODY_OPTIONS = (
         ("father", _("Father")),
@@ -93,22 +108,17 @@ class Choices:
         ("Medical Exemption", _("Medical Exemption")),
         ("End of Service", _("End of Service")),
     )
-    INSURANCE_TYPE_CHOICES = (
-        ("Takmili", _("Takmili")),
-        ("Darmani", _("Darmani")),
-        ("Niro Mosalah (Military Insurance)", _("Niro Mosalah (Military Insurance)")),
-        ("Ommi", _("Ommi")),
-    )
     LEISURE_TYPE_CHOICES = (
         ("Park", _("Park")),
         ("Trip", _("Trip")),
         ("Family", _("Family")),
         ("Television", _("Television")),
-        ("Mobile Reading", _("Mobile Reading")),
+        ("Mobile", _("Mobile")),
+        ("Reading", _("Reading")),
         ("Shrine", _("Shrine")),
         ("Jankaran", _("Jankaran")),
         ("Cinema", _("Cinema")),
-        ("Working in Home", _("Working in Home")),
+        ("Family", _("Visiting Family")),
         ("Gym", _("Gym")),
         ("Poem", _("Poem")),
         ("Garden", _("Garden")),
@@ -118,6 +128,7 @@ class Choices:
         ("Drugs", _("Drugs")),
         ("Cigarettes", _("Cigarettes")),
         ("Hookah", _("Hookah")),
+        ("none", _("None")),
     )
     SKIN_COLOR_CHOICES = (
         ("Very Bright", _("Very Bright")),
@@ -126,7 +137,17 @@ class Choices:
         ("Wheat", _("Wheat")),
         ("Date", _("Date")),
         ("Green", _("Green")),
-        ("Dark", _("Dark")),
+        ("Olive", _("Olive")),
+        ("Darken", _("Darken")),
+        ("Black", _("Black")),
+        ("Bright Brown", _("Bright Brown")),
+        ("Darken Brown", _("Darken Brown")),
+        ("Normal", _("Normal")),
+        ("Bright", _("Bright")),
+        ("Yellow", _("Yellow")),
+        ("Whitish White", _("Whitish White")),
+        ("Red & White", _("Red & White")),
+        ("Bright Green", _("Bright Green")),
     )
     EYES_COLOR_CHOICES = (
         ("Green", _("Green")),
@@ -195,60 +216,136 @@ class Choices:
 
 class FinancialInformationChoices:
     CURRENT_RESIDENCE_STATUS_CHOICES = (
-        ('fathers_house', "Father's House"),
-        ('mothers_house', "Mother's House"),
-        ('other', "Other"),
+        ('fathers_house', _("Father's House")),
+        ('mothers_house', _("Mother's House")),
+        ('other', _("Other")),
     )
     OWNERSHIP_STATUS_CHOICES = (
-        ('owner', "Owner"),
-        ('rent', "Rent"),
+        ('owner', _("Owner")),
+        ('rent', _("Rent")),
     )
     CAPITAL_CHOICES = (
-        ('house', "House"),
-        ('shop', "Shop"),
-        ('land', "Land"),
-        ('garden', "Garden"),
-        ('factory', "Factory"),
-        ('company', "Company"),
-        ('motorcycle', "Motorcycle"),
-        ('car', "Car"),
-        ('other', "Other"),
+        ('house', _("House")),
+        ('shop', _("Shop")),
+        ('land', _("Land")),
+        ('garden', _("Garden")),
+        ('factory', _("Factory")),
+        ('company', _("Company")),
+        ('motorcycle', _("Motorcycle")),
+        ('car', _("Car")),
+        ('gold', _("Gold")),
+        ('other', _("Other")),
     )
     AFTER_MARRIAGE_RESIDENCE_STATUS_CHOICES = (
-        ('owner', "Owner"),
-        ('mortgage', "Mortgage"),
-        ('fathers_house', "Father's House"),
-        ('mothers_house', "Mother's House"),
-        ('other', "Other"),
+        ('owner', _("Owner")),
+        ('mortgage', _("Mortgage")),
+        ('fathers_house', _("Father's House")),
+        ('mothers_house', _("Mother's House")),
+        ('other', _("Other")),
     )
-    EX_SPOUSE_FINANCIAL_STATUS_CHOICES = (
-        ('does', "Does"),
-        ('doesnt', "Doesn't"),
-        ('wants', "Wants"),
-        ('doesnt_want', "Doesn't Want"),
-        ('man_should_help', "Man Should Help"),
-        ('agreement', "Agreement"),
+    JAHIZIYEH_CHOICES = (
+        ('does', _("Does")),
+        ('doesnt', _("Doesn't")),
+        ('wants', _("Wants")),
+        ('doesnt_want', _("Doesn't Want")),
+        ('man_should_help', _("Man Should Help")),
+        ('agreement', _("Agreement")),
     )
     EX_SPOUSE_FINANCIAL_PAY_STATUS_CHOICES = (
-        ('monthly', "Monthly"),
-        ('yearly', "Yearly"),
-        ('two_years', "Two Years"),
+        ('monthly', _("Monthly")),
+        ('yearly', _("Yearly")),
+        ('two_years', _("Two Years")),
     )
-    DOWRY_TYPE_CHOICES = (
-        ('cash', "Cash"),
-        ('rights', "Rights"),
-        ('settled', "Settled"),
-        ('creditor', "Creditor"),
-        ('debtor', "Debtor"),
+    EX_SPOUSE_FINANCIAL_STATUS_CHOICES = (
+        ('cash', _("Cash")),
+        ('rights', _("Rights")),
+        ('settled', _("Settled")),
+        ('creditor', _("Creditor")),
+        ('debtor', _("Debtor")),
     )
-    TOCHER_CHOICES = (
-        ('mecca', "Mecca"),
-        ('gifts_from_iraq', "Gifts from Iraq"),
-        ('gifts_from_syria', "Gifts from Syria"),
-        ('gold_coin', "Gold Coin"),
-        ('money', "Money"),
-        ('land', "Land"),
-        ('car', "Car"),
-        ('garden', "Garden"),
-        ('agreement', "Agreement"),
+    DOWRY_TYPE = (
+        ('mecca', _("Mecca")),
+        ('gifts_from_iraq', _("Gifts from Iraq")),
+        ('gifts_from_syria', _("Gifts from Syria")),
+        ('gold_coin', _("Gold Coin")),
+        ('money', _("Money")),
+        ('land', _("Land")),
+        ('car', _("Car")),
+        ('garden', _("Garden")),
+        ('agreement', _("Agreement")),
+    )
+
+class IntellectualInformationChoices:
+    WOMAN_JOB_OPTIONS = (
+        ("disagree", _("Disagree")),
+        ("agree", _("Agree")),
+        ("must_have_job", _("Must have a job")),
+        ("depends_work_env", _("Depends on Work Environment")),
+        ("depends_job_type", _("Depends on Job Type")),
+        ("womanly_job", _("Womanly Job")),
+        ("housekeeper", _("Housekeeper")),
+    )
+    WOMAN_EDU_OPTIONS = (
+        ("disagree", _("Disagree")),
+        ("agree", _("Agree")),
+        ("depends_degree", _("Depends on the Degree")),
+    )
+    FRIENDS_CONNECTION_TYPE = (
+        ("excellent", _("Excellent")),
+        ("good", _("Good")),
+        ("average", _("Average")),
+        ("weak", _("Weak")),
+        ("none", _("None")),
+    )
+    VELAYAT_FAQIH_OPTIONS = (
+        ("agree", _("Agree")),
+        ("no_opinion", _("No Opinion")),
+    )
+    CHILD_QUANTITY_OPTIONS = (
+        ("dont_want", _("Don't Want")),
+        ("depends", _("Depends")),
+        ("one", _("1")),
+        ("two", _("2")),
+        ("three", _("3")),
+        ("more_than_three", _("More than 3")),
+        ("agreement", _("Agreement")),
+    )
+    CONTRACT_HOW_OPTIONS = (
+        ("registry", _("In the Registry")),
+        ("house_family", _("In House & Family")),
+        ("hall", _("In the Hall")),
+        ("doesnt_matter", _("Doesn't Matter")),
+        ("agreement", _("Agreement")),
+    )
+    WEDDING_HOW_OPTIONS = (
+        ("house_family", _("In House & Family")),
+        ("hall", _("In the Hall")),
+        ("pilgrimage", _("Pilgrimage")),
+        ("trip", _("Trip")),
+        ("doesnt_matter", _("Doesn't Matter")),
+        ("agreement", _("Agreement")),
+    )
+    WORSHIP_PRAYER_OPTIONS = (
+        ("fully_obligated", _("Fully Obligated")),
+        ("sometimes", _("Sometimes")),
+        ("not_obligated", _("Not Obligated")),
+        ("doesnt_matter", _("Doesn't Matter")),
+        ("disagree", _("Disagree")),
+        ("sick", _("Sick")),
+    )
+    FASTING_OPTIONS = (
+        ("too_much", _("Too Much")),
+        ("much", _("Much")),
+        ("average", _("Average")),
+        ("low", _("Low")),
+        ("doesnt_matter", _("Doesn't Matter")),
+    )
+    COVER_TYPE_HOUSE_OPTIONS = (
+        ("cozy_attractive", _("Cozy & Attractive")),
+        ("normal", _("Normal")),
+    )
+    COVER_TYPE_SOCIETY_OPTIONS = (
+        ("only_chador", _("Only Chador")),
+        ("covered_manto", _("Covered Manto")),
+        ("free_manto", _("Free Manto")),
     )

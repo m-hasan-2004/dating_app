@@ -17,8 +17,8 @@ class WeightValidator:
         message=_('Weight cannot be negative.'),
     )
     max_weight_validator = MaxValueValidator(
-        500, 
-        message=_('Weight cannot exceed 500 kg.'),
+        300, 
+        message=_('Weight cannot exceed 300 kg.'),
     )
 
 class HeightValidator:
@@ -27,8 +27,8 @@ class HeightValidator:
         message=_('Height cannot be negative.'),
     )
     max_height_validator = MaxValueValidator(
-        300, 
-        message=_('Height cannot exceed 300 cm.'),
+        260, 
+        message=_('Height cannot exceed 260 cm.'),
     )
     
 

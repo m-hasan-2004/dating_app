@@ -5,7 +5,7 @@ class PersonalInfoErrorMessages:
         "required": _("Education is required."),
         "invalid_choice": _("Invalid choice for education."),
     }
-    DEGREE = {
+    FIELD_OF_STUDY = {
         "required": _("Degree is required."),
         "invalid_choice": _("Invalid choice for degree."),
     }

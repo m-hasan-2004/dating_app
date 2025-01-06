@@ -7,7 +7,8 @@ class CustomUserCreationForm(UserCreationForm):
     access_code = forms.CharField(
         max_length=50,
         required=True,
-        help_text=_("Enter an active access code for the user.")
+        help_text=_("Enter an active access code for the user."),
+        label=_("Access Code")
     )
 
     def clean_access_code(self):
@@ -25,8 +26,6 @@ class CustomUserCreationForm(UserCreationForm):
             self.add_error('access_code', _("This field is required."))
         if not username:
             self.add_error('username', _("This field is required."))
-        if not email:
-            self.add_error('email', _("This field is required."))
 
         return cleaned_data
 
