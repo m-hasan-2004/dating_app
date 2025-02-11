@@ -11,8 +11,9 @@ from users.preferred_wife_models import (
     PreferredWifeExtraInformation, PreferredWifePhysicalInformation, PreferredWifePersonalInformation, 
     PreferredWifeIntellectualInformation, FutureSposeOriginality
 )
+from jalali_date.admin import StackedInlineJalaliMixin, TabularInlineJalaliMixin	
 
-class IdentityInfoInline(admin.StackedInline):
+class IdentityInfoInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = IdentityInformation
     fk_name = "user"
     extra = 1
@@ -28,7 +29,7 @@ class IdentityInfoInline(admin.StackedInline):
             fields = [f for f in fields if f not in ('introduced_subjects', 'introduced_subjects_explantions')]
         return fields
 
-class BirthCertificateInfoInline(admin.StackedInline):
+class BirthCertificateInfoInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = BirthCertificateInformation
     extra = 1
     def get_queryset(self, request):
@@ -37,88 +38,88 @@ class BirthCertificateInfoInline(admin.StackedInline):
             return qs.none()  # Hide inline birth certificate info for staff
         return qs
 
-class PersonalInfoInline(admin.StackedInline):
+class PersonalInfoInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = PersonalInformation
     fk_name = "user"
     extra = 1
 
-class PhysicalInfoInline(admin.StackedInline):
+class PhysicalInfoInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = PhysicalInformation
     fk_name = "user"
     extra = 1
 
-class FamilyInfoInline(admin.StackedInline):
+class FamilyInfoInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = FamilyInformation
     fk_name = "user"
     extra = 1
 
-class EngagementOrWeddingStatusInline(admin.StackedInline):
+class EngagementOrWeddingStatusInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = EngagementOrWeddingStatus
     fk_name = "user"
     extra = 1
 
-class ExHusbandChildStatusInline(admin.StackedInline):
+class ExHusbandChildStatusInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = ExHusbandChildStatus
     fk_name = "user"
     extra = 1
 
-class SisterInline(admin.StackedInline):
+class SisterInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = Sister
     fk_name = "user"
     extra = 1
 
-class BrotherInline(admin.StackedInline):
+class BrotherInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = Brother
     fk_name = "user"
     extra = 1
 
-class GroomInline(admin.StackedInline):
+class GroomInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = Groom
     fk_name = "user"
     extra = 1
 
-class BrideOrWifeInline(admin.StackedInline):
+class BrideOrWifeInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = BrideOrWife
     fk_name = "user"
     extra = 1
 
-class MotherInline(admin.StackedInline):
+class MotherInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = Mother
     fk_name = "user"
     extra = 1
 
-class FatherInline(admin.StackedInline):
+class FatherInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = Father
     fk_name = "user"
     extra = 1
 
-class FinancialInfoInline(admin.StackedInline):
+class FinancialInfoInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = FinancialInformation
     fk_name = "user"
     extra = 1
     
-class PreferredWifeIntellectualInformationInLine(admin.StackedInline):
+class PreferredWifeIntellectualInformationInLine(StackedInlineJalaliMixin, admin.StackedInline):
     model = PreferredWifeIntellectualInformation
     fk_name = "user"
     extra = 1   
 
-class FutureSposeOriginalityInLine(admin.StackedInline):
+class FutureSposeOriginalityInLine(StackedInlineJalaliMixin, admin.StackedInline):
     model = FutureSposeOriginality
     fk_name = "user"
     extra = 5
     max_num = 5 
     
-class PreferredWifePersonalInformationInLine(admin.StackedInline):
+class PreferredWifePersonalInformationInLine(StackedInlineJalaliMixin, admin.StackedInline):
     model = PreferredWifePersonalInformation
     fk_name = "user"
     extra = 1    
     
-class PreferredWifePhysicalInformationInLine(admin.StackedInline):
+class PreferredWifePhysicalInformationInLine(StackedInlineJalaliMixin, admin.StackedInline):
     model = PreferredWifePhysicalInformation
     fk_name = "user"
     extra = 1    
     
-class PreferredWifeExtraInformationInLine(admin.StackedInline):
+class PreferredWifeExtraInformationInLine(StackedInlineJalaliMixin, admin.StackedInline):
     model = PreferredWifeExtraInformation
     fk_name = "user"
     extra = 1    
