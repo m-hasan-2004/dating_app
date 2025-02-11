@@ -536,3 +536,32 @@ class IntellectualInfoErrorMessages:
         "required": _("A unique ID is required."),
         "unique": _("This ID already exists. Please use a different one."),
     }
+
+class IntroducedSubjectsErrorMessages:
+    USERNAME = {
+        "required": _("The username is required."),
+        "max_length": _("The username cannot exceed 50 characters."),
+    }
+    POSTIVE = {
+        "required": _("You must indicate whether the introduction was positive."),
+    }
+    NEGATIVE = {
+        "required": _("You must indicate whether the introduction was negative."),
+    }
+    REASON = {
+        "required": _("A reason for the introduction's outcome is required."),
+    }
+    DATES_OF_MEETINGS = {
+        "required": _("You must provide the dates of meetings."),
+    }
+    RESULT_AND_REGARDS = {
+        "required": _("You must summarize the results and any regards from the meetings."),
+    }
+    COST_OF_INTRODUCTION = {
+        "required": _("The cost of introduction is required."),
+        "max_length": _("The cost of introduction cannot exceed 100 characters."),
+    }
+    COST_OF_MEETING = {
+        "required": _("The cost of meeting is required."),
+        "max_length": _("The cost of meeting cannot exceed 100 characters."),
+    }

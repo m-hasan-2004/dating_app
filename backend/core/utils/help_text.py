@@ -146,3 +146,13 @@ class IntellectualInfoHelpText:
     COVER_TYPE_HOUSE = _("Choose your preferred clothing style at home.")
     COVER_TYPE_SOCIETY = _("Select your dress preference in society and the workplace.")
     UNIQUE_ID = _("A unique identifier for this record.")
+
+class IntroducedSubjectsHelpText:
+    USERNAME = _("Enter the username of the introduced subject. This should be unique and descriptive.")
+    POSTIVE = _("Indicate whether the introduction was positive.")
+    NEGATIVE = _("Indicate whether the introduction was negative.")
+    REASON = _("Provide a detailed reason for the introduction's outcome.")
+    DATES_OF_MEETINGS = _("List the dates of meetings with the introduced subject.")
+    RESULT_AND_REGARDS = _("Summarize the results and any regards from the meetings.")
+    COST_OF_INTRODUCTION = _("Specify the cost associated with the introduction.")
+    COST_OF_MEETING = _("Specify the cost associated with the meetings.")

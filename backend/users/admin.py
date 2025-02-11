@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth import admin as auth_admin
 from django.utils.translation import gettext_lazy as _
 from users.user_related_models import (
-    User, AccessCode, IdentityInformation, BirthCertificateInformation, PersonalInformation, PhysicalInformation, 
+    User, AccessCode, IdentityInformation, BirthCertificateInformation, IntroducedSubjectsInformation, PersonalInformation, PhysicalInformation, 
     FamilyInformation, EngagementOrWeddingStatus, ExHusbandChildStatus, Sister, Brother, Groom, BrideOrWife, 
     Mother, Father, FinancialInformation
 )
@@ -31,6 +31,16 @@ class IdentityInfoInline(StackedInlineJalaliMixin, admin.StackedInline):
 
 class BirthCertificateInfoInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = BirthCertificateInformation
+    extra = 1
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if not request.user.is_superuser:
+            return qs.none()  # Hide inline birth certificate info for staff
+        return qs
+    
+class IntroducedSubjectsInformationInline(StackedInlineJalaliMixin, admin.StackedInline):
+    model = IntroducedSubjectsInformation
+    fk_name = "user"
     extra = 1
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -142,6 +152,7 @@ class UserAdmin(auth_admin.UserAdmin):
     inlines = [
         BirthCertificateInfoInline, 
         IdentityInfoInline, 
+        IntroducedSubjectsInformationInline,
         PersonalInfoInline, 
         PhysicalInfoInline, 
         FamilyInfoInline, 

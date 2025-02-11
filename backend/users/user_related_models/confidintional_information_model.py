@@ -5,8 +5,8 @@ from multiselectfield import MultiSelectField
 from django.urls import reverse
 from django.db import models
 from core.utils.model_choices import Choices, FinancialInformationChoices
-from core.utils.model_error_messages import IdentityInfoErrorMessages, BirthCertificateInfoErrorMessages
-from core.utils.help_text import IdentityInfoHelpText, BirthCertificateInfoHelpText
+from core.utils.model_error_messages import IdentityInfoErrorMessages, BirthCertificateInfoErrorMessages, IntroducedSubjectsErrorMessages
+from core.utils.help_text import IdentityInfoHelpText, BirthCertificateInfoHelpText, IntroducedSubjectsHelpText
 from django.core.validators import FileExtensionValidator
 
 class IdentityInformation(models.Model):
@@ -301,3 +301,79 @@ class BirthCertificateInformation(models.Model):
         verbose_name = _("Birth Certificate Information")
         verbose_name_plural = _("Birth Certificates Information")
 
+
+class IntroducedSubjectsInformation(models.Model):
+    username = models.CharField(
+        _("Username"),
+        max_length=50,
+        error_messages=IntroducedSubjectsErrorMessages.USERNAME,
+        help_text=IntroducedSubjectsHelpText.USERNAME,
+    )
+    birth_date = models.DateField(
+        _("Birth Date"),
+        auto_now=False,
+        auto_now_add=False,
+        error_messages=BirthCertificateInfoErrorMessages.BIRTH_DATE,
+        help_text=BirthCertificateInfoHelpText.BIRTH_DATE,
+    )
+    marriage_status = models.CharField(
+        _("Marriage Status"),
+        choices=Choices.MARRIAGE_STATUS_OPTIONS,
+        error_messages=BirthCertificateInfoErrorMessages.MARRIAGE_STATUS,
+        help_text=BirthCertificateInfoHelpText.MARRIAGE_STATUS,
+    )  
+    postive = models.BooleanField(
+        _("Positive"),
+        error_messages=IntroducedSubjectsErrorMessages.POSTIVE,
+        help_text=IntroducedSubjectsHelpText.POSTIVE,
+    )
+    negative = models.BooleanField(
+        _("Negative"),
+        error_messages=IntroducedSubjectsErrorMessages.NEGATIVE,
+        help_text=IntroducedSubjectsHelpText.NEGATIVE,
+    )
+    reason = models.TextField(
+        _("Reason"),
+        error_messages=IntroducedSubjectsErrorMessages.REASON,
+        help_text=IntroducedSubjectsHelpText.REASON,
+    )
+    dates_of_meetings = models.TextField(
+        _("Dates Of Meetings"),
+        error_messages=IntroducedSubjectsErrorMessages.DATES_OF_MEETINGS,
+        help_text=IntroducedSubjectsHelpText.DATES_OF_MEETINGS,
+    )
+    result_and_regards = models.TextField(
+        _("Result & Regards"),
+        error_messages=IntroducedSubjectsErrorMessages.RESULT_AND_REGARDS,
+        help_text=IntroducedSubjectsHelpText.RESULT_AND_REGARDS,
+    )
+    cost_of_introduction = models.CharField(
+        _("Cost of Introduction"),
+        max_length=100,
+        error_messages=IntroducedSubjectsErrorMessages.COST_OF_INTRODUCTION,
+        help_text=IntroducedSubjectsHelpText.COST_OF_INTRODUCTION,
+    )
+    cost_of_meeting = models.CharField(
+        _("Cost of Meeting"),
+        max_length=100,
+        error_messages=IntroducedSubjectsErrorMessages.COST_OF_MEETING,
+        help_text=IntroducedSubjectsHelpText.COST_OF_MEETING,
+    )
+    user = models.ForeignKey(
+        "users.User",
+        on_delete=models.CASCADE,
+        related_name="introduced_subjects_info",
+        error_messages=BirthCertificateInfoErrorMessages.USER,
+        help_text=BirthCertificateInfoHelpText.USER,
+        db_index=True
+    )
+
+    def __str__(self):
+        return f"اطالاعات کاربر: {self.user.last_name}"
+
+    def get_absolute_url(self):
+        return reverse("IntroducedSubjects_details", kwargs={"pk": self.pk})
+    
+    class Meta:
+        verbose_name = 'IntroducedSubjects'
+        verbose_name_plural = 'IntroducedSubjectss'
