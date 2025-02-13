@@ -350,33 +350,33 @@ class IntellectualInformationChoices:
         ("formal_manto", _("Formal Manto")),
         ("colored_chador", _("Colored Chador")),
     )
-    PARTICIPATING_PRAYER_QURAN_MEETINGS_OPTIONS = [
+    PARTICIPATING_PRAYER_QURAN_MEETINGS_OPTIONS = (
         ("too_much", _("Too Much")),
         ("much", _("Much")),
         ("average", _("Average")),
         ("low", _("Low")),
         ("doesnt_matter", _("Doesn't Matter")),
-    ]
-    MUSIC_OPTIONS = [
+    )
+    MUSIC_OPTIONS = (
         ("too_much", _("Too Much")),
         ("much", _("Much")),
         ("average", _("Average")),
         ("low", _("Low")),
         ("never", _("Never")),
-    ]
-    DANCE_SINGING_ASSEMBLIES_OPTIONS = [
+    )
+    DANCE_SINGING_ASSEMBLIES_OPTIONS = (
         ("too_much", _("Too Much")),
         ("much", _("Much")),
         ("average", _("Average")),
         ("low", _("Low")),
         ("never", _("Never")),
-    ]
-    OPINION_INNOCENT_CONTACT_OPTIONS = [
+    )
+    OPINION_INNOCENT_CONTACT_OPTIONS = (
         ("daily_matters", _("Daily Matters")),
         ("work_matters", _("Work Matters")),
         ("doesnt_matter", _("Doesn't Matter")),
-    ]
-    COVER_TYPE_SOCIETY_OPTIONS = [
+    )
+    COVER_TYPE_SOCIETY_OPTIONS = (
         ("always_chador", _("Always Chador")),
         ("always_coverd_manto", _("Always Coverd Manto")),
         ("always_free_manto", _("Always Free Manto")),
@@ -384,12 +384,12 @@ class IntellectualInformationChoices:
         ("sometimes_coverd_manto", _("Sometimes Coverd Manto")),
         ("sometimes_free_manto", _("Sometimes Free Manto")),
 
-    ]
-    DECISION_MAKING_CHOOSING_SPOUSE_OPTIONS = [
+    )
+    DECISION_MAKING_CHOOSING_SPOUSE_OPTIONS = (
         ("dependent", _("Dependent")),
         ("independet", _("Independet")),
         ("counsole_with_parents", _("Counsole with Parents")),
         ("counsole_with_bros_and_siss", _("Counsole with Brothers and Sisters")),
         ("counsole_with_childs", _("Counsole with Childs")),
         ("counsole_with_professional", _("Counsole with Professional")),
-    ]
+    )

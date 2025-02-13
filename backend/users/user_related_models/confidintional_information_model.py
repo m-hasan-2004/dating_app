@@ -132,21 +132,6 @@ class IdentityInformation(models.Model):
         error_messages=IdentityInfoErrorMessages.HEIGHT,
         help_text=IdentityInfoHelpText.HEIGHT,
     )
-    introduced_subjects = models.ManyToManyField(
-        "users.User",
-        verbose_name=_("Introduced Subjects"),
-        related_name="confidintional_info_subjects",
-        blank=True,
-        error_messages=IdentityInfoErrorMessages.INTRODUCED_SUBJECTS,
-        help_text=IdentityInfoHelpText.INTRODUCED_SUBJECTS,
-    )
-    introduced_subjects_explantions = models.TextField(
-        _("Introduced Subjects Explanations"),
-        error_messages=IdentityInfoErrorMessages.INTRODUCED_SUBJECTS,
-        help_text=IdentityInfoHelpText.INTRODUCED_SUBJECTS_EXPLANTIONS,
-        blank=True,
-        null=True,
-    )
     prefered_meeting_time = models.CharField(
         _("Prefered Meeting Time"),
         max_length=150,

@@ -92,8 +92,6 @@ class IdentityInfoHelpText:
     ASSETS = _("Enter the assets of the user.")
     WEIGHT = _("Enter the weight of the user in kilograms.")
     HEIGHT = _("Enter the height of the user in centimeters.")
-    INTRODUCED_SUBJECTS = _("Select the user who introduced the subjects.")
-    INTRODUCED_SUBJECTS_EXPLANTIONS = _("Needed Explantions About Result of Introduced Subjects.")
     PREFERED_MEETING_TIME = _("Enter the preferred meeting time of the user.")
     TYPE_OF_PAYMENT = _("Select the type of payment.")
     PAYMENT_PROOF = _("Upload a PDF, JPG, or PNG file as proof of payment.")

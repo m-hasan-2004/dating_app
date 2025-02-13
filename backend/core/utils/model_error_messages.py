@@ -181,11 +181,6 @@ class IdentityInfoErrorMessages:
     PAYMENT_PROOF = {
         "invalid": _("Invalid file type. Only PDF, JPG, JPEG, and PNG files are allowed.")
     }
-    INTRODUCED_SUBJECTS = {
-        "blank": _("Introduced subjects cannot be blank."),
-        "null": _("Introduced subjects cannot be null."),
-        "invalid": _("Introduced subjects is invalid.")
-    }
     USER = {
         "blank": _("User cannot be blank."),
         "null": _("User cannot be null."),
