@@ -145,7 +145,13 @@ class IntellectualInfoHelpText:
     FASTING = _("Describe your practice regarding fasting.")
     COVER_TYPE_HOUSE = _("Choose your preferred clothing style at home.")
     COVER_TYPE_SOCIETY = _("Select your dress preference in society and the workplace.")
-    UNIQUE_ID = _("A unique identifier for this record.")
+    PARTICIPATING_PRAYER_QURAN_MEETINGS = _("How committed are you to attending prayer and Quran religious meetings?")
+    MUSIC = _("How often do you listen to music?")
+    DANCE_SINGING_ASSEMBLIES = _("Do you participate in dance and singing assemblies?")
+    OPINION_INNOCENT_CONTACT = _("What is your opinion on innocent contact?")
+    COVER_TYPE_INNOCENT_CONTACT = _("Please select the cover type you prefer in contact with someone innocent.")
+    DECISION_MAKING_CHOOSING_SPOUSE = _("How do you prefer to decide when choosing a spouse?")
+    USER = _("Select the user associated with this intellectual information.")
 
 class IntroducedSubjectsHelpText:
     USERNAME = _("Enter the username of the introduced subject. This should be unique and descriptive.")

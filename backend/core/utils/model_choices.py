@@ -284,11 +284,13 @@ class IntellectualInformationChoices:
         ("depends_job_type", _("Depends on Job Type")),
         ("womanly_job", _("Womanly Job")),
         ("housekeeper", _("Housekeeper")),
+        ("depends_spouse_opinion", _("Depends On Spouse Opinion")),
     )
     WOMAN_EDU_OPTIONS = (
         ("disagree", _("Disagree")),
         ("agree", _("Agree")),
         ("depends_degree", _("Depends on the Degree")),
+        ("depends_spouse_opinion", _("Depends On Spouse Opinion")),
     )
     FRIENDS_CONNECTION_TYPE = (
         ("excellent", _("Excellent")),
@@ -331,21 +333,63 @@ class IntellectualInformationChoices:
         ("not_obligated", _("Not Obligated")),
         ("doesnt_matter", _("Doesn't Matter")),
         ("disagree", _("Disagree")),
-        ("sick", _("Sick")),
     )
     FASTING_OPTIONS = (
-        ("too_much", _("Too Much")),
-        ("much", _("Much")),
-        ("average", _("Average")),
-        ("low", _("Low")),
-        ("doesnt_matter", _("Doesn't Matter")),
+        ("fully_obligated", _("Fully Obligated")),
+        ("sometimes", _("Sometimes")),
+        ("not_obligated", _("Not Obligated")),
+        ("disagree", _("Disagree")),
+        ("sick", _("Sick")),
     )
     COVER_TYPE_HOUSE_OPTIONS = (
         ("cozy_attractive", _("Cozy & Attractive")),
         ("normal", _("Normal")),
     )
-    COVER_TYPE_SOCIETY_OPTIONS = (
+    COVER_TYPE_INNOCENT_CONTACT_OPTIONS = (
         ("only_chador", _("Only Chador")),
-        ("covered_manto", _("Covered Manto")),
-        ("free_manto", _("Free Manto")),
+        ("formal_manto", _("Formal Manto")),
+        ("colored_chador", _("Colored Chador")),
     )
+    PARTICIPATING_PRAYER_QURAN_MEETINGS_OPTIONS = [
+        ("too_much", _("Too Much")),
+        ("much", _("Much")),
+        ("average", _("Average")),
+        ("low", _("Low")),
+        ("doesnt_matter", _("Doesn't Matter")),
+    ]
+    MUSIC_OPTIONS = [
+        ("too_much", _("Too Much")),
+        ("much", _("Much")),
+        ("average", _("Average")),
+        ("low", _("Low")),
+        ("never", _("Never")),
+    ]
+    DANCE_SINGING_ASSEMBLIES_OPTIONS = [
+        ("too_much", _("Too Much")),
+        ("much", _("Much")),
+        ("average", _("Average")),
+        ("low", _("Low")),
+        ("never", _("Never")),
+    ]
+    OPINION_INNOCENT_CONTACT_OPTIONS = [
+        ("daily_matters", _("Daily Matters")),
+        ("work_matters", _("Work Matters")),
+        ("doesnt_matter", _("Doesn't Matter")),
+    ]
+    COVER_TYPE_SOCIETY_OPTIONS = [
+        ("always_chador", _("Always Chador")),
+        ("always_coverd_manto", _("Always Coverd Manto")),
+        ("always_free_manto", _("Always Free Manto")),
+        ("sometimes_chador", _("Sometimes Chador")),
+        ("sometimes_coverd_manto", _("Sometimes Coverd Manto")),
+        ("sometimes_free_manto", _("Sometimes Free Manto")),
+
+    ]
+    DECISION_MAKING_CHOOSING_SPOUSE_OPTIONS = [
+        ("dependent", _("Dependent")),
+        ("independet", _("Independet")),
+        ("counsole_with_parents", _("Counsole with Parents")),
+        ("counsole_with_bros_and_siss", _("Counsole with Brothers and Sisters")),
+        ("counsole_with_childs", _("Counsole with Childs")),
+        ("counsole_with_professional", _("Counsole with Professional")),
+    ]

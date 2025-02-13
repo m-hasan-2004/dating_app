@@ -172,7 +172,7 @@ class IdentityInformation(models.Model):
     user = models.OneToOneField(
         "users.User",
         on_delete=models.CASCADE,
-        related_name="confidintional_info_user",
+        related_name="confidintional_info",
         error_messages=IdentityInfoErrorMessages.USER,
         help_text=IdentityInfoHelpText.USER,
         db_index=True
@@ -375,5 +375,5 @@ class IntroducedSubjectsInformation(models.Model):
         return reverse("IntroducedSubjects_details", kwargs={"pk": self.pk})
     
     class Meta:
-        verbose_name = 'IntroducedSubjects'
-        verbose_name_plural = 'IntroducedSubjectss'
+        verbose_name = _('IntroducedSubjects')
+        verbose_name_plural = _('IntroducedSubjects')

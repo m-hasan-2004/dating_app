@@ -89,5 +89,5 @@ class FutureSposeOriginality(models.Model):
         return f"اطالاعات کاربر: {self.user.last_name}"
 
     class Meta:
-        verbose_name = 'FutureSposeOriginality'
-        verbose_name_plural = 'FutureSposeOriginalities'
+        verbose_name = _('FutureSposeOriginality')
+        verbose_name_plural = _('FutureSposeOriginalities')

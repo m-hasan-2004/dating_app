@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from users.user_related_models import (
     User, AccessCode, IdentityInformation, BirthCertificateInformation, IntroducedSubjectsInformation, PersonalInformation, PhysicalInformation, 
     FamilyInformation, EngagementOrWeddingStatus, ExHusbandChildStatus, Sister, Brother, Groom, BrideOrWife, 
-    Mother, Father, FinancialInformation
+    Mother, Father, FinancialInformation, IntellectualInformation
 )
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 from users.preferred_wife_models import (
@@ -108,6 +108,11 @@ class FinancialInfoInline(StackedInlineJalaliMixin, admin.StackedInline):
     fk_name = "user"
     extra = 1
     
+class IntellectualInfoInline(StackedInlineJalaliMixin, admin.StackedInline):
+    model =  IntellectualInformation
+    fk_name = "user"
+    extra = 1 
+    
 class PreferredWifeIntellectualInformationInLine(StackedInlineJalaliMixin, admin.StackedInline):
     model = PreferredWifeIntellectualInformation
     fk_name = "user"
@@ -145,7 +150,11 @@ class UserAdmin(auth_admin.UserAdmin):
         "is_active", 
         "is_staff", 
     )
-    list_filter = ("is_staff", "is_active", "date_joined")
+    list_filter = (
+        "is_staff", 
+        "is_active", 
+        "date_joined",
+    )
     search_fields = ("username", "email", "first_name", "last_name", "phone_number")
     ordering = ("date_joined",)
     actions = ["deactivate_users", "reactivate_users"]
@@ -165,6 +174,7 @@ class UserAdmin(auth_admin.UserAdmin):
         MotherInline, 
         FatherInline,
         FinancialInfoInline,
+        IntellectualInfoInline,
         PreferredWifeIntellectualInformationInLine,
         FutureSposeOriginalityInLine,
         PreferredWifePersonalInformationInLine,

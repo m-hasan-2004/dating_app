@@ -536,6 +536,24 @@ class IntellectualInfoErrorMessages:
         "required": _("A unique ID is required."),
         "unique": _("This ID already exists. Please use a different one."),
     }
+    PARTICIPATING_PRAYER_QURAN_MEETINGS = {
+        "required": _("This field is required. Please select an option."),
+    }
+    MUSIC = {
+        "required": _("This field is required. Please select an option."),
+    }
+    DANCE_SINGING_ASSEMBLIES = {
+        "required": _("This field is required. Please select an option."),
+    }
+    OPINION_INNOCENT_CONTACT = {
+        "required": _("This field is required. Please select an option."),
+    }
+    COVER_TYPE_INNOCENT_CONTACT = {
+        "required": _("This field is required. Please select an option."),
+    }
+    DECISION_MAKING_CHOOSING_SPOUSE = {
+        "required": _("This field is required. Please select an option for decision making."),
+    }
 
 class IntroducedSubjectsErrorMessages:
     USERNAME = {
