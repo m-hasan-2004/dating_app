@@ -1051,7 +1051,7 @@ msgstr "قهوه‌ای تیره"
 #: core/utils/model_choices.py:145 core/utils/model_choices.py:346
 #: core/utils/preferred_wife_model_choices.py:46
 msgid "Normal"
-msgstr "نرمال"
+msgstr "عادی و  معمولی"
 
 #: core/utils/model_choices.py:146
 #: core/utils/preferred_wife_model_choices.py:47
@@ -1421,7 +1421,7 @@ msgstr "بیش از سه فرزند"
 
 #: core/utils/model_choices.py:316
 msgid "In the Registry"
-msgstr "عقد در ممحضر"
+msgstr "عقد در محضر"
 
 #: core/utils/model_choices.py:317 core/utils/model_choices.py:323
 msgid "In House & Family"
@@ -2704,7 +2704,7 @@ msgstr "حوزه غیر ملبس"
 
 #: core/utils/preferred_wife_model_choices.py:22
 msgid "Hoze Not Mobtadas"
-msgstr "حوزه غیر ملبس"
+msgstr "حوزه ملبس"
 
 #: core/utils/preferred_wife_model_choices.py:27
 msgid "Exactly Qom"
@@ -3486,11 +3486,11 @@ msgstr "والدین"
 
 #: users/user_related_models/family_information_model.py:244
 msgid "Mothers"
-msgstr "مادران"
+msgstr "مادر"
 
 #: users/user_related_models/family_information_model.py:250
 msgid "Fathers"
-msgstr "پدران"
+msgstr "پدر"
 
 #: users/user_related_models/financial_information.py:10
 msgid "Current Residence Status"
@@ -3554,11 +3554,11 @@ msgstr "اهداف و انتظارات از ازدواج"
 
 #: users/user_related_models/intellectual_information_model.py:15
 msgid "Opinion About Woman's Job"
-msgstr "نظر شمل در مورد شغل زنان"
+msgstr "نظر شما در مورد شغل زنان"
 
 #: users/user_related_models/intellectual_information_model.py:21
 msgid "Opinion About Woman's Education"
-msgstr "نظر تحصیلات در مورد شغل زنان"
+msgstr "نظر شما در مورد تحصیلات زنان"
 
 #: users/user_related_models/intellectual_information_model.py:27
 msgid "Pros Of Yourself"

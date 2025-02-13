@@ -100,7 +100,7 @@ class PersonalInformation(models.Model):
         help_text=PersonalInfoHelpText.USAGE_CASE_DESCRIPTION,
     )
     tatoo = models.BooleanField(
-        _("Tatto"),  # verbose name updated via gettext
+        _("Tatto"),
         db_index=True,
         error_messages=PersonalInfoErrorMessages.TATTO,
         help_text=PersonalInfoHelpText.TATTO,

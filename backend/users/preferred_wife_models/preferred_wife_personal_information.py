@@ -6,10 +6,9 @@ from core.utils.preferred_wife_help_text import PersonalInfoHelpText
 from multiselectfield import MultiSelectField
 
 class PreferredWifePersonalInformation(models.Model):
-    education = MultiSelectField(
+    education = models.CharField(
         _("Education Level"),
         max_length=50,
-        choices=Choices.EDUCATION_CHOICES,
         error_messages=PersonalInfoErrorMessages.EDUCATION,
         help_text=PersonalInfoHelpText.EDUCATION
     )

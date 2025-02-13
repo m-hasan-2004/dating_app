@@ -1,19 +1,6 @@
 from django.utils.translation import gettext_lazy as _
 
 class Choices:
-    EDUCATION_CHOICES = (
-        ("Uninterested", _("Uninterested")),
-        ("Under Diploma", _("Under Diploma")),
-        ("Diploma", _("Diploma")),
-        ("Associate Degree", _("Associate Degree")),
-        ("Bachelor", _("Bachelor")),
-        ("Master’s Bachelor", _("Master’s Bachelor")),
-        ("Hoze LVL1", _("Hoze LVL1")),
-        ("Hoze LVL2", _("Hoze LVL2")),
-        ("Hoze LVL3", _("Hoze LVL3")),
-        ("Hoze LVL4", _("Hoze LVL4")),
-        ("School & Quranic", _("School & Quranic")),
-    )
     FIELD_OF_STUDY_CHOICES = (
         ("Medical", _("Medical")),
         ("Engineer", _("Engineer")),
