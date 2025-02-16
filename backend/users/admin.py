@@ -11,42 +11,23 @@ from users.preferred_wife_models import (
     PreferredWifeExtraInformation, PreferredWifePhysicalInformation, PreferredWifePersonalInformation, 
     PreferredWifeIntellectualInformation, FutureSposeOriginality
 )
-from jalali_date.admin import StackedInlineJalaliMixin, TabularInlineJalaliMixin	
+from jalali_date.admin import StackedInlineJalaliMixin
+from django_admin_multi_select_filter.filters import MultiSelectFieldListFilter
+from jalali_date import date2jalali
 
 class IdentityInfoInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = IdentityInformation
     fk_name = "user"
     extra = 1
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        if not request.user.is_superuser:
-            return qs.none()  # Hide inline identity info for staff
-        return qs
-
-    def get_fields(self, request, obj=None):
-        fields = super().get_fields(request, obj)
-        if not request.user.is_superuser:
-            fields = [f for f in fields if f not in ('introduced_subjects', 'introduced_subjects_explantions')]
-        return fields
 
 class BirthCertificateInfoInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = BirthCertificateInformation
     extra = 1
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        if not request.user.is_superuser:
-            return qs.none()  # Hide inline birth certificate info for staff
-        return qs
     
 class IntroducedSubjectsInformationInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = IntroducedSubjectsInformation
     fk_name = "user"
     extra = 1
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        if not request.user.is_superuser:
-            return qs.none()  # Hide inline birth certificate info for staff
-        return qs
 
 class PersonalInfoInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = PersonalInformation
@@ -148,19 +129,40 @@ class UserAdmin(auth_admin.UserAdmin):
         "email", 
         "date_joined", 
         "is_active", 
-        "is_staff", 
+        "is_staff",
+        "get_birth_date"
     )
     list_filter = (
-        "is_staff", 
-        "is_active", 
-        "date_joined",
+        ("is_active", MultiSelectFieldListFilter),
+        ("personalinformation__gender", MultiSelectFieldListFilter),
+        ("father__originality", MultiSelectFieldListFilter),
+        ("mother__originality", MultiSelectFieldListFilter),
+        ("personalinformation__income", MultiSelectFieldListFilter),
+        "personalinformation__have_insurance",
+        ("personalinformation__birth_date", MultiSelectFieldListFilter),
+        ("financialinformation__capital", MultiSelectFieldListFilter),
+        ("financialinformation__dowry_type", MultiSelectFieldListFilter),
+        ("physicalinformation__disease_or_surgery", MultiSelectFieldListFilter),
+        ("personalinformation__education", MultiSelectFieldListFilter),
+        ("financialinformation__current_residence_status", MultiSelectFieldListFilter), 
+        ("intellectual_info__worship_prayer", MultiSelectFieldListFilter),
+        ("intellectual_info__fasting", MultiSelectFieldListFilter),
+        "intellectual_info__opinion_velayat_faqih",
+        ("intellectual_info__cover_type_society", MultiSelectFieldListFilter),
+        ("preferred_wife_intellectual_information__marriage_with_someone_with_marriage_experience", MultiSelectFieldListFilter),
+        ("family_information__kids", MultiSelectFieldListFilter),
+        ("financialinformation__job", MultiSelectFieldListFilter),
+        ("physicalinformation__height", MultiSelectFieldListFilter), 
+        ("physicalinformation__weight", MultiSelectFieldListFilter),
     )
-    search_fields = ("username", "email", "first_name", "last_name", "phone_number")
+    search_fields = (
+        "username", "email", "first_name", "last_name", "phone_number",
+    )
     ordering = ("date_joined",)
     actions = ["deactivate_users", "reactivate_users"]
     inlines = [
-        BirthCertificateInfoInline, 
-        IdentityInfoInline, 
+        # BirthCertificateInfoInline, 
+        # IdentityInfoInline, 
         IntroducedSubjectsInformationInline,
         PersonalInfoInline, 
         PhysicalInfoInline, 
@@ -241,7 +243,12 @@ class UserAdmin(auth_admin.UserAdmin):
         queryset.update(is_active=True)
         self.message_user(request, _("Selected users have been reactivated."))
     reactivate_users.short_description = _("Reactivate selected users")
-    
+
+    def get_birth_date(self, obj):
+        return obj.personalinformation.birth_date if obj.personalinformation else None
+    get_birth_date.short_description = _('Birth Date') 
+
+    get_birth_date.admin_order_field = 'personalinformation__birth_date'  # This enables sorting by birth_date
 
 class AccessCodeAdmin(admin.ModelAdmin):
     model = AccessCode
@@ -261,124 +268,6 @@ class AccessCodeAdmin(admin.ModelAdmin):
         self.message_user(request, _("Selected access codes have been reactivated."))
     reactivate_access_codes.short_description = _("Reactivate selected access codes")
 
-class IdentityInfoAdmin(admin.ModelAdmin):
-    model = IdentityInformation
-    list_display = ("first_name", "last_name", "father_name", "eitta_number", "landline_phone", "mother_phone", "father_phone", "home_address", "work_address", "originality", "education", "job", "insurance", "income", "assets", "weight", "height", "prefered_meeting_time", "type_of_payment", "user")
-    search_fields = ("first_name", "last_name", "father_name", "eitta_number", "landline_phone", "mother_phone", "father_phone", "home_address", "work_address", "originality", "education", "job", "insurance", "income", "assets", "weight", "height", "prefered_meeting_time", "type_of_payment", "user")
-    list_filter = ("job", "insurance", "type_of_payment")
-    
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        if not request.user.is_superuser:
-            return qs.none()  # Staff cannot see identity information
-        return qs
-
-class BirthCertificateInfoAdmin(admin.ModelAdmin):
-    model = BirthCertificateInformation
-    list_display = ("national_code", "birth_certificate_serial", "birth_certificate_location", "marriage_experince", "contract_date", "marriage_status", "marriage_date", "divorce_date", "husband_death_date", "birth_date", "children", "children_custody", "user")
-    search_fields = ("national_code", "birth_certificate_serial", "birth_certificate_location", "marriage_experince", "contract_date", "marriage_status", "marriage_date", "divorce_date", "husband_death_date", "birth_date", "children", "children_custody", "user")
-    list_filter = ("marriage_experince", "marriage_status", "children", "children_custody")
-    
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        if not request.user.is_superuser:
-            return qs.none()  # Staff cannot see birth certificate information
-        return qs
-
-class FinancialInfoAdmin(admin.ModelAdmin):
-    model = FinancialInformation
-    list_display = ("current_residence_status", "ownership_status", "rent_amount", "mortgage_amount", "capital", "after_marriage_residence_status", "ex_spouse_financial_status", "ex_spouse_financial_amount", "ex_spouse_financial_pay_status", "dowry_type", "dowry_amount", "tocher", "user")
-    search_fields = ("current_residence_status", "ownership_status", "rent_amount", "mortgage_amount", "capital", "after_marriage_residence_status", "ex_spouse_financial_status", "ex_spouse_financial_amount", "ex_spouse_financial_pay_status", "dowry_type", "dowry_amount", "tocher", "user")
-    list_filter = ("current_residence_status", "ownership_status", "capital", "after_marriage_residence_status", "ex_spouse_financial_status", "ex_spouse_financial_pay_status", "dowry_type", "tocher")
-
-class PersonalInfoAdmin(admin.ModelAdmin):
-    model = PersonalInformation
-    list_display = ("user", "gender", "birth_date", "education")
-    search_fields = ("gender", "birth_date", "education", "user")
-    list_filter = ("gender", "education")
-
-class PhysicalInfoAdmin(admin.ModelAdmin):
-    model = PhysicalInformation
-    list_display = ("user", "height", "weight", "skin_color")
-    search_fields = ("height", "weight", "skin_color", "user")
-    list_filter = ("skin_color",)
-
-class FamilyInfoAdmin(admin.ModelAdmin):
-    model = FamilyInformation
-    list_display = ("user", "average_family_education", "average_family_finance", "family_divorce_history")
-    search_fields = ("average_family_education", "average_family_finance", "family_divorce_history", "user")
-    list_filter = ("family_divorce_history",)
-    
-class EngagementOrWeddingStatusAdmin(admin.ModelAdmin):
-    model = EngagementOrWeddingStatus
-    list_display = ("user", "status", "contract_length", "living_length")
-    search_fields = ("status", "contract_length", "living_length", "user")
-    list_filter = ("status",)
-
-class ExHusbandChildStatusAdmin(admin.ModelAdmin):
-    model = ExHusbandChildStatus
-    list_display = ("user", "status", "custody", "living_location")
-    search_fields = ("status", "custody", "living_location", "user")
-    list_filter = ("status",)
-
-class SisterAdmin(admin.ModelAdmin):
-    model = Sister
-    list_display = ("user", "status", "education", "job")
-    search_fields = ("status", "education", "job", "user")
-    list_filter = ("status",)
-
-class BrotherAdmin(admin.ModelAdmin):
-    model = Brother
-    list_display = ("user", "status", "education", "job")
-    search_fields = ("status", "education", "job", "user")
-    list_filter = ("status",)
-
-class GroomAdmin(admin.ModelAdmin):
-    model = Groom
-    list_display = ("user", "status", "education", "job")
-    search_fields = ("status", "education", "job", "user")
-    list_filter = ("status",)
-
-class BrideOrWifeAdmin(admin.ModelAdmin):
-    model = BrideOrWife
-    list_display = ("user", "status", "education", "job")
-    search_fields = ("status", "education", "job", "user")
-    list_filter = ("status",)
-
-class MotherAdmin(admin.ModelAdmin):
-    model = Mother
-    list_display = ("user", "language", "birth_date", "job")
-    search_fields = ("language", "birth_date", "job", "user")
-    list_filter = ("job",)
-
-class FatherAdmin(admin.ModelAdmin):
-    model = Father
-    list_display = ("user", "language", "birth_date", "job")
-    search_fields = ("language", "birth_date", "job", "user")
-    list_filter = ("job",)
-
-class PreferredWifeExtraInformationAdmin(admin.ModelAdmin):
-    model = PreferredWifeExtraInformation
-    list_display = ("user", "additional_explanations")
-    search_fields = ("additional_explanations", "user")
-
-class PreferredWifePhysicalInformationAdmin(admin.ModelAdmin):
-    model = PreferredWifePhysicalInformation
-    list_display = ("user", "height", "weight", "skin_color")
-    search_fields = ("height", "weight", "skin_color", "user")
-    list_filter = ("skin_color",)
-    
-class PreferredWifePersonalInformationAdmin(admin.ModelAdmin):
-    model = PreferredWifePersonalInformation
-    list_display = ("user", "education", "field_of_study", "future_spouse_job")
-    search_fields = ("education", "field_of_study", "future_spouse_job", "user")
-    list_filter = ("education", "field_of_study")
-
-class PreferredWifeIntellectualInformationAdmin(admin.ModelAdmin):
-    model = PreferredWifeIntellectualInformation
-    list_display = ("user", "appearance_type", "age_difference", "future_spouse_family_religious_status_importance")
-    search_fields = ("appearance_type", "age_difference", "future_spouse_family_religious_status_importance", "user")
-    list_filter = ("appearance_type", "future_spouse_family_religious_status_importance")
 
 admin.site.register(User, UserAdmin)
 admin.site.register(AccessCode, AccessCodeAdmin)

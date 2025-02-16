@@ -277,7 +277,7 @@ class BirthCertificateInformation(models.Model):
     )
     
     def __str__(self):
-        return f"اطالاعات کاربر: {self.user.last_name}"
+        return f"اطلاعات کاربر: {self.user.last_name}"
 
     def get_absolute_url(self):
         return reverse("BirthCertificateInfo_detail", kwargs={"pk": self.pk})
@@ -354,7 +354,7 @@ class IntroducedSubjectsInformation(models.Model):
     )
 
     def __str__(self):
-        return f"اطالاعات کاربر: {self.user.last_name}"
+        return f"اطلاعات کاربر: {self.user.last_name}"
 
     def get_absolute_url(self):
         return reverse("IntroducedSubjects_details", kwargs={"pk": self.pk})

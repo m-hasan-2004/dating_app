@@ -1,5 +1,5 @@
 from django.utils.translation import gettext_lazy as _
-
+from .model_choices import Choices as CHO
 class Choices:
     FIELD_OF_STUDY_CHOICES = (
         ("Medical", _("Medical")),
@@ -13,30 +13,14 @@ class Choices:
     RESIDENCE_LOCATION_CHOICES = (
         ("Exactly Qom", _("Exactly Qom")),
         ("Near Qom", _("Near Qom")),
-        ("Mecca City", _("Mecca City")),
+        ("Mega Cities", _("Mega Cities")),
         ("Anywhere in Iran", _("Anywhere in Iran")),
         ("Villages Near Qom", _("Villages Near Qom")),
+        ("Environs Near Qom", _("Environs Near Qom")),
         ("Foreign Country", _("Foreign Country")),
         ("Agreement", _("Agreement")),
     )
-    SKIN_COLOR_CHOICES = (
-        ("Very Bright", _("Very Bright")),
-        ("Fair", _("Fair")),
-        ("White", _("White")),
-        ("Wheat", _("Wheat")),
-        ("Green", _("Green")),
-        ("Olive", _("Olive")),
-        ("Darken", _("Darken")),
-        ("Black", _("Black")),
-        ("Bright Brown", _("Bright Brown")),
-        ("Darken Brown", _("Darken Brown")),
-        ("Normal", _("Normal")),
-        ("Bright", _("Bright")),
-        ("Yellow", _("Yellow")),
-        ("Whitish White", _("Whitish White")),
-        ("Red & White", _("Red & White")),
-        ("Bright Green", _("Bright Green")),
-    )
+    SKIN_COLOR_CHOICES = CHO.SKIN_COLOR_CHOICES
     APPEARANCE_TYPE_CHOICES = (
         ("Religious", _("Religious")),
         ("Norm", _("Norm")),
@@ -74,4 +58,18 @@ class Choices:
         ("Yes", _("Yes")),
         ("No", _("No")),
         ("Depends", _("Depends")),
+    )
+    IRAN_PROVINCES = CHO.IRAN_PROVINCES
+    FUTURE_SPOUSE_JOB = (
+        ("free", _("Freelance")),
+        ("military", _("Military")),
+        ("office", _("Office")),
+        ("teacher", _("Teacher")),
+        ("hoze_m", _("Hoze M")),
+        ("hoze_n", _("Hoze N")),
+        ("hoze_s", _("hoze Sis")),
+        ("womanly", _("Womanly Job")),
+        ("no_job", _("No Job At All")),
+        ("housekeeper", _("Housekeeper")),
+        ("Doesn’t Matter", _("Doesn’t Matter")),
     )

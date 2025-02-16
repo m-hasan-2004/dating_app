@@ -16,7 +16,7 @@ class Choices:
         ("Saman", _("Saman")),
         ("melat", _("Melat")),
         ("ma", _("Ma")),
-        ("alborz", _("Alborz")),
+        ("alborz_insurance", _("Alborz")),
         ("kosar", _("Kosar")),
         ("karafarin", _("Karafarin")),
         ("novin", _("Novin")),
@@ -30,6 +30,7 @@ class Choices:
         ("khavermiane", _("Khavermiane")),
         ("hekmat", _("Hekmat Saba")),
         ("tosehe", _("Tosehe")),
+        ("other", _("Other"))
     )
     TYPE_OF_PAYMENT_OPTIONS = (
         ("cash", _("Cash")),
@@ -91,15 +92,6 @@ class Choices:
         ("Hoze (Islamic Seminary) LVL 4", _("Hoze (Islamic Seminary) LVL 4")),
         ("School & Quranic", _("School & Quranic")),
     )
-    DEGREE_CHOICES = (
-        ("Medical", _("Medical")),
-        ("Engineer", _("Engineer")),
-        ("Human Science", _("Human Science")),
-        ("Hoze Molabas", _("Hoze Molabas")),
-        ("Hoze Not Molabas", _("Hoze Not Molabas")),
-        ("Art", _("Art")),
-        ("Other", _("Other")),
-    )
     MILITARY_STATUS_CHOICES = (
         ("Exemption", _("Exemption")),
         ("Mother Sponsorship", _("Mother Sponsorship")),
@@ -107,6 +99,8 @@ class Choices:
         ("Educational Exemption", _("Educational Exemption")),
         ("Medical Exemption", _("Medical Exemption")),
         ("End of Service", _("End of Service")),
+        ("No Service", _("No Service")),
+        ("Woman", _("Woman")),
     )
     LEISURE_TYPE_CHOICES = (
         ("Park", _("Park")),
@@ -132,22 +126,22 @@ class Choices:
     )
     SKIN_COLOR_CHOICES = (
         ("Very Bright", _("Very Bright")),
+        ("Bor", _("Bor")),
         ("Fair", _("Fair")),
         ("White", _("White")),
         ("Wheat", _("Wheat")),
-        ("Date", _("Date")),
         ("Green", _("Green")),
         ("Olive", _("Olive")),
         ("Darken", _("Darken")),
         ("Black", _("Black")),
         ("Bright Brown", _("Bright Brown")),
         ("Darken Brown", _("Darken Brown")),
-        ("Normal", _("Normal")),
         ("Bright", _("Bright")),
         ("Yellow", _("Yellow")),
         ("Whitish White", _("Whitish White")),
         ("Red & White", _("Red & White")),
         ("Bright Green", _("Bright Green")),
+        ('other', _("Other")),
     )
     EYES_COLOR_CHOICES = (
         ("Green", _("Green")),
@@ -210,8 +204,57 @@ class Choices:
         ("None", _("None")),
     )
     CUSTODY_CHOICES = (
-        ("Father", _("Father")),
+        ("Father", _("Father")),    
         ("Mother", _("Mother")),
+    )
+    GROOM_CHOICES = (
+        ("groom", _("Groomm")),
+        ("zan_dadash", _("Zan Dadash")),
+    )
+    BRIDE_OR_WIFE_CHOICES = (
+        ("bride", _("Bride")),
+        ("shohar_khahar", _("Shohar Khahar")),
+    )
+    IRAN_PROVINCES = (
+        ("Alborzz", _("Alborzz")),
+        ("Ardabil", _("Ardabil")),
+        ("Bushehr", _("Bushehr")),
+        ("Chaharmahal and Bakhtiari", _("Chaharmahal and Bakhtiari")),
+        ("East Azerbaijan", _("East Azerbaijan")),
+        ("Esfahan", _("Esfahan")),
+        ("Fars", _("Fars")),
+        ("Gilan", _("Gilan")),
+        ("Golestan", _("Golestan")),
+        ("Hamadan", _("Hamadan")),
+        ("Hormozgan", _("Hormozgan")),
+        ("Ilam", _("Ilam")),
+        ("Kerman", _("Kerman")),
+        ("Kermanshah", _("Kermanshah")),
+        ("Khuzestan", _("Khuzestan")),
+        ("Kohgiluyeh and Boyer-Ahmad", _("Kohgiluyeh and Boyer-Ahmad")),
+        ("Kurdistan", _("Kurdistan")),
+        ("Lorestan", _("Lorestan")),
+        ("Markazi", _("Markazi")),
+        ("Mazandaran", _("Mazandaran")),
+        ("North Khorasan", _("North Khorasan")),
+        ("Qazvin", _("Qazvin")),
+        ("Qom", _("Qom")),
+        ("Razavi Khorasan", _("Razavi Khorasan")),
+        ("Semnan", _("Semnan")),
+        ("Sistan and Baluchestan", _("Sistan and Baluchestan")),
+        ("South Khorasan", _("South Khorasan")),
+        ("Tehran", _("Tehran")),
+        ("West Azerbaijan", _("West Azerbaijan")),
+        ("Yazd", _("Yazd")),
+        ("Zanjan", _("Zanjan")),
+        ("doesnt_matter", _("Doesn't Matter")),
+    )
+    KIDS = (
+        ("none", _("None")),
+        ("1", _("1")),
+        ("2", _("2")),
+        ("3", _("3")),
+        ("+3", _("+3")),
     )
 
 class FinancialInformationChoices:
@@ -257,7 +300,6 @@ class FinancialInformationChoices:
         ('two_years', _("Two Years")),
     )
     EX_SPOUSE_FINANCIAL_STATUS_CHOICES = (
-        ('cash', _("Cash")),
         ('rights', _("Rights")),
         ('settled', _("Settled")),
         ('creditor', _("Creditor")),
@@ -265,13 +307,14 @@ class FinancialInformationChoices:
     )
     DOWRY_TYPE = (
         ('mecca', _("Mecca")),
-        ('gifts_from_iraq', _("Gifts from Iraq")),
-        ('gifts_from_syria', _("Gifts from Syria")),
-        ('gold_coin', _("Gold Coin")),
+        ('iraq', _("Iraq")),
+        ('syria', _("Syria")),
+        ('gold', _("Gold")),
         ('money', _("Money")),
         ('land', _("Land")),
         ('car', _("Car")),
         ('garden', _("Garden")),
+        ('house', _("House")),
         ('agreement', _("Agreement")),
     )
 
@@ -283,7 +326,7 @@ class IntellectualInformationChoices:
         ("depends_work_env", _("Depends on Work Environment")),
         ("depends_job_type", _("Depends on Job Type")),
         ("womanly_job", _("Womanly Job")),
-        ("housekeeper", _("Housekeeper")),
+        ("housejob", _("Housejob")),
         ("depends_spouse_opinion", _("Depends On Spouse Opinion")),
     )
     WOMAN_EDU_OPTIONS = (
@@ -339,6 +382,7 @@ class IntellectualInformationChoices:
         ("sometimes", _("Sometimes")),
         ("not_obligated", _("Not Obligated")),
         ("disagree", _("Disagree")),
+        ("doesnt_matter", _("Doesn't Matter")),
         ("sick", _("Sick")),
     )
     COVER_TYPE_HOUSE_OPTIONS = (
@@ -349,6 +393,7 @@ class IntellectualInformationChoices:
         ("only_chador", _("Only Chador")),
         ("formal_manto", _("Formal Manto")),
         ("colored_chador", _("Colored Chador")),
+        ("cozy_attractive", _("Cozy & Attractive")),
     )
     PARTICIPATING_PRAYER_QURAN_MEETINGS_OPTIONS = (
         ("too_much", _("Too Much")),

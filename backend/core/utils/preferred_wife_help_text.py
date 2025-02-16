@@ -2,9 +2,9 @@ from django.utils.translation import gettext_lazy as _
 
 class PersonalInfoHelpText:
     EDUCATION = _("Select the education level of the preferred wife.")
-    FIELD_OF_STUDY = _("Select the degree of the preferred wife.")
+    FIELD_OF_STUDY = _("Enter the degree of the preferred wife.")
     FUTURE_SPOUSE_JOB = _("Select the future spouse job of the preferred wife.")
-    CURRENT_RESIDENCE_LOCATION = _("Select the current residence location of the preferred wife.")
+    CURRENT_RESIDENCE_LOCATION = _("Enter the current residence location of the preferred wife.")
     AFTER_MARRIAGE_RESIDENCE_LOCATION = _("Select the after marriage residence location of the preferred wife.")
     USER = _("Select the user associated with this preferred wife information.")
 
@@ -23,6 +23,7 @@ class IntellectualInfoHelpText:
     FUTURE_SPOUSE_ORIGINALITY = _("Select the originality of the future spouse.")
     MOST_IMPORTANT_MORAL_FEATURE_OF_FUTURE_SPOUSE = _("Enter the most important moral feature of the future spouse.")
     MARRIAGE_WITH_DISABLED = _("Select the preference for marriage with a disabled person.")
+    MARRIAGE_WITH_DISABLED_VETERAN_EXPLANATION = _("Enter the Marriage With Disabled & Veteran Explanation")
     RED_FLAGS = _("Enter any red flags for the future spouse.")
     USER = _("Select the user associated with this preferred wife information.")
 

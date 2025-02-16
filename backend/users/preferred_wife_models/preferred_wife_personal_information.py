@@ -12,24 +12,22 @@ class PreferredWifePersonalInformation(models.Model):
         error_messages=PersonalInfoErrorMessages.EDUCATION,
         help_text=PersonalInfoHelpText.EDUCATION
     )
-    field_of_study = MultiSelectField(
+    field_of_study = models.CharField(
         _("Field of Study"),
-        max_length=50,
-        choices=Choices.FIELD_OF_STUDY_CHOICES,
+        max_length=150,
         error_messages=PersonalInfoErrorMessages.FIELD_OF_STUDY,
         help_text=PersonalInfoHelpText.FIELD_OF_STUDY,
     )
-    future_spouse_job = models.CharField(
+    future_spouse_job = MultiSelectField(
         _("Future Spouse Job"),
-        max_length=50,
+        choices=Choices.FUTURE_SPOUSE_JOB,
         error_messages=PersonalInfoErrorMessages.FUTURE_SPOUSE_JOB,
         help_text=PersonalInfoHelpText.FUTURE_SPOUSE_JOB,
         db_index=True,
     )
-    current_residence_location = MultiSelectField(
+    current_residence_location = models.CharField(
         _("Current Residence Location"),
-        max_length=50,
-        choices=Choices.RESIDENCE_LOCATION_CHOICES,
+        max_length=150,
         error_messages=PersonalInfoErrorMessages.CURRENT_RESIDENCE_LOCATION,
         help_text=PersonalInfoHelpText.CURRENT_RESIDENCE_LOCATION,
         db_index=True,
@@ -45,7 +43,7 @@ class PreferredWifePersonalInformation(models.Model):
     user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=PersonalInfoHelpText.USER, db_index=True)
 
     def __str__(self):
-        return f"اطالاعات کاربر: {self.user.last_name}"
+        return f"اطلاعات کاربر: {self.user.last_name}"
     
     class Meta:
         verbose_name = _("Preferred Wife Personal Information")

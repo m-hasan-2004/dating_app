@@ -32,7 +32,7 @@ class PreferredWifePhysicalInformation(models.Model):
     user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=PhysicalInfoHelpText.USER, db_index=True)
 
     def __str__(self):
-        return f"اطالاعات کاربر: {self.user.last_name}"
+        return f"اطلاعات کاربر: {self.user.last_name}"
     
     class Meta:
         verbose_name = _("Preferred Wife Physical Information")

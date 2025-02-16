@@ -62,15 +62,20 @@ class PreferredWifeIntellectualInformation(models.Model):
         help_text=IntellectualInfoHelpText.MARRIAGE_WITH_DISABLED,
         db_index=True,
     )
+    marriage_with_veteran_disabled_explanation = models.CharField(
+        _("Marriage with Veteran & Disabled Person Explanation"),
+        error_messages=IntellectualInfoErrorMessages.MARRIAGE_WITH_DISABLED_VETERAN_EXPLANATION,
+        help_text=IntellectualInfoHelpText.MARRIAGE_WITH_DISABLED_VETERAN_EXPLANATION,
+    )
     red_flags = models.TextField(
         _("Red Flags"),
         error_messages=IntellectualInfoErrorMessages.RED_FLAGS,
         help_text=IntellectualInfoHelpText.RED_FLAGS
     )
-    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=IntellectualInfoHelpText.USER, db_index=True)
+    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=IntellectualInfoHelpText.USER, db_index=True, related_name="preferred_wife_intellectual_information")
     
     def __str__(self):
-        return f"اطالاعات کاربر: {self.user.last_name}"
+        return f"اطلاعات کاربر: {self.user.last_name}"
 
     class Meta:
         verbose_name = _("Preferred Wife Intellectual Information")
@@ -79,14 +84,14 @@ class PreferredWifeIntellectualInformation(models.Model):
 class FutureSposeOriginality(models.Model):
     future_spouse_originality = models.CharField(
         _("Future Spouse Originality"),
-        max_length=50,
+        choices=Choices.IRAN_PROVINCES,
         error_messages=IntellectualInfoErrorMessages.FUTURE_SPOUSE_ORIGINALITY,
         help_text=IntellectualInfoHelpText.FUTURE_SPOUSE_ORIGINALITY
     )
     user = models.ForeignKey("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=IntellectualInfoHelpText.USER, db_index=True)
 
     def __str__(self):
-        return f"اطالاعات کاربر: {self.user.last_name}"
+        return f"اطلاعات کاربر: {self.user.last_name}"
 
     class Meta:
         verbose_name = _('FutureSposeOriginality')

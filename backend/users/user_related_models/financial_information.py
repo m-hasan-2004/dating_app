@@ -1,11 +1,18 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from core.utils.model_choices import FinancialInformationChoices
-from core.utils.model_error_messages import FinancialInformationErrorMessages
-from core.utils.help_text import FinancialInfoHelpText
+from core.utils.model_error_messages import FinancialInformationErrorMessages, IdentityInfoErrorMessages
+from core.utils.help_text import FinancialInfoHelpText, IdentityInfoHelpText
 from multiselectfield import MultiSelectField
 
 class FinancialInformation(models.Model):
+    job = models.CharField(
+        _("Job"),
+        max_length=100,
+        error_messages=IdentityInfoErrorMessages.JOB,
+        help_text=IdentityInfoHelpText.JOB,
+        default="None",
+    )
     current_residence_status = models.CharField(
         _("Current Residence Status"),
         max_length=50,
@@ -73,7 +80,7 @@ class FinancialInformation(models.Model):
     ex_spouse_financial_amount = models.CharField(
         _("Ex-Spouse Financial Amount"),
         max_length=50,
-        blank=True, 
+        blank=True,
         null=True,
         error_messages=FinancialInformationErrorMessages.EX_SPOUSE_FINANCIAL_AMOUNT_ERROR_MESSAGES,
         help_text=FinancialInfoHelpText.EX_SPOUSE_FINANCIAL_AMOUNT
@@ -100,16 +107,24 @@ class FinancialInformation(models.Model):
         blank=True,
         null=True,
     )
+    jahiziyeh_explantion = models.CharField(
+        _("Future Spose Jahiziyeh Explantion"),
+        error_messages=FinancialInformationErrorMessages.JAHIZIYEH_EXPLANTION_ERROR_MESSAGES,
+        help_text=FinancialInfoHelpText.JAHIZIYEH_EXPLANATION,
+        blank=True,
+        null=True,
+    )
     user = models.OneToOneField(
         'users.User',
         on_delete=models.CASCADE,
         help_text=FinancialInfoHelpText.USER,
-        db_index=True
+        db_index=True,
+        related_name="financialinformation"
     )
 
     def __str__(self):
-        return f"اطالاعات کاربر: {self.user.last_name}"
-    
+        return f"اطلاعات کاربر: {self.user.last_name}"
+
     class Meta:
         verbose_name = _('Financial Information')
         verbose_name_plural = _('Financial Informations')

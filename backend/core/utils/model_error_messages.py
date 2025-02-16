@@ -1,5 +1,4 @@
 from django.utils.translation import gettext_lazy as _
-
 class UserErrorMessages:
     USERNAME = {
         "unique": _("This username is already taken."),
@@ -283,6 +282,10 @@ class PersonalInfoErrorMessages:
         "required": _("Military status is required."),
         "invalid_choice": _("Invalid choice for military status."),
     }
+    MILITARY_STATUS_EXPLANATION = {
+        "required": _("Military status Explanation is required."),
+        "max_length": _("Military status Explanation cannot exceed 50 characters."),
+    }
     INCOME = {
         "required": _("Income is required."),
         "invalid": _("Invalid income value."),
@@ -388,6 +391,10 @@ class FamilyInfoErrorMessages:
         "required": _("Contact with family is required."),
         "max_length": _("Contact with family cannot exceed 50 characters."),
     }
+    CONTACT_WITH_RELATIVES = {
+        "required": _("Contact with Relatives is required."),
+        "max_length": _("Contact with Relatives cannot exceed 50 characters."),
+    }
     ENGAGEMENT_OR_WEDDING_STATUS = {
         "required": _("Engagement or wedding status is required."),
         "invalid_choice": _("Invalid choice for engagement or wedding status."),
@@ -408,58 +415,72 @@ class FamilyInfoErrorMessages:
     LIVING_LOCATION = {
         "max_length": _("Living location cannot exceed 50 characters."),
     }
+    GROOM_OR_ZAN = {
+        "required": _("Groom field is required."),
+        "invalid_choice": _("Selected value for groom is invalid."),
+    }
+    BRIDE_OR_WIFE= {
+        "required": _("Bride or Wife field is required."),
+        "invalid_choice": _("Selected value for bride or wife is invalid."),
+    }
+
+from django.utils.translation import gettext_lazy as _
 
 class FinancialInformationErrorMessages:
     CURRENT_RESIDENCE_STATUS_ERROR_MESSAGES = {
-        'required': "Current residence status is required.",
-        'invalid_choice': "Invalid choice for current residence status.",
+        'required': _("Current residence status is required."),
+        'invalid_choice': _("Invalid choice for current residence status."),
     }
     OWNERSHIP_STATUS_ERROR_MESSAGES = {
-        'required': "Ownership status is required.",
-        'invalid_choice': "Invalid choice for ownership status.",
+        'required': _("Ownership status is required."),
+        'invalid_choice': _("Invalid choice for ownership status."),
     }
     RENT_AMOUNT_ERROR_MESSAGES = {
-        'required': "Rent amount is required.",
-        'invalid': "Invalid value for rent amount.",
+        'required': _("Rent amount is required."),
+        'invalid': _("Invalid value for rent amount."),
     }
     MORTGAGE_AMOUNT_ERROR_MESSAGES = {
-        'required': "Mortgage amount is required.",
-        'invalid': "Invalid value for mortgage amount.",
+        'required': _("Mortgage amount is required."),
+        'invalid': _("Invalid value for mortgage amount."),
     }
     CAPITAL_ERROR_MESSAGES = {
-        'required': "Capital is required.",
-        'invalid_choice': "Invalid choice for capital.",
+        'required': _("Capital is required."),
+        'invalid_choice': _("Invalid choice for capital."),
     }
     OTHER_CAPTIAL_ERROR_MESSAGES = {
-        'max_length': "Other Captial cannot exceed 150 characters.",
+        'max_length': _("Other capital cannot exceed 150 characters."),
     }
     AFTER_MARRIAGE_RESIDENCE_STATUS_ERROR_MESSAGES = {
-        'required': "After marriage residence status is required.",
-        'invalid_choice': "Invalid choice for after marriage residence status.",
+        'required': _("After marriage residence status is required."),
+        'invalid_choice': _("Invalid choice for after marriage residence status."),
     }
     EX_SPOUSE_FINANCIAL_STATUS_ERROR_MESSAGES = {
-        'required': "Ex-spouse financial status is required.",
-        'invalid_choice': "Invalid choice for ex-spouse financial status.",
+        'required': _("Ex-spouse financial status is required."),
+        'invalid_choice': _("Invalid choice for ex-spouse financial status."),
     }
     EX_SPOUSE_FINANCIAL_AMOUNT_ERROR_MESSAGES = {
-        'required': "Ex-spouse financial amount is required.",
-        'max_length': "Ex-spouse financial amount cannot exceed 50 characters.",
+        'required': _("Ex-spouse financial amount is required."),
+        'max_length': _("Ex-spouse financial amount cannot exceed 50 characters."),
     }
     EX_SPOUSE_FINANCIAL_PAY_STATUS_ERROR_MESSAGES = {
-        'required': "Ex-spouse financial pay status is required.",
-        'invalid_choice': "Invalid choice for ex-spouse financial pay status.",
+        'required': _("Ex-spouse financial pay status is required."),
+        'invalid_choice': _("Invalid choice for ex-spouse financial pay status."),
     }
     DOWRY_TYPE_ERROR_MESSAGES = {
-        'required': "Dowry type is required.",
-        'invalid_choice': "Invalid choice for dowry type.",
+        'required': _("Dowry type is required."),
+        'invalid_choice': _("Invalid choice for dowry type."),
     }
     DOWRY_AMOUNT_ERROR_MESSAGES = {
-        'required': "Dowry amount is required.",
-        'max_length': "Dowry amount cannot exceed 50 characters.",
+        'required': _("Dowry amount is required."),
+        'max_length': _("Dowry amount cannot exceed 50 characters."),
     }
     JAHIZIYEH_ERROR_MESSAGES = {
-        'required': "Dowry type is required.",
-        'invalid_choice': "Invalid choice for dowry type.",
+        'required': _("Jahiziyeh type is required."),
+        'invalid_choice': _("Invalid choice for Jahiziyeh type."),
+    }
+    JAHIZIYEH_EXPLANTION_ERROR_MESSAGES = {
+        'required': _("Jahiziyeh explanation is required."),
+        'max_length': _("Jahiziyeh explanation cannot exceed 150 characters."),
     }
 
 class IntellectualInfoErrorMessages:
@@ -578,3 +599,12 @@ class IntroducedSubjectsErrorMessages:
         "required": _("The cost of meeting is required."),
         "max_length": _("The cost of meeting cannot exceed 100 characters."),
     }
+
+class ParentErrorMessages:
+    LANGUAGE = {"required": _("Language is required."), "max_length": _("Language cannot exceed 50 characters.")}
+    BIRTH_DATE = {"required": _("Birth date is required."), "invalid": _("Invalid birth date format.")}
+    JOB = {"required": _("Job is required."), "max_length": _("Job cannot exceed 100 characters.")}
+    ORIGINALITY = {"required": _("Originality is required."), "max_length": _("Originality cannot exceed 80 characters.")}
+    EDUCATION = {"required": _("Education is required."), "invalid_choice": _("Invalid choice for education.")}
+    ALIVE = {"required": _("Alive status is required."), "invalid": _("Invalid value for alive status.")}
+    DEATH_DATE = {"invalid": _("Invalid death date."), "max_length": _("Death date format error.")}

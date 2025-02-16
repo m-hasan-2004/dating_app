@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-13 20:27+0330\n"
+"POT-Creation-Date: 2025-02-21 16:21+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: core/utils/help_text.py:4 core/utils/help_text.py:94
+#: core/utils/help_text.py:4 core/utils/help_text.py:110
 msgid "Enter the height of the user in centimeters."
 msgstr "قد خود را بر حسب سانتی متر وارد کنید."
 
-#: core/utils/help_text.py:5 core/utils/help_text.py:93
+#: core/utils/help_text.py:5 core/utils/help_text.py:109
 msgid "Enter the weight of the user in kilograms."
 msgstr "وزن خود را بر حسب سانتی متر وارد کنید."
 
@@ -72,514 +72,574 @@ msgid "Select the gender of the user."
 msgstr "جنسیت خود را انتخاب کنید."
 
 #: core/utils/help_text.py:19
+msgid "Is the user a Sadat?"
+msgstr "آیا کاربر از سادات است؟"
+
+#: core/utils/help_text.py:20 core/utils/help_text.py:128
+msgid "Enter the birth date of the user."
+msgstr "تاریخ تولد خود را وارد کنید."
+
+#: core/utils/help_text.py:21
+msgid "Enter the birth location of the user."
+msgstr "محل تولد خود را وارد کنید."
+
+#: core/utils/help_text.py:22
+msgid "Select the education level of the user."
+msgstr "سطح تحصیلات خود را وارد کنید."
+
+#: core/utils/help_text.py:23
+msgid "Select the degree of the user."
+msgstr "مدرک خود را انتخاب کنید."
+
+#: core/utils/help_text.py:24
+msgid "Select the military status of the user."
+msgstr "وضعیت سربازی خود را انتخاب کنید."
+
+#: core/utils/help_text.py:25
 msgid "Provide an explanation for the military status if applicable."
 msgstr "در صورت لزوم، توضیحی در مورد وضعیت نظام وظیفه بدهید."
 
-#: core/utils/help_text.py:20
+#: core/utils/help_text.py:26
 msgid "Enter the income of the user."
 msgstr "درآمد خود را وارد کنید."
 
-#: core/utils/help_text.py:21
+#: core/utils/help_text.py:27
 msgid "Enter the deposit amount of the user."
 msgstr "میزان سپرده خود را وارد کنید."
 
-#: core/utils/help_text.py:22
+#: core/utils/help_text.py:28
+msgid "Show That User Has Insurance Or Not"
+msgstr "تحت پوشش بیمه هستید؟"
+
+#: core/utils/help_text.py:29
+msgid "Select the type of insurance the user has."
+msgstr "نوع بیمه خود را انتخاب کنید."
+
+#: core/utils/help_text.py:30
 msgid "Enter the number of years the user has had insurance."
 msgstr "تعداد سال‌های سابقه بیمه خود را وارد کنید."
 
-#: core/utils/help_text.py:23
-msgid "Does the user have a conviction or arrest history?"
-msgstr "آیا سابقه محکومیت یا بازداشت دارید؟"
+#: core/utils/help_text.py:31
+msgid "Select the types of leisure activities the user enjoys."
+msgstr "نوع تفریحات مورد علاقه خود را انتخاب کنید."
 
-#: core/utils/help_text.py:24
-msgid "Specify the reason for the conviction if applicable."
-msgstr "در صورت داشتن سابقه محکومیت یا بازداشت، دلیل را توضیح دهید."
-
-#: core/utils/help_text.py:25
+#: core/utils/help_text.py:32
 msgid "Select the usage cases applicable to the user."
 msgstr "موارد استفاده‌ای که مرتبط به شما است را انتخاب کنید."
 
-#: core/utils/help_text.py:26
-msgid "Indicate whether the user has any tattoos."
-msgstr "مشخص می‌کند که آیا تتو دارید؟"
-
-#: core/utils/help_text.py:27
-msgid "Provide details about the tattoos, Like Where on the Body."
-msgstr "توضیحات اضافی درباره تتو نظیر محل تتو در بدن را بنویسید."
-
-#: core/utils/help_text.py:28
+#: core/utils/help_text.py:33
 msgid ""
 "Provide additional details about usage cases. Like how many cigars or hookah "
 "a day."
 msgstr "توضیحات اضافی درباره میزان مصرف روزانه سیگار یا قلیان."
 
-#: core/utils/help_text.py:31
+#: core/utils/help_text.py:34
+msgid "Indicate whether the user has any tattoos."
+msgstr "مشخص می‌کند که آیا تتو دارید؟"
+
+#: core/utils/help_text.py:35
+msgid "Provide details about the tattoos, like where on the body."
+msgstr "توضیحات اضافی درباره تتو نظیر محل تتو در بدن را بنویسید."
+
+#: core/utils/help_text.py:36
+msgid "Does the user have a conviction or arrest history?"
+msgstr "آیا سابقه محکومیت یا بازداشت دارید؟"
+
+#: core/utils/help_text.py:37
+msgid "Specify the reason for the conviction if applicable."
+msgstr "در صورت داشتن سابقه محکومیت یا بازداشت، دلیل را توضیح دهید."
+
+#: core/utils/help_text.py:38
+msgid "The user associated with this personal information."
+msgstr "کاربر مرتبط با این اطلاعات شخصی"
+
+#: core/utils/help_text.py:41
 msgid "Select the current residence status of the user."
 msgstr "وضعیت محل سکونت فعلی خود را انتخاب کنید."
 
-#: core/utils/help_text.py:32
+#: core/utils/help_text.py:42
 msgid "Select the ownership status of the residence."
 msgstr "وضعیت مالکیت محل سکونت فعلی خود را انتخاب کنید."
 
-#: core/utils/help_text.py:33
+#: core/utils/help_text.py:43
 msgid "Enter the rent amount in the local currency."
 msgstr "مبلغ اجاره را به تومان وارد کنید."
 
-#: core/utils/help_text.py:34
+#: core/utils/help_text.py:44
 msgid "Enter the mortgage amount in the local currency."
 msgstr "مبلغ وام مسکن را به تومان وارد کنید."
 
-#: core/utils/help_text.py:35
+#: core/utils/help_text.py:45
 msgid "Select the types of capital owned by the user."
 msgstr "انواع دارایی‌ هایی که دارید را انتخاب کنید."
 
-#: core/utils/help_text.py:36
+#: core/utils/help_text.py:46
 msgid "Enter the Other capitals owned by the user."
 msgstr "انواع دیگر دارایی‌ هایی که دارید را بنویسید."
 
-#: core/utils/help_text.py:37
+#: core/utils/help_text.py:47
 msgid "Select the residence status after marriage."
 msgstr "این یک سوال از آقا است. وضعیت محل سکونت پس از ازدواج را انتخاب کنید."
 
-#: core/utils/help_text.py:38
+#: core/utils/help_text.py:48
 msgid "Select the financial status with the ex-spouse."
 msgstr "وضعیت مهریه همسر سابق را انتخاب کنید."
 
-#: core/utils/help_text.py:39
+#: core/utils/help_text.py:49
 msgid "Enter the financial amount related to the ex-spouse."
 msgstr "مبلغ مهریه مربوط به همسر سابق را وارد کنید."
 
-#: core/utils/help_text.py:40
+#: core/utils/help_text.py:50
 msgid "Select the payment status for the ex-spouse financial amount."
 msgstr "وضعیت پرداخت مبلغ مهریه همسر سابق را انتخاب کنید."
 
-#: core/utils/help_text.py:41
+#: core/utils/help_text.py:51
 msgid "Select the type of dowry Of Future Wife."
 msgstr "نوع مهریه همسر آینده را انتخاب کنید."
 
-#: core/utils/help_text.py:42
+#: core/utils/help_text.py:52
 msgid "Enter the dowry amount in the local currency or gold."
 msgstr "مبلغ مهریه را به تومان یا طلا وارد کنید."
 
-#: core/utils/help_text.py:43
+#: core/utils/help_text.py:53
 msgid "Select the Status of Jahiziyeh."
 msgstr "نوع جهیزیه همسر آینده را انتخاب کنید."
 
-#: core/utils/help_text.py:44
+#: core/utils/help_text.py:54
+msgid "Write the Explanation of Jahiziyeh."
+msgstr "توضیحات جهیزیه همسر آینده را بنویسید.."
+
+#: core/utils/help_text.py:55
 msgid "Select the user associated with this financial information."
 msgstr "کاربری که این اطلاعات مالی به آن مربوط است را انتخاب کنید."
 
-#: core/utils/help_text.py:47
+#: core/utils/help_text.py:58
 msgid "Unique access code for user creation."
 msgstr "کد دسترسی منحصر به فرد برای ایجاد کاربر."
 
-#: core/utils/help_text.py:48
+#: core/utils/help_text.py:59
 msgid "Indicates whether the access code is active."
 msgstr "مشخص می‌کند که آیا کد دسترسی فعال است."
 
-#: core/utils/help_text.py:49
+#: core/utils/help_text.py:60
 msgid "The date and time when the access code was created."
 msgstr "تاریخ و زمان ایجاد کد دسترسی."
 
-#: core/utils/help_text.py:52
+#: core/utils/help_text.py:63
 msgid "Check the box if you have child from ex husband"
 msgstr "در صورت داشتن فرزند از همسر سابق، تیک بزنید."
 
-#: core/utils/help_text.py:53
+#: core/utils/help_text.py:64
 msgid "Select the average family education level."
 msgstr "میانگین سطح تحصیلات خانواده خود را انتخاب کنید."
 
-#: core/utils/help_text.py:54
+#: core/utils/help_text.py:65
 msgid "Select the average family financial status."
 msgstr "میانگین سطح مالی خانواده خود را انتخاب کنید."
 
-#: core/utils/help_text.py:55
+#: core/utils/help_text.py:66
 msgid "Indicate if there is a history of divorce in the family."
 msgstr "آیا در خانواده سابقه طلاق وجود دارد؟"
 
-#: core/utils/help_text.py:56
+#: core/utils/help_text.py:67
 msgid "Specify the reason for the family divorce if applicable."
 msgstr "در صورت وجود، دلیل طلاق در خانواده را وارد کنید."
 
-#: core/utils/help_text.py:57
+#: core/utils/help_text.py:68
 msgid "Describe the contact with the family."
+msgstr "ارتباط با خانواده (والدین و برادران و خواهران) چگونه است؟"
+
+#: core/utils/help_text.py:69
+msgid "Describe the contact with the Relatives."
 msgstr "ارتباط با فامیل چگونه است؟"
 
-#: core/utils/help_text.py:58
+#: core/utils/help_text.py:70
 msgid "Select the user associated with this family information."
 msgstr "کاربری که این اطلاعات خانوادگی به آن مربوط است را انتخاب کنید."
 
-#: core/utils/help_text.py:59
+#: core/utils/help_text.py:71
 msgid "Select the Status Of Life."
 msgstr "آیا عضو خانواده در قید حیات است؟"
 
-#: core/utils/help_text.py:60
+#: core/utils/help_text.py:72
 msgid "If user has engagment or related history"
 msgstr ".آیا سابقه ازدواج یا سابقه مرتبط داشته اید"
 
-#: core/utils/help_text.py:61
+#: core/utils/help_text.py:73
 msgid "Enter the length of the contract."
 msgstr "مدت عقد را وارد کنید."
 
-#: core/utils/help_text.py:62
+#: core/utils/help_text.py:74
 msgid "Enter the length of living together."
 msgstr "مدت زندگی مشترک را وارد کنید."
 
-#: core/utils/help_text.py:63
+#: core/utils/help_text.py:75
 msgid "Enter the death date if applicable."
 msgstr "در صورت شامل بودن، تاریخ فوت را وارد کنید."
 
-#: core/utils/help_text.py:64
+#: core/utils/help_text.py:76
 msgid "Enter the divorce date if applicable."
 msgstr "در صورت شامل بودن، تاریخ طلاق را وارد کنید."
 
-#: core/utils/help_text.py:65
+#: core/utils/help_text.py:77
 msgid "Specify the reason for divorce or death if applicable."
 msgstr "در صورت شامل بودن، دلیل طلاق یا فوت را وارد کنید."
 
-#: core/utils/help_text.py:66
+#: core/utils/help_text.py:78
 msgid "Enter the birth date of the girl if applicable."
 msgstr "در صورت شامل بودن، تاریخ تولد دختر را وارد کنید."
 
-#: core/utils/help_text.py:67 core/utils/help_text.py:114
+#: core/utils/help_text.py:79 core/utils/help_text.py:130
 msgid "Select the custody status of the children."
 msgstr "وضعیت حضانت فرزندان را انتخاب کنید."
 
-#: core/utils/help_text.py:68
+#: core/utils/help_text.py:80
 msgid "Enter the living location if applicable."
 msgstr "محل زندگی را وارد کنید."
 
-#: core/utils/help_text.py:69
+#: core/utils/help_text.py:81
 msgid "Select the education level of the family member."
 msgstr "سطح تحصیلات عضو خانواده را انتخاب کنید."
 
-#: core/utils/help_text.py:70
+#: core/utils/help_text.py:82
 msgid "Enter the job of the family member."
 msgstr "شغل عضو خانواده را انتخاب کنید."
 
-#: core/utils/help_text.py:71
+#: core/utils/help_text.py:83
 msgid "Enter the language spoken by the parent."
 msgstr "زبان مادری والدین را وارد کنید."
 
-#: core/utils/help_text.py:72
+#: core/utils/help_text.py:84
 msgid "Enter the birth date of the parent."
 msgstr "تاریخ تولد والدین را وارد کنید."
 
-#: core/utils/help_text.py:73
+#: core/utils/help_text.py:85
 msgid "Enter the originality of the parent."
 msgstr "اصالت والدین را وارد کنید."
 
-#: core/utils/help_text.py:74
+#: core/utils/help_text.py:86
 msgid "Indicate if the parent is alive."
 msgstr "مشخص کنید که آیا والدین در قید حیات هستند."
 
-#: core/utils/help_text.py:75
+#: core/utils/help_text.py:87
 msgid "Enter the death date of the parent if applicable."
 msgstr "تاریخ فوت والدین را وارد کنید."
 
-#: core/utils/help_text.py:78
+#: core/utils/help_text.py:88
+msgid "Select the groom from the available options."
+msgstr "اطلاعات وارده مربوط به داماد یا شوهر خواهر است."
+
+#: core/utils/help_text.py:89
+msgid "Select the bride or wife from the available options."
+msgstr "اطلاعات وارده مربوط به عروس یا زن داداش است."
+
+#: core/utils/help_text.py:90
+msgid "Choose the number of Kids"
+msgstr "تعداد فرزندان را انتخاب کنید."
+
+#: core/utils/help_text.py:94
 msgid "Enter the first name of the user."
 msgstr "نام خود را وارد کنید."
 
-#: core/utils/help_text.py:79
+#: core/utils/help_text.py:95
 msgid "Enter the last name of the user."
 msgstr "نام خانوادگی خود را وارد کنید."
 
-#: core/utils/help_text.py:80
+#: core/utils/help_text.py:96
 msgid "Enter the father's name of the user."
 msgstr "نام پدر خود را وارد کنید."
 
-#: core/utils/help_text.py:81
+#: core/utils/help_text.py:97
 msgid "Enter a unique Eitta number in the format: +98 or 09**."
 msgstr "شماره ایتا منحصر به فرد را وارد کنید به فرمت: +98 یا 09**."
 
-#: core/utils/help_text.py:82
+#: core/utils/help_text.py:98
 msgid "Enter a landline number in the format: 025-32305083."
 msgstr "شماره تلفن ثابت را وارد کنید به فرمت: 025-32305083."
 
-#: core/utils/help_text.py:83
+#: core/utils/help_text.py:99
 msgid "Enter a unique phone number for the mother in the format: +98 or 09**."
 msgstr "شماره تلفن منحصر به فرد مادر را وارد کنید به فرمت: +98 یا 09**."
 
-#: core/utils/help_text.py:84
+#: core/utils/help_text.py:100
 msgid "Enter a unique phone number for the father in the format: +98 or 09**."
 msgstr "شماره تلفن منحصر به فرد پدر را وارد کنید به فرمت: +98 یا 09**."
 
-#: core/utils/help_text.py:85
+#: core/utils/help_text.py:101
 msgid "Enter the home address of the user."
 msgstr "آدرس منزل خود را وارد کنید."
 
-#: core/utils/help_text.py:86
+#: core/utils/help_text.py:102
 msgid "Enter the work address of the user."
 msgstr "آدرس محل کار خود را وارد کنید."
 
-#: core/utils/help_text.py:87
+#: core/utils/help_text.py:103
 msgid "Enter the originality of the user."
 msgstr "اصالت خود را وارد کنید."
 
-#: core/utils/help_text.py:88
+#: core/utils/help_text.py:104
 msgid "Enter the education level of the user."
 msgstr "سطح تحصیلات خود را وارد کنید."
 
-#: core/utils/help_text.py:89
+#: core/utils/help_text.py:105
 msgid "Select the job of the user."
-msgstr "شغل خود را انتخاب کنید."
+msgstr "شغل خود را وارد کنید."
 
-#: core/utils/help_text.py:90
+#: core/utils/help_text.py:106
 msgid "Select the insurance type of the user."
 msgstr "نوع بیمه خود را انتخاب کنید."
 
-#: core/utils/help_text.py:91
+#: core/utils/help_text.py:107
 msgid "Enter the income of the user in Tooman."
 msgstr "درآمد خود را به تومان وارد کنید."
 
-#: core/utils/help_text.py:92
+#: core/utils/help_text.py:108
 msgid "Enter the assets of the user."
 msgstr "دارایی‌ های خود را وارد کنید."
 
-#: core/utils/help_text.py:95
+#: core/utils/help_text.py:111
 msgid "Select the user who introduced the subjects."
 msgstr "کاربری که موضوعات را معرفی کرده است را انتخاب کنید."
 
-#: core/utils/help_text.py:96
+#: core/utils/help_text.py:112
 msgid "Needed Explantions About Result of Introduced Subjects."
 msgstr "توضیحات مورد نیاز درباره نتیجه افراد معرفی شده."
 
-#: core/utils/help_text.py:97
+#: core/utils/help_text.py:113
 msgid "Enter the preferred meeting time of the user."
 msgstr "اوقات پیشنهادی ملاقات مورد نظر خود را وارد کنید."
 
-#: core/utils/help_text.py:98
+#: core/utils/help_text.py:114
 msgid "Select the type of payment."
 msgstr "نوع پرداخت هزینه معرفی را انتخاب کنید."
 
-#: core/utils/help_text.py:99
+#: core/utils/help_text.py:115
 msgid "Upload a PDF, JPG, or PNG file as proof of payment."
 msgstr "فایل با فرمت pdf, jpg یا png آپلود کنید."
 
-#: core/utils/help_text.py:100
+#: core/utils/help_text.py:116
 msgid "Select the user associated with this identity information."
 msgstr "کاربری که این اطلاعات هویتی به آن مربوط است را انتخاب کنید."
 
-#: core/utils/help_text.py:103
+#: core/utils/help_text.py:119
 msgid "Enter the national code of the user."
 msgstr "کد ملی خود را وارد کنید."
 
-#: core/utils/help_text.py:104
+#: core/utils/help_text.py:120
 msgid "Enter the birth certificate serial number of the user."
 msgstr "شماره سریال شناسنامه خود را وارد کنید."
 
-#: core/utils/help_text.py:105
+#: core/utils/help_text.py:121
 msgid "Enter the location where the birth certificate was issued."
 msgstr "محل صدور شناسنامه را وارد کنید."
 
-#: core/utils/help_text.py:106
+#: core/utils/help_text.py:122
 msgid "Select the marriage experience of the user."
 msgstr "نوع تجربه ازدواج خود را انتخاب کنید."
 
-#: core/utils/help_text.py:107
+#: core/utils/help_text.py:123
 msgid "Enter the contract date."
 msgstr "تاریخ عقد را وارد کنید."
 
-#: core/utils/help_text.py:108
+#: core/utils/help_text.py:124
 msgid "Select the marriage status of the user."
 msgstr "وضعیت ازدواج خود را انتخاب کنید."
 
-#: core/utils/help_text.py:109
+#: core/utils/help_text.py:125
 msgid "Enter the marriage date."
 msgstr "تاریخ ازدواج را وارد کنید."
 
-#: core/utils/help_text.py:110
+#: core/utils/help_text.py:126
 msgid "Enter the divorce date."
 msgstr "تاریخ طلاق را وارد کنید."
 
-#: core/utils/help_text.py:111
+#: core/utils/help_text.py:127
 msgid "Enter the husband death date."
 msgstr "تاریخ فوت همسر را وارد کنید."
 
-#: core/utils/help_text.py:112
-#: users/user_related_models/personal_information_model.py:24
-msgid "Enter the birth date of the user."
-msgstr "تاریخ تولد خود را وارد کنید."
-
-#: core/utils/help_text.py:113
+#: core/utils/help_text.py:129
 msgid "Select the number of children."
 msgstr "تعداد فرزندان را انتخاب کنید."
 
-#: core/utils/help_text.py:115
+#: core/utils/help_text.py:131
 msgid "Select the user associated with this birth certificate information."
 msgstr "کاربری که این اطلاعات شناسنامه‌ای به آن مربوط است را انتخاب کنید."
 
-#: core/utils/help_text.py:118
+#: core/utils/help_text.py:134
 msgid "Unique identifier for the user."
 msgstr "شناسه منحصر به فرد برای کاربر."
 
-#: core/utils/help_text.py:119
+#: core/utils/help_text.py:135
 msgid "Required access code for initial user creation."
 msgstr "کد دسترسی لازم برای ثبت نام اولیه کاربر."
 
-#: core/utils/help_text.py:120
+#: core/utils/help_text.py:136
 msgid "Optional Username or Full Name for middle man reference."
 msgstr "یوزر نیم یا نام کامل شخص واسطه."
 
-#: core/utils/help_text.py:121
+#: core/utils/help_text.py:137
 msgid "150 characters or fewer. Letters, digits and @/./+/-/_ only."
 msgstr "اجباری. 150 کاراکتر یا کمتر. فقط حروف، اعداد و @/./+/-/_."
 
-#: core/utils/help_text.py:122 core/utils/help_text.py:123
+#: core/utils/help_text.py:138 core/utils/help_text.py:139
 msgid "150 characters or fewer."
 msgstr "150 کاراکتر یا کمتر."
 
-#: core/utils/help_text.py:124
+#: core/utils/help_text.py:140
 msgid "The date and time when the user was created."
 msgstr "تاریخ و زمان ایجاد کاربر."
 
-#: core/utils/help_text.py:125
+#: core/utils/help_text.py:141
 msgid "+98 or 09** format accepted."
 msgstr "فرمت +98 یا 09** پذیرفته می‌شود."
 
-#: core/utils/help_text.py:126
+#: core/utils/help_text.py:142
 msgid "Email format accepted."
 msgstr "فرمت ایمیل پذیرفته می‌شود."
 
-#: core/utils/help_text.py:127
+#: core/utils/help_text.py:143
 msgid "Designates whether the user can log into this admin site."
 msgstr "مشخص می‌کند که آیا کاربر می‌تواند وارد این سایت مدیریت شود."
 
-#: core/utils/help_text.py:128
+#: core/utils/help_text.py:144
 msgid ""
 "Designates whether this user should be treated as active. Unselect this "
 "instead of deleting accounts."
-msgstr "به جای پاک کردن کاربرد، تیک این گزینه را بزنید تا کاربر غیر فعال شود."
+msgstr "به جای پاک کردن کاربر، تیک این گزینه را بزنید تا کاربر غیر فعال شود."
 
-#: core/utils/help_text.py:129
+#: core/utils/help_text.py:145
 msgid "The date and time when the user joined."
 msgstr "تاریخ و زمان پیوستن کاربر."
 
-#: core/utils/help_text.py:132
+#: core/utils/help_text.py:148
 msgid "Describe your goals and purposes for marriage in detail."
 msgstr "اهداف و انتظارات خود از ازدواج را شرح دهید."
 
-#: core/utils/help_text.py:133
+#: core/utils/help_text.py:149
 msgid "Select your opinion about a woman's job and employment status."
 msgstr "نظر خود در مورد شغل زنان را انتخاب کنید."
 
-#: core/utils/help_text.py:134
+#: core/utils/help_text.py:150
 msgid "Choose your stance on women's education."
 msgstr "نظر خود در مورد زنان را انتخاب کنید."
 
-#: core/utils/help_text.py:135
+#: core/utils/help_text.py:151
 msgid "List positive traits about yourself."
 msgstr "۵ ویژگی مثبت از خود بنویسید."
 
-#: core/utils/help_text.py:136
+#: core/utils/help_text.py:152
 msgid "List aspects of yourself you wish to improve."
 msgstr "۵ ویژگی منفی و قابل بهبود از خود بنویسید."
 
-#: core/utils/help_text.py:137
+#: core/utils/help_text.py:153
 msgid "Specify the type of connection you prefer with friends."
 msgstr "نوع ارتباط خود با دوستان را بنویسید."
 
-#: core/utils/help_text.py:138
+#: core/utils/help_text.py:154
 msgid "Explain why you connect with friends."
 msgstr "توضیح دهید که چرا ارتباط شما با دوستان اینگونه است."
 
-#: core/utils/help_text.py:139
+#: core/utils/help_text.py:155
 msgid "Indicate whether you have a political orientation."
 msgstr "مشخص کنید که جهت گیری خاص سیاسی دارید یا خیر."
 
-#: core/utils/help_text.py:140
+#: core/utils/help_text.py:156
 msgid "State your opinion on Velayat Faqih."
 msgstr "نظر خود درباره جمهوری اسلامی و ولایت فقیه را بنویسید."
 
-#: core/utils/help_text.py:141
+#: core/utils/help_text.py:157
 msgid "How many children do you prefer to have?"
 msgstr "ترجیه می دهید در آینده چند فرزند داشته باشید؟"
 
-#: core/utils/help_text.py:142
+#: core/utils/help_text.py:158
 msgid "Define how you prefer the marriage contract to be arranged."
 msgstr "ترجیه می دهید که مراسم عقد چگونه برگذار شود."
 
-#: core/utils/help_text.py:143
+#: core/utils/help_text.py:159
 msgid "Choose your preferred wedding arrangement."
 msgstr "ترجیه می دهید که مراسم عروسی چگونه برگذار شود."
 
-#: core/utils/help_text.py:144
+#: core/utils/help_text.py:160
 msgid "Indicate your level of commitment to worship and prayer."
 msgstr "میزان تعهد خود به نماز و عبادات را انتخاب کنید."
 
-#: core/utils/help_text.py:145
+#: core/utils/help_text.py:161
 msgid "Describe your practice regarding fasting."
 msgstr "میزان تعهد خود به روزه را انتخاب کنید."
 
-#: core/utils/help_text.py:146
+#: core/utils/help_text.py:162
 msgid "Choose your preferred clothing style at home."
 msgstr "نظر شما در مورد نوع پوشش زن در خانه چیست؟"
 
-#: core/utils/help_text.py:147
+#: core/utils/help_text.py:163
 msgid "Select your dress preference in society and the workplace."
 msgstr "نظر شما در مورد نوع پوشش زن در محل کار و جامعه چیست؟"
 
-#: core/utils/help_text.py:148
-msgid "How committed are you to attending prayer and Quran religious meetings?"
-msgstr "میزان تعهد خود به مجالس مذهبی، دعا و قرآن را انتخاب کنید."
+#: core/utils/help_text.py:164
+msgid "A unique identifier for this record."
+msgstr "شناسه منحصر به فرد برای رکورد."
 
-#: core/utils/help_text.py:149
-msgid "How often do you listen to music?"
-msgstr "چه مقدار به موسیقی گوش میدهید؟"
+#: core/utils/help_text.py:165
+msgid "Select your level of participation in prayer and Quran meetings."
+msgstr "میزان مشارکت خود در مجالس مذهبی، دعا و قرآن را وارد کنید."
 
-#: core/utils/help_text.py:150
-msgid "Do you participate in dance and singing assemblies?"
-msgstr "چه مقدار در مراسم های رقص و آواز شرکت میکنید؟"
+#: core/utils/help_text.py:166
+msgid "Select your music preference."
+msgstr "میزان گوش دادن به موسیقی و آهنگ را وارد کنید."
 
-#: core/utils/help_text.py:151
-msgid "What is your opinion on innocent contact?"
-msgstr "نظر شما درباره ارتباط با نامحرم چیست؟"
+#: core/utils/help_text.py:167
+msgid "Select your preference for dance and singing assemblies."
+msgstr "میزان مشارکت خود در مجالس رقص و آواز را وارد کنید."
 
-#: core/utils/help_text.py:152
-msgid ""
-"Please select the cover type you prefer in contact with someone innocent."
-msgstr "نظر شما در مورد نوع پوشش زن در زمان حضور نامحرم چیست؟"
+#: core/utils/help_text.py:168
+msgid "Select your opinion about innocent contacts."
+msgstr "به طور کلی در چه مواردی می توان با نامحرم گفتگو کرد؟"
 
-#: core/utils/help_text.py:153
-msgid "How do you prefer to decide when choosing a spouse?"
-msgstr "در انتخاب نهایی همسر مستقل هستید یا نیاز به مشاوره و کمک دارید؟"
+#: core/utils/help_text.py:169
+msgid "Select the cover type for innocent contact situations."
+msgstr "نظر شما در مورد نوع پوشش زن در مهمانی در حضور نامحرم چیست؟"
 
-#: core/utils/help_text.py:154
-msgid "Select the user associated with this intellectual information."
-msgstr "کاربری که این اطلاعات عقیدتی به آن مربوط است را انتخاب کنید."
+#: core/utils/help_text.py:170
+msgid "Select your decision-making approach when choosing a spouse."
+msgstr ""
+"در تصمیم گیری برای انتخاب همسر و ازدواج با افرادی که موسسه انتخاب می‌کند، آیا "
+"مستقل هستید یا دیگران برایتان تصمیم گیری می کنند؟"
 
-#: core/utils/help_text.py:157
+#: core/utils/help_text.py:171
+msgid "Select the user associated with this information."
+msgstr "کاربری که این اطلاعات به آن مربوط است را انتخاب کنید."
+
+#: core/utils/help_text.py:174
 msgid ""
 "Enter the username of the introduced subject. This should be unique and "
 "descriptive."
 msgstr "نام کاربری یا کد فرد معرفی شده را وارد کنید."
 
-#: core/utils/help_text.py:158
+#: core/utils/help_text.py:175
 msgid "Indicate whether the introduction was positive."
 msgstr "مشخص می‌کند که آیا نتیجه گزینه معرفی شده مثبت بوده."
 
-#: core/utils/help_text.py:159
+#: core/utils/help_text.py:176
 msgid "Indicate whether the introduction was negative."
 msgstr "مشخص می‌کند که آیا نتیجه گزینه معرفی شده منفی بوده."
 
-#: core/utils/help_text.py:160
+#: core/utils/help_text.py:177
 msgid "Provide a detailed reason for the introduction's outcome."
 msgstr "توضیحات کاملی در رابطه با نتیجه معرفی بنویسید."
 
-#: core/utils/help_text.py:161
+#: core/utils/help_text.py:178
 msgid "List the dates of meetings with the introduced subject."
 msgstr "تاریخ های ملاقات فرد های معرفی شده را بنویسید."
 
-#: core/utils/help_text.py:162
+#: core/utils/help_text.py:179
 msgid "Summarize the results and any regards from the meetings."
 msgstr "نتیجه و ملاحظات را ذکر کنید."
 
-#: core/utils/help_text.py:163
+#: core/utils/help_text.py:180
 msgid "Specify the cost associated with the introduction."
 msgstr "هزینه معرفی را بنویسید."
 
-#: core/utils/help_text.py:164
+#: core/utils/help_text.py:181
 msgid "Specify the cost associated with the meetings."
 msgstr "هزینه ملاقات را بنویسید."
 
@@ -621,7 +681,7 @@ msgstr "بیمه معلم"
 
 #: core/utils/model_choices.py:14
 msgid "Parsian"
-msgstr "فارسی"
+msgstr "بیمه پارسیان"
 
 #: core/utils/model_choices.py:15
 msgid "Pasargad"
@@ -695,1916 +755,2186 @@ msgstr "بیمه حکمت صبا"
 msgid "Tosehe"
 msgstr "بیمه توسعه"
 
-#: core/utils/model_choices.py:35 core/utils/model_choices.py:260
+#: core/utils/model_choices.py:33 core/utils/model_choices.py:144
+#: core/utils/model_choices.py:264 core/utils/model_choices.py:280
+#: core/utils/model_choices.py:287
+#: core/utils/preferred_wife_model_choices.py:11
+msgid "Other"
+msgstr "دیگر"
+
+#: core/utils/model_choices.py:36
 msgid "Cash"
 msgstr "نقدی"
 
-#: core/utils/model_choices.py:36
+#: core/utils/model_choices.py:37
 msgid "Online"
 msgstr "آنلاین"
 
-#: core/utils/model_choices.py:39
+#: core/utils/model_choices.py:40
 msgid "Under 10M"
 msgstr "کمتر از ۱۰ میلیون تومان"
 
-#: core/utils/model_choices.py:40
+#: core/utils/model_choices.py:41
 msgid "Between 10M to 20M"
 msgstr "۱۰ الی ۲۰ میلیون تومان"
 
-#: core/utils/model_choices.py:41
+#: core/utils/model_choices.py:42
 msgid "Between 20M to 30M"
 msgstr "۲۰ الی ۳۰ میلیون تومان"
 
-#: core/utils/model_choices.py:42
+#: core/utils/model_choices.py:43
 msgid "Between 30M to 40M"
 msgstr "۳۰ الی ۴۰ میلیون تومان"
 
-#: core/utils/model_choices.py:43
+#: core/utils/model_choices.py:44
 msgid "Between 40M to 50M"
 msgstr "۴۰ الی ۵۰ میلیون تومان"
 
-#: core/utils/model_choices.py:44 core/utils/model_choices.py:49
+#: core/utils/model_choices.py:45 core/utils/model_choices.py:50
 msgid "Between 50M to 100M"
 msgstr "۵۰ الی ۱۰۰ میلیون تومان"
 
-#: core/utils/model_choices.py:45
+#: core/utils/model_choices.py:46
 msgid "Plus 100"
 msgstr "بیش از ۱۰۰ میلیون تومان"
 
-#: core/utils/model_choices.py:48
+#: core/utils/model_choices.py:49
 msgid "Under 50M"
 msgstr "کمتر از ۵۰ میلیون تومان"
 
-#: core/utils/model_choices.py:50
+#: core/utils/model_choices.py:51
 msgid "Between 100M to 200M"
 msgstr "۱۰۰ الی ۲۰۰ میلیون تومان"
 
-#: core/utils/model_choices.py:51
+#: core/utils/model_choices.py:52
 msgid "Between 200M to 500M"
 msgstr "۲۰۰ الی ۵۰۰ میلیون تومان"
 
-#: core/utils/model_choices.py:52
+#: core/utils/model_choices.py:53
 msgid "Plus 500M"
 msgstr "بیش از ۵۰۰ میلیون تومان"
 
-#: core/utils/model_choices.py:55 core/utils/preferred_wife_model_choices.py:87
+#: core/utils/model_choices.py:56 core/utils/preferred_wife_model_choices.py:58
 #: venv/lib/python3.13/site-packages/django/forms/widgets.py:795
 msgid "Yes"
 msgstr "بله"
 
-#: core/utils/model_choices.py:56 core/utils/preferred_wife_model_choices.py:88
+#: core/utils/model_choices.py:57 core/utils/preferred_wife_model_choices.py:59
 #: venv/lib/python3.13/site-packages/django/forms/widgets.py:796
 msgid "No"
 msgstr "خیر"
 
-#: core/utils/model_choices.py:57
+#: core/utils/model_choices.py:58
 msgid "Engagement Only"
 msgstr "فقط نامزدی"
 
-#: core/utils/model_choices.py:60
+#: core/utils/model_choices.py:61
 msgid "Husband"
 msgstr "همسر"
 
-#: core/utils/model_choices.py:61
+#: core/utils/model_choices.py:62
 msgid "Blank Birth Certificate"
 msgstr "شناسنامه سفید"
 
-#: core/utils/model_choices.py:64 core/utils/model_choices.py:131
-#: core/utils/model_choices.py:189 core/utils/model_choices.py:210
-#: core/utils/model_choices.py:300
+#: core/utils/model_choices.py:65 core/utils/model_choices.py:125
+#: core/utils/model_choices.py:183 core/utils/model_choices.py:204
+#: core/utils/model_choices.py:253 core/utils/model_choices.py:343
 #: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history_list.html:74
 msgid "None"
 msgstr "هیچ کدام"
 
-#: core/utils/model_choices.py:65
+#: core/utils/model_choices.py:66
 msgid "One Boy"
 msgstr "یک پسر"
 
-#: core/utils/model_choices.py:66
+#: core/utils/model_choices.py:67
 msgid "Two Boys"
 msgstr "دو پسر"
 
-#: core/utils/model_choices.py:67
+#: core/utils/model_choices.py:68
 msgid "Three Boys"
 msgstr "سه پسر"
 
-#: core/utils/model_choices.py:68
+#: core/utils/model_choices.py:69
 msgid "One Girl"
 msgstr "یک دختر"
 
-#: core/utils/model_choices.py:69
+#: core/utils/model_choices.py:70
 msgid "Two Girls"
 msgstr "دو دختر"
 
-#: core/utils/model_choices.py:70
+#: core/utils/model_choices.py:71
 msgid "Three Girls"
 msgstr "سه دختر"
 
-#: core/utils/model_choices.py:73 core/utils/model_choices.py:213
-#: users/user_related_models/family_information_model.py:249
+#: core/utils/model_choices.py:74 core/utils/model_choices.py:207
+#: users/user_related_models/family_information_model.py:289
 msgid "Father"
 msgstr "پدر"
 
-#: core/utils/model_choices.py:74 core/utils/model_choices.py:214
-#: users/user_related_models/family_information_model.py:243
+#: core/utils/model_choices.py:75 core/utils/model_choices.py:208
+#: users/user_related_models/family_information_model.py:281
 msgid "Mother"
 msgstr "مادر"
 
-#: core/utils/model_choices.py:77
+#: core/utils/model_choices.py:78
 msgid "Man"
 msgstr "مرد"
 
-#: core/utils/model_choices.py:78
+#: core/utils/model_choices.py:79 core/utils/model_choices.py:103
 msgid "Woman"
 msgstr "زن"
 
-#: core/utils/model_choices.py:81
+#: core/utils/model_choices.py:82
 msgid "Unlettered"
 msgstr "بی‌سواد"
 
-#: core/utils/model_choices.py:82 core/utils/model_choices.py:192
-#: core/utils/preferred_wife_model_choices.py:6
+#: core/utils/model_choices.py:83 core/utils/model_choices.py:186
 msgid "Under Diploma"
 msgstr "زیر دیپلم"
 
-#: core/utils/model_choices.py:83 core/utils/model_choices.py:193
-#: core/utils/preferred_wife_model_choices.py:7
+#: core/utils/model_choices.py:84 core/utils/model_choices.py:187
 msgid "Diploma"
 msgstr "دیپلم"
 
-#: core/utils/model_choices.py:84 core/utils/model_choices.py:194
-#: core/utils/preferred_wife_model_choices.py:8
+#: core/utils/model_choices.py:85 core/utils/model_choices.py:188
 msgid "Associate Degree"
 msgstr "کاردانی"
 
-#: core/utils/model_choices.py:85
+#: core/utils/model_choices.py:86
 msgid "Bachelor's Degree"
 msgstr "کارشناسی"
 
-#: core/utils/model_choices.py:86
+#: core/utils/model_choices.py:87
 msgid "Master's Degree"
 msgstr "کارشناسی ارشد"
 
-#: core/utils/model_choices.py:87 core/utils/model_choices.py:197
+#: core/utils/model_choices.py:88 core/utils/model_choices.py:191
 msgid "Ph.D."
 msgstr "دکتری"
 
-#: core/utils/model_choices.py:88
+#: core/utils/model_choices.py:89
 msgid "Hoze (Islamic Seminary) LVL 1"
 msgstr "حوزه (سطح 1)"
 
-#: core/utils/model_choices.py:89
+#: core/utils/model_choices.py:90
 msgid "Hoze (Islamic Seminary) LVL 2"
 msgstr "حوزه (سطح 2)"
 
-#: core/utils/model_choices.py:90
+#: core/utils/model_choices.py:91
 msgid "Hoze (Islamic Seminary) LVL 3"
 msgstr "حوزه (سطح 3)"
 
-#: core/utils/model_choices.py:91
+#: core/utils/model_choices.py:92
 msgid "Hoze (Islamic Seminary) LVL 4"
 msgstr "حوزه (سطح 4)"
 
-#: core/utils/model_choices.py:92 core/utils/preferred_wife_model_choices.py:15
+#: core/utils/model_choices.py:93
 msgid "School & Quranic"
-msgstr "مدرسه و قرآن"
+msgstr "مکتبی و قرآنی"
 
-#: core/utils/model_choices.py:95 core/utils/preferred_wife_model_choices.py:18
-msgid "Medical"
-msgstr "پزشکی"
-
-#: core/utils/model_choices.py:96 core/utils/preferred_wife_model_choices.py:19
-msgid "Engineer"
-msgstr "مهندسی"
-
-#: core/utils/model_choices.py:97 core/utils/preferred_wife_model_choices.py:20
-msgid "Human Science"
-msgstr "علوم انسانی"
-
-#: core/utils/model_choices.py:98
-msgid "Hoze Molabas"
-msgstr "حوزه ملبس"
-
-#: core/utils/model_choices.py:99
-msgid "Hoze Not Molabas"
-msgstr "حوزه غیر ملبس"
-
-#: core/utils/model_choices.py:100
-#: core/utils/preferred_wife_model_choices.py:23
-msgid "Art"
-msgstr "هنر"
-
-#: core/utils/model_choices.py:101 core/utils/model_choices.py:221
-#: core/utils/model_choices.py:237 core/utils/model_choices.py:244
-#: core/utils/preferred_wife_model_choices.py:24
-msgid "Other"
-msgstr "دیگر"
-
-#: core/utils/model_choices.py:104
+#: core/utils/model_choices.py:96
 msgid "Exemption"
 msgstr "معافیت"
 
-#: core/utils/model_choices.py:105
+#: core/utils/model_choices.py:97
 msgid "Mother Sponsorship"
 msgstr "کفالت مادر"
 
-#: core/utils/model_choices.py:106
+#: core/utils/model_choices.py:98
 msgid "Father Sponsorship"
 msgstr "کفالت پدر"
 
-#: core/utils/model_choices.py:107
+#: core/utils/model_choices.py:99
 msgid "Educational Exemption"
 msgstr "معافیت تحصیلی"
 
-#: core/utils/model_choices.py:108
+#: core/utils/model_choices.py:100
 msgid "Medical Exemption"
 msgstr "معافیت پزشکی"
 
-#: core/utils/model_choices.py:109
+#: core/utils/model_choices.py:101
 msgid "End of Service"
 msgstr "پایان خدمت"
 
-#: core/utils/model_choices.py:112
+#: core/utils/model_choices.py:102
+msgid "No Service"
+msgstr "پایان خدمت"
+
+#: core/utils/model_choices.py:106
 msgid "Park"
 msgstr "پارک"
 
-#: core/utils/model_choices.py:113 core/utils/model_choices.py:326
+#: core/utils/model_choices.py:107 core/utils/model_choices.py:369
 msgid "Trip"
-msgstr "سفر"
+msgstr "سفر تفریحی"
 
-#: core/utils/model_choices.py:114
+#: core/utils/model_choices.py:108
 msgid "Family"
 msgstr "خانواده"
 
-#: core/utils/model_choices.py:115
+#: core/utils/model_choices.py:109
 msgid "Television"
 msgstr "تلویزیون"
 
-#: core/utils/model_choices.py:116
+#: core/utils/model_choices.py:110
 msgid "Mobile"
 msgstr "موبایل"
 
-#: core/utils/model_choices.py:117
+#: core/utils/model_choices.py:111
 msgid "Reading"
 msgstr "مطالعه"
 
-#: core/utils/model_choices.py:118
+#: core/utils/model_choices.py:112
 msgid "Shrine"
 msgstr "حرم"
 
-#: core/utils/model_choices.py:119
+#: core/utils/model_choices.py:113
 msgid "Jankaran"
 msgstr "جمکران"
 
-#: core/utils/model_choices.py:120
+#: core/utils/model_choices.py:114
 msgid "Cinema"
 msgstr "سینما"
 
-#: core/utils/model_choices.py:121
+#: core/utils/model_choices.py:115
 msgid "Visiting Family"
 msgstr "ملاقات خانواده"
 
-#: core/utils/model_choices.py:122
+#: core/utils/model_choices.py:116
 msgid "Gym"
 msgstr "باشگاه"
 
-#: core/utils/model_choices.py:123
+#: core/utils/model_choices.py:117
 msgid "Poem"
 msgstr "شعر"
 
-#: core/utils/model_choices.py:124 core/utils/model_choices.py:231
-#: core/utils/model_choices.py:274
+#: core/utils/model_choices.py:118 core/utils/model_choices.py:274
+#: core/utils/model_choices.py:316
 msgid "Garden"
 msgstr "باغ"
 
-#: core/utils/model_choices.py:127
+#: core/utils/model_choices.py:121
 msgid "Alcoholic Drinks"
 msgstr "مشروبات الکلی"
 
-#: core/utils/model_choices.py:128
+#: core/utils/model_choices.py:122
 msgid "Drugs"
 msgstr "مواد مخدر"
 
-#: core/utils/model_choices.py:129
+#: core/utils/model_choices.py:123
 msgid "Cigarettes"
 msgstr "سیگار"
 
-#: core/utils/model_choices.py:130
+#: core/utils/model_choices.py:124
 msgid "Hookah"
 msgstr "قلیان"
 
-#: core/utils/model_choices.py:134
-#: core/utils/preferred_wife_model_choices.py:36
+#: core/utils/model_choices.py:128
 msgid "Very Bright"
 msgstr "بسیار روشن"
 
-#: core/utils/model_choices.py:135
-#: core/utils/preferred_wife_model_choices.py:37
+#: core/utils/model_choices.py:129
+msgid "Bor"
+msgstr "بور"
+
+#: core/utils/model_choices.py:130
 msgid "Fair"
 msgstr "معمولی"
 
-#: core/utils/model_choices.py:136
-#: core/utils/preferred_wife_model_choices.py:38
+#: core/utils/model_choices.py:131
 msgid "White"
 msgstr "سفید"
 
-#: core/utils/model_choices.py:137
-#: core/utils/preferred_wife_model_choices.py:39
+#: core/utils/model_choices.py:132
 msgid "Wheat"
 msgstr "گندمی"
 
-#: core/utils/model_choices.py:138
-#: venv/lib/python3.13/site-packages/unfold/widgets.py:532
-msgid "Date"
-msgstr "تاریخ"
-
-#: core/utils/model_choices.py:139 core/utils/model_choices.py:153
-#: core/utils/preferred_wife_model_choices.py:40
+#: core/utils/model_choices.py:133 core/utils/model_choices.py:147
 msgid "Green"
 msgstr "سبز"
 
-#: core/utils/model_choices.py:140
-#: core/utils/preferred_wife_model_choices.py:41
+#: core/utils/model_choices.py:134
 msgid "Olive"
 msgstr "زیتونی"
 
-#: core/utils/model_choices.py:141
-#: core/utils/preferred_wife_model_choices.py:42
+#: core/utils/model_choices.py:135
 msgid "Darken"
 msgstr "تیره"
 
-#: core/utils/model_choices.py:142 core/utils/model_choices.py:161
-#: core/utils/preferred_wife_model_choices.py:43
+#: core/utils/model_choices.py:136 core/utils/model_choices.py:155
 msgid "Black"
 msgstr "سیاه"
 
-#: core/utils/model_choices.py:143
-#: core/utils/preferred_wife_model_choices.py:44
+#: core/utils/model_choices.py:137
 msgid "Bright Brown"
 msgstr "قهوه‌ای روشن"
 
-#: core/utils/model_choices.py:144
-#: core/utils/preferred_wife_model_choices.py:45
+#: core/utils/model_choices.py:138
 msgid "Darken Brown"
 msgstr "قهوه‌ای تیره"
 
-#: core/utils/model_choices.py:145 core/utils/model_choices.py:346
-#: core/utils/preferred_wife_model_choices.py:46
-msgid "Normal"
-msgstr "عادی و  معمولی"
-
-#: core/utils/model_choices.py:146
-#: core/utils/preferred_wife_model_choices.py:47
+#: core/utils/model_choices.py:139
 msgid "Bright"
 msgstr "روشن"
 
-#: core/utils/model_choices.py:147
-#: core/utils/preferred_wife_model_choices.py:48
+#: core/utils/model_choices.py:140
 msgid "Yellow"
 msgstr "زرد"
 
-#: core/utils/model_choices.py:148
-#: core/utils/preferred_wife_model_choices.py:49
+#: core/utils/model_choices.py:141
 msgid "Whitish White"
 msgstr "سفید مایل به خاکی"
 
-#: core/utils/model_choices.py:149
-#: core/utils/preferred_wife_model_choices.py:50
+#: core/utils/model_choices.py:142
 msgid "Red & White"
 msgstr "قرمز و سفید"
 
-#: core/utils/model_choices.py:150
-#: core/utils/preferred_wife_model_choices.py:51
+#: core/utils/model_choices.py:143
 msgid "Bright Green"
-msgstr "سبز روشن"
+msgstr "سبزه روشن"
 
-#: core/utils/model_choices.py:154
+#: core/utils/model_choices.py:148
 msgid "Light Blue"
 msgstr "آبی روشن"
 
-#: core/utils/model_choices.py:155
+#: core/utils/model_choices.py:149
 msgid "Hazel"
 msgstr "فندقی"
 
-#: core/utils/model_choices.py:156
+#: core/utils/model_choices.py:150
 msgid "Darken Blue"
 msgstr "آبی تیره"
 
-#: core/utils/model_choices.py:157
+#: core/utils/model_choices.py:151
 msgid "Grey"
-msgstr "خاکی"
+msgstr "خاکستری"
 
-#: core/utils/model_choices.py:158
+#: core/utils/model_choices.py:152
 msgid "Honey"
 msgstr "عسلی"
 
-#: core/utils/model_choices.py:159
+#: core/utils/model_choices.py:153
 msgid "Purple"
 msgstr "بنفش"
 
-#: core/utils/model_choices.py:160
+#: core/utils/model_choices.py:154
 msgid "Brown"
 msgstr "قهوه‌ای"
 
-#: core/utils/model_choices.py:164
+#: core/utils/model_choices.py:158
 msgid "O+"
 msgstr "O+"
 
-#: core/utils/model_choices.py:165
+#: core/utils/model_choices.py:159
 msgid "O-"
 msgstr "O-"
 
-#: core/utils/model_choices.py:166
+#: core/utils/model_choices.py:160
 msgid "A+"
 msgstr "A+"
 
-#: core/utils/model_choices.py:167
+#: core/utils/model_choices.py:161
 msgid "A-"
 msgstr "A-"
 
-#: core/utils/model_choices.py:168
+#: core/utils/model_choices.py:162
 msgid "B+"
 msgstr "B+"
 
-#: core/utils/model_choices.py:169
+#: core/utils/model_choices.py:163
 msgid "B-"
 msgstr "B-"
 
-#: core/utils/model_choices.py:170
+#: core/utils/model_choices.py:164
 msgid "AB+"
 msgstr "AB+"
 
-#: core/utils/model_choices.py:171
+#: core/utils/model_choices.py:165
 msgid "AB-"
 msgstr "AB-"
 
-#: core/utils/model_choices.py:174
+#: core/utils/model_choices.py:168
 msgid "Safravi (Hot & Dry)"
 msgstr "صفراوی (گرم و خشک)"
 
-#: core/utils/model_choices.py:175
+#: core/utils/model_choices.py:169
 msgid "Damvi (Hot & Wet)"
 msgstr "دموی (گرم و تر)"
 
-#: core/utils/model_choices.py:176
+#: core/utils/model_choices.py:170
 msgid "Sodavi (Cold & Dry)"
 msgstr "سوداوی (سرد و خشک)"
 
-#: core/utils/model_choices.py:177
+#: core/utils/model_choices.py:171
 msgid "Balghami (Cold & Wet)"
 msgstr "بلغمی (سرد و تر)"
 
-#: core/utils/model_choices.py:180 core/utils/model_choices.py:296
+#: core/utils/model_choices.py:174 core/utils/model_choices.py:339
 msgid "Excellent"
 msgstr "عالی"
 
-#: core/utils/model_choices.py:181 core/utils/model_choices.py:202
-#: core/utils/model_choices.py:297
+#: core/utils/model_choices.py:175 core/utils/model_choices.py:196
+#: core/utils/model_choices.py:340
 msgid "Good"
 msgstr "خوب"
 
-#: core/utils/model_choices.py:182 core/utils/model_choices.py:203
-#: core/utils/model_choices.py:298 core/utils/model_choices.py:356
-#: core/utils/model_choices.py:363 core/utils/model_choices.py:370
+#: core/utils/model_choices.py:176 core/utils/model_choices.py:197
+#: core/utils/model_choices.py:341 core/utils/model_choices.py:401
+#: core/utils/model_choices.py:408 core/utils/model_choices.py:415
 msgid "Average"
 msgstr "متوسط"
 
-#: core/utils/model_choices.py:183
+#: core/utils/model_choices.py:177
 msgid "Suitable"
 msgstr "مناسب"
 
-#: core/utils/model_choices.py:184
+#: core/utils/model_choices.py:178
 msgid "Nice Face"
 msgstr "خوش چهره"
 
-#: core/utils/model_choices.py:185
+#: core/utils/model_choices.py:179
 msgid "Nice Body"
 msgstr "خوش اندام"
 
-#: core/utils/model_choices.py:186
+#: core/utils/model_choices.py:180
 msgid "Looks Older"
-msgstr "بزرگتر به نظر برسد"
+msgstr "بزرگتر به نظر می رسد"
 
-#: core/utils/model_choices.py:187
+#: core/utils/model_choices.py:181
 msgid "Looks Younger"
-msgstr "جوانتر به نظر برسد"
+msgstr "جوانتر به نظر می رسد"
 
-#: core/utils/model_choices.py:188
+#: core/utils/model_choices.py:182
 msgid "Satisfied"
 msgstr "در هر حالت راضیم"
 
-#: core/utils/model_choices.py:195
+#: core/utils/model_choices.py:189
 msgid "Bachelor's"
 msgstr "کارشناسی"
 
-#: core/utils/model_choices.py:196
+#: core/utils/model_choices.py:190
 msgid "Master's"
 msgstr "کارشناسی ارشد"
 
-#: core/utils/model_choices.py:198
+#: core/utils/model_choices.py:192
 msgid "Hoze"
 msgstr "حوزه"
 
-#: core/utils/model_choices.py:201
+#: core/utils/model_choices.py:195
 msgid "Perfect"
 msgstr "عالی"
 
-#: core/utils/model_choices.py:204 core/utils/model_choices.py:299
+#: core/utils/model_choices.py:198 core/utils/model_choices.py:342
 msgid "Weak"
 msgstr "کم"
 
-#: core/utils/model_choices.py:207
+#: core/utils/model_choices.py:201
 msgid "Engagement"
 msgstr "نامزدی"
 
-#: core/utils/model_choices.py:208
+#: core/utils/model_choices.py:202
 msgid "Contract"
 msgstr "عقد"
 
-#: core/utils/model_choices.py:209
+#: core/utils/model_choices.py:203
 msgid "Wedding"
 msgstr "عروسی"
 
-#: core/utils/model_choices.py:219 core/utils/model_choices.py:242
-msgid "Father's House"
-msgstr "منزل پدر"
+#: core/utils/model_choices.py:211
+msgid "Groomm"
+msgstr "داماد"
 
-#: core/utils/model_choices.py:220 core/utils/model_choices.py:243
-msgid "Mother's House"
-msgstr "منزل مادر"
+#: core/utils/model_choices.py:212
+msgid "Zan Dadash"
+msgstr "زن داداش"
 
-#: core/utils/model_choices.py:224 core/utils/model_choices.py:240
-msgid "Owner"
-msgstr "صاحب خانه"
+#: core/utils/model_choices.py:215
+msgid "Bride"
+msgstr "عروس"
+
+#: core/utils/model_choices.py:216
+msgid "Shohar Khahar"
+msgstr "سوشهر خواهر"
+
+#: core/utils/model_choices.py:219
+msgid "Alborzz"
+msgstr "البرز"
+
+#: core/utils/model_choices.py:220
+msgid "Ardabil"
+msgstr "اردبیل"
+
+#: core/utils/model_choices.py:221
+msgid "Bushehr"
+msgstr "بوشهر"
+
+#: core/utils/model_choices.py:222
+msgid "Chaharmahal and Bakhtiari"
+msgstr "چهارمحال و بختیاری"
+
+#: core/utils/model_choices.py:223
+msgid "East Azerbaijan"
+msgstr "آذربایجان شرقی"
+
+#: core/utils/model_choices.py:224
+msgid "Esfahan"
+msgstr "اصفهان"
 
 #: core/utils/model_choices.py:225
-msgid "Rent"
-msgstr "اجاره ای"
+msgid "Fars"
+msgstr "فارس"
+
+#: core/utils/model_choices.py:226
+msgid "Gilan"
+msgstr "گیلان"
+
+#: core/utils/model_choices.py:227
+msgid "Golestan"
+msgstr "گلستان"
 
 #: core/utils/model_choices.py:228
-msgid "House"
-msgstr "خانه"
+msgid "Hamadan"
+msgstr "همدان"
 
 #: core/utils/model_choices.py:229
-msgid "Shop"
-msgstr "مغازه"
+msgid "Hormozgan"
+msgstr "هرمزگان"
 
-#: core/utils/model_choices.py:230 core/utils/model_choices.py:272
-msgid "Land"
-msgstr "زمین"
+#: core/utils/model_choices.py:230
+msgid "Ilam"
+msgstr "ایلام"
+
+#: core/utils/model_choices.py:231
+msgid "Kerman"
+msgstr "کرمان"
 
 #: core/utils/model_choices.py:232
-msgid "Factory"
-msgstr "کارخانه"
+msgid "Kermanshah"
+msgstr "کرمانشاه"
 
 #: core/utils/model_choices.py:233
-msgid "Company"
-msgstr "شرکت"
+msgid "Khuzestan"
+msgstr "خوزستان"
 
 #: core/utils/model_choices.py:234
-msgid "Motorcycle"
-msgstr "موتور"
+msgid "Kohgiluyeh and Boyer-Ahmad"
+msgstr "کهگیلویه و بویراحمد"
 
-#: core/utils/model_choices.py:235 core/utils/model_choices.py:273
-msgid "Car"
-msgstr "ماشین"
+#: core/utils/model_choices.py:235
+msgid "Kurdistan"
+msgstr "کردستان"
 
 #: core/utils/model_choices.py:236
-msgid "Gold"
-msgstr "طلا"
+msgid "Lorestan"
+msgstr "لرستان"
+
+#: core/utils/model_choices.py:237
+msgid "Markazi"
+msgstr "مرکزی"
+
+#: core/utils/model_choices.py:238
+msgid "Mazandaran"
+msgstr "مازندران"
+
+#: core/utils/model_choices.py:239
+msgid "North Khorasan"
+msgstr "خوراسان شمالی"
+
+#: core/utils/model_choices.py:240
+msgid "Qazvin"
+msgstr "قزوین"
 
 #: core/utils/model_choices.py:241
-msgid "Mortgage"
-msgstr "رهن"
+msgid "Qom"
+msgstr "قم"
+
+#: core/utils/model_choices.py:242
+msgid "Razavi Khorasan"
+msgstr "خراسان رضوی"
+
+#: core/utils/model_choices.py:243
+msgid "Semnan"
+msgstr "سمنان"
+
+#: core/utils/model_choices.py:244
+msgid "Sistan and Baluchestan"
+msgstr "سیستان و بلوچستان"
+
+#: core/utils/model_choices.py:245
+msgid "South Khorasan"
+msgstr "خراسان جنوبی"
+
+#: core/utils/model_choices.py:246
+msgid "Tehran"
+msgstr "تهران"
 
 #: core/utils/model_choices.py:247
-msgid "Does"
-msgstr "دارد"
+msgid "West Azerbaijan"
+msgstr "آذربایجان غربی"
 
 #: core/utils/model_choices.py:248
-msgid "Doesn't"
-msgstr "ندارد"
+msgid "Yazd"
+msgstr "یزد"
 
 #: core/utils/model_choices.py:249
-msgid "Wants"
-msgstr "میخواهد"
+msgid "Zanjan"
+msgstr "زنجان"
 
-#: core/utils/model_choices.py:250
-msgid "Doesn't Want"
-msgstr "نمی خواهد"
-
-#: core/utils/model_choices.py:251
-msgid "Man Should Help"
-msgstr "مرد باید کمک کند"
-
-#: core/utils/model_choices.py:252 core/utils/model_choices.py:275
-#: core/utils/model_choices.py:313 core/utils/model_choices.py:320
-#: core/utils/model_choices.py:328
-#: core/utils/preferred_wife_model_choices.py:33
-msgid "Agreement"
-msgstr "توافقی"
-
-#: core/utils/model_choices.py:255
-msgid "Monthly"
-msgstr "ماهانه"
-
-#: core/utils/model_choices.py:256
-msgid "Yearly"
-msgstr "سالانه"
-
-#: core/utils/model_choices.py:257
-msgid "Two Years"
-msgstr "دو سال"
-
-#: core/utils/model_choices.py:261
-msgid "Rights"
-msgstr "بذل حقوق"
-
-#: core/utils/model_choices.py:262
-msgid "Settled"
-msgstr "تسویه شده"
-
-#: core/utils/model_choices.py:263
-msgid "Creditor"
-msgstr "طلبکار"
-
-#: core/utils/model_choices.py:264
-msgid "Debtor"
-msgstr "بدهکار"
-
-#: core/utils/model_choices.py:267
-msgid "Mecca"
-msgstr "شهر مکه"
-
-#: core/utils/model_choices.py:268
-msgid "Gifts from Iraq"
-msgstr "سفر به عراق"
-
-#: core/utils/model_choices.py:269
-msgid "Gifts from Syria"
-msgstr "سفر به سوریه"
-
-#: core/utils/model_choices.py:270
-msgid "Gold Coin"
-msgstr "سکه طلا"
-
-#: core/utils/model_choices.py:271
-msgid "Money"
-msgstr "پول نقد"
-
-#: core/utils/model_choices.py:280 core/utils/model_choices.py:290
-#: core/utils/model_choices.py:335 core/utils/model_choices.py:341
-msgid "Disagree"
-msgstr "مخالف"
-
-#: core/utils/model_choices.py:281 core/utils/model_choices.py:291
-#: core/utils/model_choices.py:303
-msgid "Agree"
-msgstr "موافق"
-
-#: core/utils/model_choices.py:282
-msgid "Must have a job"
-msgstr "باید شاغل باشد"
-
-#: core/utils/model_choices.py:283
-msgid "Depends on Work Environment"
-msgstr "بستگی به مکان شغل دارد."
-
-#: core/utils/model_choices.py:284
-msgid "Depends on Job Type"
-msgstr "بستگی به نوع شغل دارد."
-
-#: core/utils/model_choices.py:285
-msgid "Womanly Job"
-msgstr "شغل زنانه"
-
-#: core/utils/model_choices.py:286
-msgid "Housekeeper"
-msgstr "خانه‌دار"
-
-#: core/utils/model_choices.py:287 core/utils/model_choices.py:293
-msgid "Depends On Spouse Opinion"
-msgstr "بستگی به نظر همسرم دارد."
-
-#: core/utils/model_choices.py:292
-msgid "Depends on the Degree"
-msgstr "بستگی به رشته دارد."
-
-#: core/utils/model_choices.py:304
-msgid "No Opinion"
-msgstr "نظری ندارم"
-
-#: core/utils/model_choices.py:307
-msgid "Don't Want"
-msgstr "نمیخواهم"
-
-#: core/utils/model_choices.py:308
-#: core/utils/preferred_wife_model_choices.py:89
-msgid "Depends"
-msgstr "بستگی دارد"
-
-#: core/utils/model_choices.py:309
-msgid "1"
-msgstr "یک فرزند"
-
-#: core/utils/model_choices.py:310
-msgid "2"
-msgstr "دو فرزند"
-
-#: core/utils/model_choices.py:311
-msgid "3"
-msgstr "سه فرزند"
-
-#: core/utils/model_choices.py:312
-msgid "More than 3"
-msgstr "بیش از سه فرزند"
-
-#: core/utils/model_choices.py:316
-msgid "In the Registry"
-msgstr "عقد در محضر"
-
-#: core/utils/model_choices.py:317 core/utils/model_choices.py:323
-msgid "In House & Family"
-msgstr "عقد در منزل و جشن خانوادگی"
-
-#: core/utils/model_choices.py:318 core/utils/model_choices.py:324
-msgid "In the Hall"
-msgstr "عقد و جشن در تالار"
-
-#: core/utils/model_choices.py:319 core/utils/model_choices.py:327
-#: core/utils/model_choices.py:334 core/utils/model_choices.py:358
-#: core/utils/model_choices.py:377
+#: core/utils/model_choices.py:250 core/utils/model_choices.py:362
+#: core/utils/model_choices.py:370 core/utils/model_choices.py:377
+#: core/utils/model_choices.py:385 core/utils/model_choices.py:403
+#: core/utils/model_choices.py:422
 msgid "Doesn't Matter"
 msgstr "اهمیت ندارد"
 
+#: core/utils/model_choices.py:254 core/utils/model_choices.py:352
+msgid "1"
+msgstr "یک فرزند"
+
+#: core/utils/model_choices.py:255 core/utils/model_choices.py:353
+msgid "2"
+msgstr "دو فرزند"
+
+#: core/utils/model_choices.py:256 core/utils/model_choices.py:354
+msgid "3"
+msgstr "سه فرزند"
+
+#: core/utils/model_choices.py:257
+msgid "+3"
+msgstr "بیش از سه فرزند"
+
+#: core/utils/model_choices.py:262 core/utils/model_choices.py:285
+msgid "Father's House"
+msgstr "منزل پدر"
+
+#: core/utils/model_choices.py:263 core/utils/model_choices.py:286
+msgid "Mother's House"
+msgstr "منزل مادر"
+
+#: core/utils/model_choices.py:267 core/utils/model_choices.py:283
+msgid "Owner"
+msgstr "صاحب خانه"
+
+#: core/utils/model_choices.py:268
+msgid "Rent"
+msgstr "اجاره ای"
+
+#: core/utils/model_choices.py:271 core/utils/model_choices.py:317
+msgid "House"
+msgstr "خانه"
+
+#: core/utils/model_choices.py:272
+msgid "Shop"
+msgstr "مغازه"
+
+#: core/utils/model_choices.py:273 core/utils/model_choices.py:314
+msgid "Land"
+msgstr "زمین"
+
+#: core/utils/model_choices.py:275
+msgid "Factory"
+msgstr "کارخانه"
+
+#: core/utils/model_choices.py:276
+msgid "Company"
+msgstr "شرکت"
+
+#: core/utils/model_choices.py:277
+msgid "Motorcycle"
+msgstr "موتور"
+
+#: core/utils/model_choices.py:278 core/utils/model_choices.py:315
+msgid "Car"
+msgstr "ماشین"
+
+#: core/utils/model_choices.py:279 core/utils/model_choices.py:312
+msgid "Gold"
+msgstr "طلا"
+
+#: core/utils/model_choices.py:284
+msgid "Mortgage"
+msgstr "رهن"
+
+#: core/utils/model_choices.py:290
+msgid "Does"
+msgstr "جهیزیه دارم"
+
+#: core/utils/model_choices.py:291
+msgid "Doesn't"
+msgstr "جهیزیه نیاز ندارم"
+
+#: core/utils/model_choices.py:292
+msgid "Wants"
+msgstr "جهیزیه میخواهد"
+
+#: core/utils/model_choices.py:293
+msgid "Doesn't Want"
+msgstr "جهیزیه نمیخواهم"
+
+#: core/utils/model_choices.py:294
+msgid "Man Should Help"
+msgstr "کمک هزینه جهیزیه از طرف مرد صورت بگیرد."
+
+#: core/utils/model_choices.py:295 core/utils/model_choices.py:318
+#: core/utils/model_choices.py:356 core/utils/model_choices.py:363
+#: core/utils/model_choices.py:371
+#: core/utils/preferred_wife_model_choices.py:21
+msgid "Agreement"
+msgstr "توافقی"
+
+#: core/utils/model_choices.py:298
+msgid "Monthly"
+msgstr "ماهانه"
+
+#: core/utils/model_choices.py:299
+msgid "Yearly"
+msgstr "سالانه"
+
+#: core/utils/model_choices.py:300
+msgid "Two Years"
+msgstr "دو سال"
+
+#: core/utils/model_choices.py:303
+msgid "Rights"
+msgstr "بذل حقوق"
+
+#: core/utils/model_choices.py:304
+msgid "Settled"
+msgstr "تسویه شده"
+
+#: core/utils/model_choices.py:305
+msgid "Creditor"
+msgstr "طلبکار"
+
+#: core/utils/model_choices.py:306
+msgid "Debtor"
+msgstr "بدهکار"
+
+#: core/utils/model_choices.py:309
+msgid "Mecca"
+msgstr "مکه"
+
+#: core/utils/model_choices.py:310
+msgid "Iraq"
+msgstr "عراق"
+
+#: core/utils/model_choices.py:311
+msgid "Syria"
+msgstr "سوریه"
+
+#: core/utils/model_choices.py:313
+msgid "Money"
+msgstr "پول"
+
+#: core/utils/model_choices.py:323 core/utils/model_choices.py:333
+#: core/utils/model_choices.py:378 core/utils/model_choices.py:384
+msgid "Disagree"
+msgstr "مخالف"
+
+#: core/utils/model_choices.py:324 core/utils/model_choices.py:334
+#: core/utils/model_choices.py:346
+msgid "Agree"
+msgstr "موافق"
+
 #: core/utils/model_choices.py:325
+msgid "Must have a job"
+msgstr "باید شاغل باشم."
+
+#: core/utils/model_choices.py:326
+msgid "Depends on Work Environment"
+msgstr "بستگی به مکان شغل دارد."
+
+#: core/utils/model_choices.py:327
+msgid "Depends on Job Type"
+msgstr "بستگی به نوع شغل دارد."
+
+#: core/utils/model_choices.py:328
+#: core/utils/preferred_wife_model_choices.py:71
+msgid "Womanly Job"
+msgstr "شغل زنانه"
+
+#: core/utils/model_choices.py:329
+msgid "Housejob"
+msgstr "شغل خانگی"
+
+#: core/utils/model_choices.py:330 core/utils/model_choices.py:336
+msgid "Depends On Spouse Opinion"
+msgstr "بستگی به نظر همسرم دارد."
+
+#: core/utils/model_choices.py:335
+msgid "Depends on the Degree"
+msgstr "بستگی به رشته دارد."
+
+#: core/utils/model_choices.py:347
+msgid "No Opinion"
+msgstr "نظری ندارم"
+
+#: core/utils/model_choices.py:350
+msgid "Don't Want"
+msgstr "نمیخواهم"
+
+#: core/utils/model_choices.py:351
+#: core/utils/preferred_wife_model_choices.py:60
+msgid "Depends"
+msgstr "بستگی دارد"
+
+#: core/utils/model_choices.py:355
+msgid "More than 3"
+msgstr "بیش از سه فرزند"
+
+#: core/utils/model_choices.py:359
+msgid "In the Registry"
+msgstr "عقد در محضر"
+
+#: core/utils/model_choices.py:360 core/utils/model_choices.py:366
+msgid "In House & Family"
+msgstr "عقد در منزل و جشن خانوادگی"
+
+#: core/utils/model_choices.py:361 core/utils/model_choices.py:367
+msgid "In the Hall"
+msgstr "عقد و جشن در تالار"
+
+#: core/utils/model_choices.py:368
 msgid "Pilgrimage"
 msgstr "سفر زیارتی"
 
-#: core/utils/model_choices.py:331 core/utils/model_choices.py:338
+#: core/utils/model_choices.py:374 core/utils/model_choices.py:381
 msgid "Fully Obligated"
 msgstr "کاملا مقید"
 
-#: core/utils/model_choices.py:332 core/utils/model_choices.py:339
+#: core/utils/model_choices.py:375 core/utils/model_choices.py:382
 msgid "Sometimes"
 msgstr "گاهی اوقات"
 
-#: core/utils/model_choices.py:333 core/utils/model_choices.py:340
+#: core/utils/model_choices.py:376 core/utils/model_choices.py:383
 msgid "Not Obligated"
 msgstr "مقید نیستم"
 
-#: core/utils/model_choices.py:342
+#: core/utils/model_choices.py:386
 msgid "Sick"
 msgstr "بیمار"
 
-#: core/utils/model_choices.py:345
+#: core/utils/model_choices.py:389 core/utils/model_choices.py:396
 msgid "Cozy & Attractive"
 msgstr "راحت و جذاب"
 
-#: core/utils/model_choices.py:349
+#: core/utils/model_choices.py:390
+msgid "Normal"
+msgstr "معمولی"
+
+#: core/utils/model_choices.py:393
 msgid "Only Chador"
 msgstr "فقط چادر"
 
-#: core/utils/model_choices.py:350
+#: core/utils/model_choices.py:394
 msgid "Formal Manto"
 msgstr "رسمی مانتویی"
 
-#: core/utils/model_choices.py:351
+#: core/utils/model_choices.py:395
 msgid "Colored Chador"
 msgstr "چادر رنگی"
 
-#: core/utils/model_choices.py:354 core/utils/model_choices.py:361
-#: core/utils/model_choices.py:368
-#: core/utils/preferred_wife_model_choices.py:70
+#: core/utils/model_choices.py:399 core/utils/model_choices.py:406
+#: core/utils/model_choices.py:413
+#: core/utils/preferred_wife_model_choices.py:41
 msgid "Too Much"
 msgstr "خیلی زیاد"
 
-#: core/utils/model_choices.py:355 core/utils/model_choices.py:362
-#: core/utils/model_choices.py:369
-#: core/utils/preferred_wife_model_choices.py:71
+#: core/utils/model_choices.py:400 core/utils/model_choices.py:407
+#: core/utils/model_choices.py:414
+#: core/utils/preferred_wife_model_choices.py:42
 msgid "Much"
 msgstr "زیاد"
 
-#: core/utils/model_choices.py:357 core/utils/model_choices.py:364
-#: core/utils/model_choices.py:371
-#: core/utils/preferred_wife_model_choices.py:73
+#: core/utils/model_choices.py:402 core/utils/model_choices.py:409
+#: core/utils/model_choices.py:416
+#: core/utils/preferred_wife_model_choices.py:44
 msgid "Low"
 msgstr "کم"
 
-#: core/utils/model_choices.py:365 core/utils/model_choices.py:372
-#: core/utils/preferred_wife_model_choices.py:77
+#: core/utils/model_choices.py:410 core/utils/model_choices.py:417
+#: core/utils/preferred_wife_model_choices.py:48
 msgid "Never"
 msgstr "هرگز"
 
-#: core/utils/model_choices.py:375
+#: core/utils/model_choices.py:420
 msgid "Daily Matters"
 msgstr "امور روزمره و ضروریات"
 
-#: core/utils/model_choices.py:376
+#: core/utils/model_choices.py:421
 msgid "Work Matters"
 msgstr "امور کاری"
 
-#: core/utils/model_choices.py:380
+#: core/utils/model_choices.py:425
 msgid "Always Chador"
 msgstr "همیشه چادر"
 
-#: core/utils/model_choices.py:381
+#: core/utils/model_choices.py:426
 msgid "Always Coverd Manto"
 msgstr "همیشه مانتویی پوشیده"
 
-#: core/utils/model_choices.py:382
+#: core/utils/model_choices.py:427
 msgid "Always Free Manto"
 msgstr "همیشه مانتویی آزاد"
 
-#: core/utils/model_choices.py:383
+#: core/utils/model_choices.py:428
 msgid "Sometimes Chador"
 msgstr "گاهی چادر"
 
-#: core/utils/model_choices.py:384
+#: core/utils/model_choices.py:429
 msgid "Sometimes Coverd Manto"
 msgstr "گاهی مانتویی پوشیده"
 
-#: core/utils/model_choices.py:385
+#: core/utils/model_choices.py:430
 msgid "Sometimes Free Manto"
 msgstr "گاهی مانتویی آزاد"
 
-#: core/utils/model_choices.py:389
+#: core/utils/model_choices.py:434
 msgid "Dependent"
 msgstr "مستقل هستم"
 
-#: core/utils/model_choices.py:390
+#: core/utils/model_choices.py:435
 msgid "Independet"
 msgstr "وابسته هستم"
 
-#: core/utils/model_choices.py:391
+#: core/utils/model_choices.py:436
 msgid "Counsole with Parents"
 msgstr "مشورت با والدین"
 
-#: core/utils/model_choices.py:392
+#: core/utils/model_choices.py:437
 msgid "Counsole with Brothers and Sisters"
 msgstr "مشورت با خواهران و برادران"
 
-#: core/utils/model_choices.py:393
+#: core/utils/model_choices.py:438
 msgid "Counsole with Childs"
 msgstr "مشورت با فرزندان"
 
-#: core/utils/model_choices.py:394
+#: core/utils/model_choices.py:439
 msgid "Counsole with Professional"
 msgstr "مشورت با متخصص"
 
-#: core/utils/model_error_messages.py:5
+#: core/utils/model_error_messages.py:4
 msgid "This username is already taken."
 msgstr "این نام کاربری قبلاً گرفته شده است."
 
-#: core/utils/model_error_messages.py:6
+#: core/utils/model_error_messages.py:5
 msgid "Username cannot be blank."
 msgstr "نام کاربری نمی تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:7
+#: core/utils/model_error_messages.py:6
 msgid "Username cannot be null."
 msgstr "نام کاربری نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:8
+#: core/utils/model_error_messages.py:7
 msgid "Username cannot exceed 150 characters."
 msgstr "نام کاربری نمی‌تواند بیشتر از 150 کاراکتر باشد."
 
-#: core/utils/model_error_messages.py:9
+#: core/utils/model_error_messages.py:8
 msgid "Username is invalid."
 msgstr "نام کاربری نامعتبر است."
 
-#: core/utils/model_error_messages.py:12
+#: core/utils/model_error_messages.py:11
 msgid "This email is already taken."
 msgstr "این ایمیل قبلاً گرفته شده است."
 
-#: core/utils/model_error_messages.py:13
+#: core/utils/model_error_messages.py:12
 msgid "Email cannot be blank."
 msgstr "ایمیل نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:14
+#: core/utils/model_error_messages.py:13
 msgid "Email cannot be null."
 msgstr "ایمیل نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:15
+#: core/utils/model_error_messages.py:14
 msgid "Email is invalid."
 msgstr "ایمیل نامعتبر است."
 
-#: core/utils/model_error_messages.py:18
+#: core/utils/model_error_messages.py:17
 msgid "This phone number is already taken."
 msgstr "این شماره تلفن قبلاً گرفته شده است."
 
-#: core/utils/model_error_messages.py:19
+#: core/utils/model_error_messages.py:18
 msgid "Phone number cannot be blank."
 msgstr "شماره تلفن نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:20
+#: core/utils/model_error_messages.py:19
 msgid "Phone number cannot be null."
 msgstr "شماره تلفن نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:21
+#: core/utils/model_error_messages.py:20
 msgid "Phone number is invalid."
 msgstr "شماره تلفن نامعتبر است."
 
-#: core/utils/model_error_messages.py:24 core/utils/model_error_messages.py:67
+#: core/utils/model_error_messages.py:23 core/utils/model_error_messages.py:66
 msgid "Access code cannot be blank."
 msgstr "کد دسترسی نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:25 core/utils/model_error_messages.py:68
+#: core/utils/model_error_messages.py:24 core/utils/model_error_messages.py:67
 msgid "Access code cannot be null."
 msgstr "کد دسترسی نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:26 core/utils/model_error_messages.py:69
+#: core/utils/model_error_messages.py:25 core/utils/model_error_messages.py:68
 msgid "Access code is invalid."
 msgstr "کد دسترسی نامعتبر است."
 
-#: core/utils/model_error_messages.py:29 core/utils/model_error_messages.py:84
+#: core/utils/model_error_messages.py:28 core/utils/model_error_messages.py:83
 msgid "First name cannot be blank."
 msgstr "نام نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:30 core/utils/model_error_messages.py:85
+#: core/utils/model_error_messages.py:29 core/utils/model_error_messages.py:84
 msgid "First name cannot be null."
 msgstr "نام نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:31
+#: core/utils/model_error_messages.py:30
 msgid "First name cannot exceed 150 characters."
 msgstr "نام اول نمی‌تواند بیشتر از 150 کاراکتر باشد."
 
-#: core/utils/model_error_messages.py:34 core/utils/model_error_messages.py:89
+#: core/utils/model_error_messages.py:33 core/utils/model_error_messages.py:88
 msgid "Last name cannot be blank."
 msgstr "نام خانوادگی نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:35 core/utils/model_error_messages.py:90
+#: core/utils/model_error_messages.py:34 core/utils/model_error_messages.py:89
 msgid "Last name cannot be null."
 msgstr "نام خانوادگی نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:36
+#: core/utils/model_error_messages.py:35
 msgid "Last name cannot exceed 150 characters."
 msgstr "نام خانوادگی نمی‌تواند بیشتر از 150 کاراکتر باشد."
 
-#: core/utils/model_error_messages.py:39
+#: core/utils/model_error_messages.py:38
 msgid "Middle man code cannot be blank."
 msgstr "کد واسطه نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:40
+#: core/utils/model_error_messages.py:39
 msgid "Middle man code cannot be null."
 msgstr "کد واسطه نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:41
+#: core/utils/model_error_messages.py:40
 msgid "Middle man code is invalid."
 msgstr "کد واسطه نامعتبر است."
 
-#: core/utils/model_error_messages.py:44 core/utils/model_error_messages.py:77
+#: core/utils/model_error_messages.py:43 core/utils/model_error_messages.py:76
 msgid "Date created cannot be blank."
 msgstr "تاریخ ایجاد نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:45 core/utils/model_error_messages.py:78
+#: core/utils/model_error_messages.py:44 core/utils/model_error_messages.py:77
 msgid "Date created cannot be null."
 msgstr "تاریخ ایجاد نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:46 core/utils/model_error_messages.py:79
+#: core/utils/model_error_messages.py:45 core/utils/model_error_messages.py:78
 msgid "Date created is invalid."
 msgstr "تاریخ ایجاد نامعتبر است."
 
-#: core/utils/model_error_messages.py:49
+#: core/utils/model_error_messages.py:48
 msgid "Staff status cannot be blank."
 msgstr "وضعیت پرسنل بودن نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:50
+#: core/utils/model_error_messages.py:49
 msgid "Staff status cannot be null."
 msgstr "وضعیت پرسنل بودن نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:51
+#: core/utils/model_error_messages.py:50
 msgid "Staff status is invalid."
 msgstr "وضعیت پرسنل بودن نامعتبر است."
 
-#: core/utils/model_error_messages.py:54 core/utils/model_error_messages.py:72
+#: core/utils/model_error_messages.py:53 core/utils/model_error_messages.py:71
 msgid "Active status cannot be blank."
 msgstr "وضعیت فعال بودن نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:55 core/utils/model_error_messages.py:73
+#: core/utils/model_error_messages.py:54 core/utils/model_error_messages.py:72
 msgid "Active status cannot be null."
 msgstr "وضعیت فعال بودن نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:56 core/utils/model_error_messages.py:74
+#: core/utils/model_error_messages.py:55 core/utils/model_error_messages.py:73
 msgid "Active status is invalid."
 msgstr "وضعیت فعال بودن نامعتبر است."
 
-#: core/utils/model_error_messages.py:59
+#: core/utils/model_error_messages.py:58
 msgid "Date joined cannot be blank."
 msgstr "تاریخ پیوستن نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:60
+#: core/utils/model_error_messages.py:59
 msgid "Date joined cannot be null."
 msgstr "تاریخ پیوستن نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:61
+#: core/utils/model_error_messages.py:60
 msgid "Date joined is invalid."
 msgstr "تاریخ پیوستن نامعتبر است."
 
-#: core/utils/model_error_messages.py:66
+#: core/utils/model_error_messages.py:65
 msgid "This access code is already taken."
 msgstr "این کد دسترسی قبلاً گرفته شده است."
 
-#: core/utils/model_error_messages.py:86
+#: core/utils/model_error_messages.py:85
 msgid "First name cannot exceed 80 characters."
 msgstr "نام نمی‌تواند بیشتر از 80 کاراکتر باشد."
 
-#: core/utils/model_error_messages.py:91
+#: core/utils/model_error_messages.py:90
 msgid "Last name cannot exceed 50 characters."
 msgstr "نام خانوادگی نمی‌تواند بیشتر از 50 کاراکتر باشد."
 
-#: core/utils/model_error_messages.py:94
+#: core/utils/model_error_messages.py:93
 msgid "Father's name cannot be blank."
 msgstr "نام پدر نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:95
+#: core/utils/model_error_messages.py:94
 msgid "Father's name cannot be null."
 msgstr "نام پدر نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:96
+#: core/utils/model_error_messages.py:95
 msgid "Father's name cannot exceed 80 characters."
 msgstr "نام پدر نمی‌تواند بیشتر از 80 کاراکتر باشد."
 
-#: core/utils/model_error_messages.py:99
+#: core/utils/model_error_messages.py:98
 msgid "This Eitta number is already taken."
 msgstr "این شماره ایتا قبلاً ثبت شده است."
 
-#: core/utils/model_error_messages.py:100
+#: core/utils/model_error_messages.py:99
 msgid "Eitta number cannot be blank."
 msgstr "شماره ایتا نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:101
+#: core/utils/model_error_messages.py:100
 msgid "Eitta number cannot be null."
 msgstr "شماره ایتا نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:102
+#: core/utils/model_error_messages.py:101
 msgid "Eitta number is invalid."
 msgstr "شماره ایتا نامعتبر است."
 
-#: core/utils/model_error_messages.py:105
+#: core/utils/model_error_messages.py:104
 msgid "Landline phone cannot be blank."
 msgstr "تلفن ثابت نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:106
+#: core/utils/model_error_messages.py:105
 msgid "Landline phone cannot be null."
 msgstr "تلفن ثابت نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:107
+#: core/utils/model_error_messages.py:106
 msgid "Landline phone is invalid."
 msgstr "تلفن ثابت نامعتبر است."
 
-#: core/utils/model_error_messages.py:110
+#: core/utils/model_error_messages.py:109
 msgid "This mother's phone number is already taken."
 msgstr "شماره تلفن مادر قبلاً ثبت شده است."
 
-#: core/utils/model_error_messages.py:111
+#: core/utils/model_error_messages.py:110
 msgid "Mother's phone number cannot be blank."
 msgstr "شماره تلفن مادر نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:112
+#: core/utils/model_error_messages.py:111
 msgid "Mother's phone number cannot be null."
 msgstr "شماره تلفن مادر نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:113
+#: core/utils/model_error_messages.py:112
 msgid "Mother's phone number is invalid."
 msgstr "شماره تلفن مادر نامعتبر است."
 
-#: core/utils/model_error_messages.py:116
+#: core/utils/model_error_messages.py:115
 msgid "This father's phone number is already taken."
 msgstr "شماره تلفن پدر قبلاً ثبت شده است."
 
-#: core/utils/model_error_messages.py:117
+#: core/utils/model_error_messages.py:116
 msgid "Father's phone number cannot be blank."
 msgstr "شماره تلفن پدر نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:118
+#: core/utils/model_error_messages.py:117
 msgid "Father's phone number cannot be null."
 msgstr "شماره تلفن پدر نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:119
+#: core/utils/model_error_messages.py:118
 msgid "Father's phone number is invalid."
 msgstr "شماره تلفن پدر نامعتبر است."
 
-#: core/utils/model_error_messages.py:122
+#: core/utils/model_error_messages.py:121
 msgid "Home address cannot be blank."
 msgstr "آدرس منزل نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:123
+#: core/utils/model_error_messages.py:122
 msgid "Home address cannot be null."
 msgstr "آدرس منزل نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:124
+#: core/utils/model_error_messages.py:123
 msgid "Home address cannot exceed 150 characters."
 msgstr "آدرس منزل نمی‌تواند بیشتر از 300 کاراکتر باشد."
 
-#: core/utils/model_error_messages.py:127
+#: core/utils/model_error_messages.py:126
 msgid "Work address cannot be blank."
 msgstr "آدرس محل کار نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:128
+#: core/utils/model_error_messages.py:127
 msgid "Work address cannot be null."
 msgstr "آدرس محل کار نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:129
+#: core/utils/model_error_messages.py:128
 msgid "Work address cannot exceed 150 characters."
 msgstr "آدرس محل کار نمی‌تواند بیشتر از 300 کاراکتر باشد."
 
-#: core/utils/model_error_messages.py:132
+#: core/utils/model_error_messages.py:131
 msgid "Originality cannot be blank."
 msgstr "اصالت نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:133
+#: core/utils/model_error_messages.py:132
 msgid "Originality cannot be null."
 msgstr "اصالت نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:134
+#: core/utils/model_error_messages.py:133
+#: core/utils/model_error_messages.py:607
 msgid "Originality cannot exceed 80 characters."
 msgstr "اصالت نمیتواند بیشتر از ۸۰ کاراکتر باشد."
 
-#: core/utils/model_error_messages.py:137
+#: core/utils/model_error_messages.py:136
 msgid "Education cannot be blank."
 msgstr "تحصیلات نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:138
+#: core/utils/model_error_messages.py:137
 msgid "Education cannot be null."
 msgstr "تحصیلات نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:139
+#: core/utils/model_error_messages.py:138
 msgid "Education cannot exceed 80 characters."
 msgstr "تحصیلات نمی‌تواند بیشتر از ۸۰ کاراکتر باشد."
 
-#: core/utils/model_error_messages.py:142
+#: core/utils/model_error_messages.py:141
 msgid "Job cannot be blank."
 msgstr "شغل نمی‌تواند خالی باشد"
 
-#: core/utils/model_error_messages.py:143
+#: core/utils/model_error_messages.py:142
 msgid "Job cannot be null."
 msgstr "شغل نمی‌تواند تهی باشد"
 
-#: core/utils/model_error_messages.py:144
+#: core/utils/model_error_messages.py:143
 msgid "Job is invalid."
 msgstr "شغل نامعتبر است."
 
-#: core/utils/model_error_messages.py:147
+#: core/utils/model_error_messages.py:146
 msgid "Insurance cannot be blank."
 msgstr "بیمه نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:148
+#: core/utils/model_error_messages.py:147
 msgid "Insurance cannot be null."
 msgstr "بیمه نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:149
+#: core/utils/model_error_messages.py:148
 msgid "Insurance is invalid."
 msgstr "بیمه نامعتبر است."
 
-#: core/utils/model_error_messages.py:152
+#: core/utils/model_error_messages.py:151
 msgid "Income cannot be blank."
 msgstr "درآمد نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:153
+#: core/utils/model_error_messages.py:152
 msgid "Income cannot be null."
 msgstr "درآمد نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:154
+#: core/utils/model_error_messages.py:153
 msgid "Income is invalid."
 msgstr "درآمد نامعتبر است."
 
-#: core/utils/model_error_messages.py:157
+#: core/utils/model_error_messages.py:156
 msgid "Assets cannot be blank."
 msgstr "دارایی‌ها نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:158
+#: core/utils/model_error_messages.py:157
 msgid "Assets cannot be null."
 msgstr "دارایی‌ها نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:159
+#: core/utils/model_error_messages.py:158
 msgid "Assets cannot exceed 150 characters."
 msgstr "دارایی‌ها نباید از ۱۵۰ کاراکتر بیشتر باشد."
 
-#: core/utils/model_error_messages.py:162
+#: core/utils/model_error_messages.py:161
 msgid "Weight cannot be blank."
 msgstr "وزن نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:163
+#: core/utils/model_error_messages.py:162
 msgid "Weight cannot be null."
 msgstr "وزن نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:164
+#: core/utils/model_error_messages.py:163
 msgid "Weight is invalid."
 msgstr "وزن نامعتبر است."
 
-#: core/utils/model_error_messages.py:167
+#: core/utils/model_error_messages.py:166
 msgid "Height cannot be blank."
 msgstr "قد نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:168
+#: core/utils/model_error_messages.py:167
 msgid "Height cannot be null."
 msgstr "قد نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:169
+#: core/utils/model_error_messages.py:168
 msgid "Height is invalid."
 msgstr "قد نامعتبر است."
 
-#: core/utils/model_error_messages.py:172
+#: core/utils/model_error_messages.py:171
 msgid "Preferred meeting time cannot be blank."
 msgstr "اوقات پیشنهادی ملاقات مورد نظر نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:173
+#: core/utils/model_error_messages.py:172
 msgid "Preferred meeting time cannot be null."
 msgstr "اوقات پیشنهادی ملاقات مورد نظر نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:174
+#: core/utils/model_error_messages.py:173
 msgid "Preferred meeting time cannot exceed 150 characters."
 msgstr "اوقات پیشنهادی ملاقات مورد نظر نباید از ۱۵۰ کاراکتر بیشتر باشد."
 
-#: core/utils/model_error_messages.py:177
+#: core/utils/model_error_messages.py:176
 msgid "Type of payment cannot be blank."
 msgstr "نوع پرداخت نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:178
+#: core/utils/model_error_messages.py:177
 msgid "Type of payment cannot be null."
 msgstr "نوع پرداخت نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:179
+#: core/utils/model_error_messages.py:178
 msgid "Type of payment is invalid."
 msgstr "نوع پرداخت نامعتبر است."
 
-#: core/utils/model_error_messages.py:182
+#: core/utils/model_error_messages.py:181
 msgid "Invalid file type. Only PDF, JPG, JPEG, and PNG files are allowed."
 msgstr "نوع فایل نامعتبر است. فقط فرمت های pdf, jpg, jpeg و png مورد قبول است."
 
-#: core/utils/model_error_messages.py:185
-msgid "Introduced subjects cannot be blank."
-msgstr "موارد معرفی شده نمی‌تواند خالی باشد."
-
-#: core/utils/model_error_messages.py:186
-msgid "Introduced subjects cannot be null."
-msgstr "موارد معرفی شده نمی‌تواند تهی باشد."
-
-#: core/utils/model_error_messages.py:187
-msgid "Introduced subjects is invalid."
-msgstr "موارد معرفی شده نامعتبر است."
-
-#: core/utils/model_error_messages.py:190
-#: core/utils/model_error_messages.py:258
+#: core/utils/model_error_messages.py:184
+#: core/utils/model_error_messages.py:252
 msgid "User cannot be blank."
 msgstr "کاربر نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:191
-#: core/utils/model_error_messages.py:259
+#: core/utils/model_error_messages.py:185
+#: core/utils/model_error_messages.py:253
 msgid "User cannot be null."
 msgstr "کاربر نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:192
-#: core/utils/model_error_messages.py:260
+#: core/utils/model_error_messages.py:186
+#: core/utils/model_error_messages.py:254
 msgid "User is invalid."
 msgstr "کاربر نامعتبر است."
 
-#: core/utils/model_error_messages.py:197
+#: core/utils/model_error_messages.py:191
 msgid "This national code is already taken."
 msgstr "این کد ملی قبلاً ثبت شده است."
 
-#: core/utils/model_error_messages.py:198
+#: core/utils/model_error_messages.py:192
 msgid "National code cannot be blank."
 msgstr "کد ملی نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:199
+#: core/utils/model_error_messages.py:193
 msgid "National code cannot be null."
 msgstr "کد ملی نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:200
+#: core/utils/model_error_messages.py:194
 msgid "National code cannot exceed 10 characters."
 msgstr "کد ملی نباید از ۱۰ کاراکتر بیشتر باشد."
 
-#: core/utils/model_error_messages.py:203
+#: core/utils/model_error_messages.py:197
 msgid "Birth certificate serial cannot be blank."
 msgstr "سریال شناسنامه نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:204
+#: core/utils/model_error_messages.py:198
 msgid "Birth certificate serial cannot be null."
 msgstr "سریال شناسنامه نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:205
+#: core/utils/model_error_messages.py:199
 msgid "Birth certificate serial cannot exceed 10 characters."
 msgstr "سریال شناسنامه نباید از ۱۰ کاراکتر بیشتر باشد."
 
-#: core/utils/model_error_messages.py:208
+#: core/utils/model_error_messages.py:202
 msgid "Birth certificate location cannot be blank."
 msgstr "محل صدور شناسنامه نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:209
+#: core/utils/model_error_messages.py:203
 msgid "Birth certificate location cannot be null."
 msgstr "محل صدور شناسنامه نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:210
+#: core/utils/model_error_messages.py:204
 msgid "Birth certificate location cannot exceed 50 characters."
 msgstr "محل صدور شناسنامه نباید از ۵۰ کاراکتر بیشتر باشد."
 
-#: core/utils/model_error_messages.py:213
+#: core/utils/model_error_messages.py:207
 msgid "Marriage experience cannot be blank."
 msgstr "تجربه ازدواج نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:214
+#: core/utils/model_error_messages.py:208
 msgid "Marriage experience cannot be null."
 msgstr "تجربه ازدواج نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:215
+#: core/utils/model_error_messages.py:209
 msgid "Marriage experience is invalid."
 msgstr "تجربه ازدواج نامعتبر است."
 
-#: core/utils/model_error_messages.py:218
+#: core/utils/model_error_messages.py:212
 msgid "Contract date cannot be blank."
 msgstr "تاریخ عقد نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:219
+#: core/utils/model_error_messages.py:213
 msgid "Contract date cannot be null."
 msgstr "تاریخ عقد نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:220
+#: core/utils/model_error_messages.py:214
 msgid "Contract date is invalid."
 msgstr "تاریخ عقد نامعتبر است."
 
-#: core/utils/model_error_messages.py:223
+#: core/utils/model_error_messages.py:217
 msgid "Marriage status cannot be blank."
 msgstr "وضعیت تاهل نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:224
+#: core/utils/model_error_messages.py:218
 msgid "Marriage status cannot be null."
 msgstr "وضعیت تاهل نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:225
+#: core/utils/model_error_messages.py:219
 msgid "Marriage status is invalid."
 msgstr "وضعیت تاهل نامعتبر است."
 
-#: core/utils/model_error_messages.py:228
+#: core/utils/model_error_messages.py:222
 msgid "Marriage date cannot be blank."
 msgstr "تاریخ ازدواج نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:229
+#: core/utils/model_error_messages.py:223
 msgid "Marriage date cannot be null."
 msgstr "تاریخ ازدواج نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:230
+#: core/utils/model_error_messages.py:224
 msgid "Marriage date is invalid."
 msgstr "تاریخ ازدواج نامعتبر است."
 
-#: core/utils/model_error_messages.py:233
+#: core/utils/model_error_messages.py:227
 msgid "Divorce date cannot be blank."
 msgstr "تاریخ طلاق نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:234
+#: core/utils/model_error_messages.py:228
 msgid "Divorce date cannot be null."
 msgstr "تاریخ طلاق نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:235
+#: core/utils/model_error_messages.py:229
 msgid "Divorce date is invalid."
 msgstr "تاریخ طلاق نامعتبر است."
 
-#: core/utils/model_error_messages.py:238
+#: core/utils/model_error_messages.py:232
 msgid "Husband death date cannot be blank."
 msgstr "تاریخ فوت همسر نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:239
+#: core/utils/model_error_messages.py:233
 msgid "Husband death date cannot be null."
 msgstr "تاریخ فوت همسر نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:240
+#: core/utils/model_error_messages.py:234
 msgid "Husband death date is invalid."
 msgstr "تاریخ فوت همسر نامعتبر است."
 
-#: core/utils/model_error_messages.py:243
+#: core/utils/model_error_messages.py:237
 msgid "Birth date cannot be blank."
 msgstr "تاریخ تولد نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:244
+#: core/utils/model_error_messages.py:238
 msgid "Birth date cannot be null."
 msgstr "تاریخ تولد نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:245
+#: core/utils/model_error_messages.py:239
 msgid "Birth date is invalid."
 msgstr "تاریخ تولد نامعتبر است."
 
-#: core/utils/model_error_messages.py:248
+#: core/utils/model_error_messages.py:242
 msgid "Children cannot be blank."
 msgstr "فرزندان نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:249
+#: core/utils/model_error_messages.py:243
 msgid "Children cannot be null."
 msgstr "فرزندان نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:250
+#: core/utils/model_error_messages.py:244
 msgid "Children is invalid."
 msgstr "فرزندان نامعتبر است."
 
-#: core/utils/model_error_messages.py:253
+#: core/utils/model_error_messages.py:247
 msgid "Children custody cannot be blank."
 msgstr "حضانت فرزندان نمی‌تواند خالی باشد."
 
-#: core/utils/model_error_messages.py:254
+#: core/utils/model_error_messages.py:248
 msgid "Children custody cannot be null."
 msgstr "حضانت فرزندان نمی‌تواند تهی باشد."
 
-#: core/utils/model_error_messages.py:255
+#: core/utils/model_error_messages.py:249
 msgid "Children custody is invalid."
 msgstr "حضانت فرزندان نامعتبر است."
 
-#: core/utils/model_error_messages.py:265
+#: core/utils/model_error_messages.py:259
 msgid "Gender is required."
 msgstr "جنسیت الزامی است."
 
-#: core/utils/model_error_messages.py:266
+#: core/utils/model_error_messages.py:260
 msgid "Invalid choice for gender."
 msgstr "انتخاب نامعتبر برای جنسیت."
 
-#: core/utils/model_error_messages.py:269
+#: core/utils/model_error_messages.py:263
 msgid "Sadat field is required."
 msgstr "فیلد سادات الزامی است."
 
-#: core/utils/model_error_messages.py:272
+#: core/utils/model_error_messages.py:266
+#: core/utils/model_error_messages.py:605
 msgid "Birth date is required."
 msgstr "تاریخ تولد الزامی است."
 
-#: core/utils/model_error_messages.py:273
+#: core/utils/model_error_messages.py:267
+#: core/utils/model_error_messages.py:605
 msgid "Invalid birth date format."
 msgstr "فرمت تاریخ تولد نامعتبر است."
 
-#: core/utils/model_error_messages.py:276
+#: core/utils/model_error_messages.py:270
 msgid "Birth location is required."
 msgstr "محل تولد الزامی است."
 
-#: core/utils/model_error_messages.py:277
+#: core/utils/model_error_messages.py:271
 msgid "Birth location cannot exceed 50 characters."
 msgstr "محل تولد نباید از ۵۰ کاراکتر بیشتر باشد."
 
-#: core/utils/model_error_messages.py:280
+#: core/utils/model_error_messages.py:274
+#: core/utils/model_error_messages.py:608
 #: core/utils/preferred_wife_model_error_messages.py:5
 msgid "Education is required."
 msgstr "تحصیلات الزامی است."
 
-#: core/utils/model_error_messages.py:281
+#: core/utils/model_error_messages.py:275
+#: core/utils/model_error_messages.py:608
 #: core/utils/preferred_wife_model_error_messages.py:6
 msgid "Invalid choice for education."
 msgstr "انتخاب نامعتبر برای تحصیلات."
 
-#: core/utils/model_error_messages.py:284
+#: core/utils/model_error_messages.py:278
 #: core/utils/preferred_wife_model_error_messages.py:9
 msgid "Degree is required."
 msgstr "مدرک الزامی است."
 
-#: core/utils/model_error_messages.py:285
-#: core/utils/preferred_wife_model_error_messages.py:10
+#: core/utils/model_error_messages.py:279
 msgid "Invalid choice for degree."
 msgstr "انتخاب نامعتبر برای مدرک."
 
-#: core/utils/model_error_messages.py:288
+#: core/utils/model_error_messages.py:282
 msgid "Military status is required."
 msgstr "وضعیت نظام وظیفه الزامی است."
 
-#: core/utils/model_error_messages.py:289
+#: core/utils/model_error_messages.py:283
 msgid "Invalid choice for military status."
 msgstr "انتخاب نامعتبر برای وضعیت نظام وظیفه."
 
-#: core/utils/model_error_messages.py:292
+#: core/utils/model_error_messages.py:286
+msgid "Military status Explanation is required."
+msgstr "توضیحات وضعیت سربازی الزامی است."
+
+#: core/utils/model_error_messages.py:287
+msgid "Military status Explanation cannot exceed 50 characters."
+msgstr "توضیحات وضعیت سربازی نباید از ۵۰ کاراکتر بیشتر باشد."
+
+#: core/utils/model_error_messages.py:290
 msgid "Income is required."
 msgstr "درآمد الزامی است."
 
-#: core/utils/model_error_messages.py:293
+#: core/utils/model_error_messages.py:291
 msgid "Invalid income value."
 msgstr "مقدار درآمد نامعتبر است."
 
-#: core/utils/model_error_messages.py:296
+#: core/utils/model_error_messages.py:294
 msgid "Deposit is required."
 msgstr "سپرده الزامی است."
 
-#: core/utils/model_error_messages.py:297
+#: core/utils/model_error_messages.py:295
 msgid "Invalid deposit value."
 msgstr "مقدار سپرده نامعتبر است."
 
-#: core/utils/model_error_messages.py:300
+#: core/utils/model_error_messages.py:298
 msgid "Insurance type is required."
 msgstr "نوع بیمه الزامی است."
 
-#: core/utils/model_error_messages.py:301
+#: core/utils/model_error_messages.py:299
 msgid "Invalid choice for insurance type."
 msgstr "انتخاب نامعتبر برای نوع بیمه."
 
-#: core/utils/model_error_messages.py:304
+#: core/utils/model_error_messages.py:302
 msgid "Insurance years are required."
 msgstr "سال‌های بیمه الزامی است."
 
-#: core/utils/model_error_messages.py:305
+#: core/utils/model_error_messages.py:303
 msgid "Invalid insurance years value."
 msgstr "مقدار سال‌های بیمه نامعتبر است."
 
-#: core/utils/model_error_messages.py:306
+#: core/utils/model_error_messages.py:304
 msgid "Insurance years cannot exceed 60."
 msgstr "سال‌های سابقه بیمه نباید از ۶۰ بیشتر باشد."
 
-#: core/utils/model_error_messages.py:309
+#: core/utils/model_error_messages.py:307
 msgid "Leisure type is required."
 msgstr "نوع اوقات فراغت الزامی است."
 
-#: core/utils/model_error_messages.py:310
+#: core/utils/model_error_messages.py:308
 msgid "Invalid choice for leisure type."
 msgstr "انتخاب نامعتبر برای نوع اوقات فراغت."
 
-#: core/utils/model_error_messages.py:313
+#: core/utils/model_error_messages.py:311
 msgid "Usage cases are required."
 msgstr "موارد مورد استفاده (اعتیاد یا ...) الزامی است."
 
-#: core/utils/model_error_messages.py:314
+#: core/utils/model_error_messages.py:312
 msgid "Invalid choice for usage cases."
 msgstr "انتخاب نامعتبر برای موارد استفاده (اعتیاد یا ...)."
 
-#: core/utils/model_error_messages.py:317
+#: core/utils/model_error_messages.py:315
 msgid "Conviction or arrest history is required."
 msgstr "سوابق محکومیت یا بازداشت الزامی است."
 
-#: core/utils/model_error_messages.py:320
+#: core/utils/model_error_messages.py:318
 msgid "Conviction reason is required."
 msgstr "دلیل محکومیت الزامی است."
 
-#: core/utils/model_error_messages.py:321
+#: core/utils/model_error_messages.py:319
 msgid "Conviction reason cannot exceed 150 characters."
 msgstr "دلیل محکومیت نباید از ۱۵۰ کاراکتر بیشتر باشد."
 
-#: core/utils/model_error_messages.py:324
-#: core/utils/model_error_messages.py:374
+#: core/utils/model_error_messages.py:322
+#: core/utils/model_error_messages.py:372
 #: core/utils/preferred_wife_model_error_messages.py:25
 #: core/utils/preferred_wife_model_error_messages.py:42
-#: core/utils/preferred_wife_model_error_messages.py:81
-#: core/utils/preferred_wife_model_error_messages.py:89
+#: core/utils/preferred_wife_model_error_messages.py:85
+#: core/utils/preferred_wife_model_error_messages.py:93
 msgid "User is required."
 msgstr "کاربر الزامی است."
 
-#: core/utils/model_error_messages.py:326
+#: core/utils/model_error_messages.py:324
 msgid "Invalid value for the tattoo field."
 msgstr "مقدار نامعتبر برای گزینه تتو."
 
-#: core/utils/model_error_messages.py:327
+#: core/utils/model_error_messages.py:325
 msgid "Invalid description provided for tattoos."
 msgstr "توضیحات نامعتبر برای توضیحات تتو."
 
-#: core/utils/model_error_messages.py:328
+#: core/utils/model_error_messages.py:326
 msgid "Invalid usage case description."
 msgstr "انتخاب نامعتبر برای توضیحات موارد استفاده (اعتیاد یا ...)."
 
-#: core/utils/model_error_messages.py:332
+#: core/utils/model_error_messages.py:330
 #: core/utils/preferred_wife_model_error_messages.py:30
 msgid "Height is required."
 msgstr "قد الزامی است."
 
-#: core/utils/model_error_messages.py:333
+#: core/utils/model_error_messages.py:331
 #: core/utils/preferred_wife_model_error_messages.py:31
 msgid "Invalid height value."
 msgstr "مقدار قد نامعتبر است."
 
-#: core/utils/model_error_messages.py:334 core/utils/validators.py:31
+#: core/utils/model_error_messages.py:332 core/utils/validators.py:31
 msgid "Height cannot exceed 260 cm."
 msgstr "قد نباید از ۲۶۰ سانتیمتر بیشتر باشد."
 
-#: core/utils/model_error_messages.py:337
+#: core/utils/model_error_messages.py:335
 #: core/utils/preferred_wife_model_error_messages.py:34
 msgid "Weight is required."
 msgstr "وزن الزامی است."
 
-#: core/utils/model_error_messages.py:338
+#: core/utils/model_error_messages.py:336
 #: core/utils/preferred_wife_model_error_messages.py:35
 msgid "Invalid weight value."
 msgstr "مقدار وزن نامعتبر است."
 
-#: core/utils/model_error_messages.py:339 core/utils/validators.py:21
+#: core/utils/model_error_messages.py:337 core/utils/validators.py:21
 msgid "Weight cannot exceed 300 kg."
 msgstr "وزن نباید از ۳۰۰ کیلوگرم بیشتر باشد."
 
-#: core/utils/model_error_messages.py:342
+#: core/utils/model_error_messages.py:340
 #: core/utils/preferred_wife_model_error_messages.py:38
 msgid "Skin color is required."
 msgstr "رنگ پوست الزامی است."
 
-#: core/utils/model_error_messages.py:343
+#: core/utils/model_error_messages.py:341
 #: core/utils/preferred_wife_model_error_messages.py:39
 msgid "Invalid choice for skin color."
 msgstr "انتخاب نامعتبر برای رنگ پوست."
 
-#: core/utils/model_error_messages.py:346
+#: core/utils/model_error_messages.py:344
 msgid "Eyes color is required."
 msgstr "رنگ چشم الزامی است."
 
-#: core/utils/model_error_messages.py:347
+#: core/utils/model_error_messages.py:345
 msgid "Invalid choice for eyes color."
 msgstr "انتخاب نامعتبر برای رنگ چشم."
 
-#: core/utils/model_error_messages.py:350
+#: core/utils/model_error_messages.py:348
 msgid "Blood type is required."
 msgstr "گروه خونی الزامی است."
 
-#: core/utils/model_error_messages.py:351
+#: core/utils/model_error_messages.py:349
 msgid "Invalid choice for blood type."
 msgstr "انتخاب نامعتبر برای گروه خونی."
 
-#: core/utils/model_error_messages.py:354
+#: core/utils/model_error_messages.py:352
 msgid "Character and temperament is required."
 msgstr "ویژگی‌ها و شخصیت الزامی است."
 
-#: core/utils/model_error_messages.py:355
+#: core/utils/model_error_messages.py:353
 msgid "Invalid choice for character and temperament."
 msgstr "انتخاب نامعتبر برای ویژگی‌ها و شخصیت."
 
-#: core/utils/model_error_messages.py:358
+#: core/utils/model_error_messages.py:356
 msgid "Glasses field is required."
 msgstr "فیلد عینک الزامی است."
 
-#: core/utils/model_error_messages.py:361
+#: core/utils/model_error_messages.py:359
 msgid "Invalid glasses size value."
 msgstr "مقدار اندازه عینک نامعتبر است."
 
-#: core/utils/model_error_messages.py:364
+#: core/utils/model_error_messages.py:362
 msgid "Body and face is required."
 msgstr "چهره و اندام الزامی است."
 
-#: core/utils/model_error_messages.py:365
+#: core/utils/model_error_messages.py:363
 msgid "Invalid choice for body and face."
 msgstr "مورد انتخابی برای چهره و اندام نامعتبر است."
 
-#: core/utils/model_error_messages.py:368
+#: core/utils/model_error_messages.py:366
 msgid "Disease or surgery field is required."
 msgstr "سوابق بیماری یا جراحی الزامی است."
 
-#: core/utils/model_error_messages.py:371
+#: core/utils/model_error_messages.py:369
 msgid "Medication, surgery, or disease type cannot exceed 100 characters."
 msgstr "نوع دارو، جراحی یا بیماری نباید از ۱۰۰ کاراکتر بیشتر باشد."
 
-#: core/utils/model_error_messages.py:379
+#: core/utils/model_error_messages.py:377
 msgid "Average family education is required."
 msgstr "میانگین تحصیلات خانواده الزامی است."
 
-#: core/utils/model_error_messages.py:380
+#: core/utils/model_error_messages.py:378
 msgid "Invalid choice for average family education."
 msgstr "انتخاب نامعتبر برای میانگین تحصیلات خانواده."
 
-#: core/utils/model_error_messages.py:383
+#: core/utils/model_error_messages.py:381
 msgid "Average family finance is required."
 msgstr "میانگین وضعیت مالی خانواده الزامی است."
 
-#: core/utils/model_error_messages.py:384
+#: core/utils/model_error_messages.py:382
 msgid "Invalid choice for average family finance."
 msgstr "انتخاب نامعتبر برای میانگین وضعیت مالی خانواده."
 
-#: core/utils/model_error_messages.py:387
+#: core/utils/model_error_messages.py:385
 msgid "Family divorce history is required."
 msgstr "تاریخچه طلاق خانواده الزامی است."
 
-#: core/utils/model_error_messages.py:390
+#: core/utils/model_error_messages.py:388
 msgid "Family divorce reason cannot exceed 150 characters."
 msgstr "دلیل طلاق خانواده نباید از ۱۵۰ کاراکتر بیشتر باشد."
 
-#: core/utils/model_error_messages.py:393
+#: core/utils/model_error_messages.py:391
 msgid "Contact with family is required."
 msgstr "وارد کردن ارتباط با فامیل الزامی است"
 
-#: core/utils/model_error_messages.py:394
+#: core/utils/model_error_messages.py:392
 msgid "Contact with family cannot exceed 50 characters."
 msgstr "وضعیت ارتباط با فامیل نباید از ۵۰ کاراکتر بیشتر باشد."
 
-#: core/utils/model_error_messages.py:397
+#: core/utils/model_error_messages.py:395
+msgid "Contact with Relatives is required."
+msgstr "وارد کردن وضعیت ارتباط با فامیل الزامی است"
+
+#: core/utils/model_error_messages.py:396
+msgid "Contact with Relatives cannot exceed 50 characters."
+msgstr "وضعیت ارتباط با فامیل نباید از ۵۰ کاراکتر بیشتر باشد."
+
+#: core/utils/model_error_messages.py:399
 msgid "Engagement or wedding status is required."
 msgstr "وضعیت نامزدی یا ازدواج الزامی است."
 
-#: core/utils/model_error_messages.py:398
+#: core/utils/model_error_messages.py:400
 msgid "Invalid choice for engagement or wedding status."
 msgstr "انتخاب نامعتبر برای وضعیت نامزدی یا ازدواج."
 
-#: core/utils/model_error_messages.py:401
+#: core/utils/model_error_messages.py:403
 msgid "Ex-husband child status is required."
 msgstr "وضعیت فرزندان همسر سابق الزامی است."
 
-#: core/utils/model_error_messages.py:404
+#: core/utils/model_error_messages.py:406
 msgid "Invalid girl birth date."
 msgstr "تاریخ تولد دختر نامعتبر است."
 
-#: core/utils/model_error_messages.py:407
+#: core/utils/model_error_messages.py:409
 msgid "Invalid boy birth date."
 msgstr "تاریخ تولد پسر نامعتبر است."
 
-#: core/utils/model_error_messages.py:410
+#: core/utils/model_error_messages.py:412
 msgid "Custody is required."
 msgstr "وضعیت حضانت الزامی است."
 
-#: core/utils/model_error_messages.py:411
+#: core/utils/model_error_messages.py:413
 msgid "Invalid choice for custody."
 msgstr "انتخاب نامعتبر برای وضعیت حضانت."
 
-#: core/utils/model_error_messages.py:414
+#: core/utils/model_error_messages.py:416
 msgid "Living location cannot exceed 50 characters."
 msgstr "محل زندگی نباید از ۵۰ کاراکتر بیشتر باشد."
 
-#: core/utils/model_error_messages.py:472
+#: core/utils/model_error_messages.py:419
+msgid "Groom field is required."
+msgstr "این فیلد الزامی است."
+
+#: core/utils/model_error_messages.py:420
+msgid "Selected value for groom is invalid."
+msgstr "مقدار انتخاب شده نامعتبر است."
+
+#: core/utils/model_error_messages.py:423
+msgid "Bride or Wife field is required."
+msgstr "این فیلد الزامی است."
+
+#: core/utils/model_error_messages.py:424
+msgid "Selected value for bride or wife is invalid."
+msgstr "مقدار انتخاب شده نامعتبر است."
+
+#: core/utils/model_error_messages.py:431
+msgid "Current residence status is required."
+msgstr "محل سکونت فعلی الزامی است."
+
+#: core/utils/model_error_messages.py:432
+msgid "Invalid choice for current residence status."
+msgstr "انتخاب نامعتبر برای وضعیت محل سکونت.."
+
+#: core/utils/model_error_messages.py:435
+msgid "Ownership status is required."
+msgstr "وضعیت مالکیت خانه وظیفه الزامی است."
+
+#: core/utils/model_error_messages.py:436
+msgid "Invalid choice for ownership status."
+msgstr "انتخاب نامعتبر برای مالکیت خانه."
+
+#: core/utils/model_error_messages.py:439
+msgid "Rent amount is required."
+msgstr "میزان رهن الزامی است."
+
+#: core/utils/model_error_messages.py:440
+msgid "Invalid value for rent amount."
+msgstr "مقدار نامعتبر برای میزان رهن."
+
+#: core/utils/model_error_messages.py:443
+msgid "Mortgage amount is required."
+msgstr "میزان اجاره الزامی است."
+
+#: core/utils/model_error_messages.py:444
+msgid "Invalid value for mortgage amount."
+msgstr "مقدار نامعتبر برای میزان اجاره."
+
+#: core/utils/model_error_messages.py:447
+msgid "Capital is required."
+msgstr "وارد کردن دارایی ها الزامی است."
+
+#: core/utils/model_error_messages.py:448
+msgid "Invalid choice for capital."
+msgstr "انتخاب نامعتبر برای دارایی ها."
+
+#: core/utils/model_error_messages.py:451
+msgid "Other capital cannot exceed 150 characters."
+msgstr "دارایی های دیگر نمی‌تواند بیشتر از 150 کاراکتر باشد."
+
+#: core/utils/model_error_messages.py:454
+msgid "After marriage residence status is required."
+msgstr "محل سکونت پس از ازدواج الزامی است."
+
+#: core/utils/model_error_messages.py:455
+msgid "Invalid choice for after marriage residence status."
+msgstr "انتخاب نامعتبر برای محل سکونت پس از ازدواج."
+
+#: core/utils/model_error_messages.py:458
+msgid "Ex-spouse financial status is required."
+msgstr "وضعیت پرداخت مالی همسر سابق الزامی است."
+
+#: core/utils/model_error_messages.py:459
+msgid "Invalid choice for ex-spouse financial status."
+msgstr "انتخاب نامعتبر برای وضعیت مالی همسر سابق."
+
+#: core/utils/model_error_messages.py:462
+msgid "Ex-spouse financial amount is required."
+msgstr "میزان مهریه همسر سابق الزامی است."
+
+#: core/utils/model_error_messages.py:463
+msgid "Ex-spouse financial amount cannot exceed 50 characters."
+msgstr "توضیحات میزان مهریه همسر سابق نباید از ۵۰ کاراکتر بیشتر باشد."
+
+#: core/utils/model_error_messages.py:466
+msgid "Ex-spouse financial pay status is required."
+msgstr "وضعیت پرداختی مهریه همسر سابق الزامی است."
+
+#: core/utils/model_error_messages.py:467
+msgid "Invalid choice for ex-spouse financial pay status."
+msgstr "انتخاب نامعتبر برای وضعیت پرداختی همسر سابق."
+
+#: core/utils/model_error_messages.py:470
+msgid "Dowry type is required."
+msgstr "نوع مهریه همسر آینده الزامی است."
+
+#: core/utils/model_error_messages.py:471
+msgid "Invalid choice for dowry type."
+msgstr "انتخاب نامعتبر برای نوع مهریه همسر آینده."
+
+#: core/utils/model_error_messages.py:474
+msgid "Dowry amount is required."
+msgstr "میزان مهریه همسر آینده الزامی است."
+
+#: core/utils/model_error_messages.py:475
+msgid "Dowry amount cannot exceed 50 characters."
+msgstr "میزان مهریه همسر آینده نباید از ۵۰ کاراکتر بیشتر باشد."
+
+#: core/utils/model_error_messages.py:478
+msgid "Jahiziyeh type is required."
+msgstr "نوع جهیزیه الزامی است."
+
+#: core/utils/model_error_messages.py:479
+msgid "Invalid choice for Jahiziyeh type."
+msgstr "انتخاب نامعتبر برای نوع جهیزیه."
+
+#: core/utils/model_error_messages.py:482
+msgid "Jahiziyeh explanation is required."
+msgstr "توضیحات جهیزیه الزامی است."
+
+#: core/utils/model_error_messages.py:483
+msgid "Jahiziyeh explanation cannot exceed 150 characters."
+msgstr "توضیحات جهیزیه نباید از ۵۰ کاراکتر بیشتر باشد."
+
+#: core/utils/model_error_messages.py:488
 msgid "Marriage goals and purposes cannot be empty."
 msgstr "اهداف و انتظارات شما، از اصل ازدواج چیست؟"
 
-#: core/utils/model_error_messages.py:473
+#: core/utils/model_error_messages.py:489
 msgid "Marriage goals should not exceed 1000 characters."
 msgstr "اهداف ازدواج نمیتواند از ۱۰۰۰ کاراکتر بیشتر باشد."
 
-#: core/utils/model_error_messages.py:476
+#: core/utils/model_error_messages.py:492
 msgid "Please provide your opinion about a woman's job."
 msgstr "لطفا نظر خود درباره شغل زنان را بنویسید."
 
-#: core/utils/model_error_messages.py:477
+#: core/utils/model_error_messages.py:493
 msgid "The selected option for a woman's job is not valid."
 msgstr "گزینه نامعتبر برای نظر درباره شغل زنان"
 
-#: core/utils/model_error_messages.py:480
+#: core/utils/model_error_messages.py:496
 msgid "Please provide your opinion about a woman's education."
 msgstr "لطفا نظر خود درباره تحصیلات زنان را بنویسید."
 
-#: core/utils/model_error_messages.py:481
+#: core/utils/model_error_messages.py:497
 msgid "The selected option for a woman's education is not valid."
 msgstr "گزینه نامعتبر برای نظر درباره شغل زنان"
 
-#: core/utils/model_error_messages.py:484
+#: core/utils/model_error_messages.py:500
 msgid "Please list some of your positive attributes."
 msgstr "ویژگی های مثبت خود را بنویسید."
 
-#: core/utils/model_error_messages.py:485
+#: core/utils/model_error_messages.py:501
 msgid "Your pros should not exceed 1000 characters."
 msgstr "ویژگی های مثبت شما نمی‌تواند بیشتر از ۱۰۰۰ کاراکتر باشد."
 
-#: core/utils/model_error_messages.py:488
+#: core/utils/model_error_messages.py:504
 msgid "Please list some of your negative attributes."
 msgstr "ویژگی های منفی خود را بنویسید."
 
-#: core/utils/model_error_messages.py:489
+#: core/utils/model_error_messages.py:505
 msgid "Your cons should not exceed 1000 characters."
 msgstr "ویژگی های مثبت شما نمی‌تواند بیشتر از ۱۰۰۰ کاراکتر باشد."
 
-#: core/utils/model_error_messages.py:492
+#: core/utils/model_error_messages.py:508
 msgid "Please specify the type of connection you have with friends."
 msgstr "ارتباط با دوستان چگونه است؟"
 
-#: core/utils/model_error_messages.py:493
+#: core/utils/model_error_messages.py:509
 msgid "Invalid selection for type of friends' connection."
 msgstr "انتخاب نامعتبر برای نوع ارتباط با دوستان"
 
-#: core/utils/model_error_messages.py:496
+#: core/utils/model_error_messages.py:512
 msgid "Please explain why you maintain connections with your friends."
 msgstr "دلیل نوع ارتباط با دوستان را توضیح دهید."
 
-#: core/utils/model_error_messages.py:497
+#: core/utils/model_error_messages.py:513
 msgid "Your explanation should not exceed 500 characters."
 msgstr "توضیحات دلیل ارتباط با دوستان نباید بیشتر از ۵۰۰ کاراکتر باشد."
 
-#: core/utils/model_error_messages.py:500
+#: core/utils/model_error_messages.py:516
 msgid "Please specify your political orientation."
 msgstr "آیا جهت گیری سیاسی خاصی دارید؟"
 
-#: core/utils/model_error_messages.py:501
+#: core/utils/model_error_messages.py:517
 msgid "Invalid input for political orientation."
 msgstr "انتخاب نامعتبر برای جهت گیری سیاسی."
 
-#: core/utils/model_error_messages.py:504
+#: core/utils/model_error_messages.py:520
 msgid "Please share your opinion about Velayat Faqih."
 msgstr "دیدگاه شما در مورد انقلاب اسلامی و ولایت فقیه چیست؟"
 
-#: core/utils/model_error_messages.py:505
+#: core/utils/model_error_messages.py:521
 msgid "Invalid selection for opinion about Velayat Faqih."
 msgstr "انتخاب نامعتبر برای نظر درباره انقلاب اسلامی"
 
-#: core/utils/model_error_messages.py:508
+#: core/utils/model_error_messages.py:524
 msgid "Please specify your opinion about the number of children."
 msgstr "نظرتان در مورد تعداد فرزند آینده چیست؟"
 
-#: core/utils/model_error_messages.py:509
+#: core/utils/model_error_messages.py:525
 msgid "Invalid selection for child quantity preference."
 msgstr "انتخاب نامعتبر برای تفاوت سنی."
 
-#: core/utils/model_error_messages.py:512
+#: core/utils/model_error_messages.py:528
 msgid "Please specify how you prefer the marriage contract."
 msgstr "برپایی جشن عقد چگونه باشد؟"
 
-#: core/utils/model_error_messages.py:513
+#: core/utils/model_error_messages.py:529
 msgid "Invalid selection for contract preferences."
 msgstr "انتخاب نامعتبر برای نوع جشن عقد."
 
-#: core/utils/model_error_messages.py:516
+#: core/utils/model_error_messages.py:532
 msgid "Please specify how you prefer the wedding."
 msgstr "برپایی جشن عروسی چگونه باشد؟"
 
-#: core/utils/model_error_messages.py:517
+#: core/utils/model_error_messages.py:533
 msgid "Invalid selection for wedding preferences."
 msgstr "انتخاب نامعتبر برای تفاوت سنی."
 
-#: core/utils/model_error_messages.py:520
+#: core/utils/model_error_messages.py:536
 msgid "Please describe your worship and prayer habits."
 msgstr "عبادات و نماز"
 
-#: core/utils/model_error_messages.py:521
+#: core/utils/model_error_messages.py:537
 msgid "Invalid selection for worship and prayer habits."
 msgstr "انتخاب نامعتبر برای عبادات و نماز"
 
-#: core/utils/model_error_messages.py:524
+#: core/utils/model_error_messages.py:540
 msgid "Please specify your fasting habits."
 msgstr "روزه"
 
-#: core/utils/model_error_messages.py:525
+#: core/utils/model_error_messages.py:541
 msgid "Invalid selection for fasting habits."
 msgstr "انتخاب نامعتبر برای روزه"
 
-#: core/utils/model_error_messages.py:528
+#: core/utils/model_error_messages.py:544
 msgid "Please specify the type of covering you use at home."
 msgstr "نظر شما در مورد نوع پوشش و آرایش زن و مرد در منزل "
 
-#: core/utils/model_error_messages.py:529
+#: core/utils/model_error_messages.py:545
 msgid "Invalid selection for house covering type."
 msgstr "انتخاب نامعتبر برای گروه خونی."
 
-#: core/utils/model_error_messages.py:532
+#: core/utils/model_error_messages.py:548
 msgid "Please specify the type of covering you use in society and workplace."
 msgstr "نظر شما در مورد نوع پوشش و آرایش زن و مرد در جامعه و محل کار "
 
-#: core/utils/model_error_messages.py:533
+#: core/utils/model_error_messages.py:549
 msgid "Invalid selection for society and workplace covering type."
 msgstr "انتخاب نامعتبر برای نوع پوشش "
 
-#: core/utils/model_error_messages.py:536
+#: core/utils/model_error_messages.py:552
 msgid "A unique ID is required."
 msgstr "آیدی الزامی است."
 
-#: core/utils/model_error_messages.py:537
+#: core/utils/model_error_messages.py:553
 msgid "This ID already exists. Please use a different one."
 msgstr "این آیدی وجود دارد یک مورد دیگر انتخاب کنید."
 
-#: core/utils/model_error_messages.py:540
-#: core/utils/model_error_messages.py:543
-#: core/utils/model_error_messages.py:546
-#: core/utils/model_error_messages.py:549
-#: core/utils/model_error_messages.py:552
+#: core/utils/model_error_messages.py:556
+#: core/utils/model_error_messages.py:559
+#: core/utils/model_error_messages.py:562
+#: core/utils/model_error_messages.py:565
+#: core/utils/model_error_messages.py:568
 msgid "This field is required. Please select an option."
 msgstr "این گزینه مورد نیاز است، لطفا یک مورد را انتخاب کنید."
 
-#: core/utils/model_error_messages.py:555
+#: core/utils/model_error_messages.py:571
 msgid "This field is required. Please select an option for decision making."
 msgstr "این فیلد الزامی است."
 
-#: core/utils/model_error_messages.py:560
+#: core/utils/model_error_messages.py:576
 msgid "The username is required."
 msgstr "نام کاربری الزامی است."
 
-#: core/utils/model_error_messages.py:561
+#: core/utils/model_error_messages.py:577
 msgid "The username cannot exceed 50 characters."
 msgstr "نام کاربری نمی‌تواند بیشتر از ۵۰ کاراکتر باشد."
 
-#: core/utils/model_error_messages.py:564
+#: core/utils/model_error_messages.py:580
 msgid "You must indicate whether the introduction was positive."
 msgstr "مشخص می‌کند که آیا نتیجه گزینه معرفی شده مثبت بوده."
 
-#: core/utils/model_error_messages.py:567
+#: core/utils/model_error_messages.py:583
 msgid "You must indicate whether the introduction was negative."
 msgstr "مشخص می‌کند که آیا نتیجه گزینه معرفی شده منفی بوده."
 
-#: core/utils/model_error_messages.py:570
+#: core/utils/model_error_messages.py:586
 msgid "A reason for the introduction's outcome is required."
 msgstr "میانگین تحصیلات خانواده الزامی است."
 
-#: core/utils/model_error_messages.py:573
+#: core/utils/model_error_messages.py:589
 msgid "You must provide the dates of meetings."
 msgstr "تعیین تاریخ ملاقات الزامی است."
 
-#: core/utils/model_error_messages.py:576
+#: core/utils/model_error_messages.py:592
 msgid "You must summarize the results and any regards from the meetings."
 msgstr "نتایج و ملاحظات"
 
-#: core/utils/model_error_messages.py:579
+#: core/utils/model_error_messages.py:595
 msgid "The cost of introduction is required."
 msgstr "هزینه معرفی الزامی است."
 
-#: core/utils/model_error_messages.py:580
+#: core/utils/model_error_messages.py:596
 msgid "The cost of introduction cannot exceed 100 characters."
 msgstr "هزینه معرفی نمی‌تواند بیشتر از ۱۰۰ کاراکتر باشد."
 
-#: core/utils/model_error_messages.py:583
+#: core/utils/model_error_messages.py:599
 msgid "The cost of meeting is required."
 msgstr "هزینه ملاقات فیلد الزامی است."
 
-#: core/utils/model_error_messages.py:584
+#: core/utils/model_error_messages.py:600
 msgid "The cost of meeting cannot exceed 100 characters."
 msgstr "هزینه ملاقات نمیتواند بیشتر از ۱۰۰ کاراکتر باشد."
+
+#: core/utils/model_error_messages.py:604
+msgid "Language is required."
+msgstr "زبان الزامی است."
+
+#: core/utils/model_error_messages.py:604
+msgid "Language cannot exceed 50 characters."
+msgstr "زبان نمی‌تواند بیشتر از 50 کاراکتر باشد."
+
+#: core/utils/model_error_messages.py:606
+msgid "Job is required."
+msgstr "شغل الزامی است."
+
+#: core/utils/model_error_messages.py:606
+msgid "Job cannot exceed 100 characters."
+msgstr "شغل نباید از ۱۵۰ کاراکتر بیشتر باشد."
+
+#: core/utils/model_error_messages.py:607
+msgid "Originality is required."
+msgstr "اصالت الزامی است."
+
+#: core/utils/model_error_messages.py:609
+msgid "Alive status is required."
+msgstr "وارد کردن در قید حیات بودن الزامی است."
+
+#: core/utils/model_error_messages.py:609
+msgid "Invalid value for alive status."
+msgstr "مقدار نامعتبر برای گزینه."
+
+#: core/utils/model_error_messages.py:610
+msgid "Invalid death date."
+msgstr "تاریخ فوت نامعتبر است."
+
+#: core/utils/model_error_messages.py:610
+msgid "Death date format error."
+msgstr "فرمت تاریخ فوت نامعتبر است."
 
 #: core/utils/preferred_wife_help_text.py:4
 msgid "Select the education level of the preferred wife."
 msgstr "سطح تحصیلات همسر مورد نظر را انتخاب کنید."
 
 #: core/utils/preferred_wife_help_text.py:5
-msgid "Select the degree of the preferred wife."
-msgstr "مدرک همسر مورد نظر را انتخاب کنید."
+msgid "Enter the degree of the preferred wife."
+msgstr "رشته تحصیلی همسر مورد نظر را وارد کنید."
 
 #: core/utils/preferred_wife_help_text.py:6
 msgid "Select the future spouse job of the preferred wife."
 msgstr "شغل همسر مورد نظر را انتخاب کنید."
 
 #: core/utils/preferred_wife_help_text.py:7
-msgid "Select the current residence location of the preferred wife."
-msgstr "محل سکونت فعلی همسر مورد نظر را انتخاب کنید."
+msgid "Enter the current residence location of the preferred wife."
+msgstr "محل سکونت فعلی شما. (آدرس ننویسید فقط نام منطقه زندگی را بنویسید.)"
 
 #: core/utils/preferred_wife_help_text.py:8
 msgid "Select the after marriage residence location of the preferred wife."
@@ -2612,8 +2942,8 @@ msgstr "محل سکونت پس از ازدواج همسر مورد نظر را �
 
 #: core/utils/preferred_wife_help_text.py:9
 #: core/utils/preferred_wife_help_text.py:15
-#: core/utils/preferred_wife_help_text.py:27
-#: core/utils/preferred_wife_help_text.py:31
+#: core/utils/preferred_wife_help_text.py:28
+#: core/utils/preferred_wife_help_text.py:32
 msgid "Select the user associated with this preferred wife information."
 msgstr "کاربر مرتبط با این اطلاعات همسر مورد نظر را انتخاب کنید."
 
@@ -2663,153 +2993,190 @@ msgid "Select the preference for marriage with a disabled person."
 msgstr "انتخاب ترجیح برای ازدواج با فرد معلول."
 
 #: core/utils/preferred_wife_help_text.py:26
+msgid "Enter the Marriage With Disabled & Veteran Explanation"
+msgstr "توضیحات ازدواج با معلمول یا جانباز را وارد کنید."
+
+#: core/utils/preferred_wife_help_text.py:27
 msgid "Enter any red flags for the future spouse."
 msgstr "خط های قرمز برای همسر آینده وارد کنید."
 
-#: core/utils/preferred_wife_help_text.py:30
+#: core/utils/preferred_wife_help_text.py:31
 msgid "Enter any additional information that is not included in the form."
 msgstr "هر اطلاعات اضافی که در فرم درج نشده است وارد کنید."
 
 #: core/utils/preferred_wife_model_choices.py:5
-msgid "Uninterested"
-msgstr "بی‌علاقه"
+msgid "Medical"
+msgstr "پزشکی"
+
+#: core/utils/preferred_wife_model_choices.py:6
+msgid "Engineer"
+msgstr "مهندسی"
+
+#: core/utils/preferred_wife_model_choices.py:7
+msgid "Human Science"
+msgstr "علوم انسانی"
+
+#: core/utils/preferred_wife_model_choices.py:8
+msgid "Hoze Mobtadas"
+msgstr "حوزوی ملبس"
 
 #: core/utils/preferred_wife_model_choices.py:9
-msgid "Bachelor"
-msgstr "لیسانس"
+msgid "Hoze Not Mobtadas"
+msgstr "حوزوی غیرملبس"
 
 #: core/utils/preferred_wife_model_choices.py:10
-msgid "Master’s Bachelor"
-msgstr "کارشناسی ارشد"
-
-#: core/utils/preferred_wife_model_choices.py:11
-msgid "Hoze LVL1"
-msgstr "حوزه سطح ۱"
-
-#: core/utils/preferred_wife_model_choices.py:12
-msgid "Hoze LVL2"
-msgstr "حوزه سطح ۲"
-
-#: core/utils/preferred_wife_model_choices.py:13
-msgid "Hoze LVL3"
-msgstr "حوزه سطح ۳"
+msgid "Art"
+msgstr "هنر"
 
 #: core/utils/preferred_wife_model_choices.py:14
-msgid "Hoze LVL4"
-msgstr "حوزه سطح ۴"
-
-#: core/utils/preferred_wife_model_choices.py:21
-msgid "Hoze Mobtadas"
-msgstr "حوزه غیر ملبس"
-
-#: core/utils/preferred_wife_model_choices.py:22
-msgid "Hoze Not Mobtadas"
-msgstr "حوزه ملبس"
-
-#: core/utils/preferred_wife_model_choices.py:27
 msgid "Exactly Qom"
-msgstr "دقیقاً قم"
+msgstr "قطعاْ قم"
 
-#: core/utils/preferred_wife_model_choices.py:28
+#: core/utils/preferred_wife_model_choices.py:15
 msgid "Near Qom"
-msgstr "نزدیک قم"
+msgstr "شهر های نزدیک قم"
 
-#: core/utils/preferred_wife_model_choices.py:29
-msgid "Mecca City"
-msgstr "شهر مکه"
+#: core/utils/preferred_wife_model_choices.py:16
+msgid "Mega Cities"
+msgstr "کلان شهر ها"
 
-#: core/utils/preferred_wife_model_choices.py:30
+#: core/utils/preferred_wife_model_choices.py:17
 msgid "Anywhere in Iran"
 msgstr " هرجای ایران سرای من است"
 
-#: core/utils/preferred_wife_model_choices.py:31
+#: core/utils/preferred_wife_model_choices.py:18
 msgid "Villages Near Qom"
 msgstr "روستاهای نزدیک قم"
 
-#: core/utils/preferred_wife_model_choices.py:32
+#: core/utils/preferred_wife_model_choices.py:19
+msgid "Environs Near Qom"
+msgstr "توابع نزدیک قم"
+
+#: core/utils/preferred_wife_model_choices.py:20
 msgid "Foreign Country"
 msgstr "خارج از کشور"
 
-#: core/utils/preferred_wife_model_choices.py:54
+#: core/utils/preferred_wife_model_choices.py:25
 msgid "Religious"
 msgstr "مذهبی"
 
-#: core/utils/preferred_wife_model_choices.py:55
+#: core/utils/preferred_wife_model_choices.py:26
 msgid "Norm"
 msgstr "عادی"
 
-#: core/utils/preferred_wife_model_choices.py:56
+#: core/utils/preferred_wife_model_choices.py:27
 msgid "Cador"
 msgstr "چادری"
 
-#: core/utils/preferred_wife_model_choices.py:57
+#: core/utils/preferred_wife_model_choices.py:28
 msgid "Manto"
 msgstr "مانتو"
 
-#: core/utils/preferred_wife_model_choices.py:58
+#: core/utils/preferred_wife_model_choices.py:29
 msgid "Sport & Modern"
-msgstr "مدرن و ورزشی"
+msgstr "اسپرت و بروز"
 
-#: core/utils/preferred_wife_model_choices.py:61
+#: core/utils/preferred_wife_model_choices.py:32
 msgid "Same"
 msgstr "هم سن"
 
-#: core/utils/preferred_wife_model_choices.py:62
+#: core/utils/preferred_wife_model_choices.py:33
 msgid "Till 3"
 msgstr "تا ۳ سال"
 
-#: core/utils/preferred_wife_model_choices.py:63
+#: core/utils/preferred_wife_model_choices.py:34
 msgid "3 to 7"
 msgstr "۳ تا ۷ سال"
 
-#: core/utils/preferred_wife_model_choices.py:64
+#: core/utils/preferred_wife_model_choices.py:35
 msgid "7 to 10"
 msgstr "۷ تا ۱۰ سال"
 
-#: core/utils/preferred_wife_model_choices.py:65
+#: core/utils/preferred_wife_model_choices.py:36
 msgid "10 to 15"
 msgstr "۱۰ تا ۱۵ سال"
 
-#: core/utils/preferred_wife_model_choices.py:66
+#: core/utils/preferred_wife_model_choices.py:37
 msgid "Depends on the Looks"
 msgstr "بسته به ظاهر"
 
-#: core/utils/preferred_wife_model_choices.py:67
+#: core/utils/preferred_wife_model_choices.py:38
+#: core/utils/preferred_wife_model_choices.py:45
 #: core/utils/preferred_wife_model_choices.py:74
 msgid "Doesn’t Matter"
 msgstr "اهمیت ندارد"
 
-#: core/utils/preferred_wife_model_choices.py:72
+#: core/utils/preferred_wife_model_choices.py:43
 msgid "Any"
-msgstr "اهمیت ندارد"
+msgstr "متوسط"
 
-#: core/utils/preferred_wife_model_choices.py:78
+#: core/utils/preferred_wife_model_choices.py:49
 msgid "Divorced Virgin"
 msgstr "مطلقه باکره"
 
-#: core/utils/preferred_wife_model_choices.py:79
+#: core/utils/preferred_wife_model_choices.py:50
 msgid "Divorced No Life"
 msgstr "مطلقه بدون زندگی"
 
-#: core/utils/preferred_wife_model_choices.py:80
+#: core/utils/preferred_wife_model_choices.py:51
 msgid "No Child"
 msgstr "بدون فرزند"
 
-#: core/utils/preferred_wife_model_choices.py:81
+#: core/utils/preferred_wife_model_choices.py:52
 msgid "Child Present"
-msgstr "فرزند دارد - تحت حضانت است"
+msgstr "فرزند دارد - تحت حضانت نیست"
 
-#: core/utils/preferred_wife_model_choices.py:82
+#: core/utils/preferred_wife_model_choices.py:53
 msgid "Have Children"
 msgstr "فرزند دارد"
 
-#: core/utils/preferred_wife_model_choices.py:83
+#: core/utils/preferred_wife_model_choices.py:54
 msgid "Have Boy"
 msgstr "فرزند پسر"
 
-#: core/utils/preferred_wife_model_choices.py:84
+#: core/utils/preferred_wife_model_choices.py:55
 msgid "Have Girl"
 msgstr "فرزند دختر"
+
+#: core/utils/preferred_wife_model_choices.py:64
+msgid "Freelance"
+msgstr "آزاد"
+
+#: core/utils/preferred_wife_model_choices.py:65
+msgid "Military"
+msgstr "نظامی"
+
+#: core/utils/preferred_wife_model_choices.py:66
+msgid "Office"
+msgstr "اداری"
+
+#: core/utils/preferred_wife_model_choices.py:67
+msgid "Teacher"
+msgstr "معلم"
+
+#: core/utils/preferred_wife_model_choices.py:68
+msgid "Hoze M"
+msgstr "حوزوی ملبس"
+
+#: core/utils/preferred_wife_model_choices.py:69
+msgid "Hoze N"
+msgstr "حوزوی غیر ملبس"
+
+#: core/utils/preferred_wife_model_choices.py:70
+msgid "hoze Sis"
+msgstr "حوزه خواهران"
+
+#: core/utils/preferred_wife_model_choices.py:72
+msgid "No Job At All"
+msgstr "قطعا غیر شاغل"
+
+#: core/utils/preferred_wife_model_choices.py:73
+msgid "Housekeeper"
+msgstr "خانه دار"
+
+#: core/utils/preferred_wife_model_error_messages.py:10
+msgid "Degree cannot exceed 150 characters."
+msgstr "رشته تحصیلی نمی‌تواند بیشتر از 150 کاراکتر باشد."
 
 #: core/utils/preferred_wife_model_error_messages.py:13
 msgid "Future spouse job is required."
@@ -2824,8 +3191,8 @@ msgid "Current residence location is required."
 msgstr "محل سکونت فعلی الزامی است."
 
 #: core/utils/preferred_wife_model_error_messages.py:18
-msgid "Invalid choice for current residence location."
-msgstr "انتخاب نامعتبر برای محل سکونت فعلی."
+msgid "Current residence location  cannot exceed 150 characters."
+msgstr "محل سکونت فعلی نمی تواند بیشتر از ۱۵۰ کاراکتر باشد.."
 
 #: core/utils/preferred_wife_model_error_messages.py:21
 msgid "After marriage residence location is required."
@@ -2896,10 +3263,20 @@ msgid "Invalid choice for marriage with disabled."
 msgstr "انتخاب نامعتبر برای ازدواج با معلول."
 
 #: core/utils/preferred_wife_model_error_messages.py:78
+msgid "Marriage with disabled & Veteran Explanation is required."
+msgstr "توضیحات ازدواج با معلول یا جانباز الزامی است."
+
+#: core/utils/preferred_wife_model_error_messages.py:79
+msgid ""
+"Marriage With Disabled & Veteran Explanation cannot exceed 150 characters."
+msgstr ""
+"توضیحات ازدواج با معلول یا جانباز نمی تواند بیشتر از ۱۵۰ کاراکتر باشد.."
+
+#: core/utils/preferred_wife_model_error_messages.py:82
 msgid "Red flags are required."
 msgstr "خط قرمزها الزامی است."
 
-#: core/utils/preferred_wife_model_error_messages.py:86
+#: core/utils/preferred_wife_model_error_messages.py:90
 msgid "Additional explanations are required."
 msgstr "توضیحات اضافی الزامی است."
 
@@ -2931,59 +3308,59 @@ msgstr "انگلیسی"
 msgid "Persian"
 msgstr "فارسی"
 
-#: users/admin.py:197 users/admin.py:217 users/admin.py:223
+#: users/admin.py:190 users/admin.py:210 users/admin.py:216
 msgid "Login Info"
 msgstr "اطلاعات ورود به حساب کاربری"
 
-#: users/admin.py:198 users/admin.py:204
+#: users/admin.py:191 users/admin.py:197
 msgid "Personal info"
 msgstr "اطلاعات شخصی"
 
-#: users/admin.py:199
+#: users/admin.py:192
 msgid "Permissions"
 msgstr "مجوزها"
 
-#: users/admin.py:200
+#: users/admin.py:193
 msgid "Important dates"
 msgstr "تاریخ‌های مهم"
 
-#: users/admin.py:201 users/admin.py:205
+#: users/admin.py:194 users/admin.py:198
 msgid "Extra Fields"
 msgstr "فیلدهای اضافی"
 
-#: users/admin.py:239
+#: users/admin.py:232
 msgid "Access code not found."
 msgstr "کد دسترسی پیدا نشد."
 
-#: users/admin.py:246
+#: users/admin.py:239
 msgid "Selected users have been deactivated."
 msgstr "کاربران انتخاب‌ شده غیرفعال شده‌اند."
 
-#: users/admin.py:247
+#: users/admin.py:240
 msgid "Deactivate selected users"
 msgstr "غیرفعال کردن کاربران انتخاب‌ شده"
 
-#: users/admin.py:251
+#: users/admin.py:244
 msgid "Selected users have been reactivated."
 msgstr "کاربران انتخاب‌ شده دوباره فعال شده‌اند."
 
-#: users/admin.py:252
+#: users/admin.py:245
 msgid "Reactivate selected users"
 msgstr "دوباره فعال کردن کاربران انتخاب شده"
 
-#: users/admin.py:265
+#: users/admin.py:258
 msgid "Selected access codes have been marked as expired."
 msgstr "کدهای دسترسی انتخاب ‌شده به عنوان منقضی شده علامت‌گذاری شده‌اند."
 
-#: users/admin.py:266
+#: users/admin.py:259
 msgid "Expire selected access codes"
 msgstr "منقضی کردن کدهای دسترسی انتخاب‌ شده"
 
-#: users/admin.py:270
+#: users/admin.py:263
 msgid "Selected access codes have been reactivated."
 msgstr "کدهای دسترسی انتخاب‌ شده دوباره فعال شده‌اند."
 
-#: users/admin.py:271
+#: users/admin.py:264
 msgid "Reactivate selected access codes"
 msgstr "دوباره فعال کردن کدهای دسترسی انتخاب‌ شده"
 
@@ -3005,15 +3382,16 @@ msgid "Additional Explanations"
 msgstr "توضیحات اضافی"
 
 #: users/preferred_wife_models/preferred_wife_extra_information.py:12
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:70
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:86
-#: users/preferred_wife_models/preferred_wife_personal_information.py:46
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:75
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:91
+#: users/preferred_wife_models/preferred_wife_personal_information.py:43
 #: users/preferred_wife_models/preferred_wife_physical_information.py:32
-#: users/user_related_models/family_information_model.py:46
-#: users/user_related_models/family_information_model.py:101
-#: users/user_related_models/family_information_model.py:135
-#: users/user_related_models/family_information_model.py:160
-#: users/user_related_models/family_information_model.py:230
+#: users/user_related_models/family_information_model.py:60
+#: users/user_related_models/family_information_model.py:115
+#: users/user_related_models/family_information_model.py:156
+#: users/user_related_models/family_information_model.py:181
+#: users/user_related_models/family_information_model.py:278
+#: users/user_related_models/family_information_model.py:285
 #: users/user_related_models/physical_information_model.py:88
 #: users/user_related_models/user_model.py:185
 #: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/admin/guardian/model/obj_perms_manage_user.html:43
@@ -3063,23 +3441,27 @@ msgid "Marriage with Veteran Person"
 msgstr "ازدواج با جانباز"
 
 #: users/preferred_wife_models/preferred_wife_intellectual_information.py:66
+msgid "Marriage with Veteran & Disabled Person Explanation"
+msgstr "توضیحات  ازدواج با معلول یا جانباز"
+
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:71
 msgid "Red Flags"
 msgstr "خط قرمزها"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:76
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:77
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:81
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:82
 msgid "Preferred Wife Intellectual Information"
 msgstr "اطلاعات عقیدتی همسر مورد نظر"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:81
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:86
 msgid "Future Spouse Originality"
 msgstr "اصالت همسر آینده"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:92
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:97
 msgid "FutureSposeOriginality"
 msgstr "اصالت همسر آینده"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:93
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:98
 msgid "FutureSposeOriginalities"
 msgstr "اصالت های همسر آینده"
 
@@ -3087,24 +3469,24 @@ msgstr "اصالت های همسر آینده"
 msgid "Education Level"
 msgstr "سطح تحصیلات"
 
-#: users/preferred_wife_models/preferred_wife_personal_information.py:17
+#: users/preferred_wife_models/preferred_wife_personal_information.py:16
 msgid "Field of Study"
 msgstr "رشته تحصیلی"
 
-#: users/preferred_wife_models/preferred_wife_personal_information.py:24
+#: users/preferred_wife_models/preferred_wife_personal_information.py:22
 msgid "Future Spouse Job"
 msgstr "شغل همسر آینده"
 
-#: users/preferred_wife_models/preferred_wife_personal_information.py:31
+#: users/preferred_wife_models/preferred_wife_personal_information.py:29
 msgid "Current Residence Location"
 msgstr "محل سکونت فعلی"
 
-#: users/preferred_wife_models/preferred_wife_personal_information.py:39
+#: users/preferred_wife_models/preferred_wife_personal_information.py:36
 msgid "After Marriage Residence Location"
 msgstr "محل سکونت پس از ازدواج"
 
-#: users/preferred_wife_models/preferred_wife_personal_information.py:52
-#: users/preferred_wife_models/preferred_wife_personal_information.py:53
+#: users/preferred_wife_models/preferred_wife_personal_information.py:49
+#: users/preferred_wife_models/preferred_wife_personal_information.py:50
 msgid "Preferred Wife Personal Information"
 msgstr "اطلاعات شخصی همسر مورد نظر"
 
@@ -3182,20 +3564,21 @@ msgid "Work Address"
 msgstr "آدرس محل کار"
 
 #: users/user_related_models/confidintional_information_model.py:85
-#: users/user_related_models/family_information_model.py:210
+#: users/user_related_models/family_information_model.py:244
 msgid "Originality"
 msgstr "اصالت"
 
 #: users/user_related_models/confidintional_information_model.py:91
-#: users/user_related_models/family_information_model.py:150
-#: users/user_related_models/family_information_model.py:215
+#: users/user_related_models/family_information_model.py:171
+#: users/user_related_models/family_information_model.py:250
 #: users/user_related_models/personal_information_model.py:34
 msgid "Education"
 msgstr "تحصیلات"
 
 #: users/user_related_models/confidintional_information_model.py:97
-#: users/user_related_models/family_information_model.py:156
-#: users/user_related_models/family_information_model.py:205
+#: users/user_related_models/family_information_model.py:177
+#: users/user_related_models/family_information_model.py:238
+#: users/user_related_models/financial_information.py:10
 msgid "Job"
 msgstr "شغل"
 
@@ -3208,7 +3591,7 @@ msgid "Income in Tooman"
 msgstr "درآمد به تومان"
 
 #: users/user_related_models/confidintional_information_model.py:116
-#: users/user_related_models/financial_information.py:38
+#: users/user_related_models/financial_information.py:45
 msgid "Capital"
 msgstr "دارایی ها"
 
@@ -3220,337 +3603,351 @@ msgstr "وزن (به کیلوگرم)"
 msgid "Height (in cm)"
 msgstr "قد (به سانتیمتر)"
 
-#: users/user_related_models/confidintional_information_model.py:137
-msgid "Introduced Subjects"
-msgstr "گزینه های معرفی شده"
-
-#: users/user_related_models/confidintional_information_model.py:144
-msgid "Introduced Subjects Explanations"
-msgstr "توضیحات گزینه های معرفی شده"
-
-#: users/user_related_models/confidintional_information_model.py:151
+#: users/user_related_models/confidintional_information_model.py:136
 msgid "Prefered Meeting Time"
 msgstr "اوقات پیشنهادی ملاقات مورد نظر"
 
-#: users/user_related_models/confidintional_information_model.py:157
+#: users/user_related_models/confidintional_information_model.py:142
 msgid "Type of payment"
 msgstr "نوع پرداخت"
 
-#: users/user_related_models/confidintional_information_model.py:164
+#: users/user_related_models/confidintional_information_model.py:149
 msgid "Proof Of Payment"
 msgstr "رسید پرداخت"
 
-#: users/user_related_models/confidintional_information_model.py:182
-#: users/user_related_models/confidintional_information_model.py:183
+#: users/user_related_models/confidintional_information_model.py:167
+#: users/user_related_models/confidintional_information_model.py:168
 msgid "Identities Information"
 msgstr "اطلاعات هویت‌ها"
 
-#: users/user_related_models/confidintional_information_model.py:194
+#: users/user_related_models/confidintional_information_model.py:179
 msgid "National Code"
 msgstr "کد ملی"
 
-#: users/user_related_models/confidintional_information_model.py:202
+#: users/user_related_models/confidintional_information_model.py:187
 msgid "Birth Certificate Serial"
 msgstr "سریال شناسنامه"
 
-#: users/user_related_models/confidintional_information_model.py:208
+#: users/user_related_models/confidintional_information_model.py:193
 msgid "Birth Certificate Location"
 msgstr "محل صدور شناسنامه"
 
-#: users/user_related_models/confidintional_information_model.py:214
+#: users/user_related_models/confidintional_information_model.py:199
 msgid "Marriage Experince"
 msgstr "تجربه ازدواج"
 
-#: users/user_related_models/confidintional_information_model.py:221
+#: users/user_related_models/confidintional_information_model.py:206
 msgid "Contract Date"
 msgstr "تاریخ عقد"
 
-#: users/user_related_models/confidintional_information_model.py:230
-#: users/user_related_models/confidintional_information_model.py:320
+#: users/user_related_models/confidintional_information_model.py:215
+#: users/user_related_models/confidintional_information_model.py:305
 msgid "Marriage Status"
 msgstr "وضعیت تاهل"
 
-#: users/user_related_models/confidintional_information_model.py:237
+#: users/user_related_models/confidintional_information_model.py:222
 msgid "Marriage Date"
 msgstr "تاریخ ازدواج"
 
-#: users/user_related_models/confidintional_information_model.py:246
-#: users/user_related_models/family_information_model.py:88
+#: users/user_related_models/confidintional_information_model.py:231
+#: users/user_related_models/family_information_model.py:102
 msgid "Divorce Date"
 msgstr "تاریخ طلاق"
 
-#: users/user_related_models/confidintional_information_model.py:255
+#: users/user_related_models/confidintional_information_model.py:240
 msgid "Husband Death Date"
 msgstr "تاریخ فوت همسر"
 
-#: users/user_related_models/confidintional_information_model.py:264
-#: users/user_related_models/confidintional_information_model.py:313
-#: users/user_related_models/family_information_model.py:201
+#: users/user_related_models/confidintional_information_model.py:249
+#: users/user_related_models/confidintional_information_model.py:298
+#: users/user_related_models/family_information_model.py:233
 #: users/user_related_models/personal_information_model.py:22
 msgid "Birth Date"
 msgstr "تاریخ تولد"
 
-#: users/user_related_models/confidintional_information_model.py:271
+#: users/user_related_models/confidintional_information_model.py:256
 msgid "Children"
 msgstr "فرزندان"
 
-#: users/user_related_models/confidintional_information_model.py:277
+#: users/user_related_models/confidintional_information_model.py:262
 msgid "Children Custody"
 msgstr "حضانت فرزندان"
 
-#: users/user_related_models/confidintional_information_model.py:301
+#: users/user_related_models/confidintional_information_model.py:286
 msgid "Birth Certificate Information"
 msgstr "اطلاعات شناسنامه"
 
-#: users/user_related_models/confidintional_information_model.py:302
+#: users/user_related_models/confidintional_information_model.py:287
 msgid "Birth Certificates Information"
 msgstr "اطلاعات شناسنامه‌ها"
 
-#: users/user_related_models/confidintional_information_model.py:307
+#: users/user_related_models/confidintional_information_model.py:292
 msgid "Username"
 msgstr "نام کاربری"
 
-#: users/user_related_models/confidintional_information_model.py:326
+#: users/user_related_models/confidintional_information_model.py:311
 msgid "Positive"
 msgstr "مثبت"
 
-#: users/user_related_models/confidintional_information_model.py:331
+#: users/user_related_models/confidintional_information_model.py:316
 msgid "Negative"
 msgstr "منفی"
 
-#: users/user_related_models/confidintional_information_model.py:336
+#: users/user_related_models/confidintional_information_model.py:321
 msgid "Reason"
 msgstr "علت"
 
-#: users/user_related_models/confidintional_information_model.py:341
+#: users/user_related_models/confidintional_information_model.py:326
 msgid "Dates Of Meetings"
 msgstr "تاریخ ملاقات"
 
-#: users/user_related_models/confidintional_information_model.py:346
+#: users/user_related_models/confidintional_information_model.py:331
 msgid "Result & Regards"
 msgstr "نتیجه و ملاحظات"
 
-#: users/user_related_models/confidintional_information_model.py:351
+#: users/user_related_models/confidintional_information_model.py:336
 msgid "Cost of Introduction"
 msgstr "هزینه معرفی"
 
-#: users/user_related_models/confidintional_information_model.py:357
+#: users/user_related_models/confidintional_information_model.py:342
 msgid "Cost of Meeting"
 msgstr "هزینه ملاقات"
 
-#: users/user_related_models/confidintional_information_model.py:378
-msgid "IntroducedSubject"
-msgstr "گزینه معرفی شده"
-
-#: users/user_related_models/confidintional_information_model.py:379
+#: users/user_related_models/confidintional_information_model.py:363
+#: users/user_related_models/confidintional_information_model.py:364
 msgid "IntroducedSubjects"
 msgstr "گزینه معرفی شده"
 
-#: users/user_related_models/family_information_model.py:12
+#: users/user_related_models/family_information_model.py:13
 msgid "Average Family Education"
 msgstr "میانگین تحصیلات خانواده"
 
-#: users/user_related_models/family_information_model.py:20
+#: users/user_related_models/family_information_model.py:21
 msgid "Average Family Finance"
 msgstr "میانگین درآمد خانواده"
 
-#: users/user_related_models/family_information_model.py:28
+#: users/user_related_models/family_information_model.py:29
 msgid "Family Divorce History"
-msgstr "تاریخچه طلاق در خانواده"
+msgstr "تاریخچه طلاق در خانواده (والدین و برادران و خواهران)"
 
-#: users/user_related_models/family_information_model.py:33
+#: users/user_related_models/family_information_model.py:34
 msgid "Family Divorce Reason"
 msgstr "دلایل طلاق در خانواده"
 
-#: users/user_related_models/family_information_model.py:41
+#: users/user_related_models/family_information_model.py:42
 msgid "Contact with Family"
-msgstr "وضعیت ارتباط با خانواده"
+msgstr "وضعیت ارتباط با خانواده (والدین و برادران و خوهران)"
 
-#: users/user_related_models/family_information_model.py:55
+#: users/user_related_models/family_information_model.py:48
+msgid "Contact with Relatives"
+msgstr "وضعیت ارتباط با فامیل"
+
+#: users/user_related_models/family_information_model.py:54
+msgid "Kids"
+msgstr "فرزندان"
+
+#: users/user_related_models/family_information_model.py:69
 msgid "Family Information"
 msgstr "اطلاعات خانواده"
 
-#: users/user_related_models/family_information_model.py:56
+#: users/user_related_models/family_information_model.py:70
 msgid "Families Information"
 msgstr "اطلاعات خانواده‌ها"
 
-#: users/user_related_models/family_information_model.py:60
+#: users/user_related_models/family_information_model.py:74
 msgid "Person Status"
 msgstr "وضعیت فرد"
 
-#: users/user_related_models/family_information_model.py:68
+#: users/user_related_models/family_information_model.py:82
 msgid "Contract Length"
 msgstr "مدت عقد"
 
-#: users/user_related_models/family_information_model.py:75
+#: users/user_related_models/family_information_model.py:89
 msgid "Living Length"
 msgstr "مدت زندگی مشترک"
 
-#: users/user_related_models/family_information_model.py:82
-#: users/user_related_models/family_information_model.py:225
+#: users/user_related_models/family_information_model.py:96
+#: users/user_related_models/family_information_model.py:262
 msgid "Death Date"
 msgstr "تاریخ فوت"
 
-#: users/user_related_models/family_information_model.py:95
+#: users/user_related_models/family_information_model.py:109
 msgid "Reason for Divorce or Death"
 msgstr "دلایل طلاق یا فوت"
 
-#: users/user_related_models/family_information_model.py:107
+#: users/user_related_models/family_information_model.py:121
 msgid "Engagement or Wedding Status"
 msgstr "وضعیت نامزدی یا ازدواج"
 
-#: users/user_related_models/family_information_model.py:108
+#: users/user_related_models/family_information_model.py:122
 msgid "Engagements or Weddings Statuse"
 msgstr "وضعیت‌های نامزدی یا ازدواج"
 
-#: users/user_related_models/family_information_model.py:112
+#: users/user_related_models/family_information_model.py:126
+#: users/user_related_models/personal_information_model.py:10
+msgid "Gender"
+msgstr "جنسیت"
+
+#: users/user_related_models/family_information_model.py:133
 msgid "Status"
 msgstr "وضعیت"
 
-#: users/user_related_models/family_information_model.py:117
+#: users/user_related_models/family_information_model.py:138
 msgid "Child Birth Date"
 msgstr "تاریخ تولد"
 
-#: users/user_related_models/family_information_model.py:123
+#: users/user_related_models/family_information_model.py:144
 msgid "Custody"
 msgstr "حضانت"
 
-#: users/user_related_models/family_information_model.py:129
+#: users/user_related_models/family_information_model.py:150
 msgid "Living Location"
 msgstr "محل زندگی"
 
-#: users/user_related_models/family_information_model.py:141
+#: users/user_related_models/family_information_model.py:162
 msgid "Ex-Husband Child Status"
 msgstr "وضعیت فرزند همسر سابق"
 
-#: users/user_related_models/family_information_model.py:142
+#: users/user_related_models/family_information_model.py:163
 msgid "Ex-Husbands Child Status"
 msgstr "وضعیت فرزند همسر سابق"
 
-#: users/user_related_models/family_information_model.py:146
-#: users/user_related_models/family_information_model.py:221
+#: users/user_related_models/family_information_model.py:167
+#: users/user_related_models/family_information_model.py:257
 msgid "Alive"
 msgstr "در قید حیات"
 
-#: users/user_related_models/family_information_model.py:167
+#: users/user_related_models/family_information_model.py:188
 msgid "Family Member"
 msgstr "عضو خانواده"
 
-#: users/user_related_models/family_information_model.py:168
+#: users/user_related_models/family_information_model.py:189
 msgid "Family Members"
 msgstr "اعضای خانواده"
 
-#: users/user_related_models/family_information_model.py:173
+#: users/user_related_models/family_information_model.py:194
 msgid "Sister"
 msgstr "خواهر"
 
-#: users/user_related_models/family_information_model.py:174
+#: users/user_related_models/family_information_model.py:195
 msgid "Sisters"
 msgstr "خواهران"
 
-#: users/user_related_models/family_information_model.py:179
+#: users/user_related_models/family_information_model.py:200
 msgid "Brother"
 msgstr "برادر"
 
-#: users/user_related_models/family_information_model.py:180
+#: users/user_related_models/family_information_model.py:201
 msgid "Brothers"
 msgstr "برادران"
 
-#: users/user_related_models/family_information_model.py:185
+#: users/user_related_models/family_information_model.py:205
+msgid "Groom or Zan Dadash"
+msgstr "داماد یا شوهر خواهر"
+
+#: users/user_related_models/family_information_model.py:211
 msgid "Groom"
-msgstr "داماد / خواهر شوهر"
+msgstr "داماد / شوهر خواهر"
 
-#: users/user_related_models/family_information_model.py:186
+#: users/user_related_models/family_information_model.py:212
 msgid "Grooms"
-msgstr "دامادها / خواهر شوهر ها"
+msgstr "دامادها / شوهر خواهر ها"
 
-#: users/user_related_models/family_information_model.py:191
+#: users/user_related_models/family_information_model.py:216
+msgid "Bride or Shohar Khahar"
+msgstr "عروس یا زن داداش"
+
+#: users/user_related_models/family_information_model.py:222
 msgid "Bride or Wife"
-msgstr "عروس"
+msgstr "عروس / زن داداش"
 
-#: users/user_related_models/family_information_model.py:192
+#: users/user_related_models/family_information_model.py:223
 msgid "Brides or Wives"
-msgstr "عروس"
+msgstr "عروس ها / زن داداش ها"
 
-#: users/user_related_models/family_information_model.py:196
+#: users/user_related_models/family_information_model.py:227
 msgid "Language"
 msgstr "زبان"
 
-#: users/user_related_models/family_information_model.py:237
+#: users/user_related_models/family_information_model.py:274
 msgid "Parent"
 msgstr "والدین"
 
-#: users/user_related_models/family_information_model.py:238
+#: users/user_related_models/family_information_model.py:275
 msgid "Parents"
 msgstr "والدین"
 
-#: users/user_related_models/family_information_model.py:244
+#: users/user_related_models/family_information_model.py:282
 msgid "Mothers"
 msgstr "مادر"
 
-#: users/user_related_models/family_information_model.py:250
+#: users/user_related_models/family_information_model.py:290
 msgid "Fathers"
 msgstr "پدر"
 
-#: users/user_related_models/financial_information.py:10
+#: users/user_related_models/financial_information.py:17
 msgid "Current Residence Status"
 msgstr "محل سکونت فعلی"
 
-#: users/user_related_models/financial_information.py:17
+#: users/user_related_models/financial_information.py:24
 msgid "Ownership Status"
 msgstr "مالکیت منزل"
 
-#: users/user_related_models/financial_information.py:24
+#: users/user_related_models/financial_information.py:31
 msgid "Rent Amount"
 msgstr "میزان اجاره"
 
-#: users/user_related_models/financial_information.py:31
+#: users/user_related_models/financial_information.py:38
 msgid "Mortgage Amount"
 msgstr "میزان رهن"
 
-#: users/user_related_models/financial_information.py:45
+#: users/user_related_models/financial_information.py:52
 msgid "Other Capital"
 msgstr "دارایی های دیگر"
 
-#: users/user_related_models/financial_information.py:54
+#: users/user_related_models/financial_information.py:61
 msgid "After Marriage Residence Status"
 msgstr "محل سکونت پس از ازدواج"
 
-#: users/user_related_models/financial_information.py:61
+#: users/user_related_models/financial_information.py:68
 msgid "Ex-Spouse Financial Status"
 msgstr "وضعیت مهریه همسر سابق"
 
-#: users/user_related_models/financial_information.py:67
+#: users/user_related_models/financial_information.py:74
 msgid "Ex-Spouse Financial Pay Status"
 msgstr "نوع مدت پرداخت همسر سابق"
 
-#: users/user_related_models/financial_information.py:74
+#: users/user_related_models/financial_information.py:81
 msgid "Ex-Spouse Financial Amount"
 msgstr "میزان مهریه همسر سابق"
 
-#: users/user_related_models/financial_information.py:82
+#: users/user_related_models/financial_information.py:89
 msgid "Future Spouse Dowry Type"
 msgstr "نوع مهریه همسر آینده"
 
-#: users/user_related_models/financial_information.py:90
+#: users/user_related_models/financial_information.py:97
 msgid "Future Spose Dowry Amount"
 msgstr "میزان مهریه همسر آینده"
 
-#: users/user_related_models/financial_information.py:96
+#: users/user_related_models/financial_information.py:103
 msgid "Future Spose Jahiziyeh"
 msgstr "جهیزیه همسر آینده"
 
-#: users/user_related_models/financial_information.py:114
+#: users/user_related_models/financial_information.py:111
+msgid "Future Spose Jahiziyeh Explantion"
+msgstr "توضیحات جهیزیه همسر آینده"
+
+#: users/user_related_models/financial_information.py:129
 msgid "Financial Information"
 msgstr "اطلاعات مالی"
 
-#: users/user_related_models/financial_information.py:115
+#: users/user_related_models/financial_information.py:130
 msgid "Financial Informations"
 msgstr "اطلاعات مالی"
 
 #: users/user_related_models/intellectual_information_model.py:10
 msgid "Marriage Goals & Purposes"
-msgstr "اهداف و انتظارات از ازدواج"
+msgstr "اهداف و انتظارات از اصل ازدواج"
 
 #: users/user_related_models/intellectual_information_model.py:15
 msgid "Opinion About Woman's Job"
@@ -3630,7 +4027,7 @@ msgstr "در چه مواردی می توان با نامحرم گفتگو کرد
 
 #: users/user_related_models/intellectual_information_model.py:128
 msgid "Cover Type in Contact of Innocent"
-msgstr "نوع پوشش در حضور نامحرم"
+msgstr "نوع پوشش در مهمانی در حضور نامحرم"
 
 #: users/user_related_models/intellectual_information_model.py:134
 msgid "Decision Making in Choosing a Spouse"
@@ -3643,111 +4040,79 @@ msgstr ""
 msgid "Intellectual Information"
 msgstr "اطلاعات عقیدتی"
 
-#: users/user_related_models/personal_information_model.py:10
-msgid "Gender"
-msgstr "جنسیت"
-
 #: users/user_related_models/personal_information_model.py:17
 msgid "Sadat"
 msgstr "سادات"
-
-#: users/user_related_models/personal_information_model.py:19
-msgid "Is the user a Sadat?"
-msgstr "آیا کاربر از سادات است؟"
 
 #: users/user_related_models/personal_information_model.py:28
 msgid "Birth Location"
 msgstr "محل تولد"
 
-#: users/user_related_models/personal_information_model.py:31
-msgid "Enter the birth location of the user."
-msgstr "محل تولد خود را وارد کنید."
-
-#: users/user_related_models/personal_information_model.py:38
-msgid "Select the education level of the user."
-msgstr "سطح تحصیلات خود را وارد کنید."
-
 #: users/user_related_models/personal_information_model.py:41
 msgid "Degree"
 msgstr "مدرک"
 
-#: users/user_related_models/personal_information_model.py:44
-msgid "Select the degree of the user."
-msgstr "مدرک خود را انتخاب کنید."
-
 #: users/user_related_models/personal_information_model.py:47
 msgid "Military Status"
-msgstr "وضعیت نظامی"
-
-#: users/user_related_models/personal_information_model.py:50
-msgid "Select the military status of the user."
-msgstr "وضعیت نظامی خود را انتخاب کنید."
+msgstr "وضعیت سربازی"
 
 #: users/user_related_models/personal_information_model.py:53
 msgid "Military Status Explanation"
-msgstr "توضیح وضعیت نظامی"
+msgstr "توضیحات سربازی"
 
-#: users/user_related_models/personal_information_model.py:59
+#: users/user_related_models/personal_information_model.py:60
 msgid "Income"
-msgstr "درآمد"
+msgstr "درآمد ماهانه"
 
-#: users/user_related_models/personal_information_model.py:66
+#: users/user_related_models/personal_information_model.py:67
 msgid "Deposit"
 msgstr "سپرده"
 
-#: users/user_related_models/personal_information_model.py:72
+#: users/user_related_models/personal_information_model.py:73
+msgid "Have Insurance"
+msgstr "بیمه دار"
+
+#: users/user_related_models/personal_information_model.py:79
 msgid "Insurance Type"
 msgstr "نوع بیمه"
 
-#: users/user_related_models/personal_information_model.py:75
-msgid "Select the type of insurance the user has."
-msgstr "نوع بیمه خود را انتخاب کنید."
-
-#: users/user_related_models/personal_information_model.py:78
+#: users/user_related_models/personal_information_model.py:85
 msgid "Insurance Years"
 msgstr "سال‌های بیمه"
 
-#: users/user_related_models/personal_information_model.py:83
+#: users/user_related_models/personal_information_model.py:90
 msgid "Leisure Type"
 msgstr "نوع تفریحات"
 
-#: users/user_related_models/personal_information_model.py:86
-msgid "Select the types of leisure activities the user enjoys."
-msgstr "نوع تفریحات مورد علاقه خود را انتخاب کنید."
-
-#: users/user_related_models/personal_information_model.py:89
+#: users/user_related_models/personal_information_model.py:96
 msgid "Usage Cases"
 msgstr "موارد استفاده نظیر دخانیات"
 
-#: users/user_related_models/personal_information_model.py:96
+#: users/user_related_models/personal_information_model.py:103
 msgid "Usage Case Description"
 msgstr "توضیحات موارد مورد استفاده نظیر دخانیات"
 
-#: users/user_related_models/personal_information_model.py:103
+#: users/user_related_models/personal_information_model.py:110
 msgid "Tatto"
 msgstr "تتو"
 
-#: users/user_related_models/personal_information_model.py:110
+#: users/user_related_models/personal_information_model.py:117
 msgid "Tatto Description"
 msgstr "توضیحات تتو"
 
-#: users/user_related_models/personal_information_model.py:117
+#: users/user_related_models/personal_information_model.py:124
 msgid "Conviction or Arrest History"
 msgstr "تاریخچه محکومیت یا دستگیری"
 
-#: users/user_related_models/personal_information_model.py:122
+#: users/user_related_models/personal_information_model.py:129
 msgid "Conviction Reason"
 msgstr "دلیل محکومیت"
 
-#: users/user_related_models/personal_information_model.py:133
-msgid "The user associated with this personal information."
-msgstr "کاربر مرتبط با این اطلاعات شخصی"
-
-#: users/user_related_models/personal_information_model.py:141
+#: users/user_related_models/personal_information_model.py:149
 msgid "Personal Information"
 msgstr "اطلاعات شخصی"
 
-#: users/user_related_models/personal_information_model.py:142
+#: users/user_related_models/personal_information_model.py:150
 msgid "Personals Information"
 msgstr "اطلاعات شخصی"
 
@@ -5067,6 +5432,15 @@ msgstr ""
 msgid "Connect, get help, or contribute"
 msgstr ""
 
+#: venv/lib/python3.13/site-packages/django_admin_multi_select_filter/filters.py:50
+#: venv/lib/python3.13/site-packages/django_admin_multi_select_filter/filters.py:111
+#: venv/lib/python3.13/site-packages/unfold/contrib/filters/admin.py:59
+#: venv/lib/python3.13/site-packages/unfold/contrib/filters/admin.py:117
+#: venv/lib/python3.13/site-packages/unfold/contrib/filters/admin/dropdown_filters.py:22
+#: venv/lib/python3.13/site-packages/unfold/contrib/filters/admin/mixins.py:43
+msgid "All"
+msgstr "همه"
+
 #: venv/lib/python3.13/site-packages/jalali_date/templates/admin/edit_inline/jalali_stacked.html:12
 #: venv/lib/python3.13/site-packages/jalali_date/templates/admin/edit_inline/jalali_tabular.html:34
 #: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history_form.html:26
@@ -5119,13 +5493,6 @@ msgstr "انتخاب مقدار"
 #: venv/lib/python3.13/site-packages/unfold/admin.py:545
 msgid "Select action"
 msgstr "انتخاب عملکرد"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/admin.py:59
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/admin.py:117
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/admin/dropdown_filters.py:22
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/admin/mixins.py:43
-msgid "All"
-msgstr "همه"
 
 #: venv/lib/python3.13/site-packages/unfold/contrib/filters/admin.py:83
 #: venv/lib/python3.13/site-packages/unfold/contrib/filters/admin.py:106
@@ -5788,7 +6155,7 @@ msgstr "اضافه کردن"
 
 #: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/boolean.html:10
 msgid "True"
-msgstr "راست"
+msgstr "درست"
 
 #: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/boolean.html:12
 msgid "False"
@@ -5926,30 +6293,89 @@ msgstr "غیرفعال کردن کاربران انتخاب‌ شده"
 msgid "Select all objects on this page for an action"
 msgstr "تمامی آبجکت های این صفحه را برای یک اکشن انتخاب کنید."
 
+#: venv/lib/python3.13/site-packages/unfold/widgets.py:532
+msgid "Date"
+msgstr "تاریخ"
+
 #: venv/lib/python3.13/site-packages/unfold/widgets.py:655
 msgid "Select currency"
 msgstr "واحد را انتخاب کنید."
 
+#~ msgid "Filter"
+#~ msgstr "فیلتر"
+
+#~ msgid ""
+#~ "How committed are you to attending prayer and Quran religious meetings?"
+#~ msgstr "میزان تعهد خود به مجالس مذهبی، دعا و قرآن را انتخاب کنید."
+
+#~ msgid "How often do you listen to music?"
+#~ msgstr "چه مقدار به موسیقی گوش میدهید؟"
+
+#~ msgid "How do you prefer to decide when choosing a spouse?"
+#~ msgstr "در انتخاب نهایی همسر مستقل هستید یا نیاز به مشاوره و کمک دارید؟"
+
+#~ msgid "Select the user associated with this intellectual information."
+#~ msgstr "کاربری که این اطلاعات عقیدتی به آن مربوط است را انتخاب کنید."
+
+#~ msgid "Hoze Molabas"
+#~ msgstr "حوزه ملبس"
+
+#~ msgid "Hoze Not Molabas"
+#~ msgstr "حوزه غیر ملبس"
+
+#~ msgid "Gifts from Iraq"
+#~ msgstr "عراق"
+
+#~ msgid "Gifts from Syria"
+#~ msgstr "سوریه"
+
+#~ msgid "Gold Coin"
+#~ msgstr "طلا"
+
+#~ msgid "Introduced subjects cannot be blank."
+#~ msgstr "موارد معرفی شده نمی‌تواند خالی باشد."
+
+#~ msgid "Introduced subjects cannot be null."
+#~ msgstr "موارد معرفی شده نمی‌تواند تهی باشد."
+
+#~ msgid "Introduced subjects is invalid."
+#~ msgstr "موارد معرفی شده نامعتبر است."
+
+#~ msgid "Uninterested"
+#~ msgstr "بی‌علاقه"
+
+#~ msgid "Bachelor"
+#~ msgstr "لیسانس"
+
+#~ msgid "Master’s Bachelor"
+#~ msgstr "کارشناسی ارشد"
+
+#~ msgid "Hoze LVL1"
+#~ msgstr "حوزه سطح ۱"
+
+#~ msgid "Hoze LVL2"
+#~ msgstr "حوزه سطح ۲"
+
+#~ msgid "Hoze LVL3"
+#~ msgstr "حوزه سطح ۳"
+
+#~ msgid "Hoze LVL4"
+#~ msgstr "حوزه سطح ۴"
+
+#~ msgid "Introduced Subjects"
+#~ msgstr "گزینه های معرفی شده"
+
+#~ msgid "Introduced Subjects Explanations"
+#~ msgstr "توضیحات گزینه های معرفی شده"
+
+#~ msgid "IntroducedSubject"
+#~ msgstr "گزینه معرفی شده"
+
 #~ msgid "Select the type of dowry."
 #~ msgstr "وضعیت مهریه همسر سابق خود را انتخاب کنید."
 
-#~ msgid "Freelancer"
-#~ msgstr "آزاد"
-
-#~ msgid "Military"
-#~ msgstr "نظامی"
-
-#~ msgid "Teacher"
-#~ msgstr "نوع مهریه همسر آینده"
-
 #~ msgid "Hoze None Molabas"
 #~ msgstr "حوزه غیر ملبس"
-
-#~ msgid "Hoze Sisters"
-#~ msgstr "حوزه خواهران"
-
-#~ msgid "No Job"
-#~ msgstr "بدون شغل"
 
 #~ msgid "One Boy, One Girl"
 #~ msgstr "یک پسر، یک دختر"

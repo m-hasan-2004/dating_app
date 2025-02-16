@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'phonenumber_field',
     'jalali_date',
+    
 ]
 
 MIDDLEWARE = [

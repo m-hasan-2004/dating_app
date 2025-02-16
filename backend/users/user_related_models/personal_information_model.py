@@ -16,43 +16,44 @@ class PersonalInformation(models.Model):
     sadat = models.BooleanField(
         _("Sadat"),
         error_messages=PersonalInfoErrorMessages.SADAT,
-        help_text=_("Is the user a Sadat?"),
+        help_text=PersonalInfoHelpText.SADAT,
     )
     birth_date = models.DateField(
         _("Birth Date"),
         error_messages=PersonalInfoErrorMessages.BIRTH_DATE,
-        help_text=_("Enter the birth date of the user."),
+        help_text=PersonalInfoHelpText.BIRTH_DATE,
         db_index=True,
     )
     birth_location = models.CharField(
         _("Birth Location"),
         max_length=50,
         error_messages=PersonalInfoErrorMessages.BIRTH_LOCATION,
-        help_text=_("Enter the birth location of the user."),
+        help_text=PersonalInfoHelpText.BIRTH_LOCATION,
     )
     education = models.CharField(
         _("Education"),
         max_length=50,
         choices=Choices.EDUCATION_CHOICES,
         error_messages=PersonalInfoErrorMessages.EDUCATION,
-        help_text=_("Select the education level of the user."),
+        help_text=PersonalInfoHelpText.EDUCATION,
     )
     degree = models.CharField(
         _("Degree"),
-        choices=Choices.DEGREE_CHOICES,
+        max_length=150,
         error_messages=PersonalInfoErrorMessages.DEGREE,
-        help_text=_("Select the degree of the user."),
+        help_text=PersonalInfoHelpText.DEGREE,
     )
     military_status = models.CharField(
         _("Military Status"),
         choices=Choices.MILITARY_STATUS_CHOICES,
         error_messages=PersonalInfoErrorMessages.MILITARY_STATUS,
-        help_text=_("Select the military status of the user."),
+        help_text=PersonalInfoHelpText.MILITARY_STATUS,
     )
     military_status_explanation = models.TextField(
         _("Military Status Explanation"),
         blank=True,
         null=True,
+        error_messages=PersonalInfoErrorMessages.MILITARY_STATUS,
         help_text=PersonalInfoHelpText.MILITARY_STATUS_EXPLANATION,
     )
     income = models.CharField(
@@ -68,11 +69,17 @@ class PersonalInformation(models.Model):
         error_messages=PersonalInfoErrorMessages.DEPOSIT,
         help_text=PersonalInfoHelpText.DEPOSIT,
     )
+    have_insurance = models.BooleanField(
+        _("Have Insurance"),
+        help_text=PersonalInfoHelpText.INSURANCE_TYPE,
+        default=True,
+    )
+    
     insurance_type = MultiSelectField(
         _("Insurance Type"),
         choices=Choices.INSURANCE_OPTIONS,
         error_messages=PersonalInfoErrorMessages.INSURANCE_TYPE,
-        help_text=_("Select the type of insurance the user has."),
+        help_text=PersonalInfoHelpText.INSURANCE_TYPE,
     )
     insurance_years = models.PositiveIntegerField(
         _("Insurance Years"),
@@ -83,7 +90,7 @@ class PersonalInformation(models.Model):
         _("Leisure Type"),
         choices=Choices.LEISURE_TYPE_CHOICES,
         error_messages=PersonalInfoErrorMessages.LEISURE_TYPE,
-        help_text=_("Select the types of leisure activities the user enjoys."),
+        help_text=PersonalInfoHelpText.LEISURE_TYPE,
     )
     usage_cases = MultiSelectField(
         _("Usage Cases"),
@@ -130,12 +137,13 @@ class PersonalInformation(models.Model):
         "users.User",
         on_delete=models.CASCADE,
         error_messages=PersonalInfoErrorMessages.USER,
-        help_text=_("The user associated with this personal information."),
-        db_index=True
+        help_text=PersonalInfoHelpText.USER,
+        db_index=True,
+        related_name="personalinformation"
     )
 
     def __str__(self):
-        return f"اطالاعات کاربر: {self.user.last_name}"
+        return f"اطلاعات کاربر: {self.user.last_name}"
 
     class Meta:
         verbose_name = _("Personal Information")

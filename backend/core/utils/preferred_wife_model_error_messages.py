@@ -7,7 +7,7 @@ class PersonalInfoErrorMessages:
     }
     FIELD_OF_STUDY = {
         "required": _("Degree is required."),
-        "invalid_choice": _("Invalid choice for degree."),
+        'max_length': _("Degree cannot exceed 150 characters."),
     }
     FUTURE_SPOUSE_JOB = {
         "required": _("Future spouse job is required."),
@@ -15,7 +15,7 @@ class PersonalInfoErrorMessages:
     }
     CURRENT_RESIDENCE_LOCATION = {
         "required": _("Current residence location is required."),
-        "invalid_choice": _("Invalid choice for current residence location."),
+        'max_length': _("Current residence location  cannot exceed 150 characters."),
     }
     AFTER_MARRIAGE_RESIDENCE_LOCATION = {
         "required": _("After marriage residence location is required."),
@@ -73,6 +73,10 @@ class IntellectualInfoErrorMessages:
     MARRIAGE_WITH_DISABLED = {
         "required": _("Marriage with disabled is required."),
         "invalid_choice": _("Invalid choice for marriage with disabled."),
+    }
+    MARRIAGE_WITH_DISABLED_VETERAN_EXPLANATION = {
+        "required": _("Marriage with disabled & Veteran Explanation is required."),
+        'max_length': _("Marriage With Disabled & Veteran Explanation cannot exceed 150 characters."),
     }
     RED_FLAGS = {
         "required": _("Red flags are required."),

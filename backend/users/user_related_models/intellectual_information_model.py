@@ -146,7 +146,7 @@ class IntellectualInformation(models.Model):
     )    
     
     def __str__(self):
-        return f"اطالاعات کاربر: {self.user.last_name}"
+        return f"اطلاعات کاربر: {self.user.last_name}"
     
     class Meta:
         verbose_name = _("Intellectual Information")

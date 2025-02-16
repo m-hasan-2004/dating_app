@@ -16,16 +16,26 @@ class PhysicalInfoHelpText:
 
 class PersonalInfoHelpText:
     GENDER = _("Select the gender of the user.")
+    SADAT = _("Is the user a Sadat?")
+    BIRTH_DATE = _("Enter the birth date of the user.")
+    BIRTH_LOCATION = _("Enter the birth location of the user.")
+    EDUCATION = _("Select the education level of the user.")
+    DEGREE = _("Select the degree of the user.")
+    MILITARY_STATUS = _("Select the military status of the user.")
     MILITARY_STATUS_EXPLANATION = _("Provide an explanation for the military status if applicable.")
     INCOME = _("Enter the income of the user.")
     DEPOSIT = _("Enter the deposit amount of the user.")
+    HAVE_INSURANCE = _("Show That User Has Insurance Or Not")
+    INSURANCE_TYPE = _("Select the type of insurance the user has.")
     INSURANCE_YEARS = _("Enter the number of years the user has had insurance.")
+    LEISURE_TYPE = _("Select the types of leisure activities the user enjoys.")
+    USAGE_CASES = _("Select the usage cases applicable to the user.")
+    USAGE_CASE_DESCRIPTION = _("Provide additional details about usage cases. Like how many cigars or hookah a day.")
+    TATTO = _("Indicate whether the user has any tattoos.")
+    TATTO_DESCRIPTION = _("Provide details about the tattoos, like where on the body.")
     CONVICTION_OR_ARREST_HISTORY = _("Does the user have a conviction or arrest history?")
     CONVICTION_REASON = _("Specify the reason for the conviction if applicable.")
-    USAGE_CASES = _("Select the usage cases applicable to the user.")
-    TATTO = _("Indicate whether the user has any tattoos.")
-    TATTO_DESCRIPTION = _("Provide details about the tattoos, Like Where on the Body.")
-    USAGE_CASE_DESCRIPTION = _("Provide additional details about usage cases. Like how many cigars or hookah a day.")
+    USER = _("The user associated with this personal information.")
 
 class FinancialInfoHelpText:
     CURRENT_RESIDENCE_STATUS = _("Select the current residence status of the user.")
@@ -41,6 +51,7 @@ class FinancialInfoHelpText:
     DOWRY_TYPE = _("Select the type of dowry Of Future Wife.")
     DOWRY_AMOUNT = _("Enter the dowry amount in the local currency or gold.")
     JAHIZIYEH = _("Select the Status of Jahiziyeh.")
+    JAHIZIYEH_EXPLANATION = _("Write the Explanation of Jahiziyeh.")
     USER = _("Select the user associated with this financial information.")
 
 class AccessCodeHelpText:
@@ -55,6 +66,7 @@ class FamilyInfoHelpText:
     FAMILY_DIVORCE_HISTORY = _("Indicate if there is a history of divorce in the family.")
     FAMILY_DIVORCE_REASON = _("Specify the reason for the family divorce if applicable.")
     CONTACT_WITH_FAMILY = _("Describe the contact with the family.")
+    CONTACT_WITH_RELATIVES = _("Describe the contact with the Relatives.")
     USER = _("Select the user associated with this family information.")
     STATUS = _("Select the Status Of Life.")
     PERSON_STATUS = _("If user has engagment or related history")
@@ -73,6 +85,10 @@ class FamilyInfoHelpText:
     ORIGINALITY = _("Enter the originality of the parent.")
     ALIVE = _("Indicate if the parent is alive.")
     DEATH_DATE_PARENT = _("Enter the death date of the parent if applicable.")
+    GROOM_OR_ZAN = _("Select the groom from the available options."),
+    BRIDE_OR_WIFE = _("Select the bride or wife from the available options.")
+    KIDS = _("Choose the number of Kids")
+
 
 class IdentityInfoHelpText:
     FIRST_NAME = _("Enter the first name of the user.")
@@ -92,6 +108,8 @@ class IdentityInfoHelpText:
     ASSETS = _("Enter the assets of the user.")
     WEIGHT = _("Enter the weight of the user in kilograms.")
     HEIGHT = _("Enter the height of the user in centimeters.")
+    INTRODUCED_SUBJECTS = _("Select the user who introduced the subjects.")
+    INTRODUCED_SUBJECTS_EXPLANTIONS = _("Needed Explantions About Result of Introduced Subjects.")
     PREFERED_MEETING_TIME = _("Enter the preferred meeting time of the user.")
     TYPE_OF_PAYMENT = _("Select the type of payment.")
     PAYMENT_PROOF = _("Upload a PDF, JPG, or PNG file as proof of payment.")
@@ -143,13 +161,14 @@ class IntellectualInfoHelpText:
     FASTING = _("Describe your practice regarding fasting.")
     COVER_TYPE_HOUSE = _("Choose your preferred clothing style at home.")
     COVER_TYPE_SOCIETY = _("Select your dress preference in society and the workplace.")
-    PARTICIPATING_PRAYER_QURAN_MEETINGS = _("How committed are you to attending prayer and Quran religious meetings?")
-    MUSIC = _("How often do you listen to music?")
-    DANCE_SINGING_ASSEMBLIES = _("Do you participate in dance and singing assemblies?")
-    OPINION_INNOCENT_CONTACT = _("What is your opinion on innocent contact?")
-    COVER_TYPE_INNOCENT_CONTACT = _("Please select the cover type you prefer in contact with someone innocent.")
-    DECISION_MAKING_CHOOSING_SPOUSE = _("How do you prefer to decide when choosing a spouse?")
-    USER = _("Select the user associated with this intellectual information.")
+    UNIQUE_ID = _("A unique identifier for this record.")
+    PARTICIPATING_PRAYER_QURAN_MEETINGS = _("Select your level of participation in prayer and Quran meetings.")
+    MUSIC = _("Select your music preference.")
+    DANCE_SINGING_ASSEMBLIES = _("Select your preference for dance and singing assemblies.")
+    OPINION_INNOCENT_CONTACT = _("Select your opinion about innocent contacts.")
+    COVER_TYPE_INNOCENT_CONTACT = _("Select the cover type for innocent contact situations.")
+    DECISION_MAKING_CHOOSING_SPOUSE = _("Select your decision-making approach when choosing a spouse.")
+    USER = _("Select the user associated with this information.")
 
 class IntroducedSubjectsHelpText:
     USERNAME = _("Enter the username of the introduced subject. This should be unique and descriptive.")

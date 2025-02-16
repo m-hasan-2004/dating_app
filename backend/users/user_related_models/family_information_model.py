@@ -1,8 +1,9 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from core.utils.model_choices import Choices
-from core.utils.model_error_messages import FamilyInfoErrorMessages
-from core.utils.help_text import FamilyInfoHelpText
+from core.utils.model_error_messages import FamilyInfoErrorMessages, PersonalInfoErrorMessages, ParentErrorMessages
+from core.utils.help_text import FamilyInfoHelpText, PersonalInfoHelpText
+
 from django.urls import reverse
 from django.utils import timezone
 
@@ -43,10 +44,23 @@ class FamilyInformation(models.Model):
         error_messages=FamilyInfoErrorMessages.CONTACT_WITH_FAMILY,
         help_text=FamilyInfoHelpText.CONTACT_WITH_FAMILY
     )
-    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=FamilyInfoHelpText.USER, db_index=True)
+    contact_with_relatives = models.CharField(
+        _("Contact with Relatives"),
+        max_length=150,
+        error_messages=FamilyInfoErrorMessages.CONTACT_WITH_RELATIVES,
+        help_text=FamilyInfoHelpText.CONTACT_WITH_RELATIVES,
+    )
+    kids = models.CharField(
+        _("Kids"),
+        blank=True,
+        null=True,
+        choices=Choices.KIDS,
+        help_text=FamilyInfoHelpText.KIDS
+    )
+    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=FamilyInfoHelpText.USER, db_index=True, related_name="family_information")
     
     def __str__(self):
-        return f"اطالاعات کاربر: {self.user.last_name}"
+        return f"اطلاعات کاربر: {self.user.last_name}"
 
     def get_absolute_url(self):
         return reverse("FamilyInformation_detail", kwargs={"pk": self.pk})
@@ -101,13 +115,20 @@ class EngagementOrWeddingStatus(models.Model):
     user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=FamilyInfoHelpText.USER, db_index=True)
     
     def __str__(self):
-        return f"اطالاعات کاربر: {self.user.last_name}"
+        return f"اطلاعات کاربر: {self.user.last_name}"
     
     class Meta:
         verbose_name = _("Engagement or Wedding Status")
         verbose_name_plural = _("Engagements or Weddings Statuse")
 
 class ExHusbandChildStatus(models.Model):
+    gender = models.CharField(
+        _("Gender"),
+        max_length=50,
+        choices=Choices.GENDER_CHOICES,
+        error_messages=PersonalInfoErrorMessages.GENDER,
+        help_text=PersonalInfoHelpText.GENDER,
+    )    
     status = models.BooleanField(
         _("Status"),
         help_text=FamilyInfoHelpText.EX_HUSBAND_CHILD_STATUS,
@@ -132,10 +153,10 @@ class ExHusbandChildStatus(models.Model):
         null=True,
         help_text=FamilyInfoHelpText.LIVING_LOCATION
     )
-    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=FamilyInfoHelpText.USER, db_index=True)
+    user = models.ForeignKey("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=FamilyInfoHelpText.USER, db_index=True)
 
     def __str__(self):
-        return f"اطالاعات کاربر: {self.user.last_name}"
+        return f"اطلاعات کاربر: {self.user.last_name}"
     
     class Meta:
         verbose_name = _("Ex-Husband Child Status")
@@ -160,7 +181,7 @@ class FamilyMember(models.Model):
     user = models.ForeignKey("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=FamilyInfoHelpText.USER, db_index=True)
     
     def __str__(self):
-        return f"اطالاعات کاربر: {self.user.last_name}"
+        return f"اطلاعات کاربر: {self.user.last_name}"
     
     class Meta:
         abstract = True
@@ -180,13 +201,23 @@ class Brother(FamilyMember):
         verbose_name_plural = _("Brothers")
 
 class Groom(FamilyMember):
-    
+    groom_or = models.CharField(
+        _("Groom or Zan Dadash"),
+        choices=Choices.GROOM_CHOICES,
+        error_messages=FamilyInfoErrorMessages.GROOM_OR_ZAN,
+        help_text=FamilyInfoHelpText.GROOM_OR_ZAN
+    )
     class Meta:
         verbose_name = _("Groom")
         verbose_name_plural = _("Grooms")
 
 class BrideOrWife(FamilyMember):
-    
+    bride_or = models.CharField(
+        _("Bride or Shohar Khahar"),
+        choices=Choices.BRIDE_OR_WIFE_CHOICES,
+        error_messages=FamilyInfoErrorMessages.BRIDE_OR_WIFE,
+        help_text=FamilyInfoHelpText.BRIDE_OR_WIFE
+    )
     class Meta:
         verbose_name = _("Bride or Wife")
         verbose_name_plural = _("Brides or Wives")
@@ -195,42 +226,48 @@ class Parent(models.Model):
     language = models.CharField(
         _("Language"),
         max_length=50,
-        help_text=FamilyInfoHelpText.LANGUAGE
+        help_text=FamilyInfoHelpText.LANGUAGE,
+        error_messages=ParentErrorMessages.LANGUAGE
     )
     birth_date = models.DateField(
         _("Birth Date"),
-        help_text=FamilyInfoHelpText.BIRTH_DATE
+        help_text=FamilyInfoHelpText.BIRTH_DATE,
+        error_messages=ParentErrorMessages.BIRTH_DATE
     )
     job = models.CharField(
         _("Job"),
         max_length=100,
-        help_text=FamilyInfoHelpText.JOB
+        help_text=FamilyInfoHelpText.JOB,
+        error_messages=ParentErrorMessages.JOB
     )
     originality = models.CharField(
         _("Originality"),
-        max_length=80,
+        choices=Choices.IRAN_PROVINCES,
+        error_messages=ParentErrorMessages.ORIGINALITY,
         help_text=FamilyInfoHelpText.ORIGINALITY
     )
     education = models.CharField(
         _("Education"),
         max_length=50,
         choices=Choices.EDUCATION_CHOICES,
-        help_text=FamilyInfoHelpText.EDUCATION
+        help_text=FamilyInfoHelpText.EDUCATION,
+        error_messages=ParentErrorMessages.EDUCATION
     )
     alive = models.BooleanField(
         _("Alive"),
-        help_text=FamilyInfoHelpText.ALIVE
+        help_text=FamilyInfoHelpText.ALIVE,
+        error_messages=ParentErrorMessages.ALIVE
     )
     death_date = models.DateField(
         _("Death Date"),
         blank=True,
         null=True,
-        help_text=FamilyInfoHelpText.DEATH_DATE_PARENT
+        help_text=FamilyInfoHelpText.DEATH_DATE_PARENT,
+        error_messages=ParentErrorMessages.DEATH_DATE
     )
-    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=FamilyInfoHelpText.USER, db_index=True)
 
     def __str__(self):
-        return f"اطالاعات کاربر: {self.user.last_name}"
+        return f"اطلاعات کاربر: {self.user.last_name}"
     
     class Meta:
         abstract = True
@@ -238,12 +275,15 @@ class Parent(models.Model):
         verbose_name_plural = _("Parents")
 
 class Mother(Parent):
-    
+    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=FamilyInfoHelpText.USER, db_index=True, related_name="mother")
+
     class Meta:
         verbose_name = _("Mother")
         verbose_name_plural = _("Mothers")
 
 class Father(Parent):
+    user = models.OneToOneField("users.user", verbose_name=_("User"), on_delete=models.CASCADE, help_text=FamilyInfoHelpText.USER, db_index=True, related_name="father")
+
     
     class Meta:
         verbose_name = _("Father")
