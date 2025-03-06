@@ -156,7 +156,7 @@ class UserAdmin(auth_admin.UserAdmin):
         ("physicalinformation__weight", MultiSelectFieldListFilter),
     )
     search_fields = (
-        "username", "email", "first_name", "last_name", "phone_number",
+        "username", "email", "phone_number",
     )
     ordering = ("date_joined",)
     actions = ["deactivate_users", "reactivate_users"]
@@ -188,13 +188,13 @@ class UserAdmin(auth_admin.UserAdmin):
 
     fieldsets = (
         (_("Login Info"), {"fields": ("username", "password", "access_code")}),
-        (_("Personal info"), {"fields": ("first_name", "last_name", "email", "phone_number")}),
+        (_("Personal info"), {"fields": ("email", "phone_number")}),
         (_("Permissions"), {"fields": ("is_active", "is_staff", "is_superuser", "groups")}),
         (_("Important dates"), {"fields": ("last_login", "date_joined")}),
         (_("Extra Fields"), {"fields": ("middle_man_code",)}),
     )
     add_fieldsets = (
-        (_("Personal info"), {"fields": ("username", "first_name", "last_name", "email", "phone_number", "access_code", "password1", "password2")}),
+        (_("Personal info"), {"fields": ("username", "email", "phone_number", "access_code", "password1", "password2")}),
         (_("Extra Fields"), {"fields": ("middle_man_code",)}),
     )
     

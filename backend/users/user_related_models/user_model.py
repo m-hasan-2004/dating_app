@@ -7,7 +7,6 @@ from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 from core.utils.model_error_messages import UserErrorMessages
 from core.utils.help_text import UserHelpText
-from django.core.mail import send_mail
 from django.utils import timezone
 from django.urls import reverse
 from django.db import models
@@ -95,18 +94,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         validators=[username_validator],
         error_messages=UserErrorMessages.USERNAME,
     )
-    first_name = models.CharField(
-        _("first name"),
-        max_length=150,
-        help_text=UserHelpText.FIRST_NAME,
-        error_messages=UserErrorMessages.FIRST_NAME,
-    )
-    last_name = models.CharField(
-        _("last name"),
-        max_length=150,
-        help_text=UserHelpText.LAST_NAME,
-        error_messages=UserErrorMessages.LAST_NAME,
-    )
     date_created = models.DateTimeField(
         _("Date created"),
         auto_now=False,
@@ -159,21 +146,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         # Only validate access_code for new users (when id is None)
         if not self.pk and not self.access_code:
             raise ValidationError({'access_code': _("Access code is required for new users.")})
-
-    def get_full_name(self):
-        """
-        Return the first_name plus the last_name, with a space in between.
-        """
-        full_name = "%s %s" % (self.first_name, self.last_name)
-        return full_name.strip()
-
-    def get_short_name(self):
-        """Return the short name for the user."""
-        return self.first_name
-
-    def email_user(self, subject, message, from_email=None, **kwargs):
-        """Send an email to this user."""
-        send_mail(subject, message, from_email, [self.email], **kwargs)
 
     def __str__(self):
         return self.username
