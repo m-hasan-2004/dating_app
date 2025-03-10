@@ -1,4 +1,5 @@
 from django.utils.translation import gettext_lazy as _
+
 class UserErrorMessages:
     USERNAME = {
         "unique": _("This username is already taken."),
@@ -321,9 +322,15 @@ class PersonalInfoErrorMessages:
     USER = {
         "required": _("User is required."),
     }
-    TATTO = _("Invalid value for the tattoo field.")
-    TATTO_DESCRIPTION = _("Invalid description provided for tattoos.")
-    USAGE_CASE_DESCRIPTION = _("Invalid usage case description.")
+    TATTO = {
+        "invalid": _("Invalid value for the tattoo field.")
+    }
+    TATTO_DESCRIPTION = {
+        "invalid": _("Invalid description provided for tattoos.")
+    }
+    USAGE_CASE_DESCRIPTION = {
+        "invalid": _("Invalid usage case description.")
+    }
 
 class PhysicalInfoErrorMessages:
     HEIGHT = {
@@ -423,8 +430,6 @@ class FamilyInfoErrorMessages:
         "required": _("Bride or Wife field is required."),
         "invalid_choice": _("Selected value for bride or wife is invalid."),
     }
-
-from django.utils.translation import gettext_lazy as _
 
 class FinancialInformationErrorMessages:
     CURRENT_RESIDENCE_STATUS_ERROR_MESSAGES = {
@@ -601,10 +606,31 @@ class IntroducedSubjectsErrorMessages:
     }
 
 class ParentErrorMessages:
-    LANGUAGE = {"required": _("Language is required."), "max_length": _("Language cannot exceed 50 characters.")}
-    BIRTH_DATE = {"required": _("Birth date is required."), "invalid": _("Invalid birth date format.")}
-    JOB = {"required": _("Job is required."), "max_length": _("Job cannot exceed 100 characters.")}
-    ORIGINALITY = {"required": _("Originality is required."), "max_length": _("Originality cannot exceed 80 characters.")}
-    EDUCATION = {"required": _("Education is required."), "invalid_choice": _("Invalid choice for education.")}
-    ALIVE = {"required": _("Alive status is required."), "invalid": _("Invalid value for alive status.")}
-    DEATH_DATE = {"invalid": _("Invalid death date."), "max_length": _("Death date format error.")}
+    LANGUAGE = {
+        "required": _("Language is required."),
+        "max_length": _("Language cannot exceed 50 characters.")
+        }
+    BIRTH_DATE = {
+        "required": _("Birth date is required."),
+        "invalid": _("Invalid birth date format.")
+        }
+    JOB = {
+        "required": _("Job is required."),
+        "max_length": _("Job cannot exceed 100 characters.")
+        }
+    ORIGINALITY = {
+        "required": _("Originality is required."),
+        "max_length": _("Originality cannot exceed 80 characters.")
+        }
+    EDUCATION = {
+        "required": _("Education is required."),
+        "invalid_choice": _("Invalid choice for education.")
+        }
+    ALIVE = {
+        "required": _("Alive status is required."),
+        "invalid": _("Invalid value for alive status.")
+        }
+    DEATH_DATE = {
+        "invalid": _("Invalid death date."),
+        "max_length": _("Death date format error.")
+        }
