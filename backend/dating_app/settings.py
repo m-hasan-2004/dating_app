@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'log',
     'search',
     'users',
-    'webpack_loader',
     'django_extensions',
     'django_filters',
     'debug_toolbar',
@@ -136,18 +135,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# my settings
-
-WEBPACK_LOADER = {
-    'DEFAULT': {
-        'CACHE': not DEBUG,
-        'BUNDLE_DIR_NAME': 'bundles/',
-        'STATS_FILE': os.path.join(BASE_DIR, 'frontend', 'my-frontend', 'webpack-stats.json'),
-        'POLL_INTERVAL': 0.1,
-        'TIMEOUT': None,
-        'IGNORE': [r'.+\.hot-update.js', r'.+\.map'],  # Use raw strings to avoid escape sequence warning
-    }
-}
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
