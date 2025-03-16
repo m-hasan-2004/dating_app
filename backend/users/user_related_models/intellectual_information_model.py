@@ -1,8 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from core.utils.model_choices import IntellectualInformationChoices
-from core.utils.help_text import IntellectualInfoHelpText
-from core.utils.model_error_messages import IntellectualInfoErrorMessages
+from core.utils.model_choices.user_model_choices import IntellectualInformationChoices
+from core.utils.help_texts.help_text import IntellectualInfoHelpText
+from core.utils.error_msgs.model_error_messages import IntellectualInfoErrorMessages
 from multiselectfield import MultiSelectField
 
 class IntellectualInformation(models.Model):

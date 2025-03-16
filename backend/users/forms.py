@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from users.user_related_models import User, AccessCode, validate_active_access_code
+from users.user_related_models import User, AccessCode
+from core.utils.validators.shared import validate_active_access_code
 from django.utils.translation import gettext_lazy as _
 
 class CustomUserCreationForm(UserCreationForm):

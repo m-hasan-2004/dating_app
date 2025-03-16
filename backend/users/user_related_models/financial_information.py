@@ -1,8 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from core.utils.model_choices import FinancialInformationChoices
-from core.utils.model_error_messages import FinancialInformationErrorMessages, IdentityInfoErrorMessages
-from core.utils.help_text import FinancialInfoHelpText, IdentityInfoHelpText
+from core.utils.model_choices.user_model_choices import FinancialInformationChoices
+from core.utils.error_msgs.model_error_messages import FinancialInformationErrorMessages, IdentityInfoErrorMessages
+from core.utils.help_texts.help_text import FinancialInfoHelpText, IdentityInfoHelpText
 from multiselectfield import MultiSelectField
 
 class FinancialInformation(models.Model):

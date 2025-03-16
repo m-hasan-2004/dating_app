@@ -7,7 +7,7 @@ import django.utils.timezone
 import multiselectfield.db.fields
 import phonenumber_field.modelfields
 import users.user_related_models.access_code_model
-from core.utils import validators
+from core.utils.validators import user_validators, shared
 import uuid
 
 
@@ -160,7 +160,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='identityinfo',
             name='landline_phone',
-            field=models.CharField(blank=True, error_messages={'blank': 'Landline phone cannot be blank.', 'invalid': 'Landline phone is invalid.', 'null': 'Landline phone cannot be null.'}, help_text='Enter a landline number in the format: 025-32305083.', max_length=12, null=True, validators=[validators.LandlineNumberValidator.landline_number_validator], verbose_name='Landline Phone'),
+            field=models.CharField(blank=True, error_messages={'blank': 'Landline phone cannot be blank.', 'invalid': 'Landline phone is invalid.', 'null': 'Landline phone cannot be null.'}, help_text='Enter a landline number in the format: 025-32305083.', max_length=12, null=True, validators=[user_validators.ConfidentialInfoValidator.landline_number_validator], verbose_name='Landline Phone'),
         ),
         migrations.AlterField(
             model_name='identityinfo',
@@ -205,7 +205,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='user',
             name='access_code',
-            field=models.CharField(error_messages={'blank': 'Access code cannot be blank.', 'invalid': 'Access code is invalid.', 'null': 'Access code cannot be null.'}, help_text='Required access code for initial user creation.', max_length=50, validators=[validators.validate_active_access_code], verbose_name='Access code'),
+            field=models.CharField(error_messages={'blank': 'Access code cannot be blank.', 'invalid': 'Access code is invalid.', 'null': 'Access code cannot be null.'}, help_text='Required access code for initial user creation.', max_length=50, validators=[shared.validate_active_access_code], verbose_name='Access code'),
         ),
         migrations.AlterField(
             model_name='user',

@@ -3,8 +3,8 @@ from django.urls import reverse
 from django.db import models
 from uuid import uuid4
 from django.utils import timezone
-from core.utils.model_error_messages import AccessCodeErrorMessages
-from core.utils.help_text import AccessCodeHelpText
+from core.utils.error_msgs.model_error_messages import AccessCodeErrorMessages
+from core.utils.help_texts.help_text import AccessCodeHelpText
 
 
 class AccessCodeManager(models.Manager):

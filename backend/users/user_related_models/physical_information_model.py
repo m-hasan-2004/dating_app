@@ -1,7 +1,7 @@
 from django.db import models
-from core.utils.model_choices import Choices
-from core.utils.model_error_messages import PhysicalInfoErrorMessages
-from core.utils.help_text import PhysicalInfoHelpText
+from core.utils.model_choices.user_model_choices import Choices
+from core.utils.error_msgs.model_error_messages import PhysicalInfoErrorMessages
+from core.utils.help_texts.help_text import PhysicalInfoHelpText
 from django.utils.translation import gettext_lazy as _
 
 class PhysicalInformation(models.Model):

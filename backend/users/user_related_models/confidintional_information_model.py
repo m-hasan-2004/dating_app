@@ -1,12 +1,12 @@
-from core.utils.validators import LandlineNumberValidator
+from core.utils.validators.user_validators import ConfidentialInfoValidator
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.translation import gettext_lazy as _
 from multiselectfield import MultiSelectField
 from django.urls import reverse
 from django.db import models
-from core.utils.model_choices import Choices, FinancialInformationChoices
-from core.utils.model_error_messages import IdentityInfoErrorMessages, BirthCertificateInfoErrorMessages, IntroducedSubjectsErrorMessages
-from core.utils.help_text import IdentityInfoHelpText, BirthCertificateInfoHelpText, IntroducedSubjectsHelpText
+from core.utils.model_choices.user_model_choices import Choices, FinancialInformationChoices
+from core.utils.error_msgs.model_error_messages import IdentityInfoErrorMessages, BirthCertificateInfoErrorMessages, IntroducedSubjectsErrorMessages
+from core.utils.help_texts.help_text import IdentityInfoHelpText, BirthCertificateInfoHelpText, IntroducedSubjectsHelpText
 from django.core.validators import FileExtensionValidator
 
 class IdentityInformation(models.Model):
@@ -41,7 +41,7 @@ class IdentityInformation(models.Model):
     landline_phone = models.CharField(
         _("Landline Phone"),
         max_length=12,
-        validators=[LandlineNumberValidator.landline_number_validator],
+        validators=[ConfidentialInfoValidator.landline_number_validator],
         blank=True,
         null=True,
         error_messages=IdentityInfoErrorMessages.LANDLINE_PHONE,

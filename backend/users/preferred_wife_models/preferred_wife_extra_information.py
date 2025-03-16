@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from core.utils.preferred_wife_model_error_messages import ExtraInfoErrorMessages
-from core.utils.preferred_wife_help_text import ExtraInfoHelpText
+from core.utils.error_msgs.preferred_wife_model_error_messages import ExtraInfoErrorMessages
+from core.utils.help_texts.preferred_wife_help_text import ExtraInfoHelpText
 
 class PreferredWifeExtraInformation(models.Model):
     additional_explanations = models.TextField(

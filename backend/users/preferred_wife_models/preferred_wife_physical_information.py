@@ -1,8 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from core.utils.preferred_wife_model_choices import Choices
-from core.utils.preferred_wife_model_error_messages import PhysicalInfoErrorMessages
-from core.utils.preferred_wife_help_text import PhysicalInfoHelpText
+from core.utils.model_choices.preferred_wife_model_choices import Choices
+from core.utils.error_msgs.preferred_wife_model_error_messages import PhysicalInfoErrorMessages
+from core.utils.help_texts.preferred_wife_help_text import PhysicalInfoHelpText
 from multiselectfield import MultiSelectField
 
 class PreferredWifePhysicalInformation(models.Model):
