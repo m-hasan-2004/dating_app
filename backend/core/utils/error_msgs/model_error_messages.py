@@ -1,259 +1,266 @@
 from django.utils.translation import gettext_lazy as _
 
+
 class UserErrorMessages:
     USERNAME = {
         "unique": _("This username is already taken."),
         "blank": _("Username cannot be blank."),
         "null": _("Username cannot be null."),
         "max_length": _("Username cannot exceed 150 characters."),
-        "invalid": _("Username is invalid.")
+        "invalid": _("Username is invalid."),
     }
     EMAIL = {
         "unique": _("This email is already taken."),
         "blank": _("Email cannot be blank."),
         "null": _("Email cannot be null."),
-        "invalid": _("Email is invalid.")
+        "invalid": _("Email is invalid."),
     }
     PHONE_NUMBER = {
         "unique": _("This phone number is already taken."),
         "blank": _("Phone number cannot be blank."),
         "null": _("Phone number cannot be null."),
-        "invalid": _("Phone number is invalid.")
+        "invalid": _("Phone number is invalid."),
     }
     ACCESS_CODE = {
         "blank": _("Access code cannot be blank."),
         "null": _("Access code cannot be null."),
-        "invalid": _("Access code is invalid.")
+        "invalid": _("Access code is invalid."),
     }
     FIRST_NAME = {
         "blank": _("First name cannot be blank."),
         "null": _("First name cannot be null."),
-        "max_length": _("First name cannot exceed 150 characters.")
+        "max_length": _("First name cannot exceed 150 characters."),
     }
     LAST_NAME = {
         "blank": _("Last name cannot be blank."),
         "null": _("Last name cannot be null."),
-        "max_length": _("Last name cannot exceed 150 characters.")
+        "max_length": _("Last name cannot exceed 150 characters."),
     }
     MIDDLE_MAN_CODE = {
         "blank": _("Middle man code cannot be blank."),
         "null": _("Middle man code cannot be null."),
-        "invalid": _("Middle man code is invalid.")
+        "invalid": _("Middle man code is invalid."),
     }
     DATE_CREATED = {
         "blank": _("Date created cannot be blank."),
         "null": _("Date created cannot be null."),
-        "invalid": _("Date created is invalid.")
+        "invalid": _("Date created is invalid."),
     }
     IS_STAFF = {
         "blank": _("Staff status cannot be blank."),
         "null": _("Staff status cannot be null."),
-        "invalid": _("Staff status is invalid.")
+        "invalid": _("Staff status is invalid."),
     }
     IS_ACTIVE = {
         "blank": _("Active status cannot be blank."),
         "null": _("Active status cannot be null."),
-        "invalid": _("Active status is invalid.")
+        "invalid": _("Active status is invalid."),
     }
     DATE_JOINED = {
         "blank": _("Date joined cannot be blank."),
         "null": _("Date joined cannot be null."),
-        "invalid": _("Date joined is invalid.")
+        "invalid": _("Date joined is invalid."),
     }
+
 
 class AccessCodeErrorMessages:
     CODE = {
         "unique": _("This access code is already taken."),
         "blank": _("Access code cannot be blank."),
         "null": _("Access code cannot be null."),
-        "invalid": _("Access code is invalid.")
+        "invalid": _("Access code is invalid."),
     }
     ACTIVE = {
         "blank": _("Active status cannot be blank."),
         "null": _("Active status cannot be null."),
-        "invalid": _("Active status is invalid.")
+        "invalid": _("Active status is invalid."),
     }
     DATE_CREATED = {
         "blank": _("Date created cannot be blank."),
         "null": _("Date created cannot be null."),
-        "invalid": _("Date created is invalid.")
+        "invalid": _("Date created is invalid."),
     }
+
 
 class IdentityInfoErrorMessages:
     FIRST_NAME = {
         "blank": _("First name cannot be blank."),
         "null": _("First name cannot be null."),
-        "max_length": _("First name cannot exceed 80 characters.")
+        "max_length": _("First name cannot exceed 80 characters."),
     }
     LAST_NAME = {
         "blank": _("Last name cannot be blank."),
         "null": _("Last name cannot be null."),
-        "max_length": _("Last name cannot exceed 50 characters.")
+        "max_length": _("Last name cannot exceed 50 characters."),
     }
     FATHER_NAME = {
         "blank": _("Father's name cannot be blank."),
         "null": _("Father's name cannot be null."),
-        "max_length": _("Father's name cannot exceed 80 characters.")
+        "max_length": _("Father's name cannot exceed 80 characters."),
     }
     EITTA_NUMBER = {
         "unique": _("This Eitta number is already taken."),
         "blank": _("Eitta number cannot be blank."),
         "null": _("Eitta number cannot be null."),
-        "invalid": _("Eitta number is invalid.")
+        "invalid": _("Eitta number is invalid."),
     }
     LANDLINE_PHONE = {
         "blank": _("Landline phone cannot be blank."),
         "null": _("Landline phone cannot be null."),
-        "invalid": _("Landline phone is invalid.")
+        "invalid": _("Landline phone is invalid."),
     }
     MOTHER_PHONE = {
         "unique": _("This mother's phone number is already taken."),
         "blank": _("Mother's phone number cannot be blank."),
         "null": _("Mother's phone number cannot be null."),
-        "invalid": _("Mother's phone number is invalid.")
+        "invalid": _("Mother's phone number is invalid."),
     }
     FATHER_PHONE = {
         "unique": _("This father's phone number is already taken."),
         "blank": _("Father's phone number cannot be blank."),
         "null": _("Father's phone number cannot be null."),
-        "invalid": _("Father's phone number is invalid.")
+        "invalid": _("Father's phone number is invalid."),
     }
     HOME_ADDRESS = {
         "blank": _("Home address cannot be blank."),
         "null": _("Home address cannot be null."),
-        "max_length": _("Home address cannot exceed 150 characters.")
+        "max_length": _("Home address cannot exceed 150 characters."),
     }
     WORK_ADDRESS = {
         "blank": _("Work address cannot be blank."),
         "null": _("Work address cannot be null."),
-        "max_length": _("Work address cannot exceed 150 characters.")
+        "max_length": _("Work address cannot exceed 150 characters."),
     }
     ORIGINALITY = {
         "blank": _("Originality cannot be blank."),
         "null": _("Originality cannot be null."),
-        "max_length": _("Originality cannot exceed 80 characters.")
+        "max_length": _("Originality cannot exceed 80 characters."),
     }
     EDUCATION = {
         "blank": _("Education cannot be blank."),
         "null": _("Education cannot be null."),
-        "max_length": _("Education cannot exceed 80 characters.")
+        "max_length": _("Education cannot exceed 80 characters."),
     }
     JOB = {
         "blank": _("Job cannot be blank."),
         "null": _("Job cannot be null."),
-        "invalid": _("Job is invalid.")
+        "invalid": _("Job is invalid."),
     }
     INSURANCE = {
         "blank": _("Insurance cannot be blank."),
         "null": _("Insurance cannot be null."),
-        "invalid": _("Insurance is invalid.")
+        "invalid": _("Insurance is invalid."),
     }
     INCOME = {
         "blank": _("Income cannot be blank."),
         "null": _("Income cannot be null."),
-        "invalid": _("Income is invalid.")
+        "invalid": _("Income is invalid."),
     }
     ASSETS = {
         "blank": _("Assets cannot be blank."),
         "null": _("Assets cannot be null."),
-        "max_length": _("Assets cannot exceed 150 characters.")
+        "max_length": _("Assets cannot exceed 150 characters."),
     }
     WEIGHT = {
         "blank": _("Weight cannot be blank."),
         "null": _("Weight cannot be null."),
-        "invalid": _("Weight is invalid.")
+        "invalid": _("Weight is invalid."),
     }
     HEIGHT = {
         "blank": _("Height cannot be blank."),
         "null": _("Height cannot be null."),
-        "invalid": _("Height is invalid.")
+        "invalid": _("Height is invalid."),
     }
     PREFERED_MEETING_TIME = {
         "blank": _("Preferred meeting time cannot be blank."),
         "null": _("Preferred meeting time cannot be null."),
-        "max_length": _("Preferred meeting time cannot exceed 150 characters.")
+        "max_length": _("Preferred meeting time cannot exceed 150 characters."),
     }
     TYPE_OF_PAYMENT = {
         "blank": _("Type of payment cannot be blank."),
         "null": _("Type of payment cannot be null."),
-        "invalid": _("Type of payment is invalid.")
+        "invalid": _("Type of payment is invalid."),
     }
     PAYMENT_PROOF = {
-        "invalid": _("Invalid file type. Only PDF, JPG, JPEG, and PNG files are allowed.")
+        "invalid": _(
+            "Invalid file type. Only PDF, JPG, JPEG, and PNG files are allowed."
+        )
     }
     USER = {
         "blank": _("User cannot be blank."),
         "null": _("User cannot be null."),
-        "invalid": _("User is invalid.")
+        "invalid": _("User is invalid."),
     }
+
 
 class BirthCertificateInfoErrorMessages:
     NATIONAL_CODE = {
         "unique": _("This national code is already taken."),
         "blank": _("National code cannot be blank."),
         "null": _("National code cannot be null."),
-        "max_length": _("National code cannot exceed 10 characters.")
+        "max_length": _("National code cannot exceed 10 characters."),
     }
     BIRTH_CERTIFICATE_SERIAL = {
         "blank": _("Birth certificate serial cannot be blank."),
         "null": _("Birth certificate serial cannot be null."),
-        "max_length": _("Birth certificate serial cannot exceed 10 characters.")
+        "max_length": _("Birth certificate serial cannot exceed 10 characters."),
     }
     BIRTH_CERTIFICATE_LOCATION = {
         "blank": _("Birth certificate location cannot be blank."),
         "null": _("Birth certificate location cannot be null."),
-        "max_length": _("Birth certificate location cannot exceed 50 characters.")
+        "max_length": _("Birth certificate location cannot exceed 50 characters."),
     }
     MARRIAGE_EXPERINCE = {
         "blank": _("Marriage experience cannot be blank."),
         "null": _("Marriage experience cannot be null."),
-        "invalid": _("Marriage experience is invalid.")
+        "invalid": _("Marriage experience is invalid."),
     }
     CONTRACT_DATE = {
         "blank": _("Contract date cannot be blank."),
         "null": _("Contract date cannot be null."),
-        "invalid": _("Contract date is invalid.")
+        "invalid": _("Contract date is invalid."),
     }
     MARRIAGE_STATUS = {
         "blank": _("Marriage status cannot be blank."),
         "null": _("Marriage status cannot be null."),
-        "invalid": _("Marriage status is invalid.")
+        "invalid": _("Marriage status is invalid."),
     }
     MARRIAGE_DATE = {
         "blank": _("Marriage date cannot be blank."),
         "null": _("Marriage date cannot be null."),
-        "invalid": _("Marriage date is invalid.")
+        "invalid": _("Marriage date is invalid."),
     }
     DIVORCE_DATE = {
         "blank": _("Divorce date cannot be blank."),
         "null": _("Divorce date cannot be null."),
-        "invalid": _("Divorce date is invalid.")
+        "invalid": _("Divorce date is invalid."),
     }
     HUSBAND_DEATH_DATE = {
         "blank": _("Husband death date cannot be blank."),
         "null": _("Husband death date cannot be null."),
-        "invalid": _("Husband death date is invalid.")
+        "invalid": _("Husband death date is invalid."),
     }
     BIRTH_DATE = {
         "blank": _("Birth date cannot be blank."),
         "null": _("Birth date cannot be null."),
-        "invalid": _("Birth date is invalid.")
+        "invalid": _("Birth date is invalid."),
     }
     CHILDREN = {
         "blank": _("Children cannot be blank."),
         "null": _("Children cannot be null."),
-        "invalid": _("Children is invalid.")
+        "invalid": _("Children is invalid."),
     }
     CHILDREN_CUSTODY = {
         "blank": _("Children custody cannot be blank."),
         "null": _("Children custody cannot be null."),
-        "invalid": _("Children custody is invalid.")
+        "invalid": _("Children custody is invalid."),
     }
     USER = {
         "blank": _("User cannot be blank."),
         "null": _("User cannot be null."),
-        "invalid": _("User is invalid.")
+        "invalid": _("User is invalid."),
     }
+
 
 class PersonalInfoErrorMessages:
     GENDER = {
@@ -322,15 +329,10 @@ class PersonalInfoErrorMessages:
     USER = {
         "required": _("User is required."),
     }
-    TATTO = {
-        "invalid": _("Invalid value for the tattoo field.")
-    }
-    TATTO_DESCRIPTION = {
-        "invalid": _("Invalid description provided for tattoos.")
-    }
-    USAGE_CASE_DESCRIPTION = {
-        "invalid": _("Invalid usage case description.")
-    }
+    TATTO = {"invalid": _("Invalid value for the tattoo field.")}
+    TATTO_DESCRIPTION = {"invalid": _("Invalid description provided for tattoos.")}
+    USAGE_CASE_DESCRIPTION = {"invalid": _("Invalid usage case description.")}
+
 
 class PhysicalInfoErrorMessages:
     HEIGHT = {
@@ -373,11 +375,14 @@ class PhysicalInfoErrorMessages:
         "required": _("Disease or surgery field is required."),
     }
     MEDICATION_SURGERY_DISEASE_TYPE = {
-        "max_length": _("Medication, surgery, or disease type cannot exceed 100 characters."),
+        "max_length": _(
+            "Medication, surgery, or disease type cannot exceed 100 characters."
+        ),
     }
     USER = {
         "required": _("User is required."),
     }
+
 
 class FamilyInfoErrorMessages:
     AVERAGE_FAMILY_EDUCATION = {
@@ -426,67 +431,69 @@ class FamilyInfoErrorMessages:
         "required": _("Groom field is required."),
         "invalid_choice": _("Selected value for groom is invalid."),
     }
-    BRIDE_OR_WIFE= {
+    BRIDE_OR_WIFE = {
         "required": _("Bride or Wife field is required."),
         "invalid_choice": _("Selected value for bride or wife is invalid."),
     }
 
+
 class FinancialInformationErrorMessages:
     CURRENT_RESIDENCE_STATUS_ERROR_MESSAGES = {
-        'required': _("Current residence status is required."),
-        'invalid_choice': _("Invalid choice for current residence status."),
+        "required": _("Current residence status is required."),
+        "invalid_choice": _("Invalid choice for current residence status."),
     }
     OWNERSHIP_STATUS_ERROR_MESSAGES = {
-        'required': _("Ownership status is required."),
-        'invalid_choice': _("Invalid choice for ownership status."),
+        "required": _("Ownership status is required."),
+        "invalid_choice": _("Invalid choice for ownership status."),
     }
     RENT_AMOUNT_ERROR_MESSAGES = {
-        'required': _("Rent amount is required."),
-        'invalid': _("Invalid value for rent amount."),
+        "required": _("Rent amount is required."),
+        "invalid": _("Invalid value for rent amount."),
     }
     MORTGAGE_AMOUNT_ERROR_MESSAGES = {
-        'required': _("Mortgage amount is required."),
-        'invalid': _("Invalid value for mortgage amount."),
+        "required": _("Mortgage amount is required."),
+        "invalid": _("Invalid value for mortgage amount."),
     }
     CAPITAL_ERROR_MESSAGES = {
-        'required': _("Capital is required."),
-        'invalid_choice': _("Invalid choice for capital."),
+        "required": _("Capital is required."),
+        "invalid_choice": _("Invalid choice for capital."),
     }
     OTHER_CAPTIAL_ERROR_MESSAGES = {
-        'max_length': _("Other capital cannot exceed 150 characters."),
+        "max_length": _("Other capital cannot exceed 150 characters."),
     }
     AFTER_MARRIAGE_RESIDENCE_STATUS_ERROR_MESSAGES = {
-        'required': _("After marriage residence status is required."),
-        'invalid_choice': _("Invalid choice for after marriage residence status."),
+        "required": _("After marriage residence status is required."),
+        "invalid_choice": _("Invalid choice for after marriage residence status."),
     }
     EX_SPOUSE_FINANCIAL_STATUS_ERROR_MESSAGES = {
-        'required': _("Ex-spouse financial status is required."),
-        'invalid_choice': _("Invalid choice for ex-spouse financial status."),
+        "required": _("Ex-spouse financial status is required."),
+        "invalid_choice": _("Invalid choice for ex-spouse financial status."),
     }
     EX_SPOUSE_FINANCIAL_AMOUNT_ERROR_MESSAGES = {
-        'required': _("Ex-spouse financial amount is required."),
-        'max_length': _("Ex-spouse financial amount cannot exceed 50 characters."),
+        "required": _("Ex-spouse financial amount is required."),
+        "max_length": _("Ex-spouse financial amount cannot exceed 50 characters."),
     }
     EX_SPOUSE_FINANCIAL_PAY_STATUS_ERROR_MESSAGES = {
-        'required': _("Ex-spouse financial pay status is required."),
-        'invalid_choice': _("Invalid choice for ex-spouse financial pay status."),
+        "required": _("Ex-spouse financial pay status is required."),
+        "invalid_choice": _("Invalid choice for ex-spouse financial pay status."),
     }
     DOWRY_TYPE_ERROR_MESSAGES = {
-        'required': _("Dowry type is required."),
-        'invalid_choice': _("Invalid choice for dowry type."),
+        "required": _("Dowry type is required."),
+        "invalid_choice": _("Invalid choice for dowry type."),
     }
     DOWRY_AMOUNT_ERROR_MESSAGES = {
-        'required': _("Dowry amount is required."),
-        'max_length': _("Dowry amount cannot exceed 50 characters."),
+        "required": _("Dowry amount is required."),
+        "max_length": _("Dowry amount cannot exceed 50 characters."),
     }
     JAHIZIYEH_ERROR_MESSAGES = {
-        'required': _("Jahiziyeh type is required."),
-        'invalid_choice': _("Invalid choice for Jahiziyeh type."),
+        "required": _("Jahiziyeh type is required."),
+        "invalid_choice": _("Invalid choice for Jahiziyeh type."),
     }
     JAHIZIYEH_EXPLANTION_ERROR_MESSAGES = {
-        'required': _("Jahiziyeh explanation is required."),
-        'max_length': _("Jahiziyeh explanation cannot exceed 150 characters."),
+        "required": _("Jahiziyeh explanation is required."),
+        "max_length": _("Jahiziyeh explanation cannot exceed 150 characters."),
     }
+
 
 class IntellectualInfoErrorMessages:
     MARRIAGE_GOALS = {
@@ -499,7 +506,9 @@ class IntellectualInfoErrorMessages:
     }
     OPINION_WOMAN_EDU = {
         "required": _("Please provide your opinion about a woman's education."),
-        "invalid_choice": _("The selected option for a woman's education is not valid."),
+        "invalid_choice": _(
+            "The selected option for a woman's education is not valid."
+        ),
     }
     PROS_OF_YOURSELF = {
         "required": _("Please list some of your positive attributes."),
@@ -550,8 +559,12 @@ class IntellectualInfoErrorMessages:
         "invalid_choice": _("Invalid selection for house covering type."),
     }
     COVER_TYPE_SOCIETY = {
-        "required": _("Please specify the type of covering you use in society and workplace."),
-        "invalid_choice": _("Invalid selection for society and workplace covering type."),
+        "required": _(
+            "Please specify the type of covering you use in society and workplace."
+        ),
+        "invalid_choice": _(
+            "Invalid selection for society and workplace covering type."
+        ),
     }
     UNIQUE_ID = {
         "required": _("A unique ID is required."),
@@ -573,8 +586,11 @@ class IntellectualInfoErrorMessages:
         "required": _("This field is required. Please select an option."),
     }
     DECISION_MAKING_CHOOSING_SPOUSE = {
-        "required": _("This field is required. Please select an option for decision making."),
+        "required": _(
+            "This field is required. Please select an option for decision making."
+        ),
     }
+
 
 class IntroducedSubjectsErrorMessages:
     USERNAME = {
@@ -594,7 +610,9 @@ class IntroducedSubjectsErrorMessages:
         "required": _("You must provide the dates of meetings."),
     }
     RESULT_AND_REGARDS = {
-        "required": _("You must summarize the results and any regards from the meetings."),
+        "required": _(
+            "You must summarize the results and any regards from the meetings."
+        ),
     }
     COST_OF_INTRODUCTION = {
         "required": _("The cost of introduction is required."),
@@ -605,32 +623,33 @@ class IntroducedSubjectsErrorMessages:
         "max_length": _("The cost of meeting cannot exceed 100 characters."),
     }
 
+
 class ParentErrorMessages:
     LANGUAGE = {
         "required": _("Language is required."),
-        "max_length": _("Language cannot exceed 50 characters.")
-        }
+        "max_length": _("Language cannot exceed 50 characters."),
+    }
     BIRTH_DATE = {
         "required": _("Birth date is required."),
-        "invalid": _("Invalid birth date format.")
-        }
+        "invalid": _("Invalid birth date format."),
+    }
     JOB = {
         "required": _("Job is required."),
-        "max_length": _("Job cannot exceed 100 characters.")
-        }
+        "max_length": _("Job cannot exceed 100 characters."),
+    }
     ORIGINALITY = {
         "required": _("Originality is required."),
-        "max_length": _("Originality cannot exceed 80 characters.")
-        }
+        "max_length": _("Originality cannot exceed 80 characters."),
+    }
     EDUCATION = {
         "required": _("Education is required."),
-        "invalid_choice": _("Invalid choice for education.")
-        }
+        "invalid_choice": _("Invalid choice for education."),
+    }
     ALIVE = {
         "required": _("Alive status is required."),
-        "invalid": _("Invalid value for alive status.")
-        }
+        "invalid": _("Invalid value for alive status."),
+    }
     DEATH_DATE = {
         "invalid": _("Invalid death date."),
-        "max_length": _("Death date format error.")
-        }
+        "max_length": _("Death date format error."),
+    }

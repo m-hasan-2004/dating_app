@@ -5,6 +5,7 @@ from core.utils.help_texts.help_text import PersonalInfoHelpText
 from django.utils.translation import gettext_lazy as _
 from multiselectfield import MultiSelectField
 
+
 class PersonalInformation(models.Model):
     gender = models.CharField(
         _("Gender"),
@@ -74,7 +75,7 @@ class PersonalInformation(models.Model):
         help_text=PersonalInfoHelpText.INSURANCE_TYPE,
         default=True,
     )
-    
+
     insurance_type = MultiSelectField(
         _("Insurance Type"),
         choices=Choices.INSURANCE_OPTIONS,
@@ -139,7 +140,7 @@ class PersonalInformation(models.Model):
         error_messages=PersonalInfoErrorMessages.USER,
         help_text=PersonalInfoHelpText.USER,
         db_index=True,
-        related_name="personalinformation"
+        related_name="personalinformation",
     )
 
     def __str__(self):

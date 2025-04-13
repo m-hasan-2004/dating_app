@@ -1,4 +1,8 @@
-from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.models import (
+    BaseUserManager,
+    AbstractBaseUser,
+    PermissionsMixin,
+)
 from core.utils.validators.user_validators import UnicodeUsernameValidator
 from core.utils.validators.shared import validate_active_access_code
 from users.user_related_models import AccessCode
@@ -14,7 +18,9 @@ from uuid import uuid4
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, username, email, access_code=None, password=None, **extra_fields):
+    def create_user(
+        self, username, email, access_code=None, password=None, **extra_fields
+    ):
         """
         Create and return a regular user with the given username, email, access code, and password.
         """
@@ -29,7 +35,9 @@ class UserManager(BaseUserManager):
 
         email = self.normalize_email(email)
         username = self.model.normalize_username(username)
-        user = self.model(username=username, email=email, access_code=access_code, **extra_fields)
+        user = self.model(
+            username=username, email=email, access_code=access_code, **extra_fields
+        )
         user.set_password(password)
         user.save(using=self._db)
 
@@ -52,7 +60,9 @@ class UserManager(BaseUserManager):
         if extra_fields.get("is_superuser") is not True:
             raise ValueError(_("Superuser must have is_superuser=True."))
 
-        user = self.model(username=username, email=self.normalize_email(email), **extra_fields)
+        user = self.model(
+            username=username, email=self.normalize_email(email), **extra_fields
+        )
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -68,10 +78,16 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     username_validator = UnicodeUsernameValidator()
 
-    id = models.UUIDField(_("id"), primary_key=True, default=uuid4, editable=False, help_text=UserHelpText.ID)
+    id = models.UUIDField(
+        _("id"),
+        primary_key=True,
+        default=uuid4,
+        editable=False,
+        help_text=UserHelpText.ID,
+    )
     access_code = models.CharField(
-        _("User Access Code"), 
-        max_length=50, 
+        _("User Access Code"),
+        max_length=50,
         null=False,
         blank=False,
         validators=[validate_active_access_code],
@@ -145,15 +161,16 @@ class User(AbstractBaseUser, PermissionsMixin):
         self.email = self.__class__.objects.normalize_email(self.email)
         # Only validate access_code for new users (when id is None)
         if not self.pk and not self.access_code:
-            raise ValidationError({'access_code': _("Access code is required for new users.")})
+            raise ValidationError(
+                {"access_code": _("Access code is required for new users.")}
+            )
 
     def __str__(self):
         return self.username
 
     def get_absolute_url(self):
         return reverse("User_detail", kwargs={"pk": self.pk})
-    
+
     class Meta:
         verbose_name = _("User")
         verbose_name_plural = _("Users Management")
-

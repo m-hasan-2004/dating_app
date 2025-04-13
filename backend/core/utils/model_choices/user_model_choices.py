@@ -1,5 +1,6 @@
 from django.utils.translation import gettext_lazy as _
 
+
 class Choices:
     INSURANCE_OPTIONS = (
         ("tamin", _("Tamin")),
@@ -30,12 +31,9 @@ class Choices:
         ("khavermiane", _("Khavermiane")),
         ("hekmat", _("Hekmat Saba")),
         ("tosehe", _("Tosehe")),
-        ("other", _("Other"))
+        ("other", _("Other")),
     )
-    TYPE_OF_PAYMENT_OPTIONS = (
-        ("cash", _("Cash")),
-        ("online", _("Online"))
-    )
+    TYPE_OF_PAYMENT_OPTIONS = (("cash", _("Cash")), ("online", _("Online")))
     INCOME_OPTIONS = (
         ("-10", _("Under 10M")),
         ("10-20", _("Between 10M to 20M")),
@@ -43,7 +41,7 @@ class Choices:
         ("30-40", _("Between 30M to 40M")),
         ("40-50", _("Between 40M to 50M")),
         ("50-100", _("Between 50M to 100M")),
-        ("+100", _("Plus 100"))
+        ("+100", _("Plus 100")),
     )
     DEPOSIT_OPTIONS = (
         ("-50", _("Under 50M")),
@@ -55,11 +53,11 @@ class Choices:
     MARRIAGE_EXPERINCE_OPTION = (
         ("yes", _("Yes")),
         ("no", _("No")),
-        ("engagement_only", _("Engagement Only"))
+        ("engagement_only", _("Engagement Only")),
     )
     MARRIAGE_STATUS_OPTIONS = (
         ("husband", _("Husband")),
-        ("blank_birth_certificate", _("Blank Birth Certificate"))
+        ("blank_birth_certificate", _("Blank Birth Certificate")),
     )
     CHILDREN_OPTIONS = (
         ("none", _("None")),
@@ -70,10 +68,7 @@ class Choices:
         ("two_girls", _("Two Girls")),
         ("three_girls", _("Three Girls")),
     )
-    CHILDREN_CUSTODY_OPTIONS = (
-        ("father", _("Father")),
-        ("mother", _("Mother"))
-    )
+    CHILDREN_CUSTODY_OPTIONS = (("father", _("Father")), ("mother", _("Mother")))
     GENDER_CHOICES = (
         ("Man", _("Man")),
         ("Woman", _("Woman")),
@@ -141,7 +136,7 @@ class Choices:
         ("Whitish White", _("Whitish White")),
         ("Red & White", _("Red & White")),
         ("Bright Green", _("Bright Green")),
-        ('other', _("Other")),
+        ("other", _("Other")),
     )
     EYES_COLOR_CHOICES = (
         ("Green", _("Green")),
@@ -204,7 +199,7 @@ class Choices:
         ("None", _("None")),
     )
     CUSTODY_CHOICES = (
-        ("Father", _("Father")),    
+        ("Father", _("Father")),
         ("Mother", _("Mother")),
     )
     GROOM_CHOICES = (
@@ -257,66 +252,68 @@ class Choices:
         ("+3", _("+3")),
     )
 
+
 class FinancialInformationChoices:
     CURRENT_RESIDENCE_STATUS_CHOICES = (
-        ('fathers_house', _("Father's House")),
-        ('mothers_house', _("Mother's House")),
-        ('other', _("Other")),
+        ("fathers_house", _("Father's House")),
+        ("mothers_house", _("Mother's House")),
+        ("other", _("Other")),
     )
     OWNERSHIP_STATUS_CHOICES = (
-        ('owner', _("Owner")),
-        ('rent', _("Rent")),
+        ("owner", _("Owner")),
+        ("rent", _("Rent")),
     )
     CAPITAL_CHOICES = (
-        ('house', _("House")),
-        ('shop', _("Shop")),
-        ('land', _("Land")),
-        ('garden', _("Garden")),
-        ('factory', _("Factory")),
-        ('company', _("Company")),
-        ('motorcycle', _("Motorcycle")),
-        ('car', _("Car")),
-        ('gold', _("Gold")),
-        ('other', _("Other")),
+        ("house", _("House")),
+        ("shop", _("Shop")),
+        ("land", _("Land")),
+        ("garden", _("Garden")),
+        ("factory", _("Factory")),
+        ("company", _("Company")),
+        ("motorcycle", _("Motorcycle")),
+        ("car", _("Car")),
+        ("gold", _("Gold")),
+        ("other", _("Other")),
     )
     AFTER_MARRIAGE_RESIDENCE_STATUS_CHOICES = (
-        ('owner', _("Owner")),
-        ('mortgage', _("Mortgage")),
-        ('fathers_house', _("Father's House")),
-        ('mothers_house', _("Mother's House")),
-        ('other', _("Other")),
+        ("owner", _("Owner")),
+        ("mortgage", _("Mortgage")),
+        ("fathers_house", _("Father's House")),
+        ("mothers_house", _("Mother's House")),
+        ("other", _("Other")),
     )
     JAHIZIYEH_CHOICES = (
-        ('does', _("Does")),
-        ('doesnt', _("Doesn't")),
-        ('wants', _("Wants")),
-        ('doesnt_want', _("Doesn't Want")),
-        ('man_should_help', _("Man Should Help")),
-        ('agreement', _("Agreement")),
+        ("does", _("Does")),
+        ("doesnt", _("Doesn't")),
+        ("wants", _("Wants")),
+        ("doesnt_want", _("Doesn't Want")),
+        ("man_should_help", _("Man Should Help")),
+        ("agreement", _("Agreement")),
     )
     EX_SPOUSE_FINANCIAL_PAY_STATUS_CHOICES = (
-        ('monthly', _("Monthly")),
-        ('yearly', _("Yearly")),
-        ('two_years', _("Two Years")),
+        ("monthly", _("Monthly")),
+        ("yearly", _("Yearly")),
+        ("two_years", _("Two Years")),
     )
     EX_SPOUSE_FINANCIAL_STATUS_CHOICES = (
-        ('rights', _("Rights")),
-        ('settled', _("Settled")),
-        ('creditor', _("Creditor")),
-        ('debtor', _("Debtor")),
+        ("rights", _("Rights")),
+        ("settled", _("Settled")),
+        ("creditor", _("Creditor")),
+        ("debtor", _("Debtor")),
     )
     DOWRY_TYPE = (
-        ('mecca', _("Mecca")),
-        ('iraq', _("Iraq")),
-        ('syria', _("Syria")),
-        ('gold', _("Gold")),
-        ('money', _("Money")),
-        ('land', _("Land")),
-        ('car', _("Car")),
-        ('garden', _("Garden")),
-        ('house', _("House")),
-        ('agreement', _("Agreement")),
+        ("mecca", _("Mecca")),
+        ("iraq", _("Iraq")),
+        ("syria", _("Syria")),
+        ("gold", _("Gold")),
+        ("money", _("Money")),
+        ("land", _("Land")),
+        ("car", _("Car")),
+        ("garden", _("Garden")),
+        ("house", _("House")),
+        ("agreement", _("Agreement")),
     )
+
 
 class IntellectualInformationChoices:
     WOMAN_JOB_OPTIONS = (
@@ -428,7 +425,6 @@ class IntellectualInformationChoices:
         ("sometimes_chador", _("Sometimes Chador")),
         ("sometimes_coverd_manto", _("Sometimes Coverd Manto")),
         ("sometimes_free_manto", _("Sometimes Free Manto")),
-
     )
     DECISION_MAKING_CHOOSING_SPOUSE_OPTIONS = (
         ("dependent", _("Dependent")),

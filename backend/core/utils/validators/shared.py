@@ -1,11 +1,12 @@
 from django.core.exceptions import ValidationError
 from users.user_related_models import AccessCode
+from django.utils.translation import gettext_lazy as _
 
 def validate_active_access_code(code):
     # Don't validate if code is None (for updates)
     if code is None:
         return
-    
+
     try:
         access_code = AccessCode.objects.get(code=code)
         if not access_code.active:

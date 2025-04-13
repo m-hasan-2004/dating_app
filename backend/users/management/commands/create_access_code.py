@@ -3,7 +3,6 @@ from users.user_related_models import AccessCode as Code
 from django.utils import timezone
 
 
-
 class Command(BaseCommand):
     help = "Creates Access Code in numbers"
 
@@ -21,4 +20,3 @@ class Command(BaseCommand):
             self.stdout.write(
                 self.style.SUCCESS(f"Successfully Created {access_code.code}")
             )
-

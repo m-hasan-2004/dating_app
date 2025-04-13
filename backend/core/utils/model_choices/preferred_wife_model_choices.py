@@ -1,5 +1,7 @@
 from django.utils.translation import gettext_lazy as _
 from .user_model_choices import Choices as CHO
+
+
 class Choices:
     FIELD_OF_STUDY_CHOICES = (
         ("Medical", _("Medical")),

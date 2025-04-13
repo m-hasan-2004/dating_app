@@ -4,6 +4,7 @@ from core.utils.error_msgs.model_error_messages import PhysicalInfoErrorMessages
 from core.utils.help_texts.help_text import PhysicalInfoHelpText
 from django.utils.translation import gettext_lazy as _
 
+
 class PhysicalInformation(models.Model):
     height = models.DecimalField(
         _("Height"),
@@ -89,12 +90,12 @@ class PhysicalInformation(models.Model):
         on_delete=models.CASCADE,
         error_messages=PhysicalInfoErrorMessages.USER,
         help_text=PhysicalInfoHelpText.USER,
-        db_index=True
+        db_index=True,
     )
 
     def __str__(self):
         return f"اطلاعات کاربر: {self.user.last_name}"
 
     class Meta:
-        verbose_name = _('Physical Information')
-        verbose_name_plural = _('Physical Informations')
+        verbose_name = _("Physical Information")
+        verbose_name_plural = _("Physical Informations")

@@ -30,22 +30,22 @@ class AccessCode(models.Model):
         default=uuid4,
         editable=False,
         error_messages=AccessCodeErrorMessages.CODE,
-        help_text=AccessCodeHelpText.CODE
+        help_text=AccessCodeHelpText.CODE,
     )
     active = models.BooleanField(
         _("Active"),
         default=True,
         error_messages=AccessCodeErrorMessages.ACTIVE,
-        help_text=AccessCodeHelpText.ACTIVE
+        help_text=AccessCodeHelpText.ACTIVE,
     )
     date_created = models.DateTimeField(
         _("Date created"),
         auto_now=False,
         auto_now_add=True,
         error_messages=AccessCodeErrorMessages.DATE_CREATED,
-        help_text=AccessCodeHelpText.DATE_CREATED
+        help_text=AccessCodeHelpText.DATE_CREATED,
     )
-    
+
     def __str__(self):
         return f"Access Code: {str(self.code)}"
 
@@ -55,4 +55,3 @@ class AccessCode(models.Model):
     class Meta:
         verbose_name = _("Access Code Management")
         verbose_name_plural = _("Access Codes Management")
-

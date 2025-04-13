@@ -4,10 +4,22 @@ from django.utils.translation import gettext_lazy as _
 from multiselectfield import MultiSelectField
 from django.urls import reverse
 from django.db import models
-from core.utils.model_choices.user_model_choices import Choices, FinancialInformationChoices
-from core.utils.error_msgs.model_error_messages import IdentityInfoErrorMessages, BirthCertificateInfoErrorMessages, IntroducedSubjectsErrorMessages
-from core.utils.help_texts.help_text import IdentityInfoHelpText, BirthCertificateInfoHelpText, IntroducedSubjectsHelpText
+from core.utils.model_choices.user_model_choices import (
+    Choices,
+    FinancialInformationChoices,
+)
+from core.utils.error_msgs.model_error_messages import (
+    IdentityInfoErrorMessages,
+    BirthCertificateInfoErrorMessages,
+    IntroducedSubjectsErrorMessages,
+)
+from core.utils.help_texts.help_text import (
+    IdentityInfoHelpText,
+    BirthCertificateInfoHelpText,
+    IntroducedSubjectsHelpText,
+)
 from django.core.validators import FileExtensionValidator
+
 
 class IdentityInformation(models.Model):
     first_name = models.CharField(
@@ -150,9 +162,13 @@ class IdentityInformation(models.Model):
         upload_to="payment_proofs/%Y/%m/%d/",
         null=True,
         blank=True,
-        validators=[FileExtensionValidator(allowed_extensions=['pdf', 'jpg', 'jpeg', 'png'], 
-        message=IdentityInfoErrorMessages.PAYMENT_PROOF)],
-        help_text=IdentityInfoHelpText.PAYMENT_PROOF
+        validators=[
+            FileExtensionValidator(
+                allowed_extensions=["pdf", "jpg", "jpeg", "png"],
+                message=IdentityInfoErrorMessages.PAYMENT_PROOF,
+            )
+        ],
+        help_text=IdentityInfoHelpText.PAYMENT_PROOF,
     )
     user = models.OneToOneField(
         "users.User",
@@ -160,7 +176,7 @@ class IdentityInformation(models.Model):
         related_name="confidintional_info",
         error_messages=IdentityInfoErrorMessages.USER,
         help_text=IdentityInfoHelpText.USER,
-        db_index=True
+        db_index=True,
     )
 
     class Meta:
@@ -172,8 +188,8 @@ class IdentityInformation(models.Model):
 
     def get_absolute_url(self):
         return reverse("IdentityInfo_detail", kwargs={"pk": self.pk})
-    
-    
+
+
 class BirthCertificateInformation(models.Model):
     national_code = models.CharField(
         _("National Code"),
@@ -273,15 +289,15 @@ class BirthCertificateInformation(models.Model):
         related_name="birth_certificate_info",
         error_messages=BirthCertificateInfoErrorMessages.USER,
         help_text=BirthCertificateInfoHelpText.USER,
-        db_index=True
+        db_index=True,
     )
-    
+
     def __str__(self):
         return f"اطلاعات کاربر: {self.user.last_name}"
 
     def get_absolute_url(self):
         return reverse("BirthCertificateInfo_detail", kwargs={"pk": self.pk})
-    
+
     class Meta:
         verbose_name = _("Birth Certificate Information")
         verbose_name_plural = _("Birth Certificates Information")
@@ -306,7 +322,7 @@ class IntroducedSubjectsInformation(models.Model):
         choices=Choices.MARRIAGE_STATUS_OPTIONS,
         error_messages=BirthCertificateInfoErrorMessages.MARRIAGE_STATUS,
         help_text=BirthCertificateInfoHelpText.MARRIAGE_STATUS,
-    )  
+    )
     postive = models.BooleanField(
         _("Positive"),
         error_messages=IntroducedSubjectsErrorMessages.POSTIVE,
@@ -350,7 +366,7 @@ class IntroducedSubjectsInformation(models.Model):
         related_name="introduced_subjects_info",
         error_messages=BirthCertificateInfoErrorMessages.USER,
         help_text=BirthCertificateInfoHelpText.USER,
-        db_index=True
+        db_index=True,
     )
 
     def __str__(self):
@@ -358,7 +374,7 @@ class IntroducedSubjectsInformation(models.Model):
 
     def get_absolute_url(self):
         return reverse("IntroducedSubjects_details", kwargs={"pk": self.pk})
-    
+
     class Meta:
-        verbose_name = _('IntroducedSubjects')
-        verbose_name_plural = _('IntroducedSubjects')
+        verbose_name = _("IntroducedSubjects")
+        verbose_name_plural = _("IntroducedSubjects")
