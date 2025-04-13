@@ -16,3 +16,4 @@ python-dotenv[cli]==0.21.1
 setuptools==75.6.0
 sqlparse==0.5.3
 django-admin-multi-select-filter==1.4.1
+drf-spectacular==0.28.0
