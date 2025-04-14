@@ -4,6 +4,7 @@ from core.utils.error_msgs.preferred_wife_model_error_messages import (
     ExtraInfoErrorMessages,
 )
 from core.utils.help_texts.preferred_wife_help_text import ExtraInfoHelpText
+from core.utils.validators.preferred_wife_validators import PreferredWifeExtraInformationValidator
 
 
 class PreferredWifeExtraInformation(models.Model):
@@ -11,6 +12,7 @@ class PreferredWifeExtraInformation(models.Model):
         _("Additional Explanations"),
         error_messages=ExtraInfoErrorMessages.ADDITIONAL_EXPLANATIONS,
         help_text=ExtraInfoHelpText.ADDITIONAL_EXPLANATIONS,
+        validators=[PreferredWifeExtraInformationValidator.validate_additional_explanations],
     )
     user = models.OneToOneField(
         "users.user",

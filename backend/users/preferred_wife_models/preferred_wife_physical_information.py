@@ -5,6 +5,7 @@ from core.utils.error_msgs.preferred_wife_model_error_messages import (
     PhysicalInfoErrorMessages,
 )
 from core.utils.help_texts.preferred_wife_help_text import PhysicalInfoHelpText
+from core.utils.validators.preferred_wife_validators import PreferredWifePhysicalInformationValidator
 from multiselectfield import MultiSelectField
 
 
@@ -16,6 +17,10 @@ class PreferredWifePhysicalInformation(models.Model):
         error_messages=PhysicalInfoErrorMessages.HEIGHT,
         help_text=PhysicalInfoHelpText.HEIGHT,
         db_index=True,
+        validators=[
+            PreferredWifePhysicalInformationValidator.height_validator,
+            PreferredWifePhysicalInformationValidator.max_height_validator,
+        ],
     )
     weight = models.DecimalField(
         _("Weight"),
@@ -24,6 +29,10 @@ class PreferredWifePhysicalInformation(models.Model):
         error_messages=PhysicalInfoErrorMessages.WEIGHT,
         help_text=PhysicalInfoHelpText.WEIGHT,
         db_index=True,
+        validators=[
+            PreferredWifePhysicalInformationValidator.weight_validator,
+            PreferredWifePhysicalInformationValidator.max_weight_validator,
+        ],
     )
     skin_color = MultiSelectField(
         _("Skin Color"),

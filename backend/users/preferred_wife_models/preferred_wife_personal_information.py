@@ -5,6 +5,7 @@ from core.utils.error_msgs.preferred_wife_model_error_messages import (
     PersonalInfoErrorMessages,
 )
 from core.utils.help_texts.preferred_wife_help_text import PersonalInfoHelpText
+from core.utils.validators.preferred_wife_validators import PreferredWifePersonalInformationValidator
 from multiselectfield import MultiSelectField
 
 
@@ -14,12 +15,14 @@ class PreferredWifePersonalInformation(models.Model):
         max_length=50,
         error_messages=PersonalInfoErrorMessages.EDUCATION,
         help_text=PersonalInfoHelpText.EDUCATION,
+        validators=[PreferredWifePersonalInformationValidator.education_validator],
     )
     field_of_study = models.CharField(
         _("Field of Study"),
         max_length=150,
         error_messages=PersonalInfoErrorMessages.FIELD_OF_STUDY,
         help_text=PersonalInfoHelpText.FIELD_OF_STUDY,
+        validators=[PreferredWifePersonalInformationValidator.field_of_study_validator],
     )
     future_spouse_job = MultiSelectField(
         _("Future Spouse Job"),
@@ -34,6 +37,7 @@ class PreferredWifePersonalInformation(models.Model):
         error_messages=PersonalInfoErrorMessages.CURRENT_RESIDENCE_LOCATION,
         help_text=PersonalInfoHelpText.CURRENT_RESIDENCE_LOCATION,
         db_index=True,
+        validators=[PreferredWifePersonalInformationValidator.location_validator],
     )
     after_marriage_residence_location = MultiSelectField(
         _("After Marriage Residence Location"),

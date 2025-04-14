@@ -5,6 +5,7 @@ from core.utils.error_msgs.preferred_wife_model_error_messages import (
     IntellectualInfoErrorMessages,
 )
 from core.utils.help_texts.preferred_wife_help_text import IntellectualInfoHelpText
+from core.utils.validators.preferred_wife_validators import PreferredWifeIntellectualInformationValidator
 from multiselectfield import MultiSelectField
 
 
@@ -49,6 +50,7 @@ class PreferredWifeIntellectualInformation(models.Model):
         _("Most Important Moral Feature of Future Spouse"),
         error_messages=IntellectualInfoErrorMessages.MOST_IMPORTANT_MORAL_FEATURE_OF_FUTURE_SPOUSE,
         help_text=IntellectualInfoHelpText.MOST_IMPORTANT_MORAL_FEATURE_OF_FUTURE_SPOUSE,
+        validators=[PreferredWifeIntellectualInformationValidator.validate_moral_feature],
     )
     marriage_with_disabled = models.CharField(
         _("Marriage with Disabled Person"),
@@ -69,11 +71,13 @@ class PreferredWifeIntellectualInformation(models.Model):
         _("Marriage with Veteran & Disabled Person Explanation"),
         error_messages=IntellectualInfoErrorMessages.MARRIAGE_WITH_DISABLED_VETERAN_EXPLANATION,
         help_text=IntellectualInfoHelpText.MARRIAGE_WITH_DISABLED_VETERAN_EXPLANATION,
+        validators=[PreferredWifeIntellectualInformationValidator.validate_disabled_veteran_explanation],
     )
     red_flags = models.TextField(
         _("Red Flags"),
         error_messages=IntellectualInfoErrorMessages.RED_FLAGS,
         help_text=IntellectualInfoHelpText.RED_FLAGS,
+        validators=[PreferredWifeIntellectualInformationValidator.validate_red_flags],
     )
     user = models.OneToOneField(
         "users.user",
