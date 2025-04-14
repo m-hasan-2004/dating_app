@@ -232,3 +232,5 @@ class IntroducedSubjectsHelpText:
     RESULT_AND_REGARDS = _("Summarize the results and any regards from the meetings.")
     COST_OF_INTRODUCTION = _("Specify the cost associated with the introduction.")
     COST_OF_MEETING = _("Specify the cost associated with the meetings.")
+    USER = _("Select the user associated with this information.")
+

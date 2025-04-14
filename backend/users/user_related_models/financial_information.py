@@ -6,6 +6,7 @@ from core.utils.error_msgs.model_error_messages import (
     IdentityInfoErrorMessages,
 )
 from core.utils.help_texts.help_text import FinancialInfoHelpText, IdentityInfoHelpText
+from core.utils.validators.user_validators import FinancialInformationValidator
 from multiselectfield import MultiSelectField
 
 
@@ -31,19 +32,23 @@ class FinancialInformation(models.Model):
         error_messages=FinancialInformationErrorMessages.OWNERSHIP_STATUS_ERROR_MESSAGES,
         help_text=FinancialInfoHelpText.OWNERSHIP_STATUS,
     )
-    rent_amount = models.IntegerField(
+    rent_amount = models.CharField(
         _("Rent Amount"),
+        max_length=50,
         blank=True,
         null=True,
         error_messages=FinancialInformationErrorMessages.RENT_AMOUNT_ERROR_MESSAGES,
         help_text=FinancialInfoHelpText.RENT_AMOUNT,
+        validators=[FinancialInformationValidator.amount_validator],
     )
-    mortgage_amount = models.IntegerField(
+    mortgage_amount = models.CharField(
         _("Mortgage Amount"),
+        max_length=50,
         blank=True,
         null=True,
         error_messages=FinancialInformationErrorMessages.MORTGAGE_AMOUNT_ERROR_MESSAGES,
         help_text=FinancialInfoHelpText.MORTGAGE_AMOUNT,
+        validators=[FinancialInformationValidator.amount_validator],
     )
     capital = MultiSelectField(
         _("Capital"),
@@ -88,6 +93,7 @@ class FinancialInformation(models.Model):
         null=True,
         error_messages=FinancialInformationErrorMessages.EX_SPOUSE_FINANCIAL_AMOUNT_ERROR_MESSAGES,
         help_text=FinancialInfoHelpText.EX_SPOUSE_FINANCIAL_AMOUNT,
+        validators=[FinancialInformationValidator.amount_validator],
     )
     dowry_type = MultiSelectField(
         _("Future Spouse Dowry Type"),
@@ -102,6 +108,7 @@ class FinancialInformation(models.Model):
         max_length=50,
         error_messages=FinancialInformationErrorMessages.DOWRY_AMOUNT_ERROR_MESSAGES,
         help_text=FinancialInfoHelpText.DOWRY_AMOUNT,
+        validators=[FinancialInformationValidator.amount_validator],
     )
     jahiziyeh = models.CharField(
         _("Future Spose Jahiziyeh"),
@@ -125,6 +132,20 @@ class FinancialInformation(models.Model):
         db_index=True,
         related_name="financialinformation",
     )
+
+    def clean(self):
+        super().clean()
+        FinancialInformationValidator.validate_rent_mortgage_info(
+            self.current_residence_status, self.rent_amount, self.mortgage_amount
+        )
+        FinancialInformationValidator.validate_jahiziyeh_info(
+            self.jahiziyeh, self.jahiziyeh_explantion
+        )
+        FinancialInformationValidator.validate_ex_spouse_financial_info(
+            self.ex_spouse_financial_status,
+            self.ex_spouse_financial_pay_status,
+            self.ex_spouse_financial_amount,
+        )
 
     def __str__(self):
         return f"اطلاعات کاربر: {self.user.last_name}"

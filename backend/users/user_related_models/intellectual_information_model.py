@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from core.utils.model_choices.user_model_choices import IntellectualInformationChoices
 from core.utils.help_texts.help_text import IntellectualInfoHelpText
 from core.utils.error_msgs.model_error_messages import IntellectualInfoErrorMessages
+from core.utils.validators.user_validators import IntellectualInformationValidator
 from multiselectfield import MultiSelectField
 
 
@@ -11,28 +12,33 @@ class IntellectualInformation(models.Model):
         _("Marriage Goals & Purposes"),
         help_text=IntellectualInfoHelpText.MARRIAGE_GOALS,
         error_messages=IntellectualInfoErrorMessages.MARRIAGE_GOALS,
+        validators=[IntellectualInformationValidator.validate_marriage_goals],
     )
     opinion_woman_job = models.CharField(
         _("Opinion About Woman's Job"),
         choices=IntellectualInformationChoices.WOMAN_JOB_OPTIONS,
         help_text=IntellectualInfoHelpText.OPINION_WOMAN_JOB,
         error_messages=IntellectualInfoErrorMessages.OPINION_WOMAN_JOB,
+        validators=[IntellectualInformationValidator.validate_opinion_woman_job],
     )
     opinion_woman_edu = models.CharField(
         _("Opinion About Woman's Education"),
         choices=IntellectualInformationChoices.WOMAN_EDU_OPTIONS,
         help_text=IntellectualInfoHelpText.OPINION_WOMAN_EDU,
         error_messages=IntellectualInfoErrorMessages.OPINION_WOMAN_EDU,
+        validators=[IntellectualInformationValidator.validate_opinion_woman_edu],
     )
     pros_of_yourself = models.TextField(
         _("Pros Of Yourself"),
         help_text=IntellectualInfoHelpText.PROS_OF_YOURSELF,
         error_messages=IntellectualInfoErrorMessages.PROS_OF_YOURSELF,
+        validators=[IntellectualInformationValidator.validate_pros_cons],
     )
     cons_of_yourself = models.TextField(
         _("Cons Of Yourself"),
         help_text=IntellectualInfoHelpText.CONS_OF_YOURSELF,
         error_messages=IntellectualInfoErrorMessages.CONS_OF_YOURSELF,
+        validators=[IntellectualInformationValidator.validate_pros_cons],
     )
     type_connection_friends = models.CharField(
         _("Type of Connection With Friends"),
@@ -45,6 +51,7 @@ class IntellectualInformation(models.Model):
         max_length=100,
         help_text=IntellectualInfoHelpText.FRIENDS_CONNECTION_REASON,
         error_messages=IntellectualInfoErrorMessages.FRIENDS_CONNECTION_REASON,
+        validators=[IntellectualInformationValidator.validate_friends_connection_reason],
     )
     political_orientation = models.BooleanField(
         _("Political Orientation"),
@@ -145,6 +152,14 @@ class IntellectualInformation(models.Model):
         help_text=IntellectualInfoHelpText.USER,
         error_messages=IntellectualInfoErrorMessages.UNIQUE_ID,
     )
+
+    def clean(self):
+        """
+        Perform complex validations using the IntellectualInformationValidator.
+        """
+        super().clean()
+        validator = IntellectualInformationValidator()
+        validator.clean(self.__dict__)
 
     def __str__(self):
         return f"اطلاعات کاربر: {self.user.last_name}"

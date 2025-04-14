@@ -7,6 +7,7 @@ from core.utils.error_msgs.model_error_messages import (
     ParentErrorMessages,
 )
 from core.utils.help_texts.help_text import FamilyInfoHelpText, PersonalInfoHelpText
+from core.utils.validators.user_validators import FamilyInformationValidator, ParentInformationValidator
 
 from django.urls import reverse
 from django.utils import timezone
@@ -47,12 +48,14 @@ class FamilyInformation(models.Model):
         max_length=150,
         error_messages=FamilyInfoErrorMessages.CONTACT_WITH_FAMILY,
         help_text=FamilyInfoHelpText.CONTACT_WITH_FAMILY,
+        validators=[FamilyInformationValidator.contact_validator],
     )
     contact_with_relatives = models.CharField(
         _("Contact with Relatives"),
         max_length=150,
         error_messages=FamilyInfoErrorMessages.CONTACT_WITH_RELATIVES,
         help_text=FamilyInfoHelpText.CONTACT_WITH_RELATIVES,
+        validators=[FamilyInformationValidator.contact_validator],
     )
     kids = models.CharField(
         _("Kids"),
@@ -69,6 +72,12 @@ class FamilyInformation(models.Model):
         db_index=True,
         related_name="family_information",
     )
+
+    def clean(self):
+        super().clean()
+        FamilyInformationValidator.validate_divorce_info(
+            self.family_divorce_history, self.family_divorce_reason
+        )
 
     def __str__(self):
         return f"اطلاعات کاربر: {self.user.last_name}"
@@ -168,6 +177,7 @@ class ExHusbandChildStatus(models.Model):
         blank=True,
         null=True,
         help_text=FamilyInfoHelpText.LIVING_LOCATION,
+        validators=[FamilyInformationValidator.contact_validator],
     )
     user = models.ForeignKey(
         "users.user",
@@ -193,7 +203,12 @@ class FamilyMember(models.Model):
         choices=Choices.EDUCATION_CHOICES,
         help_text=FamilyInfoHelpText.EDUCATION,
     )
-    job = models.CharField(_("Job"), max_length=100, help_text=FamilyInfoHelpText.JOB)
+    job = models.CharField(
+        _("Job"), 
+        max_length=100, 
+        help_text=FamilyInfoHelpText.JOB,
+        validators=[ParentInformationValidator.job_validator],
+    )
     user = models.ForeignKey(
         "users.user",
         verbose_name=_("User"),
@@ -212,14 +227,12 @@ class FamilyMember(models.Model):
 
 
 class Sister(FamilyMember):
-
     class Meta:
         verbose_name = _("Sister")
         verbose_name_plural = _("Sisters")
 
 
 class Brother(FamilyMember):
-
     class Meta:
         verbose_name = _("Brother")
         verbose_name_plural = _("Brothers")
@@ -257,6 +270,7 @@ class Parent(models.Model):
         max_length=50,
         help_text=FamilyInfoHelpText.LANGUAGE,
         error_messages=ParentErrorMessages.LANGUAGE,
+        validators=[ParentInformationValidator.language_validator],
     )
     birth_date = models.DateField(
         _("Birth Date"),
@@ -268,6 +282,7 @@ class Parent(models.Model):
         max_length=100,
         help_text=FamilyInfoHelpText.JOB,
         error_messages=ParentErrorMessages.JOB,
+        validators=[ParentInformationValidator.job_validator],
     )
     originality = models.CharField(
         _("Originality"),
@@ -291,9 +306,14 @@ class Parent(models.Model):
         _("Death Date"),
         blank=True,
         null=True,
-        help_text=FamilyInfoHelpText.DEATH_DATE_PARENT,
-        error_messages=ParentErrorMessages.DEATH_DATE,
+        help_text=FamilyInfoHelpText.DEATH_DATE,
     )
+
+    def clean(self):
+        super().clean()
+        ParentInformationValidator.validate_parent_dates(
+            self.birth_date, self.death_date, self.alive
+        )
 
     def __str__(self):
         return f"اطلاعات کاربر: {self.user.last_name}"

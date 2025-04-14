@@ -3,7 +3,8 @@ from django.contrib.auth.models import (
     AbstractBaseUser,
     PermissionsMixin,
 )
-from core.utils.validators.user_validators import UnicodeUsernameValidator
+from core.utils.validators.user_validators import UserValidator
+from django.contrib.auth.validators import UnicodeUsernameValidator
 from core.utils.validators.shared import validate_active_access_code
 from users.user_related_models import AccessCode
 from phonenumber_field.modelfields import PhoneNumberField
@@ -90,7 +91,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         max_length=50,
         null=False,
         blank=False,
-        validators=[validate_active_access_code],
+        validators=[validate_active_access_code, UserValidator.validate_access_code],
         help_text=UserHelpText.ACCESS_CODE,
         error_messages=UserErrorMessages.ACCESS_CODE,
     )
@@ -99,6 +100,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         max_length=100,
         blank=True,
         null=True,
+        validators=[UserValidator.validate_middle_man_code],
         help_text=UserHelpText.MIDDLE_MAN_CODE,
         error_messages=UserErrorMessages.MIDDLE_MAN_CODE,
     )
@@ -107,7 +109,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         max_length=150,
         unique=True,
         help_text=UserHelpText.USERNAME,
-        validators=[username_validator],
+        validators=[username_validator, UserValidator.validate_username],
         error_messages=UserErrorMessages.USERNAME,
     )
     date_created = models.DateTimeField(
@@ -128,6 +130,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         _("email address"),
         blank=True,
         null=True,
+        validators=[UserValidator.validate_email],
         help_text=UserHelpText.EMAIL,
         error_messages=UserErrorMessages.EMAIL,
     )
@@ -157,13 +160,21 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ["email"]
 
     def clean(self):
+        """
+        Perform complex validations using the UserValidator.
+        """
         super().clean()
         self.email = self.__class__.objects.normalize_email(self.email)
+        
         # Only validate access_code for new users (when id is None)
         if not self.pk and not self.access_code:
             raise ValidationError(
                 {"access_code": _("Access code is required for new users.")}
             )
+            
+        # Perform complex validations
+        validator = UserValidator()
+        validator.clean(self.__dict__)
 
     def __str__(self):
         return self.username

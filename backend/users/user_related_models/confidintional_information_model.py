@@ -1,4 +1,9 @@
-from core.utils.validators.user_validators import ConfidentialInfoValidator
+from core.utils.validators.user_validators import (
+    ConfidentialInfoValidator,
+    PaymentValidator,
+    IntroducedSubjectsValidator,
+    PhysicalInformationValidator,
+)
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.translation import gettext_lazy as _
 from multiselectfield import MultiSelectField
@@ -309,6 +314,7 @@ class IntroducedSubjectsInformation(models.Model):
         max_length=50,
         error_messages=IntroducedSubjectsErrorMessages.USERNAME,
         help_text=IntroducedSubjectsHelpText.USERNAME,
+        validators=[IntroducedSubjectsValidator.username_validator],
     )
     birth_date = models.DateField(
         _("Birth Date"),
@@ -316,6 +322,7 @@ class IntroducedSubjectsInformation(models.Model):
         auto_now_add=False,
         error_messages=BirthCertificateInfoErrorMessages.BIRTH_DATE,
         help_text=BirthCertificateInfoHelpText.BIRTH_DATE,
+        validators=[ConfidentialInfoValidator.validate_birth_date],
     )
     marriage_status = models.CharField(
         _("Marriage Status"),
@@ -337,43 +344,51 @@ class IntroducedSubjectsInformation(models.Model):
         _("Reason"),
         error_messages=IntroducedSubjectsErrorMessages.REASON,
         help_text=IntroducedSubjectsHelpText.REASON,
+        validators=[IntroducedSubjectsValidator.validate_reason],
     )
     dates_of_meetings = models.TextField(
         _("Dates Of Meetings"),
         error_messages=IntroducedSubjectsErrorMessages.DATES_OF_MEETINGS,
         help_text=IntroducedSubjectsHelpText.DATES_OF_MEETINGS,
+        validators=[IntroducedSubjectsValidator.validate_dates_of_meetings],
     )
     result_and_regards = models.TextField(
         _("Result & Regards"),
         error_messages=IntroducedSubjectsErrorMessages.RESULT_AND_REGARDS,
         help_text=IntroducedSubjectsHelpText.RESULT_AND_REGARDS,
+        validators=[IntroducedSubjectsValidator.validate_result_and_regards],
     )
     cost_of_introduction = models.CharField(
         _("Cost of Introduction"),
         max_length=100,
         error_messages=IntroducedSubjectsErrorMessages.COST_OF_INTRODUCTION,
         help_text=IntroducedSubjectsHelpText.COST_OF_INTRODUCTION,
+        validators=[PaymentValidator.validate_cost],
     )
     cost_of_meeting = models.CharField(
         _("Cost of Meeting"),
         max_length=100,
         error_messages=IntroducedSubjectsErrorMessages.COST_OF_MEETING,
         help_text=IntroducedSubjectsHelpText.COST_OF_MEETING,
+        validators=[PaymentValidator.validate_cost],
     )
     user = models.ForeignKey(
         "users.User",
         on_delete=models.CASCADE,
-        related_name="introduced_subjects_info",
-        error_messages=BirthCertificateInfoErrorMessages.USER,
-        help_text=BirthCertificateInfoHelpText.USER,
+        error_messages=IntroducedSubjectsErrorMessages.USER,
+        help_text=IntroducedSubjectsHelpText.USER,
         db_index=True,
     )
 
+    def clean(self):
+        super().clean()
+        IntroducedSubjectsValidator.validate_positive_negative(self.postive, self.negative)
+
     def __str__(self):
-        return f"اطلاعات کاربر: {self.user.last_name}"
+        return self.username
 
     def get_absolute_url(self):
-        return reverse("IntroducedSubjects_details", kwargs={"pk": self.pk})
+        return reverse("IntroducedSubjectsInfo_detail", kwargs={"pk": self.pk})
 
     class Meta:
         verbose_name = _("IntroducedSubjects")

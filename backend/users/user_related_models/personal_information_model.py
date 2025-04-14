@@ -4,6 +4,7 @@ from core.utils.error_msgs.model_error_messages import PersonalInfoErrorMessages
 from core.utils.help_texts.help_text import PersonalInfoHelpText
 from django.utils.translation import gettext_lazy as _
 from multiselectfield import MultiSelectField
+from core.utils.validators.user_validators import PersonalInformationValidator
 
 
 class PersonalInformation(models.Model):
@@ -24,6 +25,7 @@ class PersonalInformation(models.Model):
         error_messages=PersonalInfoErrorMessages.BIRTH_DATE,
         help_text=PersonalInfoHelpText.BIRTH_DATE,
         db_index=True,
+        validators=[PersonalInformationValidator.validate_birth_date],
     )
     birth_location = models.CharField(
         _("Birth Location"),
@@ -142,6 +144,14 @@ class PersonalInformation(models.Model):
         db_index=True,
         related_name="personalinformation",
     )
+
+    def clean(self):
+        """
+        Perform complex validations using the PersonalInformationValidator.
+        """
+        super().clean()
+        validator = PersonalInformationValidator()
+        validator.clean(self.__dict__)
 
     def __str__(self):
         return f"اطلاعات کاربر: {self.user.last_name}"

@@ -3,6 +3,7 @@ from core.utils.model_choices.user_model_choices import Choices
 from core.utils.error_msgs.model_error_messages import PhysicalInfoErrorMessages
 from core.utils.help_texts.help_text import PhysicalInfoHelpText
 from django.utils.translation import gettext_lazy as _
+from core.utils.validators.user_validators import PhysicalInformationValidator
 
 
 class PhysicalInformation(models.Model):
@@ -13,6 +14,10 @@ class PhysicalInformation(models.Model):
         error_messages=PhysicalInfoErrorMessages.HEIGHT,
         help_text=PhysicalInfoHelpText.HEIGHT,
         db_index=True,
+        validators=[
+            PhysicalInformationValidator.height_validator,
+            PhysicalInformationValidator.max_height_validator,
+        ],
     )
     weight = models.DecimalField(
         _("Weight"),
@@ -21,6 +26,10 @@ class PhysicalInformation(models.Model):
         error_messages=PhysicalInfoErrorMessages.WEIGHT,
         help_text=PhysicalInfoHelpText.WEIGHT,
         db_index=True,
+        validators=[
+            PhysicalInformationValidator.weight_validator,
+            PhysicalInformationValidator.max_weight_validator,
+        ],
     )
     skin_color = models.CharField(
         _("Skin Color"),
@@ -63,6 +72,7 @@ class PhysicalInformation(models.Model):
         null=True,
         error_messages=PhysicalInfoErrorMessages.GLASSES_SIZE,
         help_text=PhysicalInfoHelpText.GLASSES_SIZE,
+        validators=[PhysicalInformationValidator.glasses_size_validator],
     )
     body_and_face = models.CharField(
         _("Body and Face"),
@@ -92,6 +102,12 @@ class PhysicalInformation(models.Model):
         help_text=PhysicalInfoHelpText.USER,
         db_index=True,
     )
+
+    def clean(self):
+        super().clean()
+        PhysicalInformationValidator.validate_disease_info(
+            self.disease_or_surgery, self.medication_surgery_disease_type
+        )
 
     def __str__(self):
         return f"اطلاعات کاربر: {self.user.last_name}"

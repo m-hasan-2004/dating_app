@@ -622,6 +622,10 @@ class IntroducedSubjectsErrorMessages:
         "required": _("The cost of meeting is required."),
         "max_length": _("The cost of meeting cannot exceed 100 characters."),
     }
+    USER = {
+        "required": _("User is required."),
+    }
+
 
 
 class ParentErrorMessages:
