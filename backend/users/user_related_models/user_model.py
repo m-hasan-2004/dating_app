@@ -104,6 +104,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         help_text=UserHelpText.MIDDLE_MAN_CODE,
         error_messages=UserErrorMessages.MIDDLE_MAN_CODE,
     )
+    first_name = models.CharField(
+        _("first name"),
+        max_length=150,
+        blank=True)
+    last_name = models.CharField(
+        _("last name"),
+        max_length=150,
+        blank=True)
     username = models.CharField(
         _("username"),
         max_length=150,
@@ -181,6 +189,13 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_absolute_url(self):
         return reverse("User_detail", kwargs={"pk": self.pk})
+
+    def save(self, *args, **kwargs):
+        # Ensure date_joined is not before date_created for new users
+        if self._state.adding:
+            if self.date_created and (not self.date_joined or self.date_joined < self.date_created):
+                self.date_joined = self.date_created
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = _("User")

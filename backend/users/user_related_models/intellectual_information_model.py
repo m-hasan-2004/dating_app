@@ -163,6 +163,13 @@ class IntellectualInformation(models.Model):
 
     def __str__(self):
         return f"اطلاعات کاربر: {self.user.last_name}"
+    
+    def save(self, *args, **kwargs):
+    # Ensure date_joined is not before date_created for new users
+        if self._state.adding:
+            if self.date_created and (not self.date_joined or self.date_joined < self.date_created):
+                self.date_joined = self.date_created
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = _("Intellectual Information")

@@ -424,7 +424,7 @@ class UserValidator:
         date_created = data.get('date_created')
 
         if date_joined and date_created and date_joined < date_created:
-            errors['date_joined'] = _("Join date cannot be before creation date")
+            errors['__all__'] = _("Join date cannot be before creation date")
 
         if errors:
             raise ValidationError(errors)

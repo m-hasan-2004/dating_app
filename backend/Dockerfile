@@ -26,6 +26,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project
 COPY . /app/
 
+COPY .env /app/.env
+
 # Copy the backup script
 COPY back_db.sh /app/back_db.sh
 

@@ -188,6 +188,13 @@ class IdentityInformation(models.Model):
         verbose_name = _("Identities Information")
         verbose_name_plural = _("Identities Information")
 
+    def save(self, *args, **kwargs):
+    # Ensure date_joined is not before date_created for new users
+        if self._state.adding:
+            if self.date_created and (not self.date_joined or self.date_joined < self.date_created):
+                self.date_joined = self.date_created
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.last_name
 
@@ -303,6 +310,13 @@ class BirthCertificateInformation(models.Model):
     def get_absolute_url(self):
         return reverse("BirthCertificateInfo_detail", kwargs={"pk": self.pk})
 
+    def save(self, *args, **kwargs):
+    # Ensure date_joined is not before date_created for new users
+        if self._state.adding:
+            if self.date_created and (not self.date_joined or self.date_joined < self.date_created):
+                self.date_joined = self.date_created
+        super().save(*args, **kwargs)
+
     class Meta:
         verbose_name = _("Birth Certificate Information")
         verbose_name_plural = _("Birth Certificates Information")
@@ -390,6 +404,13 @@ class IntroducedSubjectsInformation(models.Model):
     def get_absolute_url(self):
         return reverse("IntroducedSubjectsInfo_detail", kwargs={"pk": self.pk})
 
+    def save(self, *args, **kwargs):
+    # Ensure date_joined is not before date_created for new users
+        if self._state.adding:
+            if self.date_created and (not self.date_joined or self.date_joined < self.date_created):
+                self.date_joined = self.date_created
+        super().save(*args, **kwargs)
+        
     class Meta:
         verbose_name = _("IntroducedSubjects")
         verbose_name_plural = _("IntroducedSubjects")

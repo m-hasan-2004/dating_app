@@ -78,6 +78,13 @@ class FamilyInformation(models.Model):
         FamilyInformationValidator.validate_divorce_info(
             self.family_divorce_history, self.family_divorce_reason
         )
+    
+    def save(self, *args, **kwargs):
+    # Ensure date_joined is not before date_created for new users
+        if self._state.adding:
+            if self.date_created and (not self.date_joined or self.date_joined < self.date_created):
+                self.date_joined = self.date_created
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"اطلاعات کاربر: {self.user.last_name}"
@@ -140,6 +147,13 @@ class EngagementOrWeddingStatus(models.Model):
 
     def __str__(self):
         return f"اطلاعات کاربر: {self.user.last_name}"
+    
+    def save(self, *args, **kwargs):
+    # Ensure date_joined is not before date_created for new users
+        if self._state.adding:
+            if self.date_created and (not self.date_joined or self.date_joined < self.date_created):
+                self.date_joined = self.date_created
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = _("Engagement or Wedding Status")
@@ -189,6 +203,13 @@ class ExHusbandChildStatus(models.Model):
 
     def __str__(self):
         return f"اطلاعات کاربر: {self.user.last_name}"
+    
+    def save(self, *args, **kwargs):
+    # Ensure date_joined is not before date_created for new users
+        if self._state.adding:
+            if self.date_created and (not self.date_joined or self.date_joined < self.date_created):
+                self.date_joined = self.date_created
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = _("Ex-Husband Child Status")
@@ -219,6 +240,13 @@ class FamilyMember(models.Model):
 
     def __str__(self):
         return f"اطلاعات کاربر: {self.user.last_name}"
+
+    def save(self, *args, **kwargs):
+    # Ensure date_joined is not before date_created for new users
+        if self._state.adding:
+            if self.date_created and (not self.date_joined or self.date_joined < self.date_created):
+                self.date_joined = self.date_created
+        super().save(*args, **kwargs)
 
     class Meta:
         abstract = True
@@ -318,10 +346,18 @@ class Parent(models.Model):
     def __str__(self):
         return f"اطلاعات کاربر: {self.user.last_name}"
 
+    def save(self, *args, **kwargs):
+    # Ensure date_joined is not before date_created for new users
+        if self._state.adding:
+            if self.date_created and (not self.date_joined or self.date_joined < self.date_created):
+                self.date_joined = self.date_created
+        super().save(*args, **kwargs)
+
     class Meta:
         abstract = True
         verbose_name = _("Parent")
         verbose_name_plural = _("Parents")
+        
 
 
 class Mother(Parent):
