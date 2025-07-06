@@ -14,7 +14,7 @@ class IntellectualInformation(models.Model):
         error_messages=IntellectualInfoErrorMessages.MARRIAGE_GOALS,
         validators=[IntellectualInformationValidator.validate_marriage_goals],
     )
-    opinion_woman_job = models.CharField(
+    opinion_woman_job = MultiSelectField(
         _("Opinion About Woman's Job"),
         choices=IntellectualInformationChoices.WOMAN_JOB_OPTIONS,
         help_text=IntellectualInfoHelpText.OPINION_WOMAN_JOB,
