@@ -496,6 +496,7 @@ class FinancialInformationErrorMessages:
 
 
 class IntellectualInfoErrorMessages:
+    FASTING_EXPLANATION = {"required": _("Please provide an explanation if you cannot fast due to sickness.")}
     MARRIAGE_GOALS = {
         "required": _("Marriage goals and purposes cannot be empty."),
         "max_length": _("Marriage goals should not exceed 1000 characters."),

@@ -90,19 +90,26 @@ class IntellectualInformation(models.Model):
         error_messages=IntellectualInfoErrorMessages.WORSHIP_PRAYER,
         db_index=True,
     )
+    
     fasting = models.CharField(
         _("Fasting"),
         choices=IntellectualInformationChoices.FASTING_OPTIONS,
         help_text=IntellectualInfoHelpText.FASTING,
         error_messages=IntellectualInfoErrorMessages.FASTING,
     )
-    cover_type_house = models.CharField(
+    fasting_explanation = models.CharField(
+        _("Fasting Explanation (sickness that makes him not be able to fast)"),
+        max_length=150,
+        help_text=IntellectualInfoHelpText.FASTING_EXPLANATION,
+        error_messages=IntellectualInfoErrorMessages.FASTING_EXPLANATION,
+    )
+    cover_type_house = MultiSelectField(
         _("Cover Type in House"),
         choices=IntellectualInformationChoices.COVER_TYPE_HOUSE_OPTIONS,
         help_text=IntellectualInfoHelpText.COVER_TYPE_HOUSE,
         error_messages=IntellectualInfoErrorMessages.COVER_TYPE_HOUSE,
     )
-    cover_type_society = models.CharField(
+    cover_type_society = MultiSelectField(
         _("Cover Type in Society & Workplace"),
         choices=IntellectualInformationChoices.COVER_TYPE_SOCIETY_OPTIONS,
         help_text=IntellectualInfoHelpText.COVER_TYPE_SOCIETY,
@@ -132,7 +139,7 @@ class IntellectualInformation(models.Model):
         help_text=IntellectualInfoHelpText.OPINION_INNOCENT_CONTACT,
         error_messages=IntellectualInfoErrorMessages.OPINION_INNOCENT_CONTACT,
     )
-    cover_type_innocent_contact = models.CharField(
+    cover_type_innocent_contact = MultiSelectField(
         _("Cover Type in Contact of Innocent"),
         choices=IntellectualInformationChoices.COVER_TYPE_INNOCENT_CONTACT_OPTIONS,
         help_text=IntellectualInfoHelpText.COVER_TYPE_INNOCENT_CONTACT,

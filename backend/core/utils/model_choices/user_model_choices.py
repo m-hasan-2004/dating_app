@@ -35,6 +35,7 @@ class Choices:
     )
     TYPE_OF_PAYMENT_OPTIONS = (("cash", _("Cash")), ("online", _("Online")))
     INCOME_OPTIONS = (
+        ("no_income", _("No Income")),
         ("-10", _("Under 10M")),
         ("10-20", _("Between 10M to 20M")),
         ("20-30", _("Between 20M to 30M")),
@@ -44,6 +45,7 @@ class Choices:
         ("+100", _("Plus 100")),
     )
     DEPOSIT_OPTIONS = (
+        ("no_deposit", _("No Deposit")),
         ("-50", _("Under 50M")),
         ("50-100", _("Between 50M to 100M")),
         ("100-200", _("Between 100M to 200M")),
@@ -72,6 +74,14 @@ class Choices:
     GENDER_CHOICES = (
         ("Man", _("Man")),
         ("Woman", _("Woman")),
+        ("boy", _("Boy")),
+        ("girl", _("Girl")),
+        ("seperated", _("Seperated")),
+        ("deceased", _("Deceased")),
+    )
+    KIDS_GENDER_CHOICES = (
+        ("boy", _("Boy")),
+        ("girl", _("Girl")),
     )
     EDUCATION_CHOICES = (
         ("Unlettered", _("Unlettered")),
@@ -101,14 +111,14 @@ class Choices:
         ("Park", _("Park")),
         ("Trip", _("Trip")),
         ("Family", _("Family")),
-        ("Television", _("Television")),
+        ("working_from_home", _("Working from home")),
         ("Mobile", _("Mobile")),
         ("Reading", _("Reading")),
         ("Shrine", _("Shrine")),
         ("Jankaran", _("Jankaran")),
         ("Cinema", _("Cinema")),
-        ("Family", _("Visiting Family")),
-        ("Gym", _("Gym")),
+        ("Family", _("Visiting Family (Sele arham)")),
+        ("sport", _("Sport")),
         ("Poem", _("Poem")),
         ("Garden", _("Garden")),
     )
@@ -125,7 +135,7 @@ class Choices:
         ("Fair", _("Fair")),
         ("White", _("White")),
         ("Wheat", _("Wheat")),
-        ("Green", _("Green")),
+        ("Greenish", _("Greenish")),
         ("Olive", _("Olive")),
         ("Darken", _("Darken")),
         ("Black", _("Black")),
@@ -135,7 +145,7 @@ class Choices:
         ("Yellow", _("Yellow")),
         ("Whitish White", _("Whitish White")),
         ("Red & White", _("Red & White")),
-        ("Bright Green", _("Bright Green")),
+        ("Bright Greenish", _("Bright Greenish")),
         ("other", _("Other")),
     )
     EYES_COLOR_CHOICES = (
@@ -146,7 +156,8 @@ class Choices:
         ("Grey", _("Grey")),
         ("Honey", _("Honey")),
         ("Purple", _("Purple")),
-        ("Brown", _("Brown")),
+        ("Light Brown", _("Light Brown")),
+        ("Deep Brown", _("Deep Brown")),
         ("Black", _("Black")),
     )
     BLOOD_TYPE_CHOICES = (
@@ -201,6 +212,8 @@ class Choices:
     CUSTODY_CHOICES = (
         ("Father", _("Father")),
         ("Mother", _("Mother")),
+        ("Independant", _("Independant")),
+        ("Other", _("Other")),
     )
     GROOM_CHOICES = (
         ("groom", _("Groomm")),
@@ -244,13 +257,6 @@ class Choices:
         ("Zanjan", _("Zanjan")),
         ("doesnt_matter", _("Doesn't Matter")),
     )
-    KIDS = (
-        ("none", _("None")),
-        ("1", _("1")),
-        ("2", _("2")),
-        ("3", _("3")),
-        ("+3", _("+3")),
-    )
 
 
 class FinancialInformationChoices:
@@ -274,6 +280,7 @@ class FinancialInformationChoices:
         ("car", _("Car")),
         ("gold", _("Gold")),
         ("other", _("Other")),
+        ("none", _("I dont Have Any")),
     )
     AFTER_MARRIAGE_RESIDENCE_STATUS_CHOICES = (
         ("owner", _("Owner")),
@@ -300,6 +307,7 @@ class FinancialInformationChoices:
         ("settled", _("Settled")),
         ("creditor", _("Creditor")),
         ("debtor", _("Debtor")),
+        ("female", _("Female"))
     )
     DOWRY_TYPE = (
         ("mecca", _("Mecca")),
@@ -371,6 +379,7 @@ class IntellectualInformationChoices:
         ("fully_obligated", _("Fully Obligated")),
         ("sometimes", _("Sometimes")),
         ("not_obligated", _("Not Obligated")),
+        ("obligated_but_lazy", _("Obligated But Lazy")),
         ("doesnt_matter", _("Doesn't Matter")),
         ("disagree", _("Disagree")),
     )
@@ -378,6 +387,7 @@ class IntellectualInformationChoices:
         ("fully_obligated", _("Fully Obligated")),
         ("sometimes", _("Sometimes")),
         ("not_obligated", _("Not Obligated")),
+        ("obligated_but_lazy", _("Obligated But Lazy")),
         ("disagree", _("Disagree")),
         ("doesnt_matter", _("Doesn't Matter")),
         ("sick", _("Sick")),

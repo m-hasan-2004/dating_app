@@ -11,6 +11,7 @@ from core.utils.validators.user_validators import FamilyInformationValidator, Pa
 
 from django.urls import reverse
 from django.utils import timezone
+from multiselectfield import MultiSelectField
 
 
 class FamilyInformation(models.Model):
@@ -57,13 +58,6 @@ class FamilyInformation(models.Model):
         help_text=FamilyInfoHelpText.CONTACT_WITH_RELATIVES,
         validators=[FamilyInformationValidator.contact_validator],
     )
-    kids = models.CharField(
-        _("Kids"),
-        blank=True,
-        null=True,
-        choices=Choices.KIDS,
-        help_text=FamilyInfoHelpText.KIDS,
-    )
     user = models.OneToOneField(
         "users.user",
         verbose_name=_("User"),
@@ -97,7 +91,7 @@ class FamilyInformation(models.Model):
 
 
 class EngagementOrWeddingStatus(models.Model):
-    status = models.CharField(
+    status = MultiSelectField(
         _("Person Status"),
         max_length=50,
         choices=Choices.ENGAGEMENT_OR_WEDDING_STATUS_CHOICES,
@@ -132,7 +126,7 @@ class EngagementOrWeddingStatus(models.Model):
     reason_for_divorce_or_death = models.CharField(
         _("Reason for Divorce or Death"),
         max_length=100,
-        blank=True,
+        blank=False,
         null=True,
         help_text=FamilyInfoHelpText.REASON_FOR_DIVORCE_OR_DEATH,
     )
@@ -172,7 +166,7 @@ class ExHusbandChildStatus(models.Model):
     gender = models.CharField(
         _("Gender"),
         max_length=50,
-        choices=Choices.GENDER_CHOICES,
+        choices=Choices.KIDS_GENDER_CHOICES,
         error_messages=PersonalInfoErrorMessages.GENDER,
         help_text=PersonalInfoHelpText.GENDER,
     )

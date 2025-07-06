@@ -128,8 +128,8 @@ class FinancialInformationValidator:
             raise ValidationError(_("Must provide mortgage amount for mortgaged residence"))
 
     amount_validator = RegexValidator(
-        regex=r"^[0-9,]+$",
-        message=_("Amount must contain only numbers and commas"),
+        regex=r"^[a-zA-Z0-9,\s\u0600-\u06FF]+$",
+        message=_("Amount must contain only letters, numbers, spaces, Persian characters, and commas"),
     )
 
     def validate_jahiziyeh_info(jahiziyeh, explanation):

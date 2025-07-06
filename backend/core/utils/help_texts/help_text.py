@@ -110,7 +110,6 @@ class FamilyInfoHelpText:
     DEATH_DATE_PARENT = _("Enter the death date of the parent if applicable.")
     GROOM_OR_ZAN = (_("Select the groom from the available options."),)
     BRIDE_OR_WIFE = _("Select the bride or wife from the available options.")
-    KIDS = _("Choose the number of Kids")
 
 
 class IdentityInfoHelpText:
@@ -183,6 +182,7 @@ class UserHelpText:
 
 
 class IntellectualInfoHelpText:
+    FASTING_EXPLANATION = _("If you cannot fast due to sickness, please explain your condition.")
     MARRIAGE_GOALS = _("Describe your goals and purposes for marriage in detail.")
     OPINION_WOMAN_JOB = _(
         "Select your opinion about a woman's job and employment status."

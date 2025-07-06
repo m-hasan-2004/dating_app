@@ -48,13 +48,10 @@ class Choices:
     )
     MARRIAGE_EXPERIENCE_CHOICES = (
         ("Never", _("Never")),
-        ("Divorced Virgin", _("Divorced Virgin")),
         ("Divorced No Life", _("Divorced No Life")),
-        ("No Child", _("No Child")),
-        ("Child Present", _("Child Present")),
-        ("Have Children", _("Have Children")),
-        ("Have Boy", _("Have Boy")),
-        ("Have Girl", _("Have Girl")),
+        ("Divorced No Child", _("Divorced No Child")),
+        ("Divorced Have Boy", _("Divorced Have Boy")),
+        ("Divorced Have Girl", _("Divorced Have Girl")),
     )
     MARRIAGE_WITH_DISABLED_CHOICES = (
         ("Yes", _("Yes")),
