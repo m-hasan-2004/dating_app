@@ -1,11 +1,13 @@
+version: '3.8'
+
 services:
   db:
     image: postgres:15
     environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
-      SECRET_KEY: ${SECRET_KEY}
+      POSTGRES_USER: ${DB_USER:-hasan}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-Welcome}
+      POSTGRES_DB: ${DB_NAME:-dating_app}
+      PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
@@ -14,19 +16,28 @@ services:
     ports:
       - "5433:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-hasan} -d ${DB_NAME:-dating_app}"]
       interval: 10s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
 
   web:
     build:
       context: .
       dockerfile: Dockerfile
     command: >
-      /bin/sh -c "until pg_isready -h db -U ${DB_USER}; do sleep 1; done;
-      python manage.py migrate &&
-      python manage.py runserver 0.0.0.0:8000"
+      /bin/sh -c "
+      echo 'Waiting for PostgreSQL to become available...' &&
+      until pg_isready -h db -U $${DB_USER:-hasan} -d $${DB_NAME:-dating_app}; do
+        echo 'PostgreSQL is unavailable - sleeping'
+        sleep 1
+      done &&
+      echo 'PostgreSQL is up - executing migrations...' &&
+      python manage.py migrate --noinput &&
+      echo 'Starting server...' &&
+      python manage.py runserver 0.0.0.0:8000
+      "
     volumes:
       - .:/app
       - backup_data:/mnt/backup
@@ -35,10 +46,17 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    environment:
+      - DB_NAME=${DB_NAME:-dating_app}
+      - DB_USER=${DB_USER:-hasan}
+      - DB_PASSWORD=${DB_PASSWORD:-Welcome}
+      - DB_HOST=db
+      - DB_PORT=5432
+      - SECRET_KEY=${SECRET_KEY:-django-insecure-default-secret-key}
+      - PYTHONUNBUFFERED=1
     networks:
       - app_network
-    environment:
-      SECRET_KEY: ${SECRET_KEY}
+    restart: unless-stopped
 
 networks:
   app_network:

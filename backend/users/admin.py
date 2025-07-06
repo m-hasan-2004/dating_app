@@ -38,11 +38,13 @@ class IdentityInfoInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = IdentityInformation
     fk_name = "user"
     extra = 1
+    classes = ('collapse',)  # Makes the section collapsible
 
 
 class BirthCertificateInfoInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = BirthCertificateInformation
     extra = 1
+    classes = ('collapse',)  # Makes the section collapsible
 
 
 class IntroducedSubjectsInformationInline(
@@ -51,84 +53,98 @@ class IntroducedSubjectsInformationInline(
     model = IntroducedSubjectsInformation
     fk_name = "user"
     extra = 1
+    classes = ('collapse',)  # Makes the section collapsible
 
 
 class PersonalInfoInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = PersonalInformation
     fk_name = "user"
     extra = 1
+    classes = ('collapse',)  # Makes the section collapsible
 
 
 class PhysicalInfoInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = PhysicalInformation
     fk_name = "user"
     extra = 1
+    classes = ('collapse',)  # Makes the section collapsible
 
 
 class FamilyInfoInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = FamilyInformation
     fk_name = "user"
     extra = 1
+    classes = ('collapse',)  # Makes the section collapsible
 
 
 class EngagementOrWeddingStatusInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = EngagementOrWeddingStatus
     fk_name = "user"
     extra = 1
+    classes = ('collapse',)  # Makes the section collapsible
 
 
 class ExHusbandChildStatusInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = ExHusbandChildStatus
     fk_name = "user"
     extra = 1
+    classes = ('collapse',)  # Makes the section collapsible
 
 
 class SisterInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = Sister
     fk_name = "user"
     extra = 1
+    classes = ('collapse',)  # Makes the section collapsible
 
 
 class BrotherInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = Brother
     fk_name = "user"
     extra = 1
+    classes = ('collapse',)  # Makes the section collapsible
 
 
 class GroomInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = Groom
     fk_name = "user"
     extra = 1
+    classes = ('collapse',)  # Makes the section collapsible
 
 
 class BrideOrWifeInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = BrideOrWife
     fk_name = "user"
     extra = 1
+    classes = ('collapse',)  # Makes the section collapsible
 
 
 class MotherInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = Mother
     fk_name = "user"
     extra = 1
+    classes = ('collapse',)  # Makes the section collapsible
 
 
 class FatherInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = Father
     fk_name = "user"
     extra = 1
+    classes = ('collapse',)  # Makes the section collapsible
 
 
 class FinancialInfoInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = FinancialInformation
     fk_name = "user"
     extra = 1
+    classes = ('collapse',)  # Makes the section collapsible
 
 
 class IntellectualInfoInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = IntellectualInformation
     fk_name = "user"
     extra = 1
+    classes = ('collapse',)  # Makes the section collapsible
 
 
 class PreferredWifeIntellectualInformationInLine(
@@ -137,6 +153,7 @@ class PreferredWifeIntellectualInformationInLine(
     model = PreferredWifeIntellectualInformation
     fk_name = "user"
     extra = 1
+    classes = ('collapse',)  # Makes the section collapsible
 
 
 class FutureSposeOriginalityInLine(StackedInlineJalaliMixin, admin.StackedInline):
@@ -144,6 +161,7 @@ class FutureSposeOriginalityInLine(StackedInlineJalaliMixin, admin.StackedInline
     fk_name = "user"
     extra = 5
     max_num = 5
+    classes = ('collapse',)  # Makes the section collapsible
 
 
 class PreferredWifePersonalInformationInLine(
@@ -152,6 +170,7 @@ class PreferredWifePersonalInformationInLine(
     model = PreferredWifePersonalInformation
     fk_name = "user"
     extra = 1
+    classes = ('collapse',)  # Makes the section collapsible
 
 
 class PreferredWifePhysicalInformationInLine(
@@ -160,6 +179,7 @@ class PreferredWifePhysicalInformationInLine(
     model = PreferredWifePhysicalInformation
     fk_name = "user"
     extra = 1
+    classes = ('collapse',)  # Makes the section collapsible
 
 
 class PreferredWifeExtraInformationInLine(
@@ -168,6 +188,7 @@ class PreferredWifeExtraInformationInLine(
     model = PreferredWifeExtraInformation
     fk_name = "user"
     extra = 1
+    classes = ('collapse',)  # Makes the section collapsible
 
 
 class SubjectDetailsInline(StackedInlineJalaliMixin, admin.StackedInline):
@@ -219,7 +240,6 @@ class UserAdmin(auth_admin.UserAdmin):
             "preferred_wife_intellectual_information__marriage_with_someone_with_marriage_experience",
             MultiSelectFieldListFilter,
         ),
-        ("family_information__kids", MultiSelectFieldListFilter),
         ("financialinformation__job", MultiSelectFieldListFilter),
         ("physicalinformation__height", MultiSelectFieldListFilter),
         ("physicalinformation__weight", MultiSelectFieldListFilter),
@@ -259,14 +279,14 @@ class UserAdmin(auth_admin.UserAdmin):
     save_on_top = True
 
     fieldsets = (
-        (_("Login Info"), {"fields": ("username", "password", "access_code")}),
-        (_("Personal info"), {"fields": ("email", "phone_number")}),
+        (_("Login Info"), {"fields": ("username", "password", "access_code"), "classes": ('collapse',)}),
+        (_("Personal info"), {"fields": ("email", "phone_number"), "classes": ('collapse',)}),
         (
             _("Permissions"),
-            {"fields": ("is_active", "is_staff", "is_superuser", "groups")},
+            {"fields": ("is_active", "is_staff", "is_superuser", "groups"), "classes": ('collapse',)},
         ),
-        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
-        (_("Extra Fields"), {"fields": ("middle_man_code",)}),
+        (_("Important dates"), {"fields": ("last_login", "date_joined"), "classes": ('collapse',)}),
+        (_("Extra Fields"), {"fields": ("middle_man_code",), "classes": ('collapse',)}),
     )
     add_fieldsets = (
         (
