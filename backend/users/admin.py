@@ -32,7 +32,7 @@ from users.preferred_wife_models import (
 from jalali_date.admin import StackedInlineJalaliMixin
 from django_admin_multi_select_filter.filters import MultiSelectFieldListFilter
 from jalali_date import date2jalali
-
+from users.user_related_models.subject_details import SubjectDetails
 
 class IdentityInfoInline(StackedInlineJalaliMixin, admin.StackedInline):
     model = IdentityInformation
@@ -170,6 +170,22 @@ class PreferredWifeExtraInformationInLine(
     extra = 1
 
 
+class SubjectDetailsInline(StackedInlineJalaliMixin, admin.StackedInline):
+    model = SubjectDetails
+    fk_name = "user"
+    extra = 1
+    fields = (
+        'preferred_date_times',
+        'signup_fee_type',
+        'account_number',
+        'bank',
+        'gender_target',
+        'amount',
+        'professional_opinion',
+    )
+    classes = ('collapse',)  # Makes the section collapsible
+
+
 class UserAdmin(auth_admin.UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
@@ -237,6 +253,7 @@ class UserAdmin(auth_admin.UserAdmin):
         PreferredWifePhysicalInformationInLine,
         PreferredWifeExtraInformationInLine,
         IntroducedSubjectsInformationInline,
+        SubjectDetailsInline,
     ]
 
     save_on_top = True
