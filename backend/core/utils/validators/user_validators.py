@@ -276,34 +276,22 @@ class PersonalInformationValidator:
     @staticmethod
     def validate_military_status_explanation(value, military_status):
         """Validate military status explanation."""
-        if military_status in ['exempt_permanent', 'exempt_temporary', 'other'] and not value:
-            raise ValidationError(_("Military status explanation is required for this status"))
-        if military_status not in ['exempt_permanent', 'exempt_temporary', 'other'] and value:
-            raise ValidationError(_("Military status explanation should not be provided for this status"))
+        pass
 
     @staticmethod
     def validate_usage_case_description(value, usage_cases):
-        """Validate usage case description."""
-        if 'other' in usage_cases and not value:
-            raise ValidationError(_("Usage case description is required when 'other' is selected"))
-        if 'other' not in usage_cases and value:
-            raise ValidationError(_("Usage case description should not be provided when 'other' is not selected"))
+        """Validate usage case description: always optional, no dependency on usage_cases."""
+        pass
 
     @staticmethod
     def validate_tatto_description(value, tatoo):
         """Validate tattoo description."""
-        if tatoo and not value:
-            raise ValidationError(_("Tattoo description is required when tattoo is present"))
-        if not tatoo and value:
-            raise ValidationError(_("Tattoo description should not be provided when no tattoo is present"))
+        pass
 
     @staticmethod
     def validate_conviction_reason(value, conviction_history):
         """Validate conviction reason."""
-        if conviction_history and not value:
-            raise ValidationError(_("Conviction reason is required when there is conviction history"))
-        if not conviction_history and value:
-            raise ValidationError(_("Conviction reason should not be provided when there is no conviction history"))
+        pass
 
     def clean(self, data):
         """

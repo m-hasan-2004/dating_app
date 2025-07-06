@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class PreferredWifePhysicalInformationValidator:
-    height_validator = MinValueValidator(140, _("Height must be at least 140cm"))
+    height_validator = MinValueValidator(100, _("Height must be at least 100cm"))
     max_height_validator = MaxValueValidator(260, _("Height must be at most 260cm"))
     weight_validator = MinValueValidator(35, _("Weight must be at least 35kg"))
     max_weight_validator = MaxValueValidator(300, _("Weight must be at most 300kg"))
