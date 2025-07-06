@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-06 20:10+0330\n"
+"POT-Creation-Date: 2025-07-06 22:02+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1335,8 +1335,10 @@ msgid "Marriage with disabled & Veteran Explanation is required."
 msgstr "توضیحات ازدواج با معلول یا جانباز الزامی است."
 
 #: core/utils/error_msgs/preferred_wife_model_error_messages.py:89
-msgid "Marriage With Disabled & Veteran Explanation cannot exceed 150 characters."
-msgstr "توضیحات ازدواج با معلول یا جانباز نمی تواند بیشتر از ۱۵۰ کاراکتر باشد.."
+msgid ""
+"Marriage With Disabled & Veteran Explanation cannot exceed 150 characters."
+msgstr ""
+"توضیحات ازدواج با معلول یا جانباز نمی تواند بیشتر از ۱۵۰ کاراکتر باشد.."
 
 #: core/utils/error_msgs/preferred_wife_model_error_messages.py:93
 msgid "Red flags are required."
@@ -1345,6 +1347,102 @@ msgstr "خط قرمزها الزامی است."
 #: core/utils/error_msgs/preferred_wife_model_error_messages.py:102
 msgid "Additional explanations are required."
 msgstr "توضیحات اضافی الزامی است."
+
+#: core/utils/error_msgs/subject_error_messages.py:6
+msgid "Preferred date times cannot be blank."
+msgstr "اوقات پیشنهادی ملاقات نمی‌تواند خالی باشد."
+
+#: core/utils/error_msgs/subject_error_messages.py:7
+msgid "Preferred date times cannot be null."
+msgstr "اوقات پیشنهادی ملاقات نمی‌تواند تهی باشد."
+
+#: core/utils/error_msgs/subject_error_messages.py:8
+msgid "Preferred date times cannot exceed 255 characters."
+msgstr "اوقات پیشنهادی ملاقات مورد نظر نباید از 255 کاراکتر بیشتر باشد."
+
+#: core/utils/error_msgs/subject_error_messages.py:11
+msgid "Signup fee type cannot be blank."
+msgstr "هزینه ثبت نام نمی‌تواند خالی باشد."
+
+#: core/utils/error_msgs/subject_error_messages.py:12
+msgid "Signup fee type cannot be null."
+msgstr "هزینه ثبت نام نمی‌تواند تهی باشد."
+
+#: core/utils/error_msgs/subject_error_messages.py:13
+msgid "Invalid choice for signup fee type."
+msgstr "انتخاب نامعتبر برای نوع هزینه ثبت نام."
+
+#: core/utils/error_msgs/subject_error_messages.py:16
+msgid "Account number cannot be blank."
+msgstr "شماره حساب نمی‌تواند خالی باشد."
+
+#: core/utils/error_msgs/subject_error_messages.py:17
+msgid "Account number cannot be null."
+msgstr "شماره حساب نمی‌تواند تهی باشد."
+
+#: core/utils/error_msgs/subject_error_messages.py:18
+msgid "Account number cannot exceed 40 characters."
+msgstr "شماره حساب نمی‌تواند بیشتر از ۴۰ کاراکتر باشد."
+
+#: core/utils/error_msgs/subject_error_messages.py:19
+msgid "Invalid account number format."
+msgstr "فرمت اشتباهی شماره حساب."
+
+#: core/utils/error_msgs/subject_error_messages.py:22
+msgid "Bank name cannot be blank."
+msgstr "نام بانک نمی‌تواند خالی باشد."
+
+#: core/utils/error_msgs/subject_error_messages.py:23
+msgid "Bank name cannot be null."
+msgstr "نام بانک نمی‌تواند تهی باشد."
+
+#: core/utils/error_msgs/subject_error_messages.py:24
+msgid "Bank name cannot exceed 100 characters."
+msgstr "نام بانک نمی‌تواند بیشتر از ۱۰۰ کاراکتر باشد."
+
+#: core/utils/error_msgs/subject_error_messages.py:25
+msgid "Invalid bank name format."
+msgstr "فرمت نام بانک نامعتبر است."
+
+#: core/utils/error_msgs/subject_error_messages.py:28
+msgid "Gender target cannot be blank."
+msgstr "نام صاحب حساب مقصد نمیتوند خالی باشک"
+
+#: core/utils/error_msgs/subject_error_messages.py:29
+msgid "Gender target cannot be null."
+msgstr "نام صاحب حساب مقصد نمیتواند تهی باشد."
+
+#: core/utils/error_msgs/subject_error_messages.py:30
+msgid "Invalid choice for gender target."
+msgstr "انتخاب نامعتبر برای صاحب حساب مقصد."
+
+#: core/utils/error_msgs/subject_error_messages.py:33
+msgid "Amount cannot be blank."
+msgstr "مبلغ نمی‌تواند خالی باشد"
+
+#: core/utils/error_msgs/subject_error_messages.py:34
+msgid "Amount cannot be null."
+msgstr "مبلغ نمی‌تواند تهی باشد"
+
+#: core/utils/error_msgs/subject_error_messages.py:35
+msgid "Amount cannot exceed 20 characters."
+msgstr "مبلغ نباید از ۲۰ کاراکتر بیشتر باشد."
+
+#: core/utils/error_msgs/subject_error_messages.py:36
+msgid "Invalid amount format."
+msgstr "فرمت اشتباهی مبلغ."
+
+#: core/utils/error_msgs/subject_error_messages.py:39
+msgid "Professional opinion cannot be blank."
+msgstr "نظر کارشناس نمی‌تواند خالی باشد."
+
+#: core/utils/error_msgs/subject_error_messages.py:40
+msgid "Professional opinion cannot be null."
+msgstr "نظر کارشناسی نمی‌تواند تهی باشد."
+
+#: core/utils/error_msgs/subject_error_messages.py:41
+msgid "Professional opinion cannot exceed 1000 characters."
+msgstr "نظر کارشناسی نباید از ۱۰ کاراکتر بیشتر باشد."
 
 #: core/utils/help_texts/help_text.py:5 core/utils/help_texts/help_text.py:136
 msgid "Enter the height of the user in centimeters."
@@ -1368,7 +1466,8 @@ msgstr "آیا بیماری یا جراحی خاصی داشته‌اید؟"
 
 #: core/utils/help_texts/help_text.py:11
 msgid "Specify the type of medication, surgery, or disease if applicable."
-msgstr "در صورت داشتن بیماری، استفاده از داروی خاص یا سابقه جراحی با جزییات شرح دهید."
+msgstr ""
+"در صورت داشتن بیماری، استفاده از داروی خاص یا سابقه جراحی با جزییات شرح دهید."
 
 #: core/utils/help_texts/help_text.py:13
 msgid "Select the skin color of the user."
@@ -1930,7 +2029,9 @@ msgstr "نظر شما در مورد نوع پوشش زن در مهمانی در 
 
 #: core/utils/help_texts/help_text.py:219
 msgid "Select your decision-making approach when choosing a spouse."
-msgstr "در تصمیم گیری برای انتخاب همسر و ازدواج با افرادی که موسسه انتخاب می‌کند، آیا مستقل هستید یا دیگران برایتان تصمیم گیری می کنند؟"
+msgstr ""
+"در تصمیم گیری برای انتخاب همسر و ازدواج با افرادی که موسسه انتخاب می‌کند، آیا "
+"مستقل هستید یا دیگران برایتان تصمیم گیری می کنند؟"
 
 #: core/utils/help_texts/help_text.py:221
 #: core/utils/help_texts/help_text.py:235
@@ -2054,6 +2155,34 @@ msgstr "خط های قرمز برای همسر آینده وارد کنید."
 #: core/utils/help_texts/preferred_wife_help_text.py:52
 msgid "Enter any additional information that is not included in the form."
 msgstr "هر اطلاعات اضافی که در فرم درج نشده است وارد کنید."
+
+#: core/utils/help_texts/subject_help_texts.py:6
+msgid "Enter your preferred date and times for meetings (e.g., 'Weekdays after 6 PM, Weekends anytime')."
+msgstr "اوقات پیشنهادی ملاقات مد نظر متقاضی."
+
+#: core/utils/help_texts/subject_help_texts.py:9
+msgid "Select the payment method for the signup fee - Cash or Card (Transfer to Card)."
+msgstr "نوع روش پرداخت را انتخاب کنید. (کارت به کارت / نقد)"
+
+#: core/utils/help_texts/subject_help_texts.py:12
+msgid "Enter your bank account number (10-20 digits). This is required if you select 'Card' as payment method."
+msgstr "در صورت انتخاب کارت به کارت، شماره کارت را وارد کنید."
+
+#: core/utils/help_texts/subject_help_texts.py:15
+msgid "Enter the name of your bank (e.g., Melli, Mellat, Saderat, etc.)."
+msgstr "نام بانک را وارد کنید."
+
+#: core/utils/help_texts/subject_help_texts.py:18
+msgid "Select the gender you are interested in (Man/Woman)."
+msgstr "جنسیت صاحب حساب مقصد را انتخاب کنید."
+
+#: core/utils/help_texts/subject_help_texts.py:21
+msgid "Enter the amount in Rials. Only numbers and decimal point are allowed."
+msgstr "میزان مبلغ را به ریاد وارد کنید"
+
+#: core/utils/help_texts/subject_help_texts.py:24
+msgid "Enter any professional opinion or notes about the subject (max 1000 characters)."
+msgstr "نظر کارشناسی را با جزییات بنویسید."
 
 #: core/utils/model_choices/preferred_wife_model_choices.py:7
 msgid "Medical"
@@ -2281,6 +2410,15 @@ msgstr "قطعا غیر شاغل"
 msgid "Housekeeper"
 msgstr "خانه دار"
 
+#: core/utils/model_choices/subject_model_choices.py:6
+#: core/utils/model_choices/user_model_choices.py:36
+msgid "Cash"
+msgstr "نقدی"
+
+#: core/utils/model_choices/subject_model_choices.py:7
+msgid "Card (Transfer to Card)"
+msgstr "کارت به کارت"
+
 #: core/utils/model_choices/user_model_choices.py:6
 msgid "Tamin"
 msgstr " بیمه تامین اجتماعی"
@@ -2392,10 +2530,6 @@ msgstr "بیمه حکمت صبا"
 #: core/utils/model_choices/user_model_choices.py:33
 msgid "Tosehe"
 msgstr "بیمه توسعه"
-
-#: core/utils/model_choices/user_model_choices.py:36
-msgid "Cash"
-msgstr "نقدی"
 
 #: core/utils/model_choices/user_model_choices.py:36
 msgid "Online"
@@ -3445,6 +3579,26 @@ msgstr "کد دسترسی ارائه شده وجود ندارد."
 msgid "The provided access code does not exist."
 msgstr "کد دسترسی ارائه شده وجود ندارد."
 
+#: core/utils/validators/subject_validators.py:12
+msgid "Account number must contain only digits."
+msgstr ""
+
+#: core/utils/validators/subject_validators.py:16
+msgid "Account number must be between 10 to 40 digits."
+msgstr ""
+
+#: core/utils/validators/subject_validators.py:27
+msgid "Bank name can only contain letters, spaces, and hyphens."
+msgstr "نام بانک فقط میتواند شامل حروف، اعداد و خط تیره باشد."
+
+#: core/utils/validators/subject_validators.py:40
+msgid "Amount must be a positive number."
+msgstr ""
+
+#: core/utils/validators/subject_validators.py:44
+msgid "Please enter a valid amount."
+msgstr "مبلغ صحیح وارد کنید."
+
 #: core/utils/validators/user_validators.py:11
 msgid "Landline number must be in the format XXX-XXXXXXXX."
 msgstr "شماره تلفن ثابت باید به فرمت XXX-XXXXXXXX باشد."
@@ -3458,7 +3612,8 @@ msgid "National code must be exactly 10 digits"
 msgstr "کد ملی باید دقیقا ۱۰ کاراکتر باشد."
 
 #: core/utils/validators/user_validators.py:26
-msgid "Birth certificate serial must contain only letters, numbers, and hyphens"
+msgid ""
+"Birth certificate serial must contain only letters, numbers, and hyphens"
 msgstr "سریال شناسنامه فقط میتواند شامل حروف، اعداد و خط تیره باشد."
 
 #: core/utils/validators/user_validators.py:33
@@ -3731,47 +3886,47 @@ msgstr "انگلیسی"
 msgid "Persian"
 msgstr "فارسی"
 
-#: users/admin.py:245 users/admin.py:279 users/admin.py:284
+#: users/admin.py:262 users/admin.py:296 users/admin.py:301
 msgid "Login Info"
 msgstr "اطلاعات ورود به حساب کاربری"
 
-#: users/admin.py:246 users/admin.py:256
+#: users/admin.py:263 users/admin.py:273
 msgid "Personal info"
 msgstr "اطلاعات شخصی"
 
-#: users/admin.py:248
+#: users/admin.py:265
 msgid "Permissions"
 msgstr "مجوزها"
 
-#: users/admin.py:251
+#: users/admin.py:268
 msgid "Important dates"
 msgstr "تاریخ‌های مهم"
 
-#: users/admin.py:252 users/admin.py:268
+#: users/admin.py:269 users/admin.py:285
 msgid "Extra Fields"
 msgstr "فیلدهای اضافی"
 
-#: users/admin.py:301
+#: users/admin.py:318
 msgid "Access code not found."
 msgstr "کد دسترسی پیدا نشد."
 
-#: users/admin.py:309
+#: users/admin.py:326
 msgid "Selected users have been deactivated."
 msgstr "کاربران انتخاب‌ شده غیرفعال شده‌اند."
 
-#: users/admin.py:311
+#: users/admin.py:328
 msgid "Deactivate selected users"
 msgstr "غیرفعال کردن کاربران انتخاب‌ شده"
 
-#: users/admin.py:315
+#: users/admin.py:332
 msgid "Selected users have been reactivated."
 msgstr "کاربران انتخاب‌ شده دوباره فعال شده‌اند."
 
-#: users/admin.py:317
+#: users/admin.py:334
 msgid "Reactivate selected users"
 msgstr "دوباره فعال کردن کاربران انتخاب شده"
 
-#: users/admin.py:322
+#: users/admin.py:339
 #: users/user_related_models/confidintional_information_model.py:282
 #: users/user_related_models/confidintional_information_model.py:339
 #: users/user_related_models/family_information_model.py:300
@@ -3779,19 +3934,19 @@ msgstr "دوباره فعال کردن کاربران انتخاب شده"
 msgid "Birth Date"
 msgstr "تاریخ تولد"
 
-#: users/admin.py:340
+#: users/admin.py:357
 msgid "Selected access codes have been marked as expired."
 msgstr "کدهای دسترسی انتخاب ‌شده به عنوان منقضی شده علامت‌گذاری شده‌اند."
 
-#: users/admin.py:343
+#: users/admin.py:360
 msgid "Expire selected access codes"
 msgstr "منقضی کردن کدهای دسترسی انتخاب‌ شده"
 
-#: users/admin.py:347
+#: users/admin.py:364
 msgid "Selected access codes have been reactivated."
 msgstr "کدهای دسترسی انتخاب‌ شده دوباره فعال شده‌اند."
 
-#: users/admin.py:349
+#: users/admin.py:366
 msgid "Reactivate selected access codes"
 msgstr "دوباره فعال کردن کدهای دسترسی انتخاب‌ شده"
 
@@ -3824,6 +3979,7 @@ msgstr "توضیحات اضافی"
 #: users/user_related_models/family_information_model.py:359
 #: users/user_related_models/family_information_model.py:374
 #: users/user_related_models/physical_information_model.py:101
+#: users/user_related_models/subject_details.py:21
 #: users/user_related_models/user_model.py:197
 #: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/admin/guardian/model/obj_perms_manage_user.html:43
 #: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/unfold/guardian/group_form.html:33
@@ -4454,7 +4610,9 @@ msgstr "نوع پوشش در مهمانی در حضور نامحرم"
 
 #: users/user_related_models/intellectual_information_model.py:149
 msgid "Decision Making in Choosing a Spouse"
-msgstr "در تصمیم گیری برای انتخاب همسر و ازدواج با افرادی که موسسه انتخاب می‌کند، آیا مستقل هستید یا دیگران برایتان تصمیم گیری می کنند؟"
+msgstr ""
+"در تصمیم گیری برای انتخاب همسر و ازدواج با افرادی که موسسه انتخاب می‌کند، آیا "
+"مستقل هستید یا دیگران برایتان تصمیم گیری می کنند؟"
 
 #: users/user_related_models/intellectual_information_model.py:180
 #: users/user_related_models/intellectual_information_model.py:181
@@ -4576,6 +4734,55 @@ msgstr "اطلاعات فیزیکی"
 #: users/user_related_models/physical_information_model.py:123
 msgid "Physical Informations"
 msgstr "اطلاعات فیزیکی افراد"
+
+#: users/user_related_models/subject_details.py:25
+msgid "Preferred Date Times"
+msgstr "اوقات پیشنهادی ملاقات متقاضی"
+
+#: users/user_related_models/subject_details.py:34
+msgid "Signup Fee Type"
+msgstr "هزینه ثبت نام"
+
+#: users/user_related_models/subject_details.py:44
+msgid "Account Number"
+msgstr "شماره حساب"
+
+#: users/user_related_models/subject_details.py:54
+msgid "Bank Name"
+msgstr "نام بانک"
+
+#: users/user_related_models/subject_details.py:64
+msgid "Gender Target"
+msgstr "آقا / خانم (نام صاحب حساب مقصد)"
+
+#: users/user_related_models/subject_details.py:73
+msgid "Amount"
+msgstr "مبلغ"
+
+#: users/user_related_models/subject_details.py:83
+msgid "Professional Opinion"
+msgstr "نظر کلی کارشناسی در مورد متقاضی"
+
+#: users/user_related_models/subject_details.py:91
+msgid "Created At"
+msgstr "ایجاد شده در"
+
+#: users/user_related_models/subject_details.py:92
+msgid "Updated At"
+msgstr "آپدیت"
+
+#: users/user_related_models/subject_details.py:95
+#: users/user_related_models/subject_details.py:96
+msgid "Subject Details"
+msgstr "جزییات نهایی متقاضی"
+
+#: users/user_related_models/subject_details.py:103
+msgid "Account number is required for card payment."
+msgstr "شماره حساب برای کاربران جدید لازم است."
+
+#: users/user_related_models/subject_details.py:104
+msgid "Bank name is required for card payment."
+msgstr "نام بانک برای پرداخت کارت به کارت مورد نیاز است"
 
 #: users/user_related_models/user_model.py:29
 msgid "The Email field must be set."
