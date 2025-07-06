@@ -343,12 +343,7 @@ class IntroducedSubjectsInformation(models.Model):
         help_text=BirthCertificateInfoHelpText.BIRTH_DATE,
         validators=[ConfidentialInfoValidator.validate_birth_date],
     )
-    marriage_status = models.CharField(
-        _("Marriage Status"),
-        choices=Choices.MARRIAGE_STATUS_OPTIONS,
-        error_messages=BirthCertificateInfoErrorMessages.MARRIAGE_STATUS,
-        help_text=BirthCertificateInfoHelpText.MARRIAGE_STATUS,
-    )
+
     postive = models.BooleanField(
         _("Positive"),
         error_messages=IntroducedSubjectsErrorMessages.POSTIVE,

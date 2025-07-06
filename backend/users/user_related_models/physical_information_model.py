@@ -4,6 +4,7 @@ from core.utils.error_msgs.model_error_messages import PhysicalInfoErrorMessages
 from core.utils.help_texts.help_text import PhysicalInfoHelpText
 from django.utils.translation import gettext_lazy as _
 from core.utils.validators.user_validators import PhysicalInformationValidator
+from multiselectfield import MultiSelectField
 
 
 class PhysicalInformation(models.Model):
@@ -74,7 +75,7 @@ class PhysicalInformation(models.Model):
         help_text=PhysicalInfoHelpText.GLASSES_SIZE,
         validators=[PhysicalInformationValidator.glasses_size_validator],
     )
-    body_and_face = models.CharField(
+    body_and_face = MultiSelectField(
         _("Body and Face"),
         max_length=20,
         choices=Choices.BODY_AND_FACE_CHOICES,

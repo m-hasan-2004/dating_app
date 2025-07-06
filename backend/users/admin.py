@@ -218,7 +218,6 @@ class UserAdmin(auth_admin.UserAdmin):
     inlines = [
         # BirthCertificateInfoInline,
         # IdentityInfoInline,
-        IntroducedSubjectsInformationInline,
         PersonalInfoInline,
         PhysicalInfoInline,
         FamilyInfoInline,
@@ -237,6 +236,7 @@ class UserAdmin(auth_admin.UserAdmin):
         PreferredWifePersonalInformationInLine,
         PreferredWifePhysicalInformationInLine,
         PreferredWifeExtraInformationInLine,
+        IntroducedSubjectsInformationInline,
     ]
 
     save_on_top = True
