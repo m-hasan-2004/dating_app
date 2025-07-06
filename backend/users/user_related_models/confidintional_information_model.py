@@ -184,6 +184,11 @@ class IdentityInformation(models.Model):
         db_index=True,
     )
 
+
+    def clean(self):
+        super().clean()
+
+
     class Meta:
         verbose_name = _("Identities Information")
         verbose_name_plural = _("Identities Information")
@@ -386,6 +391,7 @@ class IntroducedSubjectsInformation(models.Model):
         help_text=IntroducedSubjectsHelpText.COST_OF_MEETING,
         validators=[PaymentValidator.validate_cost],
     )
+
     user = models.ForeignKey(
         "users.User",
         on_delete=models.CASCADE,
@@ -398,6 +404,7 @@ class IntroducedSubjectsInformation(models.Model):
         super().clean()
         IntroducedSubjectsValidator.validate_positive_negative(self.postive, self.negative)
 
+
     def __str__(self):
         return self.username
 
@@ -405,12 +412,8 @@ class IntroducedSubjectsInformation(models.Model):
         return reverse("IntroducedSubjectsInfo_detail", kwargs={"pk": self.pk})
 
     def save(self, *args, **kwargs):
-    # Ensure date_joined is not before date_created for new users
-        if self._state.adding:
-            if self.date_created and (not self.date_joined or self.date_joined < self.date_created):
-                self.date_joined = self.date_created
         super().save(*args, **kwargs)
-        
+
     class Meta:
         verbose_name = _("IntroducedSubjects")
         verbose_name_plural = _("IntroducedSubjects")

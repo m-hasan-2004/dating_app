@@ -136,6 +136,7 @@ class PersonalInformation(models.Model):
         error_messages=PersonalInfoErrorMessages.CONVICTION_REASON,
         help_text=PersonalInfoHelpText.CONVICTION_REASON,
     )
+
     user = models.OneToOneField(
         "users.User",
         on_delete=models.CASCADE,
@@ -157,10 +158,6 @@ class PersonalInformation(models.Model):
         return f"اطلاعات کاربر: {self.user.last_name}"
 
     def save(self, *args, **kwargs):
-    # Ensure date_joined is not before date_created for new users
-        if self._state.adding:
-            if self.date_created and (not self.date_joined or self.date_joined < self.date_created):
-                self.date_joined = self.date_created
         super().save(*args, **kwargs)
 
     class Meta:

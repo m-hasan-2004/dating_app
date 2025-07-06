@@ -125,6 +125,7 @@ class FinancialInformation(models.Model):
         blank=True,
         null=True,
     )
+
     user = models.OneToOneField(
         "users.User",
         on_delete=models.CASCADE,
@@ -135,6 +136,7 @@ class FinancialInformation(models.Model):
 
     def clean(self):
         super().clean()
+
         FinancialInformationValidator.validate_rent_mortgage_info(
             self.current_residence_status, self.rent_amount, self.mortgage_amount
         )
@@ -151,10 +153,6 @@ class FinancialInformation(models.Model):
         return f"اطلاعات کاربر: {self.user.last_name}"
     
     def save(self, *args, **kwargs):
-    # Ensure date_joined is not before date_created for new users
-        if self._state.adding:
-            if self.date_created and (not self.date_joined or self.date_joined < self.date_created):
-                self.date_joined = self.date_created
         super().save(*args, **kwargs)
 
     class Meta:

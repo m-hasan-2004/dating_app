@@ -420,12 +420,6 @@ class UserValidator:
             errors['is_staff'] = _("Inactive user cannot be staff")
 
         # Validate dates consistency
-        date_joined = data.get('date_joined')
-        date_created = data.get('date_created')
-
-        if date_joined and date_created and date_joined < date_created:
-            errors['__all__'] = _("Join date cannot be before creation date")
-
         if errors:
             raise ValidationError(errors)
 
