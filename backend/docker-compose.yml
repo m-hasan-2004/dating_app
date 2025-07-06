@@ -54,6 +54,9 @@ services:
       - DB_PORT=5432
       - SECRET_KEY=${SECRET_KEY:-django-insecure-default-secret-key}
       - PYTHONUNBUFFERED=1
+      - LANG=fa_IR.UTF-8
+      - LC_ALL=fa_IR.UTF-8
+      - LANGUAGE=fa_IR.UTF-8
     networks:
       - app_network
     restart: unless-stopped
