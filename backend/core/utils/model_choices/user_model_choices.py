@@ -110,7 +110,6 @@ class Choices:
     LEISURE_TYPE_CHOICES = (
         ("Park", _("Park")),
         ("Trip", _("Trip")),
-        ("Family", _("Family")),
         ("working_from_home", _("Working from home")),
         ("Mobile", _("Mobile")),
         ("Reading", _("Reading")),

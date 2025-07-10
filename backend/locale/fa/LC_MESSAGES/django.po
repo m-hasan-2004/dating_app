@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-06 22:02+0330\n"
+"POT-Creation-Date: 2025-07-10 18:52+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1381,7 +1381,7 @@ msgid "Account number cannot be null."
 msgstr "شماره حساب نمی‌تواند تهی باشد."
 
 #: core/utils/error_msgs/subject_error_messages.py:18
-msgid "Account number cannot exceed 40 characters."
+msgid "Account number cannot exceed 20 characters."
 msgstr "شماره حساب نمی‌تواند بیشتر از ۴۰ کاراکتر باشد."
 
 #: core/utils/error_msgs/subject_error_messages.py:19
@@ -1738,7 +1738,7 @@ msgstr "زبان مادری والدین را وارد کنید."
 
 #: core/utils/help_texts/help_text.py:107
 msgid "Enter the birth date of the parent."
-msgstr "تاریخ تولد والدین را وارد کنید."
+msgstr "تاریخ تولد فرزند را وارد کنید."
 
 #: core/utils/help_texts/help_text.py:108
 msgid "Enter the originality of the parent."
@@ -2157,15 +2157,21 @@ msgid "Enter any additional information that is not included in the form."
 msgstr "هر اطلاعات اضافی که در فرم درج نشده است وارد کنید."
 
 #: core/utils/help_texts/subject_help_texts.py:6
-msgid "Enter your preferred date and times for meetings (e.g., 'Weekdays after 6 PM, Weekends anytime')."
+msgid ""
+"Enter your preferred date and times for meetings (e.g., 'Weekdays after 6 "
+"PM, Weekends anytime')."
 msgstr "اوقات پیشنهادی ملاقات مد نظر متقاضی."
 
 #: core/utils/help_texts/subject_help_texts.py:9
-msgid "Select the payment method for the signup fee - Cash or Card (Transfer to Card)."
+msgid ""
+"Select the payment method for the signup fee - Cash or Card (Transfer to "
+"Card)."
 msgstr "نوع روش پرداخت را انتخاب کنید. (کارت به کارت / نقد)"
 
 #: core/utils/help_texts/subject_help_texts.py:12
-msgid "Enter your bank account number (10-20 digits). This is required if you select 'Card' as payment method."
+msgid ""
+"Enter your bank account number (10-20 digits). This is required if you "
+"select 'Card' as payment method."
 msgstr "در صورت انتخاب کارت به کارت، شماره کارت را وارد کنید."
 
 #: core/utils/help_texts/subject_help_texts.py:15
@@ -2181,7 +2187,9 @@ msgid "Enter the amount in Rials. Only numbers and decimal point are allowed."
 msgstr "میزان مبلغ را به ریاد وارد کنید"
 
 #: core/utils/help_texts/subject_help_texts.py:24
-msgid "Enter any professional opinion or notes about the subject (max 1000 characters)."
+msgid ""
+"Enter any professional opinion or notes about the subject (max 1000 "
+"characters)."
 msgstr "نظر کارشناسی را با جزییات بنویسید."
 
 #: core/utils/model_choices/preferred_wife_model_choices.py:7
@@ -2210,11 +2218,11 @@ msgstr "هنر"
 
 #: core/utils/model_choices/preferred_wife_model_choices.py:13
 #: core/utils/model_choices/user_model_choices.py:34
-#: core/utils/model_choices/user_model_choices.py:149
-#: core/utils/model_choices/user_model_choices.py:216
-#: core/utils/model_choices/user_model_choices.py:266
-#: core/utils/model_choices/user_model_choices.py:282
-#: core/utils/model_choices/user_model_choices.py:290
+#: core/utils/model_choices/user_model_choices.py:148
+#: core/utils/model_choices/user_model_choices.py:215
+#: core/utils/model_choices/user_model_choices.py:265
+#: core/utils/model_choices/user_model_choices.py:281
+#: core/utils/model_choices/user_model_choices.py:289
 msgid "Other"
 msgstr "دیگر"
 
@@ -2247,11 +2255,11 @@ msgid "Foreign Country"
 msgstr "خارج از کشور"
 
 #: core/utils/model_choices/preferred_wife_model_choices.py:23
-#: core/utils/model_choices/user_model_choices.py:298
-#: core/utils/model_choices/user_model_choices.py:322
-#: core/utils/model_choices/user_model_choices.py:361
-#: core/utils/model_choices/user_model_choices.py:368
-#: core/utils/model_choices/user_model_choices.py:376
+#: core/utils/model_choices/user_model_choices.py:297
+#: core/utils/model_choices/user_model_choices.py:321
+#: core/utils/model_choices/user_model_choices.py:360
+#: core/utils/model_choices/user_model_choices.py:367
+#: core/utils/model_choices/user_model_choices.py:375
 msgid "Agreement"
 msgstr "توافقی"
 
@@ -2301,21 +2309,21 @@ msgstr "بسته به ظاهر"
 
 #: core/utils/model_choices/preferred_wife_model_choices.py:40
 #: core/utils/model_choices/preferred_wife_model_choices.py:47
-#: core/utils/model_choices/preferred_wife_model_choices.py:73
+#: core/utils/model_choices/preferred_wife_model_choices.py:76
 msgid "Doesn’t Matter"
 msgstr "اهمیت ندارد"
 
 #: core/utils/model_choices/preferred_wife_model_choices.py:43
-#: core/utils/model_choices/user_model_choices.py:406
-#: core/utils/model_choices/user_model_choices.py:413
-#: core/utils/model_choices/user_model_choices.py:420
+#: core/utils/model_choices/user_model_choices.py:405
+#: core/utils/model_choices/user_model_choices.py:412
+#: core/utils/model_choices/user_model_choices.py:419
 msgid "Too Much"
 msgstr "خیلی زیاد"
 
 #: core/utils/model_choices/preferred_wife_model_choices.py:44
-#: core/utils/model_choices/user_model_choices.py:407
-#: core/utils/model_choices/user_model_choices.py:414
-#: core/utils/model_choices/user_model_choices.py:421
+#: core/utils/model_choices/user_model_choices.py:406
+#: core/utils/model_choices/user_model_choices.py:413
+#: core/utils/model_choices/user_model_choices.py:420
 msgid "Much"
 msgstr "زیاد"
 
@@ -2324,89 +2332,101 @@ msgid "Any"
 msgstr "متوسط"
 
 #: core/utils/model_choices/preferred_wife_model_choices.py:46
-#: core/utils/model_choices/user_model_choices.py:409
-#: core/utils/model_choices/user_model_choices.py:416
-#: core/utils/model_choices/user_model_choices.py:423
+#: core/utils/model_choices/user_model_choices.py:408
+#: core/utils/model_choices/user_model_choices.py:415
+#: core/utils/model_choices/user_model_choices.py:422
 msgid "Low"
 msgstr "کم"
 
 #: core/utils/model_choices/preferred_wife_model_choices.py:50
-#: core/utils/model_choices/user_model_choices.py:417
-#: core/utils/model_choices/user_model_choices.py:424
+#: core/utils/model_choices/user_model_choices.py:416
+#: core/utils/model_choices/user_model_choices.py:423
 msgid "Never"
 msgstr "هرگز"
 
 #: core/utils/model_choices/preferred_wife_model_choices.py:51
+msgid "Divorced Virgin"
+msgstr "مطلقه باکره"
+
+#: core/utils/model_choices/preferred_wife_model_choices.py:52
+msgid "Divorced No Custody"
+msgstr "مطلقه بدون حضانت"
+
+#: core/utils/model_choices/preferred_wife_model_choices.py:53
 msgid "Divorced No Life"
 msgstr "مطلقه بدون زندگی"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:52
+#: core/utils/model_choices/preferred_wife_model_choices.py:54
 msgid "Divorced No Child"
 msgstr "مطلقه بدون فرزند"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:53
+#: core/utils/model_choices/preferred_wife_model_choices.py:55
 msgid "Divorced Have Boy"
-msgstr "مطلقه با فرزند"
+msgstr "مطلقه با فرزند پسر"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:54
+#: core/utils/model_choices/preferred_wife_model_choices.py:56
 msgid "Divorced Have Girl"
 msgstr "مطلقه با فرزند دختر"
 
 #: core/utils/model_choices/preferred_wife_model_choices.py:57
+msgid "Spouse Died"
+msgstr "فوت همسر"
+
+#: core/utils/model_choices/preferred_wife_model_choices.py:60
 #: core/utils/model_choices/user_model_choices.py:56
 #: venv/lib/python3.13/site-packages/django/forms/widgets.py:795
 msgid "Yes"
 msgstr "بله"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:58
+#: core/utils/model_choices/preferred_wife_model_choices.py:61
 #: core/utils/model_choices/user_model_choices.py:57
 #: venv/lib/python3.13/site-packages/django/forms/widgets.py:796
 msgid "No"
 msgstr "خیر"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:59
-#: core/utils/model_choices/user_model_choices.py:356
+#: core/utils/model_choices/preferred_wife_model_choices.py:62
+#: core/utils/model_choices/user_model_choices.py:355
 msgid "Depends"
 msgstr "بستگی دارد"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:63
+#: core/utils/model_choices/preferred_wife_model_choices.py:66
 msgid "Freelance"
 msgstr "آزاد"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:64
+#: core/utils/model_choices/preferred_wife_model_choices.py:67
 msgid "Military"
 msgstr "نظامی"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:65
+#: core/utils/model_choices/preferred_wife_model_choices.py:68
 msgid "Office"
 msgstr "اداری"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:66
+#: core/utils/model_choices/preferred_wife_model_choices.py:69
 msgid "Teacher"
 msgstr "معلم"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:67
+#: core/utils/model_choices/preferred_wife_model_choices.py:70
 msgid "Hoze M"
 msgstr "حوزوی ملبس"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:68
+#: core/utils/model_choices/preferred_wife_model_choices.py:71
 msgid "Hoze N"
 msgstr "حوزوی غیر ملبس"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:69
+#: core/utils/model_choices/preferred_wife_model_choices.py:72
 msgid "hoze Sis"
 msgstr "حوزه خواهران"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:70
-#: core/utils/model_choices/user_model_choices.py:333
+#: core/utils/model_choices/preferred_wife_model_choices.py:73
+#: core/utils/model_choices/user_model_choices.py:332
 msgid "Womanly Job"
 msgstr "شغل زنانه"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:71
+#: core/utils/model_choices/preferred_wife_model_choices.py:74
 msgid "No Job At All"
 msgstr "قطعا غیر شاغل"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:72
+#: core/utils/model_choices/preferred_wife_model_choices.py:75
 msgid "Housekeeper"
 msgstr "خانه دار"
 
@@ -2601,10 +2621,10 @@ msgid "Blank Birth Certificate"
 msgstr "شناسنامه سفید"
 
 #: core/utils/model_choices/user_model_choices.py:65
-#: core/utils/model_choices/user_model_choices.py:130
-#: core/utils/model_choices/user_model_choices.py:189
-#: core/utils/model_choices/user_model_choices.py:210
-#: core/utils/model_choices/user_model_choices.py:348
+#: core/utils/model_choices/user_model_choices.py:129
+#: core/utils/model_choices/user_model_choices.py:188
+#: core/utils/model_choices/user_model_choices.py:209
+#: core/utils/model_choices/user_model_choices.py:347
 #: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history_list.html:74
 msgid "None"
 msgstr "هیچ کدام"
@@ -2634,13 +2654,13 @@ msgid "Three Girls"
 msgstr "سه دختر"
 
 #: core/utils/model_choices/user_model_choices.py:73
-#: core/utils/model_choices/user_model_choices.py:213
+#: core/utils/model_choices/user_model_choices.py:212
 #: users/user_related_models/family_information_model.py:382
 msgid "Father"
 msgstr "پدر"
 
 #: core/utils/model_choices/user_model_choices.py:73
-#: core/utils/model_choices/user_model_choices.py:214
+#: core/utils/model_choices/user_model_choices.py:213
 #: users/user_related_models/family_information_model.py:367
 msgid "Mother"
 msgstr "مادر"
@@ -2677,17 +2697,17 @@ msgid "Unlettered"
 msgstr "بی‌سواد"
 
 #: core/utils/model_choices/user_model_choices.py:88
-#: core/utils/model_choices/user_model_choices.py:192
+#: core/utils/model_choices/user_model_choices.py:191
 msgid "Under Diploma"
 msgstr "زیر دیپلم"
 
 #: core/utils/model_choices/user_model_choices.py:89
-#: core/utils/model_choices/user_model_choices.py:193
+#: core/utils/model_choices/user_model_choices.py:192
 msgid "Diploma"
 msgstr "دیپلم"
 
 #: core/utils/model_choices/user_model_choices.py:90
-#: core/utils/model_choices/user_model_choices.py:194
+#: core/utils/model_choices/user_model_choices.py:193
 msgid "Associate Degree"
 msgstr "کاردانی"
 
@@ -2700,7 +2720,7 @@ msgid "Master's Degree"
 msgstr "کارشناسی ارشد"
 
 #: core/utils/model_choices/user_model_choices.py:93
-#: core/utils/model_choices/user_model_choices.py:197
+#: core/utils/model_choices/user_model_choices.py:196
 msgid "Ph.D."
 msgstr "دکتری"
 
@@ -2757,761 +2777,757 @@ msgid "Park"
 msgstr "پارک"
 
 #: core/utils/model_choices/user_model_choices.py:112
-#: core/utils/model_choices/user_model_choices.py:374
+#: core/utils/model_choices/user_model_choices.py:373
 msgid "Trip"
 msgstr "سفر تفریحی"
 
 #: core/utils/model_choices/user_model_choices.py:113
-msgid "Family"
-msgstr "خانواده"
+msgid "Working from home"
+msgstr "کار منزل"
 
 #: core/utils/model_choices/user_model_choices.py:114
-msgid "Working from home"
-msgstr "کار در منزل"
-
-#: core/utils/model_choices/user_model_choices.py:115
 msgid "Mobile"
 msgstr "موبایل"
 
-#: core/utils/model_choices/user_model_choices.py:116
+#: core/utils/model_choices/user_model_choices.py:115
 msgid "Reading"
 msgstr "مطالعه"
 
-#: core/utils/model_choices/user_model_choices.py:117
+#: core/utils/model_choices/user_model_choices.py:116
 msgid "Shrine"
 msgstr "حرم"
 
-#: core/utils/model_choices/user_model_choices.py:118
+#: core/utils/model_choices/user_model_choices.py:117
 msgid "Jankaran"
 msgstr "جمکران"
 
-#: core/utils/model_choices/user_model_choices.py:119
+#: core/utils/model_choices/user_model_choices.py:118
 msgid "Cinema"
 msgstr "سینما"
 
-#: core/utils/model_choices/user_model_choices.py:120
+#: core/utils/model_choices/user_model_choices.py:119
 msgid "Visiting Family (Sele arham)"
-msgstr "ملاقات خانواده (صلحه ارحام)"
+msgstr "صلحه ارحام"
 
-#: core/utils/model_choices/user_model_choices.py:121
+#: core/utils/model_choices/user_model_choices.py:120
 msgid "Sport"
 msgstr "ورزش"
 
-#: core/utils/model_choices/user_model_choices.py:122
+#: core/utils/model_choices/user_model_choices.py:121
 msgid "Poem"
 msgstr "شعر"
 
-#: core/utils/model_choices/user_model_choices.py:123
-#: core/utils/model_choices/user_model_choices.py:276
-#: core/utils/model_choices/user_model_choices.py:320
+#: core/utils/model_choices/user_model_choices.py:122
+#: core/utils/model_choices/user_model_choices.py:275
+#: core/utils/model_choices/user_model_choices.py:319
 msgid "Garden"
 msgstr "باغ"
 
-#: core/utils/model_choices/user_model_choices.py:126
+#: core/utils/model_choices/user_model_choices.py:125
 msgid "Alcoholic Drinks"
 msgstr "مشروبات الکلی"
 
-#: core/utils/model_choices/user_model_choices.py:127
+#: core/utils/model_choices/user_model_choices.py:126
 msgid "Drugs"
 msgstr "مواد مخدر"
 
-#: core/utils/model_choices/user_model_choices.py:128
+#: core/utils/model_choices/user_model_choices.py:127
 msgid "Cigarettes"
 msgstr "سیگار"
 
-#: core/utils/model_choices/user_model_choices.py:129
+#: core/utils/model_choices/user_model_choices.py:128
 msgid "Hookah"
 msgstr "قلیان"
 
-#: core/utils/model_choices/user_model_choices.py:133
+#: core/utils/model_choices/user_model_choices.py:132
 msgid "Very Bright"
 msgstr "بسیار روشن"
 
-#: core/utils/model_choices/user_model_choices.py:134
+#: core/utils/model_choices/user_model_choices.py:133
 msgid "Bor"
 msgstr "بور"
 
-#: core/utils/model_choices/user_model_choices.py:135
+#: core/utils/model_choices/user_model_choices.py:134
 msgid "Fair"
 msgstr "معمولی"
 
-#: core/utils/model_choices/user_model_choices.py:136
+#: core/utils/model_choices/user_model_choices.py:135
 msgid "White"
 msgstr "سفید"
 
-#: core/utils/model_choices/user_model_choices.py:137
+#: core/utils/model_choices/user_model_choices.py:136
 msgid "Wheat"
 msgstr "گندمی"
 
-#: core/utils/model_choices/user_model_choices.py:138
+#: core/utils/model_choices/user_model_choices.py:137
 msgid "Greenish"
 msgstr "سبزه"
 
-#: core/utils/model_choices/user_model_choices.py:139
+#: core/utils/model_choices/user_model_choices.py:138
 msgid "Olive"
 msgstr "زیتونی"
 
-#: core/utils/model_choices/user_model_choices.py:140
+#: core/utils/model_choices/user_model_choices.py:139
 msgid "Darken"
 msgstr "تیره"
 
-#: core/utils/model_choices/user_model_choices.py:141
-#: core/utils/model_choices/user_model_choices.py:161
+#: core/utils/model_choices/user_model_choices.py:140
+#: core/utils/model_choices/user_model_choices.py:160
 msgid "Black"
 msgstr "سیاه"
 
-#: core/utils/model_choices/user_model_choices.py:142
+#: core/utils/model_choices/user_model_choices.py:141
 msgid "Bright Brown"
 msgstr "قهوه‌ای روشن"
 
-#: core/utils/model_choices/user_model_choices.py:143
+#: core/utils/model_choices/user_model_choices.py:142
 msgid "Darken Brown"
 msgstr "قهوه‌ای تیره"
 
-#: core/utils/model_choices/user_model_choices.py:144
+#: core/utils/model_choices/user_model_choices.py:143
 msgid "Bright"
 msgstr "روشن"
 
-#: core/utils/model_choices/user_model_choices.py:145
+#: core/utils/model_choices/user_model_choices.py:144
 msgid "Yellow"
 msgstr "زرد"
 
-#: core/utils/model_choices/user_model_choices.py:146
+#: core/utils/model_choices/user_model_choices.py:145
 msgid "Whitish White"
 msgstr "سفید مایل به خاکی"
 
-#: core/utils/model_choices/user_model_choices.py:147
+#: core/utils/model_choices/user_model_choices.py:146
 msgid "Red & White"
 msgstr "قرمز و سفید"
 
-#: core/utils/model_choices/user_model_choices.py:148
+#: core/utils/model_choices/user_model_choices.py:147
 msgid "Bright Greenish"
 msgstr "سبزه روشن"
 
-#: core/utils/model_choices/user_model_choices.py:152
+#: core/utils/model_choices/user_model_choices.py:151
 msgid "Green"
 msgstr "سبز"
 
-#: core/utils/model_choices/user_model_choices.py:153
+#: core/utils/model_choices/user_model_choices.py:152
 msgid "Light Blue"
 msgstr "آبی روشن"
 
-#: core/utils/model_choices/user_model_choices.py:154
+#: core/utils/model_choices/user_model_choices.py:153
 msgid "Hazel"
 msgstr "فندقی"
 
-#: core/utils/model_choices/user_model_choices.py:155
+#: core/utils/model_choices/user_model_choices.py:154
 msgid "Darken Blue"
 msgstr "آبی تیره"
 
-#: core/utils/model_choices/user_model_choices.py:156
+#: core/utils/model_choices/user_model_choices.py:155
 msgid "Grey"
 msgstr "خاکستری"
 
-#: core/utils/model_choices/user_model_choices.py:157
+#: core/utils/model_choices/user_model_choices.py:156
 msgid "Honey"
 msgstr "عسلی"
 
-#: core/utils/model_choices/user_model_choices.py:158
+#: core/utils/model_choices/user_model_choices.py:157
 msgid "Purple"
 msgstr "بنفش"
 
-#: core/utils/model_choices/user_model_choices.py:159
+#: core/utils/model_choices/user_model_choices.py:158
 msgid "Light Brown"
 msgstr "قهوه‌ای روشن"
 
-#: core/utils/model_choices/user_model_choices.py:160
+#: core/utils/model_choices/user_model_choices.py:159
 msgid "Deep Brown"
 msgstr "قهوه‌ای تیره"
 
-#: core/utils/model_choices/user_model_choices.py:164
+#: core/utils/model_choices/user_model_choices.py:163
 msgid "O+"
 msgstr "O+"
 
-#: core/utils/model_choices/user_model_choices.py:165
+#: core/utils/model_choices/user_model_choices.py:164
 msgid "O-"
 msgstr "O-"
 
-#: core/utils/model_choices/user_model_choices.py:166
+#: core/utils/model_choices/user_model_choices.py:165
 msgid "A+"
 msgstr "A+"
 
-#: core/utils/model_choices/user_model_choices.py:167
+#: core/utils/model_choices/user_model_choices.py:166
 msgid "A-"
 msgstr "A-"
 
-#: core/utils/model_choices/user_model_choices.py:168
+#: core/utils/model_choices/user_model_choices.py:167
 msgid "B+"
 msgstr "B+"
 
-#: core/utils/model_choices/user_model_choices.py:169
+#: core/utils/model_choices/user_model_choices.py:168
 msgid "B-"
 msgstr "B-"
 
-#: core/utils/model_choices/user_model_choices.py:170
+#: core/utils/model_choices/user_model_choices.py:169
 msgid "AB+"
 msgstr "AB+"
 
-#: core/utils/model_choices/user_model_choices.py:171
+#: core/utils/model_choices/user_model_choices.py:170
 msgid "AB-"
 msgstr "AB-"
 
-#: core/utils/model_choices/user_model_choices.py:174
+#: core/utils/model_choices/user_model_choices.py:173
 msgid "Safravi (Hot & Dry)"
 msgstr "صفراوی (گرم و خشک)"
 
-#: core/utils/model_choices/user_model_choices.py:175
+#: core/utils/model_choices/user_model_choices.py:174
 msgid "Damvi (Hot & Wet)"
 msgstr "دموی (گرم و تر)"
 
-#: core/utils/model_choices/user_model_choices.py:176
+#: core/utils/model_choices/user_model_choices.py:175
 msgid "Sodavi (Cold & Dry)"
 msgstr "سوداوی (سرد و خشک)"
 
-#: core/utils/model_choices/user_model_choices.py:177
+#: core/utils/model_choices/user_model_choices.py:176
 msgid "Balghami (Cold & Wet)"
 msgstr "بلغمی (سرد و تر)"
 
-#: core/utils/model_choices/user_model_choices.py:180
-#: core/utils/model_choices/user_model_choices.py:344
+#: core/utils/model_choices/user_model_choices.py:179
+#: core/utils/model_choices/user_model_choices.py:343
 msgid "Excellent"
 msgstr "عالی"
+
+#: core/utils/model_choices/user_model_choices.py:180
+#: core/utils/model_choices/user_model_choices.py:201
+#: core/utils/model_choices/user_model_choices.py:344
+msgid "Good"
+msgstr "خوب"
 
 #: core/utils/model_choices/user_model_choices.py:181
 #: core/utils/model_choices/user_model_choices.py:202
 #: core/utils/model_choices/user_model_choices.py:345
-msgid "Good"
-msgstr "خوب"
-
-#: core/utils/model_choices/user_model_choices.py:182
-#: core/utils/model_choices/user_model_choices.py:203
-#: core/utils/model_choices/user_model_choices.py:346
-#: core/utils/model_choices/user_model_choices.py:408
-#: core/utils/model_choices/user_model_choices.py:415
-#: core/utils/model_choices/user_model_choices.py:422
+#: core/utils/model_choices/user_model_choices.py:407
+#: core/utils/model_choices/user_model_choices.py:414
+#: core/utils/model_choices/user_model_choices.py:421
 msgid "Average"
 msgstr "متوسط"
 
-#: core/utils/model_choices/user_model_choices.py:183
+#: core/utils/model_choices/user_model_choices.py:182
 msgid "Suitable"
 msgstr "مناسب"
 
-#: core/utils/model_choices/user_model_choices.py:184
+#: core/utils/model_choices/user_model_choices.py:183
 msgid "Nice Face"
 msgstr "خوش چهره"
 
-#: core/utils/model_choices/user_model_choices.py:185
+#: core/utils/model_choices/user_model_choices.py:184
 msgid "Nice Body"
 msgstr "خوش اندام"
 
-#: core/utils/model_choices/user_model_choices.py:186
+#: core/utils/model_choices/user_model_choices.py:185
 msgid "Looks Older"
 msgstr "بزرگتر به نظر می رسد"
 
-#: core/utils/model_choices/user_model_choices.py:187
+#: core/utils/model_choices/user_model_choices.py:186
 msgid "Looks Younger"
 msgstr "جوانتر به نظر می رسد"
 
-#: core/utils/model_choices/user_model_choices.py:188
+#: core/utils/model_choices/user_model_choices.py:187
 msgid "Satisfied"
 msgstr "در هر حالت راضیم"
 
-#: core/utils/model_choices/user_model_choices.py:195
+#: core/utils/model_choices/user_model_choices.py:194
 msgid "Bachelor's"
 msgstr "کارشناسی"
 
-#: core/utils/model_choices/user_model_choices.py:196
+#: core/utils/model_choices/user_model_choices.py:195
 msgid "Master's"
 msgstr "کارشناسی ارشد"
 
-#: core/utils/model_choices/user_model_choices.py:198
+#: core/utils/model_choices/user_model_choices.py:197
 msgid "Hoze"
 msgstr "حوزه"
 
-#: core/utils/model_choices/user_model_choices.py:201
+#: core/utils/model_choices/user_model_choices.py:200
 msgid "Perfect"
 msgstr "عالی"
 
-#: core/utils/model_choices/user_model_choices.py:204
-#: core/utils/model_choices/user_model_choices.py:347
+#: core/utils/model_choices/user_model_choices.py:203
+#: core/utils/model_choices/user_model_choices.py:346
 msgid "Weak"
 msgstr "کم"
 
-#: core/utils/model_choices/user_model_choices.py:207
+#: core/utils/model_choices/user_model_choices.py:206
 msgid "Engagement"
 msgstr "نامزدی"
 
-#: core/utils/model_choices/user_model_choices.py:208
+#: core/utils/model_choices/user_model_choices.py:207
 msgid "Contract"
 msgstr "عقد"
 
-#: core/utils/model_choices/user_model_choices.py:209
+#: core/utils/model_choices/user_model_choices.py:208
 msgid "Wedding"
 msgstr "عروسی"
 
-#: core/utils/model_choices/user_model_choices.py:215
+#: core/utils/model_choices/user_model_choices.py:214
 msgid "Independant"
 msgstr "مستقل"
 
-#: core/utils/model_choices/user_model_choices.py:219
+#: core/utils/model_choices/user_model_choices.py:218
 msgid "Groomm"
 msgstr "داماد"
 
-#: core/utils/model_choices/user_model_choices.py:220
+#: core/utils/model_choices/user_model_choices.py:219
 msgid "Zan Dadash"
 msgstr "زن داداش"
 
-#: core/utils/model_choices/user_model_choices.py:223
+#: core/utils/model_choices/user_model_choices.py:222
 msgid "Bride"
 msgstr "عروس"
 
-#: core/utils/model_choices/user_model_choices.py:224
+#: core/utils/model_choices/user_model_choices.py:223
 msgid "Shohar Khahar"
 msgstr "سوشهر خواهر"
 
-#: core/utils/model_choices/user_model_choices.py:227
+#: core/utils/model_choices/user_model_choices.py:226
 msgid "Alborzz"
 msgstr "البرز"
 
-#: core/utils/model_choices/user_model_choices.py:228
+#: core/utils/model_choices/user_model_choices.py:227
 msgid "Ardabil"
 msgstr "اردبیل"
 
-#: core/utils/model_choices/user_model_choices.py:229
+#: core/utils/model_choices/user_model_choices.py:228
 msgid "Bushehr"
 msgstr "بوشهر"
 
-#: core/utils/model_choices/user_model_choices.py:230
+#: core/utils/model_choices/user_model_choices.py:229
 msgid "Chaharmahal and Bakhtiari"
 msgstr "چهارمحال و بختیاری"
 
-#: core/utils/model_choices/user_model_choices.py:231
+#: core/utils/model_choices/user_model_choices.py:230
 msgid "East Azerbaijan"
 msgstr "آذربایجان شرقی"
 
-#: core/utils/model_choices/user_model_choices.py:232
+#: core/utils/model_choices/user_model_choices.py:231
 msgid "Esfahan"
 msgstr "اصفهان"
 
-#: core/utils/model_choices/user_model_choices.py:233
+#: core/utils/model_choices/user_model_choices.py:232
 msgid "Fars"
 msgstr "فارس"
 
-#: core/utils/model_choices/user_model_choices.py:234
+#: core/utils/model_choices/user_model_choices.py:233
 msgid "Gilan"
 msgstr "گیلان"
 
-#: core/utils/model_choices/user_model_choices.py:235
+#: core/utils/model_choices/user_model_choices.py:234
 msgid "Golestan"
 msgstr "گلستان"
 
-#: core/utils/model_choices/user_model_choices.py:236
+#: core/utils/model_choices/user_model_choices.py:235
 msgid "Hamadan"
 msgstr "همدان"
 
-#: core/utils/model_choices/user_model_choices.py:237
+#: core/utils/model_choices/user_model_choices.py:236
 msgid "Hormozgan"
 msgstr "هرمزگان"
 
-#: core/utils/model_choices/user_model_choices.py:238
+#: core/utils/model_choices/user_model_choices.py:237
 msgid "Ilam"
 msgstr "ایلام"
 
-#: core/utils/model_choices/user_model_choices.py:239
+#: core/utils/model_choices/user_model_choices.py:238
 msgid "Kerman"
 msgstr "کرمان"
 
-#: core/utils/model_choices/user_model_choices.py:240
+#: core/utils/model_choices/user_model_choices.py:239
 msgid "Kermanshah"
 msgstr "کرمانشاه"
 
-#: core/utils/model_choices/user_model_choices.py:241
+#: core/utils/model_choices/user_model_choices.py:240
 msgid "Khuzestan"
 msgstr "خوزستان"
 
-#: core/utils/model_choices/user_model_choices.py:242
+#: core/utils/model_choices/user_model_choices.py:241
 msgid "Kohgiluyeh and Boyer-Ahmad"
 msgstr "کهگیلویه و بویراحمد"
 
-#: core/utils/model_choices/user_model_choices.py:243
+#: core/utils/model_choices/user_model_choices.py:242
 msgid "Kurdistan"
 msgstr "کردستان"
 
-#: core/utils/model_choices/user_model_choices.py:244
+#: core/utils/model_choices/user_model_choices.py:243
 msgid "Lorestan"
 msgstr "لرستان"
 
-#: core/utils/model_choices/user_model_choices.py:245
+#: core/utils/model_choices/user_model_choices.py:244
 msgid "Markazi"
 msgstr "مرکزی"
 
-#: core/utils/model_choices/user_model_choices.py:246
+#: core/utils/model_choices/user_model_choices.py:245
 msgid "Mazandaran"
 msgstr "مازندران"
 
-#: core/utils/model_choices/user_model_choices.py:247
+#: core/utils/model_choices/user_model_choices.py:246
 msgid "North Khorasan"
 msgstr "خوراسان شمالی"
 
-#: core/utils/model_choices/user_model_choices.py:248
+#: core/utils/model_choices/user_model_choices.py:247
 msgid "Qazvin"
 msgstr "قزوین"
 
-#: core/utils/model_choices/user_model_choices.py:249
+#: core/utils/model_choices/user_model_choices.py:248
 msgid "Qom"
 msgstr "قم"
 
-#: core/utils/model_choices/user_model_choices.py:250
+#: core/utils/model_choices/user_model_choices.py:249
 msgid "Razavi Khorasan"
 msgstr "خراسان رضوی"
 
-#: core/utils/model_choices/user_model_choices.py:251
+#: core/utils/model_choices/user_model_choices.py:250
 msgid "Semnan"
 msgstr "سمنان"
 
-#: core/utils/model_choices/user_model_choices.py:252
+#: core/utils/model_choices/user_model_choices.py:251
 msgid "Sistan and Baluchestan"
 msgstr "سیستان و بلوچستان"
 
-#: core/utils/model_choices/user_model_choices.py:253
+#: core/utils/model_choices/user_model_choices.py:252
 msgid "South Khorasan"
 msgstr "خراسان جنوبی"
 
-#: core/utils/model_choices/user_model_choices.py:254
+#: core/utils/model_choices/user_model_choices.py:253
 msgid "Tehran"
 msgstr "تهران"
 
-#: core/utils/model_choices/user_model_choices.py:255
+#: core/utils/model_choices/user_model_choices.py:254
 msgid "West Azerbaijan"
 msgstr "آذربایجان غربی"
 
-#: core/utils/model_choices/user_model_choices.py:256
+#: core/utils/model_choices/user_model_choices.py:255
 msgid "Yazd"
 msgstr "یزد"
 
-#: core/utils/model_choices/user_model_choices.py:257
+#: core/utils/model_choices/user_model_choices.py:256
 msgid "Zanjan"
 msgstr "زنجان"
 
-#: core/utils/model_choices/user_model_choices.py:258
-#: core/utils/model_choices/user_model_choices.py:367
-#: core/utils/model_choices/user_model_choices.py:375
-#: core/utils/model_choices/user_model_choices.py:383
-#: core/utils/model_choices/user_model_choices.py:392
-#: core/utils/model_choices/user_model_choices.py:410
-#: core/utils/model_choices/user_model_choices.py:429
+#: core/utils/model_choices/user_model_choices.py:257
+#: core/utils/model_choices/user_model_choices.py:366
+#: core/utils/model_choices/user_model_choices.py:374
+#: core/utils/model_choices/user_model_choices.py:382
+#: core/utils/model_choices/user_model_choices.py:391
+#: core/utils/model_choices/user_model_choices.py:409
+#: core/utils/model_choices/user_model_choices.py:428
 msgid "Doesn't Matter"
 msgstr "اهمیت ندارد"
 
-#: core/utils/model_choices/user_model_choices.py:264
-#: core/utils/model_choices/user_model_choices.py:288
+#: core/utils/model_choices/user_model_choices.py:263
+#: core/utils/model_choices/user_model_choices.py:287
 msgid "Father's House"
 msgstr "منزل پدر"
 
-#: core/utils/model_choices/user_model_choices.py:265
-#: core/utils/model_choices/user_model_choices.py:289
+#: core/utils/model_choices/user_model_choices.py:264
+#: core/utils/model_choices/user_model_choices.py:288
 msgid "Mother's House"
 msgstr "منزل مادر"
 
-#: core/utils/model_choices/user_model_choices.py:269
-#: core/utils/model_choices/user_model_choices.py:286
+#: core/utils/model_choices/user_model_choices.py:268
+#: core/utils/model_choices/user_model_choices.py:285
 msgid "Owner"
 msgstr "صاحب خانه"
 
-#: core/utils/model_choices/user_model_choices.py:270
+#: core/utils/model_choices/user_model_choices.py:269
 msgid "Rent"
 msgstr "اجاره ای"
 
-#: core/utils/model_choices/user_model_choices.py:273
-#: core/utils/model_choices/user_model_choices.py:321
+#: core/utils/model_choices/user_model_choices.py:272
+#: core/utils/model_choices/user_model_choices.py:320
 msgid "House"
 msgstr "خانه"
 
-#: core/utils/model_choices/user_model_choices.py:274
+#: core/utils/model_choices/user_model_choices.py:273
 msgid "Shop"
 msgstr "مغازه"
 
-#: core/utils/model_choices/user_model_choices.py:275
-#: core/utils/model_choices/user_model_choices.py:318
+#: core/utils/model_choices/user_model_choices.py:274
+#: core/utils/model_choices/user_model_choices.py:317
 msgid "Land"
 msgstr "زمین"
 
-#: core/utils/model_choices/user_model_choices.py:277
+#: core/utils/model_choices/user_model_choices.py:276
 msgid "Factory"
 msgstr "کارخانه"
 
-#: core/utils/model_choices/user_model_choices.py:278
+#: core/utils/model_choices/user_model_choices.py:277
 msgid "Company"
 msgstr "شرکت"
 
-#: core/utils/model_choices/user_model_choices.py:279
+#: core/utils/model_choices/user_model_choices.py:278
 msgid "Motorcycle"
 msgstr "موتور"
 
-#: core/utils/model_choices/user_model_choices.py:280
-#: core/utils/model_choices/user_model_choices.py:319
+#: core/utils/model_choices/user_model_choices.py:279
+#: core/utils/model_choices/user_model_choices.py:318
 msgid "Car"
 msgstr "ماشین"
 
-#: core/utils/model_choices/user_model_choices.py:281
-#: core/utils/model_choices/user_model_choices.py:316
+#: core/utils/model_choices/user_model_choices.py:280
+#: core/utils/model_choices/user_model_choices.py:315
 msgid "Gold"
 msgstr "سکه"
 
-#: core/utils/model_choices/user_model_choices.py:283
+#: core/utils/model_choices/user_model_choices.py:282
 msgid "I dont Have Any"
 msgstr "ندارم"
 
-#: core/utils/model_choices/user_model_choices.py:287
+#: core/utils/model_choices/user_model_choices.py:286
 msgid "Mortgage"
 msgstr "رهن"
 
-#: core/utils/model_choices/user_model_choices.py:293
+#: core/utils/model_choices/user_model_choices.py:292
 msgid "Does"
 msgstr "جهیزیه دارم"
 
-#: core/utils/model_choices/user_model_choices.py:294
+#: core/utils/model_choices/user_model_choices.py:293
 msgid "Doesn't"
 msgstr "جهیزیه نیاز ندارم"
 
-#: core/utils/model_choices/user_model_choices.py:295
+#: core/utils/model_choices/user_model_choices.py:294
 msgid "Wants"
 msgstr "جهیزیه میخواهد"
 
-#: core/utils/model_choices/user_model_choices.py:296
+#: core/utils/model_choices/user_model_choices.py:295
 msgid "Doesn't Want"
 msgstr "جهیزیه نمیخواهم"
 
-#: core/utils/model_choices/user_model_choices.py:297
+#: core/utils/model_choices/user_model_choices.py:296
 msgid "Man Should Help"
 msgstr "کمک هزینه جهیزیه از طرف مرد صورت بگیرد."
 
-#: core/utils/model_choices/user_model_choices.py:301
+#: core/utils/model_choices/user_model_choices.py:300
 msgid "Monthly"
 msgstr "ماهانه"
 
-#: core/utils/model_choices/user_model_choices.py:302
+#: core/utils/model_choices/user_model_choices.py:301
 msgid "Yearly"
 msgstr "سالانه"
 
-#: core/utils/model_choices/user_model_choices.py:303
+#: core/utils/model_choices/user_model_choices.py:302
 msgid "Two Years"
 msgstr "دو سال"
 
-#: core/utils/model_choices/user_model_choices.py:306
+#: core/utils/model_choices/user_model_choices.py:305
 msgid "Rights"
 msgstr "بذل حقوق"
 
-#: core/utils/model_choices/user_model_choices.py:307
+#: core/utils/model_choices/user_model_choices.py:306
 msgid "Settled"
 msgstr "تسویه شده"
 
-#: core/utils/model_choices/user_model_choices.py:308
+#: core/utils/model_choices/user_model_choices.py:307
 msgid "Creditor"
 msgstr "طلبکار"
 
-#: core/utils/model_choices/user_model_choices.py:309
+#: core/utils/model_choices/user_model_choices.py:308
 msgid "Debtor"
 msgstr "بدهکار"
 
-#: core/utils/model_choices/user_model_choices.py:310
+#: core/utils/model_choices/user_model_choices.py:309
 msgid "Female"
 msgstr "زن"
 
-#: core/utils/model_choices/user_model_choices.py:313
+#: core/utils/model_choices/user_model_choices.py:312
 msgid "Mecca"
 msgstr "مکه"
 
-#: core/utils/model_choices/user_model_choices.py:314
+#: core/utils/model_choices/user_model_choices.py:313
 msgid "Iraq"
 msgstr "عراق"
 
-#: core/utils/model_choices/user_model_choices.py:315
+#: core/utils/model_choices/user_model_choices.py:314
 msgid "Syria"
 msgstr "سوریه"
 
-#: core/utils/model_choices/user_model_choices.py:317
+#: core/utils/model_choices/user_model_choices.py:316
 msgid "Money"
 msgstr "پول"
 
-#: core/utils/model_choices/user_model_choices.py:328
-#: core/utils/model_choices/user_model_choices.py:338
-#: core/utils/model_choices/user_model_choices.py:384
-#: core/utils/model_choices/user_model_choices.py:391
+#: core/utils/model_choices/user_model_choices.py:327
+#: core/utils/model_choices/user_model_choices.py:337
+#: core/utils/model_choices/user_model_choices.py:383
+#: core/utils/model_choices/user_model_choices.py:390
 msgid "Disagree"
 msgstr "مخالف"
 
-#: core/utils/model_choices/user_model_choices.py:329
-#: core/utils/model_choices/user_model_choices.py:339
-#: core/utils/model_choices/user_model_choices.py:351
+#: core/utils/model_choices/user_model_choices.py:328
+#: core/utils/model_choices/user_model_choices.py:338
+#: core/utils/model_choices/user_model_choices.py:350
 msgid "Agree"
 msgstr "موافق"
 
-#: core/utils/model_choices/user_model_choices.py:330
+#: core/utils/model_choices/user_model_choices.py:329
 msgid "Must have a job"
 msgstr "باید شاغل باشم."
 
-#: core/utils/model_choices/user_model_choices.py:331
+#: core/utils/model_choices/user_model_choices.py:330
 msgid "Depends on Work Environment"
 msgstr "بستگی به مکان شغل دارد."
 
-#: core/utils/model_choices/user_model_choices.py:332
+#: core/utils/model_choices/user_model_choices.py:331
 msgid "Depends on Job Type"
 msgstr "بستگی به نوع شغل دارد."
 
-#: core/utils/model_choices/user_model_choices.py:334
+#: core/utils/model_choices/user_model_choices.py:333
 msgid "Housejob"
 msgstr "شغل خانگی"
 
-#: core/utils/model_choices/user_model_choices.py:335
-#: core/utils/model_choices/user_model_choices.py:341
+#: core/utils/model_choices/user_model_choices.py:334
+#: core/utils/model_choices/user_model_choices.py:340
 msgid "Depends On Spouse Opinion"
 msgstr "بستگی به نظر همسرم دارد."
 
-#: core/utils/model_choices/user_model_choices.py:340
+#: core/utils/model_choices/user_model_choices.py:339
 msgid "Depends on the Degree"
 msgstr "بستگی به رشته دارد."
 
-#: core/utils/model_choices/user_model_choices.py:352
+#: core/utils/model_choices/user_model_choices.py:351
 msgid "No Opinion"
 msgstr "نظری ندارم"
 
-#: core/utils/model_choices/user_model_choices.py:355
+#: core/utils/model_choices/user_model_choices.py:354
 msgid "Don't Want"
 msgstr "نمیخواهم"
 
-#: core/utils/model_choices/user_model_choices.py:357
+#: core/utils/model_choices/user_model_choices.py:356
 msgid "1"
 msgstr "یک فرزند"
 
-#: core/utils/model_choices/user_model_choices.py:358
+#: core/utils/model_choices/user_model_choices.py:357
 msgid "2"
 msgstr "دو فرزند"
 
-#: core/utils/model_choices/user_model_choices.py:359
+#: core/utils/model_choices/user_model_choices.py:358
 msgid "3"
 msgstr "سه فرزند"
 
-#: core/utils/model_choices/user_model_choices.py:360
+#: core/utils/model_choices/user_model_choices.py:359
 msgid "More than 3"
 msgstr "بیش از سه فرزند"
 
-#: core/utils/model_choices/user_model_choices.py:364
+#: core/utils/model_choices/user_model_choices.py:363
 msgid "In the Registry"
 msgstr "عقد در محضر"
 
-#: core/utils/model_choices/user_model_choices.py:365
-#: core/utils/model_choices/user_model_choices.py:371
+#: core/utils/model_choices/user_model_choices.py:364
+#: core/utils/model_choices/user_model_choices.py:370
 msgid "In House & Family"
 msgstr "عقد در منزل و جشن خانوادگی"
 
-#: core/utils/model_choices/user_model_choices.py:366
-#: core/utils/model_choices/user_model_choices.py:372
+#: core/utils/model_choices/user_model_choices.py:365
+#: core/utils/model_choices/user_model_choices.py:371
 msgid "In the Hall"
 msgstr "عقد و جشن در تالار"
 
-#: core/utils/model_choices/user_model_choices.py:373
+#: core/utils/model_choices/user_model_choices.py:372
 msgid "Pilgrimage"
 msgstr "سفر زیارتی"
 
-#: core/utils/model_choices/user_model_choices.py:379
-#: core/utils/model_choices/user_model_choices.py:387
+#: core/utils/model_choices/user_model_choices.py:378
+#: core/utils/model_choices/user_model_choices.py:386
 msgid "Fully Obligated"
 msgstr "کاملا مقید"
 
-#: core/utils/model_choices/user_model_choices.py:380
-#: core/utils/model_choices/user_model_choices.py:388
+#: core/utils/model_choices/user_model_choices.py:379
+#: core/utils/model_choices/user_model_choices.py:387
 msgid "Sometimes"
 msgstr "گاهی اوقات"
 
-#: core/utils/model_choices/user_model_choices.py:381
-#: core/utils/model_choices/user_model_choices.py:389
+#: core/utils/model_choices/user_model_choices.py:380
+#: core/utils/model_choices/user_model_choices.py:388
 msgid "Not Obligated"
 msgstr "مقید نیستم"
 
-#: core/utils/model_choices/user_model_choices.py:382
-#: core/utils/model_choices/user_model_choices.py:390
+#: core/utils/model_choices/user_model_choices.py:381
+#: core/utils/model_choices/user_model_choices.py:389
 msgid "Obligated But Lazy"
 msgstr "مقید ولی تنبل هستم"
 
-#: core/utils/model_choices/user_model_choices.py:393
+#: core/utils/model_choices/user_model_choices.py:392
 msgid "Sick"
 msgstr "بیمار"
 
-#: core/utils/model_choices/user_model_choices.py:396
-#: core/utils/model_choices/user_model_choices.py:403
+#: core/utils/model_choices/user_model_choices.py:395
+#: core/utils/model_choices/user_model_choices.py:402
 msgid "Cozy & Attractive"
 msgstr "راحت و جذاب"
 
-#: core/utils/model_choices/user_model_choices.py:397
+#: core/utils/model_choices/user_model_choices.py:396
 msgid "Normal"
 msgstr "معمولی"
 
-#: core/utils/model_choices/user_model_choices.py:400
+#: core/utils/model_choices/user_model_choices.py:399
 msgid "Only Chador"
 msgstr "فقط چادر"
 
-#: core/utils/model_choices/user_model_choices.py:401
+#: core/utils/model_choices/user_model_choices.py:400
 msgid "Formal Manto"
 msgstr "رسمی مانتویی"
 
-#: core/utils/model_choices/user_model_choices.py:402
+#: core/utils/model_choices/user_model_choices.py:401
 msgid "Colored Chador"
 msgstr "چادر رنگی"
 
-#: core/utils/model_choices/user_model_choices.py:427
+#: core/utils/model_choices/user_model_choices.py:426
 msgid "Daily Matters"
 msgstr "امور روزمره و ضروریات"
 
-#: core/utils/model_choices/user_model_choices.py:428
+#: core/utils/model_choices/user_model_choices.py:427
 msgid "Work Matters"
 msgstr "امور کاری"
 
-#: core/utils/model_choices/user_model_choices.py:432
+#: core/utils/model_choices/user_model_choices.py:431
 msgid "Always Chador"
 msgstr "همیشه چادر"
 
-#: core/utils/model_choices/user_model_choices.py:433
+#: core/utils/model_choices/user_model_choices.py:432
 msgid "Always Coverd Manto"
 msgstr "همیشه مانتویی پوشیده"
 
-#: core/utils/model_choices/user_model_choices.py:434
+#: core/utils/model_choices/user_model_choices.py:433
 msgid "Always Free Manto"
 msgstr "همیشه مانتویی آزاد"
 
-#: core/utils/model_choices/user_model_choices.py:435
+#: core/utils/model_choices/user_model_choices.py:434
 msgid "Sometimes Chador"
 msgstr "گاهی چادر"
 
-#: core/utils/model_choices/user_model_choices.py:436
+#: core/utils/model_choices/user_model_choices.py:435
 msgid "Sometimes Coverd Manto"
 msgstr "گاهی مانتویی پوشیده"
 
-#: core/utils/model_choices/user_model_choices.py:437
+#: core/utils/model_choices/user_model_choices.py:436
 msgid "Sometimes Free Manto"
 msgstr "گاهی مانتویی آزاد"
 
-#: core/utils/model_choices/user_model_choices.py:440
+#: core/utils/model_choices/user_model_choices.py:439
 msgid "Dependent"
 msgstr "مستقل هستم"
 
-#: core/utils/model_choices/user_model_choices.py:441
+#: core/utils/model_choices/user_model_choices.py:440
 msgid "Independet"
 msgstr "وابسته هستم"
 
-#: core/utils/model_choices/user_model_choices.py:442
+#: core/utils/model_choices/user_model_choices.py:441
 msgid "Counsole with Parents"
 msgstr "مشورت با والدین"
 
-#: core/utils/model_choices/user_model_choices.py:443
+#: core/utils/model_choices/user_model_choices.py:442
 msgid "Counsole with Brothers and Sisters"
 msgstr "مشورت با خواهران و برادران"
 
-#: core/utils/model_choices/user_model_choices.py:444
+#: core/utils/model_choices/user_model_choices.py:443
 msgid "Counsole with Childs"
 msgstr "مشورت با فرزندان"
 
-#: core/utils/model_choices/user_model_choices.py:445
+#: core/utils/model_choices/user_model_choices.py:444
 msgid "Counsole with Professional"
 msgstr "مشورت با متخصص"
 
@@ -3886,67 +3902,67 @@ msgstr "انگلیسی"
 msgid "Persian"
 msgstr "فارسی"
 
-#: users/admin.py:262 users/admin.py:296 users/admin.py:301
+#: users/admin.py:282 users/admin.py:316 users/admin.py:321
 msgid "Login Info"
 msgstr "اطلاعات ورود به حساب کاربری"
 
-#: users/admin.py:263 users/admin.py:273
+#: users/admin.py:283 users/admin.py:293
 msgid "Personal info"
 msgstr "اطلاعات شخصی"
 
-#: users/admin.py:265
+#: users/admin.py:285
 msgid "Permissions"
 msgstr "مجوزها"
 
-#: users/admin.py:268
+#: users/admin.py:288
 msgid "Important dates"
 msgstr "تاریخ‌های مهم"
 
-#: users/admin.py:269 users/admin.py:285
+#: users/admin.py:289 users/admin.py:305
 msgid "Extra Fields"
 msgstr "فیلدهای اضافی"
 
-#: users/admin.py:318
+#: users/admin.py:338
 msgid "Access code not found."
 msgstr "کد دسترسی پیدا نشد."
 
-#: users/admin.py:326
+#: users/admin.py:346
 msgid "Selected users have been deactivated."
 msgstr "کاربران انتخاب‌ شده غیرفعال شده‌اند."
 
-#: users/admin.py:328
+#: users/admin.py:348
 msgid "Deactivate selected users"
 msgstr "غیرفعال کردن کاربران انتخاب‌ شده"
 
-#: users/admin.py:332
+#: users/admin.py:352
 msgid "Selected users have been reactivated."
 msgstr "کاربران انتخاب‌ شده دوباره فعال شده‌اند."
 
-#: users/admin.py:334
+#: users/admin.py:354
 msgid "Reactivate selected users"
 msgstr "دوباره فعال کردن کاربران انتخاب شده"
 
-#: users/admin.py:339
+#: users/admin.py:359
 #: users/user_related_models/confidintional_information_model.py:282
 #: users/user_related_models/confidintional_information_model.py:339
 #: users/user_related_models/family_information_model.py:300
-#: users/user_related_models/personal_information_model.py:24
+#: users/user_related_models/personal_information_model.py:25
 msgid "Birth Date"
 msgstr "تاریخ تولد"
 
-#: users/admin.py:357
+#: users/admin.py:377
 msgid "Selected access codes have been marked as expired."
 msgstr "کدهای دسترسی انتخاب ‌شده به عنوان منقضی شده علامت‌گذاری شده‌اند."
 
-#: users/admin.py:360
+#: users/admin.py:380
 msgid "Expire selected access codes"
 msgstr "منقضی کردن کدهای دسترسی انتخاب‌ شده"
 
-#: users/admin.py:364
+#: users/admin.py:384
 msgid "Selected access codes have been reactivated."
 msgstr "کدهای دسترسی انتخاب‌ شده دوباره فعال شده‌اند."
 
-#: users/admin.py:366
+#: users/admin.py:386
 msgid "Reactivate selected access codes"
 msgstr "دوباره فعال کردن کدهای دسترسی انتخاب‌ شده"
 
@@ -3968,8 +3984,8 @@ msgid "Additional Explanations"
 msgstr "توضیحات اضافی"
 
 #: users/preferred_wife_models/preferred_wife_extra_information.py:19
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:84
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:108
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:89
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:113
 #: users/preferred_wife_models/preferred_wife_personal_information.py:52
 #: users/preferred_wife_models/preferred_wife_physical_information.py:46
 #: users/user_related_models/family_information_model.py:63
@@ -3995,60 +4011,64 @@ msgstr "کاربر"
 msgid "Preferred Wife Extra Information"
 msgstr "اطلاعات اضافی همسر مورد نظر"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:14
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:15
 msgid "Appearance Type"
 msgstr "نوع پوشش ظاهری"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:21
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:22
 msgid "Age Difference"
 msgstr "تفاوت سنی"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:27
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:28
 msgid "Future Spouse Family Religious Status Importance"
 msgstr "اهمیت وضعیت مذهبی خانواده همسر آینده"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:35
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:36
 msgid "Future Spouse Family Financial Status Importance"
 msgstr "اهمیت وضعیت مالی خانواده همسر آینده"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:43
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:44
 msgid "Marriage with Someone with Marriage Experience"
 msgstr "ازدواج با فردی که تجربه عقد و ازدواج دارد"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:50
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:51
+msgid "Marriage with Someone with Marriage Experience Additional Explnations"
+msgstr "توضیحات اضافی بخش بالا"
+
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:55
 msgid "Most Important Moral Feature of Future Spouse"
 msgstr "مهم‌ترین ویژگی اخلاقی همسر آینده"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:56
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:61
 msgid "Marriage with Disabled Person"
 msgstr "ازدواج با معلول"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:64
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:69
 msgid "Marriage with Veteran Person"
 msgstr "ازدواج با جانباز"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:71
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:76
 msgid "Marriage with Veteran & Disabled Person Explanation"
 msgstr "توضیحات  ازدواج با معلول یا جانباز"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:77
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:82
 msgid "Red Flags"
 msgstr "خط قرمزها"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:95
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:96
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:100
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:101
 msgid "Preferred Wife Intellectual Information"
 msgstr "اطلاعات عقیدتی همسر مورد نظر"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:101
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:106
 msgid "Future Spouse Originality"
 msgstr "اصالت همسر آینده"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:122
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:127
 msgid "FutureSposeOriginality"
 msgstr "اصالت همسر آینده"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:123
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:128
 msgid "FutureSposeOriginalities"
 msgstr "اصالت های همسر آینده"
 
@@ -4158,7 +4178,7 @@ msgstr "اصالت"
 #: users/user_related_models/confidintional_information_model.py:108
 #: users/user_related_models/family_information_model.py:221
 #: users/user_related_models/family_information_model.py:318
-#: users/user_related_models/personal_information_model.py:37
+#: users/user_related_models/personal_information_model.py:38
 msgid "Education"
 msgstr "تحصیلات"
 
@@ -4359,7 +4379,7 @@ msgid "Engagements or Weddings Statuse"
 msgstr "وضعیت‌های نامزدی یا ازدواج"
 
 #: users/user_related_models/family_information_model.py:167
-#: users/user_related_models/personal_information_model.py:12
+#: users/user_related_models/personal_information_model.py:13
 msgid "Gender"
 msgstr "جنسیت"
 
@@ -4619,79 +4639,79 @@ msgstr ""
 msgid "Intellectual Information"
 msgstr "اطلاعات عقیدتی"
 
-#: users/user_related_models/personal_information_model.py:19
+#: users/user_related_models/personal_information_model.py:20
 msgid "Sadat"
 msgstr "سادات"
 
-#: users/user_related_models/personal_information_model.py:31
+#: users/user_related_models/personal_information_model.py:32
 msgid "Birth Location"
 msgstr "محل تولد"
 
-#: users/user_related_models/personal_information_model.py:44
+#: users/user_related_models/personal_information_model.py:45
 msgid "Degree"
 msgstr "رشته و گرایش"
 
-#: users/user_related_models/personal_information_model.py:50
+#: users/user_related_models/personal_information_model.py:51
 msgid "Military Status"
 msgstr "وضعیت سربازی"
 
-#: users/user_related_models/personal_information_model.py:56
+#: users/user_related_models/personal_information_model.py:57
 msgid "Military Status Explanation"
 msgstr "توضیحات سربازی"
 
-#: users/user_related_models/personal_information_model.py:63
+#: users/user_related_models/personal_information_model.py:64
 msgid "Income"
 msgstr "درآمد ماهانه"
 
-#: users/user_related_models/personal_information_model.py:70
+#: users/user_related_models/personal_information_model.py:71
 msgid "Deposit"
 msgstr "سپرده"
 
-#: users/user_related_models/personal_information_model.py:76
+#: users/user_related_models/personal_information_model.py:77
 msgid "Have Insurance"
 msgstr "بیمه دار"
 
-#: users/user_related_models/personal_information_model.py:82
+#: users/user_related_models/personal_information_model.py:83
 msgid "Insurance Type"
 msgstr "نوع بیمه"
 
-#: users/user_related_models/personal_information_model.py:88
+#: users/user_related_models/personal_information_model.py:92
 msgid "Insurance Years"
 msgstr "سال‌های بیمه"
 
-#: users/user_related_models/personal_information_model.py:93
+#: users/user_related_models/personal_information_model.py:97
 msgid "Leisure Type"
 msgstr "نوع تفریحات"
 
-#: users/user_related_models/personal_information_model.py:99
+#: users/user_related_models/personal_information_model.py:103
 msgid "Usage Cases"
 msgstr "موارد استفاده نظیر دخانیات"
 
-#: users/user_related_models/personal_information_model.py:106
+#: users/user_related_models/personal_information_model.py:110
 msgid "Usage Case Description"
 msgstr "توضیحات موارد مورد استفاده نظیر دخانیات"
 
-#: users/user_related_models/personal_information_model.py:113
+#: users/user_related_models/personal_information_model.py:117
 msgid "Tatto"
 msgstr "تتو"
 
-#: users/user_related_models/personal_information_model.py:120
+#: users/user_related_models/personal_information_model.py:124
 msgid "Tatto Description"
 msgstr "توضیحات تتو"
 
-#: users/user_related_models/personal_information_model.py:127
+#: users/user_related_models/personal_information_model.py:131
 msgid "Conviction or Arrest History"
 msgstr "تاریخچه محکومیت یا دستگیری"
 
-#: users/user_related_models/personal_information_model.py:132
+#: users/user_related_models/personal_information_model.py:136
 msgid "Conviction Reason"
 msgstr "دلیل محکومیت"
 
-#: users/user_related_models/personal_information_model.py:164
+#: users/user_related_models/personal_information_model.py:168
 msgid "Personal Information"
 msgstr "اطلاعات شخصی"
 
-#: users/user_related_models/personal_information_model.py:165
+#: users/user_related_models/personal_information_model.py:169
 msgid "Personals Information"
 msgstr "اطلاعات شخصی"
 
@@ -4958,24 +4978,18 @@ msgid "Try '{command} {option}' for help."
 msgstr ""
 
 #: venv/lib/python3.13/site-packages/click/exceptions.py:129
-#, fuzzy, python-brace-format
-#| msgid "Invalid value for mortgage amount."
 msgid "Invalid value: {message}"
-msgstr "مقدار نامعتبر برای میزان اجاره."
+msgstr "مقدار نامعتبر"
 
 #: venv/lib/python3.13/site-packages/click/exceptions.py:131
-#, fuzzy, python-brace-format
-#| msgid "Invalid value for rent amount."
 msgid "Invalid value for {param_hint}: {message}"
-msgstr "مقدار نامعتبر برای میزان رهن."
+msgstr "مقدار نامعتبر برای"
 
 #: venv/lib/python3.13/site-packages/click/exceptions.py:187
 msgid "Missing argument"
 msgstr "آرگومان پیدا نشد"
 
 #: venv/lib/python3.13/site-packages/click/exceptions.py:189
-#, fuzzy
-#| msgid "Living Location"
 msgid "Missing option"
 msgstr "گزینه پیدا نشد"
 
@@ -7225,16 +7239,12 @@ msgid "Add another %(model)s"
 msgstr ""
 
 #: venv/lib/python3.13/site-packages/unfold/templates/unfold/widgets/related_widget_wrapper.html:35
-#, fuzzy, python-format
-#| msgid "Expire selected access codes"
 msgid "View selected %(model)s"
-msgstr "منقضی کردن کدهای دسترسی انتخاب‌ شده"
+msgstr "دیدن انتخاب شده ها"
 
 #: venv/lib/python3.13/site-packages/unfold/templates/unfold/widgets/related_widget_wrapper.html:45
-#, fuzzy, python-format
-#| msgid "Deactivate selected users"
 msgid "Delete selected %(model)s"
-msgstr "غیرفعال کردن کاربران انتخاب‌ شده"
+msgstr "پاک کردن انتخاب‌ شده ها"
 
 #: venv/lib/python3.13/site-packages/unfold/templatetags/unfold_list.py:113
 msgid "Select all objects on this page for an action"

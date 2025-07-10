@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import CharField
 from django.utils.translation import gettext_lazy as _
 from core.utils.model_choices.preferred_wife_model_choices import Choices
 from core.utils.error_msgs.preferred_wife_model_error_messages import (
@@ -45,6 +46,12 @@ class PreferredWifeIntellectualInformation(models.Model):
         error_messages=IntellectualInfoErrorMessages.MARRIAGE_WITH_SOMEONE_WITH_MARRIAGE_EXPERIENCE,
         help_text=IntellectualInfoHelpText.MARRIAGE_WITH_SOMEONE_WITH_MARRIAGE_EXPERIENCE,
         db_index=True,
+    )
+    additional_explnation_marriage_with_someone = models.CharField(
+        _("Marriage with Someone with Marriage Experience Additional Explnations"),
+        max_length=150,
+        blank=True,
+        null=True
     )
     most_important_moral_feature_of_future_spouse = models.TextField(
         _("Most Important Moral Feature of Future Spouse"),

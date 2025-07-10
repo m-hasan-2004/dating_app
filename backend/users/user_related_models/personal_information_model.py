@@ -5,10 +5,11 @@ from core.utils.help_texts.help_text import PersonalInfoHelpText
 from django.utils.translation import gettext_lazy as _
 from multiselectfield import MultiSelectField
 from core.utils.validators.user_validators import PersonalInformationValidator
+from multiselectfield import MultiSelectField
 
 
 class PersonalInformation(models.Model):
-    gender = models.CharField(
+    gender = MultiSelectField(
         _("Gender"),
         max_length=50,
         choices=Choices.GENDER_CHOICES,
@@ -83,6 +84,9 @@ class PersonalInformation(models.Model):
         choices=Choices.INSURANCE_OPTIONS,
         error_messages=PersonalInfoErrorMessages.INSURANCE_TYPE,
         help_text=PersonalInfoHelpText.INSURANCE_TYPE,
+        blank=True,
+        null=True,
+        
     )
     insurance_years = models.PositiveIntegerField(
         _("Insurance Years"),
