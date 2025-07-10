@@ -135,14 +135,10 @@ class FinancialInformationValidator:
     def validate_jahiziyeh_info(jahiziyeh, explanation):
         if jahiziyeh == "OTHER" and not explanation:
             raise ValidationError(_("Must provide explanation for other jahiziyeh type"))
-        if jahiziyeh != "OTHER" and explanation:
-            raise ValidationError(_("Cannot provide jahiziyeh explanation for standard types"))
 
     def validate_ex_spouse_financial_info(status, pay_status, amount):
-        if status == "NONE" and (pay_status != "NONE" or amount):
-            raise ValidationError(_("Cannot have pay status or amount without financial obligations"))
-        if status != "NONE" and not amount:
-            raise ValidationError(_("Must provide amount for financial obligations"))
+        # Validation removed as per user request
+        pass
 
 
 class ParentInformationValidator:

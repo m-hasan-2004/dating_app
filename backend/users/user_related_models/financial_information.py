@@ -78,6 +78,8 @@ class FinancialInformation(models.Model):
         choices=FinancialInformationChoices.EX_SPOUSE_FINANCIAL_STATUS_CHOICES,
         error_messages=FinancialInformationErrorMessages.EX_SPOUSE_FINANCIAL_STATUS_ERROR_MESSAGES,
         help_text=FinancialInfoHelpText.EX_SPOUSE_FINANCIAL_STATUS,
+        blank=True,
+        null=True,
     )
     ex_spouse_financial_pay_status = models.CharField(
         _("Ex-Spouse Financial Pay Status"),
@@ -85,6 +87,8 @@ class FinancialInformation(models.Model):
         choices=FinancialInformationChoices.EX_SPOUSE_FINANCIAL_PAY_STATUS_CHOICES,
         error_messages=FinancialInformationErrorMessages.EX_SPOUSE_FINANCIAL_PAY_STATUS_ERROR_MESSAGES,
         help_text=FinancialInfoHelpText.EX_SPOUSE_FINANCIAL_PAY_STATUS,
+        blank=True,
+        null=True,
     )
     ex_spouse_financial_amount = models.CharField(
         _("Ex-Spouse Financial Amount"),
@@ -143,11 +147,7 @@ class FinancialInformation(models.Model):
         FinancialInformationValidator.validate_jahiziyeh_info(
             self.jahiziyeh, self.jahiziyeh_explantion
         )
-        FinancialInformationValidator.validate_ex_spouse_financial_info(
-            self.ex_spouse_financial_status,
-            self.ex_spouse_financial_pay_status,
-            self.ex_spouse_financial_amount,
-        )
+        # Ex-spouse financial info validation removed as per user request
 
     def __str__(self):
         return f"اطلاعات کاربر: {self.user.last_name}"

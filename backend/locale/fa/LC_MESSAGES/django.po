@@ -2184,7 +2184,7 @@ msgstr "جنسیت صاحب حساب مقصد را انتخاب کنید."
 
 #: core/utils/help_texts/subject_help_texts.py:21
 msgid "Enter the amount in Rials. Only numbers and decimal point are allowed."
-msgstr "میزان مبلغ را به ریاد وارد کنید"
+msgstr "میزان مبلغ را به ریال وارد کنید"
 
 #: core/utils/help_texts/subject_help_texts.py:24
 msgid ""
@@ -3597,7 +3597,7 @@ msgstr "کد دسترسی ارائه شده وجود ندارد."
 
 #: core/utils/validators/subject_validators.py:12
 msgid "Account number must contain only digits."
-msgstr ""
+msgstr "شماره حساب فقط میتواند عدد باشد."
 
 #: core/utils/validators/subject_validators.py:16
 msgid "Account number must be between 10 to 40 digits."
