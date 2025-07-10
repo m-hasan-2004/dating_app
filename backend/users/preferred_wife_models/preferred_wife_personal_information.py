@@ -41,7 +41,6 @@ class PreferredWifePersonalInformation(models.Model):
     )
     after_marriage_residence_location = MultiSelectField(
         _("After Marriage Residence Location"),
-        max_length=50,
         choices=Choices.RESIDENCE_LOCATION_CHOICES,
         error_messages=PersonalInfoErrorMessages.AFTER_MARRIAGE_RESIDENCE_LOCATION,
         help_text=PersonalInfoHelpText.AFTER_MARRIAGE_RESIDENCE_LOCATION,

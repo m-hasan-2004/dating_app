@@ -13,7 +13,6 @@ from multiselectfield import MultiSelectField
 class PreferredWifeIntellectualInformation(models.Model):
     appearance_type = MultiSelectField(
         _("Appearance Type"),
-        max_length=50,
         choices=Choices.APPEARANCE_TYPE_CHOICES,
         error_messages=IntellectualInfoErrorMessages.APPEARANCE_TYPE,
         help_text=IntellectualInfoHelpText.APPEARANCE_TYPE,

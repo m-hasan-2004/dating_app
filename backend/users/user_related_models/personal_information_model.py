@@ -5,13 +5,11 @@ from core.utils.help_texts.help_text import PersonalInfoHelpText
 from django.utils.translation import gettext_lazy as _
 from multiselectfield import MultiSelectField
 from core.utils.validators.user_validators import PersonalInformationValidator
-from multiselectfield import MultiSelectField
 
 
 class PersonalInformation(models.Model):
     gender = MultiSelectField(
         _("Gender"),
-        max_length=50,
         choices=Choices.GENDER_CHOICES,
         error_messages=PersonalInfoErrorMessages.GENDER,
         help_text=PersonalInfoHelpText.GENDER,

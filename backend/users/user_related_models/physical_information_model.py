@@ -77,7 +77,6 @@ class PhysicalInformation(models.Model):
     )
     body_and_face = MultiSelectField(
         _("Body and Face"),
-        max_length=20,
         choices=Choices.BODY_AND_FACE_CHOICES,
         error_messages=PhysicalInfoErrorMessages.BODY_AND_FACE,
         help_text=PhysicalInfoHelpText.BODY_AND_FACE,

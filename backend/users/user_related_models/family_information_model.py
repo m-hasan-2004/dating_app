@@ -93,7 +93,6 @@ class FamilyInformation(models.Model):
 class EngagementOrWeddingStatus(models.Model):
     status = MultiSelectField(
         _("Person Status"),
-        max_length=50,
         choices=Choices.ENGAGEMENT_OR_WEDDING_STATUS_CHOICES,
         error_messages=FamilyInfoErrorMessages.ENGAGEMENT_OR_WEDDING_STATUS,
         help_text=FamilyInfoHelpText.PERSON_STATUS,
