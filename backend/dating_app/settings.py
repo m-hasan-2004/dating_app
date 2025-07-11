@@ -253,3 +253,6 @@ sentry_sdk.init(
     # django.contrib.auth) you may enable sending PII data.
     send_default_pii=True,
 )
+
+# Translation Problem on Win 10
+PGCLIENTENCODING = "UTF8"
