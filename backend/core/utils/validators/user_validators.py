@@ -62,20 +62,14 @@ class IntroducedSubjectsValidator:
     )
 
     def validate_dates_of_meetings(value):
-        if len(value.strip()) < 10:
-            raise ValidationError(_("Dates of meetings must be at least 10 characters"))
         if len(value.strip()) > 1000:
             raise ValidationError(_("Dates of meetings must not exceed 1000 characters"))
 
     def validate_result_and_regards(value):
-        if len(value.strip()) < 10:
-            raise ValidationError(_("Result and regards must be at least 10 characters"))
         if len(value.strip()) > 1000:
             raise ValidationError(_("Result and regards must not exceed 1000 characters"))
 
     def validate_reason(value):
-        if len(value.strip()) < 10:
-            raise ValidationError(_("Reason must be at least 10 characters"))
         if len(value.strip()) > 500:
             raise ValidationError(_("Reason must not exceed 500 characters"))
 
@@ -165,24 +159,18 @@ class IntellectualInformationValidator:
     @staticmethod
     def validate_marriage_goals(value):
         """Validate marriage goals field."""
-        if len(value.strip()) < 10:
-            raise ValidationError(_("Marriage goals must be at least 10 characters long"))
         if len(value.strip()) > 1000:
             raise ValidationError(_("Marriage goals must not exceed 1000 characters"))
 
     @staticmethod
     def validate_pros_cons(value):
         """Validate pros and cons fields."""
-        if len(value.strip()) < 10:
-            raise ValidationError(_("Description must be at least 10 characters long"))
         if len(value.strip()) > 1000:
             raise ValidationError(_("Description must not exceed 1000 characters"))
 
     @staticmethod
     def validate_friends_connection_reason(value):
         """Validate friends connection reason field."""
-        if len(value.strip()) < 10:
-            raise ValidationError(_("Friends connection reason must be at least 10 characters long"))
         if len(value.strip()) > 100:
             raise ValidationError(_("Friends connection reason must not exceed 100 characters"))
 

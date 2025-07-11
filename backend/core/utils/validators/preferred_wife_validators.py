@@ -27,20 +27,14 @@ class PreferredWifePersonalInformationValidator:
 
 class PreferredWifeIntellectualInformationValidator:
     def validate_moral_feature(value):
-        if len(value.strip()) < 10:
-            raise ValidationError(_("Moral feature description must be at least 10 characters long"))
         if len(value.strip()) > 1000:
             raise ValidationError(_("Moral feature description must not exceed 1000 characters"))
 
     def validate_red_flags(value):
-        if len(value.strip()) < 10:
-            raise ValidationError(_("Red flags description must be at least 10 characters long"))
         if len(value.strip()) > 1000:
             raise ValidationError(_("Red flags description must not exceed 1000 characters"))
 
     def validate_disabled_veteran_explanation(value):
-        if len(value.strip()) < 10:
-            raise ValidationError(_("Explanation must be at least 10 characters long"))
         if len(value.strip()) > 500:
             raise ValidationError(_("Explanation must not exceed 500 characters"))
 

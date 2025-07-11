@@ -78,6 +78,8 @@ class PreferredWifeIntellectualInformation(models.Model):
         error_messages=IntellectualInfoErrorMessages.MARRIAGE_WITH_DISABLED_VETERAN_EXPLANATION,
         help_text=IntellectualInfoHelpText.MARRIAGE_WITH_DISABLED_VETERAN_EXPLANATION,
         validators=[PreferredWifeIntellectualInformationValidator.validate_disabled_veteran_explanation],
+        blank=True,
+        null=True
     )
     red_flags = models.TextField(
         _("Red Flags"),

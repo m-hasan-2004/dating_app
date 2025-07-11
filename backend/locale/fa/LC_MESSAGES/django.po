@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-10 18:52+0330\n"
+"POT-Creation-Date: 2025-07-11 19:55+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2655,13 +2655,13 @@ msgstr "سه دختر"
 
 #: core/utils/model_choices/user_model_choices.py:73
 #: core/utils/model_choices/user_model_choices.py:212
-#: users/user_related_models/family_information_model.py:382
+#: users/user_related_models/family_information_model.py:381
 msgid "Father"
 msgstr "پدر"
 
 #: core/utils/model_choices/user_model_choices.py:73
 #: core/utils/model_choices/user_model_choices.py:213
-#: users/user_related_models/family_information_model.py:367
+#: users/user_related_models/family_information_model.py:366
 msgid "Mother"
 msgstr "مادر"
 
@@ -2807,7 +2807,7 @@ msgstr "سینما"
 
 #: core/utils/model_choices/user_model_choices.py:119
 msgid "Visiting Family (Sele arham)"
-msgstr "صلحه ارحام"
+msgstr "صله ارحام"
 
 #: core/utils/model_choices/user_model_choices.py:120
 msgid "Sport"
@@ -3083,7 +3083,7 @@ msgstr "عروس"
 
 #: core/utils/model_choices/user_model_choices.py:223
 msgid "Shohar Khahar"
-msgstr "سوشهر خواهر"
+msgstr "شوهر خواهر"
 
 #: core/utils/model_choices/user_model_choices.py:226
 msgid "Alborzz"
@@ -3560,30 +3560,18 @@ msgid "Location must contain only letters, spaces, and basic punctuation"
 msgstr ""
 
 #: core/utils/validators/preferred_wife_validators.py:31
-msgid "Moral feature description must be at least 10 characters long"
-msgstr ""
-
-#: core/utils/validators/preferred_wife_validators.py:33
 msgid "Moral feature description must not exceed 1000 characters"
 msgstr "اصول شما نمی‌تواند بیشتر از ۱۰۰۰ کاراکتر باشد."
 
-#: core/utils/validators/preferred_wife_validators.py:37
-msgid "Red flags description must be at least 10 characters long"
-msgstr "خط قرمز های شما نباید کمتر از از ۱۰ کاراکتر باشد. "
-
-#: core/utils/validators/preferred_wife_validators.py:39
+#: core/utils/validators/preferred_wife_validators.py:35
 msgid "Red flags description must not exceed 1000 characters"
 msgstr "خط قرمز های شما نمی‌تواند بیشتر از ۱۰۰۰ کاراکتر باشد. "
 
-#: core/utils/validators/preferred_wife_validators.py:43
-msgid "Explanation must be at least 10 characters long"
-msgstr "توضیحات باید حداقل ۱۰ کاراکتر باشد."
-
-#: core/utils/validators/preferred_wife_validators.py:45
+#: core/utils/validators/preferred_wife_validators.py:39
 msgid "Explanation must not exceed 500 characters"
 msgstr "توضیحات دلیل ارتباط با دوستان نباید بیشتر از ۵۰۰ کاراکتر باشد."
 
-#: core/utils/validators/preferred_wife_validators.py:51
+#: core/utils/validators/preferred_wife_validators.py:45
 msgid "Additional explanations must not exceed 2000 characters"
 msgstr "توضیحات نباید بیشتر از ۲۰۰۰ کاراکتر باشد."
 
@@ -3633,12 +3621,12 @@ msgid ""
 msgstr "سریال شناسنامه فقط میتواند شامل حروف، اعداد و خط تیره باشد."
 
 #: core/utils/validators/user_validators.py:33
-#: core/utils/validators/user_validators.py:272
+#: core/utils/validators/user_validators.py:256
 msgid "Must be at least 18 years old"
 msgstr "سن الزامی ۱۸ سال است."
 
 #: core/utils/validators/user_validators.py:35
-#: core/utils/validators/user_validators.py:274
+#: core/utils/validators/user_validators.py:258
 msgid "Age cannot exceed 100 years"
 msgstr "شغل نباید از ۱۵۰ کاراکتر بیشتر باشد."
 
@@ -3663,242 +3651,206 @@ msgid "Cannot provide medication type without disease history"
 msgstr ""
 
 #: core/utils/validators/user_validators.py:61
-#: core/utils/validators/user_validators.py:364
+#: core/utils/validators/user_validators.py:348
 msgid "Username must contain only letters, numbers, and underscores"
 msgstr ""
 
 #: core/utils/validators/user_validators.py:66
-msgid "Dates of meetings must be at least 10 characters"
-msgstr "تاریخ ملافات ها باید حداقل ۱۰ کاراکتر باشد."
-
-#: core/utils/validators/user_validators.py:68
 msgid "Dates of meetings must not exceed 1000 characters"
 msgstr "تاریخ ملاقات نمیتواند بیشتر از ۱۰۰ کاراکتر باشد."
 
-#: core/utils/validators/user_validators.py:72
-msgid "Result and regards must be at least 10 characters"
-msgstr ""
-
-#: core/utils/validators/user_validators.py:74
+#: core/utils/validators/user_validators.py:70
 msgid "Result and regards must not exceed 1000 characters"
 msgstr "نتایج نباید بیش از ۱۰۰۰ کاراکتر باشد"
 
-#: core/utils/validators/user_validators.py:78
-msgid "Reason must be at least 10 characters"
-msgstr "دلیل باید حداقل ۱۰ کاراکتر باشد."
-
-#: core/utils/validators/user_validators.py:80
+#: core/utils/validators/user_validators.py:74
 msgid "Reason must not exceed 500 characters"
 msgstr "دلیل نمیتواند بیشتر از ۵۰۰ کاراکتر باشد."
 
-#: core/utils/validators/user_validators.py:84
+#: core/utils/validators/user_validators.py:78
 msgid "Cannot be both positive and negative"
 msgstr ""
 
-#: core/utils/validators/user_validators.py:86
+#: core/utils/validators/user_validators.py:80
 msgid "Must select either positive or negative"
 msgstr ""
 
-#: core/utils/validators/user_validators.py:92
+#: core/utils/validators/user_validators.py:86
 msgid "Only PDF and image files (jpg, jpeg, png) are allowed"
 msgstr ""
 
-#: core/utils/validators/user_validators.py:99
+#: core/utils/validators/user_validators.py:93
 msgid "Cost cannot be negative"
 msgstr "هزینه نمیتواند عدد منفی باشد."
 
-#: core/utils/validators/user_validators.py:101
+#: core/utils/validators/user_validators.py:95
 msgid "Invalid cost format"
 msgstr "فرمت اشتباهی هزینه."
 
-#: core/utils/validators/user_validators.py:107
+#: core/utils/validators/user_validators.py:101
 msgid "Please provide divorce reason when there is divorce history"
 msgstr ""
 
-#: core/utils/validators/user_validators.py:109
+#: core/utils/validators/user_validators.py:103
 msgid "Cannot provide divorce reason without divorce history"
 msgstr ""
 
-#: core/utils/validators/user_validators.py:113
+#: core/utils/validators/user_validators.py:107
 msgid ""
 "Contact information must contain only letters, spaces, and basic punctuation"
 msgstr ""
 
-#: core/utils/validators/user_validators.py:118
+#: core/utils/validators/user_validators.py:112
 msgid "Cannot have death date for someone who is alive"
 msgstr ""
 
-#: core/utils/validators/user_validators.py:120
+#: core/utils/validators/user_validators.py:114
 msgid "Must provide death date for someone who is not alive"
 msgstr ""
 
-#: core/utils/validators/user_validators.py:126
+#: core/utils/validators/user_validators.py:120
 msgid "Must provide rent amount for rental residence"
 msgstr ""
 
-#: core/utils/validators/user_validators.py:128
+#: core/utils/validators/user_validators.py:122
 msgid "Must provide mortgage amount for mortgaged residence"
 msgstr ""
 
-#: core/utils/validators/user_validators.py:132
+#: core/utils/validators/user_validators.py:126
 msgid ""
 "Amount must contain only letters, numbers, spaces, Persian characters, and "
 "commas"
 msgstr ""
 
-#: core/utils/validators/user_validators.py:137
+#: core/utils/validators/user_validators.py:131
 msgid "Must provide explanation for other jahiziyeh type"
 msgstr "توضیحات جهیزیه همسر آینده را بنویسید.."
 
-#: core/utils/validators/user_validators.py:139
-msgid "Cannot provide jahiziyeh explanation for standard types"
-msgstr ""
-
-#: core/utils/validators/user_validators.py:143
-msgid "Cannot have pay status or amount without financial obligations"
-msgstr ""
-
-#: core/utils/validators/user_validators.py:145
-msgid "Must provide amount for financial obligations"
-msgstr ""
-
-#: core/utils/validators/user_validators.py:151
+#: core/utils/validators/user_validators.py:141
 msgid "Language must contain only letters, spaces, and commas"
 msgstr ""
 
-#: core/utils/validators/user_validators.py:156
+#: core/utils/validators/user_validators.py:146
 msgid "Job must contain only letters, spaces, and hyphens"
 msgstr ""
 
-#: core/utils/validators/user_validators.py:161
+#: core/utils/validators/user_validators.py:151
 msgid "Cannot have death date for living parent"
 msgstr "نمیتوان برای والدین زنده تاریخ فوت ذکر کرد."
 
-#: core/utils/validators/user_validators.py:163
+#: core/utils/validators/user_validators.py:153
 msgid "Must provide death date for deceased parent"
 msgstr "تعیین تاریخ فوت الزامی است."
 
-#: core/utils/validators/user_validators.py:165
+#: core/utils/validators/user_validators.py:155
 msgid "Death date cannot be before birth date"
 msgstr "تاریخ فوت نمی‌تواند قبل از تاریخ تولد باشد."
 
-#: core/utils/validators/user_validators.py:173
-msgid "Marriage goals must be at least 10 characters long"
-msgstr "اهداف ازدواج باید حداقل ۱۰ کاراکتر باشد."
-
-#: core/utils/validators/user_validators.py:175
+#: core/utils/validators/user_validators.py:163
 msgid "Marriage goals must not exceed 1000 characters"
 msgstr "اهداف ازدواج نمیتواند از ۱۰۰۰ کاراکتر بیشتر باشد."
 
-#: core/utils/validators/user_validators.py:181
-msgid "Description must be at least 10 characters long"
-msgstr ""
-
-#: core/utils/validators/user_validators.py:183
+#: core/utils/validators/user_validators.py:169
 msgid "Description must not exceed 1000 characters"
 msgstr " توضیحات شما نمی‌تواند بیشتر از ۱۰۰۰ کاراکتر باشد."
 
-#: core/utils/validators/user_validators.py:189
-msgid "Friends connection reason must be at least 10 characters long"
-msgstr "دلیل نوع ارتباط با دوستان نباید کمتر از ۱۰ کاراکتر بیشتر باشد."
-
-#: core/utils/validators/user_validators.py:191
+#: core/utils/validators/user_validators.py:175
 msgid "Friends connection reason must not exceed 100 characters"
 msgstr "دلیل نوع ارتباط با دوستان نباید از ۱۰۰ کاراکتر بیشتر باشد."
 
-#: core/utils/validators/user_validators.py:197
+#: core/utils/validators/user_validators.py:181
 msgid "Opinion about woman's job is required"
 msgstr "نظر شما در مورد شغل زنان"
 
-#: core/utils/validators/user_validators.py:203
+#: core/utils/validators/user_validators.py:187
 msgid "Opinion about woman's education is required"
 msgstr "نظر شما در مورد تحصیلات زنان الزامی است."
 
-#: core/utils/validators/user_validators.py:219
+#: core/utils/validators/user_validators.py:203
 msgid "House covering type is inconsistent with society covering type"
 msgstr ""
 
-#: core/utils/validators/user_validators.py:225
+#: core/utils/validators/user_validators.py:209
 msgid "Covering type choices are inconsistent across different contexts"
 msgstr ""
 
-#: core/utils/validators/user_validators.py:234
+#: core/utils/validators/user_validators.py:218
 msgid "Prayer and fasting habits appear inconsistent"
 msgstr ""
 
-#: core/utils/validators/user_validators.py:242
+#: core/utils/validators/user_validators.py:226
 msgid "Political orientation and Velayat Faqih opinion appear inconsistent"
 msgstr ""
 
-#: core/utils/validators/user_validators.py:250
+#: core/utils/validators/user_validators.py:234
 msgid ""
 "Religious activities participation appears inconsistent with entertainment "
 "choices"
 msgstr ""
 
-#: core/utils/validators/user_validators.py:257
+#: core/utils/validators/user_validators.py:241
 msgid ""
 "No children preference is inconsistent with permanent marriage contract "
 "choice"
 msgstr ""
 
-#: core/utils/validators/user_validators.py:341
+#: core/utils/validators/user_validators.py:325
 msgid "Insurance type is required when you have insurance"
 msgstr "نوع بیمه الزامی است."
 
-#: core/utils/validators/user_validators.py:343
+#: core/utils/validators/user_validators.py:327
 msgid "Insurance years is required when you have insurance"
 msgstr "سال‌های بیمه الزامی است."
 
-#: core/utils/validators/user_validators.py:346
+#: core/utils/validators/user_validators.py:330
 msgid "Insurance type should not be provided when you don't have insurance"
 msgstr ""
 
-#: core/utils/validators/user_validators.py:348
+#: core/utils/validators/user_validators.py:332
 msgid "Insurance years should not be provided when you don't have insurance"
 msgstr ""
 
-#: core/utils/validators/user_validators.py:360
+#: core/utils/validators/user_validators.py:344
 msgid "Username must be at least 3 characters long"
 msgstr "نام کاربری نباید کمتر از ۳ کاراکتر باشد."
 
-#: core/utils/validators/user_validators.py:362
+#: core/utils/validators/user_validators.py:346
 msgid "Username must not exceed 150 characters"
 msgstr "نام کاربری نمی‌تواند بیشتر از 150 کاراکتر باشد."
 
-#: core/utils/validators/user_validators.py:370
+#: core/utils/validators/user_validators.py:354
 msgid "Enter a valid email address"
 msgstr "ایمیل صحیح وارد کنید."
 
-#: core/utils/validators/user_validators.py:376
+#: core/utils/validators/user_validators.py:360
 msgid "Access code is required"
 msgstr "کد دسترسی برای کاربران جدید لازم است."
 
-#: core/utils/validators/user_validators.py:378
+#: core/utils/validators/user_validators.py:362
 msgid "Access code must not exceed 50 characters"
 msgstr "کد دسترسی نباید از ۱۵۰ کاراکتر بیشتر باشد."
 
-#: core/utils/validators/user_validators.py:384
+#: core/utils/validators/user_validators.py:368
 msgid "Middle man code must not exceed 100 characters"
 msgstr "کد معرف نباید از ۱۰۰ کاراکتر بیشتر باشد."
 
-#: core/utils/validators/user_validators.py:397
+#: core/utils/validators/user_validators.py:381
 msgid "Cannot have middle man code without access code"
 msgstr ""
 
-#: core/utils/validators/user_validators.py:405
+#: core/utils/validators/user_validators.py:389
 msgid "Superuser must be staff"
 msgstr "سوپر یوزر باید is_staff=True داشته باشد."
 
-#: core/utils/validators/user_validators.py:408
+#: core/utils/validators/user_validators.py:392
 msgid "Inactive user cannot be staff"
 msgstr "کاربر غیر فعال نمی‌تواند خالیstaff  باشد."
 
-#: dating_app/settings.py:187
+#: dating_app/settings.py:190
 msgid "English"
 msgstr "انگلیسی"
 
-#: dating_app/settings.py:188
+#: dating_app/settings.py:191
 msgid "Persian"
 msgstr "فارسی"
 
@@ -3945,8 +3897,8 @@ msgstr "دوباره فعال کردن کاربران انتخاب شده"
 #: users/admin.py:359
 #: users/user_related_models/confidintional_information_model.py:282
 #: users/user_related_models/confidintional_information_model.py:339
-#: users/user_related_models/family_information_model.py:300
-#: users/user_related_models/personal_information_model.py:25
+#: users/user_related_models/family_information_model.py:299
+#: users/user_related_models/personal_information_model.py:23
 msgid "Birth Date"
 msgstr "تاریخ تولد"
 
@@ -3966,6 +3918,10 @@ msgstr "کدهای دسترسی انتخاب‌ شده دوباره فعال ش�
 msgid "Reactivate selected access codes"
 msgstr "دوباره فعال کردن کدهای دسترسی انتخاب‌ شده"
 
+#: users/apps.py:7
+msgid "Users"
+msgstr "کاربران"
+
 #: users/forms.py:12
 msgid "Enter an active access code for the user."
 msgstr "کد دسترسی فعال برای کاربر وارد کنید."
@@ -3984,17 +3940,17 @@ msgid "Additional Explanations"
 msgstr "توضیحات اضافی"
 
 #: users/preferred_wife_models/preferred_wife_extra_information.py:19
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:89
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:113
-#: users/preferred_wife_models/preferred_wife_personal_information.py:52
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:92
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:116
+#: users/preferred_wife_models/preferred_wife_personal_information.py:51
 #: users/preferred_wife_models/preferred_wife_physical_information.py:46
 #: users/user_related_models/family_information_model.py:63
-#: users/user_related_models/family_information_model.py:135
-#: users/user_related_models/family_information_model.py:200
-#: users/user_related_models/family_information_model.py:234
-#: users/user_related_models/family_information_model.py:359
-#: users/user_related_models/family_information_model.py:374
-#: users/user_related_models/physical_information_model.py:101
+#: users/user_related_models/family_information_model.py:134
+#: users/user_related_models/family_information_model.py:199
+#: users/user_related_models/family_information_model.py:233
+#: users/user_related_models/family_information_model.py:358
+#: users/user_related_models/family_information_model.py:373
+#: users/user_related_models/physical_information_model.py:100
 #: users/user_related_models/subject_details.py:21
 #: users/user_related_models/user_model.py:197
 #: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/admin/guardian/model/obj_perms_manage_user.html:43
@@ -4015,60 +3971,60 @@ msgstr "اطلاعات اضافی همسر مورد نظر"
 msgid "Appearance Type"
 msgstr "نوع پوشش ظاهری"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:22
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:21
 msgid "Age Difference"
 msgstr "تفاوت سنی"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:28
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:27
 msgid "Future Spouse Family Religious Status Importance"
 msgstr "اهمیت وضعیت مذهبی خانواده همسر آینده"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:36
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:35
 msgid "Future Spouse Family Financial Status Importance"
 msgstr "اهمیت وضعیت مالی خانواده همسر آینده"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:44
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:43
 msgid "Marriage with Someone with Marriage Experience"
 msgstr "ازدواج با فردی که تجربه عقد و ازدواج دارد"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:51
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:50
 msgid "Marriage with Someone with Marriage Experience Additional Explnations"
 msgstr "توضیحات اضافی بخش بالا"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:55
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:56
 msgid "Most Important Moral Feature of Future Spouse"
 msgstr "مهم‌ترین ویژگی اخلاقی همسر آینده"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:61
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:62
 msgid "Marriage with Disabled Person"
 msgstr "ازدواج با معلول"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:69
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:70
 msgid "Marriage with Veteran Person"
 msgstr "ازدواج با جانباز"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:76
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:77
 msgid "Marriage with Veteran & Disabled Person Explanation"
 msgstr "توضیحات  ازدواج با معلول یا جانباز"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:82
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:85
 msgid "Red Flags"
 msgstr "خط قرمزها"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:100
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:101
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:103
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:104
 msgid "Preferred Wife Intellectual Information"
 msgstr "اطلاعات عقیدتی همسر مورد نظر"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:106
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:109
 msgid "Future Spouse Originality"
 msgstr "اصالت همسر آینده"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:127
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:130
 msgid "FutureSposeOriginality"
 msgstr "اصالت همسر آینده"
 
-#: users/preferred_wife_models/preferred_wife_intellectual_information.py:128
+#: users/preferred_wife_models/preferred_wife_intellectual_information.py:131
 msgid "FutureSposeOriginalities"
 msgstr "اصالت های همسر آینده"
 
@@ -4092,8 +4048,8 @@ msgstr "محل سکونت فعلی"
 msgid "After Marriage Residence Location"
 msgstr "محل سکونت پس از ازدواج"
 
+#: users/preferred_wife_models/preferred_wife_personal_information.py:65
 #: users/preferred_wife_models/preferred_wife_personal_information.py:66
-#: users/preferred_wife_models/preferred_wife_personal_information.py:67
 msgid "Preferred Wife Personal Information"
 msgstr "اطلاعات شخصی همسر مورد نظر"
 
@@ -4171,20 +4127,20 @@ msgid "Work Address"
 msgstr "آدرس محل کار"
 
 #: users/user_related_models/confidintional_information_model.py:102
-#: users/user_related_models/family_information_model.py:312
+#: users/user_related_models/family_information_model.py:311
 msgid "Originality"
 msgstr "اصالت"
 
 #: users/user_related_models/confidintional_information_model.py:108
-#: users/user_related_models/family_information_model.py:221
-#: users/user_related_models/family_information_model.py:318
-#: users/user_related_models/personal_information_model.py:38
+#: users/user_related_models/family_information_model.py:220
+#: users/user_related_models/family_information_model.py:317
+#: users/user_related_models/personal_information_model.py:36
 msgid "Education"
 msgstr "تحصیلات"
 
 #: users/user_related_models/confidintional_information_model.py:114
-#: users/user_related_models/family_information_model.py:227
-#: users/user_related_models/family_information_model.py:305
+#: users/user_related_models/family_information_model.py:226
+#: users/user_related_models/family_information_model.py:304
 #: users/user_related_models/financial_information.py:15
 msgid "Job"
 msgstr "شغل"
@@ -4256,7 +4212,7 @@ msgid "Marriage Date"
 msgstr "تاریخ ازدواج"
 
 #: users/user_related_models/confidintional_information_model.py:264
-#: users/user_related_models/family_information_model.py:120
+#: users/user_related_models/family_information_model.py:119
 msgid "Divorce Date"
 msgstr "تاریخ طلاق"
 
@@ -4353,130 +4309,130 @@ msgstr "اطلاعات خانواده‌ها"
 msgid "Person Status"
 msgstr "وضعیت فرد"
 
-#: users/user_related_models/family_information_model.py:103
+#: users/user_related_models/family_information_model.py:102
 msgid "Contract Length"
 msgstr "مدت عقد"
 
-#: users/user_related_models/family_information_model.py:110
+#: users/user_related_models/family_information_model.py:109
 msgid "Living Length"
 msgstr "مدت زندگی مشترک"
 
-#: users/user_related_models/family_information_model.py:117
-#: users/user_related_models/family_information_model.py:330
+#: users/user_related_models/family_information_model.py:116
+#: users/user_related_models/family_information_model.py:329
 msgid "Death Date"
 msgstr "تاریخ فوت"
 
-#: users/user_related_models/family_information_model.py:127
+#: users/user_related_models/family_information_model.py:126
 msgid "Reason for Divorce or Death"
 msgstr "دلایل طلاق یا فوت"
 
-#: users/user_related_models/family_information_model.py:161
+#: users/user_related_models/family_information_model.py:160
 msgid "Engagement or Wedding Status"
 msgstr "وضعیت نامزدی یا ازدواج"
 
-#: users/user_related_models/family_information_model.py:162
+#: users/user_related_models/family_information_model.py:161
 msgid "Engagements or Weddings Statuse"
 msgstr "وضعیت‌های نامزدی یا ازدواج"
 
-#: users/user_related_models/family_information_model.py:167
-#: users/user_related_models/personal_information_model.py:13
+#: users/user_related_models/family_information_model.py:166
+#: users/user_related_models/personal_information_model.py:12
 msgid "Gender"
 msgstr "جنسیت"
 
-#: users/user_related_models/family_information_model.py:174
+#: users/user_related_models/family_information_model.py:173
 msgid "Status"
 msgstr "وضعیت"
 
-#: users/user_related_models/family_information_model.py:179
+#: users/user_related_models/family_information_model.py:178
 msgid "Child Birth Date"
 msgstr "تاریخ تولد"
 
-#: users/user_related_models/family_information_model.py:185
+#: users/user_related_models/family_information_model.py:184
 msgid "Custody"
 msgstr "حضانت"
 
-#: users/user_related_models/family_information_model.py:191
+#: users/user_related_models/family_information_model.py:190
 msgid "Living Location"
 msgstr "محل زندگی"
 
-#: users/user_related_models/family_information_model.py:214
+#: users/user_related_models/family_information_model.py:213
 msgid "Ex-Husband Child Status"
 msgstr "وضعیت فرزند همسر سابق"
 
-#: users/user_related_models/family_information_model.py:215
+#: users/user_related_models/family_information_model.py:214
 msgid "Ex-Husbands Child Status"
 msgstr "وضعیت فرزند همسر سابق"
 
-#: users/user_related_models/family_information_model.py:219
-#: users/user_related_models/family_information_model.py:325
+#: users/user_related_models/family_information_model.py:218
+#: users/user_related_models/family_information_model.py:324
 msgid "Alive"
 msgstr "در قید حیات"
 
-#: users/user_related_models/family_information_model.py:249
+#: users/user_related_models/family_information_model.py:248
 msgid "Family Member"
 msgstr "عضو خانواده"
 
-#: users/user_related_models/family_information_model.py:250
+#: users/user_related_models/family_information_model.py:249
 msgid "Family Members"
 msgstr "اعضای خانواده"
 
-#: users/user_related_models/family_information_model.py:255
+#: users/user_related_models/family_information_model.py:254
 msgid "Sister"
 msgstr "خواهر"
 
-#: users/user_related_models/family_information_model.py:256
+#: users/user_related_models/family_information_model.py:255
 msgid "Sisters"
 msgstr "خواهران"
 
-#: users/user_related_models/family_information_model.py:261
+#: users/user_related_models/family_information_model.py:260
 msgid "Brother"
 msgstr "برادر"
 
-#: users/user_related_models/family_information_model.py:262
+#: users/user_related_models/family_information_model.py:261
 msgid "Brothers"
 msgstr "برادران"
 
-#: users/user_related_models/family_information_model.py:267
+#: users/user_related_models/family_information_model.py:266
 msgid "Groom or Zan Dadash"
-msgstr "داماد یا شوهر خواهر"
+msgstr "داماد یا زن داداش"
+
+#: users/user_related_models/family_information_model.py:273
+msgid "Groom"
+msgstr "داماد / زن داداش"
 
 #: users/user_related_models/family_information_model.py:274
-msgid "Groom"
-msgstr "داماد / شوهر خواهر"
-
-#: users/user_related_models/family_information_model.py:275
 msgid "Grooms"
-msgstr "دامادها / شوهر خواهر ها"
+msgstr "دامادها / زن داداش ها"
 
-#: users/user_related_models/family_information_model.py:280
+#: users/user_related_models/family_information_model.py:279
 msgid "Bride or Shohar Khahar"
-msgstr "عروس یا زن داداش"
+msgstr "عروس یا شوهر خواهر"
+
+#: users/user_related_models/family_information_model.py:286
+msgid "Bride or Wife"
+msgstr "عروس / شوهر خواهر"
 
 #: users/user_related_models/family_information_model.py:287
-msgid "Bride or Wife"
-msgstr "عروس / زن داداش"
-
-#: users/user_related_models/family_information_model.py:288
 msgid "Brides or Wives"
-msgstr "عروس ها / زن داداش ها"
+msgstr "عروس ها / شوهر خواهر ها"
 
-#: users/user_related_models/family_information_model.py:293
+#: users/user_related_models/family_information_model.py:292
 msgid "Language"
 msgstr "زبان"
 
-#: users/user_related_models/family_information_model.py:351
+#: users/user_related_models/family_information_model.py:350
 msgid "Parent"
 msgstr "والدین"
 
-#: users/user_related_models/family_information_model.py:352
+#: users/user_related_models/family_information_model.py:351
 msgid "Parents"
 msgstr "والدین"
 
-#: users/user_related_models/family_information_model.py:368
+#: users/user_related_models/family_information_model.py:367
 msgid "Mothers"
 msgstr "مادر"
 
-#: users/user_related_models/family_information_model.py:383
+#: users/user_related_models/family_information_model.py:382
 msgid "Fathers"
 msgstr "پدر"
 
@@ -4508,27 +4464,27 @@ msgstr "محل سکونت پس از ازدواج"
 msgid "Ex-Spouse Financial Status"
 msgstr "وضعیت مهریه همسر سابق"
 
-#: users/user_related_models/financial_information.py:83
+#: users/user_related_models/financial_information.py:85
 msgid "Ex-Spouse Financial Pay Status"
 msgstr "نوع مدت پرداخت همسر سابق"
 
-#: users/user_related_models/financial_information.py:90
+#: users/user_related_models/financial_information.py:94
 msgid "Ex-Spouse Financial Amount"
 msgstr "میزان مهریه همسر سابق"
 
-#: users/user_related_models/financial_information.py:99
+#: users/user_related_models/financial_information.py:103
 msgid "Future Spouse Dowry Type"
 msgstr "نوع مهریه همسر آینده"
 
-#: users/user_related_models/financial_information.py:107
+#: users/user_related_models/financial_information.py:111
 msgid "Future Spose Dowry Amount"
 msgstr "میزان مهریه همسر آینده"
 
-#: users/user_related_models/financial_information.py:114
+#: users/user_related_models/financial_information.py:118
 msgid "Future Spose Jahiziyeh"
 msgstr "جهیزیه همسر آینده"
 
-#: users/user_related_models/financial_information.py:122
+#: users/user_related_models/financial_information.py:126
 msgid "Future Spose Jahiziyeh Explantion"
 msgstr "توضیحات جهیزیه همسر آینده"
 
@@ -4600,118 +4556,118 @@ msgstr "روزه"
 msgid "Fasting Explanation (sickness that makes him not be able to fast)"
 msgstr "توضیحات علت ناتوانی در روزه گرفتن."
 
-#: users/user_related_models/intellectual_information_model.py:107
+#: users/user_related_models/intellectual_information_model.py:109
 msgid "Cover Type in House"
 msgstr "نوع پوشش در خانه"
 
-#: users/user_related_models/intellectual_information_model.py:113
+#: users/user_related_models/intellectual_information_model.py:115
 msgid "Cover Type in Society & Workplace"
 msgstr "نوع پوشش در جامعه و محل کار"
 
-#: users/user_related_models/intellectual_information_model.py:119
+#: users/user_related_models/intellectual_information_model.py:121
 msgid "Participating in Prayer and Quran Religious Meetings"
 msgstr "شرکت در مجالس مذهبی، دعا و قرآن"
 
-#: users/user_related_models/intellectual_information_model.py:125
+#: users/user_related_models/intellectual_information_model.py:127
 msgid "Music"
 msgstr "گوش دادن به موسیقی"
 
-#: users/user_related_models/intellectual_information_model.py:131
+#: users/user_related_models/intellectual_information_model.py:133
 msgid "Dance & Singing Assemblies"
 msgstr "شرکت در مجالس رقص و آواز"
 
-#: users/user_related_models/intellectual_information_model.py:137
+#: users/user_related_models/intellectual_information_model.py:139
 msgid "Opinion About Innocent Contact"
 msgstr "در چه مواردی می توان با نامحرم گفتگو کرد؟"
 
-#: users/user_related_models/intellectual_information_model.py:143
+#: users/user_related_models/intellectual_information_model.py:145
 msgid "Cover Type in Contact of Innocent"
 msgstr "نوع پوشش در مهمانی در حضور نامحرم"
 
-#: users/user_related_models/intellectual_information_model.py:149
+#: users/user_related_models/intellectual_information_model.py:151
 msgid "Decision Making in Choosing a Spouse"
 msgstr ""
 "در تصمیم گیری برای انتخاب همسر و ازدواج با افرادی که موسسه انتخاب می‌کند، آیا "
 "مستقل هستید یا دیگران برایتان تصمیم گیری می کنند؟"
 
-#: users/user_related_models/intellectual_information_model.py:180
-#: users/user_related_models/intellectual_information_model.py:181
+#: users/user_related_models/intellectual_information_model.py:182
+#: users/user_related_models/intellectual_information_model.py:183
 msgid "Intellectual Information"
 msgstr "اطلاعات عقیدتی"
 
-#: users/user_related_models/personal_information_model.py:20
+#: users/user_related_models/personal_information_model.py:18
 msgid "Sadat"
 msgstr "سادات"
 
-#: users/user_related_models/personal_information_model.py:32
+#: users/user_related_models/personal_information_model.py:30
 msgid "Birth Location"
 msgstr "محل تولد"
 
-#: users/user_related_models/personal_information_model.py:45
+#: users/user_related_models/personal_information_model.py:43
 msgid "Degree"
 msgstr "رشته و گرایش"
 
-#: users/user_related_models/personal_information_model.py:51
+#: users/user_related_models/personal_information_model.py:49
 msgid "Military Status"
 msgstr "وضعیت سربازی"
 
-#: users/user_related_models/personal_information_model.py:57
+#: users/user_related_models/personal_information_model.py:55
 msgid "Military Status Explanation"
 msgstr "توضیحات سربازی"
 
-#: users/user_related_models/personal_information_model.py:64
+#: users/user_related_models/personal_information_model.py:62
 msgid "Income"
 msgstr "درآمد ماهانه"
 
-#: users/user_related_models/personal_information_model.py:71
+#: users/user_related_models/personal_information_model.py:69
 msgid "Deposit"
 msgstr "سپرده"
 
-#: users/user_related_models/personal_information_model.py:77
+#: users/user_related_models/personal_information_model.py:75
 msgid "Have Insurance"
 msgstr "بیمه دار"
 
-#: users/user_related_models/personal_information_model.py:83
+#: users/user_related_models/personal_information_model.py:81
 msgid "Insurance Type"
 msgstr "نوع بیمه"
 
-#: users/user_related_models/personal_information_model.py:92
+#: users/user_related_models/personal_information_model.py:90
 msgid "Insurance Years"
 msgstr "سال‌های بیمه"
 
-#: users/user_related_models/personal_information_model.py:97
+#: users/user_related_models/personal_information_model.py:95
 msgid "Leisure Type"
 msgstr "نوع تفریحات"
 
-#: users/user_related_models/personal_information_model.py:103
+#: users/user_related_models/personal_information_model.py:101
 msgid "Usage Cases"
 msgstr "موارد استفاده نظیر دخانیات"
 
-#: users/user_related_models/personal_information_model.py:110
+#: users/user_related_models/personal_information_model.py:108
 msgid "Usage Case Description"
 msgstr "توضیحات موارد مورد استفاده نظیر دخانیات"
 
-#: users/user_related_models/personal_information_model.py:117
+#: users/user_related_models/personal_information_model.py:115
 msgid "Tatto"
 msgstr "تتو"
 
-#: users/user_related_models/personal_information_model.py:124
+#: users/user_related_models/personal_information_model.py:122
 msgid "Tatto Description"
 msgstr "توضیحات تتو"
 
-#: users/user_related_models/personal_information_model.py:131
+#: users/user_related_models/personal_information_model.py:129
 msgid "Conviction or Arrest History"
 msgstr "تاریخچه محکومیت یا دستگیری"
 
-#: users/user_related_models/personal_information_model.py:136
+#: users/user_related_models/personal_information_model.py:134
 msgid "Conviction Reason"
 msgstr "دلیل محکومیت"
 
-#: users/user_related_models/personal_information_model.py:168
+#: users/user_related_models/personal_information_model.py:166
 msgid "Personal Information"
 msgstr "اطلاعات شخصی"
 
-#: users/user_related_models/personal_information_model.py:169
+#: users/user_related_models/personal_information_model.py:167
 msgid "Personals Information"
 msgstr "اطلاعات شخصی"
 
@@ -4739,19 +4695,19 @@ msgstr "اندازه عینک"
 msgid "Body and Face"
 msgstr "چهره و اندام"
 
-#: users/user_related_models/physical_information_model.py:86
+#: users/user_related_models/physical_information_model.py:85
 msgid "Disease or Surgery History"
 msgstr "بیماری یا جراحی"
 
-#: users/user_related_models/physical_information_model.py:91
+#: users/user_related_models/physical_information_model.py:90
 msgid "Medication/Surgery/Disease Type"
 msgstr "نوع دارو/جراحی/بیماری"
 
-#: users/user_related_models/physical_information_model.py:122
+#: users/user_related_models/physical_information_model.py:121
 msgid "Physical Information"
 msgstr "اطلاعات فیزیکی"
 
-#: users/user_related_models/physical_information_model.py:123
+#: users/user_related_models/physical_information_model.py:122
 msgid "Physical Informations"
 msgstr "اطلاعات فیزیکی افراد"
 
@@ -7258,6 +7214,24 @@ msgstr "تاریخ"
 msgid "Select currency"
 msgstr "واحد را انتخاب کنید."
 
+#~ msgid "Red flags description must be at least 10 characters long"
+#~ msgstr "خط قرمز های شما نباید کمتر از از ۱۰ کاراکتر باشد. "
+
+#~ msgid "Explanation must be at least 10 characters long"
+#~ msgstr "توضیحات باید حداقل ۱۰ کاراکتر باشد."
+
+#~ msgid "Dates of meetings must be at least 10 characters"
+#~ msgstr "تاریخ ملافات ها باید حداقل ۱۰ کاراکتر باشد."
+
+#~ msgid "Reason must be at least 10 characters"
+#~ msgstr "دلیل باید حداقل ۱۰ کاراکتر باشد."
+
+#~ msgid "Marriage goals must be at least 10 characters long"
+#~ msgstr "اهداف ازدواج باید حداقل ۱۰ کاراکتر باشد."
+
+#~ msgid "Friends connection reason must be at least 10 characters long"
+#~ msgstr "دلیل نوع ارتباط با دوستان نباید کمتر از ۱۰ کاراکتر بیشتر باشد."
+
 #~ msgid "Choose the number of Kids"
 #~ msgstr "تعداد فرزندان را انتخاب کنید."
 
@@ -7417,9 +7391,6 @@ msgstr "واحد را انتخاب کنید."
 
 #~ msgid "Tocher"
 #~ msgstr "نوع مهریه همسر آینده"
-
-#~ msgid "Users"
-#~ msgstr "کاربران"
 
 #~ msgid "users"
 #~ msgstr "کاربران"

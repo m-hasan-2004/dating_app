@@ -100,6 +100,9 @@ DATABASES = {
         "PASSWORD": os.getenv("DB_PASSWORD"),
         "HOST": os.getenv("DB_HOST"),  # Use '127.0.0.1' for IPv4
         "PORT": os.getenv("DB_PORT"),  # Default PostgreSQL port
+        "OPTIONS": {
+            "client_encoding": "UTF8",
+        },
     }
 }
 

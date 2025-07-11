@@ -21,7 +21,7 @@ class IntellectualInformation(models.Model):
         error_messages=IntellectualInfoErrorMessages.OPINION_WOMAN_JOB,
         validators=[IntellectualInformationValidator.validate_opinion_woman_job],
     )
-    opinion_woman_edu = models.CharField(
+    opinion_woman_edu = MultiSelectField(
         _("Opinion About Woman's Education"),
         choices=IntellectualInformationChoices.WOMAN_EDU_OPTIONS,
         help_text=IntellectualInfoHelpText.OPINION_WOMAN_EDU,
@@ -102,6 +102,8 @@ class IntellectualInformation(models.Model):
         max_length=150,
         help_text=IntellectualInfoHelpText.FASTING_EXPLANATION,
         error_messages=IntellectualInfoErrorMessages.FASTING_EXPLANATION,
+        blank=True,
+        null=True
     )
     cover_type_house = MultiSelectField(
         _("Cover Type in House"),
