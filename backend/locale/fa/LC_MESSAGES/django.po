@@ -7056,7 +7056,7 @@ msgstr "مشاهده سایت"
 
 #: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/account_links.html:32
 msgid "Log out"
-msgstr "خروج از حسباب کاربری"
+msgstr "خروج از حساب کاربری"
 
 #: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/actions_row.html:4
 msgid "More actions"
