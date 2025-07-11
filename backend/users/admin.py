@@ -1,5 +1,9 @@
 from django.contrib import admin
+from django.contrib.auth.models import Group
 from django.contrib.auth import admin as auth_admin
+
+# Unregister the Group model to hide the Authentication and Authorization section
+admin.site.unregister(Group)
 from django.utils.translation import gettext_lazy as _
 from users.user_related_models import (
     User,
