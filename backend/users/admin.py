@@ -43,6 +43,7 @@ class IdentityInfoInline(StackedInlineJalaliMixin, admin.StackedInline):
     fk_name = "user"
     extra = 1
     classes = ('collapse',)  # Makes the section collapsible
+    
 
 
 class BirthCertificateInfoInline(StackedInlineJalaliMixin, admin.StackedInline):
