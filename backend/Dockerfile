@@ -1,42 +1,70 @@
-FROM docker.arvancloud.ir/python:3.11-slim
+# Base image DockerFile
+FROM python:3.11-slim-bullseye
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    postgresql-client \
-    locales \
-    cron \
-    gettext \
-    && rm -rf /var/lib/apt/lists/* \
-    && locale-gen fa_IR.UTF-8
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONFAULTHANDLER=1 \
+    PYTHONPATH=/app \
+    # Set locale for Persian support
+    LANG=fa_IR.UTF-8 \
+    LC_ALL=fa_IR.UTF-8 \
+    # Set timezone (change to your timezone if needed)
+    TZ=Asia/Tehran \
+    # Default settings module
+    DJANGO_SETTINGS_MODULE=dating_app.settings \
+    # Debug mode (can be overridden in docker-compose)
+    DEBUG=1
 
-# Set environment variables for locale
-ENV LANG=fa_IR.UTF-8
-ENV LC_ALL=fa_IR.UTF-8
-ENV LANGUAGE=fa_IR.UTF-8
+# Install system dependencies with error handling and retry
+COPY install_packages.sh /install_packages.sh
+RUN chmod +x /install_packages.sh && \
+    echo "[INFO] Starting package installation..." && \
+    /install_packages.sh
+
+# Set timezone
+RUN echo "[INFO] Setting timezone to $TZ" && \
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+    echo $TZ > /etc/timezone
 
 # Set work directory
 WORKDIR /app
 
-# Install Python dependencies first (for better caching)
+# Copy requirements.txt and install Python dependencies
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN echo "[INFO] Installing Python packages from requirements.txt..." && \
+    pip install --no-cache-dir -r requirements.txt && \
+    echo "[SUCCESS] Python packages installed successfully" || \
+    (echo "[ERROR] Failed to install Python packages. Detailed error log:" && \
+     pip install --no-cache-dir -r requirements.txt -v 2>&1 | tee pip_error.log && \
+     cat pip_error.log && \
+     exit 1)
 
-# Copy project files
+# Copy project files with error handling
 COPY . .
 
-# Compile translation files
-RUN python manage.py compilemessages
+# Copy scripts and make them executable
+COPY backup_db.sh /usr/local/bin/backup_db.sh
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN echo "[INFO] Making scripts executable..." && \
+    chmod +x /usr/local/bin/backup_db.sh /usr/local/bin/entrypoint.sh || \
+    (echo "[ERROR] Failed to make scripts executable" && exit 1)
 
-# Copy .env file
-COPY .env /app/.env
+# Set up cron for backups
+RUN echo "[INFO] Setting up cron for backups..." && \
+    echo "* * * * * root /usr/local/bin/backup_db.sh >> /var/log/cron.log 2>&1" > /etc/cron.d/backup-cron && \
+    echo "0 3 * * * root find /backups -type f -mtime +7 -name '*.sql' -delete" >> /etc/cron.d/backup-cron && \
+    chmod 0644 /etc/cron.d/backup-cron && \
+    touch /var/log/cron.log || \
+    (echo "[ERROR] Failed to set up cron" && exit 1)
 
-# Copy the backup script
-COPY back_db.sh /app/back_db.sh
+# Create necessary directories with error handling
+RUN echo "[INFO] Creating necessary directories..." && \
+    mkdir -p /app/staticfiles /app/media /backups || \
+    (echo "[ERROR] Failed to create directories" && exit 1)
 
-# Set up cron job
-RUN echo "0 * * * * /bin/bash /app/back_db.sh" > /etc/cron.d/db_backup \
-    && chmod 0744 /etc/cron.d/db_backup \
-    && crontab /etc/cron.d/db_backup
+# Set the entrypoint script
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
-# Run the application
-CMD ["sh", "-c", "cron && python manage.py runserver 0.0.0.0:8000"]
+# Command to run the application
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

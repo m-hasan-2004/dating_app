@@ -1,70 +1,74 @@
-version: '3.8'
+# docker-compose.yml
 
 services:
-  db:
-    image: postgres:15
-    environment:
-      POSTGRES_USER: ${DB_USER:-hasan}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-Welcome}
-      POSTGRES_DB: ${DB_NAME:-dating_app}
-      PGDATA: /var/lib/postgresql/data/pgdata
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
-    networks:
-      - app_network
-    ports:
-      - "5433:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-hasan} -d ${DB_NAME:-dating_app}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    restart: unless-stopped
-
   web:
     build:
       context: .
       dockerfile: Dockerfile
-    command: >
-      /bin/sh -c "
-      echo 'Waiting for PostgreSQL to become available...' &&
-      until pg_isready -h db -U $${DB_USER:-hasan} -d $${DB_NAME:-dating_app}; do
-        echo 'PostgreSQL is unavailable - sleeping'
-        sleep 1
-      done &&
-      echo 'PostgreSQL is up - executing migrations...' &&
-      python manage.py migrate --noinput &&
-      echo 'Starting server...' &&
-      python manage.py runserver 0.0.0.0:8000
-      "
+    container_name: dating_app_web
     volumes:
-      - .:/app
-      - backup_data:/mnt/backup
+      - ./:/app
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
+      - backup_volume:/backups
     ports:
       - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      - PGPASSWORD=${DB_PASSWORD}
+      - DJANGO_SETTINGS_MODULE=dating_app.settings
+      - DB_HOST=db
+      - DB_NAME=dating_app
+      - DB_USER=hasan
+      - DB_PASSWORD=Welcome
+      - PYTHONUNBUFFERED=1
+      - DJANGO_DEBUG=True
     depends_on:
       db:
         condition: service_healthy
-    environment:
-      - DB_NAME=${DB_NAME:-dating_app}
-      - DB_USER=${DB_USER:-hasan}
-      - DB_PASSWORD=${DB_PASSWORD:-Welcome}
-      - DB_HOST=db
-      - DB_PORT=5432
-      - SECRET_KEY=${SECRET_KEY:-django-insecure-default-secret-key}
-      - PYTHONUNBUFFERED=1
-      - LANG=fa_IR.UTF-8
-      - LC_ALL=fa_IR.UTF-8
-      - LANGUAGE=fa_IR.UTF-8
-    networks:
-      - app_network
     restart: unless-stopped
+    networks:
+      - app-network
+    command: >
+      sh -c "python manage.py migrate && 
+             python manage.py collectstatic --noinput && 
+             python manage.py runserver 0.0.0.0:8000"
+
+  db:
+    image: postgres:15-alpine
+    container_name: dating_app_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+      - backup_volume:/backups
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_INITDB_ARGS: --data-checksums
+    ports:
+      - "5432:5432"
+    restart: always
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 networks:
-  app_network:
+  app-network:
     driver: bridge
 
 volumes:
   postgres_data:
-  backup_data:
+    name: dating_app_postgres_data
+  static_volume:
+    name: dating_app_static
+  media_volume:
+    name: dating_app_media
+  backup_volume:
+    name: dating_app_backups
+
+
