@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.functions.datetime import TruncBase
 from core.utils.model_choices.user_model_choices import Choices
 from core.utils.error_msgs.model_error_messages import PersonalInfoErrorMessages
 from core.utils.help_texts.help_text import PersonalInfoHelpText
@@ -44,6 +45,8 @@ class PersonalInformation(models.Model):
         max_length=150,
         error_messages=PersonalInfoErrorMessages.DEGREE,
         help_text=PersonalInfoHelpText.DEGREE,
+        blank=True,
+        null=True
     )
     military_status = models.CharField(
         _("Military Status"),
@@ -90,12 +93,16 @@ class PersonalInformation(models.Model):
         _("Insurance Years"),
         error_messages=PersonalInfoErrorMessages.INSURANCE_YEARS,
         help_text=PersonalInfoHelpText.INSURANCE_YEARS,
+        blank=True,
+        null=True
     )
     leisure_type = MultiSelectField(
         _("Leisure Type"),
         choices=Choices.LEISURE_TYPE_CHOICES,
         error_messages=PersonalInfoErrorMessages.LEISURE_TYPE,
         help_text=PersonalInfoHelpText.LEISURE_TYPE,
+        blank=True,
+        null=True
     )
     usage_cases = MultiSelectField(
         _("Usage Cases"),

@@ -106,8 +106,8 @@ class PreferredWifeIntellectualInformation(models.Model):
 
 class FutureSposeOriginality(models.Model):
     future_spouse_originality = models.CharField(
-        _("Future Spouse Originality"),
-        choices=Choices.IRAN_PROVINCES,
+        _("Future Spouse Ethnicity"),
+        choices=Choices.ETHNIC_GROUP_CHOICES,
         error_messages=IntellectualInfoErrorMessages.FUTURE_SPOUSE_ORIGINALITY,
         help_text=IntellectualInfoHelpText.FUTURE_SPOUSE_ORIGINALITY,
     )

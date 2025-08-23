@@ -108,8 +108,10 @@ class FamilyInfoHelpText:
     ORIGINALITY = _("Enter the originality of the parent.")
     ALIVE = _("Indicate if the parent is alive.")
     DEATH_DATE_PARENT = _("Enter the death date of the parent if applicable.")
-    GROOM_OR_ZAN = (_("Select the groom from the available options."),)
+    GROOM_OR_ZAN = _("Select the groom from the available options.")
     BRIDE_OR_WIFE = _("Select the bride or wife from the available options.")
+    NUMBER_OF_SISTERS = _("Enter the number of sisters you have.")
+    NUMBER_OF_BROTHERS = _("Enter the number of brothers you have.")
 
 
 class IdentityInfoHelpText:

@@ -46,6 +46,17 @@ class Choices:
         ("Low", _("Low")),
         ("Doesn’t Matter", _("Doesn’t Matter")),
     )
+    ETHNIC_GROUP_CHOICES = (
+        ("فارس", _("فارس")),
+        ("لر", _("لر")),
+        ("ترک", _("ترک")),
+        ("کرد", _("کرد")),
+        ("لک", _("لک")),
+        ("تات", _("تات")),
+        ("عرب", _("عرب")),
+        ("بلوچ", _("بلوچ")),
+    )
+    
     MARRIAGE_EXPERIENCE_CHOICES = (
         ("Never", _("Never")),
         ("Divorced Virgin", _("Divorced Virgin")),

@@ -435,6 +435,14 @@ class FamilyInfoErrorMessages:
         "required": _("Bride or Wife field is required."),
         "invalid_choice": _("Selected value for bride or wife is invalid."),
     }
+    NUMBER_OF_SISTERS = {
+        "required": _("Number of sisters is required."),
+        "invalid": _("Number of sisters must be a positive number."),
+    }
+    NUMBER_OF_BROTHERS = {
+        "required": _("Number of brothers is required."),
+        "invalid": _("Number of brothers must be a positive number."),
+    }
 
 
 class FinancialInformationErrorMessages:

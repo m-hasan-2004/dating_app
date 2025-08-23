@@ -104,8 +104,7 @@ class FinancialInformation(models.Model):
         choices=FinancialInformationChoices.DOWRY_TYPE,
         error_messages=FinancialInformationErrorMessages.DOWRY_TYPE_ERROR_MESSAGES,
         help_text=FinancialInfoHelpText.DOWRY_TYPE,
-        blank=True,
-        null=True,
+        default="None",
     )
     dowry_amount = models.CharField(
         _("Future Spose Dowry Amount"),

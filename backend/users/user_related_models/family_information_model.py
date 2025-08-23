@@ -58,6 +58,19 @@ class FamilyInformation(models.Model):
         help_text=FamilyInfoHelpText.CONTACT_WITH_RELATIVES,
         validators=[FamilyInformationValidator.contact_validator],
     )
+    number_of_sisters = models.PositiveSmallIntegerField(
+        _("Number of Sisters"),
+        error_messages=FamilyInfoErrorMessages.NUMBER_OF_SISTERS,
+        help_text=FamilyInfoHelpText.NUMBER_OF_SISTERS,
+        default=0,
+    )
+    number_of_brothers = models.PositiveSmallIntegerField(
+        _("Number of Brothers"),
+        error_messages=FamilyInfoErrorMessages.NUMBER_OF_BROTHERS,
+        help_text=FamilyInfoHelpText.NUMBER_OF_BROTHERS,
+        default=0,
+    )
+    
     user = models.OneToOneField(
         "users.user",
         verbose_name=_("User"),
@@ -101,16 +114,14 @@ class EngagementOrWeddingStatus(models.Model):
     contract_length = models.CharField(
         _("Contract Length"),
         max_length=50,
-        blank=True,
-        null=True,
         help_text=FamilyInfoHelpText.CONTRACT_LENGTH,
+        default=0,
     )
     living_length = models.CharField(
         _("Living Length"),
         max_length=50,
-        blank=True,
-        null=True,
         help_text=FamilyInfoHelpText.LIVING_LENGTH,
+        default=0,
     )
     death_date = models.DateField(
         _("Death Date"), blank=True, null=True, help_text=FamilyInfoHelpText.DEATH_DATE
