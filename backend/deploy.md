@@ -10,9 +10,10 @@ This comprehensive guide helps you set up the Dating App development environment
 5. [Database Initialization](#database-initialization)
 6. [First Run Verification](#first-run-verification)
 7. [Development Workflow](#development-workflow)
-8. [Translation Management](#translation-management)
-9. [Backup and Restore](#backup-and-restore)
-10. [Troubleshooting](#troubleshooting)
+8. [pgAdmin4 Setup](#pgadmin4-setup)
+9. [Translation Management](#translation-management)
+10. [Backup and Restore](#backup-and-restore)
+11. [Troubleshooting](#troubleshooting)
 
 ## Quick Start
 
@@ -501,6 +502,45 @@ docker volume rm dating_app_pgadmin_data
    - Check GitHub Issues
    - Review Docker documentation
    - Consult Django documentation
+
+## pgAdmin4 Setup
+
+### Connecting to PostgreSQL Database
+
+After starting the containers, you need to register the PostgreSQL server in pgAdmin4 to access your database:
+
+1. **Open pgAdmin4**: Navigate to http://localhost:5050
+2. **Login with credentials**:
+   - Email: `admin@example.com` (or your PGADMIN_EMAIL from .env)
+   - Password: `admin` (or your PGADMIN_PASSWORD from .env)
+
+3. **Register the server**:
+   - Right-click on "Servers" in the left panel
+   - Select "Register" → "Server"
+
+4. **Connection Details**:
+   - **Name**: `Dating App DB`
+   - **Host**: `host.docker.internal` (Windows/Mac) or `localhost` (Linux)
+   - **Port**: `5432`
+   - **Maintenance database**: `postgres`
+   - **Username**: `hasan` (or your DB_USER from .env)
+   - **Password**: `Welcome` (or your DB_PASSWORD from .env)
+
+5. **Alternative Host** (if above doesn't work):
+   - **Host**: `db` (the Docker service name)
+
+6. **Save and Connect**:
+   - Click "Save" to register the server
+   - Expand the server to see databases:
+     - `dating_app` (your application database)
+     - `postgres` (system database)
+   - Navigate to `dating_app` → "Schemas" → "public" → "Tables" to see your Django tables
+
+### Common Connection Issues
+
+- **Connection refused**: Try using `host.docker.internal` instead of `localhost`
+- **Authentication failed**: Verify your .env file credentials match pgAdmin settings
+- **Server not visible**: Ensure both PostgreSQL and pgAdmin containers are running
 
 ## Translation Management
 
