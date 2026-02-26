@@ -1,4 +1,4 @@
-# Base image DockerFile
+# Base image DockerFile - Updated to fix script issues
 FROM python:3.11-slim-bullseye
 
 # Set environment variables
@@ -17,10 +17,23 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     DEBUG=1
 
 # Install system dependencies with error handling and retry
-COPY install_packages.sh /install_packages.sh
-RUN chmod +x /install_packages.sh && \
-    echo "[INFO] Starting package installation..." && \
-    /install_packages.sh
+RUN echo "[INFO] Starting package installation..." && \
+    which apt-get && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+        build-essential \
+        gettext \
+        libpq-dev \
+        postgresql-client \
+        cron \
+        tzdata \
+        locales && \
+    echo "[INFO] Generating Persian locale..." && \
+    echo "fa_IR.UTF-8 UTF-8" > /etc/locale.gen && \
+    locale-gen fa_IR.UTF-8 && \
+    update-locale LANG=fa_IR.UTF-8 LC_ALL=fa_IR.UTF-8 && \
+    echo "[SUCCESS] System packages installed successfully" && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set timezone
 RUN echo "[INFO] Setting timezone to $TZ" && \
@@ -47,6 +60,9 @@ COPY . .
 COPY backup_db.sh /usr/local/bin/backup_db.sh
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN echo "[INFO] Making scripts executable..." && \
+    ls -la /usr/local/bin/entrypoint.sh && \
+    sed -i 's/\r$//' /usr/local/bin/entrypoint.sh && \
+    sed -i 's/\r$//' /usr/local/bin/backup_db.sh && \
     chmod +x /usr/local/bin/backup_db.sh /usr/local/bin/entrypoint.sh || \
     (echo "[ERROR] Failed to make scripts executable" && exit 1)
 

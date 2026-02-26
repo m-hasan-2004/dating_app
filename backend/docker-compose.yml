@@ -16,12 +16,12 @@ services:
     env_file:
       - .env
     environment:
-      - PGPASSWORD=${DB_PASSWORD}
+      - PGPASSWORD=${DB_PASSWORD:-Welcome}
       - DJANGO_SETTINGS_MODULE=dating_app.settings
       - DB_HOST=db
-      - DB_NAME=dating_app
-      - DB_USER=hasan
-      - DB_PASSWORD=Welcome
+      - DB_NAME=${DB_NAME:-dating_app}
+      - DB_USER=${DB_USER:-hasan}
+      - DB_PASSWORD=${DB_PASSWORD:-Welcome}
       - PYTHONUNBUFFERED=1
       - DJANGO_DEBUG=True
     depends_on:
@@ -42,20 +42,39 @@ services:
       - postgres_data:/var/lib/postgresql/data/
       - backup_volume:/backups
     environment:
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_INITDB_ARGS: --data-checksums
+      POSTGRES_DB: ${DB_NAME:-dating_app}
+      POSTGRES_USER: ${DB_USER:-hasan}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-Welcome}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=C"
+      LANG: C.UTF-8
+      LC_ALL: C.UTF-8
     ports:
       - "5432:5432"
     restart: always
     networks:
       - app-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-hasan} -d ${DB_NAME:-dating_app}"]
       interval: 5s
       timeout: 5s
       retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: dating_app_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@example.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - app-network
+    depends_on:
+      - db
+    restart: unless-stopped
 
 networks:
   app-network:
@@ -70,5 +89,7 @@ volumes:
     name: dating_app_media
   backup_volume:
     name: dating_app_backups
+  pgadmin_data:
+    name: dating_app_pgadmin_data
 
 
