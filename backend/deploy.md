@@ -10,8 +10,9 @@ This comprehensive guide helps you set up the Dating App development environment
 5. [Database Initialization](#database-initialization)
 6. [First Run Verification](#first-run-verification)
 7. [Development Workflow](#development-workflow)
-8. [Backup and Restore](#backup-and-restore)
-9. [Troubleshooting](#troubleshooting)
+8. [Translation Management](#translation-management)
+9. [Backup and Restore](#backup-and-restore)
+10. [Troubleshooting](#troubleshooting)
 
 ## Quick Start
 

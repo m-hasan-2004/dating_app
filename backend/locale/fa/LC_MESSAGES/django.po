@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-11 19:55+0330\n"
+"POT-Creation-Date: 2026-02-26 16:10+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -296,7 +296,7 @@ msgid "Originality cannot be null."
 msgstr "اصالت نمی‌تواند تهی باشد."
 
 #: core/utils/error_msgs/model_error_messages.py:137
-#: core/utils/error_msgs/model_error_messages.py:647
+#: core/utils/error_msgs/model_error_messages.py:655
 msgid "Originality cannot exceed 80 characters."
 msgstr "اصالت نمیتواند بیشتر از ۸۰ کاراکتر باشد."
 
@@ -588,12 +588,12 @@ msgid "Sadat field is required."
 msgstr "فیلد سادات الزامی است."
 
 #: core/utils/error_msgs/model_error_messages.py:274
-#: core/utils/error_msgs/model_error_messages.py:638
+#: core/utils/error_msgs/model_error_messages.py:646
 msgid "Birth date is required."
 msgstr "تاریخ تولد الزامی است."
 
 #: core/utils/error_msgs/model_error_messages.py:275
-#: core/utils/error_msgs/model_error_messages.py:639
+#: core/utils/error_msgs/model_error_messages.py:647
 msgid "Invalid birth date format."
 msgstr "فرمت تاریخ تولد نامعتبر است."
 
@@ -606,13 +606,13 @@ msgid "Birth location cannot exceed 50 characters."
 msgstr "محل تولد نباید از ۵۰ کاراکتر بیشتر باشد."
 
 #: core/utils/error_msgs/model_error_messages.py:282
-#: core/utils/error_msgs/model_error_messages.py:650
+#: core/utils/error_msgs/model_error_messages.py:658
 #: core/utils/error_msgs/preferred_wife_model_error_messages.py:6
 msgid "Education is required."
 msgstr "تحصیلات الزامی است."
 
 #: core/utils/error_msgs/model_error_messages.py:283
-#: core/utils/error_msgs/model_error_messages.py:651
+#: core/utils/error_msgs/model_error_messages.py:659
 #: core/utils/error_msgs/preferred_wife_model_error_messages.py:7
 msgid "Invalid choice for education."
 msgstr "انتخاب نامعتبر برای تحصیلات."
@@ -708,7 +708,7 @@ msgstr "دلیل محکومیت نباید از ۱۵۰ کاراکتر بیشتر
 
 #: core/utils/error_msgs/model_error_messages.py:330
 #: core/utils/error_msgs/model_error_messages.py:383
-#: core/utils/error_msgs/model_error_messages.py:627
+#: core/utils/error_msgs/model_error_messages.py:635
 #: core/utils/error_msgs/preferred_wife_model_error_messages.py:26
 #: core/utils/error_msgs/preferred_wife_model_error_messages.py:44
 #: core/utils/error_msgs/preferred_wife_model_error_messages.py:96
@@ -902,343 +902,363 @@ msgstr "این فیلد الزامی است."
 msgid "Selected value for bride or wife is invalid."
 msgstr "مقدار انتخاب شده نامعتبر است."
 
-#: core/utils/error_msgs/model_error_messages.py:442
+#: core/utils/error_msgs/model_error_messages.py:439
+#, fuzzy
+#| msgid "Deposit is required."
+msgid "Number of sisters is required."
+msgstr "سپرده الزامی است."
+
+#: core/utils/error_msgs/model_error_messages.py:440
+msgid "Number of sisters must be a positive number."
+msgstr ""
+
+#: core/utils/error_msgs/model_error_messages.py:443
+#, fuzzy
+#| msgid "Eyes color is required."
+msgid "Number of brothers is required."
+msgstr "رنگ چشم الزامی است."
+
+#: core/utils/error_msgs/model_error_messages.py:444
+msgid "Number of brothers must be a positive number."
+msgstr ""
+
+#: core/utils/error_msgs/model_error_messages.py:450
 msgid "Current residence status is required."
 msgstr "محل سکونت فعلی الزامی است."
 
-#: core/utils/error_msgs/model_error_messages.py:443
+#: core/utils/error_msgs/model_error_messages.py:451
 msgid "Invalid choice for current residence status."
 msgstr "انتخاب نامعتبر برای وضعیت محل سکونت.."
 
-#: core/utils/error_msgs/model_error_messages.py:446
+#: core/utils/error_msgs/model_error_messages.py:454
 msgid "Ownership status is required."
 msgstr "وضعیت مالکیت خانه وظیفه الزامی است."
 
-#: core/utils/error_msgs/model_error_messages.py:447
+#: core/utils/error_msgs/model_error_messages.py:455
 msgid "Invalid choice for ownership status."
 msgstr "انتخاب نامعتبر برای مالکیت خانه."
 
-#: core/utils/error_msgs/model_error_messages.py:450
+#: core/utils/error_msgs/model_error_messages.py:458
 msgid "Rent amount is required."
 msgstr "میزان رهن الزامی است."
 
-#: core/utils/error_msgs/model_error_messages.py:451
+#: core/utils/error_msgs/model_error_messages.py:459
 msgid "Invalid value for rent amount."
 msgstr "مقدار نامعتبر برای میزان رهن."
 
-#: core/utils/error_msgs/model_error_messages.py:454
+#: core/utils/error_msgs/model_error_messages.py:462
 msgid "Mortgage amount is required."
 msgstr "میزان اجاره الزامی است."
 
-#: core/utils/error_msgs/model_error_messages.py:455
+#: core/utils/error_msgs/model_error_messages.py:463
 msgid "Invalid value for mortgage amount."
 msgstr "مقدار نامعتبر برای میزان اجاره."
 
-#: core/utils/error_msgs/model_error_messages.py:458
+#: core/utils/error_msgs/model_error_messages.py:466
 msgid "Capital is required."
 msgstr "وارد کردن دارایی ها الزامی است."
 
-#: core/utils/error_msgs/model_error_messages.py:459
+#: core/utils/error_msgs/model_error_messages.py:467
 msgid "Invalid choice for capital."
 msgstr "انتخاب نامعتبر برای دارایی ها."
 
-#: core/utils/error_msgs/model_error_messages.py:462
+#: core/utils/error_msgs/model_error_messages.py:470
 msgid "Other capital cannot exceed 150 characters."
 msgstr "دارایی های دیگر نمی‌تواند بیشتر از 150 کاراکتر باشد."
 
-#: core/utils/error_msgs/model_error_messages.py:465
+#: core/utils/error_msgs/model_error_messages.py:473
 msgid "After marriage residence status is required."
 msgstr "محل سکونت پس از ازدواج الزامی است."
 
-#: core/utils/error_msgs/model_error_messages.py:466
+#: core/utils/error_msgs/model_error_messages.py:474
 msgid "Invalid choice for after marriage residence status."
 msgstr "انتخاب نامعتبر برای محل سکونت پس از ازدواج."
 
-#: core/utils/error_msgs/model_error_messages.py:469
+#: core/utils/error_msgs/model_error_messages.py:477
 msgid "Ex-spouse financial status is required."
 msgstr "وضعیت پرداخت مالی همسر سابق الزامی است."
 
-#: core/utils/error_msgs/model_error_messages.py:470
+#: core/utils/error_msgs/model_error_messages.py:478
 msgid "Invalid choice for ex-spouse financial status."
 msgstr "انتخاب نامعتبر برای وضعیت مالی همسر سابق."
 
-#: core/utils/error_msgs/model_error_messages.py:473
+#: core/utils/error_msgs/model_error_messages.py:481
 msgid "Ex-spouse financial amount is required."
 msgstr "میزان مهریه همسر سابق الزامی است."
 
-#: core/utils/error_msgs/model_error_messages.py:474
+#: core/utils/error_msgs/model_error_messages.py:482
 msgid "Ex-spouse financial amount cannot exceed 50 characters."
 msgstr "توضیحات میزان مهریه همسر سابق نباید از ۵۰ کاراکتر بیشتر باشد."
 
-#: core/utils/error_msgs/model_error_messages.py:477
+#: core/utils/error_msgs/model_error_messages.py:485
 msgid "Ex-spouse financial pay status is required."
 msgstr "وضعیت پرداختی مهریه همسر سابق الزامی است."
 
-#: core/utils/error_msgs/model_error_messages.py:478
+#: core/utils/error_msgs/model_error_messages.py:486
 msgid "Invalid choice for ex-spouse financial pay status."
 msgstr "انتخاب نامعتبر برای وضعیت پرداختی همسر سابق."
 
-#: core/utils/error_msgs/model_error_messages.py:481
+#: core/utils/error_msgs/model_error_messages.py:489
 msgid "Dowry type is required."
 msgstr "نوع مهریه همسر آینده الزامی است."
 
-#: core/utils/error_msgs/model_error_messages.py:482
+#: core/utils/error_msgs/model_error_messages.py:490
 msgid "Invalid choice for dowry type."
 msgstr "انتخاب نامعتبر برای نوع مهریه همسر آینده."
 
-#: core/utils/error_msgs/model_error_messages.py:485
+#: core/utils/error_msgs/model_error_messages.py:493
 msgid "Dowry amount is required."
 msgstr "میزان مهریه همسر آینده الزامی است."
 
-#: core/utils/error_msgs/model_error_messages.py:486
+#: core/utils/error_msgs/model_error_messages.py:494
 msgid "Dowry amount cannot exceed 50 characters."
 msgstr "میزان مهریه همسر آینده نباید از ۵۰ کاراکتر بیشتر باشد."
 
-#: core/utils/error_msgs/model_error_messages.py:489
+#: core/utils/error_msgs/model_error_messages.py:497
 msgid "Jahiziyeh type is required."
 msgstr "نوع جهیزیه الزامی است."
 
-#: core/utils/error_msgs/model_error_messages.py:490
+#: core/utils/error_msgs/model_error_messages.py:498
 msgid "Invalid choice for Jahiziyeh type."
 msgstr "انتخاب نامعتبر برای نوع جهیزیه."
 
-#: core/utils/error_msgs/model_error_messages.py:493
+#: core/utils/error_msgs/model_error_messages.py:501
 msgid "Jahiziyeh explanation is required."
 msgstr "توضیحات جهیزیه الزامی است."
 
-#: core/utils/error_msgs/model_error_messages.py:494
+#: core/utils/error_msgs/model_error_messages.py:502
 msgid "Jahiziyeh explanation cannot exceed 150 characters."
 msgstr "توضیحات جهیزیه نباید از ۵۰ کاراکتر بیشتر باشد."
 
-#: core/utils/error_msgs/model_error_messages.py:499
+#: core/utils/error_msgs/model_error_messages.py:507
 msgid "Please provide an explanation if you cannot fast due to sickness."
 msgstr "در صورتی که به علت مریضی قادر به روزه گرفتن نیستید، توضیح دهید."
 
-#: core/utils/error_msgs/model_error_messages.py:501
+#: core/utils/error_msgs/model_error_messages.py:509
 msgid "Marriage goals and purposes cannot be empty."
 msgstr "اهداف و انتظارات شما، از اصل ازدواج چیست؟"
 
-#: core/utils/error_msgs/model_error_messages.py:502
+#: core/utils/error_msgs/model_error_messages.py:510
 msgid "Marriage goals should not exceed 1000 characters."
 msgstr "اهداف ازدواج نمیتواند از ۱۰۰۰ کاراکتر بیشتر باشد."
 
-#: core/utils/error_msgs/model_error_messages.py:505
+#: core/utils/error_msgs/model_error_messages.py:513
 msgid "Please provide your opinion about a woman's job."
 msgstr "لطفا نظر خود درباره شغل زنان را بنویسید."
 
-#: core/utils/error_msgs/model_error_messages.py:506
+#: core/utils/error_msgs/model_error_messages.py:514
 msgid "The selected option for a woman's job is not valid."
 msgstr "گزینه نامعتبر برای نظر درباره شغل زنان"
 
-#: core/utils/error_msgs/model_error_messages.py:509
+#: core/utils/error_msgs/model_error_messages.py:517
 msgid "Please provide your opinion about a woman's education."
 msgstr "لطفا نظر خود درباره تحصیلات زنان را بنویسید."
 
-#: core/utils/error_msgs/model_error_messages.py:511
+#: core/utils/error_msgs/model_error_messages.py:519
 msgid "The selected option for a woman's education is not valid."
 msgstr "گزینه نامعتبر برای نظر درباره شغل زنان"
 
-#: core/utils/error_msgs/model_error_messages.py:515
+#: core/utils/error_msgs/model_error_messages.py:523
 msgid "Please list some of your positive attributes."
 msgstr "نقاط مثبت و توانایی های خود را بنویسید."
 
-#: core/utils/error_msgs/model_error_messages.py:516
+#: core/utils/error_msgs/model_error_messages.py:524
 msgid "Your pros should not exceed 1000 characters."
 msgstr " نقاط مثبت و توانایی های شما نمی‌تواند بیشتر از ۱۰۰۰ کاراکتر باشد."
 
-#: core/utils/error_msgs/model_error_messages.py:519
+#: core/utils/error_msgs/model_error_messages.py:527
 msgid "Please list some of your negative attributes."
 msgstr "نقاط ضعف و منفی خود را بنویسید."
 
-#: core/utils/error_msgs/model_error_messages.py:520
+#: core/utils/error_msgs/model_error_messages.py:528
 msgid "Your cons should not exceed 1000 characters."
 msgstr "نقاط مثبت و توانایی های شما نمی‌تواند بیشتر از ۱۰۰۰ کاراکتر باشد."
 
-#: core/utils/error_msgs/model_error_messages.py:523
+#: core/utils/error_msgs/model_error_messages.py:531
 msgid "Please specify the type of connection you have with friends."
 msgstr "ارتباط با دوستان چگونه است؟"
 
-#: core/utils/error_msgs/model_error_messages.py:524
+#: core/utils/error_msgs/model_error_messages.py:532
 msgid "Invalid selection for type of friends' connection."
 msgstr "انتخاب نامعتبر برای نوع ارتباط با دوستان"
 
-#: core/utils/error_msgs/model_error_messages.py:527
+#: core/utils/error_msgs/model_error_messages.py:535
 msgid "Please explain why you maintain connections with your friends."
 msgstr "دلیل نوع ارتباط با دوستان را توضیح دهید."
 
-#: core/utils/error_msgs/model_error_messages.py:528
+#: core/utils/error_msgs/model_error_messages.py:536
 msgid "Your explanation should not exceed 500 characters."
 msgstr "توضیحات دلیل ارتباط با دوستان نباید بیشتر از ۵۰۰ کاراکتر باشد."
 
-#: core/utils/error_msgs/model_error_messages.py:531
+#: core/utils/error_msgs/model_error_messages.py:539
 msgid "Please specify your political orientation."
 msgstr "آیا جهت گیری سیاسی خاصی دارید؟"
 
-#: core/utils/error_msgs/model_error_messages.py:532
+#: core/utils/error_msgs/model_error_messages.py:540
 msgid "Invalid input for political orientation."
 msgstr "انتخاب نامعتبر برای جهت گیری سیاسی."
 
-#: core/utils/error_msgs/model_error_messages.py:535
+#: core/utils/error_msgs/model_error_messages.py:543
 msgid "Please share your opinion about Velayat Faqih."
 msgstr "دیدگاه شما در مورد انقلاب اسلامی و ولایت فقیه چیست؟"
 
-#: core/utils/error_msgs/model_error_messages.py:536
+#: core/utils/error_msgs/model_error_messages.py:544
 msgid "Invalid selection for opinion about Velayat Faqih."
 msgstr "انتخاب نامعتبر برای نظر درباره انقلاب اسلامی"
 
-#: core/utils/error_msgs/model_error_messages.py:539
+#: core/utils/error_msgs/model_error_messages.py:547
 msgid "Please specify your opinion about the number of children."
 msgstr "نظرتان در مورد تعداد فرزند آینده چیست؟"
 
-#: core/utils/error_msgs/model_error_messages.py:540
+#: core/utils/error_msgs/model_error_messages.py:548
 msgid "Invalid selection for child quantity preference."
 msgstr "انتخاب نامعتبر برای تفاوت سنی."
 
-#: core/utils/error_msgs/model_error_messages.py:543
+#: core/utils/error_msgs/model_error_messages.py:551
 msgid "Please specify how you prefer the marriage contract."
 msgstr "برپایی جشن عقد چگونه باشد؟"
 
-#: core/utils/error_msgs/model_error_messages.py:544
+#: core/utils/error_msgs/model_error_messages.py:552
 msgid "Invalid selection for contract preferences."
 msgstr "انتخاب نامعتبر برای نوع جشن عقد."
 
-#: core/utils/error_msgs/model_error_messages.py:547
+#: core/utils/error_msgs/model_error_messages.py:555
 msgid "Please specify how you prefer the wedding."
 msgstr "برپایی جشن عروسی چگونه باشد؟"
 
-#: core/utils/error_msgs/model_error_messages.py:548
+#: core/utils/error_msgs/model_error_messages.py:556
 msgid "Invalid selection for wedding preferences."
 msgstr "انتخاب نامعتبر برای تفاوت سنی."
 
-#: core/utils/error_msgs/model_error_messages.py:551
+#: core/utils/error_msgs/model_error_messages.py:559
 msgid "Please describe your worship and prayer habits."
 msgstr "عبادات و نماز"
 
-#: core/utils/error_msgs/model_error_messages.py:552
+#: core/utils/error_msgs/model_error_messages.py:560
 msgid "Invalid selection for worship and prayer habits."
 msgstr "انتخاب نامعتبر برای عبادات و نماز"
 
-#: core/utils/error_msgs/model_error_messages.py:555
+#: core/utils/error_msgs/model_error_messages.py:563
 msgid "Please specify your fasting habits."
 msgstr "روزه"
 
-#: core/utils/error_msgs/model_error_messages.py:556
+#: core/utils/error_msgs/model_error_messages.py:564
 msgid "Invalid selection for fasting habits."
 msgstr "انتخاب نامعتبر برای روزه"
 
-#: core/utils/error_msgs/model_error_messages.py:559
+#: core/utils/error_msgs/model_error_messages.py:567
 msgid "Please specify the type of covering you use at home."
 msgstr "نظر شما در مورد نوع پوشش و آرایش زن و مرد در منزل "
 
-#: core/utils/error_msgs/model_error_messages.py:560
+#: core/utils/error_msgs/model_error_messages.py:568
 msgid "Invalid selection for house covering type."
 msgstr "انتخاب نامعتبر برای گروه خونی."
 
-#: core/utils/error_msgs/model_error_messages.py:564
+#: core/utils/error_msgs/model_error_messages.py:572
 msgid "Please specify the type of covering you use in society and workplace."
 msgstr "نظر شما در مورد نوع پوشش و آرایش زن و مرد در جامعه و محل کار "
 
-#: core/utils/error_msgs/model_error_messages.py:567
+#: core/utils/error_msgs/model_error_messages.py:575
 msgid "Invalid selection for society and workplace covering type."
 msgstr "انتخاب نامعتبر برای نوع پوشش "
 
-#: core/utils/error_msgs/model_error_messages.py:571
+#: core/utils/error_msgs/model_error_messages.py:579
 msgid "A unique ID is required."
 msgstr "آیدی الزامی است."
 
-#: core/utils/error_msgs/model_error_messages.py:572
+#: core/utils/error_msgs/model_error_messages.py:580
 msgid "This ID already exists. Please use a different one."
 msgstr "این آیدی وجود دارد یک مورد دیگر انتخاب کنید."
 
-#: core/utils/error_msgs/model_error_messages.py:575
-#: core/utils/error_msgs/model_error_messages.py:578
-#: core/utils/error_msgs/model_error_messages.py:581
-#: core/utils/error_msgs/model_error_messages.py:584
-#: core/utils/error_msgs/model_error_messages.py:587
+#: core/utils/error_msgs/model_error_messages.py:583
+#: core/utils/error_msgs/model_error_messages.py:586
+#: core/utils/error_msgs/model_error_messages.py:589
+#: core/utils/error_msgs/model_error_messages.py:592
+#: core/utils/error_msgs/model_error_messages.py:595
 msgid "This field is required. Please select an option."
 msgstr "این گزینه مورد نیاز است، لطفا یک مورد را انتخاب کنید."
 
-#: core/utils/error_msgs/model_error_messages.py:591
+#: core/utils/error_msgs/model_error_messages.py:599
 msgid "This field is required. Please select an option for decision making."
 msgstr "این فیلد الزامی است."
 
-#: core/utils/error_msgs/model_error_messages.py:598
+#: core/utils/error_msgs/model_error_messages.py:606
 msgid "The username is required."
 msgstr "نام کاربری الزامی است."
 
-#: core/utils/error_msgs/model_error_messages.py:599
+#: core/utils/error_msgs/model_error_messages.py:607
 msgid "The username cannot exceed 50 characters."
 msgstr "نام کاربری نمی‌تواند بیشتر از ۵۰ کاراکتر باشد."
 
-#: core/utils/error_msgs/model_error_messages.py:602
+#: core/utils/error_msgs/model_error_messages.py:610
 msgid "You must indicate whether the introduction was positive."
 msgstr "مشخص می‌کند که آیا نتیجه گزینه معرفی شده مثبت بوده."
 
-#: core/utils/error_msgs/model_error_messages.py:605
+#: core/utils/error_msgs/model_error_messages.py:613
 msgid "You must indicate whether the introduction was negative."
 msgstr "مشخص می‌کند که آیا نتیجه گزینه معرفی شده منفی بوده."
 
-#: core/utils/error_msgs/model_error_messages.py:608
+#: core/utils/error_msgs/model_error_messages.py:616
 msgid "A reason for the introduction's outcome is required."
 msgstr "میانگین تحصیلات خانواده الزامی است."
 
-#: core/utils/error_msgs/model_error_messages.py:611
+#: core/utils/error_msgs/model_error_messages.py:619
 msgid "You must provide the dates of meetings."
 msgstr "تعیین تاریخ ملاقات الزامی است."
 
-#: core/utils/error_msgs/model_error_messages.py:615
+#: core/utils/error_msgs/model_error_messages.py:623
 msgid "You must summarize the results and any regards from the meetings."
 msgstr "نتایج و ملاحظات"
 
-#: core/utils/error_msgs/model_error_messages.py:619
+#: core/utils/error_msgs/model_error_messages.py:627
 msgid "The cost of introduction is required."
 msgstr "هزینه معرفی الزامی است."
 
-#: core/utils/error_msgs/model_error_messages.py:620
+#: core/utils/error_msgs/model_error_messages.py:628
 msgid "The cost of introduction cannot exceed 100 characters."
 msgstr "هزینه معرفی نمی‌تواند بیشتر از ۱۰۰ کاراکتر باشد."
 
-#: core/utils/error_msgs/model_error_messages.py:623
+#: core/utils/error_msgs/model_error_messages.py:631
 msgid "The cost of meeting is required."
 msgstr "هزینه ملاقات فیلد الزامی است."
 
-#: core/utils/error_msgs/model_error_messages.py:624
+#: core/utils/error_msgs/model_error_messages.py:632
 msgid "The cost of meeting cannot exceed 100 characters."
 msgstr "هزینه ملاقات نمیتواند بیشتر از ۱۰۰ کاراکتر باشد."
 
-#: core/utils/error_msgs/model_error_messages.py:634
+#: core/utils/error_msgs/model_error_messages.py:642
 msgid "Language is required."
 msgstr "زبان الزامی است."
 
-#: core/utils/error_msgs/model_error_messages.py:635
+#: core/utils/error_msgs/model_error_messages.py:643
 msgid "Language cannot exceed 50 characters."
 msgstr "زبان نمی‌تواند بیشتر از 50 کاراکتر باشد."
 
-#: core/utils/error_msgs/model_error_messages.py:642
+#: core/utils/error_msgs/model_error_messages.py:650
 msgid "Job is required."
 msgstr "شغل الزامی است."
 
-#: core/utils/error_msgs/model_error_messages.py:643
+#: core/utils/error_msgs/model_error_messages.py:651
 msgid "Job cannot exceed 100 characters."
 msgstr "شغل نباید از ۱۵۰ کاراکتر بیشتر باشد."
 
-#: core/utils/error_msgs/model_error_messages.py:646
+#: core/utils/error_msgs/model_error_messages.py:654
 msgid "Originality is required."
 msgstr "اصالت الزامی است."
 
-#: core/utils/error_msgs/model_error_messages.py:654
+#: core/utils/error_msgs/model_error_messages.py:662
 msgid "Alive status is required."
 msgstr "وارد کردن در قید حیات بودن الزامی است."
 
-#: core/utils/error_msgs/model_error_messages.py:655
+#: core/utils/error_msgs/model_error_messages.py:663
 msgid "Invalid value for alive status."
 msgstr "مقدار نامعتبر برای گزینه."
 
-#: core/utils/error_msgs/model_error_messages.py:658
+#: core/utils/error_msgs/model_error_messages.py:666
 msgid "Invalid death date."
 msgstr "تاریخ فوت نامعتبر است."
 
-#: core/utils/error_msgs/model_error_messages.py:659
+#: core/utils/error_msgs/model_error_messages.py:667
 msgid "Death date format error."
 msgstr "فرمت تاریخ فوت نامعتبر است."
 
@@ -1444,11 +1464,11 @@ msgstr "نظر کارشناسی نمی‌تواند تهی باشد."
 msgid "Professional opinion cannot exceed 1000 characters."
 msgstr "نظر کارشناسی نباید از ۱۰ کاراکتر بیشتر باشد."
 
-#: core/utils/help_texts/help_text.py:5 core/utils/help_texts/help_text.py:136
+#: core/utils/help_texts/help_text.py:5 core/utils/help_texts/help_text.py:138
 msgid "Enter the height of the user in centimeters."
 msgstr "قد خود را بر حسب سانتی متر وارد کنید."
 
-#: core/utils/help_texts/help_text.py:6 core/utils/help_texts/help_text.py:135
+#: core/utils/help_texts/help_text.py:6 core/utils/help_texts/help_text.py:137
 msgid "Enter the weight of the user in kilograms."
 msgstr "وزن خود را بر حسب سانتی متر وارد کنید."
 
@@ -1501,7 +1521,7 @@ msgstr "جنسیت خود را انتخاب کنید."
 msgid "Is the user a Sadat?"
 msgstr "آیا کاربر از سادات است؟"
 
-#: core/utils/help_texts/help_text.py:24 core/utils/help_texts/help_text.py:161
+#: core/utils/help_texts/help_text.py:24 core/utils/help_texts/help_text.py:163
 msgid "Enter the birth date of the user."
 msgstr "تاریخ تولد خود را وارد کنید."
 
@@ -1716,7 +1736,7 @@ msgid "Enter the birth date of the girl if applicable."
 msgstr "در صورت شامل بودن، تاریخ تولد دختر را وارد کنید."
 
 #: core/utils/help_texts/help_text.py:102
-#: core/utils/help_texts/help_text.py:163
+#: core/utils/help_texts/help_text.py:165
 msgid "Select the custody status of the children."
 msgstr "وضعیت حضانت فرزندان را انتخاب کنید."
 
@@ -1760,315 +1780,327 @@ msgstr "اطلاعات وارده مربوط به داماد یا شوهر خو�
 msgid "Select the bride or wife from the available options."
 msgstr "اطلاعات وارده مربوط به عروس یا زن داداش است."
 
-#: core/utils/help_texts/help_text.py:116
+#: core/utils/help_texts/help_text.py:113
+#, fuzzy
+#| msgid "Enter the income of the user."
+msgid "Enter the number of sisters you have."
+msgstr "درآمد خود را وارد کنید."
+
+#: core/utils/help_texts/help_text.py:114
+#, fuzzy
+#| msgid "Enter the income of the user."
+msgid "Enter the number of brothers you have."
+msgstr "درآمد خود را وارد کنید."
+
+#: core/utils/help_texts/help_text.py:118
 msgid "Enter the first name of the user."
 msgstr "نام خود را وارد کنید."
 
-#: core/utils/help_texts/help_text.py:117
+#: core/utils/help_texts/help_text.py:119
 msgid "Enter the last name of the user."
 msgstr "نام خانوادگی خود را وارد کنید."
 
-#: core/utils/help_texts/help_text.py:118
+#: core/utils/help_texts/help_text.py:120
 msgid "Enter the father's name of the user."
 msgstr "نام پدر خود را وارد کنید."
 
-#: core/utils/help_texts/help_text.py:119
+#: core/utils/help_texts/help_text.py:121
 msgid "Enter a unique Eitta number in the format: +98 or 09**."
 msgstr "شماره ایتا منحصر به فرد را وارد کنید به فرمت: +98 یا 09**."
 
-#: core/utils/help_texts/help_text.py:120
+#: core/utils/help_texts/help_text.py:122
 msgid "Enter a landline number in the format: 025-32305083."
 msgstr "شماره تلفن ثابت را وارد کنید به فرمت: 025-32305083."
 
-#: core/utils/help_texts/help_text.py:122
+#: core/utils/help_texts/help_text.py:124
 msgid "Enter a unique phone number for the mother in the format: +98 or 09**."
 msgstr "شماره تلفن منحصر به فرد مادر را وارد کنید به فرمت: +98 یا 09**."
 
-#: core/utils/help_texts/help_text.py:125
+#: core/utils/help_texts/help_text.py:127
 msgid "Enter a unique phone number for the father in the format: +98 or 09**."
 msgstr "شماره تلفن منحصر به فرد پدر را وارد کنید به فرمت: +98 یا 09**."
 
-#: core/utils/help_texts/help_text.py:127
+#: core/utils/help_texts/help_text.py:129
 msgid "Enter the home address of the user."
 msgstr "آدرس منزل خود را وارد کنید."
 
-#: core/utils/help_texts/help_text.py:128
+#: core/utils/help_texts/help_text.py:130
 msgid "Enter the work address of the user."
 msgstr "آدرس محل کار خود را وارد کنید."
 
-#: core/utils/help_texts/help_text.py:129
+#: core/utils/help_texts/help_text.py:131
 msgid "Enter the originality of the user."
 msgstr "اصالت خود را وارد کنید."
 
-#: core/utils/help_texts/help_text.py:130
+#: core/utils/help_texts/help_text.py:132
 msgid "Enter the education level of the user."
 msgstr "سطح تحصیلات خود را وارد کنید."
 
-#: core/utils/help_texts/help_text.py:131
+#: core/utils/help_texts/help_text.py:133
 msgid "Select the job of the user."
 msgstr "شغل خود را وارد کنید."
 
-#: core/utils/help_texts/help_text.py:132
+#: core/utils/help_texts/help_text.py:134
 msgid "Select the insurance type of the user."
 msgstr "نوع بیمه خود را انتخاب کنید."
 
-#: core/utils/help_texts/help_text.py:133
+#: core/utils/help_texts/help_text.py:135
 msgid "Enter the income of the user in Tooman."
 msgstr "درآمد خود را به تومان وارد کنید."
 
-#: core/utils/help_texts/help_text.py:134
+#: core/utils/help_texts/help_text.py:136
 msgid "Enter the assets of the user."
 msgstr "دارایی‌ های خود را وارد کنید."
 
-#: core/utils/help_texts/help_text.py:137
+#: core/utils/help_texts/help_text.py:139
 msgid "Select the user who introduced the subjects."
 msgstr "کاربری که موضوعات را معرفی کرده است را انتخاب کنید."
 
-#: core/utils/help_texts/help_text.py:139
+#: core/utils/help_texts/help_text.py:141
 msgid "Needed Explantions About Result of Introduced Subjects."
 msgstr "توضیحات مورد نیاز درباره نتیجه افراد معرفی شده."
 
-#: core/utils/help_texts/help_text.py:141
+#: core/utils/help_texts/help_text.py:143
 msgid "Enter the preferred meeting time of the user."
 msgstr "اوقات پیشنهادی ملاقات مورد نظر خود را وارد کنید."
 
-#: core/utils/help_texts/help_text.py:142
+#: core/utils/help_texts/help_text.py:144
 msgid "Select the type of payment."
 msgstr "نوع پرداخت هزینه معرفی را انتخاب کنید."
 
-#: core/utils/help_texts/help_text.py:143
+#: core/utils/help_texts/help_text.py:145
 msgid "Upload a PDF, JPG, or PNG file as proof of payment."
 msgstr "فایل با فرمت pdf, jpg یا png آپلود کنید."
 
-#: core/utils/help_texts/help_text.py:144
+#: core/utils/help_texts/help_text.py:146
 msgid "Select the user associated with this identity information."
 msgstr "کاربری که این اطلاعات هویتی به آن مربوط است را انتخاب کنید."
 
-#: core/utils/help_texts/help_text.py:148
+#: core/utils/help_texts/help_text.py:150
 msgid "Enter the national code of the user."
 msgstr "کد ملی خود را وارد کنید."
 
-#: core/utils/help_texts/help_text.py:150
+#: core/utils/help_texts/help_text.py:152
 msgid "Enter the birth certificate serial number of the user."
 msgstr "شماره سریال شناسنامه خود را وارد کنید."
 
-#: core/utils/help_texts/help_text.py:153
+#: core/utils/help_texts/help_text.py:155
 msgid "Enter the location where the birth certificate was issued."
 msgstr "محل صدور شناسنامه را وارد کنید."
 
-#: core/utils/help_texts/help_text.py:155
+#: core/utils/help_texts/help_text.py:157
 msgid "Select the marriage experience of the user."
 msgstr "نوع تجربه ازدواج خود را انتخاب کنید."
 
-#: core/utils/help_texts/help_text.py:156
+#: core/utils/help_texts/help_text.py:158
 msgid "Enter the contract date."
 msgstr "تاریخ عقد را وارد کنید."
 
-#: core/utils/help_texts/help_text.py:157
+#: core/utils/help_texts/help_text.py:159
 msgid "Select the marriage status of the user."
 msgstr "وضعیت ازدواج خود را انتخاب کنید."
 
-#: core/utils/help_texts/help_text.py:158
+#: core/utils/help_texts/help_text.py:160
 msgid "Enter the marriage date."
 msgstr "تاریخ ازدواج را وارد کنید."
 
-#: core/utils/help_texts/help_text.py:159
+#: core/utils/help_texts/help_text.py:161
 msgid "Enter the divorce date."
 msgstr "تاریخ طلاق را وارد کنید."
 
-#: core/utils/help_texts/help_text.py:160
+#: core/utils/help_texts/help_text.py:162
 msgid "Enter the husband death date."
 msgstr "تاریخ فوت همسر را وارد کنید."
 
-#: core/utils/help_texts/help_text.py:162
+#: core/utils/help_texts/help_text.py:164
 msgid "Select the number of children."
 msgstr "تعداد فرزندان را انتخاب کنید."
 
-#: core/utils/help_texts/help_text.py:164
+#: core/utils/help_texts/help_text.py:166
 msgid "Select the user associated with this birth certificate information."
 msgstr "کاربری که این اطلاعات شناسنامه‌ای به آن مربوط است را انتخاب کنید."
 
-#: core/utils/help_texts/help_text.py:168
+#: core/utils/help_texts/help_text.py:170
 msgid "Unique identifier for the user."
 msgstr "شناسه منحصر به فرد برای کاربر."
 
-#: core/utils/help_texts/help_text.py:169
+#: core/utils/help_texts/help_text.py:171
 msgid "Required access code for initial user creation."
 msgstr "کد دسترسی لازم برای ثبت نام اولیه کاربر."
 
-#: core/utils/help_texts/help_text.py:170
+#: core/utils/help_texts/help_text.py:172
 msgid "Optional Username or Full Name for middle man reference."
 msgstr "یوزر نیم یا نام کامل شخص واسطه."
 
-#: core/utils/help_texts/help_text.py:171
+#: core/utils/help_texts/help_text.py:173
 msgid "150 characters or fewer. Letters, digits and @/./+/-/_ only."
 msgstr "اجباری. 150 کاراکتر یا کمتر. فقط حروف، اعداد و @/./+/-/_."
 
-#: core/utils/help_texts/help_text.py:172
-#: core/utils/help_texts/help_text.py:173
+#: core/utils/help_texts/help_text.py:174
+#: core/utils/help_texts/help_text.py:175
 msgid "150 characters or fewer."
 msgstr "150 کاراکتر یا کمتر."
 
-#: core/utils/help_texts/help_text.py:174
+#: core/utils/help_texts/help_text.py:176
 msgid "The date and time when the user was created."
 msgstr "تاریخ و زمان ایجاد کاربر."
 
-#: core/utils/help_texts/help_text.py:175
+#: core/utils/help_texts/help_text.py:177
 msgid "+98 or 09** format accepted."
 msgstr "فرمت +98 یا 09** پذیرفته می‌شود."
 
-#: core/utils/help_texts/help_text.py:176
+#: core/utils/help_texts/help_text.py:178
 msgid "Email format accepted."
 msgstr "فرمت ایمیل پذیرفته می‌شود."
 
-#: core/utils/help_texts/help_text.py:177
+#: core/utils/help_texts/help_text.py:179
 msgid "Designates whether the user can log into this admin site."
 msgstr "مشخص می‌کند که آیا کاربر می‌تواند وارد این سایت مدیریت شود."
 
-#: core/utils/help_texts/help_text.py:179
+#: core/utils/help_texts/help_text.py:181
 msgid ""
 "Designates whether this user should be treated as active. Unselect this "
 "instead of deleting accounts."
 msgstr "به جای پاک کردن کاربر، تیک این گزینه را بزنید تا کاربر غیر فعال شود."
 
-#: core/utils/help_texts/help_text.py:181
+#: core/utils/help_texts/help_text.py:183
 msgid "The date and time when the user joined."
 msgstr "تاریخ و زمان پیوستن کاربر."
 
-#: core/utils/help_texts/help_text.py:185
+#: core/utils/help_texts/help_text.py:187
 msgid "If you cannot fast due to sickness, please explain your condition."
 msgstr "اگر به علت بیماری قادر به روزه گرفتن نیستید، درباره بیماری توضیح دهید."
 
-#: core/utils/help_texts/help_text.py:186
+#: core/utils/help_texts/help_text.py:188
 msgid "Describe your goals and purposes for marriage in detail."
 msgstr "اهداف و انتظارات خود از ازدواج را شرح دهید."
 
-#: core/utils/help_texts/help_text.py:188
+#: core/utils/help_texts/help_text.py:190
 msgid "Select your opinion about a woman's job and employment status."
 msgstr "نظر خود در مورد شغل زنان را انتخاب کنید."
 
-#: core/utils/help_texts/help_text.py:190
+#: core/utils/help_texts/help_text.py:192
 msgid "Choose your stance on women's education."
 msgstr "نظر خود در مورد زنان را انتخاب کنید."
 
-#: core/utils/help_texts/help_text.py:191
+#: core/utils/help_texts/help_text.py:193
 msgid "List positive traits about yourself."
 msgstr "۵ مورد از نقاط مثبت و توانایی های خود را بنویسید."
 
-#: core/utils/help_texts/help_text.py:192
+#: core/utils/help_texts/help_text.py:194
 msgid "List aspects of yourself you wish to improve."
 msgstr "۵ مورد از نقاط ضعف و منفی خود را بنویسید."
 
-#: core/utils/help_texts/help_text.py:194
+#: core/utils/help_texts/help_text.py:196
 msgid "Specify the type of connection you prefer with friends."
 msgstr "نوع ارتباط خود با دوستان را بنویسید."
 
-#: core/utils/help_texts/help_text.py:196
+#: core/utils/help_texts/help_text.py:198
 msgid "Explain why you connect with friends."
 msgstr "توضیح دهید که چرا ارتباط شما با دوستان اینگونه است."
 
-#: core/utils/help_texts/help_text.py:197
+#: core/utils/help_texts/help_text.py:199
 msgid "Indicate whether you have a political orientation."
 msgstr "مشخص کنید که جهت گیری خاص سیاسی دارید یا خیر."
 
-#: core/utils/help_texts/help_text.py:198
+#: core/utils/help_texts/help_text.py:200
 msgid "State your opinion on Velayat Faqih."
 msgstr "نظر خود درباره جمهوری اسلامی و ولایت فقیه را بنویسید."
 
-#: core/utils/help_texts/help_text.py:199
+#: core/utils/help_texts/help_text.py:201
 msgid "How many children do you prefer to have?"
 msgstr "ترجیح می دهید در آینده چند فرزند داشته باشید؟"
 
-#: core/utils/help_texts/help_text.py:200
+#: core/utils/help_texts/help_text.py:202
 msgid "Define how you prefer the marriage contract to be arranged."
 msgstr "ترجیح می دهید که مراسم عقد چگونه برگذار شود."
 
-#: core/utils/help_texts/help_text.py:201
+#: core/utils/help_texts/help_text.py:203
 msgid "Choose your preferred wedding arrangement."
 msgstr "ترجیح می دهید که مراسم عروسی چگونه برگذار شود."
 
-#: core/utils/help_texts/help_text.py:202
+#: core/utils/help_texts/help_text.py:204
 msgid "Indicate your level of commitment to worship and prayer."
 msgstr "میزان تعهد خود به نماز و عبادات را انتخاب کنید."
 
-#: core/utils/help_texts/help_text.py:203
+#: core/utils/help_texts/help_text.py:205
 msgid "Describe your practice regarding fasting."
 msgstr "میزان تعهد خود به روزه را انتخاب کنید."
 
-#: core/utils/help_texts/help_text.py:204
+#: core/utils/help_texts/help_text.py:206
 msgid "Choose your preferred clothing style at home."
 msgstr "نظر شما در مورد نوع پوشش زن در خانه چیست؟"
 
-#: core/utils/help_texts/help_text.py:205
+#: core/utils/help_texts/help_text.py:207
 msgid "Select your dress preference in society and the workplace."
 msgstr "نظر شما در مورد نوع پوشش زن در محل کار و جامعه چیست؟"
 
-#: core/utils/help_texts/help_text.py:206
+#: core/utils/help_texts/help_text.py:208
 msgid "A unique identifier for this record."
 msgstr "شناسه منحصر به فرد برای رکورد."
 
-#: core/utils/help_texts/help_text.py:208
+#: core/utils/help_texts/help_text.py:210
 msgid "Select your level of participation in prayer and Quran meetings."
 msgstr "میزان مشارکت خود در مجالس مذهبی، دعا و قرآن را وارد کنید."
 
-#: core/utils/help_texts/help_text.py:210
+#: core/utils/help_texts/help_text.py:212
 msgid "Select your music preference."
 msgstr "میزان گوش دادن به موسیقی و آهنگ را وارد کنید."
 
-#: core/utils/help_texts/help_text.py:212
+#: core/utils/help_texts/help_text.py:214
 msgid "Select your preference for dance and singing assemblies."
 msgstr "میزان مشارکت خود در مجالس رقص و آواز را وارد کنید."
 
-#: core/utils/help_texts/help_text.py:214
+#: core/utils/help_texts/help_text.py:216
 msgid "Select your opinion about innocent contacts."
 msgstr "به طور کلی در چه مواردی می توان با نامحرم گفتگو کرد؟"
 
-#: core/utils/help_texts/help_text.py:216
+#: core/utils/help_texts/help_text.py:218
 msgid "Select the cover type for innocent contact situations."
 msgstr "نظر شما در مورد نوع پوشش زن در مهمانی در حضور نامحرم چیست؟"
 
-#: core/utils/help_texts/help_text.py:219
+#: core/utils/help_texts/help_text.py:221
 msgid "Select your decision-making approach when choosing a spouse."
 msgstr ""
 "در تصمیم گیری برای انتخاب همسر و ازدواج با افرادی که موسسه انتخاب می‌کند، آیا "
 "مستقل هستید یا دیگران برایتان تصمیم گیری می کنند؟"
 
-#: core/utils/help_texts/help_text.py:221
-#: core/utils/help_texts/help_text.py:235
+#: core/utils/help_texts/help_text.py:223
+#: core/utils/help_texts/help_text.py:237
 msgid "Select the user associated with this information."
 msgstr "کاربری که این اطلاعات به آن مربوط است را انتخاب کنید."
 
-#: core/utils/help_texts/help_text.py:226
+#: core/utils/help_texts/help_text.py:228
 msgid ""
 "Enter the username of the introduced subject. This should be unique and "
 "descriptive."
 msgstr "نام کاربری یا کد فرد معرفی شده را وارد کنید."
 
-#: core/utils/help_texts/help_text.py:228
+#: core/utils/help_texts/help_text.py:230
 msgid "Indicate whether the introduction was positive."
 msgstr "مشخص می‌کند که آیا نتیجه گزینه معرفی شده مثبت بوده."
 
-#: core/utils/help_texts/help_text.py:229
+#: core/utils/help_texts/help_text.py:231
 msgid "Indicate whether the introduction was negative."
 msgstr "مشخص می‌کند که آیا نتیجه گزینه معرفی شده منفی بوده."
 
-#: core/utils/help_texts/help_text.py:230
+#: core/utils/help_texts/help_text.py:232
 msgid "Provide a detailed reason for the introduction's outcome."
 msgstr "توضیحات کاملی در رابطه با نتیجه معرفی بنویسید."
 
-#: core/utils/help_texts/help_text.py:231
+#: core/utils/help_texts/help_text.py:233
 msgid "List the dates of meetings with the introduced subject."
 msgstr "تاریخ های ملاقات فرد های معرفی شده را بنویسید."
 
-#: core/utils/help_texts/help_text.py:232
+#: core/utils/help_texts/help_text.py:234
 msgid "Summarize the results and any regards from the meetings."
 msgstr "نتیجه و ملاحظات را ذکر کنید."
 
-#: core/utils/help_texts/help_text.py:233
+#: core/utils/help_texts/help_text.py:235
 msgid "Specify the cost associated with the introduction."
 msgstr "هزینه معرفی را بنویسید."
 
-#: core/utils/help_texts/help_text.py:234
+#: core/utils/help_texts/help_text.py:236
 msgid "Specify the cost associated with the meetings."
 msgstr "هزینه ملاقات را بنویسید."
 
@@ -2309,7 +2341,7 @@ msgstr "بسته به ظاهر"
 
 #: core/utils/model_choices/preferred_wife_model_choices.py:40
 #: core/utils/model_choices/preferred_wife_model_choices.py:47
-#: core/utils/model_choices/preferred_wife_model_choices.py:76
+#: core/utils/model_choices/preferred_wife_model_choices.py:87
 msgid "Doesn’t Matter"
 msgstr "اهمیت ندارد"
 
@@ -2339,94 +2371,126 @@ msgid "Low"
 msgstr "کم"
 
 #: core/utils/model_choices/preferred_wife_model_choices.py:50
+msgid "فارس"
+msgstr ""
+
+#: core/utils/model_choices/preferred_wife_model_choices.py:51
+msgid "لر"
+msgstr ""
+
+#: core/utils/model_choices/preferred_wife_model_choices.py:52
+msgid "ترک"
+msgstr ""
+
+#: core/utils/model_choices/preferred_wife_model_choices.py:53
+msgid "کرد"
+msgstr ""
+
+#: core/utils/model_choices/preferred_wife_model_choices.py:54
+msgid "لک"
+msgstr ""
+
+#: core/utils/model_choices/preferred_wife_model_choices.py:55
+msgid "تات"
+msgstr ""
+
+#: core/utils/model_choices/preferred_wife_model_choices.py:56
+msgid "عرب"
+msgstr ""
+
+#: core/utils/model_choices/preferred_wife_model_choices.py:57
+msgid "بلوچ"
+msgstr ""
+
+#: core/utils/model_choices/preferred_wife_model_choices.py:61
 #: core/utils/model_choices/user_model_choices.py:416
 #: core/utils/model_choices/user_model_choices.py:423
 msgid "Never"
 msgstr "هرگز"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:51
+#: core/utils/model_choices/preferred_wife_model_choices.py:62
 msgid "Divorced Virgin"
 msgstr "مطلقه باکره"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:52
+#: core/utils/model_choices/preferred_wife_model_choices.py:63
 msgid "Divorced No Custody"
 msgstr "مطلقه بدون حضانت"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:53
+#: core/utils/model_choices/preferred_wife_model_choices.py:64
 msgid "Divorced No Life"
 msgstr "مطلقه بدون زندگی"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:54
+#: core/utils/model_choices/preferred_wife_model_choices.py:65
 msgid "Divorced No Child"
 msgstr "مطلقه بدون فرزند"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:55
+#: core/utils/model_choices/preferred_wife_model_choices.py:66
 msgid "Divorced Have Boy"
 msgstr "مطلقه با فرزند پسر"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:56
+#: core/utils/model_choices/preferred_wife_model_choices.py:67
 msgid "Divorced Have Girl"
 msgstr "مطلقه با فرزند دختر"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:57
+#: core/utils/model_choices/preferred_wife_model_choices.py:68
 msgid "Spouse Died"
 msgstr "فوت همسر"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:60
+#: core/utils/model_choices/preferred_wife_model_choices.py:71
 #: core/utils/model_choices/user_model_choices.py:56
-#: venv/lib/python3.13/site-packages/django/forms/widgets.py:795
+#: venv/Lib/site-packages/django/forms/widgets.py:795
 msgid "Yes"
 msgstr "بله"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:61
+#: core/utils/model_choices/preferred_wife_model_choices.py:72
 #: core/utils/model_choices/user_model_choices.py:57
-#: venv/lib/python3.13/site-packages/django/forms/widgets.py:796
+#: venv/Lib/site-packages/django/forms/widgets.py:796
 msgid "No"
 msgstr "خیر"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:62
+#: core/utils/model_choices/preferred_wife_model_choices.py:73
 #: core/utils/model_choices/user_model_choices.py:355
 msgid "Depends"
 msgstr "بستگی دارد"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:66
+#: core/utils/model_choices/preferred_wife_model_choices.py:77
 msgid "Freelance"
 msgstr "آزاد"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:67
+#: core/utils/model_choices/preferred_wife_model_choices.py:78
 msgid "Military"
 msgstr "نظامی"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:68
+#: core/utils/model_choices/preferred_wife_model_choices.py:79
 msgid "Office"
 msgstr "اداری"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:69
+#: core/utils/model_choices/preferred_wife_model_choices.py:80
 msgid "Teacher"
 msgstr "معلم"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:70
+#: core/utils/model_choices/preferred_wife_model_choices.py:81
 msgid "Hoze M"
 msgstr "حوزوی ملبس"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:71
+#: core/utils/model_choices/preferred_wife_model_choices.py:82
 msgid "Hoze N"
 msgstr "حوزوی غیر ملبس"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:72
+#: core/utils/model_choices/preferred_wife_model_choices.py:83
 msgid "hoze Sis"
 msgstr "حوزه خواهران"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:73
+#: core/utils/model_choices/preferred_wife_model_choices.py:84
 #: core/utils/model_choices/user_model_choices.py:332
 msgid "Womanly Job"
 msgstr "شغل زنانه"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:74
+#: core/utils/model_choices/preferred_wife_model_choices.py:85
 msgid "No Job At All"
 msgstr "قطعا غیر شاغل"
 
-#: core/utils/model_choices/preferred_wife_model_choices.py:75
+#: core/utils/model_choices/preferred_wife_model_choices.py:86
 msgid "Housekeeper"
 msgstr "خانه دار"
 
@@ -2625,7 +2689,6 @@ msgstr "شناسنامه سفید"
 #: core/utils/model_choices/user_model_choices.py:188
 #: core/utils/model_choices/user_model_choices.py:209
 #: core/utils/model_choices/user_model_choices.py:347
-#: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history_list.html:74
 msgid "None"
 msgstr "هیچ کدام"
 
@@ -2655,13 +2718,13 @@ msgstr "سه دختر"
 
 #: core/utils/model_choices/user_model_choices.py:73
 #: core/utils/model_choices/user_model_choices.py:212
-#: users/user_related_models/family_information_model.py:381
+#: users/user_related_models/family_information_model.py:392
 msgid "Father"
 msgstr "پدر"
 
 #: core/utils/model_choices/user_model_choices.py:73
 #: core/utils/model_choices/user_model_choices.py:213
-#: users/user_related_models/family_information_model.py:366
+#: users/user_related_models/family_information_model.py:377
 msgid "Mother"
 msgstr "مادر"
 
@@ -3854,67 +3917,67 @@ msgstr "انگلیسی"
 msgid "Persian"
 msgstr "فارسی"
 
-#: users/admin.py:282 users/admin.py:316 users/admin.py:321
+#: users/admin.py:287 users/admin.py:321 users/admin.py:326
 msgid "Login Info"
 msgstr "اطلاعات ورود به حساب کاربری"
 
-#: users/admin.py:283 users/admin.py:293
+#: users/admin.py:288 users/admin.py:298
 msgid "Personal info"
 msgstr "اطلاعات شخصی"
 
-#: users/admin.py:285
+#: users/admin.py:290
 msgid "Permissions"
 msgstr "مجوزها"
 
-#: users/admin.py:288
+#: users/admin.py:293
 msgid "Important dates"
 msgstr "تاریخ‌های مهم"
 
-#: users/admin.py:289 users/admin.py:305
+#: users/admin.py:294 users/admin.py:310
 msgid "Extra Fields"
 msgstr "فیلدهای اضافی"
 
-#: users/admin.py:338
+#: users/admin.py:343
 msgid "Access code not found."
 msgstr "کد دسترسی پیدا نشد."
 
-#: users/admin.py:346
+#: users/admin.py:351
 msgid "Selected users have been deactivated."
 msgstr "کاربران انتخاب‌ شده غیرفعال شده‌اند."
 
-#: users/admin.py:348
+#: users/admin.py:353
 msgid "Deactivate selected users"
 msgstr "غیرفعال کردن کاربران انتخاب‌ شده"
 
-#: users/admin.py:352
+#: users/admin.py:357
 msgid "Selected users have been reactivated."
 msgstr "کاربران انتخاب‌ شده دوباره فعال شده‌اند."
 
-#: users/admin.py:354
+#: users/admin.py:359
 msgid "Reactivate selected users"
 msgstr "دوباره فعال کردن کاربران انتخاب شده"
 
-#: users/admin.py:359
+#: users/admin.py:364
 #: users/user_related_models/confidintional_information_model.py:282
 #: users/user_related_models/confidintional_information_model.py:339
-#: users/user_related_models/family_information_model.py:299
-#: users/user_related_models/personal_information_model.py:23
+#: users/user_related_models/family_information_model.py:310
+#: users/user_related_models/personal_information_model.py:24
 msgid "Birth Date"
 msgstr "تاریخ تولد"
 
-#: users/admin.py:377
+#: users/admin.py:382
 msgid "Selected access codes have been marked as expired."
 msgstr "کدهای دسترسی انتخاب ‌شده به عنوان منقضی شده علامت‌گذاری شده‌اند."
 
-#: users/admin.py:380
+#: users/admin.py:385
 msgid "Expire selected access codes"
 msgstr "منقضی کردن کدهای دسترسی انتخاب‌ شده"
 
-#: users/admin.py:384
+#: users/admin.py:389
 msgid "Selected access codes have been reactivated."
 msgstr "کدهای دسترسی انتخاب‌ شده دوباره فعال شده‌اند."
 
-#: users/admin.py:386
+#: users/admin.py:391
 msgid "Reactivate selected access codes"
 msgstr "دوباره فعال کردن کدهای دسترسی انتخاب‌ شده"
 
@@ -3931,7 +3994,7 @@ msgid "Access Code"
 msgstr "کد دسترسی"
 
 #: users/forms.py:28 users/forms.py:30
-#: venv/lib/python3.13/site-packages/django/forms/fields.py:91
+#: venv/Lib/site-packages/django/forms/fields.py:91
 msgid "This field is required."
 msgstr "این فیلد الزامی است."
 
@@ -3944,21 +4007,15 @@ msgstr "توضیحات اضافی"
 #: users/preferred_wife_models/preferred_wife_intellectual_information.py:116
 #: users/preferred_wife_models/preferred_wife_personal_information.py:51
 #: users/preferred_wife_models/preferred_wife_physical_information.py:46
-#: users/user_related_models/family_information_model.py:63
-#: users/user_related_models/family_information_model.py:134
-#: users/user_related_models/family_information_model.py:199
-#: users/user_related_models/family_information_model.py:233
-#: users/user_related_models/family_information_model.py:358
-#: users/user_related_models/family_information_model.py:373
+#: users/user_related_models/family_information_model.py:76
+#: users/user_related_models/family_information_model.py:145
+#: users/user_related_models/family_information_model.py:210
+#: users/user_related_models/family_information_model.py:244
+#: users/user_related_models/family_information_model.py:369
+#: users/user_related_models/family_information_model.py:384
 #: users/user_related_models/physical_information_model.py:100
 #: users/user_related_models/subject_details.py:21
 #: users/user_related_models/user_model.py:197
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/admin/guardian/model/obj_perms_manage_user.html:43
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/unfold/guardian/group_form.html:33
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/unfold/guardian/user_form.html:15
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/unfold/guardian/user_form.html:33
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/object_history.html:38
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/object_history.html:54
 msgid "User"
 msgstr "کاربر"
 
@@ -4017,8 +4074,10 @@ msgid "Preferred Wife Intellectual Information"
 msgstr "اطلاعات عقیدتی همسر مورد نظر"
 
 #: users/preferred_wife_models/preferred_wife_intellectual_information.py:109
-msgid "Future Spouse Originality"
-msgstr "اصالت همسر آینده"
+#, fuzzy
+#| msgid "Future Spose Jahiziyeh"
+msgid "Future Spouse Ethnicity"
+msgstr "جهیزیه همسر آینده"
 
 #: users/preferred_wife_models/preferred_wife_intellectual_information.py:130
 msgid "FutureSposeOriginality"
@@ -4127,20 +4186,20 @@ msgid "Work Address"
 msgstr "آدرس محل کار"
 
 #: users/user_related_models/confidintional_information_model.py:102
-#: users/user_related_models/family_information_model.py:311
+#: users/user_related_models/family_information_model.py:322
 msgid "Originality"
 msgstr "اصالت"
 
 #: users/user_related_models/confidintional_information_model.py:108
-#: users/user_related_models/family_information_model.py:220
-#: users/user_related_models/family_information_model.py:317
-#: users/user_related_models/personal_information_model.py:36
+#: users/user_related_models/family_information_model.py:231
+#: users/user_related_models/family_information_model.py:328
+#: users/user_related_models/personal_information_model.py:37
 msgid "Education"
 msgstr "تحصیلات"
 
 #: users/user_related_models/confidintional_information_model.py:114
-#: users/user_related_models/family_information_model.py:226
-#: users/user_related_models/family_information_model.py:304
+#: users/user_related_models/family_information_model.py:237
+#: users/user_related_models/family_information_model.py:315
 #: users/user_related_models/financial_information.py:15
 msgid "Job"
 msgstr "شغل"
@@ -4212,7 +4271,7 @@ msgid "Marriage Date"
 msgstr "تاریخ ازدواج"
 
 #: users/user_related_models/confidintional_information_model.py:264
-#: users/user_related_models/family_information_model.py:119
+#: users/user_related_models/family_information_model.py:130
 msgid "Divorce Date"
 msgstr "تاریخ طلاق"
 
@@ -4297,142 +4356,152 @@ msgstr "وضعیت ارتباط با خانواده (والدین و برادر�
 msgid "Contact with Relatives"
 msgstr "وضعیت ارتباط با فامیل"
 
-#: users/user_related_models/family_information_model.py:89
+#: users/user_related_models/family_information_model.py:62
+msgid "Number of Sisters"
+msgstr ""
+
+#: users/user_related_models/family_information_model.py:68
+#, fuzzy
+#| msgid "Brothers"
+msgid "Number of Brothers"
+msgstr "برادران"
+
+#: users/user_related_models/family_information_model.py:102
 msgid "Family Information"
 msgstr "اطلاعات خانواده"
 
-#: users/user_related_models/family_information_model.py:90
+#: users/user_related_models/family_information_model.py:103
 msgid "Families Information"
 msgstr "اطلاعات خانواده‌ها"
 
-#: users/user_related_models/family_information_model.py:95
+#: users/user_related_models/family_information_model.py:108
 msgid "Person Status"
 msgstr "وضعیت فرد"
 
-#: users/user_related_models/family_information_model.py:102
+#: users/user_related_models/family_information_model.py:115
 msgid "Contract Length"
 msgstr "مدت عقد"
 
-#: users/user_related_models/family_information_model.py:109
+#: users/user_related_models/family_information_model.py:121
 msgid "Living Length"
 msgstr "مدت زندگی مشترک"
 
-#: users/user_related_models/family_information_model.py:116
-#: users/user_related_models/family_information_model.py:329
+#: users/user_related_models/family_information_model.py:127
+#: users/user_related_models/family_information_model.py:340
 msgid "Death Date"
 msgstr "تاریخ فوت"
 
-#: users/user_related_models/family_information_model.py:126
+#: users/user_related_models/family_information_model.py:137
 msgid "Reason for Divorce or Death"
 msgstr "دلایل طلاق یا فوت"
 
-#: users/user_related_models/family_information_model.py:160
+#: users/user_related_models/family_information_model.py:171
 msgid "Engagement or Wedding Status"
 msgstr "وضعیت نامزدی یا ازدواج"
 
-#: users/user_related_models/family_information_model.py:161
+#: users/user_related_models/family_information_model.py:172
 msgid "Engagements or Weddings Statuse"
 msgstr "وضعیت‌های نامزدی یا ازدواج"
 
-#: users/user_related_models/family_information_model.py:166
-#: users/user_related_models/personal_information_model.py:12
+#: users/user_related_models/family_information_model.py:177
+#: users/user_related_models/personal_information_model.py:13
 msgid "Gender"
 msgstr "جنسیت"
 
-#: users/user_related_models/family_information_model.py:173
+#: users/user_related_models/family_information_model.py:184
 msgid "Status"
 msgstr "وضعیت"
 
-#: users/user_related_models/family_information_model.py:178
+#: users/user_related_models/family_information_model.py:189
 msgid "Child Birth Date"
 msgstr "تاریخ تولد"
 
-#: users/user_related_models/family_information_model.py:184
+#: users/user_related_models/family_information_model.py:195
 msgid "Custody"
 msgstr "حضانت"
 
-#: users/user_related_models/family_information_model.py:190
+#: users/user_related_models/family_information_model.py:201
 msgid "Living Location"
 msgstr "محل زندگی"
 
-#: users/user_related_models/family_information_model.py:213
+#: users/user_related_models/family_information_model.py:224
 msgid "Ex-Husband Child Status"
 msgstr "وضعیت فرزند همسر سابق"
 
-#: users/user_related_models/family_information_model.py:214
+#: users/user_related_models/family_information_model.py:225
 msgid "Ex-Husbands Child Status"
 msgstr "وضعیت فرزند همسر سابق"
 
-#: users/user_related_models/family_information_model.py:218
-#: users/user_related_models/family_information_model.py:324
+#: users/user_related_models/family_information_model.py:229
+#: users/user_related_models/family_information_model.py:335
 msgid "Alive"
 msgstr "در قید حیات"
 
-#: users/user_related_models/family_information_model.py:248
+#: users/user_related_models/family_information_model.py:259
 msgid "Family Member"
 msgstr "عضو خانواده"
 
-#: users/user_related_models/family_information_model.py:249
+#: users/user_related_models/family_information_model.py:260
 msgid "Family Members"
 msgstr "اعضای خانواده"
 
-#: users/user_related_models/family_information_model.py:254
+#: users/user_related_models/family_information_model.py:265
 msgid "Sister"
 msgstr "خواهر"
 
-#: users/user_related_models/family_information_model.py:255
+#: users/user_related_models/family_information_model.py:266
 msgid "Sisters"
 msgstr "خواهران"
 
-#: users/user_related_models/family_information_model.py:260
+#: users/user_related_models/family_information_model.py:271
 msgid "Brother"
 msgstr "برادر"
 
-#: users/user_related_models/family_information_model.py:261
+#: users/user_related_models/family_information_model.py:272
 msgid "Brothers"
 msgstr "برادران"
 
-#: users/user_related_models/family_information_model.py:266
+#: users/user_related_models/family_information_model.py:277
 msgid "Groom or Zan Dadash"
 msgstr "داماد یا زن داداش"
 
-#: users/user_related_models/family_information_model.py:273
+#: users/user_related_models/family_information_model.py:284
 msgid "Groom"
 msgstr "داماد / زن داداش"
 
-#: users/user_related_models/family_information_model.py:274
+#: users/user_related_models/family_information_model.py:285
 msgid "Grooms"
 msgstr "دامادها / زن داداش ها"
 
-#: users/user_related_models/family_information_model.py:279
+#: users/user_related_models/family_information_model.py:290
 msgid "Bride or Shohar Khahar"
 msgstr "عروس یا شوهر خواهر"
 
-#: users/user_related_models/family_information_model.py:286
+#: users/user_related_models/family_information_model.py:297
 msgid "Bride or Wife"
 msgstr "عروس / شوهر خواهر"
 
-#: users/user_related_models/family_information_model.py:287
+#: users/user_related_models/family_information_model.py:298
 msgid "Brides or Wives"
 msgstr "عروس ها / شوهر خواهر ها"
 
-#: users/user_related_models/family_information_model.py:292
+#: users/user_related_models/family_information_model.py:303
 msgid "Language"
 msgstr "زبان"
 
-#: users/user_related_models/family_information_model.py:350
+#: users/user_related_models/family_information_model.py:361
 msgid "Parent"
 msgstr "والدین"
 
-#: users/user_related_models/family_information_model.py:351
+#: users/user_related_models/family_information_model.py:362
 msgid "Parents"
 msgstr "والدین"
 
-#: users/user_related_models/family_information_model.py:367
+#: users/user_related_models/family_information_model.py:378
 msgid "Mothers"
 msgstr "مادر"
 
-#: users/user_related_models/family_information_model.py:382
+#: users/user_related_models/family_information_model.py:393
 msgid "Fathers"
 msgstr "پدر"
 
@@ -4476,23 +4545,23 @@ msgstr "میزان مهریه همسر سابق"
 msgid "Future Spouse Dowry Type"
 msgstr "نوع مهریه همسر آینده"
 
-#: users/user_related_models/financial_information.py:111
+#: users/user_related_models/financial_information.py:110
 msgid "Future Spose Dowry Amount"
 msgstr "میزان مهریه همسر آینده"
 
-#: users/user_related_models/financial_information.py:118
+#: users/user_related_models/financial_information.py:117
 msgid "Future Spose Jahiziyeh"
 msgstr "جهیزیه همسر آینده"
 
-#: users/user_related_models/financial_information.py:126
+#: users/user_related_models/financial_information.py:125
 msgid "Future Spose Jahiziyeh Explantion"
 msgstr "توضیحات جهیزیه همسر آینده"
 
-#: users/user_related_models/financial_information.py:159
+#: users/user_related_models/financial_information.py:158
 msgid "Financial Information"
 msgstr "اطلاعات مالی"
 
-#: users/user_related_models/financial_information.py:160
+#: users/user_related_models/financial_information.py:159
 msgid "Financial Informations"
 msgstr "اطلاعات مالی"
 
@@ -4595,79 +4664,79 @@ msgstr ""
 msgid "Intellectual Information"
 msgstr "اطلاعات عقیدتی"
 
-#: users/user_related_models/personal_information_model.py:18
+#: users/user_related_models/personal_information_model.py:19
 msgid "Sadat"
 msgstr "سادات"
 
-#: users/user_related_models/personal_information_model.py:30
+#: users/user_related_models/personal_information_model.py:31
 msgid "Birth Location"
 msgstr "محل تولد"
 
-#: users/user_related_models/personal_information_model.py:43
+#: users/user_related_models/personal_information_model.py:44
 msgid "Degree"
 msgstr "رشته و گرایش"
 
-#: users/user_related_models/personal_information_model.py:49
+#: users/user_related_models/personal_information_model.py:52
 msgid "Military Status"
 msgstr "وضعیت سربازی"
 
-#: users/user_related_models/personal_information_model.py:55
+#: users/user_related_models/personal_information_model.py:58
 msgid "Military Status Explanation"
 msgstr "توضیحات سربازی"
 
-#: users/user_related_models/personal_information_model.py:62
+#: users/user_related_models/personal_information_model.py:65
 msgid "Income"
 msgstr "درآمد ماهانه"
 
-#: users/user_related_models/personal_information_model.py:69
+#: users/user_related_models/personal_information_model.py:72
 msgid "Deposit"
 msgstr "سپرده"
 
-#: users/user_related_models/personal_information_model.py:75
+#: users/user_related_models/personal_information_model.py:78
 msgid "Have Insurance"
 msgstr "بیمه دار"
 
-#: users/user_related_models/personal_information_model.py:81
+#: users/user_related_models/personal_information_model.py:84
 msgid "Insurance Type"
 msgstr "نوع بیمه"
 
-#: users/user_related_models/personal_information_model.py:90
+#: users/user_related_models/personal_information_model.py:93
 msgid "Insurance Years"
 msgstr "سال‌های بیمه"
 
-#: users/user_related_models/personal_information_model.py:95
+#: users/user_related_models/personal_information_model.py:100
 msgid "Leisure Type"
 msgstr "نوع تفریحات"
 
-#: users/user_related_models/personal_information_model.py:101
+#: users/user_related_models/personal_information_model.py:108
 msgid "Usage Cases"
 msgstr "موارد استفاده نظیر دخانیات"
 
-#: users/user_related_models/personal_information_model.py:108
+#: users/user_related_models/personal_information_model.py:115
 msgid "Usage Case Description"
 msgstr "توضیحات موارد مورد استفاده نظیر دخانیات"
 
-#: users/user_related_models/personal_information_model.py:115
+#: users/user_related_models/personal_information_model.py:122
 msgid "Tatto"
 msgstr "تتو"
 
-#: users/user_related_models/personal_information_model.py:122
+#: users/user_related_models/personal_information_model.py:129
 msgid "Tatto Description"
 msgstr "توضیحات تتو"
 
-#: users/user_related_models/personal_information_model.py:129
+#: users/user_related_models/personal_information_model.py:136
 msgid "Conviction or Arrest History"
 msgstr "تاریخچه محکومیت یا دستگیری"
 
-#: users/user_related_models/personal_information_model.py:134
+#: users/user_related_models/personal_information_model.py:141
 msgid "Conviction Reason"
 msgstr "دلیل محکومیت"
 
-#: users/user_related_models/personal_information_model.py:166
+#: users/user_related_models/personal_information_model.py:173
 msgid "Personal Information"
 msgstr "اطلاعات شخصی"
 
-#: users/user_related_models/personal_information_model.py:167
+#: users/user_related_models/personal_information_model.py:174
 msgid "Personals Information"
 msgstr "اطلاعات شخصی"
 
@@ -4699,7 +4768,7 @@ msgstr "چهره و اندام"
 msgid "Disease or Surgery History"
 msgstr "بیماری یا جراحی"
 
-#: users/user_related_models/physical_information_model.py:90
+#: users/user_related_models/physical_information_model.py:91
 msgid "Medication/Surgery/Disease Type"
 msgstr "نوع دارو/جراحی/بیماری"
 
@@ -4828,285 +4897,286 @@ msgstr "کد دسترسی برای کاربران جدید لازم است."
 msgid "Users Management"
 msgstr "مدیریت کاربران"
 
-#: venv/lib/python3.13/site-packages/_pytest/config/argparsing.py:474
+#: venv/Lib/site-packages/_pytest/config/argparsing.py:474
 #, python-format
 msgid "ambiguous option: %(option)s could match %(matches)s"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/_termui_impl.py:556
+#: venv/Lib/site-packages/click/_termui_impl.py:613
 #, python-brace-format
 msgid "{editor}: Editing failed"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/_termui_impl.py:560
+#: venv/Lib/site-packages/click/_termui_impl.py:617
 #, python-brace-format
 msgid "{editor}: Editing failed: {e}"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/core.py:1124
-msgid "Aborted!"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/click/core.py:1349
-#: venv/lib/python3.13/site-packages/click/core.py:1379
+#: venv/Lib/site-packages/click/core.py:1114
+#: venv/Lib/site-packages/click/core.py:1151
 #, python-brace-format
-msgid "(Deprecated) {text}"
+msgid "{text} {deprecated_message}"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/core.py:1396
+#: venv/Lib/site-packages/click/core.py:1170
 msgid "Options"
 msgstr "گزینه ها"
 
-#: venv/lib/python3.13/site-packages/click/core.py:1422
+#: venv/Lib/site-packages/click/core.py:1245
 #, python-brace-format
 msgid "Got unexpected extra argument ({args})"
 msgid_plural "Got unexpected extra arguments ({args})"
 msgstr[0] ""
 msgstr[1] ""
 
-#: venv/lib/python3.13/site-packages/click/core.py:1438
-msgid "DeprecationWarning: The command {name!r} is deprecated."
+#: venv/Lib/site-packages/click/core.py:1264
+msgid "DeprecationWarning: The command {name!r} is deprecated.{extra_message}"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/core.py:1645
+#: venv/Lib/site-packages/click/core.py:1448
+msgid "Aborted!"
+msgstr ""
+
+#: venv/Lib/site-packages/click/core.py:1822
 msgid "Commands"
 msgstr "دستور ها"
 
-#: venv/lib/python3.13/site-packages/click/core.py:1677
+#: venv/Lib/site-packages/click/core.py:1853
 msgid "Missing command."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/core.py:1755
+#: venv/Lib/site-packages/click/core.py:1931
 msgid "No such command {name!r}."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/core.py:2313
+#: venv/Lib/site-packages/click/core.py:2355
 msgid "Value must be an iterable."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/core.py:2334
+#: venv/Lib/site-packages/click/core.py:2378
 #, python-brace-format
 msgid "Takes {nargs} values but 1 was given."
 msgid_plural "Takes {nargs} values but {len} were given."
 msgstr[0] ""
 msgstr[1] ""
 
-#: venv/lib/python3.13/site-packages/click/core.py:2783
+#: venv/Lib/site-packages/click/core.py:2567
+msgid ""
+"DeprecationWarning: The {param_type} {name!r} is deprecated.{extra_message}"
+msgstr ""
+
+#: venv/Lib/site-packages/click/core.py:3015
 #, python-brace-format
 msgid "env var: {var}"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/core.py:2813
-msgid "(dynamic)"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/click/core.py:2828
+#: venv/Lib/site-packages/click/core.py:3018
 #, python-brace-format
 msgid "default: {default}"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/core.py:2841
-msgid "required"
-msgstr "الزامی است."
+#: venv/Lib/site-packages/click/core.py:3082
+msgid "(dynamic)"
+msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/decorators.py:457
+#: venv/Lib/site-packages/click/decorators.py:465
 #, python-format
 msgid "%(prog)s, version %(version)s"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/decorators.py:520
+#: venv/Lib/site-packages/click/decorators.py:522
 msgid "Show the version and exit."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/decorators.py:541
+#: venv/Lib/site-packages/click/decorators.py:548
 msgid "Show this message and exit."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/exceptions.py:49
-#: venv/lib/python3.13/site-packages/click/exceptions.py:88
+#: venv/Lib/site-packages/click/exceptions.py:50
+#: venv/Lib/site-packages/click/exceptions.py:89
 #, python-brace-format
 msgid "Error: {message}"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/exceptions.py:80
+#: venv/Lib/site-packages/click/exceptions.py:81
 #, python-brace-format
 msgid "Try '{command} {option}' for help."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/exceptions.py:129
+#: venv/Lib/site-packages/click/exceptions.py:130
+#, fuzzy, python-brace-format
+#| msgid "Invalid value: {message}"
 msgid "Invalid value: {message}"
 msgstr "مقدار نامعتبر"
 
-#: venv/lib/python3.13/site-packages/click/exceptions.py:131
+#: venv/Lib/site-packages/click/exceptions.py:132
+#, fuzzy, python-brace-format
+#| msgid "Invalid value for {param_hint}: {message}"
 msgid "Invalid value for {param_hint}: {message}"
 msgstr "مقدار نامعتبر برای"
 
-#: venv/lib/python3.13/site-packages/click/exceptions.py:187
+#: venv/Lib/site-packages/click/exceptions.py:190
 msgid "Missing argument"
 msgstr "آرگومان پیدا نشد"
 
-#: venv/lib/python3.13/site-packages/click/exceptions.py:189
+#: venv/Lib/site-packages/click/exceptions.py:192
 msgid "Missing option"
 msgstr "گزینه پیدا نشد"
 
-#: venv/lib/python3.13/site-packages/click/exceptions.py:191
+#: venv/Lib/site-packages/click/exceptions.py:194
 msgid "Missing parameter"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/exceptions.py:193
+#: venv/Lib/site-packages/click/exceptions.py:196
 #, python-brace-format
 msgid "Missing {param_type}"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/exceptions.py:200
+#: venv/Lib/site-packages/click/exceptions.py:203
 #, python-brace-format
 msgid "Missing parameter: {param_name}"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/exceptions.py:220
+#: venv/Lib/site-packages/click/exceptions.py:223
 #, python-brace-format
 msgid "No such option: {name}"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/exceptions.py:232
+#: venv/Lib/site-packages/click/exceptions.py:235
 #, python-brace-format
 msgid "Did you mean {possibility}?"
 msgid_plural "(Possible options: {possibilities})"
 msgstr[0] ""
 msgstr[1] ""
 
-#: venv/lib/python3.13/site-packages/click/exceptions.py:270
+#: venv/Lib/site-packages/click/exceptions.py:282
 msgid "unknown error"
 msgstr "نامعلوم"
 
-#: venv/lib/python3.13/site-packages/click/exceptions.py:277
+#: venv/Lib/site-packages/click/exceptions.py:289
 msgid "Could not open file {filename!r}: {message}"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/formatting.py:156
-msgid "Usage:"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/click/parser.py:233
+#: venv/Lib/site-packages/click/parser.py:199
 msgid "Argument {name!r} takes {nargs} values."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/parser.py:415
+#: venv/Lib/site-packages/click/parser.py:381
 msgid "Option {name!r} does not take a value."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/parser.py:476
+#: venv/Lib/site-packages/click/parser.py:444
 msgid "Option {name!r} requires an argument."
 msgid_plural "Option {name!r} requires {nargs} arguments."
 msgstr[0] ""
 msgstr[1] ""
 
-#: venv/lib/python3.13/site-packages/click/shell_completion.py:326
+#: venv/Lib/site-packages/click/shell_completion.py:332
 msgid "Shell completion is not supported for Bash versions older than 4.4."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/shell_completion.py:333
+#: venv/Lib/site-packages/click/shell_completion.py:339
 msgid "Couldn't detect Bash version, shell completion is not supported."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/termui.py:158
+#: venv/Lib/site-packages/click/termui.py:165
 msgid "Repeat for confirmation"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/termui.py:174
+#: venv/Lib/site-packages/click/termui.py:181
 msgid "Error: The value you entered was invalid."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/termui.py:176
+#: venv/Lib/site-packages/click/termui.py:183
 #, python-brace-format
 msgid "Error: {e.message}"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/termui.py:187
+#: venv/Lib/site-packages/click/termui.py:194
 msgid "Error: The two entered values do not match."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/termui.py:243
+#: venv/Lib/site-packages/click/termui.py:253
 msgid "Error: invalid input"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/termui.py:773
+#: venv/Lib/site-packages/click/termui.py:872
 msgid "Press any key to continue..."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/types.py:267
+#: venv/Lib/site-packages/click/types.py:332
 #, python-brace-format
 msgid ""
 "Choose from:\n"
 "\t{choices}"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/types.py:299
+#: venv/Lib/site-packages/click/types.py:369
 msgid "{value!r} is not {choice}."
 msgid_plural "{value!r} is not one of {choices}."
 msgstr[0] ""
 msgstr[1] ""
 
-#: venv/lib/python3.13/site-packages/click/types.py:393
+#: venv/Lib/site-packages/click/types.py:460
 msgid "{value!r} does not match the format {format}."
 msgid_plural "{value!r} does not match the formats {formats}."
 msgstr[0] ""
 msgstr[1] ""
 
-#: venv/lib/python3.13/site-packages/click/types.py:415
+#: venv/Lib/site-packages/click/types.py:482
 msgid "{value!r} is not a valid {number_type}."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/types.py:471
+#: venv/Lib/site-packages/click/types.py:538
 #, python-brace-format
 msgid "{value} is not in the range {range}."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/types.py:612
-msgid "{value!r} is not a valid boolean."
+#: venv/Lib/site-packages/click/types.py:719
+msgid "{value!r} is not a valid boolean. Recognized values: {states}"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/types.py:636
+#: venv/Lib/site-packages/click/types.py:747
 msgid "{value!r} is not a valid UUID."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/types.py:826
+#: venv/Lib/site-packages/click/types.py:937
 msgid "file"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/types.py:828
+#: venv/Lib/site-packages/click/types.py:939
 msgid "directory"
 msgstr "پوشه"
 
-#: venv/lib/python3.13/site-packages/click/types.py:830
+#: venv/Lib/site-packages/click/types.py:941
 msgid "path"
 msgstr "آدرس فایل"
 
-#: venv/lib/python3.13/site-packages/click/types.py:881
+#: venv/Lib/site-packages/click/types.py:988
 msgid "{name} {filename!r} does not exist."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/types.py:890
+#: venv/Lib/site-packages/click/types.py:997
 msgid "{name} {filename!r} is a file."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/types.py:898
+#: venv/Lib/site-packages/click/types.py:1005
 msgid "{name} {filename!r} is a directory."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/types.py:907
+#: venv/Lib/site-packages/click/types.py:1014
 msgid "{name} {filename!r} is not readable."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/types.py:916
+#: venv/Lib/site-packages/click/types.py:1023
 msgid "{name} {filename!r} is not writable."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/types.py:925
+#: venv/Lib/site-packages/click/types.py:1032
 msgid "{name} {filename!r} is not executable."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/click/types.py:992
+#: venv/Lib/site-packages/click/types.py:1099
 #, python-brace-format
 msgid "{len_type} values are required, but {len_value} was given."
 msgid_plural "{len_type} values are required, but {len_value} were given."
@@ -5114,110 +5184,110 @@ msgstr[0] ""
 msgstr[1] ""
 
 # ######################### from_here
-#: venv/lib/python3.13/site-packages/django/contrib/messages/apps.py:15
+#: venv/Lib/site-packages/django/contrib/messages/apps.py:15
 msgid "Messages"
 msgstr "پیام ها"
 
-#: venv/lib/python3.13/site-packages/django/contrib/sitemaps/apps.py:8
+#: venv/Lib/site-packages/django/contrib/sitemaps/apps.py:8
 msgid "Site Maps"
 msgstr "نقشه های سایت"
 
-#: venv/lib/python3.13/site-packages/django/contrib/staticfiles/apps.py:9
+#: venv/Lib/site-packages/django/contrib/staticfiles/apps.py:9
 msgid "Static Files"
 msgstr "فایل های استاتیک"
 
-#: venv/lib/python3.13/site-packages/django/contrib/syndication/apps.py:7
+#: venv/Lib/site-packages/django/contrib/syndication/apps.py:7
 msgid "Syndication"
 msgstr ""
 
 #. Translators: String used to replace omitted page numbers in elided page
 #. range generated by paginators, e.g. [1, 2, '…', 5, 6, 7, '…', 9, 10].
-#: venv/lib/python3.13/site-packages/django/core/paginator.py:30
+#: venv/Lib/site-packages/django/core/paginator.py:30
 msgid "…"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/core/paginator.py:50
+#: venv/Lib/site-packages/django/core/paginator.py:50
 msgid "That page number is not an integer"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/core/paginator.py:52
+#: venv/Lib/site-packages/django/core/paginator.py:52
 msgid "That page number is less than 1"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/core/paginator.py:54
+#: venv/Lib/site-packages/django/core/paginator.py:54
 msgid "That page contains no results"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/core/validators.py:22
+#: venv/Lib/site-packages/django/core/validators.py:22
 msgid "Enter a valid value."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/core/validators.py:104
-#: venv/lib/python3.13/site-packages/django/forms/fields.py:752
+#: venv/Lib/site-packages/django/core/validators.py:104
+#: venv/Lib/site-packages/django/forms/fields.py:752
 msgid "Enter a valid URL."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/core/validators.py:165
+#: venv/Lib/site-packages/django/core/validators.py:165
 msgid "Enter a valid integer."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/core/validators.py:176
+#: venv/Lib/site-packages/django/core/validators.py:176
 msgid "Enter a valid email address."
 msgstr ""
 
 #. Translators: "letters" means latin letters: a-z and A-Z.
-#: venv/lib/python3.13/site-packages/django/core/validators.py:259
+#: venv/Lib/site-packages/django/core/validators.py:259
 msgid ""
 "Enter a valid “slug” consisting of letters, numbers, underscores or hyphens."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/core/validators.py:267
+#: venv/Lib/site-packages/django/core/validators.py:267
 msgid ""
 "Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or "
 "hyphens."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/core/validators.py:281
-#: venv/lib/python3.13/site-packages/django/core/validators.py:289
-#: venv/lib/python3.13/site-packages/django/core/validators.py:318
+#: venv/Lib/site-packages/django/core/validators.py:281
+#: venv/Lib/site-packages/django/core/validators.py:289
+#: venv/Lib/site-packages/django/core/validators.py:318
 msgid "Enter a valid IPv4 address."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/core/validators.py:298
-#: venv/lib/python3.13/site-packages/django/core/validators.py:319
+#: venv/Lib/site-packages/django/core/validators.py:298
+#: venv/Lib/site-packages/django/core/validators.py:319
 msgid "Enter a valid IPv6 address."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/core/validators.py:310
-#: venv/lib/python3.13/site-packages/django/core/validators.py:317
+#: venv/Lib/site-packages/django/core/validators.py:310
+#: venv/Lib/site-packages/django/core/validators.py:317
 msgid "Enter a valid IPv4 or IPv6 address."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/core/validators.py:353
+#: venv/Lib/site-packages/django/core/validators.py:353
 msgid "Enter only digits separated by commas."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/core/validators.py:359
+#: venv/Lib/site-packages/django/core/validators.py:359
 #, python-format
 msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/core/validators.py:394
+#: venv/Lib/site-packages/django/core/validators.py:394
 #, python-format
 msgid "Ensure this value is less than or equal to %(limit_value)s."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/core/validators.py:403
+#: venv/Lib/site-packages/django/core/validators.py:403
 #, python-format
 msgid "Ensure this value is greater than or equal to %(limit_value)s."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/core/validators.py:412
+#: venv/Lib/site-packages/django/core/validators.py:412
 #, python-format
 msgid "Ensure this value is a multiple of step size %(limit_value)s."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/core/validators.py:422
+#: venv/Lib/site-packages/django/core/validators.py:422
 #, python-format
 msgid ""
 "Ensure this value has at least %(limit_value)d character (it has "
@@ -5228,7 +5298,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: venv/lib/python3.13/site-packages/django/core/validators.py:440
+#: venv/Lib/site-packages/django/core/validators.py:440
 #, python-format
 msgid ""
 "Ensure this value has at most %(limit_value)d character (it has "
@@ -5239,27 +5309,27 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: venv/lib/python3.13/site-packages/django/core/validators.py:463
-#: venv/lib/python3.13/site-packages/django/forms/fields.py:347
-#: venv/lib/python3.13/site-packages/django/forms/fields.py:386
+#: venv/Lib/site-packages/django/core/validators.py:463
+#: venv/Lib/site-packages/django/forms/fields.py:347
+#: venv/Lib/site-packages/django/forms/fields.py:386
 msgid "Enter a number."
 msgstr "عدد وارد کنید."
 
-#: venv/lib/python3.13/site-packages/django/core/validators.py:465
+#: venv/Lib/site-packages/django/core/validators.py:465
 #, python-format
 msgid "Ensure that there are no more than %(max)s digit in total."
 msgid_plural "Ensure that there are no more than %(max)s digits in total."
 msgstr[0] ""
 msgstr[1] ""
 
-#: venv/lib/python3.13/site-packages/django/core/validators.py:470
+#: venv/Lib/site-packages/django/core/validators.py:470
 #, python-format
 msgid "Ensure that there are no more than %(max)s decimal place."
 msgid_plural "Ensure that there are no more than %(max)s decimal places."
 msgstr[0] ""
 msgstr[1] ""
 
-#: venv/lib/python3.13/site-packages/django/core/validators.py:475
+#: venv/Lib/site-packages/django/core/validators.py:475
 #, python-format
 msgid ""
 "Ensure that there are no more than %(max)s digit before the decimal point."
@@ -5268,348 +5338,344 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: venv/lib/python3.13/site-packages/django/core/validators.py:546
+#: venv/Lib/site-packages/django/core/validators.py:546
 #, python-format
 msgid ""
 "File extension “%(extension)s” is not allowed. Allowed extensions are: "
 "%(allowed_extensions)s."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/core/validators.py:607
+#: venv/Lib/site-packages/django/core/validators.py:607
 msgid "Null characters are not allowed."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/base.py:1423
-#: venv/lib/python3.13/site-packages/django/forms/models.py:893
-#: venv/lib/python3.13/site-packages/unfold/contrib/inlines/admin.py:103
+#: venv/Lib/site-packages/django/db/models/base.py:1423
+#: venv/Lib/site-packages/django/forms/models.py:893
 msgid "and"
 msgstr "و"
 
-#: venv/lib/python3.13/site-packages/django/db/models/base.py:1425
+#: venv/Lib/site-packages/django/db/models/base.py:1425
 #, python-format
 msgid "%(model_name)s with this %(field_labels)s already exists."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/constraints.py:17
+#: venv/Lib/site-packages/django/db/models/constraints.py:17
 #, python-format
 msgid "Constraint “%(name)s” is violated."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:128
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:128
 #, python-format
 msgid "Value %(value)r is not a valid choice."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:129
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:129
 msgid "This field cannot be null."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:130
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:130
 msgid "This field cannot be blank."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:131
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:131
 #, python-format
 msgid "%(model_name)s with this %(field_label)s already exists."
 msgstr ""
 
 #. Translators: The 'lookup_type' is one of 'date', 'year' or
 #. 'month'. Eg: "Title must be unique for pub_date year"
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:135
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:135
 #, python-format
 msgid ""
 "%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:173
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:173
 #, python-format
 msgid "Field of type: %(field_type)s"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:1094
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:1094
 #, python-format
 msgid "“%(value)s” value must be either True or False."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:1095
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:1095
 #, python-format
 msgid "“%(value)s” value must be either True, False, or None."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:1097
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:1097
 msgid "Boolean (Either True or False)"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:1147
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:1147
 #, python-format
 msgid "String (up to %(max_length)s)"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:1149
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:1149
 msgid "String (unlimited)"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:1253
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:1253
 msgid "Comma-separated integers"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:1354
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:1354
 #, python-format
 msgid ""
 "“%(value)s” value has an invalid date format. It must be in YYYY-MM-DD "
 "format."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:1358
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:1493
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:1358
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:1493
 #, python-format
 msgid ""
 "“%(value)s” value has the correct format (YYYY-MM-DD) but it is an invalid "
 "date."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:1362
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:1362
 msgid "Date (without time)"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:1489
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:1489
 #, python-format
 msgid ""
-"“%(value)s” value has an invalid format. It must be in YYYY-MM-DD "
-"HH:MM[:ss[.uuuuuu]][TZ] format."
+"“%(value)s” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[."
+"uuuuuu]][TZ] format."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:1497
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:1497
 #, python-format
 msgid ""
 "“%(value)s” value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
 "[TZ]) but it is an invalid date/time."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:1502
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:1502
 msgid "Date (with time)"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:1626
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:1626
 #, python-format
 msgid "“%(value)s” value must be a decimal number."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:1628
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:1628
 msgid "Decimal number"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:1789
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:1789
 #, python-format
 msgid ""
-"“%(value)s” value has an invalid format. It must be in [DD] "
-"[[HH:]MM:]ss[.uuuuuu] format."
+"“%(value)s” value has an invalid format. It must be in [DD] [[HH:]MM:]ss[."
+"uuuuuu] format."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:1793
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:1793
 msgid "Duration"
 msgstr "مدت"
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:1845
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:1845
 msgid "Email address"
 msgstr "آدرس ایمیل"
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:1870
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:1870
 msgid "File path"
 msgstr "آدرس فایل"
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:1948
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:1948
 #, python-format
 msgid "“%(value)s” value must be a float."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:1950
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:1950
 msgid "Floating point number"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:1990
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:1990
 #, python-format
 msgid "“%(value)s” value must be an integer."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:1992
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:1992
 msgid "Integer"
 msgstr "اینتیجر"
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:2088
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:2088
 msgid "Big (8 byte) integer"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:2105
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:2105
 msgid "Small integer"
 msgstr "اینتیجر کوچک"
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:2113
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:2113
 msgid "IPv4 address"
 msgstr "آدرس IPV4"
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:2144
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:2144
 msgid "IP address"
 msgstr "آدرس ip"
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:2237
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:2238
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:2237
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:2238
 #, python-format
 msgid "“%(value)s” value must be either None, True or False."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:2240
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:2240
 msgid "Boolean (Either True, False or None)"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:2291
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:2291
 msgid "Positive big integer"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:2306
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:2306
 msgid "Positive integer"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:2321
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:2321
 msgid "Positive small integer"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:2337
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:2337
 #, python-format
 msgid "Slug (up to %(max_length)s)"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:2373
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:2373
 msgid "Text"
 msgstr "متن"
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:2448
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:2448
 #, python-format
 msgid ""
 "“%(value)s” value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] "
 "format."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:2452
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:2452
 #, python-format
 msgid ""
 "“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an "
 "invalid time."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:2456
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/forms.py:225
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/forms.py:241
-#: venv/lib/python3.13/site-packages/unfold/widgets.py:537
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:2456
 msgid "Time"
 msgstr "زمان"
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:2564
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:2564
 msgid "URL"
 msgstr "آدرس سایت"
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:2588
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:2588
 msgid "Raw binary data"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:2653
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:2653
 #, python-format
 msgid "“%(value)s” is not a valid UUID."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/__init__.py:2655
+#: venv/Lib/site-packages/django/db/models/fields/__init__.py:2655
 msgid "Universally unique identifier"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/files.py:232
+#: venv/Lib/site-packages/django/db/models/fields/files.py:232
 msgid "File"
 msgstr "فایل"
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/files.py:393
+#: venv/Lib/site-packages/django/db/models/fields/files.py:393
 msgid "Image"
 msgstr "عکس"
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/json.py:26
+#: venv/Lib/site-packages/django/db/models/fields/json.py:26
 msgid "A JSON object"
 msgstr "جیسان"
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/json.py:28
+#: venv/Lib/site-packages/django/db/models/fields/json.py:28
 msgid "Value must be valid JSON."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/related.py:919
+#: venv/Lib/site-packages/django/db/models/fields/related.py:919
 #, python-format
 msgid "%(model)s instance with %(field)s %(value)r does not exist."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/related.py:921
+#: venv/Lib/site-packages/django/db/models/fields/related.py:921
 msgid "Foreign Key (type determined by related field)"
 msgstr "فورن کی"
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/related.py:1212
+#: venv/Lib/site-packages/django/db/models/fields/related.py:1212
 msgid "One-to-one relationship"
 msgstr "ارتباط یک به یک"
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/related.py:1269
+#: venv/Lib/site-packages/django/db/models/fields/related.py:1269
 #, python-format
 msgid "%(from)s-%(to)s relationship"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/related.py:1271
+#: venv/Lib/site-packages/django/db/models/fields/related.py:1271
 #, python-format
 msgid "%(from)s-%(to)s relationships"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/db/models/fields/related.py:1319
+#: venv/Lib/site-packages/django/db/models/fields/related.py:1319
 msgid "Many-to-many relationship"
 msgstr "ارتباط چند به چند"
 
 #. Translators: If found as last label character, these punctuation
 #. characters will prevent the default label_suffix to be appended to the label
-#: venv/lib/python3.13/site-packages/django/forms/boundfield.py:184
+#: venv/Lib/site-packages/django/forms/boundfield.py:184
 msgid ":?.!"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/forms/fields.py:298
+#: venv/Lib/site-packages/django/forms/fields.py:298
 msgid "Enter a whole number."
 msgstr "شماره را کامل وارد کنید."
 
-#: venv/lib/python3.13/site-packages/django/forms/fields.py:467
-#: venv/lib/python3.13/site-packages/django/forms/fields.py:1241
+#: venv/Lib/site-packages/django/forms/fields.py:467
+#: venv/Lib/site-packages/django/forms/fields.py:1241
 msgid "Enter a valid date."
 msgstr "تاریخ صحیح وارد کنید."
 
-#: venv/lib/python3.13/site-packages/django/forms/fields.py:490
-#: venv/lib/python3.13/site-packages/django/forms/fields.py:1242
+#: venv/Lib/site-packages/django/forms/fields.py:490
+#: venv/Lib/site-packages/django/forms/fields.py:1242
 msgid "Enter a valid time."
 msgstr "زمان صحیح وارد کنید."
 
-#: venv/lib/python3.13/site-packages/django/forms/fields.py:517
+#: venv/Lib/site-packages/django/forms/fields.py:517
 msgid "Enter a valid date/time."
 msgstr "زمان و تاریخ صحیح وارد کنید."
 
-#: venv/lib/python3.13/site-packages/django/forms/fields.py:551
+#: venv/Lib/site-packages/django/forms/fields.py:551
 msgid "Enter a valid duration."
 msgstr "مدت صحیح وارد کنید."
 
-#: venv/lib/python3.13/site-packages/django/forms/fields.py:552
+#: venv/Lib/site-packages/django/forms/fields.py:552
 #, python-brace-format
 msgid "The number of days must be between {min_days} and {max_days}."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/forms/fields.py:621
+#: venv/Lib/site-packages/django/forms/fields.py:621
 msgid "No file was submitted. Check the encoding type on the form."
 msgstr "فایلی انتخاب نشده است."
 
-#: venv/lib/python3.13/site-packages/django/forms/fields.py:622
+#: venv/Lib/site-packages/django/forms/fields.py:622
 msgid "No file was submitted."
 msgstr "فایلی انتخاب نشده است."
 
-#: venv/lib/python3.13/site-packages/django/forms/fields.py:623
+#: venv/Lib/site-packages/django/forms/fields.py:623
 msgid "The submitted file is empty."
 msgstr "فایل انتخاب شده خالی است."
 
-#: venv/lib/python3.13/site-packages/django/forms/fields.py:625
+#: venv/Lib/site-packages/django/forms/fields.py:625
 #, python-format
 msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
 msgid_plural ""
@@ -5617,552 +5683,546 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: venv/lib/python3.13/site-packages/django/forms/fields.py:630
+#: venv/Lib/site-packages/django/forms/fields.py:630
 msgid "Please either submit a file or check the clear checkbox, not both."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/forms/fields.py:694
+#: venv/Lib/site-packages/django/forms/fields.py:694
 msgid ""
 "Upload a valid image. The file you uploaded was either not an image or a "
 "corrupted image."
 msgstr "فایل به فرمت عکس آپلود کنید."
 
-#: venv/lib/python3.13/site-packages/django/forms/fields.py:857
-#: venv/lib/python3.13/site-packages/django/forms/fields.py:949
-#: venv/lib/python3.13/site-packages/django/forms/models.py:1566
+#: venv/Lib/site-packages/django/forms/fields.py:857
+#: venv/Lib/site-packages/django/forms/fields.py:949
+#: venv/Lib/site-packages/django/forms/models.py:1566
 #, python-format
 msgid "Select a valid choice. %(value)s is not one of the available choices."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/forms/fields.py:951
-#: venv/lib/python3.13/site-packages/django/forms/fields.py:1070
-#: venv/lib/python3.13/site-packages/django/forms/models.py:1564
+#: venv/Lib/site-packages/django/forms/fields.py:951
+#: venv/Lib/site-packages/django/forms/fields.py:1070
+#: venv/Lib/site-packages/django/forms/models.py:1564
 msgid "Enter a list of values."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/forms/fields.py:1071
+#: venv/Lib/site-packages/django/forms/fields.py:1071
 msgid "Enter a complete value."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/forms/fields.py:1313
+#: venv/Lib/site-packages/django/forms/fields.py:1313
 msgid "Enter a valid UUID."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/forms/fields.py:1343
+#: venv/Lib/site-packages/django/forms/fields.py:1343
 msgid "Enter a valid JSON."
 msgstr ""
 
 #. Translators: This is the default suffix added to form field labels
-#: venv/lib/python3.13/site-packages/django/forms/forms.py:98
+#: venv/Lib/site-packages/django/forms/forms.py:98
 msgid ":"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/forms/forms.py:244
-#: venv/lib/python3.13/site-packages/django/forms/forms.py:328
+#: venv/Lib/site-packages/django/forms/forms.py:244
+#: venv/Lib/site-packages/django/forms/forms.py:328
 #, python-format
 msgid "(Hidden field %(name)s) %(error)s"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/forms/formsets.py:63
+#: venv/Lib/site-packages/django/forms/formsets.py:63
 #, python-format
 msgid ""
 "ManagementForm data is missing or has been tampered with. Missing fields: "
 "%(field_names)s. You may need to file a bug report if the issue persists."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/forms/formsets.py:67
+#: venv/Lib/site-packages/django/forms/formsets.py:67
 #, python-format
 msgid "Please submit at most %(num)d form."
 msgid_plural "Please submit at most %(num)d forms."
 msgstr[0] ""
 msgstr[1] ""
 
-#: venv/lib/python3.13/site-packages/django/forms/formsets.py:72
+#: venv/Lib/site-packages/django/forms/formsets.py:72
 #, python-format
 msgid "Please submit at least %(num)d form."
 msgid_plural "Please submit at least %(num)d forms."
 msgstr[0] ""
 msgstr[1] ""
 
-#: venv/lib/python3.13/site-packages/django/forms/formsets.py:484
-#: venv/lib/python3.13/site-packages/django/forms/formsets.py:491
+#: venv/Lib/site-packages/django/forms/formsets.py:484
+#: venv/Lib/site-packages/django/forms/formsets.py:491
 msgid "Order"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/forms/formsets.py:499
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/import_preview.html:26
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/submit_line.html:56
+#: venv/Lib/site-packages/django/forms/formsets.py:499
 msgid "Delete"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/forms/models.py:886
+#: venv/Lib/site-packages/django/forms/models.py:886
 #, python-format
 msgid "Please correct the duplicate data for %(field)s."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/forms/models.py:891
+#: venv/Lib/site-packages/django/forms/models.py:891
 #, python-format
 msgid "Please correct the duplicate data for %(field)s, which must be unique."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/forms/models.py:898
+#: venv/Lib/site-packages/django/forms/models.py:898
 #, python-format
 msgid ""
 "Please correct the duplicate data for %(field_name)s which must be unique "
 "for the %(lookup)s in %(date_field)s."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/forms/models.py:907
+#: venv/Lib/site-packages/django/forms/models.py:907
 msgid "Please correct the duplicate values below."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/forms/models.py:1338
+#: venv/Lib/site-packages/django/forms/models.py:1338
 msgid "The inline value did not match the parent instance."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/forms/models.py:1429
+#: venv/Lib/site-packages/django/forms/models.py:1429
 msgid "Select a valid choice. That choice is not one of the available choices."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/forms/models.py:1568
+#: venv/Lib/site-packages/django/forms/models.py:1568
 #, python-format
 msgid "“%(pk)s” is not a valid value."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/forms/utils.py:226
+#: venv/Lib/site-packages/django/forms/utils.py:226
 #, python-format
 msgid ""
 "%(datetime)s couldn’t be interpreted in time zone %(current_timezone)s; it "
 "may be ambiguous or it may not exist."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/forms/widgets.py:463
+#: venv/Lib/site-packages/django/forms/widgets.py:463
 msgid "Clear"
 msgstr "پاک سازی."
 
-#: venv/lib/python3.13/site-packages/django/forms/widgets.py:464
+#: venv/Lib/site-packages/django/forms/widgets.py:464
 msgid "Currently"
 msgstr "در حال حاضر"
 
-#: venv/lib/python3.13/site-packages/django/forms/widgets.py:465
-#: venv/lib/python3.13/site-packages/jalali_date/templates/admin/edit_inline/jalali_stacked.html:12
-#: venv/lib/python3.13/site-packages/jalali_date/templates/admin/edit_inline/jalali_tabular.html:34
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/edit_inline/stacked.html:57
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/app_list_default.html:42
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/edit_inline/tabular_title.html:23
+#: venv/Lib/site-packages/django/forms/widgets.py:465
+#: venv/Lib/site-packages/jalali_date/templates/admin/edit_inline/jalali_stacked.html:12
+#: venv/Lib/site-packages/jalali_date/templates/admin/edit_inline/jalali_tabular.html:34
 msgid "Change"
 msgstr "تغییر"
 
-#: venv/lib/python3.13/site-packages/django/forms/widgets.py:794
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/boolean.html:8
+#: venv/Lib/site-packages/django/forms/widgets.py:794
 msgid "Unknown"
 msgstr "نامعلوم"
 
 #. Translators: Please do not add spaces around commas.
-#: venv/lib/python3.13/site-packages/django/template/defaultfilters.py:874
+#: venv/Lib/site-packages/django/template/defaultfilters.py:874
 msgid "yes,no,maybe"
 msgstr "بله، خیر، شاید"
 
-#: venv/lib/python3.13/site-packages/django/template/defaultfilters.py:904
-#: venv/lib/python3.13/site-packages/django/template/defaultfilters.py:921
+#: venv/Lib/site-packages/django/template/defaultfilters.py:904
+#: venv/Lib/site-packages/django/template/defaultfilters.py:921
 #, python-format
 msgid "%(size)d byte"
 msgid_plural "%(size)d bytes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: venv/lib/python3.13/site-packages/django/template/defaultfilters.py:923
+#: venv/Lib/site-packages/django/template/defaultfilters.py:923
 #, python-format
 msgid "%s KB"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/template/defaultfilters.py:925
+#: venv/Lib/site-packages/django/template/defaultfilters.py:925
 #, python-format
 msgid "%s MB"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/template/defaultfilters.py:927
+#: venv/Lib/site-packages/django/template/defaultfilters.py:927
 #, python-format
 msgid "%s GB"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/template/defaultfilters.py:929
+#: venv/Lib/site-packages/django/template/defaultfilters.py:929
 #, python-format
 msgid "%s TB"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/template/defaultfilters.py:931
+#: venv/Lib/site-packages/django/template/defaultfilters.py:931
 #, python-format
 msgid "%s PB"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dateformat.py:73
+#: venv/Lib/site-packages/django/utils/dateformat.py:73
 msgid "p.m."
 msgstr "ظهر"
 
-#: venv/lib/python3.13/site-packages/django/utils/dateformat.py:74
+#: venv/Lib/site-packages/django/utils/dateformat.py:74
 msgid "a.m."
 msgstr "صبح"
 
-#: venv/lib/python3.13/site-packages/django/utils/dateformat.py:79
+#: venv/Lib/site-packages/django/utils/dateformat.py:79
 msgid "PM"
 msgstr "ظهر"
 
-#: venv/lib/python3.13/site-packages/django/utils/dateformat.py:80
+#: venv/Lib/site-packages/django/utils/dateformat.py:80
 msgid "AM"
 msgstr "صبح"
 
-#: venv/lib/python3.13/site-packages/django/utils/dateformat.py:152
+#: venv/Lib/site-packages/django/utils/dateformat.py:152
 msgid "midnight"
 msgstr "نیمه شب"
 
-#: venv/lib/python3.13/site-packages/django/utils/dateformat.py:154
+#: venv/Lib/site-packages/django/utils/dateformat.py:154
 msgid "noon"
 msgstr "ظهر"
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:7
+#: venv/Lib/site-packages/django/utils/dates.py:7
 msgid "Monday"
 msgstr "دوشنبه"
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:8
+#: venv/Lib/site-packages/django/utils/dates.py:8
 msgid "Tuesday"
 msgstr "سه شنبه"
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:9
+#: venv/Lib/site-packages/django/utils/dates.py:9
 msgid "Wednesday"
 msgstr "چهار شنبه"
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:10
+#: venv/Lib/site-packages/django/utils/dates.py:10
 msgid "Thursday"
 msgstr "پنج شنبه"
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:11
+#: venv/Lib/site-packages/django/utils/dates.py:11
 msgid "Friday"
 msgstr "جمعه"
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:12
+#: venv/Lib/site-packages/django/utils/dates.py:12
 msgid "Saturday"
 msgstr "شنبه"
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:13
+#: venv/Lib/site-packages/django/utils/dates.py:13
 msgid "Sunday"
 msgstr "یکشنبه"
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:16
+#: venv/Lib/site-packages/django/utils/dates.py:16
 msgid "Mon"
 msgstr "دوشنبه"
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:17
+#: venv/Lib/site-packages/django/utils/dates.py:17
 msgid "Tue"
 msgstr "سه شنبه"
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:18
+#: venv/Lib/site-packages/django/utils/dates.py:18
 msgid "Wed"
 msgstr "چهارشنبه"
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:19
+#: venv/Lib/site-packages/django/utils/dates.py:19
 msgid "Thu"
 msgstr "پنج شنبه"
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:20
+#: venv/Lib/site-packages/django/utils/dates.py:20
 msgid "Fri"
 msgstr "جمعه"
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:21
+#: venv/Lib/site-packages/django/utils/dates.py:21
 msgid "Sat"
 msgstr "شنبه"
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:22
+#: venv/Lib/site-packages/django/utils/dates.py:22
 msgid "Sun"
 msgstr "یکشنبه"
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:25
+#: venv/Lib/site-packages/django/utils/dates.py:25
 msgid "January"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:26
+#: venv/Lib/site-packages/django/utils/dates.py:26
 msgid "February"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:27
+#: venv/Lib/site-packages/django/utils/dates.py:27
 msgid "March"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:28
+#: venv/Lib/site-packages/django/utils/dates.py:28
 msgid "April"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:29
+#: venv/Lib/site-packages/django/utils/dates.py:29
 msgid "May"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:30
+#: venv/Lib/site-packages/django/utils/dates.py:30
 msgid "June"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:31
+#: venv/Lib/site-packages/django/utils/dates.py:31
 msgid "July"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:32
+#: venv/Lib/site-packages/django/utils/dates.py:32
 msgid "August"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:33
+#: venv/Lib/site-packages/django/utils/dates.py:33
 msgid "September"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:34
+#: venv/Lib/site-packages/django/utils/dates.py:34
 msgid "October"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:35
+#: venv/Lib/site-packages/django/utils/dates.py:35
 msgid "November"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:36
+#: venv/Lib/site-packages/django/utils/dates.py:36
 msgid "December"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:39
+#: venv/Lib/site-packages/django/utils/dates.py:39
 msgid "jan"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:40
+#: venv/Lib/site-packages/django/utils/dates.py:40
 msgid "feb"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:41
+#: venv/Lib/site-packages/django/utils/dates.py:41
 msgid "mar"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:42
+#: venv/Lib/site-packages/django/utils/dates.py:42
 msgid "apr"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:43
+#: venv/Lib/site-packages/django/utils/dates.py:43
 msgid "may"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:44
+#: venv/Lib/site-packages/django/utils/dates.py:44
 msgid "jun"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:45
+#: venv/Lib/site-packages/django/utils/dates.py:45
 msgid "jul"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:46
+#: venv/Lib/site-packages/django/utils/dates.py:46
 msgid "aug"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:47
+#: venv/Lib/site-packages/django/utils/dates.py:47
 msgid "sep"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:48
+#: venv/Lib/site-packages/django/utils/dates.py:48
 msgid "oct"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:49
+#: venv/Lib/site-packages/django/utils/dates.py:49
 msgid "nov"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:50
+#: venv/Lib/site-packages/django/utils/dates.py:50
 msgid "dec"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:53
+#: venv/Lib/site-packages/django/utils/dates.py:53
 msgctxt "abbrev. month"
 msgid "Jan."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:54
+#: venv/Lib/site-packages/django/utils/dates.py:54
 msgctxt "abbrev. month"
 msgid "Feb."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:55
+#: venv/Lib/site-packages/django/utils/dates.py:55
 msgctxt "abbrev. month"
 msgid "March"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:56
+#: venv/Lib/site-packages/django/utils/dates.py:56
 msgctxt "abbrev. month"
 msgid "April"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:57
+#: venv/Lib/site-packages/django/utils/dates.py:57
 msgctxt "abbrev. month"
 msgid "May"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:58
+#: venv/Lib/site-packages/django/utils/dates.py:58
 msgctxt "abbrev. month"
 msgid "June"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:59
+#: venv/Lib/site-packages/django/utils/dates.py:59
 msgctxt "abbrev. month"
 msgid "July"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:60
+#: venv/Lib/site-packages/django/utils/dates.py:60
 msgctxt "abbrev. month"
 msgid "Aug."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:61
+#: venv/Lib/site-packages/django/utils/dates.py:61
 msgctxt "abbrev. month"
 msgid "Sept."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:62
+#: venv/Lib/site-packages/django/utils/dates.py:62
 msgctxt "abbrev. month"
 msgid "Oct."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:63
+#: venv/Lib/site-packages/django/utils/dates.py:63
 msgctxt "abbrev. month"
 msgid "Nov."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:64
+#: venv/Lib/site-packages/django/utils/dates.py:64
 msgctxt "abbrev. month"
 msgid "Dec."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:67
+#: venv/Lib/site-packages/django/utils/dates.py:67
 msgctxt "alt. month"
 msgid "January"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:68
+#: venv/Lib/site-packages/django/utils/dates.py:68
 msgctxt "alt. month"
 msgid "February"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:69
+#: venv/Lib/site-packages/django/utils/dates.py:69
 msgctxt "alt. month"
 msgid "March"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:70
+#: venv/Lib/site-packages/django/utils/dates.py:70
 msgctxt "alt. month"
 msgid "April"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:71
+#: venv/Lib/site-packages/django/utils/dates.py:71
 msgctxt "alt. month"
 msgid "May"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:72
+#: venv/Lib/site-packages/django/utils/dates.py:72
 msgctxt "alt. month"
 msgid "June"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:73
+#: venv/Lib/site-packages/django/utils/dates.py:73
 msgctxt "alt. month"
 msgid "July"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:74
+#: venv/Lib/site-packages/django/utils/dates.py:74
 msgctxt "alt. month"
 msgid "August"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:75
+#: venv/Lib/site-packages/django/utils/dates.py:75
 msgctxt "alt. month"
 msgid "September"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:76
+#: venv/Lib/site-packages/django/utils/dates.py:76
 msgctxt "alt. month"
 msgid "October"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:77
+#: venv/Lib/site-packages/django/utils/dates.py:77
 msgctxt "alt. month"
 msgid "November"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/dates.py:78
+#: venv/Lib/site-packages/django/utils/dates.py:78
 msgctxt "alt. month"
 msgid "December"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/ipv6.py:20
+#: venv/Lib/site-packages/django/utils/ipv6.py:20
 msgid "This is not a valid IPv6 address."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/text.py:129
+#: venv/Lib/site-packages/django/utils/text.py:129
 #, python-format
 msgctxt "String to return when truncating text"
 msgid "%(truncated_text)s…"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/text.py:314
+#: venv/Lib/site-packages/django/utils/text.py:314
 msgid "or"
 msgstr ""
 
 #. Translators: This string is used as a separator between list elements
-#: venv/lib/python3.13/site-packages/django/utils/text.py:333
-#: venv/lib/python3.13/site-packages/django/utils/timesince.py:135
+#: venv/Lib/site-packages/django/utils/text.py:333
+#: venv/Lib/site-packages/django/utils/timesince.py:135
 msgid ", "
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/utils/timesince.py:8
+#: venv/Lib/site-packages/django/utils/timesince.py:8
 #, python-format
 msgid "%(num)d year"
 msgid_plural "%(num)d years"
 msgstr[0] ""
 msgstr[1] ""
 
-#: venv/lib/python3.13/site-packages/django/utils/timesince.py:9
+#: venv/Lib/site-packages/django/utils/timesince.py:9
 #, python-format
 msgid "%(num)d month"
 msgid_plural "%(num)d months"
 msgstr[0] ""
 msgstr[1] ""
 
-#: venv/lib/python3.13/site-packages/django/utils/timesince.py:10
+#: venv/Lib/site-packages/django/utils/timesince.py:10
 #, python-format
 msgid "%(num)d week"
 msgid_plural "%(num)d weeks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: venv/lib/python3.13/site-packages/django/utils/timesince.py:11
+#: venv/Lib/site-packages/django/utils/timesince.py:11
 #, python-format
 msgid "%(num)d day"
 msgid_plural "%(num)d days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: venv/lib/python3.13/site-packages/django/utils/timesince.py:12
+#: venv/Lib/site-packages/django/utils/timesince.py:12
 #, python-format
 msgid "%(num)d hour"
 msgid_plural "%(num)d hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: venv/lib/python3.13/site-packages/django/utils/timesince.py:13
+#: venv/Lib/site-packages/django/utils/timesince.py:13
 #, python-format
 msgid "%(num)d minute"
 msgid_plural "%(num)d minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: venv/lib/python3.13/site-packages/django/views/csrf.py:111
+#: venv/Lib/site-packages/django/views/csrf.py:111
 msgid "Forbidden"
 msgstr "ممنوعه"
 
-#: venv/lib/python3.13/site-packages/django/views/csrf.py:112
+#: venv/Lib/site-packages/django/views/csrf.py:112
 msgid "CSRF verification failed. Request aborted."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/csrf.py:116
+#: venv/Lib/site-packages/django/views/csrf.py:116
 msgid ""
 "You are seeing this message because this HTTPS site requires a “Referer "
 "header” to be sent by your web browser, but none was sent. This header is "
@@ -6170,184 +6230,180 @@ msgid ""
 "hijacked by third parties."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/csrf.py:122
+#: venv/Lib/site-packages/django/views/csrf.py:122
 msgid ""
 "If you have configured your browser to disable “Referer” headers, please re-"
 "enable them, at least for this site, or for HTTPS connections, or for “same-"
 "origin” requests."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/csrf.py:127
+#: venv/Lib/site-packages/django/views/csrf.py:127
 msgid ""
 "If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or "
 "including the “Referrer-Policy: no-referrer” header, please remove them. The "
 "CSRF protection requires the “Referer” header to do strict referer checking. "
-"If you’re concerned about privacy, use alternatives like <a "
-"rel=\"noreferrer\" …> for links to third-party sites."
+"If you’re concerned about privacy, use alternatives like <a rel=\"noreferrer"
+"\" …> for links to third-party sites."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/csrf.py:136
+#: venv/Lib/site-packages/django/views/csrf.py:136
 msgid ""
 "You are seeing this message because this site requires a CSRF cookie when "
 "submitting forms. This cookie is required for security reasons, to ensure "
 "that your browser is not being hijacked by third parties."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/csrf.py:142
+#: venv/Lib/site-packages/django/views/csrf.py:142
 msgid ""
 "If you have configured your browser to disable cookies, please re-enable "
 "them, at least for this site, or for “same-origin” requests."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/csrf.py:148
+#: venv/Lib/site-packages/django/views/csrf.py:148
 msgid "More information is available with DEBUG=True."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/generic/dates.py:44
+#: venv/Lib/site-packages/django/views/generic/dates.py:44
 msgid "No year specified"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/generic/dates.py:64
-#: venv/lib/python3.13/site-packages/django/views/generic/dates.py:115
-#: venv/lib/python3.13/site-packages/django/views/generic/dates.py:214
+#: venv/Lib/site-packages/django/views/generic/dates.py:64
+#: venv/Lib/site-packages/django/views/generic/dates.py:115
+#: venv/Lib/site-packages/django/views/generic/dates.py:214
 msgid "Date out of range"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/generic/dates.py:94
+#: venv/Lib/site-packages/django/views/generic/dates.py:94
 msgid "No month specified"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/generic/dates.py:147
+#: venv/Lib/site-packages/django/views/generic/dates.py:147
 msgid "No day specified"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/generic/dates.py:194
+#: venv/Lib/site-packages/django/views/generic/dates.py:194
 msgid "No week specified"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/generic/dates.py:349
-#: venv/lib/python3.13/site-packages/django/views/generic/dates.py:380
+#: venv/Lib/site-packages/django/views/generic/dates.py:349
+#: venv/Lib/site-packages/django/views/generic/dates.py:380
 #, python-format
 msgid "No %(verbose_name_plural)s available"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/generic/dates.py:652
+#: venv/Lib/site-packages/django/views/generic/dates.py:652
 #, python-format
 msgid ""
-"Future %(verbose_name_plural)s not available because "
-"%(class_name)s.allow_future is False."
+"Future %(verbose_name_plural)s not available because %(class_name)s."
+"allow_future is False."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/generic/dates.py:692
+#: venv/Lib/site-packages/django/views/generic/dates.py:692
 #, python-format
 msgid "Invalid date string “%(datestr)s” given format “%(format)s”"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/generic/detail.py:56
+#: venv/Lib/site-packages/django/views/generic/detail.py:56
 #, python-format
 msgid "No %(verbose_name)s found matching the query"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/generic/list.py:70
+#: venv/Lib/site-packages/django/views/generic/list.py:70
 msgid "Page is not “last”, nor can it be converted to an int."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/generic/list.py:77
+#: venv/Lib/site-packages/django/views/generic/list.py:77
 #, python-format
 msgid "Invalid page (%(page_number)s): %(message)s"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/generic/list.py:169
+#: venv/Lib/site-packages/django/views/generic/list.py:169
 #, python-format
 msgid "Empty list and “%(class_name)s.allow_empty” is False."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/static.py:38
+#: venv/Lib/site-packages/django/views/static.py:38
 msgid "Directory indexes are not allowed here."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/static.py:40
+#: venv/Lib/site-packages/django/views/static.py:40
 #, python-format
 msgid "“%(path)s” does not exist"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/static.py:79
+#: venv/Lib/site-packages/django/views/static.py:79
 #, python-format
 msgid "Index of %(directory)s"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/templates/default_urlconf.html:7
-#: venv/lib/python3.13/site-packages/django/views/templates/default_urlconf.html:220
+#: venv/Lib/site-packages/django/views/templates/default_urlconf.html:7
+#: venv/Lib/site-packages/django/views/templates/default_urlconf.html:220
 msgid "The install worked successfully! Congratulations!"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/templates/default_urlconf.html:206
+#: venv/Lib/site-packages/django/views/templates/default_urlconf.html:206
 #, python-format
 msgid ""
 "View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
 "target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/templates/default_urlconf.html:221
+#: venv/Lib/site-packages/django/views/templates/default_urlconf.html:221
 #, python-format
 msgid ""
 "You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
-"%(version)s/ref/settings/#debug\" target=\"_blank\" "
-"rel=\"noopener\">DEBUG=True</a> is in your settings file and you have not "
-"configured any URLs."
+"%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
+"\">DEBUG=True</a> is in your settings file and you have not configured any "
+"URLs."
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/templates/default_urlconf.html:229
+#: venv/Lib/site-packages/django/views/templates/default_urlconf.html:229
 msgid "Django Documentation"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/templates/default_urlconf.html:230
+#: venv/Lib/site-packages/django/views/templates/default_urlconf.html:230
 msgid "Topics, references, &amp; how-to’s"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/templates/default_urlconf.html:238
+#: venv/Lib/site-packages/django/views/templates/default_urlconf.html:238
 msgid "Tutorial: A Polling App"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/templates/default_urlconf.html:239
+#: venv/Lib/site-packages/django/views/templates/default_urlconf.html:239
 msgid "Get started with Django"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/templates/default_urlconf.html:247
+#: venv/Lib/site-packages/django/views/templates/default_urlconf.html:247
 msgid "Django Community"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django/views/templates/default_urlconf.html:248
+#: venv/Lib/site-packages/django/views/templates/default_urlconf.html:248
 msgid "Connect, get help, or contribute"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/django_admin_multi_select_filter/filters.py:50
-#: venv/lib/python3.13/site-packages/django_admin_multi_select_filter/filters.py:111
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/admin.py:59
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/admin.py:117
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/admin/dropdown_filters.py:22
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/admin/mixins.py:43
+#: venv/Lib/site-packages/django_admin_multi_select_filter/filters.py:50
+#: venv/Lib/site-packages/django_admin_multi_select_filter/filters.py:111
 msgid "All"
 msgstr "همه"
 
-#: venv/lib/python3.13/site-packages/drf_spectacular/openapi.py:1394
-#: venv/lib/python3.13/site-packages/drf_spectacular/openapi.py:1447
-#: venv/lib/python3.13/site-packages/drf_spectacular/openapi.py:1451
-#: venv/lib/python3.13/site-packages/drf_spectacular/openapi.py:1455
+#: venv/Lib/site-packages/drf_spectacular/openapi.py:1394
+#: venv/Lib/site-packages/drf_spectacular/openapi.py:1447
+#: venv/Lib/site-packages/drf_spectacular/openapi.py:1451
+#: venv/Lib/site-packages/drf_spectacular/openapi.py:1455
 msgid "No response body"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/drf_spectacular/openapi.py:1419
-#: venv/lib/python3.13/site-packages/drf_spectacular/openapi.py:1473
+#: venv/Lib/site-packages/drf_spectacular/openapi.py:1419
+#: venv/Lib/site-packages/drf_spectacular/openapi.py:1473
 msgid "Unspecified response body"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/drf_spectacular/plumbing.py:487
+#: venv/Lib/site-packages/drf_spectacular/plumbing.py:487
 #, python-format
 msgid "Token-based authentication with required prefix \"%s\""
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/drf_spectacular/views.py:45
+#: venv/Lib/site-packages/drf_spectacular/views.py:45
 msgid ""
 "\n"
 "    OpenApi3 schema for this API. Format can be selected via content "
@@ -6358,861 +6414,401 @@ msgid ""
 "    "
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/jalali_date/templates/admin/edit_inline/jalali_stacked.html:12
-#: venv/lib/python3.13/site-packages/jalali_date/templates/admin/edit_inline/jalali_tabular.html:34
-#: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history_form.html:26
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/edit_inline/stacked.html:59
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/app_list_default.html:38
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/edit_inline/tabular_title.html:25
+#: venv/Lib/site-packages/jalali_date/templates/admin/edit_inline/jalali_stacked.html:12
+#: venv/Lib/site-packages/jalali_date/templates/admin/edit_inline/jalali_tabular.html:34
 msgid "View"
 msgstr "مشاهده"
 
-#: venv/lib/python3.13/site-packages/jalali_date/templates/admin/edit_inline/jalali_stacked.html:14
-#: venv/lib/python3.13/site-packages/jalali_date/templates/admin/edit_inline/jalali_tabular.html:36
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/change_form_object_tools.html:12
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/edit_inline/stacked.html:71
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/edit_inline/tabular_title.html:33
+#: venv/Lib/site-packages/jalali_date/templates/admin/edit_inline/jalali_stacked.html:14
+#: venv/Lib/site-packages/jalali_date/templates/admin/edit_inline/jalali_tabular.html:36
 msgid "View on site"
 msgstr "مشاهده در سایت"
 
-#: venv/lib/python3.13/site-packages/jalali_date/templates/admin/edit_inline/jalali_tabular.html:20
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/edit_inline/tabular_heading.html:21
+#: venv/Lib/site-packages/jalali_date/templates/admin/edit_inline/jalali_tabular.html:20
 msgid "Delete?"
 msgstr "حذف؟"
 
-#: venv/lib/python3.13/site-packages/jalali_date/widgets.py:49
+#: venv/Lib/site-packages/jalali_date/widgets.py:49
 msgid "Date:"
 msgstr "تاریخ:"
 
-#: venv/lib/python3.13/site-packages/jalali_date/widgets.py:49
+#: venv/Lib/site-packages/jalali_date/widgets.py:49
 msgid "Time:"
 msgstr "ساعت:"
 
-#: venv/lib/python3.13/site-packages/tests/tests/templatetags/test_jalali_admin_safe_readonly_template_tag.py:84
+#: venv/Lib/site-packages/tests/tests/templatetags/test_jalali_admin_safe_readonly_template_tag.py:84
 msgid "%H.%M.%S | %Y-%m-%d"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/tests/tests/templatetags/test_jalali_now_template_tag.py:46
-#: venv/lib/python3.13/site-packages/tests/tests/templatetags/test_to_jalali_template_tag.py:66
+#: venv/Lib/site-packages/tests/tests/templatetags/test_jalali_now_template_tag.py:46
+#: venv/Lib/site-packages/tests/tests/templatetags/test_to_jalali_template_tag.py:66
 msgid "%Y-%m-%d"
 msgstr ""
 
-#: venv/lib/python3.13/site-packages/unfold/admin.py:124
-#: venv/lib/python3.13/site-packages/unfold/templatetags/unfold_list.py:329
-msgid "Select record"
-msgstr "انتخاب رکورد"
+#~ msgid "Future Spouse Originality"
+#~ msgstr "اصالت همسر آینده"
 
-#: venv/lib/python3.13/site-packages/unfold/admin.py:156
-#: venv/lib/python3.13/site-packages/unfold/admin.py:177
-msgid "Select value"
-msgstr "انتخاب مقدار"
+#~ msgid "required"
+#~ msgstr "الزامی است."
 
-#: venv/lib/python3.13/site-packages/unfold/admin.py:545
-msgid "Select action"
-msgstr "انتخاب عملکرد"
+#~ msgid "Select record"
+#~ msgstr "انتخاب رکورد"
 
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/admin.py:83
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/admin.py:106
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/admin.py:123
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/admin.py:150
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/admin.py:167
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/admin/dropdown_filters.py:28
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/admin/dropdown_filters.py:61
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/admin/dropdown_filters.py:90
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/admin/mixins.py:138
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/admin/text_filters.py:29
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/admin/text_filters.py:60
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/templates/unfold/filters/filters_date_range.html:5
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/templates/unfold/filters/filters_datetime_range.html:5
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/templates/unfold/filters/filters_numeric_range.html:5
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/templates/unfold/filters/filters_numeric_single.html:5
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/templates/unfold/filters/filters_numeric_slider.html:7
+#~ msgid "Select value"
+#~ msgstr "انتخاب مقدار"
+
+#~ msgid "Select action"
+#~ msgstr "انتخاب عملکرد"
+
+#~ msgid "Value"
+#~ msgstr "مقدار"
+
+#~ msgid "From"
+#~ msgstr "از"
+
+#~ msgid "To"
+#~ msgstr "به"
+
+#~ msgid "Date from"
+#~ msgstr "از تاریخ"
+
+#~ msgid "Date to"
+#~ msgstr "تا تاریخ"
+
+#~ msgid "Not enough data."
+#~ msgstr "اطلاعات ناکافی"
+
+#~ msgid "Add new item"
+#~ msgstr "اضافه کرد آیتم جدید"
+
+#~ msgid "Paragraph"
+#~ msgstr "پاراگراف"
+
+#~ msgid "Underlined"
+#~ msgstr "اندرلاین"
+
+#~ msgid "Bold"
+#~ msgstr "بولد"
+
+#~ msgid "Italic"
+#~ msgstr "ایتالیک"
+
+#~ msgid "Link"
+#~ msgstr "لینک"
+
+#~ msgid "Heading"
+#~ msgstr "هدینگ"
+
+#~ msgid "Quote"
+#~ msgstr "کوت"
+
+#~ msgid "Code"
+#~ msgstr "کد"
+
+#~ msgid "Unordered list"
+#~ msgstr "لیست نامرتبط"
+
+#~ msgid "Ordered list"
+#~ msgstr "لیست مرتبط"
+
+#~ msgid "Indent increase"
+#~ msgstr "اضافه کردن فاصله"
+
+#~ msgid "Indent decrease"
+#~ msgstr "حذف فاصله گذاری"
+
+#~ msgid "Undo"
+#~ msgstr "بازگرداندن"
+
+#~ msgid "Redo"
+#~ msgstr "بازانجامدادن"
+
+#~ msgid "Enter an URL"
+#~ msgstr "یک آدرس سایت وارد کنید."
+
+#~ msgid "Unlink"
+#~ msgstr "حذف لینک"
+
+#~ msgid "Object permissions"
+#~ msgstr "مجوزهای آبجکت"
+
+#~ msgid "Home"
+#~ msgstr "خانه"
+
+#~ msgid "Object"
+#~ msgstr "آبجکت"
+
+#~ msgid "Group"
+#~ msgstr "گروه"
+
+#~ msgid "Save"
+#~ msgstr "ذخیره"
+
+#~ msgid "Group permissions"
+#~ msgstr "مجوزهای گروه"
+
+#~ msgid "Action"
+#~ msgstr "عملکرد"
+
+#~ msgid "Edit"
+#~ msgstr "ویرایش"
+
+#~ msgid "Manage group"
+#~ msgstr "مدیریت گروه"
+
+#~ msgid "User permissions"
+#~ msgstr "مجوزهای کاربر"
+
+#~ msgid "Manage user"
+#~ msgstr "مدیریت کاربر"
+
+#~ msgid "Export"
+#~ msgstr "خروجی"
+
+#~ msgid "Import"
+#~ msgstr "ورودی"
+
+#~ msgid "Submit"
+#~ msgstr "تایید"
+
+#~ msgid "Confirm import"
+#~ msgstr "تایید ورودی"
+
+#~ msgid "Line number"
+#~ msgstr "شماره تلفن ثابت"
+
+#~ msgid "New"
+#~ msgstr "جدید"
+
+#~ msgid "Skipped"
+#~ msgstr "رد شده"
+
+#~ msgid "Update"
+#~ msgstr "آپدیت"
+
+#~ msgid "Row"
+#~ msgstr "ردیف"
+
+#~ msgid "Errors"
+#~ msgstr "ارورها"
+
+#~ msgid "History"
+#~ msgstr "تاریخچه"
+
+#~ msgid "Revert"
+#~ msgstr "بازگرداندن"
+
+#~ msgid "Date/time"
+#~ msgstr "تاریخ/ساعت"
+
+#~ msgid "Comment"
+#~ msgstr "کامنت"
+
+#~ msgid "Changed by"
+#~ msgstr "تغییر یافته توسط"
+
+#~ msgid "Change reason"
+#~ msgstr "علت تغییر"
+
+#~ msgid "Changes"
+#~ msgstr "تغییرات"
+
+#~ msgid "Change History"
+#~ msgstr "تاریخچه تغییر"
+
+#~ msgid "Close"
+#~ msgstr "بستن"
+
+#~ msgid "Select action to run"
+#~ msgstr "عملکرد مورد نظر را انتخاب کنید"
+
+#~ msgid "Run the selected action"
+#~ msgstr "اجرا کردن اکشن انتخاب شده"
+
+#~ msgid "Run"
+#~ msgstr "اجرا کردن"
+
+#~ msgid "Clear selection"
+#~ msgstr "پاک کردن انتخاب شده ها"
+
+#~ msgid "Django site admin"
+#~ msgstr "پنل ادمین جنگو"
+
+#~ msgid "You don’t have permission to view or edit anything."
+#~ msgstr "اجازه دیدن یا تغییر نداری"
+
+#~ msgid "Enter a username and password."
+#~ msgstr "نام کاربری و رمز عبور را وارد کنید"
+
+#~ msgid "Change password"
+#~ msgstr "تغییر رمزعبور"
+
 #, python-format
-msgid "By %(filter_title)s"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/forms.py:134
-msgid "Value"
-msgstr "مقدار"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/forms.py:148
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/forms.py:186
-msgid "From"
-msgstr "از"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/forms.py:155
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/forms.py:196
-msgid "To"
-msgstr "به"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/forms.py:220
-msgid "Date from"
-msgstr "از تاریخ"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/forms.py:236
-msgid "Date to"
-msgstr "تا تاریخ"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/filters/templates/unfold/filters/filters_numeric_slider.html:30
-msgid "Not enough data."
-msgstr "اطلاعات ناکافی"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/forms/templates/unfold/forms/array.html:30
-msgid "Add new item"
-msgstr "اضافه کرد آیتم جدید"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/forms/templates/unfold/forms/helpers/toolbar.html:7
-msgid "Paragraph"
-msgstr "پاراگراف"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/forms/templates/unfold/forms/helpers/toolbar.html:11
-msgid "Underlined"
-msgstr "اندرلاین"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/forms/templates/unfold/forms/helpers/toolbar.html:15
-msgid "Bold"
-msgstr "بولد"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/forms/templates/unfold/forms/helpers/toolbar.html:19
-msgid "Italic"
-msgstr "ایتالیک"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/forms/templates/unfold/forms/helpers/toolbar.html:23
-msgid "Strike"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/forms/templates/unfold/forms/helpers/toolbar.html:27
-#: venv/lib/python3.13/site-packages/unfold/contrib/forms/templates/unfold/forms/helpers/toolbar.html:98
-msgid "Link"
-msgstr "لینک"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/forms/templates/unfold/forms/helpers/toolbar.html:35
-#: venv/lib/python3.13/site-packages/unfold/contrib/forms/templates/unfold/forms/helpers/toolbar.html:39
-#: venv/lib/python3.13/site-packages/unfold/contrib/forms/templates/unfold/forms/helpers/toolbar.html:43
-#: venv/lib/python3.13/site-packages/unfold/contrib/forms/templates/unfold/forms/helpers/toolbar.html:47
-msgid "Heading"
-msgstr "هدینگ"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/forms/templates/unfold/forms/helpers/toolbar.html:55
-msgid "Quote"
-msgstr "کوت"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/forms/templates/unfold/forms/helpers/toolbar.html:59
-msgid "Code"
-msgstr "کد"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/forms/templates/unfold/forms/helpers/toolbar.html:63
-msgid "Unordered list"
-msgstr "لیست نامرتبط"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/forms/templates/unfold/forms/helpers/toolbar.html:67
-msgid "Ordered list"
-msgstr "لیست مرتبط"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/forms/templates/unfold/forms/helpers/toolbar.html:71
-msgid "Indent increase"
-msgstr "اضافه کردن فاصله"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/forms/templates/unfold/forms/helpers/toolbar.html:75
-msgid "Indent decrease"
-msgstr "حذف فاصله گذاری"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/forms/templates/unfold/forms/helpers/toolbar.html:83
-msgid "Undo"
-msgstr "بازگرداندن"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/forms/templates/unfold/forms/helpers/toolbar.html:87
-msgid "Redo"
-msgstr "بازانجامدادن"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/forms/templates/unfold/forms/helpers/toolbar.html:95
-msgid "Enter an URL"
-msgstr "یک آدرس سایت وارد کنید."
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/forms/templates/unfold/forms/helpers/toolbar.html:102
-msgid "Unlink"
-msgstr "حذف لینک"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/admin/guardian/model/change_form.html:8
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/admin/guardian/model/obj_perms_manage.html:22
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/admin/guardian/model/obj_perms_manage_group.html:25
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/admin/guardian/model/obj_perms_manage_user.html:26
-msgid "Object permissions"
-msgstr "مجوزهای آبجکت"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/admin/guardian/model/obj_perms_manage.html:10
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/admin/guardian/model/obj_perms_manage_group.html:13
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/admin/guardian/model/obj_perms_manage_user.html:14
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/export.html:17
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/import.html:28
-#: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history_form.html:11
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/app_index.html:15
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/auth/user/change_password.html:13
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/base.html:23
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/change_form.html:18
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/change_list.html:31
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/delete_confirmation.html:17
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/delete_selected_confirmation.html:17
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/object_history.html:9
-#: venv/lib/python3.13/site-packages/unfold/templates/registration/password_change_done.html:12
-#: venv/lib/python3.13/site-packages/unfold/templates/registration/password_change_form.html:12
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/site_icon.html:6
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/site_icon.html:8
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/site_icon.html:10
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/site_logo.html:5
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/site_logo.html:7
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/site_logo.html:9
-msgid "Home"
-msgstr "خانه"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/admin/guardian/model/obj_perms_manage_group.html:39
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/admin/guardian/model/obj_perms_manage_user.html:40
-#: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history_list.html:10
-#: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history_list.html:44
-msgid "Object"
-msgstr "آبجکت"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/admin/guardian/model/obj_perms_manage_group.html:42
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/unfold/guardian/group_form.html:15
-msgid "Group"
-msgstr "گروه"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/admin/guardian/model/obj_perms_manage_group.html:49
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/admin/guardian/model/obj_perms_manage_user.html:50
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/pagination.html:38
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/submit_line.html:10
-msgid "Save"
-msgstr "ذخیره"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/unfold/guardian/group_form.html:7
-msgid "Group permissions"
-msgstr "مجوزهای گروه"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/unfold/guardian/group_form.html:25
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/unfold/guardian/group_form.html:49
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/unfold/guardian/user_form.html:25
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/unfold/guardian/user_form.html:49
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/object_history.html:42
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/object_history.html:58
-msgid "Action"
-msgstr "عملکرد"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/unfold/guardian/group_form.html:51
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/unfold/guardian/user_form.html:51
-msgid "Edit"
-msgstr "ویرایش"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/unfold/guardian/group_form.html:67
-msgid "Manage group"
-msgstr "مدیریت گروه"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/unfold/guardian/user_form.html:7
-msgid "User permissions"
-msgstr "مجوزهای کاربر"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/guardian/templates/unfold/guardian/user_form.html:67
-msgid "Manage user"
-msgstr "مدیریت کاربر"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/change_form.html:8
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/change_list_export_item.html:4
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/export.html:28
-msgid "Export"
-msgstr "خروجی"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/change_list_import_item.html:4
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/import.html:39
-msgid "Import"
-msgstr "ورودی"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/export.html:41
-#, python-format
-msgid ""
-"\n"
-"                    Export %(len)s selected item.\n"
-"                "
-msgid_plural ""
-"\n"
-"                    Export %(len)s selected items.\n"
-"                "
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/export.html:60
-msgid "This exporter will export the following fields"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/export.html:79
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/import_form.html:21
-msgid "Submit"
-msgstr "تایید"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/import_confirm.html:10
-msgid ""
-"Below is a preview of data to be imported. If you are satisfied with the "
-"results, click 'Confirm import'"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/import_confirm.html:15
-msgid "Confirm import"
-msgstr "تایید ورودی"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/import_errors.html:19
-msgid "Line number"
-msgstr "شماره تلفن ثابت"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/import_preview.html:22
-msgid "New"
-msgstr "جدید"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/import_preview.html:24
-msgid "Skipped"
-msgstr "رد شده"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/import_preview.html:28
-msgid "Update"
-msgstr "آپدیت"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/import_validation.html:6
-msgid "Some rows failed to validate"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/import_validation.html:10
-msgid ""
-"Please correct these errors in your data where possible, then reupload it "
-"using the form above."
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/import_validation.html:22
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/import_validation.html:40
-msgid "Row"
-msgstr "ردیف"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/import_validation.html:26
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/import_validation.html:44
-msgid "Errors"
-msgstr "ارورها"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/import_validation.html:70
-msgid "Non field specific"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/resource_fields_list.html:6
-msgid "This exporter will export the following fields: "
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/import_export/templates/admin/import_export/resource_fields_list.html:8
-msgid "This importer will import the following fields: "
-msgstr ""
-
-#. Translators: Model verbose name and instance representation,
-#. suitable to be an item in a list.
-#: venv/lib/python3.13/site-packages/unfold/contrib/inlines/admin.py:94
-#, python-format
-msgid "%(class_name)s %(instance)s"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/inlines/admin.py:106
-#, python-format
-msgid ""
-"Deleting %(class_name)s %(instance)s would require deleting the following "
-"protected related objects: %(related_objects)s"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history.html:8
-msgid ""
-"Choose a date from the list below to revert to a previous version of this "
-"object."
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history.html:28
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/object_history.html:81
-msgid "entry"
-msgid_plural "entries"
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history.html:32
-msgid "This object doesn't have a change history."
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history_form.html:22
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/change_form_object_tools.html:6
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/object_history.html:21
-msgid "History"
-msgstr "تاریخچه"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history_form.html:29
-#: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/submit_line.html:9
-msgid "Revert"
-msgstr "بازگرداندن"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history_form.html:48
-msgid ""
-"Press the 'Revert' button below to revert to this version of the object."
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history_form.html:52
-msgid "Press the 'Change History' button below to edit the history."
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history_list.html:20
-#: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history_list.html:56
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/object_history.html:34
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/object_history.html:50
-msgid "Date/time"
-msgstr "تاریخ/ساعت"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history_list.html:24
-#: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history_list.html:60
-msgid "Comment"
-msgstr "کامنت"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history_list.html:28
-#: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history_list.html:64
-msgid "Changed by"
-msgstr "تغییر یافته توسط"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history_list.html:32
-#: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history_list.html:78
-msgid "Change reason"
-msgstr "علت تغییر"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history_list.html:36
-#: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/object_history_list.html:82
-msgid "Changes"
-msgstr "تغییرات"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/submit_line.html:15
-msgid "Change History"
-msgstr "تاریخچه تغییر"
-
-#: venv/lib/python3.13/site-packages/unfold/contrib/simple_history/templates/simple_history/submit_line.html:20
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/submit_line.html:47
-msgid "Close"
-msgstr "بستن"
-
-#: venv/lib/python3.13/site-packages/unfold/forms.py:57
-msgid "Select action to run"
-msgstr "عملکرد مورد نظر را انتخاب کنید"
-
-#: venv/lib/python3.13/site-packages/unfold/forms.py:115
-msgid ""
-"Raw passwords are not stored, so there is no way to see this user’s "
-"password, but you can change the password using <a href=\"{}\" class=\"text-"
-"primary-600 dark:text-primary-500\">this form</a>."
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/actions.html:22
-msgid "Run the selected action"
-msgstr "اجرا کردن اکشن انتخاب شده"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/actions.html:23
-msgid "Run"
-msgstr "اجرا کردن"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/actions.html:43
-msgid "Click here to select the objects across all pages"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/actions.html:44
-#, python-format
-msgid "Select all %(total_count)s %(module_name)s"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/actions.html:50
-msgid "Clear selection"
-msgstr "پاک کردن انتخاب شده ها"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/app_index.html:5
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/base_site.html:3
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/index.html:7
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/login.html:32
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/layouts/base.html:7
-msgid "Django site admin"
-msgstr "پنل ادمین جنگو"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/app_list.html:12
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/app_list_default.html:9
-#, python-format
-msgid "Models in the %(name)s application"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/app_list.html:47
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/app_list.html:98
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/app_list_default.html:59
-msgid "You don’t have permission to view or edit anything."
-msgstr "اجازه دیدن یا تغییر نداری"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/auth/user/add_form.html:7
-msgid ""
-"First, enter a username and password. Then, you’ll be able to edit more user "
-"options."
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/auth/user/add_form.html:9
-msgid "Enter a username and password."
-msgstr "نام کاربری و رمز عبور را وارد کنید"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/auth/user/change_password.html:25
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/auth/user/change_password.html:55
-#: venv/lib/python3.13/site-packages/unfold/templates/registration/password_change_done.html:15
-#: venv/lib/python3.13/site-packages/unfold/templates/registration/password_change_form.html:15
-#: venv/lib/python3.13/site-packages/unfold/templates/registration/password_change_form.html:46
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/account_links.html:23
-msgid "Change password"
-msgstr "تغییر رمزعبور"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/auth/user/change_password.html:44
-#, python-format
-msgid "Enter a new password for the user <strong>%(username)s</strong>."
-msgstr "رمزعبور جدید برای کاربر <strong>%(username)s</strong> وارد کنید."
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/change_form.html:32
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/change_list_results.html:90
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/add_link.html:5
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/add_link.html:8
-#, python-format
-msgid "Add %(name)s"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/change_list.html:72
-msgid "Filters"
-msgstr "فیلترها"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/change_list_results.html:28
-msgid "Select all rows"
-msgstr "انتخاب تمامی ردیف ها"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/change_list_results.html:42
-msgid "Toggle sorting"
-msgstr "مرتبط سازی"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/change_list_results.html:50
-msgid "Remove from sorting"
-msgstr "حذف مرتبط سازی"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/change_list_results.html:56
-#, python-format
-msgid "Sorting priority: %(priority_number)s"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/change_list_results.html:98
-msgid "No results found"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/change_list_results.html:102
-msgid ""
-"This page yielded into no results. Create a new item or reset your filters."
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/change_list_results.html:116
-msgid "Reset filters"
-msgstr "ریست کردن فیلترها"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/delete_confirmation.html:37
-#, python-format
-msgid ""
-"Deleting the %(object_name)s '%(escaped_object)s' would result in deleting "
-"related objects, but your account doesn't have permission to delete the "
-"following types of objects:"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/delete_confirmation.html:53
-#, python-format
-msgid ""
-"Deleting the %(object_name)s '%(escaped_object)s' would require deleting the "
-"following protected related objects:"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/delete_confirmation.html:69
-#, python-format
-msgid ""
-"Are you sure you want to delete the %(object_name)s \"%(escaped_object)s\"? "
-"All of the following related items will be deleted:"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/delete_confirmation.html:76
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/delete_selected_confirmation.html:71
-msgid "Objects"
-msgstr "آبجکت ها"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/delete_selected_confirmation.html:27
-msgid "Delete multiple objects"
-msgstr "حذف چند آبجکت"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/delete_selected_confirmation.html:37
-#, python-format
-msgid ""
-"Deleting the selected %(objects_name)s would result in deleting related "
-"objects, but your account doesn't have permission to delete the following "
-"types of objects:"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/delete_selected_confirmation.html:50
-#, python-format
-msgid ""
-"Deleting the selected %(objects_name)s would require deleting the following "
-"protected related objects:"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/delete_selected_confirmation.html:64
-#, python-format
-msgid ""
-"Are you sure you want to delete the selected %(objects_name)s? All of the "
-"following objects and their related items will be deleted:"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/filter.html:5
-#, python-format
-msgid " By %(filter_title)s "
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/includes/object_delete_summary.html:5
-msgid "Summary"
-msgstr "خلاصه"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/login.html:31
-msgid "Welcome back to"
-msgstr "خوش آمدید به"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/login.html:44
-#, python-format
-msgid ""
-"You are authenticated as %(username)s, but are not authorized to access this "
-"page. Would you like to login to a different account?"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/login.html:67
-msgid "Log in"
-msgstr "ورود"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/login.html:76
-msgid "Forgotten your password or username?"
-msgstr "رمز عبور یا نام کاربری خود را فراموش کرده اید؟"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/login.html:88
-msgid "Return to site"
-msgstr "بازگشت به سایت"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/object_history.html:84
-msgid ""
-"This object doesn’t have a change history. It probably wasn’t added via this "
-"admin site."
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/pagination.html:31
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/welcomemsg.html:28
-msgid "Show all"
-msgstr "نشان دادن همه"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/search_form.html:7
-msgid "Type to search"
-msgstr "برای سرچ کردن بنویسید"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/submit_line.html:23
-msgid "Save and continue editing"
-msgstr "ذخیره و ادامه ویرایش"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/submit_line.html:25
-msgid "Save and view"
-msgstr "ذخیره و مشاهده"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/submit_line.html:32
-msgid "Save and add another"
-msgstr "ذخیره و اضافه کردن یک مورد دیگر"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/admin/submit_line.html:38
-msgid "Save as new"
-msgstr "ذخیره به عنوان جدید"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/registration/logged_out.html:11
-msgid "You have been successfully logged out from the administration"
-msgstr "با موفقیت از پنل ادمین خارج شدید"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/registration/logged_out.html:16
-msgid "Thanks for spending some quality time with the web site today."
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/registration/logged_out.html:20
-msgid "Log in again"
-msgstr "ورود دوباره"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/registration/password_change_done.html:26
-msgid "Your password was changed."
-msgstr "رمز عبور شما تغییر یافت."
-
-#: venv/lib/python3.13/site-packages/unfold/templates/registration/password_change_form.html:35
-msgid ""
-"Please enter your old password, for security’s sake, and then enter your new "
-"password twice so we can verify you typed it in correctly."
-msgstr ""
-"لطفا رمز عبور قبلی خود را وارد کرده و سپس رمز عبور جدید خود را دو بار وارد "
-"کنید."
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/account_links.html:17
-msgid "View site"
-msgstr "مشاهده سایت"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/account_links.html:32
-msgid "Log out"
-msgstr "خروج از حساب کاربری"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/actions_row.html:4
-msgid "More actions"
-msgstr "اکشن های بیشتر"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/app_list.html:68
-msgid "All applications"
-msgstr "تمامی اپ ها"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/app_list_default.html:31
-msgid "Add"
-msgstr "اضافه کردن"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/boolean.html:10
-msgid "True"
-msgstr "درست"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/boolean.html:12
-msgid "False"
-msgstr "غلط"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/change_list_filter_actions.html:6
-msgid "Apply Filters"
-msgstr "اعمال فیتلر ها"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/change_list_filter_actions.html:15
-msgid "Hide counts"
-msgstr "نشان ندادن تعداد"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/change_list_filter_actions.html:19
-msgid "Show counts"
-msgstr "نشان دادن تعداد"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/change_list_filter_actions.html:26
-msgid "Clear all filters"
-msgstr "پاک کردن تمام فیلترها"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/delete_submit_line.html:5
-msgid "No, take me back"
-msgstr "نه، من را بازگردان."
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/delete_submit_line.html:9
-msgid "Yes, I’m sure"
-msgstr "بله، مطمعنم."
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/display_header.html:10
-msgid "Record picture"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/edit_inline/tabular_delete.html:4
-msgid "Remove"
-msgstr "حذف"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/header_back_button.html:7
-msgid "Go back"
-msgstr "برگرد به عقب"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/history.html:9
-msgid "Recent actions"
-msgstr "اکشن های چند وقت اخیر"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/history.html:28
-msgid "Unknown content"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/messages/errornote.html:6
-msgid "Please correct the error below."
-msgstr "لطفا ارور ذیل را برطرف کنید."
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/messages/errornote.html:8
-msgid "Please correct the errors below."
-msgstr "لطفا ارورهای ذیل را برطرف کنید."
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/search.html:18
-msgid "Search apps and models..."
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/search.html:18
-msgid "Filter navigation items"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/site_branding.html:3
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/site_branding.html:6
-msgid "Django administration"
-msgstr "پنل ادمین جنگو"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/tab_list.html:30
-msgid "General"
-msgstr "کلی"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/theme_switch.html:15
-msgid "Dark"
-msgstr "تیره"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/theme_switch.html:22
-msgid "Light"
-msgstr "روشن"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/theme_switch.html:29
-msgid "System"
-msgstr "سیستم"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/welcomemsg.html:28
-#, python-format
-msgid "%(counter)s result"
-msgid_plural "%(counter)s results"
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/welcomemsg.html:28
-#, python-format
-msgid "%(full_result_count)s total"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/helpers/welcomemsg.html:36
-msgid "Welcome,"
-msgstr "خوش آمدید"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/widgets/clearable_file_input.html:6
-msgid "Image preview"
-msgstr "مشاهده عکس"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/widgets/clearable_file_input.html:24
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/widgets/clearable_file_input_small.html:17
-msgid "Choose file to upload"
-msgstr "فایل مورد نظر را انتخاب کنید."
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/widgets/related_widget_wrapper.html:16
-#, python-format
-msgid "Change selected %(model)s"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/widgets/related_widget_wrapper.html:26
-#, python-format
-msgid "Add another %(model)s"
-msgstr ""
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/widgets/related_widget_wrapper.html:35
-msgid "View selected %(model)s"
-msgstr "دیدن انتخاب شده ها"
-
-#: venv/lib/python3.13/site-packages/unfold/templates/unfold/widgets/related_widget_wrapper.html:45
-msgid "Delete selected %(model)s"
-msgstr "پاک کردن انتخاب‌ شده ها"
-
-#: venv/lib/python3.13/site-packages/unfold/templatetags/unfold_list.py:113
-msgid "Select all objects on this page for an action"
-msgstr "تمامی آبجکت های این صفحه را برای یک اکشن انتخاب کنید."
-
-#: venv/lib/python3.13/site-packages/unfold/widgets.py:532
-msgid "Date"
-msgstr "تاریخ"
-
-#: venv/lib/python3.13/site-packages/unfold/widgets.py:655
-msgid "Select currency"
-msgstr "واحد را انتخاب کنید."
+#~ msgid "Enter a new password for the user <strong>%(username)s</strong>."
+#~ msgstr "رمزعبور جدید برای کاربر <strong>%(username)s</strong> وارد کنید."
+
+#~ msgid "Filters"
+#~ msgstr "فیلترها"
+
+#~ msgid "Select all rows"
+#~ msgstr "انتخاب تمامی ردیف ها"
+
+#~ msgid "Toggle sorting"
+#~ msgstr "مرتبط سازی"
+
+#~ msgid "Remove from sorting"
+#~ msgstr "حذف مرتبط سازی"
+
+#~ msgid "Reset filters"
+#~ msgstr "ریست کردن فیلترها"
+
+#~ msgid "Objects"
+#~ msgstr "آبجکت ها"
+
+#~ msgid "Delete multiple objects"
+#~ msgstr "حذف چند آبجکت"
+
+#~ msgid "Summary"
+#~ msgstr "خلاصه"
+
+#~ msgid "Welcome back to"
+#~ msgstr "خوش آمدید به"
+
+#~ msgid "Log in"
+#~ msgstr "ورود"
+
+#~ msgid "Forgotten your password or username?"
+#~ msgstr "رمز عبور یا نام کاربری خود را فراموش کرده اید؟"
+
+#~ msgid "Return to site"
+#~ msgstr "بازگشت به سایت"
+
+#~ msgid "Show all"
+#~ msgstr "نشان دادن همه"
+
+#~ msgid "Type to search"
+#~ msgstr "برای سرچ کردن بنویسید"
+
+#~ msgid "Save and continue editing"
+#~ msgstr "ذخیره و ادامه ویرایش"
+
+#~ msgid "Save and view"
+#~ msgstr "ذخیره و مشاهده"
+
+#~ msgid "Save and add another"
+#~ msgstr "ذخیره و اضافه کردن یک مورد دیگر"
+
+#~ msgid "Save as new"
+#~ msgstr "ذخیره به عنوان جدید"
+
+#~ msgid "You have been successfully logged out from the administration"
+#~ msgstr "با موفقیت از پنل ادمین خارج شدید"
+
+#~ msgid "Log in again"
+#~ msgstr "ورود دوباره"
+
+#~ msgid "Your password was changed."
+#~ msgstr "رمز عبور شما تغییر یافت."
+
+#~ msgid ""
+#~ "Please enter your old password, for security’s sake, and then enter your "
+#~ "new password twice so we can verify you typed it in correctly."
+#~ msgstr ""
+#~ "لطفا رمز عبور قبلی خود را وارد کرده و سپس رمز عبور جدید خود را دو بار "
+#~ "وارد کنید."
+
+#~ msgid "View site"
+#~ msgstr "مشاهده سایت"
+
+#~ msgid "Log out"
+#~ msgstr "خروج از حساب کاربری"
+
+#~ msgid "More actions"
+#~ msgstr "اکشن های بیشتر"
+
+#~ msgid "All applications"
+#~ msgstr "تمامی اپ ها"
+
+#~ msgid "Add"
+#~ msgstr "اضافه کردن"
+
+#~ msgid "True"
+#~ msgstr "درست"
+
+#~ msgid "False"
+#~ msgstr "غلط"
+
+#~ msgid "Apply Filters"
+#~ msgstr "اعمال فیتلر ها"
+
+#~ msgid "Hide counts"
+#~ msgstr "نشان ندادن تعداد"
+
+#~ msgid "Show counts"
+#~ msgstr "نشان دادن تعداد"
+
+#~ msgid "Clear all filters"
+#~ msgstr "پاک کردن تمام فیلترها"
+
+#~ msgid "No, take me back"
+#~ msgstr "نه، من را بازگردان."
+
+#~ msgid "Yes, I’m sure"
+#~ msgstr "بله، مطمعنم."
+
+#~ msgid "Remove"
+#~ msgstr "حذف"
+
+#~ msgid "Go back"
+#~ msgstr "برگرد به عقب"
+
+#~ msgid "Recent actions"
+#~ msgstr "اکشن های چند وقت اخیر"
+
+#~ msgid "Please correct the error below."
+#~ msgstr "لطفا ارور ذیل را برطرف کنید."
+
+#~ msgid "Please correct the errors below."
+#~ msgstr "لطفا ارورهای ذیل را برطرف کنید."
+
+#~ msgid "Django administration"
+#~ msgstr "پنل ادمین جنگو"
+
+#~ msgid "General"
+#~ msgstr "کلی"
+
+#~ msgid "Dark"
+#~ msgstr "تیره"
+
+#~ msgid "Light"
+#~ msgstr "روشن"
+
+#~ msgid "System"
+#~ msgstr "سیستم"
+
+#~ msgid "Welcome,"
+#~ msgstr "خوش آمدید"
+
+#~ msgid "Image preview"
+#~ msgstr "مشاهده عکس"
+
+#~ msgid "Choose file to upload"
+#~ msgstr "فایل مورد نظر را انتخاب کنید."
+
+#~ msgid "View selected %(model)s"
+#~ msgstr "دیدن انتخاب شده ها"
+
+#~ msgid "Delete selected %(model)s"
+#~ msgstr "پاک کردن انتخاب‌ شده ها"
+
+#~ msgid "Select all objects on this page for an action"
+#~ msgstr "تمامی آبجکت های این صفحه را برای یک اکشن انتخاب کنید."
+
+#~ msgid "Date"
+#~ msgstr "تاریخ"
+
+#~ msgid "Select currency"
+#~ msgstr "واحد را انتخاب کنید."
 
 #~ msgid "Red flags description must be at least 10 characters long"
 #~ msgstr "خط قرمز های شما نباید کمتر از از ۱۰ کاراکتر باشد. "
