@@ -1,4 +1,5 @@
 import pytest
+from uuid import uuid4
 from django.utils import timezone
 from users.user_related_models.user_model import User
 from users.user_related_models.access_code_model import AccessCode
@@ -7,7 +8,7 @@ from users.user_related_models.access_code_model import AccessCode
 @pytest.fixture
 def access_code():
     """Create a test access code."""
-    return AccessCode.objects.create(code="TEST123", active=True)
+    return AccessCode.objects.create(code=uuid4(), active=True)
 
 
 @pytest.fixture
@@ -17,7 +18,7 @@ def user(access_code):
         username="testuser",
         email="test@example.com",
         password="testpass123",
-        access_code=access_code.code,
+        access_code=str(access_code.code),
         phone_number="+989123456789"
     )
 

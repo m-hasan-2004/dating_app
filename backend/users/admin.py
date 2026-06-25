@@ -1,10 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.contrib.auth import admin as auth_admin
+from django.utils.translation import gettext_lazy as _
+from jalali_date.admin import StackedInlineJalaliMixin
+from django_admin_multi_select_filter.filters import MultiSelectFieldListFilter
 
 # Unregister the Group model to hide the Authentication and Authorization section
 admin.site.unregister(Group)
-from django.utils.translation import gettext_lazy as _
+
 from users.user_related_models import (
     User,
     AccessCode,
@@ -33,9 +36,6 @@ from users.preferred_wife_models import (
     PreferredWifeIntellectualInformation,
     FutureSposeOriginality,
 )
-from jalali_date.admin import StackedInlineJalaliMixin
-from django_admin_multi_select_filter.filters import MultiSelectFieldListFilter
-from jalali_date import date2jalali
 from users.user_related_models.subject_details import SubjectDetails
 
 class IdentityInfoInline(StackedInlineJalaliMixin, admin.StackedInline):

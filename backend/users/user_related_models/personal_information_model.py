@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models.functions.datetime import TruncBase
 from core.utils.model_choices.user_model_choices import Choices
 from core.utils.error_msgs.model_error_messages import PersonalInfoErrorMessages
 from core.utils.help_texts.help_text import PersonalInfoHelpText

@@ -149,27 +149,18 @@ class EngagementOrWeddingStatus(models.Model):
     )
 
 
-
     def clean(self):
         super().clean()
-
-
-
-
-    def clean(self):
-        super().clean()
-
 
     def __str__(self):
         return f"اطلاعات کاربر: {self.user.last_name}"
-    
-    def save(self, *args, **kwargs):
 
+    def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = _("Engagement or Wedding Status")
-        verbose_name_plural = _("Engagements or Weddings Statuse")
+        verbose_name_plural = _("Engagements or Weddings Statuses")
 
 
 class ExHusbandChildStatus(models.Model):

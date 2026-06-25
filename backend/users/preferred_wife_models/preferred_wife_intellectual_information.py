@@ -1,5 +1,4 @@
 from django.db import models
-from django.forms import CharField
 from django.utils.translation import gettext_lazy as _
 from core.utils.model_choices.preferred_wife_model_choices import Choices
 from core.utils.error_msgs.preferred_wife_model_error_messages import (

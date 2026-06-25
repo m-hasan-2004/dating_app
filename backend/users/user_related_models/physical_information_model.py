@@ -119,4 +119,4 @@ class PhysicalInformation(models.Model):
 
     class Meta:
         verbose_name = _("Physical Information")
-        verbose_name_plural = _("Physical Informations")
+        verbose_name_plural = _("Physical Information")

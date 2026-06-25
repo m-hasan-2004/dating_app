@@ -156,4 +156,4 @@ class FinancialInformation(models.Model):
 
     class Meta:
         verbose_name = _("Financial Information")
-        verbose_name_plural = _("Financial Informations")
+        verbose_name_plural = _("Financial Information")

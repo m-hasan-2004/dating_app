@@ -194,10 +194,6 @@ class IdentityInformation(models.Model):
         verbose_name_plural = _("Identities Information")
 
     def save(self, *args, **kwargs):
-    # Ensure date_joined is not before date_created for new users
-        if self._state.adding:
-            if self.date_created and (not self.date_joined or self.date_joined < self.date_created):
-                self.date_joined = self.date_created
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -316,10 +312,6 @@ class BirthCertificateInformation(models.Model):
         return reverse("BirthCertificateInfo_detail", kwargs={"pk": self.pk})
 
     def save(self, *args, **kwargs):
-    # Ensure date_joined is not before date_created for new users
-        if self._state.adding:
-            if self.date_created and (not self.date_joined or self.date_joined < self.date_created):
-                self.date_joined = self.date_created
         super().save(*args, **kwargs)
 
     class Meta:
