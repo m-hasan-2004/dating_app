@@ -15,11 +15,13 @@ Profile-model serializers mark the ``user`` reverse-FK as read-only and
 auto-assign it from ``request.user`` inside the corresponding ViewSet.
 """
 
+from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError as DjangoValidationError
 from django.utils.translation import gettext_lazy as _
 
 from rest_framework import serializers
+from rest_framework.exceptions import AuthenticationFailed
 
 from phonenumber_field.serializerfields import PhoneNumberField
 
@@ -67,17 +69,41 @@ class AccessCodeSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+# Fields exposed to regular users (no sensitive/permission fields).
+USER_PUBLIC_FIELDS = (
+    "id",
+    "username",
+    "first_name",
+    "last_name",
+    "email",
+    "phone_number",
+    "middle_man_code",
+    "date_created",
+    "date_joined",
+)
+
+# Extra fields exposed only to staff/admin users.
+USER_ADMIN_FIELDS = (
+    "is_active",
+    "is_staff",
+    "is_superuser",
+    "access_code",
+    "groups",
+    "user_permissions",
+    "last_login",
+)
+
+
 class UserSerializer(serializers.ModelSerializer):
     """
     Serializer for the custom :class:`User` model.
 
-    Includes **all** model fields. ``password`` is write-only so the hash is
-    never exposed. ``access_code`` is overridden as a plain ``CharField`` (with
-    ``required=False``) so that the model-level validators
-    (:func:`validate_active_access_code`, ``UserValidator.validate_access_code``)
-    do **not** fire on every update -- they would fail because the code is
-    already consumed. Custom conditional validation is performed in
-    :meth:`validate_access_code`.
+    Only exposes a safe subset of fields by default. Sensitive / administrative
+    fields (``password``, ``is_staff``, ``is_superuser``, ``groups``,
+    ``user_permissions``, raw ``access_code``) are only returned when the
+    current requester is staff.
+
+    ``password`` is write-only and never included in responses.
     """
 
     access_code = serializers.CharField(
@@ -85,14 +111,54 @@ class UserSerializer(serializers.ModelSerializer):
         required=False,
         allow_blank=False,
         allow_null=True,
+        write_only=True,
     )
 
     class Meta:
         model = User
-        fields = "__all__"
+        fields = (
+            "id",
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "phone_number",
+            "middle_man_code",
+            "access_code",
+            "password",
+            "date_created",
+            "date_joined",
+            "is_active",
+            "is_staff",
+            "is_superuser",
+            "groups",
+            "user_permissions",
+            "last_login",
+        )
+        read_only_fields = (
+            "id",
+            "date_created",
+            "date_joined",
+            "last_login",
+            "groups",
+            "user_permissions",
+        )
         extra_kwargs = {
             "password": {"write_only": True, "required": False},
+            "is_active": {"read_only": True},
+            "is_staff": {"read_only": True},
+            "is_superuser": {"read_only": True},
         }
+
+    def __init__(self, *args, **kwargs):
+        # Pop our custom context flag before delegating to DRF.
+        super().__init__(*args, **kwargs)
+        request = self.context.get("request")
+        is_staff = bool(request and getattr(request.user, "is_staff", False))
+        if not is_staff:
+            # Drop admin-only fields entirely for non-staff requesters.
+            for field in USER_ADMIN_FIELDS:
+                self.fields.pop(field, None)
 
     def validate_access_code(self, value):
         """
@@ -146,6 +212,157 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
 
+class UserUpdateSerializer(serializers.ModelSerializer):
+    """
+    Self-service profile update serializer (used by ``PATCH /api/auth/me/``).
+
+    A regular user can update their basic profile fields. Password is handled
+    via a dedicated field and is write-only. Sensitive fields are read-only.
+    """
+
+    old_password = serializers.CharField(
+        write_only=True, required=False, style={"input_type": "password"}
+    )
+    new_password = serializers.CharField(
+        write_only=True, required=False, style={"input_type": "password"}
+    )
+
+    class Meta:
+        model = User
+        fields = (
+            "id",
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "phone_number",
+            "middle_man_code",
+            "old_password",
+            "new_password",
+        )
+        read_only_fields = ("id",)
+
+    def validate_username(self, value):
+        request = self.context.get("request")
+        if request and getattr(request.user, "username", None) == value:
+            return value
+        if User.objects.filter(username=value).exists():
+            raise serializers.ValidationError(_("A user with that username already exists."))
+        return value
+
+    def validate_email(self, value):
+        if not value:
+            return value
+        request = self.context.get("request")
+        if request and getattr(request.user, "email", None) == value:
+            return value
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError(_("A user with that email already exists."))
+        return value
+
+    def validate_new_password(self, value):
+        if value:
+            validate_password(value)
+        return value
+
+    def validate(self, attrs):
+        new_password = attrs.get("new_password")
+        old_password = attrs.get("old_password")
+        if new_password and not old_password:
+            raise serializers.ValidationError(
+                {"old_password": _("Current password is required to set a new password.")}
+            )
+        request = self.context.get("request")
+        if new_password and old_password and request:
+            user = request.user
+            if not user.check_password(old_password):
+                raise serializers.ValidationError({"old_password": _("Current password is incorrect.")})
+        return attrs
+
+    def update(self, instance, validated_data):
+        validated_data.pop("old_password", None)
+        new_password = validated_data.pop("new_password", None)
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        if new_password:
+            instance.set_password(new_password)
+        instance.save()
+        return instance
+
+
+# ---------------------------------------------------------------------------
+# Auth serializers
+# ---------------------------------------------------------------------------
+
+
+class LoginSerializer(serializers.Serializer):
+    """
+    Validates username + password credentials.
+
+    On ``validate()`` the user is authenticated through Django's
+    ``authenticate()`` (ModelBackend). Returns the user instance on success;
+    raises ``AuthenticationFailed`` on failure or when the account is inactive.
+    """
+
+    username = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True, style={"input_type": "password"})
+
+    def validate(self, attrs):
+        username = attrs.get("username")
+        password = attrs.get("password")
+
+        user = authenticate(
+            request=self.context.get("request"),
+            username=username,
+            password=password,
+        )
+
+        if user is None:
+            raise AuthenticationFailed(_("Invalid credentials."))
+        if not user.is_active:
+            raise AuthenticationFailed(_("Account is disabled."))
+
+        attrs["user"] = user
+        return attrs
+
+
+class LogoutSerializer(serializers.Serializer):
+    """
+    Accepts a refresh token (from cookie or body) and blacklists it.
+
+    When the refresh token is not provided in the request body the view will
+    fall back to the ``refresh_token`` cookie.
+    """
+
+    refresh = serializers.CharField(required=False, write_only=True)
+
+    def validate(self, attrs):
+        refresh = attrs.get("refresh") or self.context.get("refresh")
+        if not refresh:
+            raise serializers.ValidationError(
+                {"refresh": _("Refresh token is required (cookie or body).")}
+            )
+        attrs["refresh"] = refresh
+        return attrs
+
+
+class TokenResponseSerializer(serializers.Serializer):
+    """Response payload returned after a successful login / refresh."""
+
+    access = serializers.CharField(read_only=True)
+    refresh = serializers.CharField(read_only=True)
+    user = UserSerializer(read_only=True)
+
+
+class RefreshTokenSerializer(serializers.Serializer):
+    """
+    Optional body input for the refresh endpoint. If absent the refresh token
+    is read from the ``refresh_token`` cookie.
+    """
+
+    refresh = serializers.CharField(required=False, write_only=True)
+
+
 # ---------------------------------------------------------------------------
 # Two-step signup serializers
 # ---------------------------------------------------------------------------
@@ -185,6 +402,21 @@ class UserRegistrationSerializer(serializers.Serializer):
     def validate_password(self, value):
         """Run Django's configured password validators."""
         validate_password(value)
+        return value
+
+    def validate_username(self, value):
+        if User.objects.filter(username=value).exists():
+            raise serializers.ValidationError(_("A user with that username already exists."))
+        return value
+
+    def validate_email(self, value):
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError(_("A user with that email already exists."))
+        return value
+
+    def validate_phone_number(self, value):
+        if User.objects.filter(phone_number=value).exists():
+            raise serializers.ValidationError(_("A user with that phone number already exists."))
         return value
 
     def validate(self, attrs):

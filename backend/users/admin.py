@@ -7,6 +7,14 @@ from django.contrib.auth import admin as auth_admin
 from django.utils.translation import gettext_lazy as _
 from jalali_date.admin import StackedInlineJalaliMixin
 
+# Hide OutstandingToken and BlacklistedToken from admin
+try:
+    from rest_framework_simplejwt.token_blacklist.models import OutstandingToken, BlacklistedToken
+    admin.site.unregister(OutstandingToken)
+    admin.site.unregister(BlacklistedToken)
+except admin.sites.NotRegistered:
+    pass
+
 from .admin_filters import (
     MultiSelectChoicesListFilter,
     MultiSelectCSVFieldListFilter,

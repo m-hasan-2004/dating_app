@@ -28,9 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "True").lower() in ("1", "true", "yes")
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
 
 # Application definition
 
@@ -48,13 +48,16 @@ INSTALLED_APPS = [
     "django_filters",
     "debug_toolbar",
     "rest_framework",
+    "rest_framework_simplejwt.token_blacklist",
     "phonenumber_field",
     "jalali_date",
     "drf_spectacular",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -147,8 +150,8 @@ INTERNAL_IPS = ["127.0.0.1"]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
+        "users.authentication.CookieJWTAuthentication",
         "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.BasicAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
@@ -158,15 +161,89 @@ REST_FRAMEWORK = {
         "rest_framework.renderers.BrowsableAPIRenderer",
     ],
     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 20,
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 AUTH_USER_MODEL = "users.User"
 
+# ModelBackend is sufficient for username/password login; the access-code
+# backend was broken (it required an active code on every login even though
+# codes are consumed at signup) and has been removed.
 AUTHENTICATION_BACKENDS = [
-    "users.backends.AccessCodeAuthenticationBackend",
     "django.contrib.auth.backends.ModelBackend",
 ]
+
+
+# ---------------------------------------------------------------------------
+# JWT (SimpleJWT) + cookie configuration
+# ---------------------------------------------------------------------------
+
+from datetime import timedelta  # noqa: E402
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": SECRET_KEY,
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "USER_ID_FIELD": "id",
+    "USER_ID_CLAIM": "user_id",
+}
+
+# Cookie names & flags used by ``users.authentication`` / ``users.views``.
+JWT_AUTH_COOKIE = os.getenv("JWT_AUTH_COOKIE", "access_token")
+JWT_AUTH_REFRESH_COOKIE = os.getenv("JWT_AUTH_REFRESH_COOKIE", "refresh_token")
+# Max age in seconds for each cookie (must match token lifetimes for the
+# browser to drop them at roughly the same time the token expires).
+JWT_AUTH_COOKIE_MAX_AGE = int(
+    SIMPLE_JWT["ACCESS_TOKEN_LIFETIME"].total_seconds()
+)
+JWT_AUTH_REFRESH_COOKIE_MAX_AGE = int(
+    SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"].total_seconds()
+)
+JWT_AUTH_COOKIE_SECURE = not DEBUG
+JWT_AUTH_COOKIE_SAMESITE = os.getenv("JWT_AUTH_COOKIE_SAMESITE", "Lax")
+
+
+# ---------------------------------------------------------------------------
+# Security / production hardening
+# ---------------------------------------------------------------------------
+
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SECURE_HSTS_SECONDS = 60 * 60 * 24 * 30  # 30 days
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_REFERRER_POLICY = "same-origin"
+
+SESSION_COOKIE_SECURE = not DEBUG
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = os.getenv("SESSION_COOKIE_SAMESITE", "Lax")
+
+CSRF_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_SAMESITE = os.getenv("CSRF_COOKIE_SAMESITE", "Lax")
+CSRF_TRUSTED_ORIGINS = os.getenv(
+    "CSRF_TRUSTED_ORIGINS", ""
+).split(",") if os.getenv("CSRF_TRUSTED_ORIGINS") else []
+
+
+# ---------------------------------------------------------------------------
+# CORS (frontend integration)
+# ---------------------------------------------------------------------------
+
+CORS_ALLOWED_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv("CORS_ALLOWED_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000").split(",")
+    if origin.strip()
+]
+CORS_ALLOW_CREDENTIALS = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -232,10 +309,34 @@ except locale.Error:
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "Dating App API",
-    "DESCRIPTION": "API documentation for Dating App",
+    "DESCRIPTION": (
+        "REST API for the Dating App.\n\n"
+        "Authentication uses **JWT access/refresh tokens delivered via "
+        "HTTP-only cookies**. After calling `/api/auth/login/` the browser "
+        "stores the tokens automatically; subsequent requests are "
+        "authenticated via the `access_token` cookie. Use `/api/auth/refresh/` "
+        "to obtain a new access token when it expires, and `/api/auth/logout/` "
+        "to clear the cookies.\n\n"
+        "In Swagger UI you can still use the **Authorize** button with a "
+        "`Bearer <access_token>` header for testing."
+    ),
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
-    # OTHER SETTINGS
+    "TAGS": [
+        {"name": "Auth", "description": "Authentication endpoints: register, login, logout, refresh, me."},
+        {"name": "User", "description": "User management and profile section CRUD endpoints."},
+    ],
+    "SECURITY": [{"jwtCookieAuth": []}, {"jwtAuth": []}],
+    "SECURITY_SCHEMES": {
+        "jwtAuth": {
+            "type": "http",
+            "scheme": "bearer",
+            "bearerFormat": "JWT",
+            "description": "JWT access token via Authorization header (Swagger UI testing).",
+        },
+    },
+    "COMPONENT_SPLIT_REQUEST": True,
+    "SORT_OPERATIONS": False,
 }
 
 # Sentry Config

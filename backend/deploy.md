@@ -35,7 +35,7 @@ docker-compose up -d --build
 docker-compose exec web python manage.py migrate
 
 # 5. Create superuser (optional)
-docker-compose exec web python manage.py createsuperuser
+docker-compose exec web python manage.py createsuperuser or super1
 
 # 6. Access the application
 # Web app: http://localhost:8000
@@ -219,7 +219,7 @@ No manual database creation is required - the Docker container handles everythin
 
 4. **Create Superuser** (optional):
    ```bash
-   docker-compose exec web python manage.py createsuperuser
+   docker-compose exec web python manage.py createsuperuser or super1
    ```
 
 5. **Collect Static Files**:
@@ -345,7 +345,7 @@ docker-compose exec web python manage.py makemigrations
 docker-compose exec web python manage.py migrate
 
 # Create superuser
-docker-compose exec web python manage.py createsuperuser
+docker-compose exec web python manage.py createsuperuser or super1
 
 # Access database directly
 docker-compose exec db psql -U hasan -d dating_app
