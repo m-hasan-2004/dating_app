@@ -10,6 +10,8 @@ from jalali_date.admin import StackedInlineJalaliMixin
 from .admin_filters import (
     MultiSelectChoicesListFilter,
     MultiSelectCSVFieldListFilter,
+    FatherOriginalityFilter,
+    MotherOriginalityFilter,
 )
 
 # Unregister the Group model to hide the Authentication and Authorization section
@@ -248,8 +250,8 @@ class UserAdmin(auth_admin.UserAdmin):
             MultiSelectCSVFieldListFilter,
         ),
         # CharField + choices (single value) -> __in with a real list
-        ("father__originality", MultiSelectChoicesListFilter),
-        ("mother__originality", MultiSelectChoicesListFilter),
+        ("father__originality", FatherOriginalityFilter),
+        ("mother__originality", MotherOriginalityFilter),
         ("personalinformation__income", MultiSelectChoicesListFilter),
         ("personalinformation__education", MultiSelectChoicesListFilter),
         ("financialinformation__current_residence_status", MultiSelectChoicesListFilter),

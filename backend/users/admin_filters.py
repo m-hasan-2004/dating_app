@@ -131,3 +131,34 @@ class MultiSelectCSVFieldListFilter(_BaseMultiSelectFilter):
         for q in queries[1:]:
             query = query | q
         return queryset.filter(query)
+
+
+class FatherOriginalityFilter(MultiSelectChoicesListFilter):
+    """
+    Multi-select filter for the father's ``originality`` (Iranian province /
+    ethnicity).
+
+    Both ``Father.originality`` and ``Mother.originality`` inherit the same
+    field (verbose name "Originality"), so the sidebar showed two
+    indistinguishable filters. This subclass overrides the sidebar title to
+    the Persian "اصالت پدر" (Father's Originality).
+    """
+
+    def __init__(self, field, request, params, model, model_admin, field_path):
+        super().__init__(field, request, params, model, model_admin, field_path)
+        self.title = _("اصالت پدر")
+
+
+class MotherOriginalityFilter(MultiSelectChoicesListFilter):
+    """
+    Multi-select filter for the mother's ``originality`` (Iranian province /
+    ethnicity).
+
+    Sets the sidebar title to the Persian "اصالت مادر" (Mother's Originality)
+    so it is distinguishable from the father's originality filter.
+    """
+
+    def __init__(self, field, request, params, model, model_admin, field_path):
+        super().__init__(field, request, params, model, model_admin, field_path)
+        self.title = _("اصالت مادر")
+
