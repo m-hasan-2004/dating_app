@@ -3584,27 +3584,27 @@ msgstr "قد باید حداقل ۱۰۰ سانتیمتر باشد"
 
 #: core/utils/validators/preferred_wife_validators.py:8
 msgid "Height must be at most 260cm"
-msgstr ""
+msgstr "حداکثر قد قابل قبول 260 سانتیمتر است."
 
 #: core/utils/validators/preferred_wife_validators.py:9
 msgid "Weight must be at least 35kg"
-msgstr ""
+msgstr "حداقل وزن قابل قبول 35 کیلوگرم است."
 
 #: core/utils/validators/preferred_wife_validators.py:10
 msgid "Weight must be at most 300kg"
-msgstr ""
+msgstr "حداکثر وزن قابل قبول 300 کیلوگرم است."
 
 #: core/utils/validators/preferred_wife_validators.py:16
 msgid "Education level must contain only letters and spaces"
-msgstr ""
+msgstr "سطح تحصیلات باید شامل حروف و فاصله باشد."
 
 #: core/utils/validators/preferred_wife_validators.py:20
 msgid "Field of study must contain only letters and spaces"
-msgstr ""
+msgstr "رشته تحصیلات باید شامل حروف و فاصله باشد."
 
 #: core/utils/validators/preferred_wife_validators.py:24
 msgid "Location must contain only letters, spaces, and basic punctuation"
-msgstr ""
+msgstr "مکان باید شامل حروف و فاصله باشد."
 
 #: core/utils/validators/preferred_wife_validators.py:31
 msgid "Moral feature description must not exceed 1000 characters"
@@ -3636,7 +3636,7 @@ msgstr "شماره حساب فقط میتواند عدد باشد."
 
 #: core/utils/validators/subject_validators.py:16
 msgid "Account number must be between 10 to 40 digits."
-msgstr ""
+msgstr "شماره حساب باید بین 10 تا 40 رقم باشد"
 
 #: core/utils/validators/subject_validators.py:27
 msgid "Bank name can only contain letters, spaces, and hyphens."
@@ -3644,7 +3644,7 @@ msgstr "نام بانک فقط میتواند شامل حروف، اعداد و 
 
 #: core/utils/validators/subject_validators.py:40
 msgid "Amount must be a positive number."
-msgstr ""
+msgstr "مقدار باید عدد مثبت باشد."
 
 #: core/utils/validators/subject_validators.py:44
 msgid "Please enter a valid amount."
@@ -3656,15 +3656,14 @@ msgstr "شماره تلفن ثابت باید به فرمت XXX-XXXXXXXX باش�
 
 #: core/utils/validators/user_validators.py:16
 msgid "Name must contain only letters and spaces"
-msgstr ""
+msgstr "نام فقط میتواند شامل حروف و فاصله باشد."
 
 #: core/utils/validators/user_validators.py:21
 msgid "National code must be exactly 10 digits"
 msgstr "کد ملی باید دقیقا ۱۰ کاراکتر باشد."
 
 #: core/utils/validators/user_validators.py:26
-msgid ""
-"Birth certificate serial must contain only letters, numbers, and hyphens"
+msgid "Birth certificate serial must contain only letters, numbers, and hyphens"
 msgstr "سریال شناسنامه فقط میتواند شامل حروف، اعداد و خط تیره باشد."
 
 #: core/utils/validators/user_validators.py:33
@@ -3687,7 +3686,7 @@ msgstr "تاریخ ازدواج  نمیتواند بعد از تاریخ فوت 
 
 #: core/utils/validators/user_validators.py:48
 msgid "Glasses size must be a valid number"
-msgstr ""
+msgstr "شماره عینک باید یک عدد درست باشد."
 
 #: core/utils/validators/user_validators.py:53
 msgid "Please provide medication/surgery/disease type"
@@ -3695,12 +3694,12 @@ msgstr "نوع دارو/جراحی/بیماری"
 
 #: core/utils/validators/user_validators.py:55
 msgid "Cannot provide medication type without disease history"
-msgstr ""
+msgstr "بدون سابقه بیماری، انتخاب نوع دارو ممکن نیست."
 
 #: core/utils/validators/user_validators.py:61
 #: core/utils/validators/user_validators.py:348
 msgid "Username must contain only letters, numbers, and underscores"
-msgstr ""
+msgstr "نام کاربری باید فقط شامل حروف و اعداد باشد."
 
 #: core/utils/validators/user_validators.py:66
 msgid "Dates of meetings must not exceed 1000 characters"
@@ -3724,7 +3723,7 @@ msgstr ""
 
 #: core/utils/validators/user_validators.py:86
 msgid "Only PDF and image files (jpg, jpeg, png) are allowed"
-msgstr ""
+msgstr "فقط نوع فایل pdf و عکس قابل قبول است."
 
 #: core/utils/validators/user_validators.py:93
 msgid "Cost cannot be negative"
@@ -3736,32 +3735,31 @@ msgstr "فرمت اشتباهی هزینه."
 
 #: core/utils/validators/user_validators.py:101
 msgid "Please provide divorce reason when there is divorce history"
-msgstr ""
+msgstr "در صورت امکان، دلیل طلاق را توضیح دهید."
 
 #: core/utils/validators/user_validators.py:103
 msgid "Cannot provide divorce reason without divorce history"
-msgstr ""
+msgstr "بدون سابقه طلاق انتخاب علت طلاق ممکن نیست."
 
 #: core/utils/validators/user_validators.py:107
-msgid ""
-"Contact information must contain only letters, spaces, and basic punctuation"
+msgid "Contact information must contain only letters, spaces, and basic punctuation"
 msgstr ""
 
 #: core/utils/validators/user_validators.py:112
 msgid "Cannot have death date for someone who is alive"
-msgstr ""
+msgstr "نمیتوان برای فرد زنده تاریخ فوت انتخاب کرد."
 
 #: core/utils/validators/user_validators.py:114
 msgid "Must provide death date for someone who is not alive"
-msgstr ""
+msgstr "باید برد متوفی تاریخ فوت انتخاب کرد."
 
 #: core/utils/validators/user_validators.py:120
 msgid "Must provide rent amount for rental residence"
-msgstr ""
+msgstr "باید برای خانه رهن شده نرخ رهن وارد کرد."
 
 #: core/utils/validators/user_validators.py:122
 msgid "Must provide mortgage amount for mortgaged residence"
-msgstr ""
+msgstr "باید برای خانه اجاره ای نرخ اجاره وارد کرد."
 
 #: core/utils/validators/user_validators.py:126
 msgid ""
