@@ -372,12 +372,20 @@ docker cp dating_app_web:/backups/dating_app_20231201_120000.sql.gz ./
 
 ### Restore from Backup
 
+#### First Drop Using Pgadmin
+
 ```bash
 # Copy backup to container
 docker cp ./backup.sql.gz dating_app_web:/backups/
 
 # Restore database
 docker-compose exec web bash -c "gunzip -c /backups/backup.sql.gz | psql -h db -U hasan -d dating_app"
+```
+
+#### Uncomperresed Sql file
+
+```bash
+psql -h db -U hasan -d dating_app < backup.sql 
 ```
 
 ### Backup Locations
