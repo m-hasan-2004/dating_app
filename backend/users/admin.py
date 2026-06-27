@@ -1,9 +1,16 @@
+import re
+
 from django.contrib import admin
+from django.contrib.admin.filters import DateFieldListFilter
 from django.contrib.auth.models import Group
 from django.contrib.auth import admin as auth_admin
 from django.utils.translation import gettext_lazy as _
 from jalali_date.admin import StackedInlineJalaliMixin
-from django_admin_multi_select_filter.filters import MultiSelectFieldListFilter
+
+from .admin_filters import (
+    MultiSelectChoicesListFilter,
+    MultiSelectCSVFieldListFilter,
+)
 
 # Unregister the Group model to hide the Authentication and Authorization section
 admin.site.unregister(Group)
@@ -225,29 +232,34 @@ class UserAdmin(auth_admin.UserAdmin):
         "get_birth_date",
     )
     list_filter = (
-        ("is_active", MultiSelectFieldListFilter),
-        ("personalinformation__gender", MultiSelectFieldListFilter),
-        ("father__originality", MultiSelectFieldListFilter),
-        ("mother__originality", MultiSelectFieldListFilter),
-        ("personalinformation__income", MultiSelectFieldListFilter),
+        # Booleans -> plain BooleanFieldListFilter (multi-select is broken here)
+        "is_active",
         "personalinformation__have_insurance",
-        ("personalinformation__birth_date", MultiSelectFieldListFilter),
-        ("financialinformation__capital", MultiSelectFieldListFilter),
-        ("financialinformation__dowry_type", MultiSelectFieldListFilter),
-        ("physicalinformation__disease_or_surgery", MultiSelectFieldListFilter),
-        ("personalinformation__education", MultiSelectFieldListFilter),
-        ("financialinformation__current_residence_status", MultiSelectFieldListFilter),
-        ("intellectual_info__worship_prayer", MultiSelectFieldListFilter),
-        ("intellectual_info__fasting", MultiSelectFieldListFilter),
-        "intellectual_info__opinion_velayat_faqih",
-        ("intellectual_info__cover_type_society", MultiSelectFieldListFilter),
+        "physicalinformation__disease_or_surgery",
+        # Date -> date hierarchy filter, not a flat value list
+        ("personalinformation__birth_date", DateFieldListFilter),
+        # MultiSelectField (CSV-stored) -> OR-ed __contains
+        ("personalinformation__gender", MultiSelectCSVFieldListFilter),
+        ("financialinformation__capital", MultiSelectCSVFieldListFilter),
+        ("financialinformation__dowry_type", MultiSelectCSVFieldListFilter),
+        ("intellectual_info__cover_type_society", MultiSelectCSVFieldListFilter),
         (
             "preferred_wife_intellectual_information__marriage_with_someone_with_marriage_experience",
-            MultiSelectFieldListFilter,
+            MultiSelectCSVFieldListFilter,
         ),
-        ("financialinformation__job", MultiSelectFieldListFilter),
-        ("physicalinformation__height", MultiSelectFieldListFilter),
-        ("physicalinformation__weight", MultiSelectFieldListFilter),
+        # CharField + choices (single value) -> __in with a real list
+        ("father__originality", MultiSelectChoicesListFilter),
+        ("mother__originality", MultiSelectChoicesListFilter),
+        ("personalinformation__income", MultiSelectChoicesListFilter),
+        ("personalinformation__education", MultiSelectChoicesListFilter),
+        ("financialinformation__current_residence_status", MultiSelectChoicesListFilter),
+        ("intellectual_info__worship_prayer", MultiSelectChoicesListFilter),
+        ("intellectual_info__fasting", MultiSelectChoicesListFilter),
+        ("intellectual_info__opinion_velayat_faqih", MultiSelectChoicesListFilter),
+        # NOTE: financialinformation__job (free text, no choices),
+        #       physicalinformation__height / __weight (DecimalField) removed:
+        #       multi-select on every distinct value is unusable; use search
+        #       for job and a numeric range would be the right tool for height/weight.
     )
     search_fields = (
         "username",
@@ -359,13 +371,46 @@ class UserAdmin(auth_admin.UserAdmin):
     reactivate_users.short_description = _("Reactivate selected users")
 
     def get_birth_date(self, obj):
-        return obj.personalinformation.birth_date if obj.personalinformation else None
+        try:
+            return obj.personalinformation.birth_date
+        except PersonalInformation.DoesNotExist:
+            return None
 
     get_birth_date.short_description = _("Birth Date")
 
     get_birth_date.admin_order_field = (
         "personalinformation__birth_date"  # This enables sorting by birth_date
     )
+
+    def get_search_results(self, request, queryset, search_term):
+        """
+        Extend the default search so Iranian phone numbers match regardless of
+        how they are typed. ``phone_number`` is stored in E.164 (e.g.
+        ``+989121234567``) but operators tend to search local forms such as
+        ``09121234567`` or ``9121234567``. We normalise the digits to E.164 and
+        OR it with the default ``__icontains`` search across all search fields.
+        """
+        queryset, use_distinct = super().get_search_results(
+            request, queryset, search_term
+        )
+        digits = re.sub(r"\D", "", search_term or "")
+        if not digits:
+            return queryset, use_distinct
+        if digits.startswith("0098"):
+            normalized = "+" + digits[2:]
+        elif digits.startswith("98") and len(digits) >= 12:
+            normalized = "+" + digits
+        elif digits.startswith("0"):
+            normalized = "+98" + digits[1:]
+        elif len(digits) == 10:
+            normalized = "+98" + digits
+        else:
+            normalized = None
+        if normalized and normalized != search_term:
+            extra, _ = super().get_search_results(request, queryset, normalized)
+            queryset = queryset | extra
+            use_distinct = True
+        return queryset, use_distinct
 
 
 class AccessCodeAdmin(admin.ModelAdmin):
