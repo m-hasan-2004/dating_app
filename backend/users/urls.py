@@ -171,5 +171,5 @@ auth_patterns = [
 
 urlpatterns = [
     path("auth/", include((auth_patterns, "auth"), namespace="auth")),
-    path("user/", include(user_router.urls)),
+    path("", include(user_router.urls)),
 ]

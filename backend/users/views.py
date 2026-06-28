@@ -154,7 +154,7 @@ class UserProfileModelViewSet(viewsets.ModelViewSet):
 # ---------------------------------------------------------------------------
 
 
-@extend_schema(tags=["User"])
+@extend_schema(tags=["Access Codes"])
 class AccessCodeViewSet(viewsets.ModelViewSet):
     """
     Full CRUD for :class:`AccessCode` objects.
@@ -171,7 +171,7 @@ class AccessCodeViewSet(viewsets.ModelViewSet):
     ordering_fields = ["date_created", "active"]
 
 
-@extend_schema(tags=["User"])
+@extend_schema(tags=["Users personal info"])
 class UserViewSet(viewsets.ModelViewSet):
     """
     CRUD for :class:`User` objects.
@@ -450,7 +450,7 @@ class CompleteProfileView(APIView):
 # ---------------------------------------------------------------------------
 
 
-@extend_schema(tags=["User"])
+@extend_schema(tags=["Personals Information"])
 class IdentityInformationViewSet(UserProfileModelViewSet):
     """CRUD for :class:`IdentityInformation` (one-to-one with user)."""
 
@@ -458,7 +458,7 @@ class IdentityInformationViewSet(UserProfileModelViewSet):
     serializer_class = IdentityInformationSerializer
 
 
-@extend_schema(tags=["User"])
+@extend_schema(tags=["Personals Information"])
 class BirthCertificateInformationViewSet(UserProfileModelViewSet):
     """CRUD for :class:`BirthCertificateInformation` (one-to-one with user)."""
 
@@ -466,7 +466,7 @@ class BirthCertificateInformationViewSet(UserProfileModelViewSet):
     serializer_class = BirthCertificateInformationSerializer
 
 
-@extend_schema(tags=["User"])
+@extend_schema(tags=["Personals Information"])
 class IntroducedSubjectsInformationViewSet(UserProfileModelViewSet):
     """CRUD for :class:`IntroducedSubjectsInformation` (FK, many per user)."""
 
@@ -479,7 +479,7 @@ class IntroducedSubjectsInformationViewSet(UserProfileModelViewSet):
 # ---------------------------------------------------------------------------
 
 
-@extend_schema(tags=["User"])
+@extend_schema(tags=["Personals Information"])
 class PersonalInformationViewSet(UserProfileModelViewSet):
     """CRUD for :class:`PersonalInformation` (one-to-one with user)."""
 
@@ -487,7 +487,7 @@ class PersonalInformationViewSet(UserProfileModelViewSet):
     serializer_class = PersonalInformationSerializer
 
 
-@extend_schema(tags=["User"])
+@extend_schema(tags=["Physical Information"])
 class PhysicalInformationViewSet(UserProfileModelViewSet):
     """CRUD for :class:`PhysicalInformation` (one-to-one with user)."""
 
@@ -500,7 +500,7 @@ class PhysicalInformationViewSet(UserProfileModelViewSet):
 # ---------------------------------------------------------------------------
 
 
-@extend_schema(tags=["User"])
+@extend_schema(tags=["Families Information"])
 class FamilyInformationViewSet(UserProfileModelViewSet):
     """CRUD for :class:`FamilyInformation` (one-to-one with user)."""
 
@@ -508,7 +508,7 @@ class FamilyInformationViewSet(UserProfileModelViewSet):
     serializer_class = FamilyInformationSerializer
 
 
-@extend_schema(tags=["User"])
+@extend_schema(tags=["Engagements or Weddings Statuses"])
 class EngagementOrWeddingStatusViewSet(UserProfileModelViewSet):
     """CRUD for :class:`EngagementOrWeddingStatus` (one-to-one with user)."""
 
@@ -516,7 +516,7 @@ class EngagementOrWeddingStatusViewSet(UserProfileModelViewSet):
     serializer_class = EngagementOrWeddingStatusSerializer
 
 
-@extend_schema(tags=["User"])
+@extend_schema(tags=["Ex-Husbands Child Status"])
 class ExHusbandChildStatusViewSet(UserProfileModelViewSet):
     """CRUD for :class:`ExHusbandChildStatus` (FK, many per user)."""
 
@@ -524,7 +524,7 @@ class ExHusbandChildStatusViewSet(UserProfileModelViewSet):
     serializer_class = ExHusbandChildStatusSerializer
 
 
-@extend_schema(tags=["User"])
+@extend_schema(tags=["Sisters"])
 class SisterViewSet(UserProfileModelViewSet):
     """CRUD for :class:`Sister` (FK, many per user)."""
 
@@ -532,7 +532,7 @@ class SisterViewSet(UserProfileModelViewSet):
     serializer_class = SisterSerializer
 
 
-@extend_schema(tags=["User"])
+@extend_schema(tags=["Brothers"])
 class BrotherViewSet(UserProfileModelViewSet):
     """CRUD for :class:`Brother` (FK, many per user)."""
 
@@ -540,7 +540,7 @@ class BrotherViewSet(UserProfileModelViewSet):
     serializer_class = BrotherSerializer
 
 
-@extend_schema(tags=["User"])
+@extend_schema(tags=["Grooms"])
 class GroomViewSet(UserProfileModelViewSet):
     """CRUD for :class:`Groom` (FK, many per user)."""
 
@@ -548,7 +548,7 @@ class GroomViewSet(UserProfileModelViewSet):
     serializer_class = GroomSerializer
 
 
-@extend_schema(tags=["User"])
+@extend_schema(tags=["Brides or Wives"])
 class BrideOrWifeViewSet(UserProfileModelViewSet):
     """CRUD for :class:`BrideOrWife` (FK, many per user)."""
 
@@ -556,7 +556,7 @@ class BrideOrWifeViewSet(UserProfileModelViewSet):
     serializer_class = BrideOrWifeSerializer
 
 
-@extend_schema(tags=["User"])
+@extend_schema(tags=["Mother"])
 class MotherViewSet(UserProfileModelViewSet):
     """CRUD for :class:`Mother` (one-to-one with user)."""
 
@@ -564,7 +564,7 @@ class MotherViewSet(UserProfileModelViewSet):
     serializer_class = MotherSerializer
 
 
-@extend_schema(tags=["User"])
+@extend_schema(tags=["Father"])
 class FatherViewSet(UserProfileModelViewSet):
     """CRUD for :class:`Father` (one-to-one with user)."""
 
@@ -577,7 +577,7 @@ class FatherViewSet(UserProfileModelViewSet):
 # ---------------------------------------------------------------------------
 
 
-@extend_schema(tags=["User"])
+@extend_schema(tags=["Financial Information"])
 class FinancialInformationViewSet(UserProfileModelViewSet):
     """CRUD for :class:`FinancialInformation` (one-to-one with user)."""
 
@@ -585,7 +585,7 @@ class FinancialInformationViewSet(UserProfileModelViewSet):
     serializer_class = FinancialInformationSerializer
 
 
-@extend_schema(tags=["User"])
+@extend_schema(tags=["Intellectual Information"])
 class IntellectualInformationViewSet(UserProfileModelViewSet):
     """CRUD for :class:`IntellectualInformation` (one-to-one with user)."""
 
@@ -598,7 +598,7 @@ class IntellectualInformationViewSet(UserProfileModelViewSet):
 # ---------------------------------------------------------------------------
 
 
-@extend_schema(tags=["User"])
+@extend_schema(tags=["System"])
 class SubjectDetailsViewSet(UserProfileModelViewSet):
     """CRUD for :class:`SubjectDetails` (one-to-one with user)."""
 
@@ -611,7 +611,7 @@ class SubjectDetailsViewSet(UserProfileModelViewSet):
 # ---------------------------------------------------------------------------
 
 
-@extend_schema(tags=["User"])
+@extend_schema(tags=["Preferred Wife Personal Information"])
 class PreferredWifePersonalInformationViewSet(UserProfileModelViewSet):
     """CRUD for :class:`PreferredWifePersonalInformation` (one-to-one)."""
 
@@ -619,7 +619,7 @@ class PreferredWifePersonalInformationViewSet(UserProfileModelViewSet):
     serializer_class = PreferredWifePersonalInformationSerializer
 
 
-@extend_schema(tags=["User"])
+@extend_schema(tags=["Preferred Wife Physical Information"])
 class PreferredWifePhysicalInformationViewSet(UserProfileModelViewSet):
     """CRUD for :class:`PreferredWifePhysicalInformation` (one-to-one)."""
 
@@ -627,7 +627,7 @@ class PreferredWifePhysicalInformationViewSet(UserProfileModelViewSet):
     serializer_class = PreferredWifePhysicalInformationSerializer
 
 
-@extend_schema(tags=["User"])
+@extend_schema(tags=["Preferred Wife Intellectual Information"])
 class PreferredWifeIntellectualInformationViewSet(UserProfileModelViewSet):
     """CRUD for :class:`PreferredWifeIntellectualInformation` (one-to-one)."""
 
@@ -635,7 +635,7 @@ class PreferredWifeIntellectualInformationViewSet(UserProfileModelViewSet):
     serializer_class = PreferredWifeIntellectualInformationSerializer
 
 
-@extend_schema(tags=["User"])
+@extend_schema(tags=["Future Spouse Originalities"])
 class FutureSposeOriginalityViewSet(UserProfileModelViewSet):
     """CRUD for :class:`FutureSposeOriginality` (FK, many per user)."""
 
@@ -643,7 +643,7 @@ class FutureSposeOriginalityViewSet(UserProfileModelViewSet):
     serializer_class = FutureSposeOriginalitySerializer
 
 
-@extend_schema(tags=["User"])
+@extend_schema(tags=["Preferred Wife Extra Information"])
 class PreferredWifeExtraInformationViewSet(UserProfileModelViewSet):
     """CRUD for :class:`PreferredWifeExtraInformation` (one-to-one)."""
 
