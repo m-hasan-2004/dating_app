@@ -346,12 +346,22 @@ class LogoutSerializer(serializers.Serializer):
         return attrs
 
 
-class TokenResponseSerializer(serializers.Serializer):
-    """Response payload returned after a successful login / refresh."""
+class LoginResponseSerializer(serializers.Serializer):
+    """
+    Response payload returned after a successful login.
 
-    access = serializers.CharField(read_only=True)
-    refresh = serializers.CharField(read_only=True)
+    Raw JWTs are **not** included: they are delivered exclusively via the
+    HTTP-only ``access_token`` / ``refresh_token`` cookies set on the response.
+    Only the authenticated user's profile is returned in the body.
+    """
+
     user = UserSerializer(read_only=True)
+
+
+class MessageSerializer(serializers.Serializer):
+    """Generic ``{"detail": ...}`` response payload (refresh / logout)."""
+
+    detail = serializers.CharField(read_only=True)
 
 
 class RefreshTokenSerializer(serializers.Serializer):

@@ -10,76 +10,74 @@ from rest_framework import permissions, status, viewsets
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenRefreshView
 
 from users.permissions import IsOwnerOrAdmin
-
+from users.preferred_wife_models import (
+    FutureSposeOriginality,
+    PreferredWifeExtraInformation,
+    PreferredWifeIntellectualInformation,
+    PreferredWifePersonalInformation,
+    PreferredWifePhysicalInformation,
+)
 from users.user_related_models import (
-    User,
     AccessCode,
-    IdentityInformation,
     BirthCertificateInformation,
-    IntroducedSubjectsInformation,
-    PersonalInformation,
-    PhysicalInformation,
-    FamilyInformation,
+    BrideOrWife,
+    Brother,
     EngagementOrWeddingStatus,
     ExHusbandChildStatus,
-    Sister,
-    Brother,
-    Groom,
-    BrideOrWife,
-    Mother,
+    FamilyInformation,
     Father,
     FinancialInformation,
+    Groom,
+    IdentityInformation,
     IntellectualInformation,
+    IntroducedSubjectsInformation,
+    Mother,
+    PersonalInformation,
+    PhysicalInformation,
+    Sister,
+    User,
 )
 from users.user_related_models.subject_details import SubjectDetails
-from users.preferred_wife_models import (
-    PreferredWifeExtraInformation,
-    PreferredWifePhysicalInformation,
-    PreferredWifePersonalInformation,
-    PreferredWifeIntellectualInformation,
-    FutureSposeOriginality,
-)
 
 from .serializers import (
     AccessCodeSerializer,
+    BirthCertificateInformationSerializer,
+    BrideOrWifeSerializer,
+    BrotherSerializer,
+    EngagementOrWeddingStatusSerializer,
+    ExHusbandChildStatusSerializer,
+    FamilyInformationSerializer,
+    FatherSerializer,
+    FinancialInformationSerializer,
+    FutureSposeOriginalitySerializer,
+    GroomSerializer,
+    IdentityInformationSerializer,
+    IntellectualInformationSerializer,
+    IntroducedSubjectsInformationSerializer,
+    LoginResponseSerializer,
     LoginSerializer,
     LogoutSerializer,
+    MessageSerializer,
+    MotherSerializer,
+    PersonalInformationSerializer,
+    PhysicalInformationSerializer,
+    PreferredWifeExtraInformationSerializer,
+    PreferredWifeIntellectualInformationSerializer,
+    PreferredWifePersonalInformationSerializer,
+    PreferredWifePhysicalInformationSerializer,
     RefreshTokenSerializer,
-    TokenResponseSerializer,
+    SisterSerializer,
+    SubjectDetailsSerializer,
     UserCompleteProfileSerializer,
     UserRegistrationSerializer,
     UserSerializer,
     UserUpdateSerializer,
-    IdentityInformationSerializer,
-    BirthCertificateInformationSerializer,
-    IntroducedSubjectsInformationSerializer,
-    PersonalInformationSerializer,
-    PhysicalInformationSerializer,
-    FamilyInformationSerializer,
-    EngagementOrWeddingStatusSerializer,
-    ExHusbandChildStatusSerializer,
-    SisterSerializer,
-    BrotherSerializer,
-    GroomSerializer,
-    BrideOrWifeSerializer,
-    MotherSerializer,
-    FatherSerializer,
-    FinancialInformationSerializer,
-    IntellectualInformationSerializer,
-    SubjectDetailsSerializer,
-    PreferredWifePersonalInformationSerializer,
-    PreferredWifePhysicalInformationSerializer,
-    PreferredWifeIntellectualInformationSerializer,
-    FutureSposeOriginalitySerializer,
-    PreferredWifeExtraInformationSerializer,
 )
-
 
 # ---------------------------------------------------------------------------
 # Cookie helpers
@@ -112,8 +110,16 @@ def _set_auth_cookies(response, access_token, refresh_token=None):
 
 def _clear_auth_cookies(response):
     """Delete the JWT auth cookies from the client."""
-    response.delete_cookie(settings.JWT_AUTH_COOKIE, path="/")
-    response.delete_cookie(settings.JWT_AUTH_REFRESH_COOKIE, path="/")
+    response.delete_cookie(
+        settings.JWT_AUTH_COOKIE,
+        path="/",
+        samesite=settings.JWT_AUTH_COOKIE_SAMESITE,
+    )
+    response.delete_cookie(
+        settings.JWT_AUTH_REFRESH_COOKIE,
+        path="/",
+        samesite=settings.JWT_AUTH_COOKIE_SAMESITE,
+    )
     return response
 
 
@@ -259,11 +265,13 @@ class RegisterView(APIView):
     description=(
         "Validates username + password and sets HTTP-only `access_token` and "
         "`refresh_token` cookies. Returns the authenticated user's profile. "
-        "The client does **not** need to store tokens in JavaScript."
+        "The client does **not** need to store tokens in JavaScript -- the "
+        "browser sends the `access_token` cookie automatically on subsequent "
+        "requests. Raw tokens are intentionally **not** returned in the body."
     ),
     request=LoginSerializer,
     responses={
-        200: TokenResponseSerializer,
+        200: LoginResponseSerializer,
         401: OpenApiResponse(description="Invalid credentials"),
     },
 )
@@ -271,23 +279,17 @@ class LoginView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        serializer = LoginSerializer(
-            data=request.data, context={"request": request}
-        )
+        serializer = LoginSerializer(data=request.data, context={"request": request})
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data["user"]
 
         refresh = RefreshToken.for_user(user)
         access = refresh.access_token
 
-        user_data = UserSerializer(user, context={"request": request}).data
-        data = {
-            "access": str(access),
-            "refresh": str(refresh),
-            "user": user_data,
-        }
-        response = Response(data, status=status.HTTP_200_OK)
-        
+        response = Response(
+            {"user": UserSerializer(user, context={"request": request}).data},
+            status=status.HTTP_200_OK,
+        )
         _set_auth_cookies(
             response,
             access_token=str(access),
@@ -300,13 +302,15 @@ class LoginView(APIView):
     tags=["Auth"],
     summary="Refresh access token",
     description=(
-        "Reads the `refresh_token` cookie (or `refresh` in the body), "
-        "rotates the refresh token (blacklists the old one) and sets new "
-        "`access_token` / `refresh_token` cookies."
+        "Reads the `refresh_token` cookie (falling back to `refresh` in the "
+        "body), rotates the refresh token (blacklists the old one when "
+        "blacklisting is enabled) and sets new `access_token` / `refresh_token` "
+        "cookies. The new tokens are delivered via cookies only -- the response "
+        "body just confirms success."
     ),
     request=RefreshTokenSerializer,
     responses={
-        200: TokenResponseSerializer,
+        200: MessageSerializer,
         401: OpenApiResponse(description="Invalid or expired refresh token"),
     },
 )
@@ -316,8 +320,6 @@ class CookieTokenRefreshView(TokenRefreshView):
     from the cookie (falling back to the JSON body) and re-sets both cookies.
     """
 
-    serializer_class = None  # use SimpleJWT default
-
     def post(self, request, *args, **kwargs):
         refresh_token = request.COOKIES.get(settings.JWT_AUTH_REFRESH_COOKIE)
         if not refresh_token:
@@ -325,7 +327,14 @@ class CookieTokenRefreshView(TokenRefreshView):
             ser.is_valid(raise_exception=True)
             refresh_token = ser.validated_data["refresh"]
 
-        request.data["refresh"] = refresh_token
+        # Inject the refresh token into the payload SimpleJWT will validate.
+        # ``request.data`` is a plain dict for JSON, an immutable QueryDict for
+        # form-encoded bodies -- handle both.
+        data = request.data
+        if hasattr(data, "_mutable"):  # django.http.QueryDict
+            data._mutable = True
+        data["refresh"] = refresh_token
+
         response = super().post(request, *args, **kwargs)
 
         if response.status_code == 200 and "access" in response.data:
@@ -336,6 +345,8 @@ class CookieTokenRefreshView(TokenRefreshView):
                 access_token=response.data["access"],
                 refresh_token=new_refresh,
             )
+            # Tokens live in cookies now; don't leak them in the body.
+            response.data = {"detail": _("Access token cookie refreshed.")}
         return response
 
 
@@ -343,32 +354,32 @@ class CookieTokenRefreshView(TokenRefreshView):
     tags=["Auth"],
     summary="Log out (clear JWT cookies)",
     description=(
-        "Blacklists the refresh token (from the `refresh_token` cookie or body) "
-        "and deletes both auth cookies from the client."
+        "Blacklists the refresh token found in the `refresh_token` cookie "
+        "(or `refresh` in the request body) and deletes both auth cookies. "
+        "No authentication is required so that logout always succeeds, "
+        "including after the short-lived access token has expired."
     ),
     request=LogoutSerializer,
     responses={
-        200: OpenApiResponse(description="Logout successful"),
-        400: OpenApiResponse(description="Refresh token required"),
+        200: MessageSerializer,
     },
 )
 class LogoutView(APIView):
-    permission_classes = [IsAuthenticated]
+    # AllowAny: logout must work even if the access token has expired.
+    # The refresh token (from cookie or body) is blacklisted best-effort.
+    permission_classes = [AllowAny]
 
     def post(self, request):
-        refresh_token = request.COOKIES.get(settings.JWT_AUTH_REFRESH_COOKIE)
-        if not refresh_token:
-            ser = LogoutSerializer(
-                data=request.data, context={"refresh": refresh_token}
-            )
-            ser.is_valid(raise_exception=True)
-            refresh_token = ser.validated_data["refresh"]
-
-        try:
-            RefreshToken(refresh_token).blacklist()
-        except TokenError:
-            # Token already expired or invalid -- still clear the cookie.
-            pass
+        # Prefer the cookie; fall back to an explicit body field.
+        refresh_token = request.COOKIES.get(
+            settings.JWT_AUTH_REFRESH_COOKIE
+        ) or request.data.get("refresh")
+        if refresh_token:
+            try:
+                RefreshToken(refresh_token).blacklist()
+            except TokenError:
+                # Already expired or invalid -- still clear the cookies.
+                pass
 
         response = Response(
             {"detail": _("Logout successful.")}, status=status.HTTP_200_OK
