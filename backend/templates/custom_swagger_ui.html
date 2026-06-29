@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" data-theme="dark">
   <head>
     {% block head %}
     <title>{{ title|default:"Swagger" }}</title>
@@ -7,15 +7,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% if favicon_href %}<link rel="icon" href="{{ favicon_href }}">{% endif %}
     <link rel="stylesheet" href="{{ swagger_ui_css }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
     <style>
+      :root {
+        --bg-body: #0f1117;
+        --bg-surface: #161822;
+        --bg-elevated: #1e2030;
+        --bg-input: #252840;
+        --border: #2e3148;
+        --border-focus: #6c63ff;
+        --text-primary: #e2e4f0;
+        --text-secondary: #8b8fa8;
+        --text-muted: #5c5f7a;
+        --accent: #6c63ff;
+        --accent-hover: #7b73ff;
+        --accent-glow: rgba(108, 99, 255, 0.25);
+        --success: #2dd4a8;
+        --danger: #ff6b81;
+        --warning: #f0b756;
+        --info: #59acf5;
+        --topbar-bg: #12141e;
+        --topbar-border: #1e2030;
+        --method-get: #2dd4a8;
+        --method-post: #59acf5;
+        --method-put: #f0b756;
+        --method-delete: #ff6b81;
+        --method-patch: #c084fc;
+        --method-options: #8b8fa8;
+        --method-head: #8b8fa8;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+        --shadow-md: 0 4px 16px rgba(0,0,0,0.5);
+        --shadow-lg: 0 8px 32px rgba(0,0,0,0.6);
+        --radius: 10px;
+        --radius-sm: 6px;
+        --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      [data-theme="light"] {
+        --bg-body: #f5f6fa;
+        --bg-surface: #ffffff;
+        --bg-elevated: #f0f1f5;
+        --bg-input: #eef0f6;
+        --border: #d8dae5;
+        --border-focus: #6c63ff;
+        --text-primary: #1a1c2e;
+        --text-secondary: #5c5f7a;
+        --text-muted: #9b9db8;
+        --accent: #6c63ff;
+        --accent-hover: #5b52ee;
+        --accent-glow: rgba(108, 99, 255, 0.15);
+        --success: #10b981;
+        --danger: #ef4444;
+        --warning: #eab308;
+        --info: #3b82f6;
+        --topbar-bg: #ffffff;
+        --topbar-border: #e5e7eb;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+        --shadow-md: 0 4px 16px rgba(0,0,0,0.1);
+        --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+      }
+
       html { box-sizing: border-box; overflow-y: scroll; }
       *, *:after, *:before { box-sizing: inherit; }
-      body { background: #fafafa; margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+      body {
+        background: var(--bg-body);
+        margin: 0;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        color: var(--text-primary);
+        transition: background var(--transition), color var(--transition);
+      }
 
+      /* ── Top bar ─────────────────────────────────────────── */
       #auth-bar {
-        background: #1b1b1b;
-        color: #fff;
-        padding: 10px 20px;
+        background: var(--topbar-bg);
+        color: var(--text-primary);
+        padding: 10px 24px;
         display: flex;
         align-items: center;
         gap: 12px;
@@ -23,101 +91,271 @@
         position: sticky;
         top: 0;
         z-index: 100;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        border-bottom: 1px solid var(--topbar-border);
+        backdrop-filter: blur(12px);
+        box-shadow: var(--shadow-sm);
       }
-      #auth-bar label { font-size: 13px; color: #ccc; }
+      #auth-bar label {
+        font-size: 12px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+      }
       #auth-bar input[type="text"],
       #auth-bar input[type="password"] {
-        padding: 6px 10px;
-        border: 1px solid #555;
-        border-radius: 4px;
+        padding: 7px 12px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
         font-size: 13px;
-        background: #2c2c2c;
-        color: #fff;
+        background: var(--bg-input);
+        color: var(--text-primary);
         outline: none;
+        transition: border-color var(--transition), box-shadow var(--transition);
+        font-family: inherit;
       }
-      #auth-bar input:focus { border-color: #61affe; }
+      #auth-bar input:focus {
+        border-color: var(--border-focus);
+        box-shadow: 0 0 0 3px var(--accent-glow);
+      }
       #auth-bar button {
-        padding: 6px 16px;
+        padding: 7px 18px;
         border: none;
-        border-radius: 4px;
+        border-radius: var(--radius-sm);
         font-size: 13px;
         font-weight: 600;
         cursor: pointer;
+        transition: all var(--transition);
+        font-family: inherit;
+        position: relative;
+        overflow: hidden;
       }
-      #btn-login { background: #61affe; color: #fff; }
-      #btn-login:hover { background: #4a9eff; }
-      #btn-logout { background: #ff6b6b; color: #fff; }
-      #btn-logout:hover { background: #ee5a5a; }
+      #btn-login {
+        background: linear-gradient(135deg, var(--accent), #8b7cff);
+        color: #fff;
+        box-shadow: 0 2px 8px var(--accent-glow);
+      }
+      #btn-login:hover {
+        background: linear-gradient(135deg, var(--accent-hover), #9a92ff);
+        box-shadow: 0 4px 16px var(--accent-glow);
+        transform: translateY(-1px);
+      }
+      #btn-logout { background: var(--danger); color: #fff; }
+      #btn-logout:hover { filter: brightness(1.1); transform: translateY(-1px); }
       #btn-profile {
-        background: #2ecc71; color: #fff; position: relative;
+        background: var(--success);
+        color: #fff;
       }
-      #btn-profile:hover { background: #27ae60; }
+      #btn-profile:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
       #auth-status {
         margin-left: auto;
-        font-size: 13px;
+        font-size: 12px;
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 8px;
+        color: var(--text-secondary);
       }
       #auth-status .dot {
         width: 8px; height: 8px; border-radius: 50%; display: inline-block;
+        transition: background var(--transition);
       }
-      #auth-status .dot.logged-out { background: #ff6b6b; }
-      #auth-status .dot.logged-in { background: #51cf66; }
+      #auth-status .dot.logged-out { background: var(--danger); box-shadow: 0 0 8px rgba(255,107,129,0.5); }
+      #auth-status .dot.logged-in { background: var(--success); box-shadow: 0 0 8px rgba(45,212,168,0.5); }
 
+      /* ── Theme toggle ────────────────────────────────────── */
+      #theme-toggle {
+        background: var(--bg-input);
+        border: 1px solid var(--border);
+        color: var(--text-secondary);
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all var(--transition);
+        flex-shrink: 0;
+      }
+      #theme-toggle i { font-size: 20px; line-height: 1; }
+      #theme-toggle:hover {
+        background: var(--accent-glow);
+        border-color: var(--accent);
+        color: var(--accent);
+        transform: rotate(30deg);
+      }
+
+      /* ── Profile panel ───────────────────────────────────── */
       #profile-panel {
         display: none;
         position: absolute;
-        right: 20px;
-        top: 48px;
-        background: #2c2c2c;
-        border: 1px solid #444;
-        border-radius: 8px;
-        padding: 16px;
+        right: 24px;
+        top: 54px;
+        background: var(--bg-surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 20px;
         min-width: 380px;
         max-width: 460px;
         z-index: 200;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+        box-shadow: var(--shadow-lg);
         font-size: 13px;
-        color: #eee;
+        color: var(--text-primary);
+        animation: panelIn 0.2s ease-out;
+      }
+      @keyframes panelIn {
+        from { opacity: 0; transform: translateY(-8px) scale(0.97); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
       }
       #profile-panel h3 {
-        margin: 0 0 12px 0;
+        margin: 0 0 14px 0;
         font-size: 14px;
-        color: #61affe;
-        border-bottom: 1px solid #444;
-        padding-bottom: 8px;
+        font-weight: 700;
+        color: var(--accent);
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 10px;
       }
-      #profile-panel table {
-        width: 100%;
-        border-collapse: collapse;
-      }
+      #profile-panel table { width: 100%; border-collapse: collapse; }
       #profile-panel td {
-        padding: 4px 6px;
+        padding: 6px 8px;
         vertical-align: top;
-        border-bottom: 1px solid #383838;
+        border-bottom: 1px solid var(--border);
       }
       #profile-panel td:first-child {
-        color: #999;
+        color: var(--text-muted);
         white-space: nowrap;
         width: 140px;
-        font-weight: 500;
+        font-weight: 600;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
       }
       #profile-panel td:last-child {
         word-break: break-all;
-        color: #fff;
+        color: var(--text-primary);
       }
       #profile-panel .token-section {
-        margin-top: 10px;
-        padding-top: 8px;
-        border-top: 1px solid #444;
+        margin-top: 12px;
+        padding-top: 10px;
+        border-top: 1px solid var(--border);
       }
       #profile-panel .token-section h4 {
-        margin: 0 0 6px 0;
-        font-size: 13px;
-        color: #f39c12;
+        margin: 0 0 8px 0;
+        font-size: 12px;
+        color: var(--warning);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 700;
       }
+
+      /* ── Swagger UI overrides (dark mode) ────────────────── */
+      .swagger-ui .topbar { display: none; }
+      .swagger-ui .info { margin: 20px 0; }
+      .swagger-ui .info .title { color: var(--text-primary) !important; }
+      .swagger-ui .info .title small { color: var(--text-secondary) !important; }
+      .swagger-ui .info p { color: var(--text-secondary) !important; }
+      .swagger-ui .scheme-container { background: var(--bg-surface) !important; box-shadow: none !important; border-bottom: 1px solid var(--border); }
+      .swagger-ui .opblock { border-radius: var(--radius) !important; border: 1px solid var(--border) !important; background: var(--bg-surface) !important; margin-bottom: 12px !important; overflow: hidden; transition: box-shadow var(--transition); }
+      .swagger-ui .opblock:hover { box-shadow: var(--shadow-md); }
+      .swagger-ui .opblock .opblock-summary { border: none !important; border-radius: var(--radius) !important; }
+      .swagger-ui .opblock .opblock-summary-method { border-radius: var(--radius-sm) !important; font-weight: 700; font-size: 12px; min-width: 70px; text-align: center; }
+      .swagger-ui .opblock .opblock-summary-description { color: var(--text-secondary) !important; }
+      .swagger-ui .opblock .opblock-summary-path { color: var(--text-primary) !important; font-weight: 600; }
+      .swagger-ui .opblock .opblock-section { background: var(--bg-elevated) !important; border-top: 1px solid var(--border) !important; }
+      .swagger-ui .opblock .opblock-section-header { background: var(--bg-elevated) !important; }
+      .swagger-ui .opblock .opblock-section-header h4 { color: var(--text-primary) !important; }
+      .swagger-ui .opblock .opblock-section-header h3 { color: var(--text-primary) !important; }
+      .swagger-ui .opblock .opblock-body table thead tr th { color: var(--text-secondary) !important; }
+      .swagger-ui .opblock .opblock-body table tbody tr td { color: var(--text-primary) !important; }
+      .swagger-ui .opblock .opblock-body .opblock-description-wrapper p { color: var(--text-secondary) !important; }
+      .swagger-ui .opblock .opblock-body .opblock-description-wrapper h4 { color: var(--text-primary) !important; }
+      .swagger-ui .opblock .opblock-body .opblock-description-wrapper h5 { color: var(--text-primary) !important; }
+
+      /* GET */
+      .swagger-ui .opblock.opblock-get { border-color: color-mix(in srgb, var(--method-get) 30%, transparent) !important; }
+      .swagger-ui .opblock.opblock-get .opblock-summary-method { background: var(--method-get) !important; color: #0f1117 !important; }
+      .swagger-ui .opblock.opblock-get .opblock-summary { background: color-mix(in srgb, var(--method-get) 8%, var(--bg-surface)) !important; }
+      .swagger-ui .opblock.opblock-get .opblock-summary:hover { background: color-mix(in srgb, var(--method-get) 14%, var(--bg-surface)) !important; }
+      /* POST */
+      .swagger-ui .opblock.opblock-post { border-color: color-mix(in srgb, var(--method-post) 30%, transparent) !important; }
+      .swagger-ui .opblock.opblock-post .opblock-summary-method { background: var(--method-post) !important; color: #fff !important; }
+      .swagger-ui .opblock.opblock-post .opblock-summary { background: color-mix(in srgb, var(--method-post) 8%, var(--bg-surface)) !important; }
+      .swagger-ui .opblock.opblock-post .opblock-summary:hover { background: color-mix(in srgb, var(--method-post) 14%, var(--bg-surface)) !important; }
+      /* PUT */
+      .swagger-ui .opblock.opblock-put { border-color: color-mix(in srgb, var(--method-put) 30%, transparent) !important; }
+      .swagger-ui .opblock.opblock-put .opblock-summary-method { background: var(--method-put) !important; color: #0f1117 !important; }
+      .swagger-ui .opblock.opblock-put .opblock-summary { background: color-mix(in srgb, var(--method-put) 8%, var(--bg-surface)) !important; }
+      .swagger-ui .opblock.opblock-put .opblock-summary:hover { background: color-mix(in srgb, var(--method-put) 14%, var(--bg-surface)) !important; }
+      /* DELETE */
+      .swagger-ui .opblock.opblock-delete { border-color: color-mix(in srgb, var(--method-delete) 30%, transparent) !important; }
+      .swagger-ui .opblock.opblock-delete .opblock-summary-method { background: var(--method-delete) !important; color: #fff !important; }
+      .swagger-ui .opblock.opblock-delete .opblock-summary { background: color-mix(in srgb, var(--method-delete) 8%, var(--bg-surface)) !important; }
+      .swagger-ui .opblock.opblock-delete .opblock-summary:hover { background: color-mix(in srgb, var(--method-delete) 14%, var(--bg-surface)) !important; }
+      /* PATCH */
+      .swagger-ui .opblock.opblock-patch { border-color: color-mix(in srgb, var(--method-patch) 30%, transparent) !important; }
+      .swagger-ui .opblock.opblock-patch .opblock-summary-method { background: var(--method-patch) !important; color: #fff !important; }
+      .swagger-ui .opblock.opblock-patch .opblock-summary { background: color-mix(in srgb, var(--method-patch) 8%, var(--bg-surface)) !important; }
+      .swagger-ui .opblock.opblock-patch .opblock-summary:hover { background: color-mix(in srgb, var(--method-patch) 14%, var(--bg-surface)) !important; }
+
+      .swagger-ui textarea, .swagger-ui select, .swagger-ui input[type="text"], .swagger-ui input[type="password"], .swagger-ui input[type="email"], .swagger-ui input[type="number"] {
+        background: var(--bg-input) !important;
+        border: 1px solid var(--border) !important;
+        color: var(--text-primary) !important;
+        border-radius: var(--radius-sm) !important;
+        font-family: inherit !important;
+      }
+      .swagger-ui textarea:focus, .swagger-ui select:focus, .swagger-ui input:focus {
+        border-color: var(--border-focus) !important;
+        box-shadow: 0 0 0 3px var(--accent-glow) !important;
+      }
+      .swagger-ui .btn { border-radius: var(--radius-sm) !important; font-family: inherit !important; font-weight: 600 !important; transition: all var(--transition) !important; }
+      .swagger-ui .btn.authorize { color: var(--success) !important; border-color: var(--success) !important; }
+      .swagger-ui .btn.authorize svg { fill: var(--success) !important; }
+      .swagger-ui .btn.execute { background: var(--accent) !important; color: #fff !important; border: none !important; }
+      .swagger-ui .btn.execute:hover { background: var(--accent-hover) !important; box-shadow: 0 2px 12px var(--accent-glow); }
+      .swagger-ui .model-box { background: var(--bg-elevated) !important; border: 1px solid var(--border) !important; border-radius: var(--radius-sm) !important; }
+      .swagger-ui .model { color: var(--text-primary) !important; }
+      .swagger-ui .model-title { color: var(--text-primary) !important; }
+      .swagger-ui .model-toggle::after { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%238b8fa8' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") center/contain no-repeat !important; }
+      .swagger-ui .response-col_status { color: var(--text-primary) !important; }
+      .swagger-ui .response-col_links { color: var(--text-secondary) !important; }
+      .swagger-ui .responses-inner h4, .swagger-ui .responses-inner h5 { color: var(--text-primary) !important; }
+      .swagger-ui .responses-inner p { color: var(--text-secondary) !important; }
+      .swagger-ui .response-control-media-type__accept-message { color: var(--text-secondary) !important; }
+      .swagger-ui .highlight-code, .swagger-ui .microlight { background: var(--bg-input) !important; color: var(--text-primary) !important; border-radius: var(--radius-sm) !important; }
+      .swagger-ui .copy-to-clipboard { filter: invert(0.7); }
+      .swagger-ui .copy-to-clipboard:hover { filter: invert(1); }
+      .swagger-ui .authorization__btn { border-color: var(--success) !important; }
+      .swagger-ui .authorization__btn svg { fill: var(--success) !important; }
+      .swagger-ui .wrapper { max-width: 1400px; }
+      .swagger-ui .information-container { padding: 0 20px; }
+      .swagger-ui .opblock-tag { color: var(--text-primary) !important; border-bottom: 1px solid var(--border) !important; font-size: 18px !important; }
+      .swagger-ui .opblock-tag small { color: var(--text-secondary) !important; }
+      .swagger-ui .opblock-tag:hover { color: var(--accent) !important; }
+      .swagger-ui .expand-operation svg { fill: var(--text-secondary) !important; }
+      .swagger-ui .opblock-description p { color: var(--text-secondary) !important; }
+      .swagger-ui .opblock-description a { color: var(--accent) !important; }
+      .swagger-ui .dialog-ux .modal-ux { background: var(--bg-surface) !important; border: 1px solid var(--border) !important; border-radius: var(--radius) !important; }
+      .swagger-ui .dialog-ux .modal-ux-content p { color: var(--text-secondary) !important; }
+      .swagger-ui .dialog-ux .modal-ux-content h3 { color: var(--text-primary) !important; }
+      .swagger-ui .dialog-ux .backdrop-ux { background: rgba(0,0,0,0.6) !important; }
+      .swagger-ui .btn-group { display: flex; gap: 6px; }
+      .swagger-ui .servers { margin-bottom: 15px; }
+      .swagger-ui .servers label { color: var(--text-secondary) !important; }
+      .swagger-ui .servers select { background: var(--bg-input) !important; border: 1px solid var(--border) !important; color: var(--text-primary) !important; }
+      .swagger-ui .renderedMarkdown p { color: var(--text-secondary) !important; }
+      .swagger-ui .renderedMarkdown code { color: var(--accent) !important; background: var(--bg-input) !important; padding: 2px 6px; border-radius: 4px; }
+
+      /* ── Scrollbar ───────────────────────────────────────── */
+      ::-webkit-scrollbar { width: 8px; height: 8px; }
+      ::-webkit-scrollbar-track { background: var(--bg-body); }
+      ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+      ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+      /* ── Animations ──────────────────────────────────────── */
+      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+      .swagger-ui { animation: fadeIn 0.4s ease-out; }
     </style>
     {% endblock head %}
   </head>
@@ -135,6 +373,9 @@
         <span class="dot logged-out"></span>
         <span id="auth-label">Not authenticated</span>
       </div>
+      <button id="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+        <i class="ph ph-moon" id="theme-icon"></i>
+      </button>
 
       <div id="profile-panel">
         <h3>User Profile</h3>
@@ -159,6 +400,23 @@
     {% endif %}
 
     <script>
+      /* ── Theme toggle ──────────────────────────────────── */
+      function getTheme() {
+        return localStorage.getItem('swagger-theme') || 'dark';
+      }
+      function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        var icon = document.getElementById('theme-icon');
+        icon.className = theme === 'dark' ? 'ph ph-moon' : 'ph ph-sun';
+      }
+      function toggleTheme() {
+        var next = getTheme() === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('swagger-theme', next);
+        applyTheme(next);
+      }
+      applyTheme(getTheme());
+
+      /* ── Auth logic ────────────────────────────────────── */
       var _currentUser = null;
       var _profileOpen = false;
 
@@ -227,7 +485,7 @@
             return '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>';
           }).join('');
         } else {
-          tt.innerHTML = '<tr><td colspan="2" style="color:#999">No token info available</td></tr>';
+          tt.innerHTML = '<tr><td colspan="2" style="color:var(--text-muted)">No token info available</td></tr>';
         }
       }
 
@@ -257,8 +515,6 @@
           return resp.json();
         })
         .then(function(data) {
-          // Login response has { user: {...} } but no token metadata.
-          // Fetch full profile with token info from /api/auth/me/
           return fetch('/api/auth/me/', { credentials: 'same-origin' })
             .then(function(r) { return r.json(); });
         })
@@ -297,7 +553,6 @@
           });
       }
 
-      // Close profile panel when clicking outside
       document.addEventListener('click', function(e) {
         var panel = document.getElementById('profile-panel');
         var btn = document.getElementById('btn-profile');
@@ -307,7 +562,7 @@
         }
       });
 
-      // Hook into Swagger UI's fetch to detect login/logout via API calls
+      /* ── Hook Swagger fetch to detect login/logout ─────── */
       (function() {
         var origFetch = window.fetch;
         window.fetch = function() {
@@ -315,13 +570,10 @@
           var method = (arguments[1] && arguments[1].method) ? arguments[1].method.toUpperCase() : 'GET';
 
           return origFetch.apply(this, arguments).then(function(response) {
-            // Clone so we can read the body without consuming it
             var clone = response.clone();
 
-            // Detect login endpoint
             if (url.indexOf('/api/auth/login/') !== -1 && method === 'POST' && response.ok) {
               clone.json().then(function() {
-                // After login succeeds, fetch profile with token info
                 setTimeout(function() {
                   fetch('/api/auth/me/', { credentials: 'same-origin' })
                     .then(function(r) { return r.ok ? r.json() : null; })
@@ -330,7 +582,6 @@
               }).catch(function() {});
             }
 
-            // Detect logout endpoint
             if (url.indexOf('/api/auth/logout/') !== -1 && method === 'POST') {
               setTimeout(function() { setLoggedOut(); }, 200);
             }
@@ -340,7 +591,6 @@
         };
       })();
 
-      // Initial auth check
       checkAuth();
     </script>
     {% endblock %}
