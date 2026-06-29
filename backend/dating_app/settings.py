@@ -15,6 +15,7 @@ import os
 from dotenv import load_dotenv
 from django.utils.translation import gettext_lazy as _
 import locale
+import core.config as core_config
 
 load_dotenv()
 
@@ -179,14 +180,12 @@ AUTHENTICATION_BACKENDS = [
 # JWT (SimpleJWT) + cookie configuration
 # ---------------------------------------------------------------------------
 
-from datetime import timedelta  # noqa: E402
-
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ACCESS_TOKEN_LIFETIME": core_config.ACCESS_TOKEN_LIFETIME,
+    "REFRESH_TOKEN_LIFETIME": core_config.REFRESH_TOKEN_LIFETIME,
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
-    "ALGORITHM": "HS256",
+    "ALGORITHM": core_config.JWT_ALGORITHM,
     "SIGNING_KEY": SECRET_KEY,
     "AUTH_HEADER_TYPES": ("Bearer",),
     "USER_ID_FIELD": "id",
