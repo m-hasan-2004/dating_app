@@ -352,6 +352,13 @@ SPECTACULAR_SETTINGS = {
     "SECURITY_SCHEMES": {},
     "COMPONENT_SPLIT_REQUEST": True,
     "SORT_OPERATIONS": False,
+    "ENUM_NAME_OVERRIDES": {
+        "AssetsEnum": "core.utils.model_choices.user_model_choices.FinancialInformationChoices.CAPITAL_CHOICES",
+        "DanceSingingAssembliesEnum": "core.utils.model_choices.user_model_choices.IntellectualInformationChoices.DANCE_SINGING_ASSEMBLIES_OPTIONS",
+        "InsuranceTypeEnum": "core.utils.model_choices.user_model_choices.Choices.INSURANCE_OPTIONS",
+        "FutureSpouseFamilyFinancialStatusImportanceEnum": "core.utils.model_choices.preferred_wife_model_choices.Choices.IMPORTANCE_CHOICES",
+        "MarriageWithVeteranEnum": "core.utils.model_choices.preferred_wife_model_choices.Choices.MARRIAGE_WITH_DISABLED_CHOICES",
+    },
 }
 
 # Sentry Config
