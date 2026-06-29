@@ -75,7 +75,7 @@ ROOT_URLCONF = "dating_app.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -319,8 +319,9 @@ SPECTACULAR_SETTINGS = {
         "authenticated via the `access_token` cookie. Use `/api/auth/refresh/` "
         "to obtain a new access token when it expires, and `/api/auth/logout/` "
         "to clear the cookies.\n\n"
-        "In Swagger UI you can still use the **Authorize** button with a "
-        "`Bearer <access_token>` header for testing."
+        "Use the **Login** form above to authenticate. The browser will store "
+        "the HTTP-only cookies automatically and send them on all subsequent "
+        "requests."
     ),
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
@@ -348,15 +349,8 @@ SPECTACULAR_SETTINGS = {
         {"name": "Future Spouse Originalities", "description": "Future spouse originalities."},
         {"name": "System", "description": "System and miscellaneous endpoints."},
     ],
-    "SECURITY": [{"jwtCookieAuth": []}, {"jwtAuth": []}],
-    "SECURITY_SCHEMES": {
-        "jwtAuth": {
-            "type": "http",
-            "scheme": "bearer",
-            "bearerFormat": "JWT",
-            "description": "JWT access token via Authorization header (Swagger UI testing).",
-        },
-    },
+    "SECURITY": [],
+    "SECURITY_SCHEMES": {},
     "COMPONENT_SPLIT_REQUEST": True,
     "SORT_OPERATIONS": False,
 }

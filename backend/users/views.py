@@ -14,6 +14,8 @@ from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenRefreshView
 
+from users.authentication import CookieJWTAuthentication
+
 from users.permissions import IsOwnerOrAdmin
 from users.preferred_wife_models import (
     FutureSposeOriginality,
@@ -82,6 +84,18 @@ from .serializers import (
 # ---------------------------------------------------------------------------
 # Cookie helpers
 # ---------------------------------------------------------------------------
+
+
+def _get_user_from_cookies(request):
+    """Try to authenticate the user from cookies. Returns (user, token) or (None, None)."""
+    auth = CookieJWTAuthentication()
+    try:
+        result = auth.authenticate(request)
+        if result is not None:
+            return result
+    except Exception:
+        pass
+    return None, None
 
 
 def _set_auth_cookies(response, access_token, refresh_token=None):
@@ -267,7 +281,9 @@ class RegisterView(APIView):
         "`refresh_token` cookies. Returns the authenticated user's profile. "
         "The client does **not** need to store tokens in JavaScript -- the "
         "browser sends the `access_token` cookie automatically on subsequent "
-        "requests. Raw tokens are intentionally **not** returned in the body."
+        "requests. Raw tokens are intentionally **not** returned in the body.\n\n"
+        "If a valid session already exists, returns the current user profile "
+        "with an informational message without re-issuing tokens."
     ),
     request=LoginSerializer,
     responses={
@@ -279,6 +295,17 @@ class LoginView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
+        # Check for an existing valid session first
+        existing_user, _token = _get_user_from_cookies(request)
+        if existing_user is not None:
+            return Response(
+                {
+                    "detail": _("Session already active."),
+                    "user": UserSerializer(existing_user, context={"request": request}).data,
+                },
+                status=status.HTTP_200_OK,
+            )
+
         serializer = LoginSerializer(data=request.data, context={"request": request})
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data["user"]
@@ -357,7 +384,9 @@ class CookieTokenRefreshView(TokenRefreshView):
         "Blacklists the refresh token found in the `refresh_token` cookie "
         "(or `refresh` in the request body) and deletes both auth cookies. "
         "No authentication is required so that logout always succeeds, "
-        "including after the short-lived access token has expired."
+        "including after the short-lived access token has expired.\n\n"
+        "If no active session is found, returns an informational message "
+        "without error."
     ),
     request=LogoutSerializer,
     responses={
@@ -370,20 +399,34 @@ class LogoutView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        # Prefer the cookie; fall back to an explicit body field.
-        refresh_token = request.COOKIES.get(
-            settings.JWT_AUTH_REFRESH_COOKIE
-        ) or request.data.get("refresh")
+        existing_user, _token = _get_user_from_cookies(request)
+        cookie_refresh = request.COOKIES.get(settings.JWT_AUTH_REFRESH_COOKIE) or ""
+        body_refresh = request.data.get("refresh") or ""
+        refresh_token = cookie_refresh or body_refresh
+
+        has_active_session = existing_user is not None or bool(refresh_token and refresh_token.strip())
+
+        if not has_active_session:
+            response = Response(
+                {"detail": _("No active session found.")},
+                status=status.HTTP_200_OK,
+            )
+            return _clear_auth_cookies(response)
+
+        token_blacklisted = False
         if refresh_token:
             try:
                 RefreshToken(refresh_token).blacklist()
+                token_blacklisted = True
             except TokenError:
-                # Already expired or invalid -- still clear the cookies.
                 pass
 
-        response = Response(
-            {"detail": _("Logout successful.")}, status=status.HTTP_200_OK
-        )
+        if existing_user is not None or token_blacklisted:
+            msg = _("Logged out successfully.")
+        else:
+            msg = _("No active session found.")
+
+        response = Response({"detail": msg}, status=status.HTTP_200_OK)
         return _clear_auth_cookies(response)
 
 
@@ -411,7 +454,20 @@ class MeView(APIView):
 
     def get(self, request):
         ser = UserSerializer(request.user, context={"request": request})
-        return Response(ser.data, status=status.HTTP_200_OK)
+        data = ser.data
+        # Include decoded JWT metadata from request.auth (SimpleJWT decoded token)
+        if hasattr(request, 'auth') and request.auth:
+            from datetime import datetime, timezone
+            data['token'] = {
+                'type': request.auth.get('token_type', 'access'),
+                'exp': datetime.fromtimestamp(
+                    request.auth.get('exp', 0), tz=timezone.utc
+                ).isoformat(),
+                'iat': datetime.fromtimestamp(
+                    request.auth.get('iat', 0), tz=timezone.utc
+                ).isoformat(),
+            }
+        return Response(data, status=status.HTTP_200_OK)
 
     def patch(self, request):
         ser = UserUpdateSerializer(

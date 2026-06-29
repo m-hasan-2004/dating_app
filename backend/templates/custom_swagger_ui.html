@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% block head %}
+    <title>{{ title|default:"Swagger" }}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% if favicon_href %}<link rel="icon" href="{{ favicon_href }}">{% endif %}
+    <link rel="stylesheet" href="{{ swagger_ui_css }}">
+    <style>
+      html { box-sizing: border-box; overflow-y: scroll; }
+      *, *:after, *:before { box-sizing: inherit; }
+      body { background: #fafafa; margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+
+      #auth-bar {
+        background: #1b1b1b;
+        color: #fff;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      }
+      #auth-bar label { font-size: 13px; color: #ccc; }
+      #auth-bar input[type="text"],
+      #auth-bar input[type="password"] {
+        padding: 6px 10px;
+        border: 1px solid #555;
+        border-radius: 4px;
+        font-size: 13px;
+        background: #2c2c2c;
+        color: #fff;
+        outline: none;
+      }
+      #auth-bar input:focus { border-color: #61affe; }
+      #auth-bar button {
+        padding: 6px 16px;
+        border: none;
+        border-radius: 4px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      #btn-login { background: #61affe; color: #fff; }
+      #btn-login:hover { background: #4a9eff; }
+      #btn-logout { background: #ff6b6b; color: #fff; }
+      #btn-logout:hover { background: #ee5a5a; }
+      #btn-profile {
+        background: #2ecc71; color: #fff; position: relative;
+      }
+      #btn-profile:hover { background: #27ae60; }
+      #auth-status {
+        margin-left: auto;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      #auth-status .dot {
+        width: 8px; height: 8px; border-radius: 50%; display: inline-block;
+      }
+      #auth-status .dot.logged-out { background: #ff6b6b; }
+      #auth-status .dot.logged-in { background: #51cf66; }
+
+      #profile-panel {
+        display: none;
+        position: absolute;
+        right: 20px;
+        top: 48px;
+        background: #2c2c2c;
+        border: 1px solid #444;
+        border-radius: 8px;
+        padding: 16px;
+        min-width: 380px;
+        max-width: 460px;
+        z-index: 200;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+        font-size: 13px;
+        color: #eee;
+      }
+      #profile-panel h3 {
+        margin: 0 0 12px 0;
+        font-size: 14px;
+        color: #61affe;
+        border-bottom: 1px solid #444;
+        padding-bottom: 8px;
+      }
+      #profile-panel table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      #profile-panel td {
+        padding: 4px 6px;
+        vertical-align: top;
+        border-bottom: 1px solid #383838;
+      }
+      #profile-panel td:first-child {
+        color: #999;
+        white-space: nowrap;
+        width: 140px;
+        font-weight: 500;
+      }
+      #profile-panel td:last-child {
+        word-break: break-all;
+        color: #fff;
+      }
+      #profile-panel .token-section {
+        margin-top: 10px;
+        padding-top: 8px;
+        border-top: 1px solid #444;
+      }
+      #profile-panel .token-section h4 {
+        margin: 0 0 6px 0;
+        font-size: 13px;
+        color: #f39c12;
+      }
+    </style>
+    {% endblock head %}
+  </head>
+  <body>
+    {% block body %}
+    <div id="auth-bar">
+      <label>Username</label>
+      <input type="text" id="auth-username" placeholder="username" autocomplete="username">
+      <label>Password</label>
+      <input type="password" id="auth-password" placeholder="password" autocomplete="current-password">
+      <button id="btn-login" onclick="doLogin()">Login</button>
+      <button id="btn-profile" onclick="toggleProfile()" style="display:none">Profile</button>
+      <button id="btn-logout" onclick="doLogout()" style="display:none">Logout</button>
+      <div id="auth-status">
+        <span class="dot logged-out"></span>
+        <span id="auth-label">Not authenticated</span>
+      </div>
+
+      <div id="profile-panel">
+        <h3>User Profile</h3>
+        <table id="profile-table"></table>
+        <div class="token-section">
+          <h4>Token Info</h4>
+          <table id="token-table"></table>
+        </div>
+      </div>
+    </div>
+
+    <div id="swagger-ui"></div>
+
+    <script src="{{ swagger_ui_bundle }}"></script>
+    <script src="{{ swagger_ui_standalone }}"></script>
+    {% if script_url %}
+    <script src="{{ script_url }}"></script>
+    {% else %}
+    <script>
+    {% include template_name_js %}
+    </script>
+    {% endif %}
+
+    <script>
+      var _currentUser = null;
+      var _profileOpen = false;
+
+      function setLoggedIn(user) {
+        _currentUser = user;
+        document.getElementById('btn-login').style.display = 'none';
+        document.getElementById('btn-profile').style.display = '';
+        document.getElementById('btn-logout').style.display = '';
+        document.getElementById('auth-username').style.display = 'none';
+        document.getElementById('auth-password').style.display = 'none';
+        document.querySelectorAll('#auth-bar label').forEach(function(l) { l.style.display = 'none'; });
+        var dot = document.querySelector('#auth-status .dot');
+        dot.className = 'dot logged-in';
+        document.getElementById('auth-label').textContent = 'Logged in as ' + (user ? user.username : '');
+        renderProfile(user);
+      }
+
+      function setLoggedOut() {
+        _currentUser = null;
+        document.getElementById('btn-login').style.display = '';
+        document.getElementById('btn-profile').style.display = 'none';
+        document.getElementById('btn-logout').style.display = 'none';
+        document.getElementById('auth-username').style.display = '';
+        document.getElementById('auth-password').style.display = '';
+        document.querySelectorAll('#auth-bar label').forEach(function(l) { l.style.display = ''; });
+        var dot = document.querySelector('#auth-status .dot');
+        dot.className = 'dot logged-out';
+        document.getElementById('auth-label').textContent = 'Not authenticated';
+        document.getElementById('profile-panel').style.display = 'none';
+        _profileOpen = false;
+        renderProfile(null);
+      }
+
+      function toggleProfile() {
+        _profileOpen = !_profileOpen;
+        document.getElementById('profile-panel').style.display = _profileOpen ? 'block' : 'none';
+      }
+
+      function renderProfile(user) {
+        var pt = document.getElementById('profile-table');
+        var tt = document.getElementById('token-table');
+        if (!user) { pt.innerHTML = ''; tt.innerHTML = ''; return; }
+
+        var userFields = [
+          ['ID', user.id],
+          ['Username', user.username],
+          ['First Name', user.first_name],
+          ['Last Name', user.last_name],
+          ['Email', user.email],
+          ['Phone', user.phone_number],
+          ['Middle Man Code', user.middle_man_code],
+          ['Date Created', formatDateTime(user.date_created)],
+          ['Date Joined', formatDateTime(user.date_joined)]
+        ];
+        pt.innerHTML = userFields.map(function(r) {
+          return '<tr><td>' + r[0] + '</td><td>' + (r[1] !== null && r[1] !== undefined ? r[1] : '-') + '</td></tr>';
+        }).join('');
+
+        if (user.token) {
+          var tokenFields = [
+            ['Type', user.token.type],
+            ['Expires', formatDateTime(user.token.exp)],
+            ['Generated', formatDateTime(user.token.iat)]
+          ];
+          tt.innerHTML = tokenFields.map(function(r) {
+            return '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>';
+          }).join('');
+        } else {
+          tt.innerHTML = '<tr><td colspan="2" style="color:#999">No token info available</td></tr>';
+        }
+      }
+
+      function formatDateTime(iso) {
+        if (!iso) return '-';
+        try {
+          var d = new Date(iso);
+          return d.toLocaleString();
+        } catch(e) { return iso; }
+      }
+
+      function doLogin() {
+        var username = document.getElementById('auth-username').value.trim();
+        var password = document.getElementById('auth-password').value;
+        if (!username || !password) {
+          alert('Please enter username and password.');
+          return;
+        }
+        fetch('/api/auth/login/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'same-origin',
+          body: JSON.stringify({ username: username, password: password })
+        })
+        .then(function(resp) {
+          if (!resp.ok) throw new Error('Login failed (' + resp.status + ')');
+          return resp.json();
+        })
+        .then(function(data) {
+          // Login response has { user: {...} } but no token metadata.
+          // Fetch full profile with token info from /api/auth/me/
+          return fetch('/api/auth/me/', { credentials: 'same-origin' })
+            .then(function(r) { return r.json(); });
+        })
+        .then(function(userData) {
+          setLoggedIn(userData);
+        })
+        .catch(function(err) {
+          alert('Login failed: ' + err.message);
+        });
+      }
+
+      function doLogout() {
+        fetch('/api/auth/logout/', {
+          method: 'POST',
+          credentials: 'same-origin'
+        })
+        .then(function() {
+          setLoggedOut();
+        })
+        .catch(function() {
+          setLoggedOut();
+        });
+      }
+
+      function checkAuth() {
+        fetch('/api/auth/me/', { credentials: 'same-origin' })
+          .then(function(resp) {
+            if (resp.ok) return resp.json();
+            throw new Error('not logged in');
+          })
+          .then(function(data) {
+            setLoggedIn(data);
+          })
+          .catch(function() {
+            setLoggedOut();
+          });
+      }
+
+      // Close profile panel when clicking outside
+      document.addEventListener('click', function(e) {
+        var panel = document.getElementById('profile-panel');
+        var btn = document.getElementById('btn-profile');
+        if (_profileOpen && !panel.contains(e.target) && e.target !== btn) {
+          _profileOpen = false;
+          panel.style.display = 'none';
+        }
+      });
+
+      // Hook into Swagger UI's fetch to detect login/logout via API calls
+      (function() {
+        var origFetch = window.fetch;
+        window.fetch = function() {
+          var url = (typeof arguments[0] === 'string') ? arguments[0] : arguments[0].url;
+          var method = (arguments[1] && arguments[1].method) ? arguments[1].method.toUpperCase() : 'GET';
+
+          return origFetch.apply(this, arguments).then(function(response) {
+            // Clone so we can read the body without consuming it
+            var clone = response.clone();
+
+            // Detect login endpoint
+            if (url.indexOf('/api/auth/login/') !== -1 && method === 'POST' && response.ok) {
+              clone.json().then(function() {
+                // After login succeeds, fetch profile with token info
+                setTimeout(function() {
+                  fetch('/api/auth/me/', { credentials: 'same-origin' })
+                    .then(function(r) { return r.ok ? r.json() : null; })
+                    .then(function(data) { if (data) setLoggedIn(data); });
+                }, 200);
+              }).catch(function() {});
+            }
+
+            // Detect logout endpoint
+            if (url.indexOf('/api/auth/logout/') !== -1 && method === 'POST') {
+              setTimeout(function() { setLoggedOut(); }, 200);
+            }
+
+            return response;
+          });
+        };
+      })();
+
+      // Initial auth check
+      checkAuth();
+    </script>
+    {% endblock %}
+  </body>
+</html>
