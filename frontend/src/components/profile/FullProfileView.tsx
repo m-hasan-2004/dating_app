@@ -85,7 +85,7 @@ import {
   IntroducedSubjectsSection,
   SubjectDetailsSection,
 } from '@/components/profile/sections/SubjectSections';
-import { ChevronDownIcon, ChevronUpIcon, LockIcon } from '@/icons';
+import { ChevronDownIcon, ChevronUpIcon, LockIcon, PencilIcon } from '@/icons';
 import { Modal } from '@/components/ui/modal';
 
 interface ProfileData {
@@ -188,51 +188,71 @@ export function FullProfileView({
 
   const allCollapsed = visibleSectionKeys.every((k) => !!collapsedSections[k]);
 
-  // Change password modal state
-  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
-  const [passwordForm, setPasswordForm] = useState({
+  // Change account info modal state (Email, Phone, Middle Man Code, Password)
+  const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
+  const [accountForm, setAccountForm] = useState({
+    email: '',
+    phone_number: '',
+    middle_man_code: '',
     password: '',
     confirmPassword: '',
   });
-  const [passwordLoading, setPasswordLoading] = useState(false);
-  const [passwordError, setPasswordError] = useState('');
-  const [passwordSuccess, setPasswordSuccess] = useState('');
+  const [accountLoading, setAccountLoading] = useState(false);
+  const [accountError, setAccountError] = useState('');
+  const [accountSuccess, setAccountSuccess] = useState('');
 
-  const handlePasswordSubmit = async (e: React.FormEvent) => {
+  const openAccountModal = () => {
+    setAccountForm({
+      email: displayUser?.email || '',
+      phone_number: displayUser?.phone_number || '',
+      middle_man_code: displayUser?.middle_man_code || '',
+      password: '',
+      confirmPassword: '',
+    });
+    setAccountError('');
+    setAccountSuccess('');
+    setIsAccountModalOpen(true);
+  };
+
+  const handleAccountSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!passwordForm.password) {
-      setPasswordError('Password cannot be empty');
-      return;
-    }
-    if (passwordForm.password.length < 8) {
-      setPasswordError('Password must be at least 8 characters long');
-      return;
-    }
-    if (passwordForm.password !== passwordForm.confirmPassword) {
-      setPasswordError('Passwords do not match');
-      return;
+    if (accountForm.password) {
+      if (accountForm.password.length < 8) {
+        setAccountError('New password must be at least 8 characters long');
+        return;
+      }
+      if (accountForm.password !== accountForm.confirmPassword) {
+        setAccountError('Passwords do not match');
+        return;
+      }
     }
 
-    setPasswordLoading(true);
-    setPasswordError('');
-    setPasswordSuccess('');
+    setAccountLoading(true);
+    setAccountError('');
+    setAccountSuccess('');
     try {
       const targetId = displayUser?.id;
       if (targetId) {
-        await updateUser(String(targetId), {
-          password: passwordForm.password,
-        });
+        const payload: Partial<User> = {
+          email: accountForm.email,
+          phone_number: accountForm.phone_number,
+          middle_man_code: accountForm.middle_man_code,
+        };
+        if (accountForm.password) {
+          payload.password = accountForm.password;
+        }
+        await updateUser(String(targetId), payload);
+        await loadAll();
       }
-      setPasswordSuccess('Password updated successfully!');
+      setAccountSuccess('Account information updated successfully!');
       setTimeout(() => {
-        setIsPasswordModalOpen(false);
-        setPasswordForm({ password: '', confirmPassword: '' });
-        setPasswordSuccess('');
+        setIsAccountModalOpen(false);
+        setAccountSuccess('');
       }, 1200);
     } catch (err: any) {
-      setPasswordError(err?.message ?? 'Failed to update password');
+      setAccountError(err?.message ?? 'Failed to update account information');
     } finally {
-      setPasswordLoading(false);
+      setAccountLoading(false);
     }
   };
 
@@ -372,16 +392,11 @@ export function FullProfileView({
             <h3 className="text-base font-semibold text-gray-800 dark:text-white">Account Info</h3>
             <button
               type="button"
-              onClick={() => {
-                setPasswordForm({ password: '', confirmPassword: '' });
-                setPasswordError('');
-                setPasswordSuccess('');
-                setIsPasswordModalOpen(true);
-              }}
+              onClick={openAccountModal}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700/60 transition-colors shadow-xs cursor-pointer"
             >
-              <LockIcon className="w-3.5 h-3.5 text-brand-500" />
-              Change Password
+              <PencilIcon className="w-3.5 h-3.5 text-brand-500" />
+              Change Account Info
             </button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-sm">
@@ -547,94 +562,154 @@ export function FullProfileView({
         </>
       )}
 
-      {/* Change Password Modal */}
+      {/* Change Account Info Modal */}
       <Modal
-        isOpen={isPasswordModalOpen}
-        onClose={() => setIsPasswordModalOpen(false)}
+        isOpen={isAccountModalOpen}
+        onClose={() => setIsAccountModalOpen(false)}
         showCloseButton={false}
-        className="p-6 max-w-md w-full"
+        className="p-6 max-w-lg w-full"
       >
         <div className="flex items-center justify-between pb-4 border-b border-gray-100 dark:border-gray-800">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-brand-50 text-brand-600 dark:bg-brand-950/40 dark:text-brand-400 flex items-center justify-center">
-              <LockIcon className="w-4 h-4" />
+              <PencilIcon className="w-4 h-4" />
             </div>
             <h3 className="text-base font-bold text-gray-900 dark:text-white">
-              Change Password
+              Change Account Information
             </h3>
           </div>
           <button
             type="button"
-            onClick={() => setIsPasswordModalOpen(false)}
+            onClick={() => setIsAccountModalOpen(false)}
             className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
           >
             ✕
           </button>
         </div>
 
-        <form onSubmit={handlePasswordSubmit} className="space-y-4 pt-4">
-          {passwordError && (
+        <form onSubmit={handleAccountSubmit} className="space-y-4 pt-4">
+          {accountError && (
             <div className="p-3 text-xs rounded-xl bg-red-50 text-red-600 dark:bg-red-950/30 dark:text-red-400 border border-red-200 dark:border-red-800">
-              {passwordError}
+              {accountError}
             </div>
           )}
-          {passwordSuccess && (
+          {accountSuccess && (
             <div className="p-3 text-xs rounded-xl bg-green-50 text-green-600 dark:bg-green-950/30 dark:text-green-400 border border-green-200 dark:border-green-800">
-              {passwordSuccess}
+              {accountSuccess}
             </div>
           )}
 
+          {/* 1. Email */}
           <div>
             <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
-              New Password
+              Email Address
             </label>
             <input
-              type="password"
-              required
-              minLength={8}
-              placeholder="Enter new password (min. 8 characters)"
-              value={passwordForm.password}
+              type="email"
+              placeholder="user@example.com"
+              value={accountForm.email}
               onChange={(e) =>
-                setPasswordForm({ ...passwordForm, password: e.target.value })
+                setAccountForm({ ...accountForm, email: e.target.value })
               }
               className="w-full px-3 py-2 text-sm border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
             />
           </div>
 
+          {/* 2. Phone Number */}
           <div>
             <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Confirm New Password
+              Phone Number
             </label>
             <input
-              type="password"
-              required
-              minLength={8}
-              placeholder="Confirm new password"
-              value={passwordForm.confirmPassword}
+              type="text"
+              placeholder="+989..."
+              value={accountForm.phone_number}
               onChange={(e) =>
-                setPasswordForm({
-                  ...passwordForm,
-                  confirmPassword: e.target.value,
+                setAccountForm({ ...accountForm, phone_number: e.target.value })
+              }
+              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+            />
+          </div>
+
+          {/* 3. Middle Man Code */}
+          <div>
+            <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Middle Man Code
+            </label>
+            <input
+              type="text"
+              placeholder="Enter reference or middle man code"
+              value={accountForm.middle_man_code}
+              onChange={(e) =>
+                setAccountForm({
+                  ...accountForm,
+                  middle_man_code: e.target.value,
                 })
               }
               className="w-full px-3 py-2 text-sm border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
             />
           </div>
 
+          {/* 4. Password (Optional) */}
+          <div className="pt-2 border-t border-gray-100 dark:border-gray-800">
+            <p className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-3">
+              Change Password (Optional)
+            </p>
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs text-gray-500 dark:text-gray-400 mb-1">
+                  New Password (leave blank to keep unchanged)
+                </label>
+                <input
+                  type="password"
+                  minLength={8}
+                  placeholder="Min. 8 characters"
+                  value={accountForm.password}
+                  onChange={(e) =>
+                    setAccountForm({
+                      ...accountForm,
+                      password: e.target.value,
+                    })
+                  }
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs text-gray-500 dark:text-gray-400 mb-1">
+                  Confirm New Password
+                </label>
+                <input
+                  type="password"
+                  minLength={8}
+                  placeholder="Confirm new password"
+                  value={accountForm.confirmPassword}
+                  onChange={(e) =>
+                    setAccountForm({
+                      ...accountForm,
+                      confirmPassword: e.target.value,
+                    })
+                  }
+                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+                />
+              </div>
+            </div>
+          </div>
+
           <div className="flex items-center justify-end gap-2 pt-4 border-t border-gray-100 dark:border-gray-800">
             <button
               type="button"
-              onClick={() => setIsPasswordModalOpen(false)}
+              onClick={() => setIsAccountModalOpen(false)}
               className="px-4 py-2 text-xs font-medium rounded-xl border border-gray-200 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
-              disabled={passwordLoading}
+              disabled={accountLoading}
               className="px-4 py-2 text-xs font-medium rounded-xl bg-brand-500 text-white hover:bg-brand-600 disabled:opacity-50 transition-colors"
             >
-              {passwordLoading ? 'Updating...' : 'Update Password'}
+              {accountLoading ? 'Saving...' : 'Save Account Info'}
             </button>
           </div>
         </form>

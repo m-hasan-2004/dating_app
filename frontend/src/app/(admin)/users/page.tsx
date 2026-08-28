@@ -8,7 +8,6 @@ import {
   fetchUserStats,
   executeBatchUserAction,
   updateUser,
-  deleteUser,
 } from '@/services/profileService';
 import {
   ChevronLeftIcon,
@@ -182,16 +181,6 @@ export default function UsersListPage() {
       await Promise.all([loadUsers(), loadStats()]);
     } catch (e: any) {
       alert(e?.message ?? 'Failed to update role');
-    }
-  };
-
-  const handleDeleteSingle = async (user: User) => {
-    if (!confirm(`Are you sure you want to delete user "${user.username}"?`)) return;
-    try {
-      await deleteUser(user.id);
-      await Promise.all([loadUsers(), loadStats()]);
-    } catch (e: any) {
-      alert(e?.message ?? 'Failed to delete user');
     }
   };
 
@@ -535,11 +524,15 @@ export default function UsersListPage() {
                           </Link>
                           <button
                             type="button"
-                            onClick={() => handleDeleteSingle(user)}
-                            className="p-1 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-lg transition-colors"
-                            title="Delete user"
+                            onClick={() => handleToggleActive(user)}
+                            className={`px-2.5 py-1 text-xs font-medium rounded-lg transition-colors cursor-pointer ${
+                              user.is_active
+                                ? 'text-amber-700 bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:text-amber-400 dark:hover:bg-amber-950/60'
+                                : 'text-green-700 bg-green-50 hover:bg-green-100 dark:bg-green-950/40 dark:text-green-400 dark:hover:bg-green-950/60'
+                            }`}
+                            title={user.is_active ? 'Deactivate user account' : 'Activate user account'}
                           >
-                            <TrashBinIcon className="w-4 h-4" />
+                            {user.is_active ? 'Deactivate' : 'Activate'}
                           </button>
                         </div>
                       </td>
