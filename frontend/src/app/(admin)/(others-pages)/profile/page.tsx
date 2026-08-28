@@ -1,30 +1,8 @@
-import UserAddressCard from "@/components/user-profile/UserAddressCard";
-import UserInfoCard from "@/components/user-profile/UserInfoCard";
-import UserMetaCard from "@/components/user-profile/UserMetaCard";
-import ChangePasswordCard from "@/components/user-profile/ChangePasswordCard";
-import { Metadata } from "next";
-import React from "react";
+﻿'use client';
 
-export const metadata: Metadata = {
-  title: "Profile | Dating & Matrimonial Platform",
-  description: "Manage your profile and security settings",
-};
+import React from 'react';
+import FullProfileView from '@/components/profile/FullProfileView';
 
 export default function Profile() {
-  return (
-    <div>
-      <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] lg:p-6">
-        <h3 className="mb-5 text-lg font-semibold text-gray-800 dark:text-white/90 lg:mb-7">
-          Profile Settings
-        </h3>
-        <div className="space-y-6">
-          <UserMetaCard />
-          <UserInfoCard />
-          <UserAddressCard />
-          <ChangePasswordCard />
-        </div>
-      </div>
-    </div>
-  );
+  return <FullProfileView />;
 }
-

@@ -25,7 +25,7 @@ class ApiConfig(AppConfig):
             if BlacklistedToken in admin.site._registry:
                 admin.site.unregister(BlacklistedToken)
 
-            print("✅ Token models removed from admin")
+            print("[OK] Token models removed from admin")
 
         except Exception as e:
-            print("❌ Unregister failed:", e)
+            print("[WARN] Unregister failed:", e)

@@ -62,13 +62,13 @@ export default function SignUpForm() {
         middle_man_code: formData.middle_man_code || undefined,
       });
 
-      // Auto-login upon successful registration
+      // Auto-login upon successful registration and redirect to profile completion
       await login({
         username: formData.username,
         password: formData.password,
       });
 
-      router.push("/");
+      router.push("/profile");
     } catch (err: any) {
       setError(err.message || "Registration failed. Please check your access code and details.");
     } finally {

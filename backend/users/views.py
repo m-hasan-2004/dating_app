@@ -6,7 +6,9 @@ from drf_spectacular.utils import (
     extend_schema,
     extend_schema_view,
 )
-from rest_framework import permissions, status, viewsets
+from rest_framework import filters, permissions, status, viewsets
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -157,10 +159,19 @@ class UserProfileModelViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return self.queryset.filter(user=self.request.user)
+        user = self.request.user
+        if (user.is_staff or user.is_superuser) and "user" in self.request.query_params:
+            return self.queryset.filter(user_id=self.request.query_params["user"])
+        return self.queryset.filter(user=user)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        user = self.request.user
+        target_user = user
+        if (user.is_staff or user.is_superuser) and "user" in self.request.query_params:
+            target_user = User.objects.get(id=self.request.query_params["user"])
+        elif (user.is_staff or user.is_superuser) and "user" in self.request.data:
+            target_user = User.objects.get(id=self.request.data["user"])
+        serializer.save(user=target_user)
 
 
 # ---------------------------------------------------------------------------
@@ -197,13 +208,16 @@ class UserViewSet(viewsets.ModelViewSet):
 
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ["is_active", "is_staff", "is_superuser"]
-    search_fields = ["username", "email", "phone_number"]
+    search_fields = ["username", "email", "phone_number", "middle_man_code"]
     ordering_fields = ["date_joined", "username"]
 
     def get_permissions(self):
-        if self.action in {"list", "create", "destroy"}:
+        if self.action in {"create", "destroy", "batch_action"}:
             return [IsAdminUser()]
+        if self.action in {"list", "stats"}:
+            return [IsAuthenticated()]
         # retrieve / update / partial_update -> owner or admin.
         return [IsOwnerOrAdmin()]
 
@@ -222,6 +236,207 @@ class UserViewSet(viewsets.ModelViewSet):
             return qs
         # Non-staff users can only ever see their own row.
         return qs.filter(pk=user.pk)
+
+    def get_object(self):
+        lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
+        val = self.kwargs.get(lookup_url_kwarg)
+        if val:
+            import uuid
+            from django.db.models import Q
+            from rest_framework.generics import get_object_or_404
+            try:
+                uid = uuid.UUID(str(val))
+                return get_object_or_404(self.get_queryset(), Q(id=uid) | Q(username=str(val)))
+            except (ValueError, AttributeError):
+                return get_object_or_404(self.get_queryset(), username=str(val))
+        return super().get_object()
+
+    @action(detail=False, methods=["get"], permission_classes=[IsAuthenticated])
+    def stats(self, request):
+        """Return system-wide statistics for the admin dashboard and user management header."""
+        user = request.user
+        if not (user.is_staff or user.is_superuser):
+            return Response(
+                {"detail": "Permission denied."}, status=status.HTTP_403_FORBIDDEN
+            )
+
+        total_users = User.objects.count()
+        active_users = User.objects.filter(is_active=True).count()
+        inactive_users = total_users - active_users
+        staff_users = User.objects.filter(is_staff=True).count()
+
+        total_codes = AccessCode.objects.count()
+        active_codes = AccessCode.objects.filter(active=True).count()
+        used_codes = total_codes - active_codes
+
+        # Categorize candidates strictly into Men vs Women
+        men_user_ids = set()
+        women_user_ids = set()
+        for p in PersonalInformation.objects.all():
+            g_str = " ".join(p.gender if isinstance(p.gender, list) else [str(p.gender)]).lower()
+            if "woman" in g_str or "girl" in g_str:
+                women_user_ids.add(p.user_id)
+            elif "man" in g_str or "boy" in g_str:
+                men_user_ids.add(p.user_id)
+
+        men_count = len(men_user_ids)
+        women_count = len(women_user_ids)
+        total_gender = men_count + women_count
+
+        gender_ratio_data = {
+            "men_count": men_count,
+            "women_count": women_count,
+            "total_gender_count": total_gender,
+            "men_percentage": round((men_count / total_gender) * 100, 1) if total_gender > 0 else 0,
+            "women_percentage": round((women_count / total_gender) * 100, 1) if total_gender > 0 else 0,
+        }
+
+        # Filter by gender parameter if specified
+        gender_param = request.query_params.get("gender", "").lower().strip()
+        personal_qs = PersonalInformation.objects.all()
+        identity_qs = IdentityInformation.objects.all()
+        financial_qs = FinancialInformation.objects.all()
+        birth_qs = BirthCertificateInformation.objects.all()
+
+        if gender_param in ["man", "men", "male"]:
+            personal_qs = personal_qs.filter(user_id__in=men_user_ids)
+            identity_qs = identity_qs.filter(user_id__in=men_user_ids)
+            financial_qs = financial_qs.filter(user_id__in=men_user_ids)
+            birth_qs = birth_qs.filter(user_id__in=men_user_ids)
+        elif gender_param in ["woman", "women", "female"]:
+            personal_qs = personal_qs.filter(user_id__in=women_user_ids)
+            identity_qs = identity_qs.filter(user_id__in=women_user_ids)
+            financial_qs = financial_qs.filter(user_id__in=women_user_ids)
+            birth_qs = birth_qs.filter(user_id__in=women_user_ids)
+
+        location_counts = {}
+        for orig in identity_qs.exclude(originality="").values_list("originality", flat=True):
+            if orig:
+                items = orig if isinstance(orig, (list, tuple)) else [orig]
+                for item in items:
+                    key = str(item).strip()
+                    if key:
+                        location_counts[key] = location_counts.get(key, 0) + 1
+
+        # Education breakdown
+        education_counts = {}
+        for edu in personal_qs.exclude(education="").values_list("education", flat=True):
+            if edu:
+                key = str(edu).strip()
+                education_counts[key] = education_counts.get(key, 0) + 1
+
+        # Income breakdown
+        income_counts = {}
+        for inc in personal_qs.exclude(income="").values_list("income", flat=True):
+            if inc:
+                key = str(inc).strip()
+                income_counts[key] = income_counts.get(key, 0) + 1
+
+        # Housing / Ownership breakdown
+        housing_counts = {}
+        for own in financial_qs.exclude(ownership_status="").values_list("ownership_status", flat=True):
+            if own:
+                key = str(own).strip()
+                housing_counts[key] = housing_counts.get(key, 0) + 1
+
+        # Marriage Experience breakdown
+        marriage_counts = {}
+        for exp in birth_qs.exclude(marriage_experince="").values_list("marriage_experince", flat=True):
+            if exp:
+                key = str(exp).strip()
+                marriage_counts[key] = marriage_counts.get(key, 0) + 1
+
+        # Age breakdown from birth_date
+        import datetime
+        today = datetime.date.today()
+        age_counts = {"Under 22": 0, "22 - 26": 0, "27 - 32": 0, "33 - 38": 0, "39 - 45": 0, "45+": 0}
+        for bdate in personal_qs.exclude(birth_date__isnull=True).values_list("birth_date", flat=True):
+            if bdate:
+                try:
+                    age = today.year - bdate.year - ((today.month, today.day) < (bdate.month or 1, bdate.day or 1))
+                    if age < 22:
+                        age_counts["Under 22"] += 1
+                    elif age <= 26:
+                        age_counts["22 - 26"] += 1
+                    elif age <= 32:
+                        age_counts["27 - 32"] += 1
+                    elif age <= 38:
+                        age_counts["33 - 38"] += 1
+                    elif age <= 45:
+                        age_counts["39 - 45"] += 1
+                    else:
+                        age_counts["45+"] += 1
+                except Exception:
+                    pass
+
+        return Response(
+            {
+                "total_users": total_users,
+                "active_users": active_users,
+                "inactive_users": inactive_users,
+                "staff_users": staff_users,
+                "total_codes": total_codes,
+                "active_codes": active_codes,
+                "used_codes": used_codes,
+                "gender_ratio": gender_ratio_data,
+                "location_breakdown": location_counts,
+                "education_breakdown": education_counts,
+                "income_breakdown": income_counts,
+                "housing_breakdown": housing_counts,
+                "marriage_experience_breakdown": marriage_counts,
+                "age_breakdown": age_counts,
+                "selected_gender": gender_param or "all",
+                "cohort_count": personal_qs.count(),
+            }
+        )
+
+    @action(detail=False, methods=["post"], permission_classes=[IsAdminUser])
+    def batch_action(self, request):
+        """
+        Perform batch actions on a list of user IDs:
+        actions: 'enable', 'disable', 'make_staff', 'make_normal', 'delete'
+        """
+        action_type = request.data.get("action")
+        user_ids = request.data.get("user_ids", [])
+        if not action_type or not user_ids:
+            return Response(
+                {"detail": "action and user_ids are required."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        import uuid
+        from django.db.models import Q
+
+        valid_uuids = []
+        usernames = []
+        for uid in user_ids:
+            try:
+                valid_uuids.append(uuid.UUID(str(uid)))
+            except (ValueError, AttributeError):
+                usernames.append(str(uid))
+
+        qs = User.objects.filter(Q(id__in=valid_uuids) | Q(username__in=usernames))
+        affected_count = qs.count()
+
+        if action_type == "enable":
+            qs.update(is_active=True)
+        elif action_type == "disable":
+            qs.exclude(id=request.user.id).update(is_active=False)
+        elif action_type == "make_staff":
+            qs.update(is_staff=True)
+        elif action_type == "make_normal":
+            qs.exclude(id=request.user.id).update(is_staff=False)
+        elif action_type == "delete":
+            qs.exclude(id=request.user.id).delete()
+        else:
+            return Response(
+                {"detail": f"Unknown action: {action_type}"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        return Response(
+            {"status": "ok", "action": action_type, "affected": affected_count}
+        )
 
 
 # ---------------------------------------------------------------------------

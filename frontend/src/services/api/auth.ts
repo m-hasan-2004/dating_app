@@ -8,6 +8,9 @@ export interface User {
   email?: string;
   phone_number?: string;
   middle_man_code?: string;
+  is_active?: boolean;
+  is_staff?: boolean;
+  date_joined?: string;
 }
 
 export interface LoginPayload {

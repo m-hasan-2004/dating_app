@@ -1,7 +1,7 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 export interface ApiRequestOptions extends RequestInit {
-  params?: Record<string, string>;
+  params?: Record<string, any>;
   _retry?: boolean;
 }
 
@@ -26,8 +26,16 @@ export async function apiClient<T = any>(
   let url = endpoint.startsWith("http") ? endpoint : `${API_BASE_URL}${endpoint.startsWith("/") ? "" : "/"}${endpoint}`;
 
   if (params && Object.keys(params).length > 0) {
-    const searchParams = new URLSearchParams(params);
-    url += `?${searchParams.toString()}`;
+    const searchParams = new URLSearchParams();
+    Object.entries(params).forEach(([k, v]) => {
+      if (v !== undefined && v !== null && v !== '') {
+        searchParams.append(k, String(v));
+      }
+    });
+    const qs = searchParams.toString();
+    if (qs) {
+      url += `?${qs}`;
+    }
   }
 
   const isFormData = customConfig.body instanceof FormData;
