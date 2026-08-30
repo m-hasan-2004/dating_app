@@ -45,6 +45,7 @@ from users.user_related_models import (
     Father,
     FinancialInformation,
     IntellectualInformation,
+    UserBookmark,
 )
 from users.user_related_models.subject_details import SubjectDetails
 from users.preferred_wife_models import (
@@ -154,8 +155,19 @@ class UserSerializer(serializers.ModelSerializer):
         # Pop our custom context flag before delegating to DRF.
         super().__init__(*args, **kwargs)
         request = self.context.get("request")
-        is_staff = bool(request and getattr(request.user, "is_staff", False))
-        if not is_staff:
+        is_staff = bool(
+            request
+            and (
+                getattr(request.user, "is_staff", False)
+                or getattr(request.user, "is_superuser", False)
+            )
+        )
+        if is_staff:
+            # For staff admins, allow updating is_active, is_staff, is_superuser
+            for f in ("is_active", "is_staff", "is_superuser"):
+                if f in self.fields:
+                    self.fields[f].read_only = False
+        else:
             # Drop admin-only fields entirely for non-staff requesters.
             for field in USER_ADMIN_FIELDS:
                 self.fields.pop(field, None)
@@ -712,3 +724,66 @@ class PreferredWifeExtraInformationSerializer(serializers.ModelSerializer):
         model = PreferredWifeExtraInformation
         fields = "__all__"
         read_only_fields = ("user",)
+
+
+class UserBookmarkSerializer(serializers.ModelSerializer):
+    """Serializer for UserBookmark with full candidate details."""
+    user_username = serializers.CharField(source="user.username", read_only=True)
+    bookmarked_username = serializers.CharField(source="bookmarked_user.username", read_only=True)
+    bookmarked_user_id = serializers.UUIDField(source="bookmarked_user.id", read_only=True)
+    candidate_profile = serializers.SerializerMethodField()
+
+    class Meta:
+        model = UserBookmark
+        fields = (
+            "id",
+            "user",
+            "user_username",
+            "bookmarked_user",
+            "bookmarked_user_id",
+            "bookmarked_username",
+            "candidate_profile",
+            "created_at",
+        )
+        read_only_fields = ("user", "created_at")
+
+    def get_candidate_profile(self, obj):
+        u = obj.bookmarked_user
+        pers = getattr(u, "personal_information", None)
+        phys = getattr(u, "physical_information", None)
+        birth = getattr(u, "birth_certificate_information", None)
+        fin = getattr(u, "financial_information", None)
+
+        age = None
+        if pers and pers.birth_date:
+            from django.utils import timezone
+            today = timezone.now().date()
+            bdate = pers.birth_date
+            age = today.year - bdate.year - ((today.month, today.day) < (bdate.month, bdate.day))
+
+        return {
+            "id": str(u.id),
+            "username": u.username,
+            "email": u.email,
+            "first_name": u.first_name,
+            "last_name": u.last_name,
+            "gender": pers.gender if pers else "unknown",
+            "birth_location": pers.birth_location if pers else None,
+            "province": pers.birth_location if pers else None,
+            "education": pers.education if pers else None,
+            "educationLevel": pers.education if pers else None,
+            "degree": pers.degree if pers else None,
+            "age": age,
+            "job": fin.job if fin else None,
+            "height": phys.height if phys else None,
+            "weight": phys.weight if phys else None,
+            "skin_color": phys.skin_color if phys else None,
+            "marriage_experience": birth.marriage_experince if birth else None,
+            "maritalExperience": birth.marriage_experince if birth else None,
+            "ownership_status": fin.ownership_status if fin else None,
+            "is_active": u.is_active,
+            "is_bookmarked": True,
+            "isBookmarked": True,
+            "bookmark_id": obj.id,
+            "created_at": obj.created_at.isoformat() if obj.created_at else None,
+        }

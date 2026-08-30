@@ -14,23 +14,49 @@ import {
   LockIcon,
 } from "../icons/index";
 
+import { useAuth } from "@/hooks/use-auth";
+
+const SearchNavIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 1114 0z" />
+  </svg>
+);
+
+const BookmarkNavIcon = () => (
+  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+  </svg>
+);
+
 type NavItem = {
   name: string;
   icon: React.ReactNode;
   path?: string;
   subItems?: { name: string; path: string; pro?: boolean; new?: boolean }[];
+  adminOnly?: boolean;
 };
 
-const navItems: NavItem[] = [
+const ALL_NAV_ITEMS: NavItem[] = [
   {
     icon: <GridIcon />,
     name: "Dashboard",
     path: "/",
   },
   {
+    icon: <SearchNavIcon />,
+    name: "Candidate Search",
+    path: "/search",
+  },
+  {
+    icon: <BookmarkNavIcon />,
+    name: "Bookmarks",
+    path: "/profile/bookmarks",
+  },
+  {
     icon: <PieChartIcon />,
     name: "Statistics",
     path: "/statistics",
+    adminOnly: true,
   },
   {
     icon: <UserCircleIcon />,
@@ -40,6 +66,7 @@ const navItems: NavItem[] = [
   {
     icon: <LockIcon />,
     name: "Management",
+    adminOnly: true,
     subItems: [
       { name: "Users", path: "/users", pro: false },
       { name: "Access Codes", path: "/access-codes", pro: false },
@@ -56,7 +83,11 @@ const othersItems: NavItem[] = [];
 
 const AppSidebar: React.FC = () => {
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
+  const { user } = useAuth();
   const pathname = usePathname();
+
+  const isAdmin = Boolean(user?.is_staff || (user as any)?.is_superuser);
+  const navItems = ALL_NAV_ITEMS.filter((item) => !item.adminOnly || isAdmin);
 
   const renderMenuItems = (
     navItems: NavItem[],

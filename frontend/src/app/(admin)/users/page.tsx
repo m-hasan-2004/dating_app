@@ -18,10 +18,22 @@ import {
   AlertIcon,
   LockIcon,
 } from '@/icons';
+import { useAuth } from '@/hooks/use-auth';
+import { useRouter } from 'next/navigation';
 
 const PAGE_SIZE_OPTIONS = [5, 10, 20, 50, 100];
 
 export default function UsersListPage() {
+  const { user, loading: authLoading } = useAuth();
+  const router = useRouter();
+  const isAdmin = Boolean(user?.is_staff || (user as any)?.is_superuser);
+
+  useEffect(() => {
+    if (!authLoading && !isAdmin) {
+      router.replace('/');
+    }
+  }, [authLoading, isAdmin, router]);
+
   const [users, setUsers] = useState<User[]>([]);
   const [stats, setStats] = useState<UserStats | null>(null);
   const [loading, setLoading] = useState(true);
@@ -167,20 +179,32 @@ export default function UsersListPage() {
 
   // Single user toggles
   const handleToggleActive = async (user: User) => {
+    const newStatus = !user.is_active;
+    setUsers((prev) => prev.map((u) => (u.id === user.id ? { ...u, is_active: newStatus } : u)));
     try {
-      await updateUser(user.id, { is_active: !user.is_active });
+      await updateUser(user.id, { is_active: newStatus });
+      setSuccessMessage(`User @${user.username} ${newStatus ? 'activated' : 'deactivated'} successfully.`);
+      setTimeout(() => setSuccessMessage(''), 3000);
       await Promise.all([loadUsers(), loadStats()]);
     } catch (e: any) {
-      alert(e?.message ?? 'Failed to update status');
+      setUsers((prev) => prev.map((u) => (u.id === user.id ? { ...u, is_active: user.is_active } : u)));
+      setError(e?.message ?? 'Failed to update user status');
+      setTimeout(() => setError(''), 4000);
     }
   };
 
   const handleToggleStaff = async (user: User) => {
+    const newStaff = !user.is_staff;
+    setUsers((prev) => prev.map((u) => (u.id === user.id ? { ...u, is_staff: newStaff } : u)));
     try {
-      await updateUser(user.id, { is_staff: !user.is_staff });
+      await updateUser(user.id, { is_staff: newStaff });
+      setSuccessMessage(`User @${user.username} role updated to ${newStaff ? 'Staff' : 'User'}.`);
+      setTimeout(() => setSuccessMessage(''), 3000);
       await Promise.all([loadUsers(), loadStats()]);
     } catch (e: any) {
-      alert(e?.message ?? 'Failed to update role');
+      setUsers((prev) => prev.map((u) => (u.id === user.id ? { ...u, is_staff: user.is_staff } : u)));
+      setError(e?.message ?? 'Failed to update user role');
+      setTimeout(() => setError(''), 4000);
     }
   };
 

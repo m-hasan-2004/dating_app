@@ -610,3 +610,163 @@ export async function executeBatchUserAction(
     body: JSON.stringify({ action, user_ids: userIds }),
   });
 }
+
+export interface CandidateProfile {
+  id: string;
+  username: string;
+  first_name?: string | null;
+  last_name?: string | null;
+  gender: 'man' | 'woman' | 'male' | 'female' | 'other' | null;
+  age?: number | null;
+  birth_date?: string | null;
+  birth_location?: string | null;
+  province?: string | null;
+  education?: string | null;
+  educationLevel?: string | null;
+  degree?: string | null;
+  job?: string | null;
+  height?: number | null;
+  weight?: number | null;
+  skin_color?: string | null;
+  skinColor?: string | null;
+  eyes_color?: string | null;
+  marriage_experience?: string | null;
+  maritalExperience?: string | null;
+  income?: string | null;
+  incomeTier?: string | null;
+  ownership_status?: string | null;
+  housingOwnership?: string | null;
+  worship_and_prayer?: string | null;
+  worship?: string | null;
+  cover_type_society?: string | string[] | null;
+  societyCover?: string | string[] | null;
+  date_joined?: string | null;
+  is_bookmarked?: boolean;
+  isBookmarked?: boolean;
+  avatar?: string | null;
+}
+
+export interface CandidateSearchResponse {
+  count: number;
+  page: number;
+  page_size: number;
+  total_pages: number;
+  user_role: 'admin' | 'user';
+  user_gender?: 'man' | 'woman' | null;
+  target_gender?: 'man' | 'woman' | null;
+  results: CandidateProfile[];
+}
+
+export interface CandidateSearchParams {
+  q?: string;
+  search?: string;
+  keyword?: string;
+  gender?: string;
+  min_age?: number | string;
+  max_age?: number | string;
+  minAge?: number | string;
+  maxAge?: number | string;
+  education?: string;
+  educationLevel?: string;
+  location?: string;
+  province?: string;
+  min_height?: number | string;
+  max_height?: number | string;
+  minHeight?: number | string;
+  maxHeight?: number | string;
+  min_weight?: number | string;
+  max_weight?: number | string;
+  minWeight?: number | string;
+  maxWeight?: number | string;
+  skin_color?: string;
+  skinColor?: string;
+  marriage_experience?: string;
+  maritalExperience?: string;
+  income?: string;
+  incomeTier?: string;
+  ownership_status?: string;
+  housingOwnership?: string;
+  current_residence_status?: string;
+  residenceStatus?: string;
+  job?: string;
+  worship_and_prayer?: string;
+  worship?: string;
+  cover_type_society?: string;
+  societyCover?: string;
+  fasting?: string;
+  opinion_velayat_faqih?: string;
+  velayatFaqih?: string;
+  have_insurance?: string | boolean;
+  disease_or_surgery?: string | boolean;
+  capital?: string;
+  dowry_type?: string;
+  father_originality?: string;
+  mother_originality?: string;
+  marriage_with_experience?: string;
+  marriage_with_someone_with_marriage_experience?: string;
+  ordering?: string;
+  sort?: string;
+  page?: number;
+  page_size?: number;
+  limit?: number;
+}
+
+export async function searchCandidates(
+  params?: CandidateSearchParams
+): Promise<CandidateSearchResponse> {
+  const queryParams: Record<string, any> = {};
+  if (params) {
+    if (params.keyword || params.q || params.search) queryParams.q = params.keyword || params.q || params.search;
+    if (params.gender) queryParams.gender = params.gender;
+    if (params.minAge !== undefined || params.min_age !== undefined) queryParams.min_age = params.minAge ?? params.min_age;
+    if (params.maxAge !== undefined || params.max_age !== undefined) queryParams.max_age = params.maxAge ?? params.max_age;
+    if (params.educationLevel || params.education) queryParams.education = params.educationLevel || params.education;
+    if (params.province || params.location) queryParams.location = params.province || params.location;
+    if (params.job) queryParams.job = params.job;
+    if (params.minHeight !== undefined || params.min_height !== undefined) queryParams.min_height = params.minHeight ?? params.min_height;
+    if (params.maxHeight !== undefined || params.max_height !== undefined) queryParams.max_height = params.maxHeight ?? params.max_height;
+    if (params.minWeight !== undefined || params.min_weight !== undefined) queryParams.min_weight = params.minWeight ?? params.min_weight;
+    if (params.maxWeight !== undefined || params.max_weight !== undefined) queryParams.max_weight = params.maxWeight ?? params.max_weight;
+    if (params.skinColor || params.skin_color) queryParams.skin_color = params.skinColor || params.skin_color;
+    if (params.maritalExperience || params.marriage_experience) queryParams.marriage_experience = params.maritalExperience || params.marriage_experience;
+    if (params.incomeTier || params.income) queryParams.income = params.incomeTier || params.income;
+    if (params.housingOwnership || params.ownership_status) queryParams.ownership_status = params.housingOwnership || params.ownership_status;
+    if (params.residenceStatus || params.current_residence_status) queryParams.current_residence_status = params.residenceStatus || params.current_residence_status;
+    if (params.worship || params.worship_and_prayer) queryParams.worship_and_prayer = params.worship || params.worship_and_prayer;
+    if (params.societyCover || params.cover_type_society) queryParams.cover_type_society = params.societyCover || params.cover_type_society;
+    if (params.fasting) queryParams.fasting = params.fasting;
+    if (params.velayatFaqih || params.opinion_velayat_faqih) queryParams.opinion_velayat_faqih = params.velayatFaqih || params.opinion_velayat_faqih;
+    if (params.have_insurance !== undefined) queryParams.have_insurance = params.have_insurance;
+    if (params.disease_or_surgery !== undefined) queryParams.disease_or_surgery = params.disease_or_surgery;
+    if (params.capital) queryParams.capital = params.capital;
+    if (params.dowry_type) queryParams.dowry_type = params.dowry_type;
+    if (params.father_originality) queryParams.father_originality = params.father_originality;
+    if (params.mother_originality) queryParams.mother_originality = params.mother_originality;
+    if (params.marriage_with_experience || params.marriage_with_someone_with_marriage_experience) {
+      queryParams.marriage_with_someone_with_marriage_experience = params.marriage_with_someone_with_marriage_experience || params.marriage_with_experience;
+    }
+    if (params.sort || params.ordering) {
+      if (params.sort === 'newest') queryParams.ordering = '-date_joined';
+      else if (params.sort === 'oldest') queryParams.ordering = 'date_joined';
+      else queryParams.ordering = params.sort || params.ordering;
+    }
+    if (params.page) queryParams.page = params.page;
+    if (params.limit || params.page_size) queryParams.page_size = params.limit || params.page_size;
+  }
+  return apiClient('/api/users/candidate_search/', { params: queryParams });
+}
+
+export async function fetchBookmarks(): Promise<CandidateProfile[]> {
+  const res = await apiClient<{ count: number; results: CandidateProfile[] } | CandidateProfile[]>('/api/users/bookmarks/');
+  if (Array.isArray(res)) return res;
+  return res.results ?? [];
+}
+
+export async function toggleBookmark(
+  candidateId: string
+): Promise<{ candidate_id: string; is_bookmarked: boolean }> {
+  return apiClient('/api/users/toggle_bookmark/', {
+    method: 'POST',
+    body: JSON.stringify({ candidate_id: candidateId }),
+  });
+}

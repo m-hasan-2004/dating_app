@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.shortcuts import get_object_or_404
 from django.utils.translation import gettext_lazy as _
 from drf_spectacular.utils import (
     OpenApiExample,
@@ -45,6 +46,7 @@ from users.user_related_models import (
     PhysicalInformation,
     Sister,
     User,
+    UserBookmark,
 )
 from users.user_related_models.subject_details import SubjectDetails
 
@@ -77,6 +79,7 @@ from .serializers import (
     RefreshTokenSerializer,
     SisterSerializer,
     SubjectDetailsSerializer,
+    UserBookmarkSerializer,
     UserCompleteProfileSerializer,
     UserRegistrationSerializer,
     UserSerializer,
@@ -437,6 +440,532 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(
             {"status": "ok", "action": action_type, "affected": affected_count}
         )
+
+    @action(detail=False, methods=["get"], permission_classes=[IsAuthenticated])
+    def candidate_search(self, request):
+        """Search candidates with role-based access control and multi-faceted filtering."""
+        user = request.user
+        is_admin = bool(user.is_staff or user.is_superuser)
+
+        # 1. Determine user gender if not admin
+        user_gender = None
+        if not is_admin:
+            pi = PersonalInformation.objects.filter(user=user).first()
+            if pi:
+                g_val = " ".join(pi.gender if isinstance(pi.gender, list) else [str(pi.gender)]).lower()
+                if "woman" in g_val or "girl" in g_val:
+                    user_gender = "woman"
+                elif "man" in g_val or "boy" in g_val:
+                    user_gender = "man"
+
+        # Base query: active candidates
+        users_qs = User.objects.filter(is_active=True)
+        if not is_admin:
+            users_qs = users_qs.exclude(id=user.id)
+
+        # Access control on gender:
+        # If not admin:
+        #   If logged-in is 'man' -> only show 'woman'
+        #   If logged-in is 'woman' -> only show 'man'
+        # If admin: allows query param ?gender=man|woman|all
+        requested_gender = request.query_params.get("gender", "").lower().strip()
+
+        target_gender = None
+        if not is_admin:
+            if user_gender == "man":
+                target_gender = "woman"
+            elif user_gender == "woman":
+                target_gender = "man"
+        else:
+            if requested_gender in ["man", "woman"]:
+                target_gender = requested_gender
+
+        # Apply gender filter if specified
+        if target_gender:
+            matching_user_ids = set()
+            for p in PersonalInformation.objects.all():
+                g_str = " ".join(p.gender if isinstance(p.gender, list) else [str(p.gender)]).lower()
+                if target_gender == "woman" and ("woman" in g_str or "girl" in g_str):
+                    matching_user_ids.add(p.user_id)
+                elif target_gender == "man" and ("woman" not in g_str and "girl" not in g_str and ("man" in g_str or "boy" in g_str)):
+                    matching_user_ids.add(p.user_id)
+            users_qs = users_qs.filter(id__in=matching_user_ids)
+
+        # Keyword search: q / search
+        q = request.query_params.get("q") or request.query_params.get("search", "").strip()
+        if q:
+            from django.db.models import Q
+            users_qs = users_qs.filter(
+                Q(username__icontains=q)
+                | Q(email__icontains=q)
+                | Q(phone_number__icontains=q)
+                | Q(middle_man_code__icontains=q)
+            )
+
+        # Age filter: min_age, max_age
+        from datetime import date
+        today = date.today()
+        min_age = request.query_params.get("min_age")
+        max_age = request.query_params.get("max_age")
+        if min_age or max_age:
+            p_age_qs = PersonalInformation.objects.all()
+            if min_age and min_age.isdigit():
+                try:
+                    max_birth = date(today.year - int(min_age), today.month, today.day)
+                    p_age_qs = p_age_qs.filter(birth_date__lte=max_birth)
+                except ValueError:
+                    pass
+            if max_age and max_age.isdigit():
+                try:
+                    min_birth = date(today.year - int(max_age) - 1, today.month, today.day)
+                    p_age_qs = p_age_qs.filter(birth_date__gte=min_birth)
+                except ValueError:
+                    pass
+            users_qs = users_qs.filter(id__in=p_age_qs.values_list("user_id", flat=True))
+
+        # Helper to extract list from query params (supports ?param=a,b and ?param=a&param=b)
+        from django.db.models import Q
+        def get_list_param(param_name, alt_name=None):
+            vals = request.query_params.getlist(param_name)
+            if not vals and alt_name:
+                vals = request.query_params.getlist(alt_name)
+            if not vals:
+                single = request.query_params.get(param_name) or (request.query_params.get(alt_name) if alt_name else None)
+                if single:
+                    vals = [v.strip() for v in single.split(",") if v.strip() and v.strip().lower() != 'all']
+            else:
+                expanded = []
+                for item in vals:
+                    for sub in str(item).split(","):
+                        s = sub.strip()
+                        if s and s.lower() != 'all':
+                            expanded.append(s)
+                vals = expanded
+            return vals
+
+        # Location filter (multiselect with Persian & English city synonyms)
+        locations = get_list_param("location", "province")
+        if locations:
+            q_loc = Q()
+            for loc in locations:
+                q_loc |= Q(birth_location__icontains=loc)
+                loc_lower = loc.lower().strip()
+                if loc_lower in ["tehran", "تهران"]:
+                    q_loc |= Q(birth_location__icontains="تهران") | Q(birth_location__icontains="Tehran")
+                elif loc_lower in ["qom", "قم"]:
+                    q_loc |= Q(birth_location__icontains="قم") | Q(birth_location__icontains="Qom")
+                elif loc_lower in ["karaj", "کرج", "alborz"]:
+                    q_loc |= Q(birth_location__icontains="کرج") | Q(birth_location__icontains="البرز")
+                elif loc_lower in ["isfahan", "esfahan", "اصفهان"]:
+                    q_loc |= Q(birth_location__icontains="اصفهان") | Q(birth_location__icontains="Isfahan")
+                elif loc_lower in ["mashhad", "مشهد", "razavi khorasan"]:
+                    q_loc |= Q(birth_location__icontains="مشهد") | Q(birth_location__icontains="خراسان")
+                elif loc_lower in ["shiraz", "شیراز", "fars"]:
+                    q_loc |= Q(birth_location__icontains="شیراز") | Q(birth_location__icontains="فارس")
+                elif loc_lower in ["tabriz", "تبریز", "east azerbaijan"]:
+                    q_loc |= Q(birth_location__icontains="تبریز") | Q(birth_location__icontains="آذربایجان")
+                elif loc_lower in ["hamadan", "همدان"]:
+                    q_loc |= Q(birth_location__icontains="همدان") | Q(birth_location__icontains="Hamadan")
+                elif loc_lower in ["yazd", "یزد"]:
+                    q_loc |= Q(birth_location__icontains="یزد") | Q(birth_location__icontains="Yazd")
+                elif loc_lower in ["gilan", "گیلان", "rasht", "رشت"]:
+                    q_loc |= Q(birth_location__icontains="گیلان") | Q(birth_location__icontains="رشت")
+                elif loc_lower in ["mazandaran", "مازندران", "sari", "ساری"]:
+                    q_loc |= Q(birth_location__icontains="مازندران") | Q(birth_location__icontains="ساری")
+                elif loc_lower in ["khuzestan", "خوزستان", "ahvaz", "اهواز"]:
+                    q_loc |= Q(birth_location__icontains="خوزستان") | Q(birth_location__icontains="اهواز")
+            users_qs = users_qs.filter(
+                id__in=PersonalInformation.objects.filter(q_loc).values_list("user_id", flat=True)
+            )
+
+        # Education filter (multiselect)
+        educations = get_list_param("education", "educationLevel")
+        if educations:
+            users_qs = users_qs.filter(
+                id__in=PersonalInformation.objects.filter(education__in=educations).values_list(
+                    "user_id", flat=True
+                )
+            )
+
+        # Physical: Height & Weight
+        min_height = request.query_params.get("min_height") or request.query_params.get("minHeight")
+        if min_height:
+            try:
+                users_qs = users_qs.filter(
+                    id__in=PhysicalInformation.objects.filter(height__gte=float(min_height)).values_list(
+                        "user_id", flat=True
+                    )
+                )
+            except ValueError:
+                pass
+        max_height = request.query_params.get("max_height") or request.query_params.get("maxHeight")
+        if max_height:
+            try:
+                users_qs = users_qs.filter(
+                    id__in=PhysicalInformation.objects.filter(height__lte=float(max_height)).values_list(
+                        "user_id", flat=True
+                    )
+                )
+            except ValueError:
+                pass
+
+        min_weight = request.query_params.get("min_weight") or request.query_params.get("minWeight")
+        if min_weight:
+            try:
+                users_qs = users_qs.filter(
+                    id__in=PhysicalInformation.objects.filter(weight__gte=float(min_weight)).values_list(
+                        "user_id", flat=True
+                    )
+                )
+            except ValueError:
+                pass
+        max_weight = request.query_params.get("max_weight") or request.query_params.get("maxWeight")
+        if max_weight:
+            try:
+                users_qs = users_qs.filter(
+                    id__in=PhysicalInformation.objects.filter(weight__lte=float(max_weight)).values_list(
+                        "user_id", flat=True
+                    )
+                )
+            except ValueError:
+                pass
+
+        # Skin color (multiselect)
+        skin_colors = get_list_param("skin_color", "skinColor")
+        if skin_colors:
+            users_qs = users_qs.filter(
+                id__in=PhysicalInformation.objects.filter(skin_color__in=skin_colors).values_list(
+                    "user_id", flat=True
+                )
+            )
+
+        # Marriage experience (multiselect)
+        mar_experiences = get_list_param("marriage_experience", "maritalExperience")
+        if mar_experiences:
+            q_mar = Q()
+            if "no" in mar_experiences:
+                # Candidates with explicit 'no' OR without prior marriage record
+                has_prior = BirthCertificateInformation.objects.filter(
+                    marriage_experince__in=["yes", "engagement_only"]
+                ).values_list("user_id", flat=True)
+                q_mar |= Q(id__in=BirthCertificateInformation.objects.filter(marriage_experince="no").values_list("user_id", flat=True)) | ~Q(id__in=has_prior)
+            if "yes" in mar_experiences:
+                q_mar |= Q(id__in=BirthCertificateInformation.objects.filter(marriage_experince="yes").values_list("user_id", flat=True))
+            if "engagement_only" in mar_experiences:
+                q_mar |= Q(id__in=BirthCertificateInformation.objects.filter(marriage_experince="engagement_only").values_list("user_id", flat=True))
+            users_qs = users_qs.filter(q_mar)
+
+        # Financial: income (multiselect), ownership_status (multiselect), job
+        incomes = get_list_param("income", "incomeTier")
+        if incomes:
+            users_qs = users_qs.filter(
+                id__in=PersonalInformation.objects.filter(income__in=incomes).values_list(
+                    "user_id", flat=True
+                )
+            )
+        ownerships = get_list_param("ownership_status", "housingOwnership")
+        if ownerships:
+            users_qs = users_qs.filter(
+                id__in=FinancialInformation.objects.filter(ownership_status__in=ownerships).values_list(
+                    "user_id", flat=True
+                )
+            )
+        job_query = request.query_params.get("job")
+        if job_query:
+            users_qs = users_qs.filter(
+                id__in=FinancialInformation.objects.filter(job__icontains=job_query).values_list(
+                    "user_id", flat=True
+                )
+            )
+
+        # Religious / Lifestyle (multiselect)
+        worships = get_list_param("worship_and_prayer", "worship")
+        if worships:
+            users_qs = users_qs.filter(
+                id__in=IntellectualInformation.objects.filter(worship_prayer__in=worships).values_list(
+                    "user_id", flat=True
+                )
+            )
+        covers = get_list_param("cover_type_society", "societyCover")
+        if covers:
+            q_cover = Q()
+            for c in covers:
+                q_cover |= Q(cover_type_society__icontains=c)
+            users_qs = users_qs.filter(
+                id__in=IntellectualInformation.objects.filter(q_cover).values_list(
+                    "user_id", flat=True
+                )
+            )
+        fastings = get_list_param("fasting")
+        if fastings:
+            users_qs = users_qs.filter(
+                id__in=IntellectualInformation.objects.filter(fasting__in=fastings).values_list(
+                    "user_id", flat=True
+                )
+            )
+        velayats = get_list_param("opinion_velayat_faqih", "velayatFaqih")
+        if velayats:
+            users_qs = users_qs.filter(
+                id__in=IntellectualInformation.objects.filter(opinion_velayat_faqih__in=velayats).values_list(
+                    "user_id", flat=True
+                )
+            )
+
+        # Residence status (multiselect), Insurance, Disease
+        residences = get_list_param("current_residence_status", "residenceStatus")
+        if residences:
+            users_qs = users_qs.filter(
+                id__in=FinancialInformation.objects.filter(current_residence_status__in=residences).values_list(
+                    "user_id", flat=True
+                )
+            )
+        have_ins = request.query_params.get("have_insurance")
+        if have_ins in ["1", "true", "True", "yes"]:
+            users_qs = users_qs.filter(
+                id__in=PersonalInformation.objects.filter(have_insurance=True).values_list("user_id", flat=True)
+            )
+        elif have_ins in ["0", "false", "False", "no"]:
+            users_qs = users_qs.filter(
+                id__in=PersonalInformation.objects.filter(have_insurance=False).values_list("user_id", flat=True)
+            )
+        disease = request.query_params.get("disease_or_surgery") or request.query_params.get("disease_or_surgery_history")
+        if disease in ["1", "true", "True", "yes"]:
+            users_qs = users_qs.filter(
+                id__in=PhysicalInformation.objects.filter(disease_or_surgery_history=True).values_list("user_id", flat=True)
+            )
+        elif disease in ["0", "false", "False", "no"]:
+            users_qs = users_qs.filter(
+                id__in=PhysicalInformation.objects.filter(disease_or_surgery_history=False).values_list("user_id", flat=True)
+            )
+
+        # Capital / Assets (multiselect) & Dowry (multiselect)
+        capitals = get_list_param("capital")
+        if capitals:
+            q_cap = Q()
+            for cap in capitals:
+                q_cap |= Q(capital__icontains=cap)
+            users_qs = users_qs.filter(
+                id__in=FinancialInformation.objects.filter(q_cap).values_list("user_id", flat=True)
+            )
+        dowries = get_list_param("dowry_type", "future_spouse_dowry_type")
+        if dowries:
+            q_dow = Q()
+            for d in dowries:
+                q_dow |= Q(dowry_type__icontains=d)
+            users_qs = users_qs.filter(
+                id__in=FinancialInformation.objects.filter(q_dow).values_list("user_id", flat=True)
+            )
+
+        # Parents Originality (multiselect)
+        from users.user_related_models.family_information_model import Mother, Father
+        from users.preferred_wife_models.preferred_wife_intellectual_information import PreferredWifeIntellectualInformation
+
+        father_origs = get_list_param("father_originality", "father_orig")
+        if father_origs:
+            users_qs = users_qs.filter(
+                id__in=Father.objects.filter(originality__in=father_origs).values_list("user_id", flat=True)
+            )
+        mother_origs = get_list_param("mother_originality", "mother_orig")
+        if mother_origs:
+            users_qs = users_qs.filter(
+                id__in=Mother.objects.filter(originality__in=mother_origs).values_list("user_id", flat=True)
+            )
+
+        # Marriage with someone with marriage experience (multiselect)
+        pref_exps = get_list_param("marriage_with_someone_with_marriage_experience", "marriage_with_experience")
+        if pref_exps:
+            q_pref = Q()
+            for pe in pref_exps:
+                q_pref |= Q(marriage_with_someone_with_marriage_experience__icontains=pe)
+            users_qs = users_qs.filter(
+                id__in=PreferredWifeIntellectualInformation.objects.filter(q_pref).values_list("user_id", flat=True)
+            )
+
+        # Ordering
+        ordering = request.query_params.get("ordering", "-date_joined")
+        if ordering in ["date_joined", "-date_joined", "username", "-username"]:
+            users_qs = users_qs.order_by(ordering)
+        else:
+            users_qs = users_qs.order_by("-date_joined")
+
+        # Pagination
+        page_number = max(1, int(request.query_params.get("page", 1)))
+        page_size = min(100, max(1, int(request.query_params.get("page_size", 12))))
+        total_count = users_qs.count()
+        start = (page_number - 1) * page_size
+        end = start + page_size
+        page_users = list(users_qs[start:end])
+
+        # Bookmarked set for current user
+        bookmarked_ids = set()
+        try:
+            bookmarked_ids = set(
+                UserBookmark.objects.filter(user=user).values_list("bookmarked_user_id", flat=True)
+            )
+        except Exception:
+            pass
+
+        user_ids = [u.id for u in page_users]
+        personal_map = {p.user_id: p for p in PersonalInformation.objects.filter(user_id__in=user_ids)}
+        physical_map = {p.user_id: p for p in PhysicalInformation.objects.filter(user_id__in=user_ids)}
+        financial_map = {p.user_id: p for p in FinancialInformation.objects.filter(user_id__in=user_ids)}
+        birth_map = {p.user_id: p for p in BirthCertificateInformation.objects.filter(user_id__in=user_ids)}
+        intellectual_map = {p.user_id: p for p in IntellectualInformation.objects.filter(user_id__in=user_ids)}
+        identity_map = {p.user_id: p for p in IdentityInformation.objects.filter(user_id__in=user_ids)}
+
+        results = []
+        for u in page_users:
+            p_info = personal_map.get(u.id)
+            phys_info = physical_map.get(u.id)
+            fin_info = financial_map.get(u.id)
+            b_info = birth_map.get(u.id)
+            intel_info = intellectual_map.get(u.id)
+            ident_info = identity_map.get(u.id)
+
+            cand_age = None
+            cand_gender = None
+            if p_info:
+                g_raw = " ".join(p_info.gender if isinstance(p_info.gender, list) else [str(p_info.gender)]).lower()
+                cand_gender = "woman" if ("woman" in g_raw or "girl" in g_raw) else ("man" if ("man" in g_raw or "boy" in g_raw) else "other")
+                if p_info.birth_date:
+                    cand_age = today.year - p_info.birth_date.year - ((today.month, today.day) < (p_info.birth_date.month, p_info.birth_date.day))
+
+            results.append({
+                "id": str(u.id),
+                "username": u.username,
+                "first_name": ident_info.first_name if ident_info else None,
+                "last_name": ident_info.last_name if ident_info else None,
+                "gender": cand_gender,
+                "age": cand_age,
+                "birth_date": str(p_info.birth_date) if (p_info and p_info.birth_date) else None,
+                "birth_location": p_info.birth_location if p_info else None,
+                "education": p_info.education if p_info else None,
+                "degree": p_info.degree if p_info else None,
+                "job": fin_info.job if fin_info else None,
+                "height": phys_info.height if phys_info else None,
+                "weight": phys_info.weight if phys_info else None,
+                "skin_color": phys_info.skin_color if phys_info else None,
+                "eyes_color": phys_info.eyes_color if phys_info else None,
+                "marriage_experience": b_info.marriage_experince if b_info else None,
+                "income": p_info.income if p_info else None,
+                "ownership_status": fin_info.ownership_status if fin_info else None,
+                "worship_and_prayer": intel_info.worship_prayer if intel_info else None,
+                "cover_type_society": intel_info.cover_type_society if intel_info else None,
+                "date_joined": u.date_joined.isoformat() if u.date_joined else None,
+                "is_bookmarked": u.id in bookmarked_ids,
+            })
+
+        return Response({
+            "count": total_count,
+            "page": page_number,
+            "page_size": page_size,
+            "total_pages": (total_count + page_size - 1) // page_size if page_size > 0 else 1,
+            "user_role": "admin" if is_admin else "user",
+            "user_gender": user_gender,
+            "target_gender": target_gender,
+            "results": results,
+        })
+
+    @action(detail=False, methods=["get"], permission_classes=[IsAuthenticated])
+    def bookmarks(self, request):
+        """List bookmarked candidate profiles for the authenticated user."""
+        user = request.user
+        from datetime import date
+        today = date.today()
+
+        bms = UserBookmark.objects.filter(user=user, bookmarked_user__is_active=True).select_related("bookmarked_user")
+        bookmarked_users = [bm.bookmarked_user for bm in bms]
+        user_ids = [u.id for u in bookmarked_users]
+
+        personal_map = {p.user_id: p for p in PersonalInformation.objects.filter(user_id__in=user_ids)}
+        physical_map = {p.user_id: p for p in PhysicalInformation.objects.filter(user_id__in=user_ids)}
+        financial_map = {p.user_id: p for p in FinancialInformation.objects.filter(user_id__in=user_ids)}
+        birth_map = {p.user_id: p for p in BirthCertificateInformation.objects.filter(user_id__in=user_ids)}
+        intellectual_map = {p.user_id: p for p in IntellectualInformation.objects.filter(user_id__in=user_ids)}
+        identity_map = {p.user_id: p for p in IdentityInformation.objects.filter(user_id__in=user_ids)}
+
+        results = []
+        for u in bookmarked_users:
+            p_info = personal_map.get(u.id)
+            phys_info = physical_map.get(u.id)
+            fin_info = financial_map.get(u.id)
+            b_info = birth_map.get(u.id)
+            intel_info = intellectual_map.get(u.id)
+            ident_info = identity_map.get(u.id)
+
+            cand_age = None
+            cand_gender = None
+            if p_info:
+                g_raw = " ".join(p_info.gender if isinstance(p_info.gender, list) else [str(p_info.gender)]).lower()
+                cand_gender = "woman" if ("woman" in g_raw or "girl" in g_raw) else ("man" if ("man" in g_raw or "boy" in g_raw) else "other")
+                if p_info.birth_date:
+                    cand_age = today.year - p_info.birth_date.year - ((today.month, today.day) < (p_info.birth_date.month, p_info.birth_date.day))
+
+            results.append({
+                "id": str(u.id),
+                "username": u.username,
+                "first_name": ident_info.first_name if ident_info else None,
+                "last_name": ident_info.last_name if ident_info else None,
+                "gender": cand_gender,
+                "age": cand_age,
+                "birth_date": str(p_info.birth_date) if (p_info and p_info.birth_date) else None,
+                "birth_location": p_info.birth_location if p_info else None,
+                "education": p_info.education if p_info else None,
+                "degree": p_info.degree if p_info else None,
+                "job": fin_info.job if fin_info else None,
+                "height": phys_info.height if phys_info else None,
+                "weight": phys_info.weight if phys_info else None,
+                "marriage_experience": b_info.marriage_experince if b_info else None,
+                "income": p_info.income if p_info else None,
+                "ownership_status": fin_info.ownership_status if fin_info else None,
+                "worship_and_prayer": intel_info.worship_prayer if intel_info else None,
+                "cover_type_society": intel_info.cover_type_society if intel_info else None,
+                "date_joined": u.date_joined.isoformat() if u.date_joined else None,
+                "is_bookmarked": True,
+            })
+
+        return Response({
+            "count": len(results),
+            "results": results,
+        })
+
+    @action(detail=False, methods=["post"], permission_classes=[IsAuthenticated])
+    def toggle_bookmark(self, request):
+        """Toggle bookmark state for a target user ID."""
+        user = request.user
+        target_id = request.data.get("candidate_id") or request.data.get("user_id")
+        if not target_id:
+            return Response(
+                {"detail": "candidate_id is required."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        import uuid
+        from django.db.models import Q
+        try:
+            uid = uuid.UUID(str(target_id))
+            target_user = User.objects.filter(Q(id=uid) | Q(username=str(target_id))).first()
+        except (ValueError, AttributeError):
+            target_user = User.objects.filter(username=str(target_id)).first()
+
+        if not target_user:
+            return Response(
+                {"detail": "Candidate user not found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        bm = UserBookmark.objects.filter(user=user, bookmarked_user=target_user).first()
+        if bm:
+            bm.delete()
+            is_bm = False
+        else:
+            UserBookmark.objects.create(user=user, bookmarked_user=target_user)
+            is_bm = True
+
+        return Response({
+            "candidate_id": str(target_user.id),
+            "is_bookmarked": is_bm,
+        })
 
 
 # ---------------------------------------------------------------------------
@@ -920,3 +1449,56 @@ class PreferredWifeExtraInformationViewSet(UserProfileModelViewSet):
 
     queryset = PreferredWifeExtraInformation.objects.all()
     serializer_class = PreferredWifeExtraInformationSerializer
+
+
+@extend_schema(tags=["User Bookmarks"])
+class UserBookmarkViewSet(viewsets.ModelViewSet):
+    """Dedicated ViewSet for user candidate bookmarks."""
+
+    serializer_class = UserBookmarkSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return (
+            UserBookmark.objects.filter(user=self.request.user)
+            .select_related("user", "bookmarked_user")
+            .order_by("-created_at")
+        )
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    @action(detail=False, methods=["post"])
+    def toggle(self, request):
+        candidate_id = (
+            request.data.get("candidate_id")
+            or request.data.get("bookmarked_user")
+            or request.data.get("user_id")
+        )
+        if not candidate_id:
+            return Response(
+                {"detail": "candidate_id is required."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        candidate = get_object_or_404(User, id=candidate_id)
+        bookmark = UserBookmark.objects.filter(
+            user=request.user, bookmarked_user=candidate
+        ).first()
+        if bookmark:
+            bookmark.delete()
+            return Response({
+                "is_bookmarked": False,
+                "candidate_id": str(candidate.id),
+                "message": "Bookmark removed",
+            })
+        else:
+            new_bm = UserBookmark.objects.create(
+                user=request.user, bookmarked_user=candidate
+            )
+            return Response({
+                "is_bookmarked": True,
+                "bookmark_id": new_bm.id,
+                "candidate_id": str(candidate.id),
+                "message": "Bookmark added",
+            })

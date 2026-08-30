@@ -366,24 +366,37 @@ export function FullProfileView({
           </div>
         </div>
 
-        {/* Global Collapse All / Expand All button */}
-        <button
-          type="button"
-          onClick={toggleCollapseAll}
-          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700/60 transition-colors shadow-sm self-start sm:self-auto"
-        >
-          {allCollapsed ? (
-            <>
-              <ChevronDownIcon className="w-4 h-4 text-brand-500" />
-              <span>Expand All</span>
-            </>
-          ) : (
-            <>
-              <ChevronUpIcon className="w-4 h-4 text-brand-500" />
-              <span>Collapse All</span>
-            </>
-          )}
-        </button>
+        <div className="flex items-center gap-2.5 self-start sm:self-auto">
+          {/* Saved Bookmarks Shortcut */}
+          <Link
+            href="/profile/bookmarks"
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 hover:bg-amber-500/20 transition-colors shadow-xs"
+          >
+            <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+              <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+            </svg>
+            <span>Saved Bookmarks</span>
+          </Link>
+
+          {/* Global Collapse All / Expand All button */}
+          <button
+            type="button"
+            onClick={toggleCollapseAll}
+            className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-xl border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700/60 transition-colors shadow-sm"
+          >
+            {allCollapsed ? (
+              <>
+                <ChevronDownIcon className="w-3.5 h-3.5 text-brand-500" />
+                <span>Expand All</span>
+              </>
+            ) : (
+              <>
+                <ChevronUpIcon className="w-3.5 h-3.5 text-brand-500" />
+                <span>Collapse All</span>
+              </>
+            )}
+          </button>
+        </div>
       </div>
 
       {displayUser && (

@@ -48,6 +48,7 @@ from .views import (
     PreferredWifeIntellectualInformationViewSet,
     FutureSposeOriginalityViewSet,
     PreferredWifeExtraInformationViewSet,
+    UserBookmarkViewSet,
 )
 
 # User router for all user-related ViewSets
@@ -153,6 +154,11 @@ user_router.register(
     r"preferred-wife-extra-information",
     PreferredWifeExtraInformationViewSet,
     basename="preferred-wife-extra-information",
+)
+user_router.register(
+    r"bookmarks",
+    UserBookmarkViewSet,
+    basename="bookmark",
 )
 
 # Auth routes are explicit (cookie-based JWT flow, not part of the router).

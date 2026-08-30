@@ -23,8 +23,20 @@ import { Modal } from "@/components/ui/modal";
 import ComponentCard from "@/components/common/ComponentCard";
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
 import { PlusIcon, TrashBinIcon, CheckLineIcon, CloseLineIcon, CopyIcon } from "@/icons";
+import { useAuth } from "@/hooks/use-auth";
+import { useRouter } from "next/navigation";
 
 export default function AccessCodesManagement() {
+  const { user, loading: authLoading } = useAuth();
+  const router = useRouter();
+  const isAdmin = Boolean(user?.is_staff || (user as any)?.is_superuser);
+
+  useEffect(() => {
+    if (!authLoading && !isAdmin) {
+      router.replace('/');
+    }
+  }, [authLoading, isAdmin, router]);
+
   const [accessCodes, setAccessCodes] = useState<AccessCode[]>([]);
   const [totalCount, setTotalCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);

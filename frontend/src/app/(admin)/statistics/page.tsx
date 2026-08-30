@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import type { UserStats } from '@/services/profileService';
@@ -13,12 +13,35 @@ import {
   ChevronLeftIcon,
 } from '@/icons';
 
+import { useAuth } from '@/hooks/use-auth';
+import { useRouter } from 'next/navigation';
+
 type GenderFilter = 'all' | 'man' | 'woman';
 
 export default function StatisticsPage() {
+  const { user, loading: authLoading } = useAuth();
+  const router = useRouter();
+  const isAdmin = Boolean(user?.is_staff || (user as any)?.is_superuser);
+
   const [stats, setStats] = useState<UserStats | null>(null);
   const [genderFilter, setGenderFilter] = useState<GenderFilter>('all');
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!authLoading && !isAdmin) {
+      router.replace('/');
+    }
+  }, [authLoading, isAdmin, router]);
+
+  if (!isAdmin && !authLoading) {
+    return (
+      <div className="rounded-3xl border border-red-200 bg-red-50 p-12 text-center dark:border-red-900/50 dark:bg-red-950/20">
+        <h2 className="text-lg font-bold text-red-700 dark:text-red-400">Admin Access Only</h2>
+        <p className="text-xs text-red-600 dark:text-red-500 mt-1">You do not have permission to view demographic statistics.</p>
+        <Link href="/" className="inline-block mt-4 px-4 py-2 text-xs font-semibold rounded-xl bg-brand-500 text-white">Return to Dashboard</Link>
+      </div>
+    );
+  }
 
   const loadStats = useCallback(async (selectedGender: GenderFilter) => {
     setLoading(true);

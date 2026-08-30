@@ -1,6 +1,5 @@
 "use client";
 import { ThemeToggleButton } from "@/components/common/ThemeToggleButton";
-import NotificationDropdown from "@/components/header/NotificationDropdown";
 import UserDropdown from "@/components/header/UserDropdown";
 import { useSidebar } from "@/context/SidebarContext";
 import Image from "next/image";
@@ -128,12 +127,20 @@ const AppHeader: React.FC = () => {
           } items-center justify-between w-full gap-4 px-5 py-4 lg:flex shadow-theme-md lg:justify-end lg:px-0 lg:shadow-none`}
         >
           <div className="flex items-center gap-2 2xsm:gap-3">
+            {/* Bookmarks Button */}
+            <Link
+              href="/profile/bookmarks"
+              className="flex items-center justify-center w-10 h-10 text-gray-700 transition-all bg-white border border-gray-200 rounded-full hover:border-amber-400 hover:bg-amber-50/50 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400 dark:hover:border-amber-500/50 dark:hover:bg-amber-950/20 group"
+              title="Saved Bookmarks"
+            >
+              <svg className="w-4 h-4 fill-current text-amber-500 transition-transform group-hover:scale-110" viewBox="0 0 24 24">
+                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+              </svg>
+            </Link>
+
             {/* <!-- Dark Mode Toggler --> */}
             <ThemeToggleButton />
             {/* <!-- Dark Mode Toggler --> */}
-
-           <NotificationDropdown /> 
-            {/* <!-- Notification Menu Area --> */}
           </div>
           {/* <!-- User Area --> */}
           <UserDropdown /> 
