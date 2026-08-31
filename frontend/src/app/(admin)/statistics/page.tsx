@@ -35,16 +35,6 @@ export default function StatisticsPage() {
     }
   }, [authLoading, isAdmin, router]);
 
-  if (!isAdmin && !authLoading) {
-    return (
-      <div className="rounded-3xl border border-red-200 bg-red-50 p-12 text-center dark:border-red-900/50 dark:bg-red-950/20">
-        <h2 className="text-lg font-bold text-red-700 dark:text-red-400">{t("Admin Access Only")}</h2>
-        <p className="text-xs text-red-600 dark:text-red-500 mt-1">{t("You do not have permission to view demographic statistics.")}</p>
-        <Link href="/" className="inline-block mt-4 px-4 py-2 text-xs font-semibold rounded-xl bg-brand-500 text-white">{t("Return to Dashboard")}</Link>
-      </div>
-    );
-  }
-
   const loadStats = useCallback(async (selectedGender: GenderFilter) => {
     setLoading(true);
     try {
@@ -59,8 +49,10 @@ export default function StatisticsPage() {
   }, []);
 
   useEffect(() => {
-    loadStats(genderFilter);
-  }, [genderFilter, loadStats]);
+    if (isAdmin) {
+      loadStats(genderFilter);
+    }
+  }, [genderFilter, loadStats, isAdmin]);
 
   // Pure Gender Ratio (Men vs Women only)
   const genderRatio = useMemo(() => {
@@ -161,6 +153,16 @@ export default function StatisticsPage() {
       : genderFilter === 'man'
       ? t('Men / Boys Only')
       : t('Women / Girls Only');
+
+  if (!isAdmin && !authLoading) {
+    return (
+      <div className="rounded-3xl border border-red-200 bg-red-50 p-12 text-center dark:border-red-900/50 dark:bg-red-950/20">
+        <h2 className="text-lg font-bold text-red-700 dark:text-red-400">{t("Admin Access Only")}</h2>
+        <p className="text-xs text-red-600 dark:text-red-500 mt-1">{t("You do not have permission to view demographic statistics.")}</p>
+        <Link href="/" className="inline-block mt-4 px-4 py-2 text-xs font-semibold rounded-xl bg-brand-500 text-white">{t("Return to Dashboard")}</Link>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 pb-12">

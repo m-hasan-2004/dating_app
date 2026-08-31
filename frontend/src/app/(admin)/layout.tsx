@@ -16,6 +16,7 @@ export default function AdminLayout({
 }) {
   const { isExpanded, isHovered, isMobileOpen } = useSidebar();
   const { user, loading, isAuthenticated } = useAuth();
+  const { isRTL } = useLanguage();
   const router = useRouter();
 
   useEffect(() => {
@@ -47,8 +48,6 @@ export default function AdminLayout({
       </div>
     );
   }
-
-  const { isRTL } = useLanguage();
 
   // Dynamic class for main content margin based on sidebar state and RTL
   const mainContentMargin = isRTL
