@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Modal from '@/components/ui/modal';
+import { useTranslation } from '@/context/LanguageContext';
 import Button from '@/components/ui/button/Button';
 import ProfileSection from '@/components/profile/ProfileSection';
 import MultiRecordSection from '@/components/profile/MultiRecordSection';
@@ -108,6 +109,7 @@ export function FutureSpouseOriginalitiesSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<FutureSposeOriginality | null>(null);
   const [saving, setSaving] = useState(false);
@@ -184,8 +186,8 @@ export function FutureSpouseOriginalitiesSection({
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
-            <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={handleSave} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>
+            <Button variant="outline" onClick={() => setOpen(false)}>{t('Cancel')}</Button>
+            <Button onClick={handleSave} disabled={saving}>{saving ? t('Saving...') : t('Save')}</Button>
           </div>
         </div>
       </Modal>
@@ -222,6 +224,7 @@ export function PreferredWifeIntellectualSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
+  const { t, isRTL } = useTranslation();
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -261,11 +264,11 @@ export function PreferredWifeIntellectualSection({
   return (
     <>
       <ProfileSection title="Preferred Wife Intellectual Information" onEdit={openModal} isEmpty={!data} isCollapsed={isCollapsed} onToggleCollapse={onToggleCollapse}>
-        <DisplayRow label="Appearance Type" value={formatMultiValue(data?.appearance_type, APPEARANCE_OPTIONS)} />
-        <DisplayRow label="Age Difference" value={formatMultiValue(data?.age_difference, AGE_DIFF_OPTIONS)} />
+        <DisplayRow label="Appearance Type" value={formatMultiValue(data?.appearance_type, APPEARANCE_OPTIONS, t)} />
+        <DisplayRow label="Age Difference" value={formatMultiValue(data?.age_difference, AGE_DIFF_OPTIONS, t)} />
         <DisplayRow label="Family Religious Status Importance" value={data?.future_spouse_family_religious_status_importance} />
         <DisplayRow label="Family Financial Status Importance" value={data?.future_spouse_family_financial_status_importance} />
-        <DisplayRow label="Marriage with Experienced" value={formatMultiValue(data?.marriage_with_someone_with_marriage_experience, MARRIAGE_EXP_OPTIONS)} />
+        <DisplayRow label="Marriage with Experienced" value={formatMultiValue(data?.marriage_with_someone_with_marriage_experience, MARRIAGE_EXP_OPTIONS, t)} />
         <DisplayRow label="Marriage Experience Explanation" value={data?.marriage_with_someone_explanation} />
         <DisplayRow label="Most Important Moral Feature" value={data?.most_important_moral_feature} />
         <DisplayRow label="Marriage with Disabled Person" value={data?.marriage_with_disabled_person} />
@@ -294,8 +297,8 @@ export function PreferredWifeIntellectualSection({
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
-            <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={handleSave} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>
+            <Button variant="outline" onClick={() => setOpen(false)}>{t('Cancel')}</Button>
+            <Button onClick={handleSave} disabled={saving}>{saving ? t('Saving...') : t('Save')}</Button>
           </div>
         </div>
       </Modal>
@@ -326,6 +329,7 @@ export function PreferredWifePersonalSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
+  const { t, isRTL } = useTranslation();
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -364,7 +368,7 @@ export function PreferredWifePersonalSection({
       <ProfileSection title="Preferred Wife Personal Information" onEdit={openModal} isEmpty={!data} isCollapsed={isCollapsed} onToggleCollapse={onToggleCollapse}>
         <DisplayRow label="Education Level" value={data?.education_level} />
         <DisplayRow label="Field of Study" value={data?.field_of_study} />
-        <DisplayRow label="Future Spouse Job" value={formatMultiValue(data?.future_spouse_job, SPOUSE_JOB_OPTIONS)} />
+        <DisplayRow label="Future Spouse Job" value={formatMultiValue(data?.future_spouse_job, SPOUSE_JOB_OPTIONS, t)} />
         <DisplayRow label="Current Residence Location" value={data?.current_residence_location} />
         <DisplayRow label="After Marriage Residence Location" value={data?.after_marriage_residence_location} />
       </ProfileSection>
@@ -383,8 +387,8 @@ export function PreferredWifePersonalSection({
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
-            <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={handleSave} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>
+            <Button variant="outline" onClick={() => setOpen(false)}>{t('Cancel')}</Button>
+            <Button onClick={handleSave} disabled={saving}>{saving ? t('Saving...') : t('Save')}</Button>
           </div>
         </div>
       </Modal>
@@ -415,6 +419,7 @@ export function PreferredWifePhysicalSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
+  const { t, isRTL } = useTranslation();
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -456,13 +461,21 @@ export function PreferredWifePhysicalSection({
       <ProfileSection title="Preferred Wife Physical Information" onEdit={openModal} isEmpty={!data} isCollapsed={isCollapsed} onToggleCollapse={onToggleCollapse}>
         <DisplayRow
           label="Height Range"
-          value={data?.height_min || data?.height_max ? `${data.height_min ?? '—'} to ${data.height_max ?? '—'} cm` : null}
+          value={
+            data?.height_min || data?.height_max
+              ? `${data.height_min ?? '—'} ${isRTL ? 'تا' : 'to'} ${data.height_max ?? '—'} ${isRTL ? 'سانتی‌متر' : 'cm'}`
+              : null
+          }
         />
         <DisplayRow
           label="Weight Range"
-          value={data?.weight_min || data?.weight_max ? `${data.weight_min ?? '—'} to ${data.weight_max ?? '—'} kg` : null}
+          value={
+            data?.weight_min || data?.weight_max
+              ? `${data.weight_min ?? '—'} ${isRTL ? 'تا' : 'to'} ${data.weight_max ?? '—'} ${isRTL ? 'کیلوگرم' : 'kg'}`
+              : null
+          }
         />
-        <DisplayRow label="Preferred Skin Color" value={formatMultiValue(data?.skin_color, SKIN_COLOR_OPTIONS)} />
+        <DisplayRow label="Preferred Skin Color" value={formatMultiValue(data?.skin_color, SKIN_COLOR_OPTIONS, t)} />
       </ProfileSection>
 
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-2xl w-full">
@@ -483,8 +496,8 @@ export function PreferredWifePhysicalSection({
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
-            <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={handleSave} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>
+            <Button variant="outline" onClick={() => setOpen(false)}>{t('Cancel')}</Button>
+            <Button onClick={handleSave} disabled={saving}>{saving ? t('Saving...') : t('Save')}</Button>
           </div>
         </div>
       </Modal>
@@ -511,6 +524,7 @@ export function PreferredWifeExtraSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -556,8 +570,8 @@ export function PreferredWifeExtraSection({
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
-            <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={handleSave} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>
+            <Button variant="outline" onClick={() => setOpen(false)}>{t('Cancel')}</Button>
+            <Button onClick={handleSave} disabled={saving}>{saving ? t('Saving...') : t('Save')}</Button>
           </div>
         </div>
       </Modal>

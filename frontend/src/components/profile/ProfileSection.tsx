@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { PencilIcon, PlusIcon, ChevronDownIcon, ChevronUpIcon } from '@/icons';
+import { useTranslation } from '@/context/LanguageContext';
 
 export interface ProfileSectionProps {
   title: string;
@@ -23,6 +24,7 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({
   isCollapsed,
   onToggleCollapse,
 }) => {
+  const { t } = useTranslation();
   const [internalCollapsed, setInternalCollapsed] = useState(false);
   const collapsed = isCollapsed !== undefined ? isCollapsed : internalCollapsed;
 
@@ -37,42 +39,42 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({
   return (
     <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] transition-all">
       <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-gray-800">
-        <h3 className="text-base font-semibold text-gray-800 dark:text-white/90">{title}</h3>
+        <h3 className="text-base font-semibold text-gray-800 dark:text-white/90">{t(title)}</h3>
         <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={handleToggle}
-            className="inline-flex items-center gap-1 text-xs font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors px-2 py-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800/60"
-            title={collapsed ? 'Expand section' : 'Collapse section'}
+            className="inline-flex items-center gap-1 text-xs font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors px-2 py-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800/60 cursor-pointer"
+            title={collapsed ? t('Expand') : t('Collapse')}
           >
             {collapsed ? (
               <>
                 <ChevronDownIcon className="w-4 h-4" />
-                <span>Expand</span>
+                <span>{t('Expand')}</span>
               </>
             ) : (
               <>
                 <ChevronUpIcon className="w-4 h-4" />
-                <span>Collapse</span>
+                <span>{t('Collapse')}</span>
               </>
             )}
           </button>
           <button
             type="button"
             onClick={onEdit}
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-brand-500 hover:text-brand-600 transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-brand-500 hover:text-brand-600 transition-colors cursor-pointer"
           >
             {isEmpty ? <PlusIcon className="w-4 h-4" /> : <PencilIcon className="w-4 h-4" />}
-            {isEmpty ? 'Add' : 'Edit'}
+            {isEmpty ? t('Add') : t('Edit')}
           </button>
         </div>
       </div>
       {!collapsed && (
         <div className="px-6 py-4">
           {loading ? (
-            <p className="text-sm text-gray-400 dark:text-gray-500">Loading...</p>
+            <p className="text-sm text-gray-400 dark:text-gray-500">{t('Loading...')}</p>
           ) : isEmpty ? (
-            <p className="text-sm text-gray-400 dark:text-gray-500 italic">{emptyText ?? 'No data yet. Click Add to fill in.'}</p>
+            <p className="text-sm text-gray-400 dark:text-gray-500 italic">{emptyText ? t(emptyText) : t('No data yet. Click Add to fill in.')}</p>
           ) : (
             children
           )}

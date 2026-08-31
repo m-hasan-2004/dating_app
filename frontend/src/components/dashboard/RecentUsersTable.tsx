@@ -1,9 +1,11 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
 import Link from 'next/link';
 import type { User } from '@/services/profileService';
 import { UserCircleIcon, ArrowRightIcon } from '@/icons';
+import { useTranslation } from '@/context/LanguageContext';
+import { formatDate } from '@/utils/formatters';
 
 interface RecentUsersTableProps {
   users: User[];
@@ -11,6 +13,7 @@ interface RecentUsersTableProps {
 }
 
 export function RecentUsersTable({ users, loading }: RecentUsersTableProps) {
+  const { t, isRTL } = useTranslation();
   const displayUsers = users.slice(0, 6);
 
   return (
@@ -18,18 +21,18 @@ export function RecentUsersTable({ users, loading }: RecentUsersTableProps) {
       <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-gray-800">
         <div>
           <h3 className="text-base font-bold text-gray-800 dark:text-white">
-            Recently Registered Candidates
+            {t("Recently Registered Candidates")}
           </h3>
           <p className="text-xs text-gray-500 dark:text-gray-400">
-            Latest profiles signed up via invitation codes
+            {t("Latest profiles signed up via invitation codes")}
           </p>
         </div>
         <Link
           href="/users"
           className="inline-flex items-center gap-1 text-xs font-semibold text-brand-500 hover:text-brand-600 transition-colors"
         >
-          View All Users
-          <ArrowRightIcon className="w-3.5 h-3.5" />
+          {t("View All Users")}
+          <ArrowRightIcon className={`w-3.5 h-3.5 ${isRTL ? 'rotate-180' : ''}`} />
         </Link>
       </div>
 
@@ -37,25 +40,24 @@ export function RecentUsersTable({ users, loading }: RecentUsersTableProps) {
         <table className="w-full text-sm">
           <thead className="bg-gray-50/70 dark:bg-gray-800/40 text-xs font-semibold text-gray-500 dark:text-gray-400">
             <tr>
-              <th className="px-6 py-3 text-left">User</th>
-              <th className="px-6 py-3 text-left">Email</th>
-              <th className="px-6 py-3 text-left">Phone</th>
-              <th className="px-6 py-3 text-left">Status</th>
-              <th className="px-6 py-3 text-left">Joined</th>
-              <th className="px-6 py-3 text-right">Action</th>
+              <th className={`px-6 py-3 ${isRTL ? 'text-right' : 'text-left'}`}>{t("User")}</th>
+              <th className={`px-6 py-3 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Phone")}</th>
+              <th className={`px-6 py-3 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Status")}</th>
+              <th className={`px-6 py-3 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Joined")}</th>
+              <th className={`px-6 py-3 ${isRTL ? 'text-left' : 'text-right'}`}>{t("Action")}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
             {loading ? (
               <tr>
-                <td colSpan={6} className="px-6 py-8 text-center text-gray-400">
-                  Loading recent users...
+                <td colSpan={5} className="px-6 py-8 text-center text-gray-400">
+                  {t("Loading recent users...")}
                 </td>
               </tr>
             ) : displayUsers.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-6 py-8 text-center text-gray-400 italic">
-                  No registered users yet.
+                <td colSpan={5} className="px-6 py-8 text-center text-gray-400 italic">
+                  {t("No registered users yet.")}
                 </td>
               </tr>
             ) : (
@@ -69,7 +71,6 @@ export function RecentUsersTable({ users, loading }: RecentUsersTableProps) {
                       <span className="font-semibold">{u.username}</span>
                     </div>
                   </td>
-                  <td className="px-6 py-3.5 text-gray-600 dark:text-gray-400 text-xs">{u.email || '—'}</td>
                   <td className="px-6 py-3.5 text-gray-600 dark:text-gray-400 text-xs">{u.phone_number ?? '—'}</td>
                   <td className="px-6 py-3.5">
                     <span
@@ -79,19 +80,19 @@ export function RecentUsersTable({ users, loading }: RecentUsersTableProps) {
                           : 'bg-red-100 text-red-700 dark:bg-red-950/40 dark:text-red-400'
                       }`}
                     >
-                      {u.is_active ? 'Active' : 'Inactive'}
+                      {u.is_active ? t('Active') : t('Inactive')}
                     </span>
                   </td>
                   <td className="px-6 py-3.5 text-gray-400 text-xs">
-                    {u.date_joined ? new Date(u.date_joined).toLocaleDateString() : '—'}
+                    {u.date_joined ? formatDate(u.date_joined, isRTL) : '—'}
                   </td>
-                  <td className="px-6 py-3.5 text-right">
+                  <td className={`px-6 py-3.5 ${isRTL ? 'text-left' : 'text-right'}`}>
                     <Link
                       href={`/users/${u.id}/profile`}
                       className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-lg text-brand-600 bg-brand-50 hover:bg-brand-100 dark:bg-brand-950/40 dark:text-brand-400 dark:hover:bg-brand-950/60 transition-colors"
                     >
                       <UserCircleIcon className="w-3.5 h-3.5" />
-                      Profile
+                      {t("Profile")}
                     </Link>
                   </td>
                 </tr>

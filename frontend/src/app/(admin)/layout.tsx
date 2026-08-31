@@ -2,6 +2,7 @@
 
 import { useSidebar } from "@/context/SidebarContext";
 import { useAuth } from "@/hooks/use-auth";
+import { useLanguage } from "@/context/LanguageContext";
 import { useRouter } from "next/navigation";
 import AppHeader from "@/layout/AppHeader";
 import AppSidebar from "@/layout/AppSidebar";
@@ -47,8 +48,16 @@ export default function AdminLayout({
     );
   }
 
-  // Dynamic class for main content margin based on sidebar state
-  const mainContentMargin = isMobileOpen
+  const { isRTL } = useLanguage();
+
+  // Dynamic class for main content margin based on sidebar state and RTL
+  const mainContentMargin = isRTL
+    ? isMobileOpen
+      ? "mr-0"
+      : isExpanded || isHovered
+      ? "lg:mr-[290px]"
+      : "lg:mr-[90px]"
+    : isMobileOpen
     ? "ml-0"
     : isExpanded || isHovered
     ? "lg:ml-[290px]"

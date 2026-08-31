@@ -24,10 +24,13 @@ import ComponentCard from "@/components/common/ComponentCard";
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
 import { PlusIcon, TrashBinIcon, CheckLineIcon, CloseLineIcon, CopyIcon } from "@/icons";
 import { useAuth } from "@/hooks/use-auth";
+import { useTranslation } from "@/context/LanguageContext";
+import { formatDate } from "@/utils/formatters";
 import { useRouter } from "next/navigation";
 
 export default function AccessCodesManagement() {
   const { user, loading: authLoading } = useAuth();
+  const { t, isRTL } = useTranslation();
   const router = useRouter();
   const isAdmin = Boolean(user?.is_staff || (user as any)?.is_superuser);
 
@@ -36,6 +39,10 @@ export default function AccessCodesManagement() {
       router.replace('/');
     }
   }, [authLoading, isAdmin, router]);
+
+  if (!isAdmin && !authLoading) {
+    return null;
+  }
 
   const [accessCodes, setAccessCodes] = useState<AccessCode[]>([]);
   const [totalCount, setTotalCount] = useState<number>(0);
@@ -96,12 +103,12 @@ export default function AccessCodesManagement() {
         setTotalCount(0);
       }
     } catch (err: any) {
-      setError(err.message || "Failed to load access codes");
+      setError(err.message || t("Failed to load access codes"));
     } finally {
       setLoading(false);
     }
     setSelectedIds(new Set());
-  }, [filterStatus]);
+  }, [filterStatus, t]);
 
   useEffect(() => { loadData(); }, [loadData]);
 
@@ -134,7 +141,7 @@ export default function AccessCodesManagement() {
         prev.map((c) => (c.id === updated.id ? { ...c, active: updated.active } : c))
       );
     } catch (err: any) {
-      alert(`Failed to update status: ${err.message}`);
+      alert(`${t("Failed to update status")}: ${err.message}`);
     }
   };
 
@@ -156,7 +163,7 @@ export default function AccessCodesManagement() {
       setIsCreateOpen(false);
       loadData();
     } catch (err: any) {
-      setFormError(err.message || "Failed to generate access codes");
+      setFormError(err.message || t("Failed to generate access codes"));
     } finally {
       setFormSubmitting(false);
     }
@@ -169,7 +176,7 @@ export default function AccessCodesManagement() {
       setSelectedCode(codeData);
       setIsDetailOpen(true);
     } catch (err: any) {
-      alert(`Failed to fetch details: ${err.message}`);
+      alert(`${t("Failed to fetch details")}: ${err.message}`);
     }
   };
 
@@ -192,7 +199,7 @@ export default function AccessCodesManagement() {
       setIsEditOpen(false);
       loadData();
     } catch (err: any) {
-      setFormError(err.message || "Failed to update access code");
+      setFormError(err.message || t("Failed to update access code"));
     } finally {
       setFormSubmitting(false);
     }
@@ -213,7 +220,7 @@ export default function AccessCodesManagement() {
       setIsDeleteOpen(false);
       loadData();
     } catch (err: any) {
-      alert(`Failed to delete access code: ${err.message}`);
+      alert(`${t("Failed to delete access code")}: ${err.message}`);
     } finally {
       setFormSubmitting(false);
     }
@@ -222,13 +229,13 @@ export default function AccessCodesManagement() {
   // ── Bulk selection actions ─────────────────────────────────────
   const handleActivateSelected = async () => {
     const targets = accessCodes.filter((item) => selectedIds.has(item.id) && !item.active);
-    if (targets.length === 0) { alert("All selected codes are already active."); return; }
+    if (targets.length === 0) { alert(t("All selected codes are already active.")); return; }
     setBulkSubmitting(true);
     try {
       await Promise.all(targets.map((item) => updateAccessCodePatch(item.id, { active: true })));
       loadData();
     } catch (err: any) {
-      alert(`Failed to activate: ${err.message}`);
+      alert(`${t("Failed to activate")}: ${err.message}`);
     } finally {
       setBulkSubmitting(false);
     }
@@ -236,13 +243,13 @@ export default function AccessCodesManagement() {
 
   const handleDeactivateSelected = async () => {
     const targets = accessCodes.filter((item) => selectedIds.has(item.id) && item.active);
-    if (targets.length === 0) { alert("All selected codes are already inactive."); return; }
+    if (targets.length === 0) { alert(t("All selected codes are already inactive.")); return; }
     setBulkSubmitting(true);
     try {
       await Promise.all(targets.map((item) => updateAccessCodePatch(item.id, { active: false })));
       loadData();
     } catch (err: any) {
-      alert(`Failed to deactivate: ${err.message}`);
+      alert(`${t("Failed to deactivate")}: ${err.message}`);
     } finally {
       setBulkSubmitting(false);
     }
@@ -255,7 +262,7 @@ export default function AccessCodesManagement() {
       setIsDeleteSelectedOpen(false);
       loadData();
     } catch (err: any) {
-      alert(`Failed to delete selected codes: ${err.message}`);
+      alert(`${t("Failed to delete selected codes")}: ${err.message}`);
     } finally {
       setBulkSubmitting(false);
     }
@@ -263,81 +270,80 @@ export default function AccessCodesManagement() {
 
   return (
     <div className="space-y-6">
-      <PageBreadcrumb pageTitle="Access Codes Management" />
+      <PageBreadcrumb pageTitle={t("Access Codes Management")} />
 
-      <ComponentCard title="Access Codes Overview">
+      <ComponentCard title={t("Access Codes Overview")}>
         {/* Top Controls */}
         <div className="flex flex-col gap-4 mb-6 sm:flex-row sm:items-center sm:justify-between">
           {/* Status Filter Tabs */}
           <div className="flex items-center gap-2 p-1 bg-gray-100 dark:bg-gray-800 rounded-xl w-fit">
             <button
               onClick={() => setFilterStatus("all")}
-              className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+              className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors cursor-pointer ${
                 filterStatus === "all"
                   ? "bg-white dark:bg-gray-700 text-brand-500 shadow-xs"
                   : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
               }`}
             >
-              All
+              {t("All")}
             </button>
             <button
               onClick={() => setFilterStatus("active")}
-              className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+              className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors cursor-pointer ${
                 filterStatus === "active"
                   ? "bg-white dark:bg-gray-700 text-brand-500 shadow-xs"
                   : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
               }`}
             >
-              Active
+              {t("Active")}
             </button>
             <button
               onClick={() => setFilterStatus("inactive")}
-              className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+              className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors cursor-pointer ${
                 filterStatus === "inactive"
                   ? "bg-white dark:bg-gray-700 text-brand-500 shadow-xs"
                   : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
               }`}
             >
-              Inactive
+              {t("Inactive")}
             </button>
           </div>
 
-          {/* Actions toolbar — selection actions on left, Generate on far right */}
+          {/* Actions toolbar */}
           <div className="flex items-center gap-3 flex-wrap">
             {hasSelection && (
               <>
                 <button
                   onClick={handleActivateSelected}
                   disabled={bulkSubmitting}
-                  className="inline-flex items-center justify-center font-medium gap-2 rounded-lg px-4 py-2.5 text-sm bg-green-600 text-white shadow-theme-xs hover:bg-green-700 disabled:opacity-50 transition-colors"
+                  className="inline-flex items-center justify-center font-medium gap-2 rounded-lg px-4 py-2.5 text-sm bg-green-600 text-white shadow-theme-xs hover:bg-green-700 disabled:opacity-50 transition-colors cursor-pointer"
                 >
                   <CheckLineIcon className="w-4 h-4" />
-                  Activate ({selectedIds.size})
+                  {t("Activate")} ({selectedIds.size})
                 </button>
 
                 <button
                   onClick={handleDeactivateSelected}
                   disabled={bulkSubmitting}
-                  className="inline-flex items-center justify-center font-medium gap-2 rounded-lg px-4 py-2.5 text-sm bg-amber-500 text-white shadow-theme-xs hover:bg-amber-600 disabled:opacity-50 transition-colors"
+                  className="inline-flex items-center justify-center font-medium gap-2 rounded-lg px-4 py-2.5 text-sm bg-amber-500 text-white shadow-theme-xs hover:bg-amber-600 disabled:opacity-50 transition-colors cursor-pointer"
                 >
                   <CloseLineIcon className="w-4 h-4" />
-                  Deactivate ({selectedIds.size})
+                  {t("Deactivate")} ({selectedIds.size})
                 </button>
 
                 <button
                   onClick={() => setIsDeleteSelectedOpen(true)}
                   disabled={bulkSubmitting}
-                  className="inline-flex items-center justify-center font-medium gap-2 rounded-lg px-4 py-2.5 text-sm bg-red-600 text-white shadow-theme-xs hover:bg-red-700 disabled:opacity-50 transition-colors"
+                  className="inline-flex items-center justify-center font-medium gap-2 rounded-lg px-4 py-2.5 text-sm bg-red-600 text-white shadow-theme-xs hover:bg-red-700 disabled:opacity-50 transition-colors cursor-pointer"
                 >
                   <TrashBinIcon className="w-4 h-4" />
-                  Delete ({selectedIds.size})
+                  {t("Delete")} ({selectedIds.size})
                 </button>
               </>
             )}
 
-            {/* Generate — always far right */}
             <Button onClick={handleOpenCreate} startIcon={<PlusIcon className="w-4 h-4" />}>
-              Generate Access Code
+              {t("Generate Access Code")}
             </Button>
           </div>
         </div>
@@ -352,11 +358,11 @@ export default function AccessCodesManagement() {
         {/* Table / Loading State */}
         {loading ? (
           <div className="py-12 text-center text-gray-500 dark:text-gray-400">
-            Loading access codes...
+            {t("Loading access codes...")}
           </div>
         ) : accessCodes.length === 0 ? (
           <div className="py-12 text-center text-gray-500 dark:text-gray-400">
-            No access codes found.
+            {t("No access codes found.")}
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -371,23 +377,23 @@ export default function AccessCodesManagement() {
                       ref={(el) => { if (el) el.indeterminate = isIndeterminate; }}
                       onChange={toggleSelectAll}
                       className="w-4 h-4 rounded border-gray-300 text-brand-500 cursor-pointer"
-                      aria-label="Select all"
+                      aria-label={t("Select all")}
                     />
                   </TableCell>
-                  <TableCell isHeader className="py-3 px-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    ID
+                  <TableCell isHeader className={`py-3 px-4 ${isRTL ? 'text-right' : 'text-left'} text-xs font-semibold text-gray-500 uppercase tracking-wider`}>
+                    {t("ID")}
                   </TableCell>
-                  <TableCell isHeader className="py-3 px-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    Code
+                  <TableCell isHeader className={`py-3 px-4 ${isRTL ? 'text-right' : 'text-left'} text-xs font-semibold text-gray-500 uppercase tracking-wider`}>
+                    {t("Code")}
                   </TableCell>
-                  <TableCell isHeader className="py-3 px-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    Status
+                  <TableCell isHeader className={`py-3 px-4 ${isRTL ? 'text-right' : 'text-left'} text-xs font-semibold text-gray-500 uppercase tracking-wider`}>
+                    {t("Status")}
                   </TableCell>
-                  <TableCell isHeader className="py-3 px-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    Date Created
+                  <TableCell isHeader className={`py-3 px-4 ${isRTL ? 'text-right' : 'text-left'} text-xs font-semibold text-gray-500 uppercase tracking-wider`}>
+                    {t("Date Created")}
                   </TableCell>
-                  <TableCell isHeader className="py-3 px-4 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    Actions
+                  <TableCell isHeader className={`py-3 px-4 ${isRTL ? 'text-left' : 'text-right'} text-xs font-semibold text-gray-500 uppercase tracking-wider`}>
+                    {t("Actions")}
                   </TableCell>
                 </TableRow>
               </TableHeader>
@@ -399,7 +405,6 @@ export default function AccessCodesManagement() {
                       selectedIds.has(item.id) ? "bg-brand-50 dark:bg-brand-900/10" : ""
                     }`}
                   >
-                    {/* Row checkbox — before ID */}
                     <TableCell className="py-3 px-4 w-10">
                       <input
                         type="checkbox"
@@ -409,31 +414,31 @@ export default function AccessCodesManagement() {
                         aria-label={`Select row ${item.id}`}
                       />
                     </TableCell>
-                    <TableCell className="py-3 px-4 text-sm font-medium text-gray-900 dark:text-white">
+                    <TableCell className={`py-3 px-4 text-sm font-medium text-gray-900 dark:text-white ${isRTL ? 'text-right' : 'text-left'}`}>
                       #{item.id}
                     </TableCell>
                     <TableCell
                       onClick={() => handleCopyCode(item.id, item.code)}
-                      className="py-3 px-4 text-sm font-mono font-semibold text-brand-600 dark:text-brand-400 cursor-pointer hover:underline select-all"
-                      title="Click to copy code"
+                      className={`py-3 px-4 text-sm font-mono font-semibold text-brand-600 dark:text-brand-400 cursor-pointer hover:underline select-all ${isRTL ? 'text-right' : 'text-left'}`}
+                      title={t("Click to copy code")}
                     >
                       {item.code}
                     </TableCell>
-                    <TableCell className="py-3 px-4 text-sm">
+                    <TableCell className={`py-3 px-4 text-sm ${isRTL ? 'text-right' : 'text-left'}`}>
                       <Badge color={item.active ? "success" : "error"} variant="light">
-                        {item.active ? "Active" : "Inactive"}
+                        {item.active ? t("Active") : t("Inactive")}
                       </Badge>
                     </TableCell>
-                    <TableCell className="py-3 px-4 text-sm text-gray-600 dark:text-gray-300">
-                      {item.date_created ? new Date(item.date_created).toLocaleString() : "-"}
+                    <TableCell className={`py-3 px-4 text-sm text-gray-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>
+                      {item.date_created ? formatDate(item.date_created, isRTL) : "-"}
                     </TableCell>
-                    <TableCell className="py-3 px-4 text-sm text-right">
-                      <div className="flex items-center justify-end gap-2">
+                    <TableCell className={`py-3 px-4 text-sm ${isRTL ? 'text-left' : 'text-right'}`}>
+                      <div className={`flex items-center ${isRTL ? 'justify-start' : 'justify-end'} gap-2`}>
                         {/* Copy Code Button */}
                         <button
                           onClick={() => handleCopyCode(item.id, item.code)}
-                          title={copiedId === item.id ? "Copied!" : "Copy Code"}
-                          className={`p-1.5 rounded-lg transition-colors ${
+                          title={copiedId === item.id ? t("Copied!") : t("Copy Code")}
+                          className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
                             copiedId === item.id
                               ? "bg-success-100 text-success-600 dark:bg-success-900/40 dark:text-success-400"
                               : "text-indigo-600 hover:bg-indigo-50 dark:text-indigo-400 dark:hover:bg-indigo-950/40"
@@ -449,8 +454,8 @@ export default function AccessCodesManagement() {
                         {/* Toggle Status Button */}
                         <button
                           onClick={() => handleToggleStatus(item)}
-                          title={item.active ? "Deactivate Code" : "Activate Code"}
-                          className={`p-1.5 rounded-lg transition-colors ${
+                          title={item.active ? t("Deactivate Code") : t("Activate Code")}
+                          className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
                             item.active
                               ? "text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/40"
                               : "text-green-600 hover:bg-green-50 dark:hover:bg-green-950/40"
@@ -462,8 +467,8 @@ export default function AccessCodesManagement() {
                         {/* Delete Button */}
                         <button
                           onClick={() => handleOpenDelete(item)}
-                          title="Delete Code"
-                          className="p-1.5 text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-lg transition-colors"
+                          title={t("Delete Code")}
+                          className="p-1.5 text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-lg transition-colors cursor-pointer"
                         >
                           <TrashBinIcon className="w-5 h-5" />
                         </button>
@@ -478,13 +483,13 @@ export default function AccessCodesManagement() {
       </ComponentCard>
 
       {/* ── CREATE MODAL ─────────────────────────────────────────── */}
-      <Modal isOpen={isCreateOpen} onClose={() => setIsCreateOpen(false)} showCloseButton={false}>
-        <div className="p-6 max-w-md w-full">
+      <Modal isOpen={isCreateOpen} onClose={() => setIsCreateOpen(false)} className="max-w-md w-full" showCloseButton={false}>
+        <div className="p-6 w-full">
           <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 text-center">
-            Generate Access Codes
+            {t("Generate Access Codes")}
           </h3>
           <p className="text-xs text-gray-500 mb-4 text-center">
-            Enter the number of access codes you want to generate.
+            {t("Enter the number of access codes you want to generate.")}
           </p>
 
           {formError && (
@@ -496,7 +501,7 @@ export default function AccessCodesManagement() {
           <form onSubmit={handleCreateSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 text-center">
-                Number of Codes to Generate
+                {t("Number of Codes to Generate")}
               </label>
               <input
                 type="number"
@@ -511,12 +516,12 @@ export default function AccessCodesManagement() {
 
             <div className="flex justify-center gap-3 pt-4 border-t border-gray-200 dark:border-gray-800">
               <Button variant="outline" onClick={() => setIsCreateOpen(false)}>
-                Cancel
+                {t("Cancel")}
               </Button>
               <Button disabled={formSubmitting}>
                 {formSubmitting
-                  ? "Generating..."
-                  : `Generate ${generateQuantity > 1 ? generateQuantity : ""} Code${generateQuantity > 1 ? "s" : ""}`}
+                  ? t("Generating...")
+                  : `${t("Generate Access Code")} (${generateQuantity})`}
               </Button>
             </div>
           </form>
@@ -524,10 +529,10 @@ export default function AccessCodesManagement() {
       </Modal>
 
       {/* ── EDIT MODAL ───────────────────────────────────────────── */}
-      <Modal isOpen={isEditOpen} onClose={() => setIsEditOpen(false)} showCloseButton={false}>
-        <div className="p-6 max-w-md w-full">
+      <Modal isOpen={isEditOpen} onClose={() => setIsEditOpen(false)} className="max-w-md w-full" showCloseButton={false}>
+        <div className="p-6 w-full">
           <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 text-center">
-            Update Access Code #{selectedCode?.id} (PUT)
+            {t("Update Access Code")} #{selectedCode?.id}
           </h3>
           <p className="text-xs font-mono text-brand-600 mb-4 truncate text-center">
             {selectedCode?.code}
@@ -549,16 +554,16 @@ export default function AccessCodesManagement() {
                 className="w-4 h-4 text-brand-500 rounded border-gray-300"
               />
               <label htmlFor="edit_active" className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                Active
+                {t("Active")}
               </label>
             </div>
 
             <div className="flex justify-center gap-3 pt-4 border-t border-gray-200 dark:border-gray-800">
               <Button variant="outline" onClick={() => setIsEditOpen(false)}>
-                Cancel
+                {t("Cancel")}
               </Button>
               <Button disabled={formSubmitting}>
-                {formSubmitting ? "Saving..." : "Save Changes"}
+                {formSubmitting ? t("Saving...") : t("Save Changes")}
               </Button>
             </div>
           </form>
@@ -566,51 +571,51 @@ export default function AccessCodesManagement() {
       </Modal>
 
       {/* ── DETAIL MODAL ─────────────────────────────────────────── */}
-      <Modal isOpen={isDetailOpen} onClose={() => setIsDetailOpen(false)} showCloseButton={false}>
-        <div className="p-6 max-w-md w-full">
+      <Modal isOpen={isDetailOpen} onClose={() => setIsDetailOpen(false)} className="max-w-md w-full" showCloseButton={false}>
+        <div className="p-6 w-full">
           <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 text-center">
-            Access Code Details
+            {t("Access Code Details")}
           </h3>
 
           {selectedCode && (
             <div className="space-y-3 text-sm">
               <div className="flex justify-between py-2 border-b border-gray-100 dark:border-gray-800">
-                <span className="font-medium text-gray-500">ID:</span>
+                <span className="font-medium text-gray-500">{t("ID")}:</span>
                 <span className="text-gray-900 dark:text-white">{selectedCode.id}</span>
               </div>
               <div className="flex justify-between py-2 border-b border-gray-100 dark:border-gray-800">
-                <span className="font-medium text-gray-500">Code (UUID):</span>
+                <span className="font-medium text-gray-500">{t("Code")}:</span>
                 <span className="font-mono font-bold text-brand-600 select-all">{selectedCode.code}</span>
               </div>
               <div className="flex justify-between py-2 border-b border-gray-100 dark:border-gray-800">
-                <span className="font-medium text-gray-500">Status:</span>
+                <span className="font-medium text-gray-500">{t("Status")}:</span>
                 <Badge color={selectedCode.active ? "success" : "error"}>
-                  {selectedCode.active ? "Active" : "Inactive"}
+                  {selectedCode.active ? t("Active") : t("Inactive")}
                 </Badge>
               </div>
               <div className="flex justify-between py-2 border-b border-gray-100 dark:border-gray-800">
-                <span className="font-medium text-gray-500">Date Created:</span>
+                <span className="font-medium text-gray-500">{t("Date Created")}:</span>
                 <span className="text-gray-900 dark:text-white">
-                  {selectedCode.date_created ? new Date(selectedCode.date_created).toLocaleString() : "-"}
+                  {selectedCode.date_created ? formatDate(selectedCode.date_created, isRTL) : "-"}
                 </span>
               </div>
             </div>
           )}
 
           <div className="flex justify-center pt-5 mt-4 border-t border-gray-200 dark:border-gray-800">
-            <Button onClick={() => setIsDetailOpen(false)}>Close</Button>
+            <Button onClick={() => setIsDetailOpen(false)}>{t("Close")}</Button>
           </div>
         </div>
       </Modal>
 
       {/* ── DELETE MODAL (single) ────────────────────────────────── */}
-      <Modal isOpen={isDeleteOpen} onClose={() => setIsDeleteOpen(false)} showCloseButton={false}>
-        <div className="p-6 max-w-md w-full text-center">
+      <Modal isOpen={isDeleteOpen} onClose={() => setIsDeleteOpen(false)} className="max-w-md w-full" showCloseButton={false}>
+        <div className="p-6 w-full text-center">
           <h3 className="text-xl font-bold text-red-600 dark:text-red-400 mb-2">
-            Confirm Delete
+            {t("Confirm Delete")}
           </h3>
           <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
-            Are you sure you want to delete access code{" "}
+            {t("Are you sure you want to delete access code")}{" "}
             <span className="font-mono font-semibold text-gray-900 dark:text-white">
               &ldquo;{selectedCode?.code}&rdquo;
             </span>
@@ -619,36 +624,36 @@ export default function AccessCodesManagement() {
 
           <div className="flex justify-center gap-3">
             <Button variant="outline" onClick={() => setIsDeleteOpen(false)}>
-              Cancel
+              {t("Cancel")}
             </Button>
             <Button
               className="bg-red-600 hover:bg-red-700 text-white"
               onClick={handleDeleteConfirm}
               disabled={formSubmitting}
             >
-              {formSubmitting ? "Deleting..." : "Delete Code"}
+              {formSubmitting ? t("Deleting...") : t("Delete")}
             </Button>
           </div>
         </div>
       </Modal>
 
       {/* ── DELETE SELECTED MODAL ────────────────────────────────── */}
-      <Modal isOpen={isDeleteSelectedOpen} onClose={() => setIsDeleteSelectedOpen(false)} showCloseButton={false}>
-        <div className="p-6 max-w-md w-full text-center">
+      <Modal isOpen={isDeleteSelectedOpen} onClose={() => setIsDeleteSelectedOpen(false)} className="max-w-md w-full" showCloseButton={false}>
+        <div className="p-6 w-full text-center">
           <h3 className="text-xl font-bold text-red-600 dark:text-red-400 mb-2">
-            Confirm Delete
+            {t("Confirm Delete")}
           </h3>
           <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
-            Are you sure you want to delete{" "}
+            {t("Are you sure you want to delete")}{" "}
             <span className="font-semibold text-gray-900 dark:text-white">
-              {selectedIds.size} selected access code{selectedIds.size !== 1 ? "s" : ""}
+              {selectedIds.size} {t("selected")} {t("access code(s)")}
             </span>
-            ? This action cannot be undone.
+            ? {t("This action cannot be undone.")}
           </p>
 
           <div className="flex justify-center gap-3">
             <Button variant="outline" onClick={() => setIsDeleteSelectedOpen(false)}>
-              Cancel
+              {t("Cancel")}
             </Button>
             <Button
               className="bg-red-600 hover:bg-red-700 text-white"
@@ -656,8 +661,8 @@ export default function AccessCodesManagement() {
               disabled={bulkSubmitting}
             >
               {bulkSubmitting
-                ? "Deleting..."
-                : `Delete ${selectedIds.size} Code${selectedIds.size !== 1 ? "s" : ""}`}
+                ? t("Deleting...")
+                : `${t("Delete")} ${selectedIds.size} ${t("Code")}`}
             </Button>
           </div>
         </div>

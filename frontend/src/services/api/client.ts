@@ -39,12 +39,16 @@ export async function apiClient<T = any>(
   }
 
   const isFormData = customConfig.body instanceof FormData;
+  const currentLang = typeof window !== "undefined" ? localStorage.getItem("app_language") || "fa" : "fa";
 
   const defaultHeaders: HeadersInit = isFormData
-    ? {}
+    ? {
+        "Accept-Language": currentLang,
+      }
     : {
         "Content-Type": "application/json",
         Accept: "application/json",
+        "Accept-Language": currentLang,
       };
 
   const config: RequestInit = {

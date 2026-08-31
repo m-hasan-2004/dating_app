@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { apiClient } from '@/services/api/client';
 import { toggleBookmark } from '@/services/profileService';
+import { useTranslation } from '@/context/LanguageContext';
+import { formatHeight, formatWeight, formatDate, formatBoolean } from '@/utils/formatters';
 import {
   ChevronLeftIcon,
   CheckCircleIcon,
@@ -12,6 +14,7 @@ import {
 } from '@/icons';
 
 export default function PublicCandidateProfilePage() {
+  const { t, isRTL } = useTranslation();
   const params = useParams();
   const router = useRouter();
   const candidateId = Array.isArray(params?.id) ? params.id[0] : (params?.id as string);
@@ -144,14 +147,15 @@ export default function PublicCandidateProfilePage() {
 
   const DetailRow = ({ label, value, badge }: { label: string; value?: any; badge?: boolean }) => {
     let display = value;
-    if (value === true) display = 'Yes (بله)';
-    else if (value === false) display = 'No (خیر)';
-    else if (Array.isArray(value)) display = value.length ? value.join(', ') : '—';
+    if (value === true) display = isRTL ? 'بله' : 'Yes';
+    else if (value === false) display = isRTL ? 'خیر' : 'No';
+    else if (Array.isArray(value)) display = value.length ? value.map((v) => t(String(v))).join('، ') : '—';
+    else if (typeof value === 'string' && value.trim()) display = t(value);
     else if (!value) display = '—';
 
     return (
       <div className="flex flex-col sm:flex-row sm:items-center justify-between py-2.5 border-b border-gray-100 dark:border-gray-800/80 last:border-0 gap-1">
-        <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{label}</span>
+        <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{t(label)}</span>
         {badge && display !== '—' ? (
           <span className="inline-flex px-2.5 py-0.5 text-xs font-semibold rounded-lg bg-brand-50 text-brand-600 dark:bg-brand-950/40 dark:text-brand-400 w-fit">
             {display}
@@ -183,14 +187,14 @@ export default function PublicCandidateProfilePage() {
         <div className="w-16 h-16 rounded-full bg-red-50 text-red-500 dark:bg-red-950/30 flex items-center justify-center mx-auto text-2xl font-bold">
           !
         </div>
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white">Candidate Not Found</h2>
-        <p className="text-sm text-gray-500 dark:text-gray-400">{error || 'This candidate profile is not available or inactive.'}</p>
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t("Candidate Not Found")}</h2>
+        <p className="text-sm text-gray-500 dark:text-gray-400">{error || t("This candidate profile is not available or inactive.")}</p>
         <Link
           href="/search"
           className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-semibold rounded-2xl bg-brand-500 text-white hover:bg-brand-600 transition-colors shadow-sm"
         >
           <ChevronLeftIcon className="w-4 h-4" />
-          Back to Candidate Search
+          {t("Back to Candidate Search")}
         </Link>
       </div>
     );
@@ -212,8 +216,8 @@ export default function PublicCandidateProfilePage() {
           href="/search"
           className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-600 hover:text-brand-500 dark:text-gray-400 dark:hover:text-white transition-colors"
         >
-          <ChevronLeftIcon className="w-4 h-4" />
-          <span>Back to Candidate Directory</span>
+          <ChevronLeftIcon className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
+          <span>{t("Back to Candidate Directory")}</span>
         </Link>
 
         <div className="flex items-center gap-3">
@@ -229,7 +233,7 @@ export default function PublicCandidateProfilePage() {
             <svg className={`w-4 h-4 ${isBookmarked ? 'fill-current text-amber-500' : 'fill-none stroke-current stroke-2'}`} viewBox="0 0 24 24">
               <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
             </svg>
-            <span>{isBookmarked ? 'Bookmarked Candidate' : 'Bookmark Candidate'}</span>
+            <span>{isBookmarked ? t("Bookmarked Candidate") : t("Bookmark Candidate")}</span>
           </button>
         </div>
       </div>
@@ -238,7 +242,7 @@ export default function PublicCandidateProfilePage() {
       <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] overflow-hidden shadow-sm">
         <div className={`h-36 ${isFemale ? 'bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600' : 'bg-gradient-to-r from-brand-500 via-indigo-600 to-blue-600'} p-6 relative flex items-end justify-between`}>
           <span className="absolute top-4 right-4 px-3 py-1 text-[11px] font-bold rounded-full bg-white/20 backdrop-blur-md text-white border border-white/30">
-            Public Verified Candidate Profile
+            {t("Public Verified Candidate Profile")}
           </span>
         </div>
 
@@ -255,7 +259,7 @@ export default function PublicCandidateProfilePage() {
                 <span className="w-2 h-2 rounded-full bg-emerald-500" title="Active"></span>
               </div>
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                {age ? `${age} years old` : 'Age: —'} • {personal?.birth_location || 'Location: —'} • Registered Member
+                {age ? `${age} ${t("Years")}` : '—'} • {personal?.birth_location ? t(personal.birth_location) : '—'} • {t("Registered Member")}
               </p>
             </div>
           </div>
@@ -263,21 +267,21 @@ export default function PublicCandidateProfilePage() {
           <div className="flex flex-wrap justify-center sm:justify-end gap-2 text-xs">
             {personal?.education && (
               <span className="px-3 py-1 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium">
-                🎓 {personal.education}
+                🎓 {t(personal.education)}
               </span>
             )}
             {financial?.job && (
               <span className="px-3 py-1 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium">
-                💼 {financial.job}
+                💼 {t(financial.job)}
               </span>
             )}
             {birth?.marriage_experince === 'no' ? (
               <span className="px-3 py-1 rounded-xl bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 font-semibold">
-                Never Married
+                {t("Never Married")}
               </span>
             ) : birth?.marriage_experince === 'yes' ? (
               <span className="px-3 py-1 rounded-xl bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 font-semibold">
-                Divorced / Has Experience
+                {t("Divorced / Has Experience")}
               </span>
             ) : null}
           </div>
@@ -287,39 +291,39 @@ export default function PublicCandidateProfilePage() {
       {/* Highlights Metrics Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
         <div className="p-4 rounded-2xl bg-white dark:bg-white/[0.02] border border-gray-200 dark:border-gray-800 text-center">
-          <span className="text-[11px] font-medium text-gray-400">Height / Weight</span>
+          <span className="text-[11px] font-medium text-gray-400">{t("Height / Weight")}</span>
           <p className="text-sm font-bold text-gray-900 dark:text-white mt-1">
-            {physical?.height ? `${physical.height} cm` : '—'} / {physical?.weight ? `${physical.weight} kg` : '—'}
+            {physical?.height ? formatHeight(physical.height, isRTL) : '—'} / {physical?.weight ? formatWeight(physical.weight, isRTL) : '—'}
           </p>
         </div>
         <div className="p-4 rounded-2xl bg-white dark:bg-white/[0.02] border border-gray-200 dark:border-gray-800 text-center">
-          <span className="text-[11px] font-medium text-gray-400">Housing</span>
-          <p className="text-sm font-bold text-gray-900 dark:text-white mt-1 capitalize">
-            {financial?.ownership_status || '—'}
-          </p>
-        </div>
-        <div className="p-4 rounded-2xl bg-white dark:bg-white/[0.02] border border-gray-200 dark:border-gray-800 text-center">
-          <span className="text-[11px] font-medium text-gray-400">Monthly Income</span>
+          <span className="text-[11px] font-medium text-gray-400">{t("Housing Ownership")}</span>
           <p className="text-sm font-bold text-gray-900 dark:text-white mt-1">
-            {personal?.income || '—'}
+            {financial?.ownership_status ? t(financial.ownership_status) : '—'}
           </p>
         </div>
         <div className="p-4 rounded-2xl bg-white dark:bg-white/[0.02] border border-gray-200 dark:border-gray-800 text-center">
-          <span className="text-[11px] font-medium text-gray-400">Skin Complexion</span>
+          <span className="text-[11px] font-medium text-gray-400">{t("Monthly Income")}</span>
           <p className="text-sm font-bold text-gray-900 dark:text-white mt-1">
-            {physical?.skin_color || '—'}
+            {personal?.income ? t(personal.income) : '—'}
           </p>
         </div>
         <div className="p-4 rounded-2xl bg-white dark:bg-white/[0.02] border border-gray-200 dark:border-gray-800 text-center">
-          <span className="text-[11px] font-medium text-gray-400">Prayer Status</span>
-          <p className="text-sm font-bold text-gray-900 dark:text-white mt-1 capitalize">
-            {intellectual?.worship_and_prayer || intellectual?.worship_prayer || '—'}
+          <span className="text-[11px] font-medium text-gray-400">{t("Skin Complexion")}</span>
+          <p className="text-sm font-bold text-gray-900 dark:text-white mt-1">
+            {physical?.skin_color ? t(physical.skin_color) : '—'}
           </p>
         </div>
         <div className="p-4 rounded-2xl bg-white dark:bg-white/[0.02] border border-gray-200 dark:border-gray-800 text-center">
-          <span className="text-[11px] font-medium text-gray-400">Society Cover</span>
-          <p className="text-sm font-bold text-gray-900 dark:text-white mt-1 capitalize">
-            {intellectual?.cover_type_society || '—'}
+          <span className="text-[11px] font-medium text-gray-400">{t("Prayer Commitment")}</span>
+          <p className="text-sm font-bold text-gray-900 dark:text-white mt-1">
+            {intellectual?.worship_and_prayer || intellectual?.worship_prayer ? t(intellectual?.worship_and_prayer || intellectual?.worship_prayer) : '—'}
+          </p>
+        </div>
+        <div className="p-4 rounded-2xl bg-white dark:bg-white/[0.02] border border-gray-200 dark:border-gray-800 text-center">
+          <span className="text-[11px] font-medium text-gray-400">{t("Society Cover & Hijab")}</span>
+          <p className="text-sm font-bold text-gray-900 dark:text-white mt-1">
+            {intellectual?.cover_type_society ? t(intellectual.cover_type_society) : '—'}
           </p>
         </div>
       </div>
@@ -328,12 +332,12 @@ export default function PublicCandidateProfilePage() {
       <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-gray-200 dark:border-gray-800 scrollbar-none">
         {[
           { key: 'overview', label: 'Overview' },
-          { key: 'personal', label: 'Personal & Lifestyle' },
-          { key: 'physical', label: 'Physical & Health' },
-          { key: 'intellectual', label: 'Religious & Beliefs' },
-          { key: 'family', label: 'Family Heritage' },
-          { key: 'financial', label: 'Housing & Financial' },
-          { key: 'preferred', label: 'Spouse Criteria' },
+          { key: 'personal', label: 'Personal Information' },
+          { key: 'physical', label: 'Physical Information' },
+          { key: 'intellectual', label: 'Intellectual & Belief Information' },
+          { key: 'family', label: 'Family Information' },
+          { key: 'financial', label: 'Financial Information' },
+          { key: 'preferred', label: 'Preferred Future Spouse' },
         ].map((tab) => (
           <button
             key={tab.key}
@@ -345,7 +349,7 @@ export default function PublicCandidateProfilePage() {
                 : 'bg-white text-gray-600 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
             }`}
           >
-            {tab.label}
+            {t(tab.label)}
           </button>
         ))}
       </div>
@@ -356,10 +360,10 @@ export default function PublicCandidateProfilePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-3">
               <h3 className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2 pb-2 border-b border-gray-100 dark:border-gray-800">
-                <span>👤</span> Personal & Identity
+                <span>👤</span> {t("Personal Information")}
               </h3>
               <DetailRow label="Birth Location / City" value={personal?.birth_location} />
-              <DetailRow label="Age" value={age ? `${age} years old` : '—'} />
+              <DetailRow label="Age" value={age ? `${age} ${t("Years")}` : '—'} />
               <DetailRow label="Education Degree" value={personal?.education} badge />
               <DetailRow label="Major / Degree Details" value={personal?.degree} />
               <DetailRow label="Sadat Lineage (سید)" value={personal?.sadat} />
@@ -370,7 +374,7 @@ export default function PublicCandidateProfilePage() {
 
             <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-3">
               <h3 className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2 pb-2 border-b border-gray-100 dark:border-gray-800">
-                <span>🕌</span> Religious & Intellectual Outlook
+                <span>🕌</span> {t("Religious & Intellectual Outlook")}
               </h3>
               <DetailRow label="Prayer & Worship" value={intellectual?.worship_and_prayer || intellectual?.worship_prayer} badge />
               <DetailRow label="Fasting (روزه)" value={intellectual?.fasting} />
@@ -383,7 +387,7 @@ export default function PublicCandidateProfilePage() {
 
             <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-3">
               <h3 className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2 pb-2 border-b border-gray-100 dark:border-gray-800">
-                <span>💰</span> Financial & Living
+                <span>💰</span> {t("Financial & Living")}
               </h3>
               <DetailRow label="Career / Job" value={financial?.job} badge />
               <DetailRow label="Housing Ownership" value={financial?.ownership_status} />
@@ -396,7 +400,7 @@ export default function PublicCandidateProfilePage() {
 
             <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-3">
               <h3 className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2 pb-2 border-b border-gray-100 dark:border-gray-800">
-                <span>🎯</span> Desired Future Spouse Criteria
+                <span>🎯</span> {t("Preferred Future Spouse")}
               </h3>
               <DetailRow label="Desired Appearance" value={prefIntellectual?.appearance_type} />
               <DetailRow label="Acceptable Age Difference" value={prefIntellectual?.age_difference} />
@@ -412,7 +416,7 @@ export default function PublicCandidateProfilePage() {
         {activeTab === 'personal' && (
           <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-4">
             <h3 className="text-sm font-bold text-gray-900 dark:text-white pb-2 border-b border-gray-100 dark:border-gray-800">
-              Personal Information & Lifestyle
+              {t("Personal Information & Lifestyle")}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1">
               <DetailRow label="Gender" value={personal?.gender} />
@@ -436,11 +440,11 @@ export default function PublicCandidateProfilePage() {
         {activeTab === 'physical' && (
           <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-4">
             <h3 className="text-sm font-bold text-gray-900 dark:text-white pb-2 border-b border-gray-100 dark:border-gray-800">
-              Physical & Health Information
+              {t("Physical & Health Information")}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1">
-              <DetailRow label="Height" value={physical?.height ? `${physical.height} cm` : '—'} />
-              <DetailRow label="Weight" value={physical?.weight ? `${physical.weight} kg` : '—'} />
+              <DetailRow label="Height" value={physical?.height ? formatHeight(physical.height, isRTL) : '—'} />
+              <DetailRow label="Weight" value={physical?.weight ? formatWeight(physical.weight, isRTL) : '—'} />
               <DetailRow label="Skin Color" value={physical?.skin_color} />
               <DetailRow label="Eyes Color" value={physical?.eyes_color} />
               <DetailRow label="Blood Type" value={physical?.blood_type} />
@@ -456,7 +460,7 @@ export default function PublicCandidateProfilePage() {
         {activeTab === 'intellectual' && (
           <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-4">
             <h3 className="text-sm font-bold text-gray-900 dark:text-white pb-2 border-b border-gray-100 dark:border-gray-800">
-              Religious, Intellectual & Lifestyle Values
+              {t("Religious, Intellectual & Lifestyle Values")}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1">
               <DetailRow label="Prayer & Worship" value={intellectual?.worship_and_prayer || intellectual?.worship_prayer} badge />
@@ -481,7 +485,7 @@ export default function PublicCandidateProfilePage() {
           <div className="space-y-6">
             <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-4">
               <h3 className="text-sm font-bold text-gray-900 dark:text-white pb-2 border-b border-gray-100 dark:border-gray-800">
-                Family Heritage & Parents
+                {t("Family Heritage & Parents")}
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1">
                 <DetailRow label="Father's Originality / Province" value={father?.originality} badge />
@@ -504,12 +508,12 @@ export default function PublicCandidateProfilePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {sisters.length > 0 && (
                   <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-3">
-                    <h4 className="text-xs font-bold uppercase text-gray-500 dark:text-gray-400">Sisters ({sisters.length})</h4>
+                    <h4 className="text-xs font-bold uppercase text-gray-500 dark:text-gray-400">{t("Sisters")} ({sisters.length})</h4>
                     <div className="space-y-2">
                       {sisters.map((sis, idx) => (
                         <div key={sis.id || idx} className="p-3 rounded-2xl bg-gray-50 dark:bg-gray-800/40 text-xs flex justify-between">
-                          <span>Sister #{idx + 1}: {sis.education || '—'}</span>
-                          <span className="font-semibold text-gray-700 dark:text-gray-300">{sis.job || '—'}</span>
+                          <span>{t("Sister")} #{idx + 1}: {sis.education ? t(sis.education) : '—'}</span>
+                          <span className="font-semibold text-gray-700 dark:text-gray-300">{sis.job ? t(sis.job) : '—'}</span>
                         </div>
                       ))}
                     </div>
@@ -517,12 +521,12 @@ export default function PublicCandidateProfilePage() {
                 )}
                 {brothers.length > 0 && (
                   <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-3">
-                    <h4 className="text-xs font-bold uppercase text-gray-500 dark:text-gray-400">Brothers ({brothers.length})</h4>
+                    <h4 className="text-xs font-bold uppercase text-gray-500 dark:text-gray-400">{t("Brothers")} ({brothers.length})</h4>
                     <div className="space-y-2">
                       {brothers.map((bro, idx) => (
                         <div key={bro.id || idx} className="p-3 rounded-2xl bg-gray-50 dark:bg-gray-800/40 text-xs flex justify-between">
-                          <span>Brother #{idx + 1}: {bro.education || '—'}</span>
-                          <span className="font-semibold text-gray-700 dark:text-gray-300">{bro.job || '—'}</span>
+                          <span>{t("Brother")} #{idx + 1}: {bro.education ? t(bro.education) : '—'}</span>
+                          <span className="font-semibold text-gray-700 dark:text-gray-300">{bro.job ? t(bro.job) : '—'}</span>
                         </div>
                       ))}
                     </div>
@@ -536,7 +540,7 @@ export default function PublicCandidateProfilePage() {
         {activeTab === 'financial' && (
           <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-4">
             <h3 className="text-sm font-bold text-gray-900 dark:text-white pb-2 border-b border-gray-100 dark:border-gray-800">
-              Financial & Residence Status
+              {t("Financial & Residence Status")}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1">
               <DetailRow label="Occupation / Job" value={financial?.job} badge />
@@ -557,7 +561,7 @@ export default function PublicCandidateProfilePage() {
         {activeTab === 'preferred' && (
           <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-4">
             <h3 className="text-sm font-bold text-gray-900 dark:text-white pb-2 border-b border-gray-100 dark:border-gray-800">
-              Preferred Future Spouse Criteria
+              {t("Preferred Future Spouse Criteria")}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1">
               <DetailRow label="Desired Appearance" value={prefIntellectual?.appearance_type} />
@@ -571,8 +575,8 @@ export default function PublicCandidateProfilePage() {
               <DetailRow label="Education Expectation" value={prefPersonal?.education_level} />
               <DetailRow label="Desired Career" value={prefPersonal?.future_spouse_job} />
               <DetailRow label="Location After Marriage" value={prefPersonal?.after_marriage_residence_location} />
-              <DetailRow label="Preferred Height Range" value={prefPhysical?.height_min || prefPhysical?.height_max ? `${prefPhysical.height_min ?? '—'} to ${prefPhysical.height_max ?? '—'} cm` : '—'} />
-              <DetailRow label="Preferred Weight Range" value={prefPhysical?.weight_min || prefPhysical?.weight_max ? `${prefPhysical.weight_min ?? '—'} to ${prefPhysical.weight_max ?? '—'} kg` : '—'} />
+              <DetailRow label="Preferred Height Range" value={prefPhysical?.height_min || prefPhysical?.height_max ? `${prefPhysical.height_min ? formatHeight(prefPhysical.height_min, isRTL) : '—'} ${isRTL ? 'تا' : 'to'} ${prefPhysical.height_max ? formatHeight(prefPhysical.height_max, isRTL) : '—'}` : '—'} />
+              <DetailRow label="Preferred Weight Range" value={prefPhysical?.weight_min || prefPhysical?.weight_max ? `${prefPhysical.weight_min ? formatWeight(prefPhysical.weight_min, isRTL) : '—'} ${isRTL ? 'تا' : 'to'} ${prefPhysical.weight_max ? formatWeight(prefPhysical.weight_max, isRTL) : '—'}` : '—'} />
               <DetailRow label="Preferred Skin Color" value={prefPhysical?.skin_color} />
               <DetailRow label="Additional Criteria / Explanations" value={prefExtra?.additional_explanations} />
             </div>

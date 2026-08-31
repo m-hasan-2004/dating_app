@@ -2,11 +2,13 @@
 
 import React, { useState } from 'react';
 import Modal from '@/components/ui/modal';
+import { useTranslation } from '@/context/LanguageContext';
 import Button from '@/components/ui/button/Button';
 import ProfileSection from '@/components/profile/ProfileSection';
 import DisplayRow from '@/components/profile/DisplayRow';
 import FormField, { useFormState, SelectOption } from '@/components/profile/FormField';
 import { toArray, formatMultiValue } from '@/components/profile/profileUtils';
+import { formatDate, formatHeight, formatWeight, formatBoolean } from '@/utils/formatters';
 import type {
   PhysicalInformation,
   FamilyInformation,
@@ -102,6 +104,7 @@ export function PhysicalInformationSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
+  const { t, isRTL } = useTranslation();
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -145,17 +148,20 @@ export function PhysicalInformationSection({
   return (
     <>
       <ProfileSection title="Physical Information" onEdit={openModal} isEmpty={!data} isCollapsed={isCollapsed} onToggleCollapse={onToggleCollapse}>
-        <DisplayRow label="Height" value={data?.height ? `${data.height} cm` : null} />
-        <DisplayRow label="Weight" value={data?.weight ? `${data.weight} kg` : null} />
+        <DisplayRow label="Height" value={data?.height ? formatHeight(data.height, isRTL) : null} />
+        <DisplayRow label="Weight" value={data?.weight ? formatWeight(data.weight, isRTL) : null} />
         <DisplayRow label="Skin Color" value={data?.skin_color} />
         <DisplayRow label="Eyes Color" value={data?.eyes_color} />
         <DisplayRow label="Blood Type" value={data?.blood_type} />
         <DisplayRow label="Temperament" value={data?.character_and_temperament} />
-        <DisplayRow label="Glasses" value={data?.glasses ? `Yes (${data.glasses_size || 'No size specified'})` : 'No'} />
-        <DisplayRow label="Body & Face" value={formatMultiValue(data?.body_and_face, BODY_FACE_OPTIONS)} />
+        <DisplayRow
+          label="Glasses"
+          value={data?.glasses ? (data.glasses_size ? `${isRTL ? 'بله' : 'Yes'} (${data.glasses_size})` : (isRTL ? 'بله (بدون ذکر نمره)' : 'Yes (No size specified)')) : (isRTL ? 'خیر' : 'No')}
+        />
+        <DisplayRow label="Body & Face" value={formatMultiValue(data?.body_and_face, BODY_FACE_OPTIONS, t)} />
         <DisplayRow
           label="Disease / Surgery History"
-          value={data?.disease_or_surgery_history ? `Yes (${data.medication_surgery_disease_type || '—'})` : 'No'}
+          value={data?.disease_or_surgery_history ? `${isRTL ? 'بله' : 'Yes'} (${data.medication_surgery_disease_type || '—'})` : (isRTL ? 'خیر' : 'No')}
         />
       </ProfileSection>
 
@@ -183,8 +189,8 @@ export function PhysicalInformationSection({
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
-            <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={handleSave} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>
+            <Button variant="outline" onClick={() => setOpen(false)}>{t('Cancel')}</Button>
+            <Button onClick={handleSave} disabled={saving}>{saving ? t('Saving...') : t('Save')}</Button>
           </div>
         </div>
       </Modal>
@@ -218,6 +224,7 @@ export function FamilyInformationSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
+  const { t, isRTL } = useTranslation();
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -260,7 +267,7 @@ export function FamilyInformationSection({
         <DisplayRow label="Average Family Finance" value={data?.average_family_finance} />
         <DisplayRow
           label="Family Divorce History"
-          value={data?.family_divorce_history ? `Yes (${data.family_divorce_reason || '—'})` : 'No'}
+          value={data?.family_divorce_history ? `${isRTL ? 'بله' : 'Yes'} (${data.family_divorce_reason || '—'})` : (isRTL ? 'خیر' : 'No')}
         />
         <DisplayRow label="Contact with Family" value={data?.contact_with_family} />
         <DisplayRow label="Contact with Relatives" value={data?.contact_with_relatives} />
@@ -287,8 +294,8 @@ export function FamilyInformationSection({
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
-            <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={handleSave} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>
+            <Button variant="outline" onClick={() => setOpen(false)}>{t('Cancel')}</Button>
+            <Button onClick={handleSave} disabled={saving}>{saving ? t('Saving...') : t('Save')}</Button>
           </div>
         </div>
       </Modal>
@@ -320,6 +327,7 @@ export function EngagementStatusSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
+  const { t, isRTL } = useTranslation();
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -360,8 +368,8 @@ export function EngagementStatusSection({
         <DisplayRow label="Status" value={data?.status} />
         <DisplayRow label="Contract Length" value={data?.contract_length} />
         <DisplayRow label="Living Length" value={data?.living_length} />
-        <DisplayRow label="Death Date" value={data?.death_date} />
-        <DisplayRow label="Divorce Date" value={data?.divorce_date} />
+        <DisplayRow label="Death Date" value={data?.death_date ? formatDate(data.death_date, isRTL) : null} />
+        <DisplayRow label="Divorce Date" value={data?.divorce_date ? formatDate(data.divorce_date, isRTL) : null} />
         <DisplayRow label="Reason for Divorce or Death" value={data?.reason_for_divorce_or_death} />
       </ProfileSection>
 
@@ -380,8 +388,8 @@ export function EngagementStatusSection({
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
-            <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={handleSave} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>
+            <Button variant="outline" onClick={() => setOpen(false)}>{t('Cancel')}</Button>
+            <Button onClick={handleSave} disabled={saving}>{saving ? t('Saving...') : t('Save')}</Button>
           </div>
         </div>
       </Modal>

@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/hooks/use-auth';
+import { useTranslation } from '@/context/LanguageContext';
 import {
   searchCandidates,
   toggleBookmark,
@@ -19,160 +20,163 @@ import {
   GridIcon,
   ListIcon,
 } from '@/icons';
+import { formatHeight, formatWeight } from '@/utils/formatters';
 
 const LOCATION_OPTIONS = [
-  { value: 'Tehran', label: 'Tehran (تهران)' },
-  { value: 'Qom', label: 'Qom (قم)' },
-  { value: 'Isfahan', label: 'Isfahan (اصفهان)' },
-  { value: 'Mashhad', label: 'Mashhad (مشهد)' },
-  { value: 'Karaj', label: 'Karaj (کرج)' },
-  { value: 'Shiraz', label: 'Shiraz (شیراز)' },
-  { value: 'Tabriz', label: 'Tabriz (تبریز)' },
-  { value: 'Hamadan', label: 'Hamadan (همدان)' },
-  { value: 'Yazd', label: 'Yazd (یزد)' },
-  { value: 'Kerman', label: 'Kerman (کرمان)' },
-  { value: 'Gilan', label: 'Gilan (گیلان / رشت)' },
-  { value: 'Mazandaran', label: 'Mazandaran (مازندران / ساری)' },
-  { value: 'Khuzestan', label: 'Khuzestan (خوزستان / اهواز)' },
-  { value: 'Kermanshah', label: 'Kermanshah (کرمانشاه)' },
-  { value: 'Markazi', label: 'Markazi (مرکزی / اراک)' },
-  { value: 'Lorestan', label: 'Lorestan (لرستان / خرم‌آباد)' },
-  { value: 'Golestan', label: 'Golestan (گلستان / گرگان)' },
-  { value: 'Zanjan', label: 'Zanjan (زنجان)' },
-  { value: 'Qazvin', label: 'Qazvin (قزوین)' },
-  { value: 'Ardabil', label: 'Ardabil (اردبیل)' },
-  { value: 'Semnan', label: 'Semnan (سمنان)' },
-  { value: 'Bushehr', label: 'Bushehr (بوشهر)' },
-  { value: 'Hormozgan', label: 'Hormozgan (هرمزگان / بندرعباس)' },
-  { value: 'Kurdistan', label: 'Kurdistan (کردستان / سنندج)' },
-  { value: 'Ilam', label: 'Ilam (ایلام)' },
-  { value: 'North Khorasan', label: 'North Khorasan (خراسان شمالی / بجنورد)' },
-  { value: 'South Khorasan', label: 'South Khorasan (خراسان جنوبی / بیرجند)' },
-  { value: 'Chaharmahal and Bakhtiari', label: 'Chaharmahal (چهارمحال و بختیاری)' },
-  { value: 'Sistan and Baluchestan', label: 'Sistan (سیستان و بلوچستان / زاهدان)' },
-  { value: 'Kohgiluyeh and Boyer-Ahmad', label: 'Kohgiluyeh (کهگیلویه و بویراحمد)' },
+  { value: 'Tehran', labelFa: 'تهران', labelEn: 'Tehran' },
+  { value: 'Qom', labelFa: 'قم', labelEn: 'Qom' },
+  { value: 'Isfahan', labelFa: 'اصفهان', labelEn: 'Isfahan' },
+  { value: 'Mashhad', labelFa: 'مشهد', labelEn: 'Mashhad' },
+  { value: 'Karaj', labelFa: 'کرج', labelEn: 'Karaj' },
+  { value: 'Shiraz', labelFa: 'شیراز', labelEn: 'Shiraz' },
+  { value: 'Tabriz', labelFa: 'تبریز', labelEn: 'Tabriz' },
+  { value: 'Hamadan', labelFa: 'همدان', labelEn: 'Hamadan' },
+  { value: 'Yazd', labelFa: 'یزد', labelEn: 'Yazd' },
+  { value: 'Kerman', labelFa: 'کرمان', labelEn: 'Kerman' },
+  { value: 'Gilan', labelFa: 'گیلان / رشت', labelEn: 'Gilan / Rasht' },
+  { value: 'Mazandaran', labelFa: 'مازندران / ساری', labelEn: 'Mazandaran / Sari' },
+  { value: 'Khuzestan', labelFa: 'خوزستان / اهواز', labelEn: 'Khuzestan / Ahvaz' },
+  { value: 'Kermanshah', labelFa: 'کرمانشاه', labelEn: 'Kermanshah' },
+  { value: 'Markazi', labelFa: 'مرکزی / اراک', labelEn: 'Markazi / Arak' },
+  { value: 'Lorestan', labelFa: 'لرستان / خرم‌آباد', labelEn: 'Lorestan / Khorramabad' },
+  { value: 'Golestan', labelFa: 'گلستان / گرگان', labelEn: 'Golestan / Gorgan' },
+  { value: 'Zanjan', labelFa: 'زنجان', labelEn: 'Zanjan' },
+  { value: 'Qazvin', labelFa: 'قزوین', labelEn: 'Qazvin' },
+  { value: 'Ardabil', labelFa: 'اردبیل', labelEn: 'Ardabil' },
+  { value: 'Semnan', labelFa: 'سمنان', labelEn: 'Semnan' },
+  { value: 'Bushehr', labelFa: 'بوشهر', labelEn: 'Bushehr' },
+  { value: 'Hormozgan', labelFa: 'هرمزگان / بندرعباس', labelEn: 'Hormozgan / Bandar Abbas' },
+  { value: 'Kurdistan', labelFa: 'کردستان / سنندج', labelEn: 'Kurdistan / Sanandaj' },
+  { value: 'Ilam', labelFa: 'ایلام', labelEn: 'Ilam' },
+  { value: 'North Khorasan', labelFa: 'خراسان شمالی / بجنورد', labelEn: 'North Khorasan' },
+  { value: 'South Khorasan', labelFa: 'خراسان جنوبی / بیرجند', labelEn: 'South Khorasan' },
+  { value: 'Chaharmahal and Bakhtiari', labelFa: 'چهارمحال و بختیاری', labelEn: 'Chaharmahal and Bakhtiari' },
+  { value: 'Sistan and Baluchestan', labelFa: 'سیستان و بلوچستان / زاهدان', labelEn: 'Sistan and Baluchestan' },
+  { value: 'Kohgiluyeh and Boyer-Ahmad', labelFa: 'کهگیلویه و بویراحمد', labelEn: 'Kohgiluyeh and Boyer-Ahmad' },
 ];
 
 const EDUCATION_OPTIONS = [
-  { value: 'Ph.D.', label: 'Ph.D. (دکتری)' },
-  { value: "Master's Degree", label: "Master's Degree (کارشناسی ارشد)" },
-  { value: "Bachelor's Degree", label: "Bachelor's Degree (کارشناسی)" },
-  { value: 'Associate Degree', label: 'Associate Degree (کاردانی / فوق دیپلم)' },
-  { value: 'Diploma', label: 'Diploma (دیپلم)' },
-  { value: 'Under Diploma', label: 'Under Diploma (زیر دیپلم)' },
-  { value: 'Hoze (Islamic Seminary) LVL 4', label: 'Seminary Lvl 4 (سطح ۴ حوزه)' },
-  { value: 'Hoze (Islamic Seminary) LVL 3', label: 'Seminary Lvl 3 (سطح ۳ حوزه)' },
-  { value: 'Hoze (Islamic Seminary) LVL 2', label: 'Seminary Lvl 2 (سطح ۲ حوزه)' },
-  { value: 'Hoze (Islamic Seminary) LVL 1', label: 'Seminary Lvl 1 (سطح ۱ حوزه)' },
-  { value: 'School & Quranic', label: 'Quranic School (علوم قرآنی)' },
+  { value: 'Ph.D.', labelFa: 'دکتری', labelEn: 'Ph.D.' },
+  { value: "Master's Degree", labelFa: 'کارشناسی ارشد', labelEn: "Master's Degree" },
+  { value: "Bachelor's Degree", labelFa: 'کارشناسی', labelEn: "Bachelor's Degree" },
+  { value: 'Associate Degree', labelFa: 'کاردانی / فوق دیپلم', labelEn: 'Associate Degree' },
+  { value: 'Diploma', labelFa: 'دیپلم', labelEn: 'Diploma' },
+  { value: 'Under Diploma', labelFa: 'زیر دیپلم', labelEn: 'Under Diploma' },
+  { value: 'Hoze (Islamic Seminary) LVL 4', labelFa: 'سطح ۴ حوزه', labelEn: 'Seminary Lvl 4' },
+  { value: 'Hoze (Islamic Seminary) LVL 3', labelFa: 'سطح ۳ حوزه', labelEn: 'Seminary Lvl 3' },
+  { value: 'Hoze (Islamic Seminary) LVL 2', labelFa: 'سطح ۲ حوزه', labelEn: 'Seminary Lvl 2' },
+  { value: 'Hoze (Islamic Seminary) LVL 1', labelFa: 'سطح ۱ حوزه', labelEn: 'Seminary Lvl 1' },
+  { value: 'School & Quranic', labelFa: 'علوم قرآنی', labelEn: 'Quranic School' },
 ];
 
 const MARITAL_OPTIONS = [
-  { value: 'no', label: 'Never Married (مجرد بدون سابقه)' },
-  { value: 'yes', label: 'Divorced / Has Experience (سابقه ازدواج / طلاق)' },
-  { value: 'engagement_only', label: 'Engagement Only (فقط دوران عقد)' },
+  { value: 'no', labelFa: 'مجرد بدون سابقه', labelEn: 'Never Married' },
+  { value: 'yes', labelFa: 'سابقه ازدواج / طلاق', labelEn: 'Divorced / Has Experience' },
+  { value: 'engagement_only', labelFa: 'فقط دوران عقد', labelEn: 'Engagement Only' },
 ];
 
 const INCOME_OPTIONS = [
-  { value: 'no_income', label: 'No Income (بدون درآمد)' },
-  { value: '-10', label: 'Under 10 Million (زیر ۱۰ میلیون)' },
-  { value: '10-20', label: '10M to 20M (۱۰ تا ۲۰ میلیون)' },
-  { value: '20-30', label: '20M to 30M (۲۰ تا ۳۰ میلیون)' },
-  { value: '30-40', label: '30M to 40M (۳۰ تا ۴۰ میلیون)' },
-  { value: '40-50', label: '40M to 50M (۴۰ تا ۵۰ میلیون)' },
-  { value: '50-100', label: '50M to 100M (۵۰ تا ۱۰۰ میلیون)' },
-  { value: '+100', label: 'Over 100 Million (بیش از ۱۰۰ میلیون)' },
+  { value: 'no_income', labelFa: 'بدون درآمد', labelEn: 'No Income' },
+  { value: '-10', labelFa: 'زیر ۱۰ میلیون', labelEn: 'Under 10 Million' },
+  { value: '10-20', labelFa: '۱۰ تا ۲۰ میلیون', labelEn: '10M to 20M' },
+  { value: '20-30', labelFa: '۲۰ تا ۳۰ میلیون', labelEn: '20M to 30M' },
+  { value: '30-40', labelFa: '۳۰ تا ۴۰ میلیون', labelEn: '30M to 40M' },
+  { value: '40-50', labelFa: '۴۰ تا ۵۰ میلیون', labelEn: '40M to 50M' },
+  { value: '50-100', labelFa: '۵۰ تا ۱۰۰ میلیون', labelEn: '50M to 100M' },
+  { value: '+100', labelFa: 'بیش از ۱۰۰ میلیون', labelEn: 'Over 100 Million' },
 ];
 
 const OWNERSHIP_OPTIONS = [
-  { value: 'owner', label: 'Homeowner (مالک)' },
-  { value: 'rent', label: 'Tenant / Rent (مستأجر)' },
+  { value: 'owner', labelFa: 'دارای مسکن شخصی (مالک)', labelEn: 'Homeowner' },
+  { value: 'rent', labelFa: 'مستاجر / اجاره', labelEn: 'Tenant / Rent' },
 ];
 
 const RESIDENCE_OPTIONS = [
-  { value: 'fathers_house', label: "Father's House (منزل پدری)" },
-  { value: 'mothers_house', label: "Mother's House (منزل مادری)" },
-  { value: 'other', label: 'Independent / Other (مستقل / سایر)' },
+  { value: 'fathers_house', labelFa: 'منزل پدری', labelEn: "Father's House" },
+  { value: 'mothers_house', labelFa: 'منزل مادری', labelEn: "Mother's House" },
+  { value: 'other', labelFa: 'مستقل / سایر موارد', labelEn: 'Independent / Other' },
 ];
 
 const CAPITAL_OPTIONS = [
-  { value: 'house', label: 'House (خانه / آپارتمان)' },
-  { value: 'car', label: 'Car (خودرو)' },
-  { value: 'shop', label: 'Commercial Shop (مغازه)' },
-  { value: 'land', label: 'Land (زمین)' },
-  { value: 'gold', label: 'Gold & Savings (طلا / پس‌انداز)' },
-  { value: 'garden', label: 'Garden / Villa (باغ / ویلا)' },
-  { value: 'company', label: 'Company / Business (شرکت)' },
-  { value: 'motorcycle', label: 'Motorcycle (موتورسیکلت)' },
-  { value: 'none', label: 'None (ندارم)' },
+  { value: 'house', labelFa: 'خانه / آپارتمان', labelEn: 'House' },
+  { value: 'car', labelFa: 'خودرو', labelEn: 'Car' },
+  { value: 'shop', labelFa: 'مغازه', labelEn: 'Shop' },
+  { value: 'land', labelFa: 'زمین', labelEn: 'Land' },
+  { value: 'gold', labelFa: 'طلا و پس‌انداز', labelEn: 'Gold & Savings' },
+  { value: 'garden', labelFa: 'باغ / ویلا', labelEn: 'Garden / Villa' },
+  { value: 'company', labelFa: 'شرکت', labelEn: 'Company' },
+  { value: 'motorcycle', labelFa: 'موتورسیکلت', labelEn: 'Motorcycle' },
+  { value: 'none', labelFa: 'هیچ‌کدام', labelEn: 'None' },
 ];
 
 const DOWRY_OPTIONS = [
-  { value: 'gold', label: 'Gold / Coins (طلا و سکه)' },
-  { value: 'money', label: 'Cash / Money (وجه نقد)' },
-  { value: 'house', label: 'Real Estate / House (ملک یا خانه)' },
-  { value: 'mecca', label: 'Mecca Pilgrimage (سفر حج)' },
-  { value: 'iraq', label: 'Karbala Pilgrimage (سفر کربلا)' },
-  { value: 'agreement', label: 'Mutual Agreement (توافقی)' },
+  { value: 'gold', labelFa: 'طلا و سکه', labelEn: 'Gold / Coins' },
+  { value: 'money', labelFa: 'وجه نقد', labelEn: 'Cash / Money' },
+  { value: 'house', labelFa: 'ملک یا خانه', labelEn: 'Real Estate / House' },
+  { value: 'mecca', labelFa: 'سفر حج', labelEn: 'Mecca Pilgrimage' },
+  { value: 'iraq', labelFa: 'سفر کربلا', labelEn: 'Karbala Pilgrimage' },
+  { value: 'agreement', labelFa: 'توافقی', labelEn: 'Mutual Agreement' },
 ];
 
 const WORSHIP_OPTIONS = [
-  { value: 'fully_obligated', label: 'Fully Obligated (کاملاً مقید به نماز اول وقت)' },
-  { value: 'sometimes', label: 'Sometimes (گاهی اوقات)' },
-  { value: 'obligated_but_lazy', label: 'Obligated But Lazy (مقید اما با تأخیر)' },
-  { value: 'not_obligated', label: 'Not Obligated (غیر مقید)' },
-  { value: 'doesnt_matter', label: "Doesn't Matter (فرقی ندارد)" },
+  { value: 'fully_obligated', labelFa: 'کاملاً مقید به نماز اول وقت', labelEn: 'Fully Obligated' },
+  { value: 'sometimes', labelFa: 'گاهی اوقات', labelEn: 'Sometimes' },
+  { value: 'obligated_but_lazy', labelFa: 'مقید اما با تأخیر', labelEn: 'Obligated But Lazy' },
+  { value: 'not_obligated', labelFa: 'غیر مقید', labelEn: 'Not Obligated' },
+  { value: 'doesnt_matter', labelFa: 'فرقی ندارد', labelEn: "Doesn't Matter" },
 ];
 
 const FASTING_OPTIONS = [
-  { value: 'fully_obligated', label: 'Fully Obligated (کاملاً مقید به روزه)' },
-  { value: 'sometimes', label: 'Sometimes (گاهی)' },
-  { value: 'sick', label: 'Medical Exemption (معذوریت پزشکی)' },
-  { value: 'not_obligated', label: 'Not Obligated (غیر مقید)' },
+  { value: 'fully_obligated', labelFa: 'کاملاً مقید به روزه', labelEn: 'Fully Obligated' },
+  { value: 'sometimes', labelFa: 'گاهی', labelEn: 'Sometimes' },
+  { value: 'sick', labelFa: 'معذوریت پزشکی', labelEn: 'Medical Exemption' },
+  { value: 'not_obligated', labelFa: 'غیر مقید', labelEn: 'Not Obligated' },
 ];
 
 const COVER_OPTIONS = [
-  { value: 'always_chador', label: 'Always Chador (همیشه چادری)' },
-  { value: 'sometimes_chador', label: 'Sometimes Chador (گاهی چادری)' },
-  { value: 'always_coverd_manto', label: 'Covered Manto (مانتو پوشیده و محجبه)' },
-  { value: 'sometimes_coverd_manto', label: 'Sometimes Covered Manto (مانتو معمولی)' },
-  { value: 'always_free_manto', label: 'Free Manto (مانتو آزاد)' },
+  { value: 'always_chador', labelFa: 'همیشه چادری', labelEn: 'Always Chador' },
+  { value: 'sometimes_chador', labelFa: 'گاهی چادری', labelEn: 'Sometimes Chador' },
+  { value: 'always_coverd_manto', labelFa: 'مانتو پوشیده و محجبه', labelEn: 'Covered Manto' },
+  { value: 'sometimes_coverd_manto', labelFa: 'مانتو معمولی', labelEn: 'Sometimes Covered Manto' },
+  { value: 'always_free_manto', labelFa: 'مانتو آزاد', labelEn: 'Free Manto' },
 ];
 
 const VELAYAT_OPTIONS = [
-  { value: 'agree', label: 'Agree / Believer (معتقد و ملتزم)' },
-  { value: 'no_opinion', label: 'No Opinion (نظری ندارم)' },
+  { value: 'agree', labelFa: 'معتقد و ملتزم', labelEn: 'Agree / Believer' },
+  { value: 'no_opinion', labelFa: 'نظری ندارم', labelEn: 'No Opinion' },
 ];
 
 const SKIN_OPTIONS = [
-  { value: 'White', label: 'White / Very Bright (سفید / بسیار روشن)' },
-  { value: 'Fair', label: 'Fair / Bright (روشن / گندمی روشن)' },
-  { value: 'Wheat', label: 'Wheat (گندمی)' },
-  { value: 'Olive', label: 'Olive / Greenish (سبزه)' },
-  { value: 'Darken', label: 'Dark / Brown (سبزه تیره / گندمی تیره)' },
+  { value: 'White', labelFa: 'سفید / بسیار روشن', labelEn: 'White / Very Bright' },
+  { value: 'Fair', labelFa: 'روشن / گندمی روشن', labelEn: 'Fair / Bright' },
+  { value: 'Wheat', labelFa: 'گندمی', labelEn: 'Wheat' },
+  { value: 'Olive', labelFa: 'سبزه', labelEn: 'Olive' },
+  { value: 'Darken', labelFa: 'سبزه تیره / گندمی تیره', labelEn: 'Dark / Brown' },
 ];
 
 const PREF_EXP_OPTIONS = [
-  { value: 'Never', label: 'Never Married Only (فقط مجرد بدون سابقه)' },
-  { value: 'Divorced Virgin', label: 'Divorced Virgin (عقد جدا شده)' },
-  { value: 'Divorced No Child', label: 'Divorced Without Children (طلاق بدون فرزند)' },
-  { value: 'Divorced Have Boy', label: 'Divorced With Son (طلاق دارای فرزند پسر)' },
-  { value: 'Divorced Have Girl', label: 'Divorced With Daughter (طلاق دارای فرزند دختر)' },
-  { value: 'Spouse Died', label: 'Spouse Deceased (همسر فوت شده)' },
+  { value: 'Never', labelFa: 'فقط مجرد بدون سابقه', labelEn: 'Never Married Only' },
+  { value: 'Divorced Virgin', labelFa: 'عقد جدا شده', labelEn: 'Divorced Virgin' },
+  { value: 'Divorced No Child', labelFa: 'طلاق بدون فرزند', labelEn: 'Divorced Without Children' },
+  { value: 'Divorced Have Boy', labelFa: 'طلاق دارای فرزند پسر', labelEn: 'Divorced With Son' },
+  { value: 'Divorced Have Girl', labelFa: 'طلاق دارای فرزند دختر', labelEn: 'Divorced With Daughter' },
+  { value: 'Spouse Died', labelFa: 'همسر فوت شده', labelEn: 'Spouse Deceased' },
 ];
 
 const AGE_PRESETS = [
-  { label: '18-25', min: 18, max: 25 },
-  { label: '25-30', min: 25, max: 30 },
-  { label: '30-35', min: 30, max: 35 },
-  { label: '35-40', min: 35, max: 40 },
-  { label: '40-50', min: 40, max: 50 },
-  { label: '50+', min: 50, max: 99 },
+  { labelFa: '۱۸-۲۵', labelEn: '18-25', min: 18, max: 25 },
+  { labelFa: '۲۵-۳۰', labelEn: '25-30', min: 25, max: 30 },
+  { labelFa: '۳۰-۳۵', labelEn: '30-35', min: 30, max: 35 },
+  { labelFa: '۳۵-۴۰', labelEn: '35-40', min: 35, max: 40 },
+  { labelFa: '۴۰-۵۰', labelEn: '40-50', min: 40, max: 50 },
+  { labelFa: '+۵۰', labelEn: '50+', min: 50, max: 99 },
 ];
 
 interface PillOption {
   value: string;
-  label: string;
+  label?: string;
+  labelFa?: string;
+  labelEn?: string;
 }
 
 function FilterPillGroup({
@@ -188,6 +192,7 @@ function FilterPillGroup({
   onToggle: (value: string) => void;
   defaultExpanded?: boolean;
 }) {
+  const { isRTL, t } = useTranslation();
   const [isOpen, setIsOpen] = useState(defaultExpanded);
 
   return (
@@ -198,7 +203,7 @@ function FilterPillGroup({
         className="w-full flex items-center justify-between text-left text-xs font-bold text-gray-800 dark:text-white/90 hover:text-brand-500 transition-colors py-1 cursor-pointer"
       >
         <span className="flex items-center gap-2">
-          <span>{title}</span>
+          <span>{t(title)}</span>
           {selected.length > 0 && (
             <span className="px-1.5 py-0.2 text-[10px] font-bold rounded-full bg-brand-500 text-white">
               {selected.length}
@@ -214,6 +219,7 @@ function FilterPillGroup({
         <div className="flex flex-wrap gap-1.5 pt-2.5 animate-fade-in">
           {options.map((opt) => {
             const isSelected = selected.includes(opt.value);
+            const labelText = isRTL ? (opt.labelFa ?? opt.label ?? opt.value) : (opt.labelEn ?? opt.label ?? opt.value);
             return (
               <button
                 key={opt.value}
@@ -226,7 +232,7 @@ function FilterPillGroup({
                 }`}
               >
                 {isSelected && <span className="font-bold text-[10px]">✓</span>}
-                <span>{opt.label}</span>
+                <span>{labelText}</span>
               </button>
             );
           })}
@@ -262,6 +268,7 @@ type SortDirection = 'asc' | 'desc' | null;
 
 export default function CandidateSearchPage() {
   const { user } = useAuth();
+  const { t, isRTL } = useTranslation();
   const isAdmin = Boolean(user?.is_staff || (user as any)?.is_superuser);
 
   const [genderFilter, setGenderFilter] = useState<'all' | 'man' | 'woman'>('all');
@@ -512,21 +519,23 @@ export default function CandidateSearchPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-3xl bg-gradient-to-r from-brand-500/10 via-brand-500/5 to-transparent border border-brand-500/20 dark:border-brand-500/10">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">
-            Candidate Search & Discovery
+            {t("Candidate Search & Discovery")}
           </h1>
           <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mt-1">
             {isAdmin ? (
               <span className="inline-flex items-center gap-1.5 font-medium text-brand-600 dark:text-brand-400">
                 <span className="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
-                Admin Mode: Full Candidate Directory (All Demographics)
+                {t("Admin Mode: Full Candidate Directory (All Demographics)")}
               </span>
             ) : data?.target_gender ? (
               <span className="inline-flex items-center gap-1.5 font-medium text-emerald-600 dark:text-emerald-400">
                 <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-                Matching Mode: Showing {data.target_gender === 'woman' ? 'Women / Girls' : 'Men / Boys'} Profiles (Opposite Gender)
+                {data.target_gender === 'woman'
+                  ? (isRTL ? 'در حال نمایش پروفایل‌های بانوان (جنس مخالف)' : 'Showing Women / Girls Profiles (Opposite Gender)')
+                  : (isRTL ? 'در حال نمایش پروفایل‌های آقایان (جنس مخالف)' : 'Showing Men / Boys Profiles (Opposite Gender)')}
               </span>
             ) : (
-              'Discover suitable candidates with advanced multi-criteria matching'
+              t("Discover suitable candidates with advanced multi-criteria matching")
             )}
           </p>
         </div>
@@ -539,7 +548,7 @@ export default function CandidateSearchPage() {
             <svg className="w-4 h-4 fill-current text-amber-500" viewBox="0 0 24 24">
               <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
             </svg>
-            Saved Bookmarks
+            {t("Saved Bookmarks")}
           </Link>
         </div>
       </div>
@@ -563,7 +572,7 @@ export default function CandidateSearchPage() {
                         : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'
                     }`}
                   >
-                    All
+                    {t("All")}
                   </button>
                   <button
                     type="button"
@@ -574,7 +583,7 @@ export default function CandidateSearchPage() {
                         : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'
                     }`}
                   >
-                    Men Only
+                    {t("Men Only")}
                   </button>
                   <button
                     type="button"
@@ -585,12 +594,12 @@ export default function CandidateSearchPage() {
                         : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white'
                     }`}
                   >
-                    Women Only
+                    {t("Women Only")}
                   </button>
                 </div>
               ) : (
                 <div className="text-xs text-gray-500 dark:text-gray-400">
-                  Showing profiles matching your opposite gender
+                  {isRTL ? "پروفایل‌های منطبق با جنسیت مقابل شما" : "Showing profiles matching your opposite gender"}
                 </div>
               )}
 
@@ -603,10 +612,10 @@ export default function CandidateSearchPage() {
                   }}
                   className="px-3 py-1.5 text-xs font-medium border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:ring-1 focus:ring-brand-500"
                 >
-                  <option value="-date_joined">Newest Joined</option>
-                  <option value="date_joined">Oldest Joined</option>
-                  <option value="username">Username (A-Z)</option>
-                  <option value="-username">Username (Z-A)</option>
+                  <option value="-date_joined">{t("Newest Joined")}</option>
+                  <option value="date_joined">{t("Oldest Joined")}</option>
+                  <option value="username">{t("Username A-Z")}</option>
+                  <option value="-username">{t("Username Z-A")}</option>
                 </select>
 
                 <div className="flex items-center rounded-xl border border-gray-300 dark:border-gray-700 p-0.5 bg-gray-50 dark:bg-gray-800">
@@ -618,7 +627,7 @@ export default function CandidateSearchPage() {
                         ? 'bg-white dark:bg-gray-700 text-brand-600 dark:text-brand-400 shadow-xs'
                         : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-200'
                     }`}
-                    title="Grid View"
+                    title={t("Grid View")}
                   >
                     <GridIcon className="w-4 h-4" />
                   </button>
@@ -630,7 +639,7 @@ export default function CandidateSearchPage() {
                         ? 'bg-white dark:bg-gray-700 text-brand-600 dark:text-brand-400 shadow-xs'
                         : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-200'
                     }`}
-                    title="List View"
+                    title={t("List View")}
                   >
                     <ListIcon className="w-4 h-4" />
                   </button>
@@ -641,7 +650,7 @@ export default function CandidateSearchPage() {
                   onClick={() => setMobileFilterOpen(!mobileFilterOpen)}
                   className="lg:hidden px-3 py-1.5 text-xs font-semibold rounded-xl bg-brand-50 text-brand-600 border border-brand-200 dark:bg-brand-950/40 dark:border-brand-800 flex items-center gap-1.5"
                 >
-                  <span>Filters</span>
+                  <span>{t("Filters")}</span>
                   {activeFilterCount > 0 && (
                     <span className="w-4 h-4 rounded-full bg-brand-500 text-white text-[10px] flex items-center justify-center font-bold">
                       {activeFilterCount}
@@ -654,7 +663,7 @@ export default function CandidateSearchPage() {
             {/* Active Filter Chips */}
             {activeFilterCount > 0 && (
               <div className="flex flex-wrap items-center gap-1.5 pt-2 border-t border-gray-100 dark:border-gray-800 text-xs">
-                <span className="text-[11px] font-semibold text-gray-400">Active ({activeFilterCount}):</span>
+                <span className="text-[11px] font-semibold text-gray-400">{isRTL ? 'فیلترهای فعال:' : 'Active:'} ({activeFilterCount})</span>
                 {keyword && (
                   <span className="px-2 py-0.5 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
                     &quot;{keyword}&quot;
@@ -662,12 +671,12 @@ export default function CandidateSearchPage() {
                 )}
                 {selectedLocations.map((loc) => (
                   <span key={loc} className="px-2 py-0.5 rounded-lg bg-brand-50 text-brand-700 dark:bg-brand-950/40 dark:text-brand-300">
-                    {loc}
+                    {t(loc)}
                   </span>
                 ))}
                 {selectedEducations.map((edu) => (
                   <span key={edu} className="px-2 py-0.5 rounded-lg bg-brand-50 text-brand-700 dark:bg-brand-950/40 dark:text-brand-300">
-                    {edu}
+                    {t(edu)}
                   </span>
                 ))}
                 <button
@@ -675,7 +684,7 @@ export default function CandidateSearchPage() {
                   onClick={handleResetFilters}
                   className="text-red-500 hover:text-red-700 text-[11px] font-semibold underline ml-1 cursor-pointer"
                 >
-                  Clear all
+                  {isRTL ? "پاک کردن همه" : "Clear all"}
                 </button>
               </div>
             )}
@@ -684,9 +693,10 @@ export default function CandidateSearchPage() {
           {/* Results Count Strip */}
           <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 px-1">
             <span>
-              Found <strong className="text-gray-900 dark:text-white font-bold">{data?.count ?? 0}</strong> candidates
+              {t("Found")}{' '}
+              <strong className="text-gray-900 dark:text-white font-bold">{data?.count ?? 0}</strong> {t("candidates")}
             </span>
-            {loading && <span className="text-brand-500 font-medium animate-pulse">Updating candidate cards...</span>}
+            {loading && <span className="text-brand-500 font-medium animate-pulse">{t("Loading...")}</span>}
           </div>
 
           {/* Error Message */}
@@ -734,9 +744,9 @@ export default function CandidateSearchPage() {
                               @{cand.username}
                             </h3>
                             <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-                              <span>{cand.age ? `${cand.age} yrs` : 'Age: —'}</span>
+                              <span>{cand.age ? `${cand.age} ${t("Years")}` : '—'}</span>
                               <span>•</span>
-                              <span className="truncate max-w-[90px]">{loc}</span>
+                              <span className="truncate max-w-[90px]">{t(loc)}</span>
                             </div>
                           </div>
                         </div>
@@ -749,7 +759,7 @@ export default function CandidateSearchPage() {
                               ? 'bg-amber-100 text-amber-500 dark:bg-amber-950/40 dark:text-amber-400 scale-110 shadow-xs'
                               : 'text-gray-400 hover:bg-gray-100 hover:text-amber-500 dark:hover:bg-gray-800'
                           }`}
-                          title={isBookmarked ? 'Remove Bookmark' : 'Bookmark Candidate'}
+                          title={isBookmarked ? t("Remove Bookmark") : t("Bookmark Candidate")}
                         >
                           <svg
                             className={`w-4 h-4 ${isBookmarked ? 'fill-current text-amber-500' : 'fill-none stroke-current stroke-2'}`}
@@ -763,35 +773,35 @@ export default function CandidateSearchPage() {
                       <div className="my-4 space-y-2 text-xs">
                         <div className="flex items-center gap-1.5 text-gray-700 dark:text-gray-300">
                           <span className="text-gray-400">🎓</span>
-                          <span className="truncate font-medium">{edu}</span>
+                          <span className="truncate font-medium">{t(edu)}</span>
                         </div>
 
                         <div className="flex items-center gap-1.5 text-gray-700 dark:text-gray-300">
                           <span className="text-gray-400">💼</span>
-                          <span className="truncate font-medium">{cand.job || 'Career: —'}</span>
+                          <span className="truncate font-medium">{cand.job ? t(cand.job) : '—'}</span>
                         </div>
 
                         <div className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
                           <span className="text-gray-400">📏</span>
                           <span>
-                            {cand.height ? `${cand.height} cm` : '—'} / {cand.weight ? `${cand.weight} kg` : '—'}
+                            {cand.height ? formatHeight(cand.height, isRTL) : '—'} / {cand.weight ? formatWeight(cand.weight, isRTL) : '—'}
                           </span>
                         </div>
 
                         <div className="flex flex-wrap gap-1.5 pt-1">
                           {mar === 'no' && (
                             <span className="px-2 py-0.5 text-[11px] font-semibold rounded-lg bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400">
-                              Never Married
+                              {t("Never Married")}
                             </span>
                           )}
                           {mar === 'yes' && (
                             <span className="px-2 py-0.5 text-[11px] font-semibold rounded-lg bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400">
-                              Divorced
+                              {t("Divorced")}
                             </span>
                           )}
                           {cand.ownership_status === 'owner' && (
                             <span className="px-2 py-0.5 text-[11px] font-semibold rounded-lg bg-brand-50 text-brand-700 dark:bg-brand-950/40 dark:text-brand-400">
-                              Homeowner
+                              {t("Homeowner")}
                             </span>
                           )}
                         </div>
@@ -802,7 +812,7 @@ export default function CandidateSearchPage() {
                         className="w-full inline-flex items-center justify-center gap-2 py-2.5 text-xs font-semibold rounded-2xl bg-gray-50 text-gray-700 hover:bg-brand-500 hover:text-white dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-brand-500 dark:hover:text-white transition-all shadow-2xs"
                       >
                         <UserCircleIcon className="w-4 h-4" />
-                        <span>View Profile</span>
+                        <span>{t("View Profile")}</span>
                       </Link>
                     </div>
                   );
@@ -817,64 +827,64 @@ export default function CandidateSearchPage() {
                         <th
                           className="w-12 px-3 py-3 text-center cursor-pointer select-none hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
                           onClick={() => handleTableSort('save')}
-                          title="Sort by Saved Bookmark"
+                          title={t("Save")}
                         >
                           <div className="flex items-center justify-center gap-1">
-                            <span>Save</span>
+                            <span>{t("Save")}</span>
                             <TableSortIndicator active={tableSortCol === 'save'} direction={tableSortDir} />
                           </div>
                         </th>
                         <th
                           className="px-4 py-3 cursor-pointer select-none hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
                           onClick={() => handleTableSort('candidate')}
-                          title="Sort by Candidate Name"
+                          title={t("Candidate")}
                         >
                           <div className="flex items-center gap-1.5">
-                            <span>Candidate</span>
+                            <span>{t("Candidate")}</span>
                             <TableSortIndicator active={tableSortCol === 'candidate'} direction={tableSortDir} />
                           </div>
                         </th>
                         <th
                           className="px-3 py-3 cursor-pointer select-none hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
                           onClick={() => handleTableSort('age_city')}
-                          title="Sort by Age / City"
+                          title={t("Age / City")}
                         >
                           <div className="flex items-center gap-1.5">
-                            <span>Age / City</span>
+                            <span>{t("Age / City")}</span>
                             <TableSortIndicator active={tableSortCol === 'age_city'} direction={tableSortDir} />
                           </div>
                         </th>
                         <th
                           className="px-3 py-3 cursor-pointer select-none hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
                           onClick={() => handleTableSort('education')}
-                          title="Sort by Education Level"
+                          title={t("Education")}
                         >
                           <div className="flex items-center gap-1.5">
-                            <span>Education</span>
+                            <span>{t("Education")}</span>
                             <TableSortIndicator active={tableSortCol === 'education'} direction={tableSortDir} />
                           </div>
                         </th>
                         <th
                           className="px-3 py-3 cursor-pointer select-none hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
                           onClick={() => handleTableSort('job')}
-                          title="Sort by Profession / Job"
+                          title={t("Job")}
                         >
                           <div className="flex items-center gap-1.5">
-                            <span>Job</span>
+                            <span>{t("Job")}</span>
                             <TableSortIndicator active={tableSortCol === 'job'} direction={tableSortDir} />
                           </div>
                         </th>
                         <th
                           className="px-3 py-3 cursor-pointer select-none hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
                           onClick={() => handleTableSort('height_weight')}
-                          title="Sort by Height & Weight"
+                          title={t("Height / Weight")}
                         >
                           <div className="flex items-center gap-1.5">
-                            <span>Height / Weight</span>
+                            <span>{t("Height / Weight")}</span>
                             <TableSortIndicator active={tableSortCol === 'height_weight'} direction={tableSortDir} />
                           </div>
                         </th>
-                        <th className="px-3 py-3 text-right">Action</th>
+                        <th className="px-3 py-3 text-right">{t("Action")}</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
@@ -915,23 +925,23 @@ export default function CandidateSearchPage() {
                               </div>
                             </td>
                             <td className="px-3 py-3.5 text-xs text-gray-600 dark:text-gray-300">
-                              {cand.age ? `${cand.age} yrs` : '—'} • {loc}
+                              {cand.age ? `${cand.age} ${t("Years")}` : '—'} • {t(loc)}
                             </td>
                             <td className="px-3 py-3.5 text-xs text-gray-600 dark:text-gray-300 truncate max-w-[120px]">
-                              {edu}
+                              {t(edu)}
                             </td>
                             <td className="px-3 py-3.5 text-xs text-gray-600 dark:text-gray-300 truncate max-w-[100px]">
-                              {cand.job || '—'}
+                              {cand.job ? t(cand.job) : '—'}
                             </td>
                             <td className="px-3 py-3.5 text-xs text-gray-600 dark:text-gray-300">
-                              {cand.height ? `${cand.height} cm` : '—'} / {cand.weight ? `${cand.weight} kg` : '—'}
+                              {cand.height ? formatHeight(cand.height, isRTL) : '—'} / {cand.weight ? formatWeight(cand.weight, isRTL) : '—'}
                             </td>
                             <td className="px-3 py-3.5 text-right">
                               <Link
                                 href={`/candidates/${cand.id}`}
                                 className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-xl bg-brand-50 text-brand-600 hover:bg-brand-100 dark:bg-brand-950/40 dark:text-brand-400 transition-colors"
                               >
-                                View
+                                {t("View")}
                               </Link>
                             </td>
                           </tr>
@@ -1007,14 +1017,16 @@ export default function CandidateSearchPage() {
         </div>
 
         {/* Right Pane Sidebar: Filters Drawer */}
-        <aside className={`w-full lg:w-80 xl:w-96 shrink-0 lg:sticky lg:top-20 space-y-4 ${mobileFilterOpen ? 'block' : 'hidden lg:block'}`}>
+        <aside className={`w-full lg:w-80 xl:w-96 shrink-0 lg:sticky lg:top-20 space-y-4 lg:-translate-x-2 ${mobileFilterOpen ? 'block' : 'hidden lg:block'}`}>
           <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-5 shadow-sm space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-gray-800">
               <div className="flex items-center gap-2">
                 <svg className="w-4 h-4 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                 </svg>
-                <h2 className="text-sm font-bold text-gray-900 dark:text-white">Filter Criteria</h2>
+                <h2 className="text-sm font-bold text-gray-900 dark:text-white">
+                  {isRTL ? "معیارهای فیلتر" : "Filter Criteria"}
+                </h2>
                 {activeFilterCount > 0 && (
                   <span className="w-5 h-5 rounded-full bg-brand-500 text-white text-[10px] flex items-center justify-center font-bold">
                     {activeFilterCount}
@@ -1026,7 +1038,7 @@ export default function CandidateSearchPage() {
                 onClick={handleResetFilters}
                 className="text-xs text-red-500 hover:text-red-700 font-semibold cursor-pointer"
               >
-                Reset All
+                {isRTL ? "پاک کردن همه" : "Reset All"}
               </button>
             </div>
 
@@ -1034,7 +1046,7 @@ export default function CandidateSearchPage() {
             <div className="relative">
               <input
                 type="text"
-                placeholder="Search username, degree, job..."
+                placeholder={isRTL ? "جستجوی نام کاربری، مدرک، شغل..." : "Search username, degree, job..."}
                 value={keyword}
                 onChange={(e) => { setKeyword(e.target.value); setPage(1); }}
                 className="w-full pl-8 pr-3 py-2 text-xs border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800/80 dark:text-white focus:outline-none focus:ring-1 focus:ring-brand-500"
@@ -1050,16 +1062,18 @@ export default function CandidateSearchPage() {
             </div>
 
             {/* Scrollable Filters Container */}
-            <div className="max-h-[calc(100vh-250px)] overflow-y-auto pr-1 space-y-1 divide-y divide-gray-100 dark:divide-gray-800/60 text-xs">
+            <div className="max-h-[calc(100vh-250px)] overflow-y-auto pr-1.5 space-y-1 divide-y divide-gray-100 dark:divide-gray-800/60 text-xs custom-scrollbar">
               {/* Age Range */}
               <div className="py-3 space-y-2">
-                <span className="font-bold text-gray-800 dark:text-gray-200 text-xs">Age Range (Years)</span>
+                <span className="font-bold text-gray-800 dark:text-gray-200 text-xs">
+                  {isRTL ? "محدوده سنی (سال)" : "Age Range (Years)"}
+                </span>
                 <div className="flex items-center gap-2">
                   <input
                     type="number"
                     min="18"
                     max="100"
-                    placeholder="Min"
+                    placeholder={isRTL ? "حداقل" : "Min"}
                     value={minAge}
                     onChange={(e) => { setMinAge(e.target.value); setPage(1); }}
                     className="w-full px-2 py-1 text-xs border border-gray-300 rounded-lg dark:border-gray-700 dark:bg-gray-800 dark:text-white"
@@ -1069,7 +1083,7 @@ export default function CandidateSearchPage() {
                     type="number"
                     min="18"
                     max="100"
-                    placeholder="Max"
+                    placeholder={isRTL ? "حداکثر" : "Max"}
                     value={maxAge}
                     onChange={(e) => { setMaxAge(e.target.value); setPage(1); }}
                     className="w-full px-2 py-1 text-xs border border-gray-300 rounded-lg dark:border-gray-700 dark:bg-gray-800 dark:text-white"
@@ -1078,7 +1092,7 @@ export default function CandidateSearchPage() {
                 <div className="flex flex-wrap gap-1 pt-1">
                   {AGE_PRESETS.map((preset) => (
                     <button
-                      key={preset.label}
+                      key={preset.labelEn}
                       type="button"
                       onClick={() => {
                         setMinAge(String(preset.min));
@@ -1087,7 +1101,7 @@ export default function CandidateSearchPage() {
                       }}
                       className="px-2 py-0.5 text-[10px] rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-brand-50 hover:text-brand-600 transition-colors cursor-pointer"
                     >
-                      {preset.label}
+                      {isRTL ? preset.labelFa : preset.labelEn}
                     </button>
                   ))}
                 </div>
@@ -1095,32 +1109,34 @@ export default function CandidateSearchPage() {
 
               {/* Height & Weight */}
               <div className="py-3 space-y-2">
-                <span className="font-bold text-gray-800 dark:text-gray-200 text-xs">Height & Weight (cm / kg)</span>
+                <span className="font-bold text-gray-800 dark:text-gray-200 text-xs">
+                  {isRTL ? "قد و وزن (سانتی‌متر / کیلوگرم)" : "Height & Weight (cm / kg)"}
+                </span>
                 <div className="grid grid-cols-2 gap-2">
                   <input
                     type="number"
-                    placeholder="Min cm"
+                    placeholder={isRTL ? "حداقل قد (cm)" : "Min cm"}
                     value={minHeight}
                     onChange={(e) => { setMinHeight(e.target.value); setPage(1); }}
                     className="w-full px-2 py-1 text-xs border border-gray-300 rounded-lg dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                   />
                   <input
                     type="number"
-                    placeholder="Max cm"
+                    placeholder={isRTL ? "حداکثر قد (cm)" : "Max cm"}
                     value={maxHeight}
                     onChange={(e) => { setMaxHeight(e.target.value); setPage(1); }}
                     className="w-full px-2 py-1 text-xs border border-gray-300 rounded-lg dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                   />
                   <input
                     type="number"
-                    placeholder="Min kg"
+                    placeholder={isRTL ? "حداقل وزن (kg)" : "Min kg"}
                     value={minWeight}
                     onChange={(e) => { setMinWeight(e.target.value); setPage(1); }}
                     className="w-full px-2 py-1 text-xs border border-gray-300 rounded-lg dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                   />
                   <input
                     type="number"
-                    placeholder="Max kg"
+                    placeholder={isRTL ? "حداکثر وزن (kg)" : "Max kg"}
                     value={maxWeight}
                     onChange={(e) => { setMaxWeight(e.target.value); setPage(1); }}
                     className="w-full px-2 py-1 text-xs border border-gray-300 rounded-lg dark:border-gray-700 dark:bg-gray-800 dark:text-white"
@@ -1130,10 +1146,12 @@ export default function CandidateSearchPage() {
 
               {/* Career Title */}
               <div className="py-3 space-y-2">
-                <span className="font-bold text-gray-800 dark:text-gray-200 text-xs">Career / Profession</span>
+                <span className="font-bold text-gray-800 dark:text-gray-200 text-xs">
+                  {isRTL ? "شغل و حرفه" : "Career / Profession"}
+                </span>
                 <input
                   type="text"
-                  placeholder="e.g. Teacher, Engineer..."
+                  placeholder={isRTL ? "مثلاً معلم، مهندس، کارمند..." : "e.g. Teacher, Engineer..."}
                   value={job}
                   onChange={(e) => { setJob(e.target.value); setPage(1); }}
                   className="w-full px-2 py-1 text-xs border border-gray-300 rounded-lg dark:border-gray-700 dark:bg-gray-800 dark:text-white"

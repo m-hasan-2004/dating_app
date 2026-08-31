@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import { toArray } from './profileUtils';
+import { useTranslation } from '@/context/LanguageContext';
 
 export type FieldType = 'text' | 'number' | 'date' | 'textarea' | 'select' | 'multiselect' | 'boolean';
 
@@ -43,6 +44,7 @@ const FormField: React.FC<FormFieldProps> = ({
   placeholder,
   rows = 3,
 }) => {
+  const { t } = useTranslation();
   const inputBaseClass = "w-full px-3 py-2 text-sm border border-gray-300 rounded-lg dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500";
   const labelClass = "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1";
   const hintClass = "text-xs text-gray-500 mt-0.5";
@@ -57,7 +59,7 @@ const FormField: React.FC<FormFieldProps> = ({
             onChange={(e) => onChange(name, e.target.value)}
             className={inputBaseClass}
             rows={rows}
-            placeholder={placeholder}
+            placeholder={placeholder ? t(placeholder) : undefined}
             required={required}
           />
         );
@@ -70,10 +72,10 @@ const FormField: React.FC<FormFieldProps> = ({
             className={inputBaseClass}
             required={required}
           >
-            <option value="">-- Select --</option>
+            <option value="">{t('-- Select --')}</option>
             {options?.map((opt) => (
               <option key={opt.value} value={opt.value}>
-                {opt.label}
+                {t(opt.label)}
               </option>
             ))}
           </select>
@@ -97,7 +99,7 @@ const FormField: React.FC<FormFieldProps> = ({
                   onChange={(e) => handleCheckboxChange(opt.value, e.target.checked)}
                   className="rounded text-brand-500 focus:ring-brand-500 dark:border-gray-600 dark:bg-gray-700"
                 />
-                <span className="text-gray-700 dark:text-gray-300">{opt.label}</span>
+                <span className="text-gray-700 dark:text-gray-300">{t(opt.label)}</span>
               </label>
             ))}
           </div>

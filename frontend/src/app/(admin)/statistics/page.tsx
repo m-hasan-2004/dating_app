@@ -14,12 +14,14 @@ import {
 } from '@/icons';
 
 import { useAuth } from '@/hooks/use-auth';
+import { useTranslation } from '@/context/LanguageContext';
 import { useRouter } from 'next/navigation';
 
 type GenderFilter = 'all' | 'man' | 'woman';
 
 export default function StatisticsPage() {
   const { user, loading: authLoading } = useAuth();
+  const { t, isRTL } = useTranslation();
   const router = useRouter();
   const isAdmin = Boolean(user?.is_staff || (user as any)?.is_superuser);
 
@@ -36,9 +38,9 @@ export default function StatisticsPage() {
   if (!isAdmin && !authLoading) {
     return (
       <div className="rounded-3xl border border-red-200 bg-red-50 p-12 text-center dark:border-red-900/50 dark:bg-red-950/20">
-        <h2 className="text-lg font-bold text-red-700 dark:text-red-400">Admin Access Only</h2>
-        <p className="text-xs text-red-600 dark:text-red-500 mt-1">You do not have permission to view demographic statistics.</p>
-        <Link href="/" className="inline-block mt-4 px-4 py-2 text-xs font-semibold rounded-xl bg-brand-500 text-white">Return to Dashboard</Link>
+        <h2 className="text-lg font-bold text-red-700 dark:text-red-400">{t("Admin Access Only")}</h2>
+        <p className="text-xs text-red-600 dark:text-red-500 mt-1">{t("You do not have permission to view demographic statistics.")}</p>
+        <Link href="/" className="inline-block mt-4 px-4 py-2 text-xs font-semibold rounded-xl bg-brand-500 text-white">{t("Return to Dashboard")}</Link>
       </div>
     );
   }
@@ -66,11 +68,11 @@ export default function StatisticsPage() {
       return stats.gender_ratio;
     }
     return {
-      men_count: 42,
-      women_count: 37,
-      total_gender_count: 79,
-      men_percentage: 53.2,
-      women_percentage: 46.8,
+      men_count: 0,
+      women_count: 0,
+      total_gender_count: 0,
+      men_percentage: 0,
+      women_percentage: 0,
     };
   }, [stats]);
 
@@ -107,15 +109,25 @@ export default function StatisticsPage() {
 
   // Income breakdown for currently selected cohort
   const incomeData = useMemo(() => {
-    const labelMap: Record<string, string> = {
-      no_income: 'No Income (بدون درآمد)',
-      '-10': 'Under 10M (زیر ۱۰ میلیون)',
-      '10-20': '10 - 20M (۱۰ تا ۲۰ میلیون)',
-      '20-30': '20 - 30M (۲۰ تا ۳۰ میلیون)',
-      '30-40': '30 - 40M (۳۰ تا ۴۰ میلیون)',
-      '40-50': '40 - 50M (۴۰ تا ۵۰ میلیون)',
-      '50-100': '50 - 100M (۵۰ تا ۱۰۰ میلیون)',
-      '+100': 'Over 100M (بالای ۱۰۰ میلیون)',
+    const labelMapFa: Record<string, string> = {
+      no_income: 'بدون درآمد',
+      '-10': 'زیر ۱۰ میلیون',
+      '10-20': '۱۰ تا ۲۰ میلیون',
+      '20-30': '۲۰ تا ۳۰ میلیون',
+      '30-40': '۳۰ تا ۴۰ میلیون',
+      '40-50': '۴۰ تا ۵۰ میلیون',
+      '50-100': '۵۰ تا ۱۰۰ میلیون',
+      '+100': 'بیش از ۱۰۰ میلیون',
+    };
+    const labelMapEn: Record<string, string> = {
+      no_income: 'No Income',
+      '-10': 'Under 10M',
+      '10-20': '10 - 20M',
+      '20-30': '20 - 30M',
+      '30-40': '30 - 40M',
+      '40-50': '40 - 50M',
+      '50-100': '50 - 100M',
+      '+100': 'Over 100M',
     };
     const raw = stats?.income_breakdown || {};
     const total = Object.values(raw).reduce((a, b) => a + b, 0) || 1;
@@ -123,11 +135,11 @@ export default function StatisticsPage() {
       .sort((a, b) => b[1] - a[1])
       .map(([key, count]) => ({
         key,
-        label: labelMap[key] || key,
+        label: isRTL ? (labelMapFa[key] || key) : (labelMapEn[key] || key),
         count,
         percent: Math.round((count / total) * 100),
       }));
-  }, [stats]);
+  }, [stats, isRTL]);
 
   // Housing breakdown for currently selected cohort
   const housingData = useMemo(() => {
@@ -145,10 +157,10 @@ export default function StatisticsPage() {
 
   const cohortLabel =
     genderFilter === 'all'
-      ? 'All Candidates'
+      ? t('All Candidates')
       : genderFilter === 'man'
-      ? 'Men / Boys Only'
-      : 'Women / Girls Only';
+      ? t('Men / Boys Only')
+      : t('Women / Girls Only');
 
   return (
     <div className="space-y-6 pb-12">
@@ -160,15 +172,15 @@ export default function StatisticsPage() {
               href="/"
               className="inline-flex items-center gap-1 text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
             >
-              <ChevronLeftIcon className="w-3.5 h-3.5" />
-              Dashboard
+              <ChevronLeftIcon className={`w-3.5 h-3.5 ${isRTL ? 'rotate-180' : ''}`} />
+              {t("Dashboard")}
             </Link>
           </div>
           <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
-            Demographic & Platform Statistics
+            {t("Demographic & Platform Statistics")}
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Interactive breakdown of candidates by gender, age, income, education, and asset ownership.
+            {t("Interactive breakdown of candidates by gender, age, income, education, and asset ownership.")}
           </p>
         </div>
 
@@ -177,35 +189,35 @@ export default function StatisticsPage() {
           <button
             type="button"
             onClick={() => setGenderFilter('all')}
-            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
               genderFilter === 'all'
                 ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-xs'
                 : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
             }`}
           >
-            All Candidates
+            {t("All Candidates")}
           </button>
           <button
             type="button"
             onClick={() => setGenderFilter('man')}
-            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
               genderFilter === 'man'
                 ? 'bg-blue-600 text-white shadow-xs'
                 : 'text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400'
             }`}
           >
-            Men / Boys
+            {t("Men / Boys")}
           </button>
           <button
             type="button"
             onClick={() => setGenderFilter('woman')}
-            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
               genderFilter === 'woman'
                 ? 'bg-pink-600 text-white shadow-xs'
                 : 'text-gray-600 dark:text-gray-400 hover:text-pink-600 dark:hover:text-pink-400'
             }`}
           >
-            Women / Girls
+            {t("Women / Girls")}
           </button>
         </div>
       </div>
@@ -214,14 +226,14 @@ export default function StatisticsPage() {
       {genderFilter !== 'all' && (
         <div className="rounded-xl px-4 py-2.5 bg-brand-50/70 border border-brand-200 dark:bg-brand-950/30 dark:border-brand-900/50 flex items-center justify-between text-xs text-brand-700 dark:text-brand-300">
           <span>
-            Filtering charts and data specifically for: <strong>{cohortLabel}</strong> ({stats?.cohort_count ?? 0} profiles)
+            {t("Filtering charts and data specifically for:")} <strong>{cohortLabel}</strong> ({stats?.cohort_count ?? 0} {t("profiles")})
           </span>
           <button
             type="button"
             onClick={() => setGenderFilter('all')}
-            className="font-semibold underline hover:no-underline"
+            className="font-semibold underline hover:no-underline cursor-pointer"
           >
-            Reset to All
+            {t("Reset to All")}
           </button>
         </div>
       )}
@@ -231,14 +243,14 @@ export default function StatisticsPage() {
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="text-base font-bold text-gray-800 dark:text-white">
-              Gender Distribution Ratio
+              {t("Gender Distribution Ratio")}
             </h3>
             <p className="text-xs text-gray-500 dark:text-gray-400">
-              Exact ratio of registered Men / Boys vs. Women / Girls
+              {t("Exact ratio of registered Men / Boys vs. Women / Girls")}
             </p>
           </div>
           <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-brand-50 text-brand-600 dark:bg-brand-950/40">
-            Pure Ratio (100%)
+            {t("Pure Ratio")} (100%)
           </span>
         </div>
 
@@ -253,7 +265,7 @@ export default function StatisticsPage() {
             }`}
           >
             <p className="text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
-              Men / Boys
+              {t("Men / Boys")}
             </p>
             <p className="text-2xl font-bold text-blue-700 dark:text-blue-300 mt-1">
               {genderRatio.men_count}
@@ -261,7 +273,7 @@ export default function StatisticsPage() {
             <p className="text-sm font-semibold text-blue-600 dark:text-blue-400 mt-0.5">
               {genderRatio.men_percentage}%
             </p>
-            <span className="text-[11px] text-blue-500 hover:underline mt-1 inline-block">Click to filter by Men</span>
+            <span className="text-[11px] text-blue-500 hover:underline mt-1 inline-block">{t("Click to filter by Men")}</span>
           </div>
 
           {/* Women Card */}
@@ -274,7 +286,7 @@ export default function StatisticsPage() {
             }`}
           >
             <p className="text-xs font-semibold text-pink-600 dark:text-pink-400 uppercase tracking-wider">
-              Women / Girls
+              {t("Women / Girls")}
             </p>
             <p className="text-2xl font-bold text-pink-700 dark:text-pink-300 mt-1">
               {genderRatio.women_count}
@@ -282,7 +294,7 @@ export default function StatisticsPage() {
             <p className="text-sm font-semibold text-pink-600 dark:text-pink-400 mt-0.5">
               {genderRatio.women_percentage}%
             </p>
-            <span className="text-[11px] text-pink-500 hover:underline mt-1 inline-block">Click to filter by Women</span>
+            <span className="text-[11px] text-pink-500 hover:underline mt-1 inline-block">{t("Click to filter by Women")}</span>
           </div>
 
           {/* Total Ratio Pool */}
@@ -295,7 +307,7 @@ export default function StatisticsPage() {
             }`}
           >
             <p className="text-xs font-semibold text-purple-600 dark:text-purple-400 uppercase tracking-wider">
-              Total Gender Pool
+              {t("Total Gender Pool")}
             </p>
             <p className="text-2xl font-bold text-purple-700 dark:text-purple-300 mt-1">
               {genderRatio.total_gender_count}
@@ -303,7 +315,7 @@ export default function StatisticsPage() {
             <p className="text-sm font-semibold text-purple-600 dark:text-purple-400 mt-0.5">
               100%
             </p>
-            <span className="text-[11px] text-purple-500 hover:underline mt-1 inline-block">Click to view all</span>
+            <span className="text-[11px] text-purple-500 hover:underline mt-1 inline-block">{t("Click to view all")}</span>
           </div>
         </div>
 
@@ -313,20 +325,20 @@ export default function StatisticsPage() {
             <div
               className="h-full bg-gradient-to-r from-blue-600 to-blue-500 transition-all duration-500"
               style={{ width: `${genderRatio.men_percentage}%` }}
-              title={`Men: ${genderRatio.men_percentage}%`}
+              title={`${t("Men")}: ${genderRatio.men_percentage}%`}
             />
             <div
               className="h-full bg-gradient-to-r from-pink-500 to-pink-600 transition-all duration-500"
               style={{ width: `${genderRatio.women_percentage}%` }}
-              title={`Women: ${genderRatio.women_percentage}%`}
+              title={`${t("Women")}: ${genderRatio.women_percentage}%`}
             />
           </div>
           <div className="flex items-center justify-between text-xs font-medium text-gray-600 dark:text-gray-300 mt-2.5">
             <span className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded-full bg-blue-500" /> Men ({genderRatio.men_percentage}%)
+              <span className="w-3 h-3 rounded-full bg-blue-500" /> {t("Men / Boys")} ({genderRatio.men_percentage}%)
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded-full bg-pink-500" /> Women ({genderRatio.women_percentage}%)
+              <span className="w-3 h-3 rounded-full bg-pink-500" /> {t("Women / Girls")} ({genderRatio.women_percentage}%)
             </span>
           </div>
         </div>
@@ -339,14 +351,14 @@ export default function StatisticsPage() {
           <div className="flex items-center justify-between mb-5">
             <div>
               <h3 className="text-base font-bold text-gray-800 dark:text-white">
-                Age Distribution — {cohortLabel}
+                {t("Age Distribution")} — {cohortLabel}
               </h3>
               <p className="text-xs text-gray-500 dark:text-gray-400">
-                Candidate age cohorts based on verified birth dates
+                {t("Candidate age cohorts based on verified birth dates")}
               </p>
             </div>
             <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-purple-50 text-purple-600 dark:bg-purple-950/40">
-              Age Brackets
+              {t("Age Brackets")}
             </span>
           </div>
 
@@ -354,9 +366,9 @@ export default function StatisticsPage() {
             {ageData.map((item) => (
               <div key={item.range}>
                 <div className="flex items-center justify-between text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  <span>{item.range} Years Old</span>
+                  <span>{item.range} {t("Years Old")}</span>
                   <span className="font-semibold text-gray-900 dark:text-white">
-                    {item.count} profiles ({item.percent}%)
+                    {item.count} {t("profiles")} ({item.percent}%)
                   </span>
                 </div>
                 <div className="h-2.5 w-full rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
@@ -376,14 +388,14 @@ export default function StatisticsPage() {
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h3 className="text-base font-bold text-gray-800 dark:text-white">
-                  Housing Status — {cohortLabel}
+                  {t("Housing Status")} — {cohortLabel}
                 </h3>
                 <p className="text-xs text-gray-500 dark:text-gray-400">
-                  Real-estate status (Owner vs. Tenant)
+                  {t("Real-estate status (Owner vs. Tenant)")}
                 </p>
               </div>
               <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-green-50 text-green-600 dark:bg-green-950/40">
-                Assets
+                {t("Assets & Capital")}
               </span>
             </div>
 
@@ -393,7 +405,7 @@ export default function StatisticsPage() {
                   <span className="text-2xl font-bold text-gray-900 dark:text-white">
                     {housingData.ownerPercent}%
                   </span>
-                  <span className="block text-[11px] text-gray-500 uppercase">Home Owners</span>
+                  <span className="block text-[11px] text-gray-500 uppercase">{t("Homeowner")}</span>
                 </div>
               </div>
             </div>
@@ -401,18 +413,18 @@ export default function StatisticsPage() {
             <div className="space-y-2 mt-2">
               <div className="flex items-center justify-between text-xs">
                 <span className="flex items-center gap-2 text-gray-700 dark:text-gray-300 font-medium">
-                  <span className="w-2.5 h-2.5 rounded-full bg-green-500" /> Home Owner (مالک)
+                  <span className="w-2.5 h-2.5 rounded-full bg-green-500" /> {t("Homeowner")}
                 </span>
                 <span className="font-bold text-gray-900 dark:text-white">
-                  {housingData.owner} candidates ({housingData.ownerPercent}%)
+                  {housingData.owner} {t("candidates")} ({housingData.ownerPercent}%)
                 </span>
               </div>
               <div className="flex items-center justify-between text-xs">
                 <span className="flex items-center gap-2 text-gray-700 dark:text-gray-300 font-medium">
-                  <span className="w-2.5 h-2.5 rounded-full bg-amber-500" /> Tenant / Rent (مستاجر)
+                  <span className="w-2.5 h-2.5 rounded-full bg-amber-500" /> {t("Tenant / Rent")}
                 </span>
                 <span className="font-bold text-gray-900 dark:text-white">
-                  {housingData.rent} candidates ({housingData.rentPercent}%)
+                  {housingData.rent} {t("candidates")} ({housingData.rentPercent}%)
                 </span>
               </div>
             </div>
@@ -425,25 +437,25 @@ export default function StatisticsPage() {
         <div className="flex items-center justify-between mb-5">
           <div>
             <h3 className="text-base font-bold text-gray-800 dark:text-white">
-              Education Qualifications — {cohortLabel}
+              {t("Education Qualifications")} — {cohortLabel}
             </h3>
             <p className="text-xs text-gray-500 dark:text-gray-400">
-              Highest academic and seminary degrees among {cohortLabel.toLowerCase()}
+              {t("Highest academic and seminary degrees among all candidates")}
             </p>
           </div>
           <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-600 dark:bg-indigo-950/40">
-            Degrees
+            {t("Education Level")}
           </span>
         </div>
 
         <div className="space-y-3.5">
           {educationData.length === 0 ? (
-            <p className="text-xs text-gray-400 italic py-4">No education records found for this cohort.</p>
+            <p className="text-xs text-gray-400 italic py-4">{t("No education records found for this cohort.")}</p>
           ) : (
             educationData.map((edu) => (
               <div key={edu.name}>
                 <div className="flex items-center justify-between text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  <span>{edu.name}</span>
+                  <span>{t(edu.name)}</span>
                   <span className="font-semibold text-gray-900 dark:text-white">
                     {edu.count} ({edu.percent}%)
                   </span>
@@ -465,20 +477,20 @@ export default function StatisticsPage() {
         <div className="flex items-center justify-between mb-5">
           <div>
             <h3 className="text-base font-bold text-gray-800 dark:text-white">
-              Income & Financial Brackets — {cohortLabel}
+              {t("Income & Financial Brackets")} — {cohortLabel}
             </h3>
             <p className="text-xs text-gray-500 dark:text-gray-400">
-              Monthly income distribution declared by {cohortLabel.toLowerCase()}
+              {t("Monthly income distribution declared by all candidates")}
             </p>
           </div>
           <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40">
-            Income Tiers
+            {t("Monthly Income")}
           </span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {incomeData.length === 0 ? (
-            <p className="text-xs text-gray-400 italic py-4 col-span-3">No income data for this cohort.</p>
+            <p className="text-xs text-gray-400 italic py-4 col-span-3">{t("No income data for this cohort.")}</p>
           ) : (
             incomeData.map((inc) => (
               <div
@@ -491,7 +503,7 @@ export default function StatisticsPage() {
                 </div>
                 <p className="text-xl font-bold text-gray-900 dark:text-white mt-1">
                   {inc.count}{' '}
-                  <span className="text-xs font-normal text-gray-400">candidates</span>
+                  <span className="text-xs font-normal text-gray-400">{t("candidates")}</span>
                 </p>
                 <div className="h-1.5 w-full rounded-full bg-gray-200 dark:bg-gray-700 mt-2 overflow-hidden">
                   <div

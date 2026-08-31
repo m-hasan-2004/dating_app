@@ -67,6 +67,7 @@ export interface User {
   middle_man_code?: string;
   is_active: boolean;
   is_staff: boolean;
+  is_superuser?: boolean;
   date_joined?: string;
 }
 

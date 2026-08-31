@@ -1,5 +1,6 @@
 "use client";
 import React, { useRef, useEffect } from "react";
+import { twMerge } from "tailwind-merge";
 
 interface ModalProps {
   isOpen: boolean;
@@ -52,7 +53,10 @@ export const Modal: React.FC<ModalProps> = ({
 
   const contentClasses = isFullscreen
     ? "w-full h-full"
-    : "relative w-full max-w-3xl rounded-3xl bg-white dark:bg-gray-900 shadow-2xl overflow-hidden border border-gray-100 dark:border-gray-800";
+    : twMerge(
+        "relative w-full max-w-lg rounded-3xl bg-white dark:bg-gray-900 shadow-2xl overflow-hidden border border-gray-100 dark:border-gray-800 mx-auto",
+        className
+      );
 
   return (
     <div className="fixed inset-0 flex items-center justify-center p-4 overflow-y-auto modal z-99999">
@@ -64,7 +68,7 @@ export const Modal: React.FC<ModalProps> = ({
       )}
       <div
         ref={modalRef}
-        className={`${contentClasses} ${className || ""}`}
+        className={contentClasses}
         onClick={(e) => e.stopPropagation()}
       >
         {showCloseButton && (

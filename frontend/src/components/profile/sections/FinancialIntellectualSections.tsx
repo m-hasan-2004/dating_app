@@ -2,11 +2,13 @@
 
 import React, { useState } from 'react';
 import Modal from '@/components/ui/modal';
+import { useTranslation } from '@/context/LanguageContext';
 import Button from '@/components/ui/button/Button';
 import ProfileSection from '@/components/profile/ProfileSection';
 import DisplayRow from '@/components/profile/DisplayRow';
 import FormField, { useFormState, SelectOption } from '@/components/profile/FormField';
 import { toArray, formatMultiValue } from '@/components/profile/profileUtils';
+import { formatBoolean } from '@/utils/formatters';
 import type {
   FinancialInformation,
   IntellectualInformation,
@@ -264,6 +266,7 @@ export function FinancialInformationSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
+  const { t, isRTL } = useTranslation();
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -310,13 +313,13 @@ export function FinancialInformationSection({
         <DisplayRow label="Ownership Status" value={data?.ownership_status} />
         <DisplayRow label="Rent Amount" value={data?.rent_amount} />
         <DisplayRow label="Mortgage Amount" value={data?.mortgage_amount} />
-        <DisplayRow label="Capital Assets" value={formatMultiValue(data?.capital, ASSETS_OPTIONS)} />
+        <DisplayRow label="Capital Assets" value={formatMultiValue(data?.capital, ASSETS_OPTIONS, t)} />
         <DisplayRow label="Other Capital" value={data?.other_capital} />
         <DisplayRow label="After Marriage Residence" value={data?.after_marriage_residence_status} />
         <DisplayRow label="Ex-Spouse Financial Status" value={data?.ex_spouse_financial_status} />
         <DisplayRow label="Ex-Spouse Financial Pay Status" value={data?.ex_spouse_financial_pay_status} />
         <DisplayRow label="Ex-Spouse Financial Amount" value={data?.ex_spouse_financial_amount} />
-        <DisplayRow label="Future Spouse Dowry Type" value={formatMultiValue(data?.future_spouse_dowry_type, DOWRY_TYPE_OPTIONS)} />
+        <DisplayRow label="Future Spouse Dowry Type" value={formatMultiValue(data?.future_spouse_dowry_type, DOWRY_TYPE_OPTIONS, t)} />
         <DisplayRow label="Future Spouse Dowry Amount" value={data?.future_spose_dowry_amount} />
         <DisplayRow label="Future Spouse Jahiziyeh" value={data?.future_spose_jahiziyeh} />
         <DisplayRow label="Jahiziyeh Explanation" value={data?.future_spose_jahiziyeh_explanation} />
@@ -348,8 +351,8 @@ export function FinancialInformationSection({
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-gray-100 dark:border-gray-800">
-            <Button variant="outline" onClick={() => setOpen(false)} disabled={saving}>Cancel</Button>
-            <Button onClick={handleSave} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>
+            <Button variant="outline" onClick={() => setOpen(false)} disabled={saving}>{t('Cancel')}</Button>
+            <Button onClick={handleSave} disabled={saving}>{saving ? t('Saving...') : t('Save')}</Button>
           </div>
         </div>
       </Modal>
@@ -398,6 +401,7 @@ export function IntellectualInformationSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
+  const { t, isRTL } = useTranslation();
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -449,13 +453,13 @@ export function IntellectualInformationSection({
     <>
       <ProfileSection title="Intellectual Information" onEdit={openModal} isEmpty={!data} isCollapsed={isCollapsed} onToggleCollapse={onToggleCollapse}>
         <DisplayRow label="Marriage Goals & Purposes" value={data?.marriage_goals_purposes} />
-        <DisplayRow label="Opinion About Woman's Job" value={formatMultiValue(data?.opinion_about_womans_job, WOMAN_JOB_OPTIONS)} />
-        <DisplayRow label="Opinion About Woman's Education" value={formatMultiValue(data?.opinion_about_womans_education, WOMAN_EDU_OPTIONS)} />
+        <DisplayRow label="Opinion About Woman's Job" value={formatMultiValue(data?.opinion_about_womans_job, WOMAN_JOB_OPTIONS, t)} />
+        <DisplayRow label="Opinion About Woman's Education" value={formatMultiValue(data?.opinion_about_womans_education, WOMAN_EDU_OPTIONS, t)} />
         <DisplayRow label="Pros of Yourself" value={data?.pros_of_yourself} />
         <DisplayRow label="Cons of Yourself" value={data?.cons_of_yourself} />
         <DisplayRow label="Friend Connection" value={data?.type_of_connection_with_friends} />
         <DisplayRow label="Friends Connection Reason" value={data?.friends_connection_reason} />
-        <DisplayRow label="Political Orientation" value={data?.political_orientation ? 'Yes' : 'No'} />
+        <DisplayRow label="Political Orientation" value={data?.political_orientation !== undefined ? formatBoolean(data.political_orientation, isRTL) : null} />
         <DisplayRow label="Opinion About Velayat Faqih" value={data?.opinion_about_velayat_faqih} />
         <DisplayRow label="Child Quantity Preference" value={data?.opinion_about_child_quantity} />
         <DisplayRow label="Contract Ceremony" value={data?.contract_how} />
@@ -505,8 +509,8 @@ export function IntellectualInformationSection({
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
-            <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={handleSave} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>
+            <Button variant="outline" onClick={() => setOpen(false)}>{t('Cancel')}</Button>
+            <Button onClick={handleSave} disabled={saving}>{saving ? t('Saving...') : t('Save')}</Button>
           </div>
         </div>
       </Modal>

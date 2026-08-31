@@ -19,7 +19,7 @@ from rest_framework_simplejwt.views import TokenRefreshView
 
 from users.authentication import CookieJWTAuthentication
 
-from users.permissions import IsOwnerOrAdmin
+from users.permissions import IsOwnerOrAdmin, IsStaffOrSuperUser
 from users.preferred_wife_models import (
     FutureSposeOriginality,
     PreferredWifeExtraInformation,
@@ -163,8 +163,12 @@ class UserProfileModelViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        if (user.is_staff or user.is_superuser) and "user" in self.request.query_params:
-            return self.queryset.filter(user_id=self.request.query_params["user"])
+        if self.action in ["list", "retrieve"]:
+            target_user_id = self.request.query_params.get("user")
+            if target_user_id:
+                if user.is_staff or user.is_superuser:
+                    return self.queryset.filter(user_id=target_user_id)
+                return self.queryset.filter(user_id=target_user_id, user__is_active=True)
         return self.queryset.filter(user=user)
 
     def perform_create(self, serializer):
@@ -187,13 +191,13 @@ class AccessCodeViewSet(viewsets.ModelViewSet):
     """
     Full CRUD for :class:`AccessCode` objects.
 
-    Restricted to staff users. Use the ``create_access_code`` management
+    Restricted to staff and superusers. Use the ``create_access_code`` management
     command or this endpoint to generate codes for prospective users.
     """
 
     queryset = AccessCode.objects.all()
     serializer_class = AccessCodeSerializer
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [IsStaffOrSuperUser]
     filterset_fields = ["active"]
     search_fields = ["code"]
     ordering_fields = ["date_created", "active"]
@@ -217,11 +221,11 @@ class UserViewSet(viewsets.ModelViewSet):
     ordering_fields = ["date_joined", "username"]
 
     def get_permissions(self):
-        if self.action in {"create", "destroy", "batch_action"}:
-            return [IsAdminUser()]
-        if self.action in {"list", "stats"}:
+        if self.action in {"create", "destroy", "batch_action", "stats", "list"}:
+            return [IsStaffOrSuperUser()]
+        if self.action in {"retrieve", "candidate_search"}:
             return [IsAuthenticated()]
-        # retrieve / update / partial_update -> owner or admin.
+        # update / partial_update -> owner or admin.
         return [IsOwnerOrAdmin()]
 
     def get_serializer_class(self):
@@ -237,7 +241,9 @@ class UserViewSet(viewsets.ModelViewSet):
         user = self.request.user
         if user.is_staff or user.is_superuser:
             return qs
-        # Non-staff users can only ever see their own row.
+        if self.action == "retrieve":
+            return qs.filter(is_active=True)
+        # Non-staff users can only list/edit their own row.
         return qs.filter(pk=user.pk)
 
     def get_object(self):
@@ -1057,6 +1063,7 @@ class LoginView(APIView):
         refresh = RefreshToken.for_user(user)
         access = refresh.access_token
 
+        request.user = user
         response = Response(
             {"user": UserSerializer(user, context={"request": request}).data},
             status=status.HTTP_200_OK,

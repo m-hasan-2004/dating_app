@@ -1,16 +1,20 @@
+"use client";
+
 import Link from "next/link";
 import React from "react";
+import { useTranslation } from "@/context/LanguageContext";
 
 interface BreadcrumbProps {
   pageTitle: string;
 }
 
 const PageBreadcrumb: React.FC<BreadcrumbProps> = ({ pageTitle }) => {
+  const { t, isRTL } = useTranslation();
+
   return (
     <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
       <h2
         className="text-xl font-semibold text-gray-800 dark:text-white/90"
-        x-text="pageName"
       >
         {pageTitle}
       </h2>
@@ -18,12 +22,12 @@ const PageBreadcrumb: React.FC<BreadcrumbProps> = ({ pageTitle }) => {
         <ol className="flex items-center gap-1.5">
           <li>
             <Link
-              className="inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400"
+              className="inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
               href="/"
             >
-              Home
+              {t("Home")}
               <svg
-                className="stroke-current"
+                className={`stroke-current ${isRTL ? "rotate-180" : ""}`}
                 width="17"
                 height="16"
                 viewBox="0 0 17 16"
@@ -32,7 +36,7 @@ const PageBreadcrumb: React.FC<BreadcrumbProps> = ({ pageTitle }) => {
               >
                 <path
                   d="M6.0765 12.667L10.2432 8.50033L6.0765 4.33366"
-                  stroke=""
+                  stroke="currentColor"
                   strokeWidth="1.2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -50,3 +54,4 @@ const PageBreadcrumb: React.FC<BreadcrumbProps> = ({ pageTitle }) => {
 };
 
 export default PageBreadcrumb;
+

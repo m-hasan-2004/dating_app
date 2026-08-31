@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { GroupIcon, LockIcon, UserCircleIcon, CheckCircleIcon } from '@/icons';
+import { useTranslation } from '@/context/LanguageContext';
 
 interface AdminMetricsProps {
   totalUsers: number;
@@ -20,6 +21,7 @@ export function AdminMetrics({
   usedCodes,
   activeCodes,
 }: AdminMetricsProps) {
+  const { t } = useTranslation();
   const activePercent = totalUsers > 0 ? Math.round((activeUsers / totalUsers) * 100) : 0;
   const usedCodesPercent = totalCodes > 0 ? Math.round((usedCodes / totalCodes) * 100) : 0;
 
@@ -32,16 +34,16 @@ export function AdminMetrics({
             <GroupIcon className="h-6 w-6" />
           </div>
           <span className="inline-flex items-center rounded-full bg-green-50 px-2 py-0.5 text-xs font-semibold text-green-700 dark:bg-green-950/40 dark:text-green-400">
-            100% Platform
+            {t("Platform Coverage")}
           </span>
         </div>
         <div className="mt-4">
           <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-            Total Registered Users
+            {t("Total Registered Users")}
           </p>
           <h3 className="mt-1 text-2xl font-bold text-gray-900 dark:text-white">{totalUsers}</h3>
           <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-            {activeUsers} active ({activePercent}%)
+            {activeUsers} {t("active")} ({activePercent}%)
           </p>
         </div>
       </div>
@@ -53,16 +55,16 @@ export function AdminMetrics({
             <CheckCircleIcon className="h-6 w-6" />
           </div>
           <span className="inline-flex items-center rounded-full bg-green-50 px-2 py-0.5 text-xs font-semibold text-green-700 dark:bg-green-950/40 dark:text-green-400">
-            {activePercent}% Rate
+            {activePercent}% {t("Active Rate")}
           </span>
         </div>
         <div className="mt-4">
           <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-            Active Profiles
+            {t("Active Profiles")}
           </p>
           <h3 className="mt-1 text-2xl font-bold text-gray-900 dark:text-white">{activeUsers}</h3>
           <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-            {totalUsers - activeUsers} inactive or pending
+            {totalUsers - activeUsers} {t("inactive or pending")}
           </p>
         </div>
       </div>
@@ -74,16 +76,16 @@ export function AdminMetrics({
             <UserCircleIcon className="h-6 w-6" />
           </div>
           <span className="inline-flex items-center rounded-full bg-blue-50 px-2 py-0.5 text-xs font-semibold text-blue-700 dark:bg-blue-950/40 dark:text-blue-400">
-            Admin Team
+            {t("Admin Team")}
           </span>
         </div>
         <div className="mt-4">
           <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-            Staff & Mediators
+            {t("Staff & Mediators")}
           </p>
           <h3 className="mt-1 text-2xl font-bold text-gray-900 dark:text-white">{staffUsers}</h3>
           <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-            Administrative accounts
+            {t("Administrative accounts")}
           </p>
         </div>
       </div>
@@ -95,16 +97,16 @@ export function AdminMetrics({
             <LockIcon className="h-6 w-6" />
           </div>
           <span className="inline-flex items-center rounded-full bg-purple-50 px-2 py-0.5 text-xs font-semibold text-purple-700 dark:bg-purple-950/40 dark:text-purple-400">
-            {usedCodesPercent}% Used
+            {usedCodesPercent}% {t("Used")}
           </span>
         </div>
         <div className="mt-4">
           <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-            Total Access Codes
+            {t("Access Codes Issued")}
           </p>
           <h3 className="mt-1 text-2xl font-bold text-gray-900 dark:text-white">{totalCodes}</h3>
           <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-            {activeCodes} available, {usedCodes} consumed
+            {usedCodes} {t("used")}, {activeCodes} {t("available")}
           </p>
         </div>
       </div>

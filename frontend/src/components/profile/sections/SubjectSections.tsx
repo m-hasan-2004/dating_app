@@ -1,12 +1,14 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import Modal from '@/components/ui/modal';
+import { useTranslation } from '@/context/LanguageContext';
 import Button from '@/components/ui/button/Button';
 import ProfileSection from '@/components/profile/ProfileSection';
 import MultiRecordSection from '@/components/profile/MultiRecordSection';
 import DisplayRow from '@/components/profile/DisplayRow';
 import FormField, { useFormState, SelectOption } from '@/components/profile/FormField';
+import { formatDate } from '@/utils/formatters';
 import type { SubjectDetails, SignupFeeTypeEnum } from '@/services/profileService';
 import type { IntroducedSubjectsInformation } from '@/services/profileMultiService';
 import { createSubjectDetails, updateSubjectDetails } from '@/services/profileService';
@@ -48,6 +50,7 @@ export function IntroducedSubjectsSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
+  const { t, isRTL } = useTranslation();
   const [open, setOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<IntroducedSubjectsInformation | null>(null);
   const [saving, setSaving] = useState(false);
@@ -120,16 +123,16 @@ export function IntroducedSubjectsSection({
         renderRecord={(item) => (
           <div className="space-y-1">
             <DisplayRow label="Username" value={item.username} />
-            <DisplayRow label="Birth Date" value={item.birth_date} />
+            <DisplayRow label="Birth Date" value={item.birth_date ? formatDate(item.birth_date, isRTL) : null} />
             <DisplayRow
               label="Evaluation"
               value={
                 <div className="flex gap-2">
                   <span className={`px-2 py-0.5 text-xs rounded font-medium ${item.postive ?? item.positive ? 'bg-green-100 text-green-800 dark:bg-green-950/40 dark:text-green-300' : 'bg-gray-100 text-gray-500'}`}>
-                    Positive
+                    {t('Positive')}
                   </span>
                   <span className={`px-2 py-0.5 text-xs rounded font-medium ${item.negative ? 'bg-red-100 text-red-800 dark:bg-red-950/40 dark:text-red-300' : 'bg-gray-100 text-gray-500'}`}>
-                    Negative
+                    {t('Negative')}
                   </span>
                 </div>
               }
@@ -165,8 +168,8 @@ export function IntroducedSubjectsSection({
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
-            <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={handleSave} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>
+            <Button variant="outline" onClick={() => setOpen(false)}>{t('Cancel')}</Button>
+            <Button onClick={handleSave} disabled={saving}>{saving ? t('Saving...') : t('Save')}</Button>
           </div>
         </div>
       </Modal>
@@ -199,6 +202,7 @@ export function SubjectDetailsSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -263,8 +267,8 @@ export function SubjectDetailsSection({
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
-            <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={handleSave} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>
+            <Button variant="outline" onClick={() => setOpen(false)}>{t('Cancel')}</Button>
+            <Button onClick={handleSave} disabled={saving}>{saving ? t('Saving...') : t('Save')}</Button>
           </div>
         </div>
       </Modal>

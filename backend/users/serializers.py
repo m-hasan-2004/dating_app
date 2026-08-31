@@ -81,13 +81,13 @@ USER_PUBLIC_FIELDS = (
     "middle_man_code",
     "date_created",
     "date_joined",
+    "is_active",
+    "is_staff",
+    "is_superuser",
 )
 
 # Extra fields exposed only to staff/admin users.
 USER_ADMIN_FIELDS = (
-    "is_active",
-    "is_staff",
-    "is_superuser",
     "access_code",
     "groups",
     "user_permissions",
@@ -100,9 +100,8 @@ class UserSerializer(serializers.ModelSerializer):
     Serializer for the custom :class:`User` model.
 
     Only exposes a safe subset of fields by default. Sensitive / administrative
-    fields (``password``, ``is_staff``, ``is_superuser``, ``groups``,
-    ``user_permissions``, raw ``access_code``) are only returned when the
-    current requester is staff.
+    fields (``password``, ``groups``, ``user_permissions``, raw ``access_code``)
+    are only returned when the current requester is staff.
 
     ``password`` is write-only and never included in responses.
     """
@@ -168,7 +167,11 @@ class UserSerializer(serializers.ModelSerializer):
                 if f in self.fields:
                     self.fields[f].read_only = False
         else:
-            # Drop admin-only fields entirely for non-staff requesters.
+            # For non-staff, ensure is_active, is_staff, is_superuser are strictly read-only
+            for f in ("is_active", "is_staff", "is_superuser"):
+                if f in self.fields:
+                    self.fields[f].read_only = True
+            # Drop admin-only internal fields entirely for non-staff requesters.
             for field in USER_ADMIN_FIELDS:
                 self.fields.pop(field, None)
 

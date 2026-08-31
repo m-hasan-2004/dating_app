@@ -19,12 +19,15 @@ import {
   LockIcon,
 } from '@/icons';
 import { useAuth } from '@/hooks/use-auth';
+import { useTranslation } from '@/context/LanguageContext';
+import { formatDate } from '@/utils/formatters';
 import { useRouter } from 'next/navigation';
 
 const PAGE_SIZE_OPTIONS = [5, 10, 20, 50, 100];
 
 export default function UsersListPage() {
   const { user, loading: authLoading } = useAuth();
+  const { t, isRTL } = useTranslation();
   const router = useRouter();
   const isAdmin = Boolean(user?.is_staff || (user as any)?.is_superuser);
 
@@ -33,6 +36,10 @@ export default function UsersListPage() {
       router.replace('/');
     }
   }, [authLoading, isAdmin, router]);
+
+  if (!isAdmin && !authLoading) {
+    return null;
+  }
 
   const [users, setUsers] = useState<User[]>([]);
   const [stats, setStats] = useState<UserStats | null>(null);
@@ -91,11 +98,11 @@ export default function UsersListPage() {
         setTotalCount(res.count ?? 0);
       }
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to load users');
+      setError(e?.message ?? t('Failed to load users'));
     } finally {
       setLoading(false);
     }
-  }, [page, pageSize, searchQuery, statusFilter, roleFilter]);
+  }, [page, pageSize, searchQuery, statusFilter, roleFilter, t]);
 
   useEffect(() => {
     loadStats();
@@ -142,20 +149,20 @@ export default function UsersListPage() {
   // Batch action executor
   const runBatchAction = async (action: 'enable' | 'disable' | 'make_staff' | 'make_normal') => {
     if (selectedUserIds.length === 0) {
-      alert('Please select at least 1 user from the list.');
+      alert(t('Please select at least 1 user from the list.'));
       return;
     }
 
     const actionLabels: Record<string, string> = {
-      enable: 'Enable',
-      disable: 'Disable',
-      make_staff: 'Change to Admin/Staff',
-      make_normal: 'Change to Normal User',
+      enable: t('Enable'),
+      disable: t('Disable'),
+      make_staff: t('Change to Admin/Staff'),
+      make_normal: t('Change to Normal User'),
     };
 
     if (
       !confirm(
-        `Are you sure you want to perform "${actionLabels[action]}" on ${selectedUserIds.length} selected user(s)?`
+        `${t('Are you sure you want to perform')} "${actionLabels[action]}" ${t('on')} ${selectedUserIds.length} ${t('selected user(s)?')}`
       )
     ) {
       return;
@@ -166,12 +173,12 @@ export default function UsersListPage() {
     setSuccessMessage('');
     try {
       const res = await executeBatchUserAction(action, selectedUserIds);
-      setSuccessMessage(`Successfully applied action "${actionLabels[action]}" to ${res.affected} user(s).`);
+      setSuccessMessage(`${t('Successfully applied action')} "${actionLabels[action]}" ${t('to')} ${res.affected} ${t('user(s).')}`);
       setSelectedUserIds([]);
       setSelectedBatchAction('');
       await Promise.all([loadUsers(), loadStats()]);
     } catch (e: any) {
-      setError(e?.message ?? `Failed to perform batch action`);
+      setError(e?.message ?? t('Failed to perform batch action'));
     } finally {
       setBatchActionLoading(false);
     }
@@ -183,12 +190,12 @@ export default function UsersListPage() {
     setUsers((prev) => prev.map((u) => (u.id === user.id ? { ...u, is_active: newStatus } : u)));
     try {
       await updateUser(user.id, { is_active: newStatus });
-      setSuccessMessage(`User @${user.username} ${newStatus ? 'activated' : 'deactivated'} successfully.`);
+      setSuccessMessage(`${t('User')} @${user.username} ${newStatus ? t('activated') : t('deactivated')} ${t('successfully.')}`);
       setTimeout(() => setSuccessMessage(''), 3000);
       await Promise.all([loadUsers(), loadStats()]);
     } catch (e: any) {
       setUsers((prev) => prev.map((u) => (u.id === user.id ? { ...u, is_active: user.is_active } : u)));
-      setError(e?.message ?? 'Failed to update user status');
+      setError(e?.message ?? t('Failed to update user status'));
       setTimeout(() => setError(''), 4000);
     }
   };
@@ -198,12 +205,12 @@ export default function UsersListPage() {
     setUsers((prev) => prev.map((u) => (u.id === user.id ? { ...u, is_staff: newStaff } : u)));
     try {
       await updateUser(user.id, { is_staff: newStaff });
-      setSuccessMessage(`User @${user.username} role updated to ${newStaff ? 'Staff' : 'User'}.`);
+      setSuccessMessage(`${t('User')} @${user.username} ${t('role updated to')} ${newStaff ? t('Staff') : t('User')}.`);
       setTimeout(() => setSuccessMessage(''), 3000);
       await Promise.all([loadUsers(), loadStats()]);
     } catch (e: any) {
       setUsers((prev) => prev.map((u) => (u.id === user.id ? { ...u, is_staff: user.is_staff } : u)));
-      setError(e?.message ?? 'Failed to update user role');
+      setError(e?.message ?? t('Failed to update user role'));
       setTimeout(() => setError(''), 4000);
     }
   };
@@ -213,9 +220,9 @@ export default function UsersListPage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800 dark:text-white">User Management</h1>
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-white">{t("User Management")}</h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            View, search, batch manage, and edit dating app user profiles and access roles.
+            {t("View, search, batch manage, and edit dating app user profiles and access roles.")}
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -224,7 +231,7 @@ export default function UsersListPage() {
             className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-xl border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 transition-colors shadow-sm"
           >
             <LockIcon className="w-4 h-4 text-brand-500" />
-            Access Codes
+            {t("Access Codes")}
           </Link>
         </div>
       </div>
@@ -232,25 +239,25 @@ export default function UsersListPage() {
       {/* System-wide True Overview Stats (Database-wide) */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4">
-          <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Total Users</p>
+          <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t("Total Users")}</p>
           <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">
             {stats ? stats.total_users : totalCount}
           </p>
         </div>
         <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4">
-          <p className="text-xs font-medium text-green-600 dark:text-green-400 uppercase tracking-wider">Active Users</p>
+          <p className="text-xs font-medium text-green-600 dark:text-green-400 uppercase tracking-wider">{t("Active Users")}</p>
           <p className="text-2xl font-bold text-green-600 dark:text-green-400 mt-1">
             {stats ? stats.active_users : '—'}
           </p>
         </div>
         <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4">
-          <p className="text-xs font-medium text-red-600 dark:text-red-400 uppercase tracking-wider">Inactive Users</p>
+          <p className="text-xs font-medium text-red-600 dark:text-red-400 uppercase tracking-wider">{t("Inactive Users")}</p>
           <p className="text-2xl font-bold text-red-600 dark:text-red-400 mt-1">
             {stats ? stats.inactive_users : '—'}
           </p>
         </div>
         <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4">
-          <p className="text-xs font-medium text-blue-600 dark:text-blue-400 uppercase tracking-wider">Staff / Admins</p>
+          <p className="text-xs font-medium text-blue-600 dark:text-blue-400 uppercase tracking-wider">{t("Staff & Mediators")}</p>
           <p className="text-2xl font-bold text-blue-600 dark:text-blue-400 mt-1">
             {stats ? stats.staff_users : '—'}
           </p>
@@ -278,7 +285,7 @@ export default function UsersListPage() {
           <div className="relative flex-1 max-w-lg">
             <input
               type="text"
-              placeholder="Search username, email, phone, middle man code..."
+              placeholder={t("Search username, phone, middle man code...")}
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
@@ -298,9 +305,9 @@ export default function UsersListPage() {
               }}
               className="px-3 py-2 text-sm border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
             >
-              <option value="all">All Status</option>
-              <option value="active">Active Only</option>
-              <option value="inactive">Inactive Only</option>
+              <option value="all">{t("All Status")}</option>
+              <option value="active">{t("Active Only")}</option>
+              <option value="inactive">{t("Inactive Only")}</option>
             </select>
 
             {/* Role filter */}
@@ -312,14 +319,14 @@ export default function UsersListPage() {
               }}
               className="px-3 py-2 text-sm border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
             >
-              <option value="all">All Roles</option>
-              <option value="staff">Staff / Admin</option>
-              <option value="user">Regular User</option>
+              <option value="all">{t("All Roles")}</option>
+              <option value="staff">{t("Staff / Admin")}</option>
+              <option value="user">{t("Regular User")}</option>
             </select>
 
             {/* Page Size Selector */}
             <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-              <span>Per page:</span>
+              <span>{t("Per page:")}</span>
               <select
                 value={pageSize}
                 onChange={(e) => {
@@ -342,35 +349,35 @@ export default function UsersListPage() {
         <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-gray-100 dark:border-gray-800">
           {/* Selection helpers (1 to N) */}
           <div className="flex flex-wrap items-center gap-2 text-xs">
-            <span className="font-semibold text-gray-600 dark:text-gray-300">Select:</span>
+            <span className="font-semibold text-gray-600 dark:text-gray-300">{t("Select:")}</span>
             <button
               type="button"
               onClick={handleSelectAllOnPage}
-              className="px-2.5 py-1 rounded-lg border border-gray-200 bg-gray-50 hover:bg-gray-100 text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 transition-colors"
+              className="px-2.5 py-1 rounded-lg border border-gray-200 bg-gray-50 hover:bg-gray-100 text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 transition-colors cursor-pointer"
             >
-              {isAllOnPageSelected ? 'Deselect All' : `All on Page (${users.length})`}
+              {isAllOnPageSelected ? t('Deselect All') : `${t('All on Page')} (${users.length})`}
             </button>
             <button
               type="button"
               onClick={handleSelectActiveOnPage}
-              className="px-2.5 py-1 rounded-lg border border-gray-200 bg-gray-50 hover:bg-gray-100 text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 transition-colors"
+              className="px-2.5 py-1 rounded-lg border border-gray-200 bg-gray-50 hover:bg-gray-100 text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 transition-colors cursor-pointer"
             >
-              Active on Page
+              {t("Active on Page")}
             </button>
             <button
               type="button"
               onClick={handleSelectInactiveOnPage}
-              className="px-2.5 py-1 rounded-lg border border-gray-200 bg-gray-50 hover:bg-gray-100 text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 transition-colors"
+              className="px-2.5 py-1 rounded-lg border border-gray-200 bg-gray-50 hover:bg-gray-100 text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 transition-colors cursor-pointer"
             >
-              Inactive on Page
+              {t("Inactive on Page")}
             </button>
             {selectedUserIds.length > 0 && (
               <button
                 type="button"
                 onClick={() => setSelectedUserIds([])}
-                className="text-red-500 hover:underline px-1"
+                className="text-red-500 hover:underline px-1 cursor-pointer"
               >
-                Clear ({selectedUserIds.length})
+                {t("Clear")} ({selectedUserIds.length})
               </button>
             )}
           </div>
@@ -378,7 +385,7 @@ export default function UsersListPage() {
           {/* Batch Actions Selector */}
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">
-              Actions ({selectedUserIds.length} selected):
+              {t("Actions")} ({selectedUserIds.length} {t("selected")}):
             </span>
             <select
               value={selectedBatchAction}
@@ -392,44 +399,44 @@ export default function UsersListPage() {
               disabled={selectedUserIds.length === 0 || batchActionLoading}
               className="px-3 py-1.5 text-xs font-medium border border-gray-300 rounded-lg dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500 disabled:opacity-50"
             >
-              <option value="">Choose an action...</option>
-              <option value="enable">Enable Selected</option>
-              <option value="disable">Disable Selected</option>
-              <option value="make_staff">Change Role: Staff / Admin</option>
-              <option value="make_normal">Change Role: Normal User</option>
+              <option value="">{t("Choose an action...")}</option>
+              <option value="enable">{t("Enable Selected")}</option>
+              <option value="disable">{t("Disable Selected")}</option>
+              <option value="make_staff">{t("Change Role: Staff / Admin")}</option>
+              <option value="make_normal">{t("Change Role: Normal User")}</option>
             </select>
 
             <button
               type="button"
               onClick={() => runBatchAction('enable')}
               disabled={selectedUserIds.length === 0 || batchActionLoading}
-              className="px-2.5 py-1.5 text-xs font-medium rounded-lg bg-green-600 hover:bg-green-700 text-white transition-colors disabled:opacity-40"
+              className="px-2.5 py-1.5 text-xs font-medium rounded-lg bg-green-600 hover:bg-green-700 text-white transition-colors disabled:opacity-40 cursor-pointer"
             >
-              Enable
+              {t("Enable")}
             </button>
             <button
               type="button"
               onClick={() => runBatchAction('disable')}
               disabled={selectedUserIds.length === 0 || batchActionLoading}
-              className="px-2.5 py-1.5 text-xs font-medium rounded-lg bg-amber-600 hover:bg-amber-700 text-white transition-colors disabled:opacity-40"
+              className="px-2.5 py-1.5 text-xs font-medium rounded-lg bg-amber-600 hover:bg-amber-700 text-white transition-colors disabled:opacity-40 cursor-pointer"
             >
-              Disable
+              {t("Disable")}
             </button>
             <button
               type="button"
               onClick={() => runBatchAction('make_staff')}
               disabled={selectedUserIds.length === 0 || batchActionLoading}
-              className="px-2.5 py-1.5 text-xs font-medium rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition-colors disabled:opacity-40"
+              className="px-2.5 py-1.5 text-xs font-medium rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition-colors disabled:opacity-40 cursor-pointer"
             >
-              Set Staff
+              {t("Set Staff")}
             </button>
             <button
               type="button"
               onClick={() => runBatchAction('make_normal')}
               disabled={selectedUserIds.length === 0 || batchActionLoading}
-              className="px-2.5 py-1.5 text-xs font-medium rounded-lg bg-gray-600 hover:bg-gray-700 text-white transition-colors disabled:opacity-40"
+              className="px-2.5 py-1.5 text-xs font-medium rounded-lg bg-gray-600 hover:bg-gray-700 text-white transition-colors disabled:opacity-40 cursor-pointer"
             >
-              Set Normal
+              {t("Set Normal")}
             </button>
           </div>
         </div>
@@ -447,30 +454,29 @@ export default function UsersListPage() {
                     checked={isAllOnPageSelected}
                     onChange={handleSelectAllOnPage}
                     className="w-4 h-4 rounded text-brand-500 border-gray-300 dark:border-gray-700 dark:bg-gray-800 focus:ring-brand-500"
-                    title="Select all on this page"
+                    title={t("Select all on this page")}
                   />
                 </th>
-                <th className="px-4 py-3 text-left font-semibold text-gray-600 dark:text-gray-300">User</th>
-                <th className="px-4 py-3 text-left font-semibold text-gray-600 dark:text-gray-300">Email</th>
-                <th className="px-4 py-3 text-left font-semibold text-gray-600 dark:text-gray-300">Phone</th>
-                <th className="px-4 py-3 text-left font-semibold text-gray-600 dark:text-gray-300">Status</th>
-                <th className="px-4 py-3 text-left font-semibold text-gray-600 dark:text-gray-300">Role</th>
-                <th className="px-4 py-3 text-left font-semibold text-gray-600 dark:text-gray-300">Joined</th>
-                <th className="px-4 py-3 text-right font-semibold text-gray-600 dark:text-gray-300">Actions</th>
+                <th className={`px-4 py-3 font-semibold text-gray-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>{t("User")}</th>
+                <th className={`px-4 py-3 font-semibold text-gray-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Phone")}</th>
+                <th className={`px-4 py-3 font-semibold text-gray-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Status")}</th>
+                <th className={`px-4 py-3 font-semibold text-gray-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Role")}</th>
+                <th className={`px-4 py-3 font-semibold text-gray-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Joined")}</th>
+                <th className={`px-4 py-3 font-semibold text-gray-600 dark:text-gray-300 ${isRTL ? 'text-left' : 'text-right'}`}>{t("Actions")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
               {loading ? (
                 <tr>
-                  <td colSpan={8} className="px-6 py-12 text-center text-gray-400">
+                  <td colSpan={7} className="px-6 py-12 text-center text-gray-400">
                     <div className="mx-auto mb-2 h-6 w-6 animate-spin rounded-full border-2 border-brand-500 border-t-transparent" />
-                    Loading matching users...
+                    {t("Loading matching users...")}
                   </td>
                 </tr>
               ) : users.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="px-6 py-12 text-center text-gray-400 italic">
-                    No users found matching your search or filters.
+                  <td colSpan={7} className="px-6 py-12 text-center text-gray-400 italic">
+                    {t("No users found matching your search or filters.")}
                   </td>
                 </tr>
               ) : (
@@ -491,7 +497,7 @@ export default function UsersListPage() {
                           className="w-4 h-4 rounded text-brand-500 border-gray-300 dark:border-gray-700 dark:bg-gray-800 focus:ring-brand-500"
                         />
                       </td>
-                      <td className="px-4 py-4 font-medium text-gray-900 dark:text-white">
+                      <td className={`px-4 py-4 font-medium text-gray-900 dark:text-white ${isRTL ? 'text-right' : 'text-left'}`}>
                         <div className="flex items-center gap-2">
                           <div className="w-8 h-8 rounded-full bg-brand-100 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400 flex items-center justify-center font-bold text-xs uppercase">
                             {user.username.slice(0, 2)}
@@ -499,14 +505,13 @@ export default function UsersListPage() {
                           <div>
                             <p className="font-semibold text-gray-900 dark:text-white">{user.username}</p>
                             {user.middle_man_code && (
-                              <p className="text-xs text-gray-400">Ref: {user.middle_man_code}</p>
+                              <p className="text-xs text-gray-400">{t("Ref")}: {user.middle_man_code}</p>
                             )}
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-4 text-gray-600 dark:text-gray-400">{user.email || '—'}</td>
-                      <td className="px-4 py-4 text-gray-600 dark:text-gray-400">{user.phone_number ?? '—'}</td>
-                      <td className="px-4 py-4">
+                      <td className={`px-4 py-4 text-gray-600 dark:text-gray-400 ${isRTL ? 'text-right' : 'text-left'}`}>{user.phone_number ?? '—'}</td>
+                      <td className={`px-4 py-4 ${isRTL ? 'text-right' : 'text-left'}`}>
                         <button
                           type="button"
                           onClick={() => handleToggleActive(user)}
@@ -515,12 +520,12 @@ export default function UsersListPage() {
                               ? 'bg-green-100 text-green-700 dark:bg-green-950/40 dark:text-green-400'
                               : 'bg-red-100 text-red-700 dark:bg-red-950/40 dark:text-red-400'
                           }`}
-                          title="Click to toggle status"
+                          title={t("Click to toggle status")}
                         >
-                          {user.is_active ? 'Active' : 'Inactive'}
+                          {user.is_active ? t('Active') : t('Inactive')}
                         </button>
                       </td>
-                      <td className="px-4 py-4">
+                      <td className={`px-4 py-4 ${isRTL ? 'text-right' : 'text-left'}`}>
                         <button
                           type="button"
                           onClick={() => handleToggleStaff(user)}
@@ -529,22 +534,22 @@ export default function UsersListPage() {
                               ? 'bg-blue-100 text-blue-700 dark:bg-blue-950/40 dark:text-blue-400'
                               : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
                           }`}
-                          title="Click to toggle staff role"
+                          title={t("Click to toggle staff role")}
                         >
-                          {user.is_staff ? 'Staff' : 'User'}
+                          {user.is_staff ? t('Staff') : t('User')}
                         </button>
                       </td>
-                      <td className="px-4 py-4 text-gray-500 dark:text-gray-400 text-xs">
-                        {user.date_joined ? new Date(user.date_joined).toLocaleDateString() : '—'}
+                      <td className={`px-4 py-4 text-gray-500 dark:text-gray-400 text-xs ${isRTL ? 'text-right' : 'text-left'}`}>
+                        {user.date_joined ? formatDate(user.date_joined, isRTL) : '—'}
                       </td>
-                      <td className="px-4 py-4 text-right">
+                      <td className={`px-4 py-4 ${isRTL ? 'text-left' : 'text-right'}`}>
                         <div className="inline-flex items-center gap-2">
                           <Link
                             href={`/users/${user.id}/profile`}
                             className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-lg text-brand-600 bg-brand-50 hover:bg-brand-100 dark:bg-brand-950/40 dark:text-brand-400 dark:hover:bg-brand-950/60 transition-colors"
                           >
                             <UserCircleIcon className="w-3.5 h-3.5" />
-                            Profile
+                            {t("Profile")}
                           </Link>
                           <button
                             type="button"
@@ -554,9 +559,9 @@ export default function UsersListPage() {
                                 ? 'text-amber-700 bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:text-amber-400 dark:hover:bg-amber-950/60'
                                 : 'text-green-700 bg-green-50 hover:bg-green-100 dark:bg-green-950/40 dark:text-green-400 dark:hover:bg-green-950/60'
                             }`}
-                            title={user.is_active ? 'Deactivate user account' : 'Activate user account'}
+                            title={user.is_active ? t('Deactivate user account') : t('Activate user account')}
                           >
-                            {user.is_active ? 'Deactivate' : 'Activate'}
+                            {user.is_active ? t('Deactivate') : t('Activate')}
                           </button>
                         </div>
                       </td>
@@ -571,16 +576,16 @@ export default function UsersListPage() {
         {/* Pagination Bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-6 py-4 border-t border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-white/[0.01]">
           <span className="text-xs text-gray-500 dark:text-gray-400">
-            Showing{' '}
+            {t('Showing')}{' '}
             <span className="font-semibold text-gray-700 dark:text-gray-300">
               {totalCount === 0 ? 0 : (page - 1) * pageSize + 1}
             </span>{' '}
-            to{' '}
+            {t('to')}{' '}
             <span className="font-semibold text-gray-700 dark:text-gray-300">
               {Math.min(page * pageSize, totalCount)}
             </span>{' '}
-            of{' '}
-            <span className="font-semibold text-gray-700 dark:text-gray-300">{totalCount}</span> matching users
+            {t('of')}{' '}
+            <span className="font-semibold text-gray-700 dark:text-gray-300">{totalCount}</span> {t('matching users')}
           </span>
 
           <div className="flex items-center gap-2">
@@ -588,22 +593,22 @@ export default function UsersListPage() {
               type="button"
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page <= 1 || loading}
-              className="px-3 py-1.5 text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 disabled:opacity-40 transition-colors"
+              className="px-3 py-1.5 text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 disabled:opacity-40 transition-colors cursor-pointer"
             >
-              Previous
+              {t("Previous")}
             </button>
 
             <span className="text-xs font-medium text-gray-700 dark:text-gray-300 px-2">
-              Page {page} of {totalPages}
+              {t("Page")} {page} {t("of")} {totalPages}
             </span>
 
             <button
               type="button"
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page >= totalPages || loading}
-              className="px-3 py-1.5 text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 disabled:opacity-40 transition-colors"
+              className="px-3 py-1.5 text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 disabled:opacity-40 transition-colors cursor-pointer"
             >
-              Next
+              {t("Next")}
             </button>
           </div>
         </div>

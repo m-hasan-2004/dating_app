@@ -1,12 +1,14 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import Modal from '@/components/ui/modal';
+import { useTranslation } from '@/context/LanguageContext';
 import Button from '@/components/ui/button/Button';
 import ProfileSection from '@/components/profile/ProfileSection';
 import DisplayRow from '@/components/profile/DisplayRow';
 import FormField, { useFormState, SelectOption } from '@/components/profile/FormField';
 import { toArray, formatMultiValue } from '@/components/profile/profileUtils';
+import { formatDate, formatHeight, formatWeight } from '@/utils/formatters';
 import type {
   IdentityInformation,
   BirthCertificateInformation,
@@ -124,6 +126,7 @@ export function IdentityInformationSection({
   isCollapsed,
   onToggleCollapse,
 }: IdentitySectionProps) {
+  const { t, isRTL } = useTranslation();
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -181,9 +184,9 @@ export function IdentityInformationSection({
         <DisplayRow label="Job" value={data?.job} />
         <DisplayRow label="Insurance" value={data?.insurance} />
         <DisplayRow label="Income" value={data?.income} />
-        <DisplayRow label="Assets / Capital" value={formatMultiValue(data?.assets)} />
-        <DisplayRow label="Height" value={data?.height ? `${data.height} cm` : null} />
-        <DisplayRow label="Weight" value={data?.weight ? `${data.weight} kg` : null} />
+        <DisplayRow label="Assets / Capital" value={formatMultiValue(data?.assets, CAPITAL_OPTIONS, t)} />
+        <DisplayRow label="Height" value={data?.height ? formatHeight(data.height, isRTL) : null} />
+        <DisplayRow label="Weight" value={data?.weight ? formatWeight(data.weight, isRTL) : null} />
         <DisplayRow label="Preferred Meeting Time" value={data?.prefered_meeting_time} />
         <DisplayRow label="Type of Payment" value={data?.type_of_payment} />
       </ProfileSection>
@@ -199,35 +202,41 @@ export function IdentityInformationSection({
               <FormField label="Last Name" name="last_name" type="text" value={state.last_name} onChange={handleChange} required />
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <FormField label="Father Name" name="father_name" type="text" value={state.father_name} onChange={handleChange} required />
-              <FormField label="Eitta Number" name="eitta_number" type="text" value={state.eitta_number} onChange={handleChange} required />
+              <FormField label="Father's Name" name="father_name" type="text" value={state.father_name} onChange={handleChange} />
+              <FormField label="Eitta Number" name="eitta_number" type="text" value={state.eitta_number} onChange={handleChange} />
             </div>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 gap-4">
               <FormField label="Landline Phone" name="landline_phone" type="text" value={state.landline_phone} onChange={handleChange} />
               <FormField label="Mother's Phone" name="mother_phone" type="text" value={state.mother_phone} onChange={handleChange} />
-              <FormField label="Father's Phone" name="father_phone" type="text" value={state.father_phone} onChange={handleChange} />
             </div>
-            <FormField label="Home Address" name="home_address" type="textarea" value={state.home_address} onChange={handleChange} required />
+            <div className="grid grid-cols-2 gap-4">
+              <FormField label="Father's Phone" name="father_phone" type="text" value={state.father_phone} onChange={handleChange} />
+              <FormField label="Originality" name="originality" type="text" value={state.originality} onChange={handleChange} />
+            </div>
+            <FormField label="Home Address" name="home_address" type="textarea" value={state.home_address} onChange={handleChange} />
             <FormField label="Work Address" name="work_address" type="textarea" value={state.work_address} onChange={handleChange} />
             <div className="grid grid-cols-2 gap-4">
-              <FormField label="Originality" name="originality" type="text" value={state.originality} onChange={handleChange} />
               <FormField label="Education" name="education" type="select" value={state.education} onChange={handleChange} options={EDUCATION_OPTIONS} />
+              <FormField label="Job / Profession" name="job" type="text" value={state.job} onChange={handleChange} />
             </div>
-            <div className="grid grid-cols-3 gap-4">
-              <FormField label="Job" name="job" type="text" value={state.job} onChange={handleChange} />
-              <FormField label="Height (cm)" name="height" type="number" value={state.height} onChange={handleChange} />
-              <FormField label="Weight (kg)" name="weight" type="number" value={state.weight} onChange={handleChange} />
+            <div className="grid grid-cols-2 gap-4">
+              <FormField label="Insurance" name="insurance" type="text" value={state.insurance} onChange={handleChange} />
+              <FormField label="Income" name="income" type="text" value={state.income} onChange={handleChange} />
             </div>
             <FormField label="Assets / Capital" name="assets" type="multiselect" value={state.assets} onChange={handleChange} options={CAPITAL_OPTIONS} />
             <div className="grid grid-cols-2 gap-4">
+              <FormField label="Height (cm)" name="height" type="number" value={state.height} onChange={handleChange} />
+              <FormField label="Weight (kg)" name="weight" type="number" value={state.weight} onChange={handleChange} />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
               <FormField label="Preferred Meeting Time" name="prefered_meeting_time" type="text" value={state.prefered_meeting_time} onChange={handleChange} />
-              <FormField label="Type of Payment" name="type_of_payment" type="select" value={state.type_of_payment} onChange={handleChange} options={PAYMENT_TYPE_OPTIONS} />
+              <FormField label="Payment Type" name="type_of_payment" type="select" value={state.type_of_payment} onChange={handleChange} options={PAYMENT_TYPE_OPTIONS} />
             </div>
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
-            <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={handleSave} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>
+            <Button variant="outline" onClick={() => setOpen(false)}>{t('Cancel')}</Button>
+            <Button onClick={handleSave} disabled={saving}>{saving ? t('Saving...') : t('Save')}</Button>
           </div>
         </div>
       </Modal>
@@ -267,6 +276,7 @@ export function BirthCertificateSection({
   isCollapsed,
   onToggleCollapse,
 }: BirthCertSectionProps) {
+  const { t, isRTL } = useTranslation();
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -316,13 +326,13 @@ export function BirthCertificateSection({
         <DisplayRow label="National Code" value={data?.national_code} />
         <DisplayRow label="Birth Certificate Serial" value={data?.birth_certificate_serial} />
         <DisplayRow label="Birth Certificate Location" value={data?.birth_certificate_location} />
-        <DisplayRow label="Birth Date" value={data?.birth_date} />
+        <DisplayRow label="Birth Date" value={data?.birth_date ? formatDate(data.birth_date, isRTL) : null} />
         <DisplayRow label="Marriage Experience" value={data?.marriage_experince} />
         <DisplayRow label="Marriage Status" value={data?.marriage_status} />
-        <DisplayRow label="Contract Date" value={data?.contract_date} />
-        <DisplayRow label="Marriage Date" value={data?.marriage_date} />
-        <DisplayRow label="Divorce Date" value={data?.divorce_date} />
-        <DisplayRow label="Husband Death Date" value={data?.husband_death_date} />
+        <DisplayRow label="Contract Date" value={data?.contract_date ? formatDate(data.contract_date, isRTL) : null} />
+        <DisplayRow label="Marriage Date" value={data?.marriage_date ? formatDate(data.marriage_date, isRTL) : null} />
+        <DisplayRow label="Divorce Date" value={data?.divorce_date ? formatDate(data.divorce_date, isRTL) : null} />
+        <DisplayRow label="Husband Death Date" value={data?.husband_death_date ? formatDate(data.husband_death_date, isRTL) : null} />
         <DisplayRow label="Children" value={data?.children} />
         <DisplayRow label="Children Custody" value={data?.children_custody} />
       </ProfileSection>
@@ -360,8 +370,8 @@ export function BirthCertificateSection({
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
-            <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={handleSave} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>
+            <Button variant="outline" onClick={() => setOpen(false)}>{t('Cancel')}</Button>
+            <Button onClick={handleSave} disabled={saving}>{saving ? t('Saving...') : t('Save')}</Button>
           </div>
         </div>
       </Modal>

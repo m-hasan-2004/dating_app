@@ -2,10 +2,12 @@
 
 import React, { useState } from 'react';
 import Modal from '@/components/ui/modal';
+import { useTranslation } from '@/context/LanguageContext';
 import Button from '@/components/ui/button/Button';
 import MultiRecordSection from '@/components/profile/MultiRecordSection';
 import DisplayRow from '@/components/profile/DisplayRow';
 import FormField, { useFormState, SelectOption } from '@/components/profile/FormField';
+import { formatDate, formatBoolean } from '@/utils/formatters';
 import type {
   ExHusbandChildStatus,
   Sister,
@@ -77,6 +79,7 @@ export function ExHusbandChildStatusSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
+  const { t, isRTL } = useTranslation();
   const [open, setOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<ExHusbandChildStatus | null>(null);
   const [saving, setSaving] = useState(false);
@@ -143,8 +146,8 @@ export function ExHusbandChildStatusSection({
         renderRecord={(item) => (
           <div className="space-y-1">
             <DisplayRow label="Gender" value={item.gender === 'boy' ? 'Boy' : 'Girl'} />
-            <DisplayRow label="Has Child Status" value={item.status ? 'Yes' : 'No'} />
-            <DisplayRow label="Birth Date" value={item.birth_date} />
+            <DisplayRow label="Has Child Status" value={item.status !== undefined ? formatBoolean(item.status, isRTL) : null} />
+            <DisplayRow label="Birth Date" value={item.birth_date ? formatDate(item.birth_date, isRTL) : null} />
             <DisplayRow label="Custody" value={item.custody} />
             <DisplayRow label="Living Location" value={item.living_location} />
           </div>
@@ -165,8 +168,8 @@ export function ExHusbandChildStatusSection({
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
-            <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={handleSave} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>
+            <Button variant="outline" onClick={() => setOpen(false)}>{t('Cancel')}</Button>
+            <Button onClick={handleSave} disabled={saving}>{saving ? t('Saving...') : t('Save')}</Button>
           </div>
         </div>
       </Modal>
@@ -195,6 +198,7 @@ export function SistersSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<Sister | null>(null);
   const [saving, setSaving] = useState(false);
@@ -253,7 +257,7 @@ export function SistersSection({
         onDelete={handleDelete}
         renderRecord={(item) => (
           <div className="space-y-1">
-            <DisplayRow label="Alive" value={item.status ? 'Yes' : 'No'} />
+            <DisplayRow label="Alive" value={item.status ? t('Yes') : t('No')} />
             <DisplayRow label="Education" value={item.education} />
             <DisplayRow label="Job" value={item.job} />
           </div>
@@ -272,8 +276,8 @@ export function SistersSection({
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
-            <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={handleSave} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>
+            <Button variant="outline" onClick={() => setOpen(false)}>{t('Cancel')}</Button>
+            <Button onClick={handleSave} disabled={saving}>{saving ? t('Saving...') : t('Save')}</Button>
           </div>
         </div>
       </Modal>
@@ -294,6 +298,7 @@ export function BrothersSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<Brother | null>(null);
   const [saving, setSaving] = useState(false);
@@ -352,7 +357,7 @@ export function BrothersSection({
         onDelete={handleDelete}
         renderRecord={(item) => (
           <div className="space-y-1">
-            <DisplayRow label="Alive" value={item.status ? 'Yes' : 'No'} />
+            <DisplayRow label="Alive" value={item.status ? t('Yes') : t('No')} />
             <DisplayRow label="Education" value={item.education} />
             <DisplayRow label="Job" value={item.job} />
           </div>
@@ -371,8 +376,8 @@ export function BrothersSection({
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
-            <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={handleSave} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>
+            <Button variant="outline" onClick={() => setOpen(false)}>{t('Cancel')}</Button>
+            <Button onClick={handleSave} disabled={saving}>{saving ? t('Saving...') : t('Save')}</Button>
           </div>
         </div>
       </Modal>
@@ -407,6 +412,7 @@ export function GroomsSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<Groom | null>(null);
   const [saving, setSaving] = useState(false);
@@ -466,7 +472,7 @@ export function GroomsSection({
         renderRecord={(item) => (
           <div className="space-y-1">
             <DisplayRow label="Role" value={item.groom_or === 'groom' ? 'Groom' : 'Zan Dadash'} />
-            <DisplayRow label="Alive" value={item.status ? 'Yes' : 'No'} />
+            <DisplayRow label="Alive" value={item.status ? t('Yes') : t('No')} />
             <DisplayRow label="Education" value={item.education} />
             <DisplayRow label="Job" value={item.job} />
           </div>
@@ -486,8 +492,8 @@ export function GroomsSection({
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
-            <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={handleSave} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>
+            <Button variant="outline" onClick={() => setOpen(false)}>{t('Cancel')}</Button>
+            <Button onClick={handleSave} disabled={saving}>{saving ? t('Saving...') : t('Save')}</Button>
           </div>
         </div>
       </Modal>
@@ -522,6 +528,7 @@ export function BridesWivesSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<BrideOrWife | null>(null);
   const [saving, setSaving] = useState(false);
@@ -581,7 +588,7 @@ export function BridesWivesSection({
         renderRecord={(item) => (
           <div className="space-y-1">
             <DisplayRow label="Role" value={item.bride_or === 'bride' ? 'Bride or Wife' : 'Shohar Khahar'} />
-            <DisplayRow label="Alive" value={item.status ? 'Yes' : 'No'} />
+            <DisplayRow label="Alive" value={item.status ? t('Yes') : t('No')} />
             <DisplayRow label="Education" value={item.education} />
             <DisplayRow label="Job" value={item.job} />
           </div>
@@ -601,8 +608,8 @@ export function BridesWivesSection({
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
-            <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={handleSave} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>
+            <Button variant="outline" onClick={() => setOpen(false)}>{t('Cancel')}</Button>
+            <Button onClick={handleSave} disabled={saving}>{saving ? t('Saving...') : t('Save')}</Button>
           </div>
         </div>
       </Modal>

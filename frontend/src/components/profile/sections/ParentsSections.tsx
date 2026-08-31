@@ -1,11 +1,13 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
 import Modal from '@/components/ui/modal';
+import { useTranslation } from '@/context/LanguageContext';
 import Button from '@/components/ui/button/Button';
 import ProfileSection from '@/components/profile/ProfileSection';
 import DisplayRow from '@/components/profile/DisplayRow';
 import FormField, { useFormState, SelectOption } from '@/components/profile/FormField';
+import { formatDate, formatBoolean } from '@/utils/formatters';
 import type { Mother, Father, EducationEnum, OriginalityEnum } from '@/services/profileService';
 import { createMother, updateMother, createFather, updateFather } from '@/services/profileService';
 
@@ -47,6 +49,7 @@ export function MotherSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
+  const { t, isRTL } = useTranslation();
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -84,12 +87,12 @@ export function MotherSection({
     <>
       <ProfileSection title="Mothers" onEdit={openModal} isEmpty={!data} isCollapsed={isCollapsed} onToggleCollapse={onToggleCollapse}>
         <DisplayRow label="Language" value={data?.language} />
-        <DisplayRow label="Birth Date" value={data?.birth_date} />
+        <DisplayRow label="Birth Date" value={data?.birth_date ? formatDate(data.birth_date, isRTL) : null} />
         <DisplayRow label="Job" value={data?.job} />
         <DisplayRow label="Originality / Province" value={data?.originality} />
         <DisplayRow label="Education" value={data?.education} />
-        <DisplayRow label="Alive" value={data?.alive ? 'Yes' : 'No'} />
-        {!data?.alive && <DisplayRow label="Death Date" value={data?.death_date} />}
+        <DisplayRow label="Alive" value={data?.alive !== undefined ? formatBoolean(data.alive, isRTL) : null} />
+        {!data?.alive && <DisplayRow label="Death Date" value={data?.death_date ? formatDate(data.death_date, isRTL) : null} />}
       </ProfileSection>
 
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-lg w-full">
@@ -110,8 +113,8 @@ export function MotherSection({
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
-            <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={handleSave} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>
+            <Button variant="outline" onClick={() => setOpen(false)}>{t('Cancel')}</Button>
+            <Button onClick={handleSave} disabled={saving}>{saving ? t('Saving...') : t('Save')}</Button>
           </div>
         </div>
       </Modal>
@@ -130,6 +133,7 @@ export function FatherSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
+  const { t, isRTL } = useTranslation();
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -167,12 +171,12 @@ export function FatherSection({
     <>
       <ProfileSection title="Fathers" onEdit={openModal} isEmpty={!data} isCollapsed={isCollapsed} onToggleCollapse={onToggleCollapse}>
         <DisplayRow label="Language" value={data?.language} />
-        <DisplayRow label="Birth Date" value={data?.birth_date} />
+        <DisplayRow label="Birth Date" value={data?.birth_date ? formatDate(data.birth_date, isRTL) : null} />
         <DisplayRow label="Job" value={data?.job} />
         <DisplayRow label="Originality / Province" value={data?.originality} />
         <DisplayRow label="Education" value={data?.education} />
-        <DisplayRow label="Alive" value={data?.alive ? 'Yes' : 'No'} />
-        {!data?.alive && <DisplayRow label="Death Date" value={data?.death_date} />}
+        <DisplayRow label="Alive" value={data?.alive !== undefined ? formatBoolean(data.alive, isRTL) : null} />
+        {!data?.alive && <DisplayRow label="Death Date" value={data?.death_date ? formatDate(data.death_date, isRTL) : null} />}
       </ProfileSection>
 
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-lg w-full">
@@ -193,8 +197,8 @@ export function FatherSection({
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
-            <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={handleSave} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>
+            <Button variant="outline" onClick={() => setOpen(false)}>{t('Cancel')}</Button>
+            <Button onClick={handleSave} disabled={saving}>{saving ? t('Saving...') : t('Save')}</Button>
           </div>
         </div>
       </Modal>

@@ -3,6 +3,8 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/hooks/use-auth';
+import { useTranslation } from '@/context/LanguageContext';
+import { formatDate } from '@/utils/formatters';
 import {
   getUser,
   fetchPersonalInformation,
@@ -156,6 +158,7 @@ export function FullProfileView({
   hideAdminSections?: boolean;
 }) {
   const { user: authUser } = useAuth();
+  const { t, isRTL } = useTranslation();
 
   const [data, setData] = useState<ProfileData>({
     user: null, personalInfo: null, physicalInfo: null, identityInfo: null,
@@ -355,12 +358,16 @@ export function FullProfileView({
         <div className="flex items-center gap-4">
           {backUrl && (
             <Link href={backUrl} className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors">
-              ← Back
+              {isRTL ? '→ بازگشت' : '← Back'}
             </Link>
           )}
           <div>
             <h1 className="text-2xl font-semibold text-gray-800 dark:text-white">
-              {displayUser?.username ? `${displayUser.username}'s Profile` : 'Complete Profile'}
+              {displayUser?.username
+                ? isRTL
+                  ? `پروفایل ${displayUser.username}`
+                  : `${displayUser.username}'s Profile`
+                : t('Complete Profile')}
             </h1>
             {displayUser?.email && <p className="text-sm text-gray-500 dark:text-gray-400">{displayUser.email}</p>}
           </div>
@@ -375,7 +382,7 @@ export function FullProfileView({
             <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
               <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
             </svg>
-            <span>Saved Bookmarks</span>
+            <span>{t('Saved Bookmarks')}</span>
           </Link>
 
           {/* Global Collapse All / Expand All button */}
@@ -387,12 +394,12 @@ export function FullProfileView({
             {allCollapsed ? (
               <>
                 <ChevronDownIcon className="w-3.5 h-3.5 text-brand-500" />
-                <span>Expand All</span>
+                <span>{t('Expand All')}</span>
               </>
             ) : (
               <>
                 <ChevronUpIcon className="w-3.5 h-3.5 text-brand-500" />
-                <span>Collapse All</span>
+                <span>{t('Collapse All')}</span>
               </>
             )}
           </button>
@@ -402,27 +409,27 @@ export function FullProfileView({
       {displayUser && (
         <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] px-6 py-4 shadow-sm">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-base font-semibold text-gray-800 dark:text-white">Account Info</h3>
+            <h3 className="text-base font-semibold text-gray-800 dark:text-white">{t('Account Info')}</h3>
             <button
               type="button"
               onClick={openAccountModal}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700/60 transition-colors shadow-xs cursor-pointer"
             >
               <PencilIcon className="w-3.5 h-3.5 text-brand-500" />
-              Change Account Info
+              {t('Change Account Info')}
             </button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-sm">
-            <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">Username:</span><span className="text-gray-900 dark:text-white font-medium">{displayUser.username}</span></div>
-            <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">Email:</span><span className="text-gray-900 dark:text-white font-medium">{displayUser.email}</span></div>
-            <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">Phone:</span><span className="text-gray-900 dark:text-white font-medium">{displayUser.phone_number ?? '—'}</span></div>
-            <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">Middle Man Code:</span><span className="text-gray-900 dark:text-white font-medium">{displayUser.middle_man_code ?? '—'}</span></div>
-            <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">Status:</span>
+            <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">{t('Username')}:</span><span className="text-gray-900 dark:text-white font-medium">{displayUser.username}</span></div>
+            <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">{t('Email')}:</span><span className="text-gray-900 dark:text-white font-medium">{displayUser.email}</span></div>
+            <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">{t('Phone')}:</span><span className="text-gray-900 dark:text-white font-medium">{displayUser.phone_number ?? '—'}</span></div>
+            <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">{t('Middle Man Code')}:</span><span className="text-gray-900 dark:text-white font-medium">{displayUser.middle_man_code ?? '—'}</span></div>
+            <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">{t('Status')}:</span>
               <span className={displayUser.is_active ? 'text-green-600 dark:text-green-400 font-semibold' : 'text-red-600 dark:text-red-400 font-semibold'}>
-                {displayUser.is_active ? 'Active' : 'Inactive'}
+                {displayUser.is_active ? t('Active') : t('Inactive')}
               </span>
             </div>
-            <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">Joined:</span><span className="text-gray-900 dark:text-white font-medium">{displayUser.date_joined ? new Date(displayUser.date_joined).toLocaleDateString() : '—'}</span></div>
+            <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">{t('Joined')}:</span><span className="text-gray-900 dark:text-white font-medium">{displayUser.date_joined ? formatDate(displayUser.date_joined, isRTL) : '—'}</span></div>
           </div>
         </div>
       )}
@@ -575,7 +582,7 @@ export function FullProfileView({
         </>
       )}
 
-      {/* Change Account Info Modal */}
+      {/* {t('Change Account Info')} Modal */}
       <Modal
         isOpen={isAccountModalOpen}
         onClose={() => setIsAccountModalOpen(false)}
@@ -588,7 +595,7 @@ export function FullProfileView({
               <PencilIcon className="w-4 h-4" />
             </div>
             <h3 className="text-base font-bold text-gray-900 dark:text-white">
-              Change Account Information
+              {t('Change Account Info')}rmation
             </h3>
           </div>
           <button
@@ -715,14 +722,14 @@ export function FullProfileView({
               onClick={() => setIsAccountModalOpen(false)}
               className="px-4 py-2 text-xs font-medium rounded-xl border border-gray-200 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors"
             >
-              Cancel
+              {t('Cancel')}
             </button>
             <button
               type="submit"
               disabled={accountLoading}
               className="px-4 py-2 text-xs font-medium rounded-xl bg-brand-500 text-white hover:bg-brand-600 disabled:opacity-50 transition-colors"
             >
-              {accountLoading ? 'Saving...' : 'Save Account Info'}
+              {accountLoading ? t('Saving...') : t('Save Changes')}
             </button>
           </div>
         </form>

@@ -1,4 +1,4 @@
-﻿export function toArray(val: any): string[] {
+export function toArray(val: any): string[] {
   if (!val) return [];
   if (Array.isArray(val)) return val.map(String);
   if (typeof val === 'string') {
@@ -15,12 +15,15 @@
   return [String(val)];
 }
 
-export function formatMultiValue(val: any, options?: { value: string; label: string }[]): string {
+export function formatMultiValue(val: any, options?: { value: string; label: string }[], t?: (k: string) => string): string {
   const arr = toArray(val);
   if (arr.length === 0) return '';
+  const translate = t || ((k: string) => k);
   if (options && options.length > 0) {
     const optionMap = new Map(options.map((o) => [o.value, o.label]));
-    return arr.map((v) => optionMap.get(v) ?? v).join(', ');
+    return arr.map((v) => translate(optionMap.get(v) ?? v)).join('، ');
   }
-  return arr.join(', ');
+  return arr.map((v) => translate(v)).join('، ');
 }
+
+export * from '@/utils/formatters';

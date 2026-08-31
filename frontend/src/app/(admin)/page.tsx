@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/hooks/use-auth';
+import { useTranslation } from '@/context/LanguageContext';
 import type { User, UserStats, CandidateProfile } from '@/services/profileService';
 import { fetchUsers, fetchUserStats, searchCandidates, fetchBookmarks, toggleBookmark } from '@/services/profileService';
 import { fetchAccessCodes, type AccessCode } from '@/services/accessCodeService';
@@ -23,6 +24,7 @@ import {
 // 1. ADMIN DASHBOARD VIEW (Staff Only)
 // ==========================================
 function AdminDashboardView() {
+  const { t } = useTranslation();
   const [users, setUsers] = useState<User[]>([]);
   const [stats, setStats] = useState<UserStats | null>(null);
   const [accessCodes, setAccessCodes] = useState<AccessCode[]>([]);
@@ -68,10 +70,10 @@ function AdminDashboardView() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
-            Admin Panel Dashboard
+            {t("Admin Panel Dashboard")}
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Platform overview, live candidate metrics, access code management, and demographic reports.
+            {t("Platform overview, live candidate metrics, access code management, and demographic reports.")}
           </p>
         </div>
 
@@ -81,14 +83,14 @@ function AdminDashboardView() {
             className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-xl bg-brand-500 text-white hover:bg-brand-600 transition-colors shadow-sm"
           >
             <PlusIcon className="w-4 h-4" />
-            Generate Access Code
+            {t("Generate Access Code")}
           </Link>
           <Link
             href="/users"
             className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-xl border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 transition-colors shadow-sm"
           >
             <UserCircleIcon className="w-4 h-4 text-brand-500" />
-            Manage Users
+            {t("Manage Users")}
           </Link>
         </div>
       </div>
@@ -111,10 +113,10 @@ function AdminDashboardView() {
           </div>
           <div>
             <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-              Demographic & Candidate Statistics
+              {t("Demographic & Candidate Statistics")}
             </h3>
             <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5">
-              Explore in-depth charts and breakdowns for gender ratios, age cohorts, academic qualifications, income brackets, and real-estate ownership.
+              {t("Explore in-depth charts and breakdowns for gender ratios, age cohorts, academic qualifications, income brackets, and real-estate ownership.")}
             </p>
           </div>
         </div>
@@ -122,7 +124,7 @@ function AdminDashboardView() {
           href="/statistics"
           className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-xl bg-brand-500 text-white hover:bg-brand-600 transition-colors shrink-0 shadow-sm"
         >
-          <span>View Full Statistics</span>
+          <span>{t("View Full Statistics")}</span>
           <ArrowRightIcon className="w-4 h-4" />
         </Link>
       </div>
@@ -147,8 +149,8 @@ function AdminDashboardView() {
                 <UserCircleIcon className="h-6 w-6" />
               </div>
               <div>
-                <h4 className="font-semibold text-gray-900 dark:text-white text-sm">User Directory & Management</h4>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Search, filter, and batch manage candidates</p>
+                <h4 className="font-semibold text-gray-900 dark:text-white text-sm">{t("User Directory & Management")}</h4>
+                <p className="text-xs text-gray-500 dark:text-gray-400">{t("Search, filter, and batch manage candidates")}</p>
               </div>
             </div>
             <ArrowRightIcon className="w-4 h-4 text-gray-400 group-hover:text-brand-500 transition-colors" />
@@ -163,8 +165,8 @@ function AdminDashboardView() {
                 <PieChartIcon className="h-6 w-6" />
               </div>
               <div>
-                <h4 className="font-semibold text-gray-900 dark:text-white text-sm">Comprehensive Analytics</h4>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Age, gender, education & income charts</p>
+                <h4 className="font-semibold text-gray-900 dark:text-white text-sm">{t("Comprehensive Analytics")}</h4>
+                <p className="text-xs text-gray-500 dark:text-gray-400">{t("Age, gender, education & income charts")}</p>
               </div>
             </div>
             <ArrowRightIcon className="w-4 h-4 text-gray-400 group-hover:text-brand-500 transition-colors" />
@@ -179,8 +181,8 @@ function AdminDashboardView() {
                 <BoltIcon className="h-6 w-6" />
               </div>
               <div>
-                <h4 className="font-semibold text-gray-900 dark:text-white text-sm">My Admin Profile</h4>
-                <p className="text-xs text-gray-500 dark:text-gray-400">View and edit personal matching profile</p>
+                <h4 className="font-semibold text-gray-900 dark:text-white text-sm">{t("My Admin Profile")}</h4>
+                <p className="text-xs text-gray-500 dark:text-gray-400">{t("View and edit personal matching profile")}</p>
               </div>
             </div>
             <ArrowRightIcon className="w-4 h-4 text-gray-400 group-hover:text-brand-500 transition-colors" />
@@ -200,6 +202,7 @@ function AdminDashboardView() {
 // 2. USER DASHBOARD VIEW (Normal Candidates)
 // ==========================================
 function UserDashboardView({ user }: { user: any }) {
+  const { t } = useTranslation();
   const [candidates, setCandidates] = useState<CandidateProfile[]>([]);
   const [bookmarksCount, setBookmarksCount] = useState<number>(0);
   const [loading, setLoading] = useState(true);
@@ -240,7 +243,9 @@ function UserDashboardView({ user }: { user: any }) {
     }
   };
 
-  const displayName = user?.first_name ? `${user.first_name} ${user?.last_name || ''}`.trim() : `@${user?.username}`;
+  const displayName = user?.first_name
+    ? `${user.first_name} ${user?.last_name || ''}`.trim()
+    : (user?.username || '');
 
   return (
     <div className="space-y-6">
@@ -250,19 +255,19 @@ function UserDashboardView({ user }: { user: any }) {
           <div className="max-w-xl space-y-2">
             <div className="flex items-center gap-2">
               <span className="px-3 py-1 text-xs font-bold rounded-full bg-white/20 backdrop-blur-md text-white border border-white/20">
-                ✨ Candidate Member
+                ✨ {t("Candidate Member")}
               </span>
               {user?.middle_man_code && (
                 <span className="px-3 py-1 text-xs font-medium rounded-full bg-black/20 text-white/90">
-                  Ref: {user.middle_man_code}
+                  {t("Ref")}: {user.middle_man_code}
                 </span>
               )}
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-              Welcome back, {displayName}!
+              {t("Welcome back")}, {displayName}!
             </h1>
             <p className="text-sm text-white/85 leading-relaxed">
-              Explore faith-aligned candidates of the opposite gender, review spouse criteria, and manage your shortlisted favorites.
+              {t("Explore opposite gender profiles matching your personal criteria")}
             </p>
           </div>
 
@@ -274,14 +279,14 @@ function UserDashboardView({ user }: { user: any }) {
               <svg className="w-4 h-4 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 1114 0z" />
               </svg>
-              <span>Search Candidates</span>
+              <span>{t("Candidate Search")}</span>
             </Link>
             <Link
               href="/profile"
               className="inline-flex items-center gap-2 px-5 py-3 text-xs sm:text-sm font-semibold rounded-2xl bg-white/15 backdrop-blur-md text-white hover:bg-white/25 transition-all border border-white/20"
             >
               <UserCircleIcon className="w-4 h-4" />
-              <span>My Profile</span>
+              <span>{t("My Profile")}</span>
             </Link>
           </div>
         </div>
@@ -305,8 +310,8 @@ function UserDashboardView({ user }: { user: any }) {
               </svg>
             </div>
             <div>
-              <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Saved Bookmarks</p>
-              <p className="text-xl font-extrabold text-gray-900 dark:text-white mt-0.5">{bookmarksCount} Shortlisted</p>
+              <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t("Saved Bookmarks")}</p>
+              <p className="text-xl font-extrabold text-gray-900 dark:text-white mt-0.5">{bookmarksCount} {t("Shortlisted")}</p>
             </div>
           </div>
           <ArrowRightIcon className="w-4 h-4 text-gray-400 group-hover:text-amber-500 transition-colors" />
@@ -324,8 +329,8 @@ function UserDashboardView({ user }: { user: any }) {
               </svg>
             </div>
             <div>
-              <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Candidate Search</p>
-              <p className="text-xl font-extrabold text-gray-900 dark:text-white mt-0.5">Explore Directory</p>
+              <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t("Candidate Search")}</p>
+              <p className="text-xl font-extrabold text-gray-900 dark:text-white mt-0.5">{t("Explore Directory")}</p>
             </div>
           </div>
           <ArrowRightIcon className="w-4 h-4 text-gray-400 group-hover:text-brand-500 transition-colors" />
@@ -341,8 +346,8 @@ function UserDashboardView({ user }: { user: any }) {
               <UserCircleIcon className="w-6 h-6" />
             </div>
             <div>
-              <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Personal Profile</p>
-              <p className="text-xl font-extrabold text-emerald-600 dark:text-emerald-400 mt-0.5">Active & Ready</p>
+              <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t("Personal Profile")}</p>
+              <p className="text-xl font-extrabold text-emerald-600 dark:text-emerald-400 mt-0.5">{t("Active & Ready")}</p>
             </div>
           </div>
           <ArrowRightIcon className="w-4 h-4 text-gray-400 group-hover:text-emerald-500 transition-colors" />
@@ -354,17 +359,17 @@ function UserDashboardView({ user }: { user: any }) {
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-base font-bold text-gray-900 dark:text-white">
-              Recommended Candidate Matches
+              {t("Recommended Candidate Matches")}
             </h2>
             <p className="text-xs text-gray-500 dark:text-gray-400">
-              Opposite gender candidates tailored to your search criteria and demographic filters.
+              {t("Opposite gender candidates tailored to your search criteria and demographic filters.")}
             </p>
           </div>
           <Link
             href="/search"
             className="text-xs font-bold text-brand-500 hover:text-brand-600 flex items-center gap-1"
           >
-            <span>View All Search Results</span>
+            <span>{t("View All Search Results")}</span>
             <ArrowRightIcon className="w-3.5 h-3.5" />
           </Link>
         </div>
@@ -397,7 +402,7 @@ function UserDashboardView({ user }: { user: any }) {
                       </div>
                       <div>
                         <h4 className="text-xs font-bold text-gray-900 dark:text-white">@{cand.username}</h4>
-                        <p className="text-[11px] text-gray-500 dark:text-gray-400">{cand.age ? `${cand.age} yrs` : '—'} • {loc}</p>
+                        <p className="text-[11px] text-gray-500 dark:text-gray-400">{cand.age ? `${cand.age} ${t("Years")}` : '—'} • {t(loc)}</p>
                       </div>
                     </div>
 
@@ -409,7 +414,7 @@ function UserDashboardView({ user }: { user: any }) {
                           ? 'bg-amber-100 text-amber-500 dark:bg-amber-950/40 dark:text-amber-400'
                           : 'text-gray-400 hover:bg-gray-100 hover:text-amber-500 dark:hover:bg-gray-800'
                       }`}
-                      title={isBookmarked ? 'Remove Bookmark' : 'Bookmark Candidate'}
+                      title={isBookmarked ? t("Remove Bookmark") : t("Bookmark Candidate")}
                     >
                       <svg
                         className={`w-4 h-4 ${isBookmarked ? 'fill-current text-amber-500' : 'fill-none stroke-current stroke-2'}`}
@@ -421,8 +426,8 @@ function UserDashboardView({ user }: { user: any }) {
                   </div>
 
                   <div className="my-3 space-y-1.5 text-xs text-gray-600 dark:text-gray-300">
-                    <p className="truncate"><span className="text-gray-400">🎓</span> {edu}</p>
-                    <p className="truncate"><span className="text-gray-400">💼</span> {cand.job || 'Career: —'}</p>
+                    <p className="truncate"><span className="text-gray-400">🎓</span> {t(edu)}</p>
+                    <p className="truncate"><span className="text-gray-400">💼</span> {cand.job ? t(cand.job) : '—'}</p>
                   </div>
 
                   <Link
@@ -430,7 +435,7 @@ function UserDashboardView({ user }: { user: any }) {
                     className="w-full inline-flex items-center justify-center gap-1.5 py-2 text-xs font-semibold rounded-2xl bg-gray-50 text-gray-700 hover:bg-brand-500 hover:text-white dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-brand-500 dark:hover:text-white transition-all shadow-2xs"
                   >
                     <UserCircleIcon className="w-3.5 h-3.5" />
-                    <span>View Profile</span>
+                    <span>{t("View Profile")}</span>
                   </Link>
                 </div>
               );
@@ -438,9 +443,9 @@ function UserDashboardView({ user }: { user: any }) {
           </div>
         ) : (
           <div className="rounded-3xl border border-dashed border-gray-300 bg-white dark:border-gray-800 dark:bg-white/[0.01] p-8 text-center">
-            <p className="text-xs text-gray-500 dark:text-gray-400">No recommended candidates yet. Visit the search page to explore all profiles.</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">{t("No candidates matched your search criteria")}</p>
             <Link href="/search" className="inline-block mt-3 px-4 py-2 text-xs font-semibold rounded-xl bg-brand-500 text-white">
-              Open Candidate Search
+              {t("Open Candidate Search")}
             </Link>
           </div>
         )}
@@ -450,20 +455,20 @@ function UserDashboardView({ user }: { user: any }) {
       <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-xs">
         <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
           <span>🤝</span>
-          <span>Matchmaking & Privacy Guidelines</span>
+          <span>{t("Matchmaking & Privacy Guidelines")}</span>
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-gray-600 dark:text-gray-300 pt-1">
           <div className="p-3.5 rounded-2xl bg-gray-50 dark:bg-white/[0.02] border border-gray-100 dark:border-gray-800/80 space-y-1">
-            <strong className="text-gray-900 dark:text-white block font-bold">1. Verified Information</strong>
-            <p className="text-gray-500 dark:text-gray-400">Keep your personal, physical, and financial information complete and honest to receive accurate matches.</p>
+            <strong className="text-gray-900 dark:text-white block font-bold">{t("1. Verified Information")}</strong>
+            <p className="text-gray-500 dark:text-gray-400">{t("Keep your personal, physical, and financial information complete and honest to receive accurate matches.")}</p>
           </div>
           <div className="p-3.5 rounded-2xl bg-gray-50 dark:bg-white/[0.02] border border-gray-100 dark:border-gray-800/80 space-y-1">
-            <strong className="text-gray-900 dark:text-white block font-bold">2. Middle Man Assistance</strong>
-            <p className="text-gray-500 dark:text-gray-400">Your assigned middle man coordinates introductions and meetings with candidate families respectfully.</p>
+            <strong className="text-gray-900 dark:text-white block font-bold">{t("2. Middle Man Assistance")}</strong>
+            <p className="text-gray-500 dark:text-gray-400">{t("Your assigned middle man coordinates introductions and meetings with candidate families respectfully.")}</p>
           </div>
           <div className="p-3.5 rounded-2xl bg-gray-50 dark:bg-white/[0.02] border border-gray-100 dark:border-gray-800/80 space-y-1">
-            <strong className="text-gray-900 dark:text-white block font-bold">3. Bookmark Shortlist</strong>
-            <p className="text-gray-500 dark:text-gray-400">Save potential spouses to your private bookmarks page to review criteria before initiating introduction requests.</p>
+            <strong className="text-gray-900 dark:text-white block font-bold">{t("3. Bookmark Shortlist")}</strong>
+            <p className="text-gray-500 dark:text-gray-400">{t("Save potential spouses to your private bookmarks page to review criteria before initiating introduction requests.")}</p>
           </div>
         </div>
       </div>
@@ -476,6 +481,7 @@ function UserDashboardView({ user }: { user: any }) {
 // ==========================================
 export default function DashboardPage() {
   const { user, loading } = useAuth();
+  const { t } = useTranslation();
   const isAdmin = Boolean(user?.is_staff || (user as any)?.is_superuser);
 
   if (loading) {
@@ -483,7 +489,7 @@ export default function DashboardPage() {
       <div className="flex items-center justify-center min-h-[50vh]">
         <div className="flex flex-col items-center gap-3">
           <div className="w-8 h-8 border-2 border-brand-500 border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-xs text-gray-400">Loading dashboard...</p>
+          <p className="text-xs text-gray-400">{t("Loading...")}</p>
         </div>
       </div>
     );

@@ -2,11 +2,13 @@
 
 import React, { useState } from 'react';
 import Modal from '@/components/ui/modal';
+import { useTranslation } from '@/context/LanguageContext';
 import Button from '@/components/ui/button/Button';
 import ProfileSection from '@/components/profile/ProfileSection';
 import DisplayRow from '@/components/profile/DisplayRow';
 import FormField, { useFormState, SelectOption } from '@/components/profile/FormField';
 import { toArray, formatMultiValue } from '@/components/profile/profileUtils';
+import { formatDate, formatBoolean } from '@/utils/formatters';
 import type {
   PersonalInformation,
   GenderEnum,
@@ -172,6 +174,7 @@ interface PersonalsInformationSectionProps {
 }
 
 export function PersonalsInformationSection({ data, onReload, isCollapsed, onToggleCollapse }: PersonalsInformationSectionProps) {
+  const { t, isRTL } = useTranslation();
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -218,8 +221,8 @@ export function PersonalsInformationSection({ data, onReload, isCollapsed, onTog
         onToggleCollapse={onToggleCollapse}
       >
         <DisplayRow label="Gender" value={labelFor(GENDER_OPTIONS, data?.gender ?? '')} />
-        <DisplayRow label="Sadat" value={data?.sadat ? 'Yes' : 'No'} />
-        <DisplayRow label="Birth Date" value={data?.birth_date} />
+        <DisplayRow label="Sadat" value={data?.sadat !== undefined ? formatBoolean(data.sadat, isRTL) : null} />
+        <DisplayRow label="Birth Date" value={data?.birth_date ? formatDate(data.birth_date, isRTL) : null} />
         <DisplayRow label="Birth Location" value={data?.birth_location} />
         <DisplayRow label="Education" value={labelFor(EDUCATION_OPTIONS, data?.education ?? '')} />
         <DisplayRow label="Degree" value={data?.degree} />
@@ -227,24 +230,24 @@ export function PersonalsInformationSection({ data, onReload, isCollapsed, onTog
         <DisplayRow label="Military Status Explanation" value={data?.military_status_explanation} />
         <DisplayRow label="Income" value={labelFor(INCOME_OPTIONS, data?.income ?? '')} />
         <DisplayRow label="Deposit" value={labelFor(DEPOSIT_OPTIONS, data?.deposit ?? '')} />
-        <DisplayRow label="Have Insurance" value={data?.have_insurance ? 'Yes' : 'No'} />
+        <DisplayRow label="Have Insurance" value={data?.have_insurance !== undefined ? formatBoolean(data.have_insurance, isRTL) : null} />
         <DisplayRow
           label="Insurance Type"
-          value={formatMultiValue(data?.insurance_type, INSURANCE_TYPE_OPTIONS)}
+          value={formatMultiValue(data?.insurance_type, INSURANCE_TYPE_OPTIONS, t)}
         />
         <DisplayRow label="Insurance Years" value={data?.insurance_years} />
         <DisplayRow
           label="Leisure Type"
-          value={formatMultiValue(data?.leisure_type, LEISURE_OPTIONS)}
+          value={formatMultiValue(data?.leisure_type, LEISURE_OPTIONS, t)}
         />
         <DisplayRow
           label="Usage Cases"
-          value={formatMultiValue(data?.usage_cases, USAGE_CASES_OPTIONS)}
+          value={formatMultiValue(data?.usage_cases, USAGE_CASES_OPTIONS, t)}
         />
         <DisplayRow label="Usage Case Description" value={data?.usage_case_description} />
-        <DisplayRow label="Tattoo" value={data?.tatto ? 'Yes' : 'No'} />
+        <DisplayRow label="Tattoo" value={data?.tatto !== undefined ? formatBoolean(data.tatto, isRTL) : null} />
         <DisplayRow label="Tattoo Description" value={data?.tatto_description} />
-        <DisplayRow label="Conviction / Arrest History" value={data?.conviction_or_arrest_history ? 'Yes' : 'No'} />
+        <DisplayRow label="Conviction / Arrest History" value={data?.conviction_or_arrest_history !== undefined ? formatBoolean(data.conviction_or_arrest_history, isRTL) : null} />
         <DisplayRow label="Conviction Reason" value={data?.conviction_reason} />
       </ProfileSection>
 
@@ -285,8 +288,8 @@ export function PersonalsInformationSection({ data, onReload, isCollapsed, onTog
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
-            <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-            <Button onClick={handleSave} disabled={saving}>{saving ? 'Saving...' : 'Save'}</Button>
+            <Button variant="outline" onClick={() => setOpen(false)}>{t('Cancel')}</Button>
+            <Button onClick={handleSave} disabled={saving}>{saving ? t('Saving...') : t('Save')}</Button>
           </div>
         </div>
       </Modal>

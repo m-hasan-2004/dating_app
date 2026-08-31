@@ -3,11 +3,12 @@ import Checkbox from "@/components/form/input/Checkbox";
 import Input from "@/components/form/input/InputField";
 import Label from "@/components/form/Label";
 import Button from "@/components/ui/button/Button";
-import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "@/icons";
+import { EyeCloseIcon, EyeIcon } from "@/icons";
 import Link from "next/link";
 import React, { useState } from "react";
 import { registerApi } from "@/services/api/auth";
 import { useAuth } from "@/hooks/use-auth";
+import { useTranslation } from "@/context/LanguageContext";
 import { useRouter } from "next/navigation";
 
 export default function SignUpForm() {
@@ -22,55 +23,128 @@ export default function SignUpForm() {
     password2: "",
     middle_man_code: "",
   });
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { login } = useAuth();
+  const { t, isRTL } = useTranslation();
   const router = useRouter();
 
+  const convertPersianToEnglishDigits = (str: string) => {
+    return str
+      .replace(/[۰-۹]/g, (d) => String("۰۱۲۳۴۵۶۷۸۹".indexOf(d)))
+      .replace(/[٠-٩]/g, (d) => String("٠١٢٣٤٥٦٧٨٩".indexOf(d)));
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [name]: value,
     }));
+    // Clear field-level error as user types
+    if (fieldErrors[name]) {
+      setFieldErrors((prev) => {
+        const next = { ...prev };
+        delete next[name];
+        return next;
+      });
+    }
+  };
+
+  const validateForm = (): boolean => {
+    const errors: Record<string, string> = {};
+
+    // 1. Access Code
+    if (!formData.access_code.trim()) {
+      errors.access_code = t("Please enter your invitation access code.");
+    }
+
+    // 2. Username
+    const trimmedUsername = formData.username.trim();
+    if (!trimmedUsername) {
+      errors.username = t("Please enter a username.");
+    } else if (trimmedUsername.length < 3) {
+      errors.username = t("Username must be at least 3 characters.");
+    } else if (!/^[a-zA-Z0-9_]+$/.test(trimmedUsername)) {
+      errors.username = t("Username can only contain English letters, numbers, and underscores.");
+    }
+
+    // 3. Email
+    const trimmedEmail = formData.email.trim();
+    if (!trimmedEmail) {
+      errors.email = t("Please enter your email address.");
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      errors.email = t("Please enter a valid email address.");
+    }
+
+    // 4. Phone Number
+    const rawPhone = convertPersianToEnglishDigits(formData.phone_number.trim());
+    if (!rawPhone) {
+      errors.phone_number = t("Please enter your mobile phone number.");
+    } else if (!/^(\+98|0)?9\d{9}$/.test(rawPhone.replace(/\s+/g, ""))) {
+      errors.phone_number = t("Please enter a valid mobile number (e.g. 09123456789).");
+    }
+
+    // 5. Password Complexity
+    if (!formData.password) {
+      errors.password = t("Please enter a password.");
+    } else if (formData.password.length < 8) {
+      errors.password = t("Password must be at least 8 characters long.");
+    } else if (!/^(?=.*[A-Za-z])(?=.*\d)/.test(formData.password)) {
+      errors.password = t("Password must contain both letters and numbers.");
+    }
+
+    // 6. Confirm Password
+    if (!formData.password2) {
+      errors.password2 = t("Please confirm your password.");
+    } else if (formData.password !== formData.password2) {
+      errors.password2 = t("Passwords do not match.");
+    }
+
+    // 7. Terms and Conditions
+    if (!isChecked) {
+      errors.terms = t("You must agree to the Terms, Conditions, and Privacy Policy.");
+    }
+
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
-    if (formData.password !== formData.password2) {
-      setError("Passwords do not match.");
-      return;
-    }
-
-    if (!isChecked) {
-      setError("You must agree to the Terms and Conditions.");
+    const isValid = validateForm();
+    if (!isValid) {
+      setError(t("Please fix the errors in the form before submitting."));
       return;
     }
 
     setIsSubmitting(true);
 
     try {
+      const normalizedPhone = convertPersianToEnglishDigits(formData.phone_number.trim());
       await registerApi({
-        username: formData.username,
-        email: formData.email,
-        phone_number: formData.phone_number,
-        access_code: formData.access_code,
+        username: formData.username.trim(),
+        email: formData.email.trim(),
+        phone_number: normalizedPhone,
+        access_code: formData.access_code.trim(),
         password: formData.password,
         password2: formData.password2,
-        middle_man_code: formData.middle_man_code || undefined,
+        middle_man_code: formData.middle_man_code.trim() || undefined,
       });
 
       // Auto-login upon successful registration and redirect to profile completion
       await login({
-        username: formData.username,
+        username: formData.username.trim(),
         password: formData.password,
       });
 
       router.push("/profile");
     } catch (err: any) {
-      setError(err.message || "Registration failed. Please check your access code and details.");
+      setError(err.message || t("Registration failed. Please check your access code and details."));
     } finally {
       setIsSubmitting(false);
     }
@@ -78,46 +152,39 @@ export default function SignUpForm() {
 
   return (
     <div className="flex flex-col flex-1 lg:w-1/2 w-full overflow-y-auto no-scrollbar">
-      <div className="w-full max-w-md sm:pt-10 mx-auto mb-5">
-        <Link
-          href="/"
-          className="inline-flex items-center text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-        >
-          <ChevronLeftIcon />
-          Back to dashboard
-        </Link>
-      </div>
-      <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
+      <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto sm:pt-10">
         <div>
           <div className="mb-5 sm:mb-8">
             <h1 className="mb-2 font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md">
-              Sign Up (Access Code Required)
+              {t("Sign Up (Access Code Required)")}
             </h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Enter your invitation access code and details to create an account.
+              {t("Enter your invitation access code and details to create an account.")}
             </p>
           </div>
 
           {error && (
-            <div className="p-3 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-900/30 dark:text-red-400">
+            <div className="p-3 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-900/30 dark:text-red-400 font-medium">
               {error}
             </div>
           )}
 
           <div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} noValidate>
               <div className="space-y-4">
                 {/* Access Code */}
                 <div>
                   <Label>
-                    Access Code <span className="text-error-500">*</span>
+                    {t("Access Code")} <span className="text-error-500">*</span>
                   </Label>
                   <Input
                     type="text"
                     name="access_code"
-                    placeholder="Enter your invitation access code"
+                    placeholder={t("Enter your invitation access code")}
                     value={formData.access_code}
                     onChange={handleChange}
+                    error={Boolean(fieldErrors.access_code)}
+                    hint={fieldErrors.access_code}
                     required
                   />
                 </div>
@@ -125,14 +192,16 @@ export default function SignUpForm() {
                 {/* Username */}
                 <div>
                   <Label>
-                    Username <span className="text-error-500">*</span>
+                    {t("Username")} <span className="text-error-500">*</span>
                   </Label>
                   <Input
                     type="text"
                     name="username"
-                    placeholder="Choose a username"
+                    placeholder={t("Choose a username")}
                     value={formData.username}
                     onChange={handleChange}
+                    error={Boolean(fieldErrors.username)}
+                    hint={fieldErrors.username}
                     required
                   />
                 </div>
@@ -141,27 +210,31 @@ export default function SignUpForm() {
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div>
                     <Label>
-                      Email <span className="text-error-500">*</span>
+                      {t("Email")} <span className="text-error-500">*</span>
                     </Label>
                     <Input
                       type="email"
                       name="email"
-                      placeholder="Enter email"
+                      placeholder={t("Enter email")}
                       value={formData.email}
                       onChange={handleChange}
+                      error={Boolean(fieldErrors.email)}
+                      hint={fieldErrors.email}
                       required
                     />
                   </div>
                   <div>
                     <Label>
-                      Phone Number <span className="text-error-500">*</span>
+                      {t("Phone Number")} <span className="text-error-500">*</span>
                     </Label>
                     <Input
                       type="tel"
                       name="phone_number"
-                      placeholder="+989123456789"
+                      placeholder={isRTL ? "۰۹۱۲۳۴۵۶۷۸۹" : "+989123456789"}
                       value={formData.phone_number}
                       onChange={handleChange}
+                      error={Boolean(fieldErrors.phone_number)}
+                      hint={fieldErrors.phone_number}
                       required
                     />
                   </div>
@@ -169,11 +242,11 @@ export default function SignUpForm() {
 
                 {/* Optional Middle Man Code */}
                 <div>
-                  <Label>Middleman Code (Optional)</Label>
+                  <Label>{t("Middleman Code (Optional)")}</Label>
                   <Input
                     type="text"
                     name="middle_man_code"
-                    placeholder="Introducer code if available"
+                    placeholder={t("Introducer code if available")}
                     value={formData.middle_man_code}
                     onChange={handleChange}
                   />
@@ -183,20 +256,24 @@ export default function SignUpForm() {
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div>
                     <Label>
-                      Password <span className="text-error-500">*</span>
+                      {t("Password")} <span className="text-error-500">*</span>
                     </Label>
                     <div className="relative">
                       <Input
                         type={showPassword ? "text" : "password"}
                         name="password"
-                        placeholder="Password"
+                        placeholder={t("Password")}
                         value={formData.password}
                         onChange={handleChange}
+                        error={Boolean(fieldErrors.password)}
+                        hint={fieldErrors.password}
                         required
                       />
                       <span
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute z-30 -translate-y-1/2 cursor-pointer right-3 top-1/2"
+                        className={`absolute z-30 -translate-y-1/2 cursor-pointer top-5.5 ${
+                          isRTL ? "left-3" : "right-3"
+                        }`}
                       >
                         {showPassword ? (
                           <EyeIcon className="fill-gray-500 dark:fill-gray-400 w-4 h-4" />
@@ -209,35 +286,51 @@ export default function SignUpForm() {
 
                   <div>
                     <Label>
-                      Confirm Password <span className="text-error-500">*</span>
+                      {t("Confirm Password")} <span className="text-error-500">*</span>
                     </Label>
                     <Input
                       type={showPassword ? "text" : "password"}
                       name="password2"
-                      placeholder="Confirm password"
+                      placeholder={t("Confirm password")}
                       value={formData.password2}
                       onChange={handleChange}
+                      error={Boolean(fieldErrors.password2)}
+                      hint={fieldErrors.password2}
                       required
                     />
                   </div>
                 </div>
 
                 {/* Terms Checkbox */}
-                <div className="flex items-center gap-3 pt-2">
-                  <Checkbox
-                    className="w-5 h-5"
-                    checked={isChecked}
-                    onChange={setIsChecked}
-                  />
-                  <p className="inline-block font-normal text-xs text-gray-500 dark:text-gray-400">
-                    I agree to the Terms, Conditions, and Privacy Policy
-                  </p>
+                <div className="pt-2">
+                  <div className="flex items-center gap-3">
+                    <Checkbox
+                      className="w-5 h-5"
+                      checked={isChecked}
+                      onChange={(checked) => {
+                        setIsChecked(checked);
+                        if (checked && fieldErrors.terms) {
+                          setFieldErrors((prev) => {
+                            const next = { ...prev };
+                            delete next.terms;
+                            return next;
+                          });
+                        }
+                      }}
+                    />
+                    <p className="inline-block font-normal text-xs text-gray-500 dark:text-gray-400">
+                      {t("I agree to the Terms, Conditions, and Privacy Policy")}
+                    </p>
+                  </div>
+                  {fieldErrors.terms && (
+                    <p className="mt-1.5 text-xs text-error-500">{fieldErrors.terms}</p>
+                  )}
                 </div>
 
                 {/* Submit Button */}
                 <div className="pt-2">
                   <Button className="w-full" size="sm" disabled={isSubmitting}>
-                    {isSubmitting ? "Creating Account..." : "Sign Up"}
+                    {isSubmitting ? t("Creating Account...") : t("Sign Up")}
                   </Button>
                 </div>
               </div>
@@ -245,12 +338,12 @@ export default function SignUpForm() {
 
             <div className="mt-5 pb-5">
               <p className="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
-                Already have an account?{" "}
+                {t("Already have an account?")}{" "}
                 <Link
                   href="/signin"
-                  className="text-brand-500 hover:text-brand-600 dark:text-brand-400"
+                  className="text-brand-500 hover:text-brand-600 dark:text-brand-400 font-semibold"
                 >
-                  Sign In
+                  {t("Sign In")}
                 </Link>
               </p>
             </div>
