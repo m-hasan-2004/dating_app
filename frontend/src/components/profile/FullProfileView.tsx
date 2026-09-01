@@ -4,7 +4,7 @@ import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/hooks/use-auth';
 import { useTranslation } from '@/context/LanguageContext';
-import { formatDate } from '@/utils/formatters';
+import { formatDate, formatIranianPhoneNumber } from '@/utils/formatters';
 import {
   getUser,
   fetchPersonalInformation,
@@ -422,7 +422,7 @@ export function FullProfileView({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-sm">
             <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">{t('Username')}:</span><span className="text-gray-900 dark:text-white font-medium">{displayUser.username}</span></div>
             <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">{t('Email')}:</span><span className="text-gray-900 dark:text-white font-medium">{displayUser.email}</span></div>
-            <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">{t('Phone')}:</span><span className="text-gray-900 dark:text-white font-medium">{displayUser.phone_number ?? '—'}</span></div>
+            <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">{t('Phone')}:</span><span className="text-gray-900 dark:text-white font-medium font-mono">{formatIranianPhoneNumber(displayUser.phone_number)}</span></div>
             <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">{t('Middle Man Code')}:</span><span className="text-gray-900 dark:text-white font-medium">{displayUser.middle_man_code ?? '—'}</span></div>
             <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">{t('Status')}:</span>
               <span className={displayUser.is_active ? 'text-green-600 dark:text-green-400 font-semibold' : 'text-red-600 dark:text-red-400 font-semibold'}>

@@ -12,11 +12,44 @@ interface DisplayRowProps {
 const DisplayRow: React.FC<DisplayRowProps> = ({ label, value, valueClassName }) => {
   const { t, isRTL } = useTranslation();
 
-  let renderedValue = value;
+  let renderedValue: React.ReactNode = value;
   if (typeof value === 'boolean') {
     renderedValue = formatBoolean(value, isRTL);
+  } else if (Array.isArray(value)) {
+    if (value.length === 0) {
+      renderedValue = null;
+    } else {
+      renderedValue = (
+        <span>
+          {value.map((v, idx) => (
+            <React.Fragment key={idx}>
+              {t(String(v).trim())}
+              {idx < value.length - 1 ? '، ' : ''}
+            </React.Fragment>
+          ))}
+        </span>
+      );
+    }
   } else if (typeof value === 'string') {
-    renderedValue = t(value);
+    const trimmed = value.trim();
+    if (trimmed.toLowerCase() === 'none') {
+      renderedValue = isRTL ? 'هیچکدام' : 'None';
+    } else if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
+      try {
+        const parsed = JSON.parse(trimmed.replace(/'/g, '"'));
+        if (Array.isArray(parsed)) {
+          renderedValue = parsed.map((p) => t(String(p).trim())).join('، ');
+        } else {
+          renderedValue = t(trimmed);
+        }
+      } catch {
+        renderedValue = t(trimmed);
+      }
+    } else if (trimmed.includes(',') && !trimmed.startsWith('{')) {
+      renderedValue = trimmed.split(',').map((p) => t(p.trim())).join('، ');
+    } else {
+      renderedValue = t(trimmed);
+    }
   }
 
   return (

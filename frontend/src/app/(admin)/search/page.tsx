@@ -554,7 +554,7 @@ export default function CandidateSearchPage() {
       </div>
 
       {/* Main 2-Column Layout (Left: Results, Right: Sticky Filters Sidebar) */}
-      <div className="flex flex-col lg:flex-row items-start gap-6">
+      <div className="flex flex-col lg:flex-row items-start gap-6 lg:gap-8">
         
         {/* Left Column: Search Bar, Admin Tabs, Results, Grid/List */}
         <div className="flex-1 min-w-0 space-y-5 w-full">
@@ -1017,7 +1017,7 @@ export default function CandidateSearchPage() {
         </div>
 
         {/* Right Pane Sidebar: Filters Drawer */}
-        <aside className={`w-full lg:w-80 xl:w-96 shrink-0 lg:sticky lg:top-20 space-y-4 lg:-translate-x-2 ${mobileFilterOpen ? 'block' : 'hidden lg:block'}`}>
+        <aside className={`w-full lg:w-80 xl:w-96 shrink-0 lg:sticky lg:top-20 space-y-4 ${mobileFilterOpen ? 'block' : 'hidden lg:block'}`}>
           <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-5 shadow-sm space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-gray-800">
               <div className="flex items-center gap-2">

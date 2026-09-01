@@ -5,7 +5,7 @@ import Link from 'next/link';
 import type { User } from '@/services/profileService';
 import { UserCircleIcon, ArrowRightIcon } from '@/icons';
 import { useTranslation } from '@/context/LanguageContext';
-import { formatDate } from '@/utils/formatters';
+import { formatDate, formatIranianPhoneNumber } from '@/utils/formatters';
 
 interface RecentUsersTableProps {
   users: User[];
@@ -71,7 +71,9 @@ export function RecentUsersTable({ users, loading }: RecentUsersTableProps) {
                       <span className="font-semibold">{u.username}</span>
                     </div>
                   </td>
-                  <td className="px-6 py-3.5 text-gray-600 dark:text-gray-400 text-xs">{u.phone_number ?? '—'}</td>
+                  <td className={`px-6 py-3.5 text-gray-600 dark:text-gray-400 text-xs font-mono ${isRTL ? 'text-right' : 'text-left'}`}>
+                    {formatIranianPhoneNumber(u.phone_number)}
+                  </td>
                   <td className="px-6 py-3.5">
                     <span
                       className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold ${

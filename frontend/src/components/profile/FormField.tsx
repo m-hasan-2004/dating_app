@@ -144,11 +144,11 @@ const FormField: React.FC<FormFieldProps> = ({
   return (
     <div className="mb-4">
       <label className={labelClass}>
-        {label}
-        {required && <span className="text-red-500 ml-1">*</span>}
+        {t(label)}
+        {required && <span className="text-red-500 mx-1">*</span>}
       </label>
       {renderInput()}
-      {hint && <p className={hintClass}>{hint}</p>}
+      {hint && <p className={hintClass}>{t(hint)}</p>}
     </div>
   );
 };

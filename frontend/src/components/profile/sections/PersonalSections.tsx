@@ -29,10 +29,13 @@ import {
 
 const GENDER_OPTIONS: SelectOption[] = [
   { value: 'Man', label: 'Man' },
+  { value: 'man', label: 'Man' },
   { value: 'Woman', label: 'Woman' },
+  { value: 'woman', label: 'Woman' },
   { value: 'boy', label: 'Boy' },
   { value: 'girl', label: 'Girl' },
   { value: 'seperated', label: 'Separated' },
+  { value: 'separated', label: 'Separated' },
   { value: 'deceased', label: 'Deceased' },
 ];
 
@@ -208,8 +211,11 @@ export function PersonalsInformationSection({ data, onReload, isCollapsed, onTog
     }
   };
 
-  const labelFor = (opts: SelectOption[], val: string) =>
-    opts.find((o) => o.value === val)?.label ?? val;
+  const labelFor = (opts: SelectOption[], val: string) => {
+    if (!val) return '';
+    const match = opts.find((o) => o.value.toLowerCase() === String(val).toLowerCase());
+    return t(match?.label ?? val);
+  };
 
   return (
     <>
@@ -220,7 +226,7 @@ export function PersonalsInformationSection({ data, onReload, isCollapsed, onTog
         isCollapsed={isCollapsed}
         onToggleCollapse={onToggleCollapse}
       >
-        <DisplayRow label="Gender" value={labelFor(GENDER_OPTIONS, data?.gender ?? '')} />
+        <DisplayRow label="Gender" value={formatMultiValue(data?.gender, GENDER_OPTIONS, t)} />
         <DisplayRow label="Sadat" value={data?.sadat !== undefined ? formatBoolean(data.sadat, isRTL) : null} />
         <DisplayRow label="Birth Date" value={data?.birth_date ? formatDate(data.birth_date, isRTL) : null} />
         <DisplayRow label="Birth Location" value={data?.birth_location} />

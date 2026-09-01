@@ -20,7 +20,7 @@ import {
 } from '@/icons';
 import { useAuth } from '@/hooks/use-auth';
 import { useTranslation } from '@/context/LanguageContext';
-import { formatDate } from '@/utils/formatters';
+import { formatDate, formatIranianPhoneNumber } from '@/utils/formatters';
 import { useRouter } from 'next/navigation';
 
 const PAGE_SIZE_OPTIONS = [5, 10, 20, 50, 100];
@@ -510,7 +510,9 @@ export default function UsersListPage() {
                           </div>
                         </div>
                       </td>
-                      <td className={`px-4 py-4 text-gray-600 dark:text-gray-400 ${isRTL ? 'text-right' : 'text-left'}`}>{user.phone_number ?? '—'}</td>
+                      <td className={`px-4 py-4 text-gray-600 dark:text-gray-400 font-mono ${isRTL ? 'text-right' : 'text-left'}`}>
+                        {formatIranianPhoneNumber(user.phone_number)}
+                      </td>
                       <td className={`px-4 py-4 ${isRTL ? 'text-right' : 'text-left'}`}>
                         <button
                           type="button"

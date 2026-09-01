@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Localization Formatters (Shamsi / Jalali Dates, Units, and Values)
  */
 
@@ -77,4 +77,23 @@ export function formatBoolean(
 ): string {
   if (val === null || val === undefined) return '';
   return isRTL ? (val ? 'بله' : 'خیر') : (val ? 'Yes' : 'No');
+}
+
+export function formatIranianPhoneNumber(phone?: string | null): string {
+  if (!phone) return '—';
+  let cleaned = String(phone)
+    .replace(/[۰-۹]/g, (d) => String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d)))
+    .replace(/[٠-٩]/g, (d) => String('٠١٢٣٤٥٦٧٨٩'.indexOf(d)))
+    .replace(/[^\d+]/g, '');
+
+  if (cleaned.startsWith('+98')) {
+    cleaned = '0' + cleaned.slice(3);
+  } else if (cleaned.startsWith('0098')) {
+    cleaned = '0' + cleaned.slice(4);
+  } else if (cleaned.startsWith('98') && cleaned.length === 12) {
+    cleaned = '0' + cleaned.slice(2);
+  } else if (cleaned.length === 10 && cleaned.startsWith('9')) {
+    cleaned = '0' + cleaned;
+  }
+  return cleaned;
 }

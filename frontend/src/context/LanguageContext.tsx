@@ -11,7 +11,7 @@ interface LanguageContextType {
   isRTL: boolean;
   setLanguage: (lang: Language) => void;
   toggleLanguage: () => void;
-  t: (key: string, fallback?: string) => string;
+  t: (key: any, fallback?: string) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -40,15 +40,15 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setMounted(true);
   }, []);
 
-  const isRTL = useMemo(() => language === "fa", [language]);
-
   const setLanguage = useCallback((lang: Language) => {
     setLanguageState(lang);
     try {
       localStorage.setItem("app_language", lang);
-      document.cookie = `django_language=${lang};path=/;max-age=31536000`;
+      if (typeof document !== "undefined") {
+        document.cookie = `django_language=${lang};path=/;max-age=31536000`;
+      }
     } catch (e) {
-      console.error("Could not persist language", e);
+      console.error(e);
     }
   }, []);
 
@@ -57,13 +57,17 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       const nextLang: Language = prev === "fa" ? "en" : "fa";
       try {
         localStorage.setItem("app_language", nextLang);
-        document.cookie = `django_language=${nextLang};path=/;max-age=31536000`;
+        if (typeof document !== "undefined") {
+          document.cookie = `django_language=${nextLang};path=/;max-age=31536000`;
+        }
       } catch (e) {
-        console.error("Could not persist language", e);
+        console.error(e);
       }
       return nextLang;
     });
   }, []);
+
+  const isRTL = useMemo(() => language === "fa", [language]);
 
   useEffect(() => {
     if (typeof document !== "undefined") {
@@ -80,8 +84,17 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, [isRTL, language]);
 
   const t = useCallback(
-    (key: string, fallback?: string): string => {
+    (key: any, fallback?: string): string => {
+      if (key === null || key === undefined) return "";
+      if (Array.isArray(key)) {
+        if (key.length === 0) return "";
+        return key.map((item) => t(item)).filter(Boolean).join(isRTL ? "، " : ", ");
+      }
+      if (typeof key !== "string") {
+        key = String(key);
+      }
       if (!key) return "";
+
       const dict = dictionaries[language];
       if (dict && dict[key]) {
         return dict[key];
@@ -91,9 +104,16 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       if (dict && dict[trimmed]) {
         return dict[trimmed];
       }
+      // Check comma-separated tokens if string has commas
+      if (trimmed.includes(",") && !trimmed.startsWith("{") && !trimmed.startsWith("[")) {
+        const parts = trimmed.split(",").map((p: string) => p.trim()).filter(Boolean);
+        if (parts.length > 1) {
+          return parts.map((p: string) => t(p)).join(isRTL ? "، " : ", ");
+        }
+      }
       return fallback !== undefined ? fallback : key;
     },
-    [language]
+    [language, isRTL]
   );
 
   return (

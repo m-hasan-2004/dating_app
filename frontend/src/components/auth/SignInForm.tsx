@@ -31,7 +31,12 @@ export default function SignInForm() {
       await login({ username, password });
       router.push("/");
     } catch (err: any) {
-      setError(err.message || t("Failed to sign in. Please check your credentials."));
+      const msg = err.message || "";
+      if (msg.toLowerCase().includes("invalid credentials")) {
+        setError(t("Invalid credentials."));
+      } else {
+        setError(t(msg) || t("Failed to sign in. Please check your credentials."));
+      }
     } finally {
       setIsSubmitting(false);
     }
