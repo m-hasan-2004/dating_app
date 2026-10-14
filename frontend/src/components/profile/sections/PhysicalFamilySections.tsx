@@ -68,6 +68,10 @@ const FAMILY_FIN_OPTIONS: SelectOption[] = [
   'Perfect', 'Good', 'Average', 'Weak',
 ].map((v) => ({ value: v, label: v }));
 
+const FAMILY_CONTACT_OPTIONS: SelectOption[] = [
+  'Excellent', 'Good', 'Average', 'Weak', 'None',
+].map((v) => ({ value: v, label: v }));
+
 const ENGAGEMENT_OPTIONS: SelectOption[] = [
   { value: 'Engagement', label: 'Engagement' },
   { value: 'Contract', label: 'Contract' },
@@ -168,7 +172,7 @@ export function PhysicalInformationSection({
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-2xl w-full">
         <div className="p-6 max-h-[80vh] overflow-y-auto w-full">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-            {data ? 'Edit' : 'Add'} Physical Information
+            {data ? t('Edit') : t('Add')} {t('Physical Information')}
           </h2>
           <div className="space-y-4">
             <FormField label="Height (cm)" name="height" type="number" value={state.height} onChange={handleChange} />
@@ -278,7 +282,7 @@ export function FamilyInformationSection({
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-2xl w-full">
         <div className="p-6 max-h-[80vh] overflow-y-auto w-full">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-            {data ? 'Edit' : 'Add'} Families Information
+            {data ? t('Edit') : t('Add')} {t('Family Information')}
           </h2>
           <div className="space-y-4">
             <FormField label="Average Family Education" name="average_family_education" type="select" value={state.average_family_education} onChange={handleChange} options={FAMILY_EDU_OPTIONS} required />
@@ -287,8 +291,8 @@ export function FamilyInformationSection({
             {state.family_divorce_history && (
               <FormField label="Divorce Reason" name="family_divorce_reason" type="textarea" value={state.family_divorce_reason} onChange={handleChange} />
             )}
-            <FormField label="Contact with Family" name="contact_with_family" type="text" value={state.contact_with_family} onChange={handleChange} required />
-            <FormField label="Contact with Relatives" name="contact_with_relatives" type="text" value={state.contact_with_relatives} onChange={handleChange} required />
+            <FormField label="Contact with Family" name="contact_with_family" type="select" value={state.contact_with_family} onChange={handleChange} options={FAMILY_CONTACT_OPTIONS} required />
+            <FormField label="Contact with Relatives" name="contact_with_relatives" type="select" value={state.contact_with_relatives} onChange={handleChange} options={FAMILY_CONTACT_OPTIONS} required />
             <FormField label="Number of Sisters" name="number_of_sisters" type="number" value={state.number_of_sisters} onChange={handleChange} />
             <FormField label="Number of Brothers" name="number_of_brothers" type="number" value={state.number_of_brothers} onChange={handleChange} />
           </div>
@@ -376,7 +380,7 @@ export function EngagementStatusSection({
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-2xl w-full">
         <div className="p-6 max-h-[80vh] overflow-y-auto w-full">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-            {data ? 'Edit' : 'Add'} Engagements or Weddings Status
+            {data ? t('Edit') : t('Add')} {t('Engagements or Weddings Status')}
           </h2>
           <div className="space-y-4">
             <FormField label="Status" name="status" type="select" value={state.status} onChange={handleChange} options={ENGAGEMENT_OPTIONS} required />

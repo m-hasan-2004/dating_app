@@ -194,7 +194,7 @@ export function IdentityInformationSection({
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-2xl w-full">
         <div className="p-6 max-h-[85vh] overflow-y-auto w-full">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-            {data ? 'Edit' : 'Add'} Identity Information
+            {data ? t('Edit') : t('Add')} {t('Identity Information')}
           </h2>
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
@@ -340,7 +340,7 @@ export function BirthCertificateSection({
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-2xl w-full">
         <div className="p-6 max-h-[85vh] overflow-y-auto w-full">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-            {data ? 'Edit' : 'Add'} Birth Certificate Information
+            {data ? t('Edit') : t('Add')} {t('Birth Certificate Information')}
           </h2>
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">

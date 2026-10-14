@@ -98,7 +98,7 @@ export function MotherSection({
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-lg w-full">
         <div className="p-6 max-h-[80vh] overflow-y-auto w-full">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-            {data ? 'Edit' : 'Add'} Mother Information
+            {data ? t('Edit') : t('Add')} {t('Mother')}
           </h2>
           <div className="space-y-4">
             <FormField label="Language" name="language" type="text" value={state.language} onChange={handleChange} required />
@@ -182,7 +182,7 @@ export function FatherSection({
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-lg w-full">
         <div className="p-6 max-h-[80vh] overflow-y-auto w-full">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-            {data ? 'Edit' : 'Add'} Father Information
+            {data ? t('Edit') : t('Add')} {t('Father')}
           </h2>
           <div className="space-y-4">
             <FormField label="Language" name="language" type="text" value={state.language} onChange={handleChange} required />

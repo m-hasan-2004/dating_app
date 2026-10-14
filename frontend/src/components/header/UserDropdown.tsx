@@ -26,7 +26,7 @@ export default function UserDropdown() {
   const handleLogout = async () => {
     closeDropdown();
     await logout();
-    router.push("/signin");
+    router.push("/signin?logged_out=true");
   };
 
   const displayName = user?.first_name

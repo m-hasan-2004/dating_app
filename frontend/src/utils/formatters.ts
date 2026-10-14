@@ -2,6 +2,21 @@
  * Localization Formatters (Shamsi / Jalali Dates, Units, and Values)
  */
 
+export function toPersianDigits(n: number | string | null | undefined): string {
+  if (n === null || n === undefined) return '';
+  const str = String(n);
+  const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+  return str.replace(/[0-9]/g, (w) => persianDigits[parseInt(w, 10)]);
+}
+
+export function formatNumber(
+  val: number | string | null | undefined,
+  isRTL: boolean = true
+): string {
+  if (val === null || val === undefined || val === '') return '';
+  return isRTL ? toPersianDigits(val) : String(val);
+}
+
 export function formatDate(
   dateVal: string | Date | null | undefined,
   isRTL: boolean = true
@@ -27,16 +42,17 @@ export function formatDate(
     }
 
     if (isNaN(d.getTime())) {
-      return String(dateVal);
+      return isRTL ? toPersianDigits(String(dateVal)) : String(dateVal);
     }
 
     if (isRTL) {
       // Use native Persian Solar Hijri (Shamsi) calendar formatter
-      return new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
+      const formatted = new Intl.DateTimeFormat('fa-IR-u-ca-persian', {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
       }).format(d);
+      return toPersianDigits(formatted);
     } else {
       return new Intl.DateTimeFormat('en-US', {
         year: 'numeric',
@@ -45,7 +61,7 @@ export function formatDate(
       }).format(d);
     }
   } catch (e) {
-    return String(dateVal);
+    return isRTL ? toPersianDigits(String(dateVal)) : String(dateVal);
   }
 }
 
@@ -55,9 +71,9 @@ export function formatHeight(
 ): string {
   if (val === null || val === undefined || val === '') return '';
   const num = typeof val === 'number' ? val : parseFloat(String(val));
-  if (isNaN(num)) return String(val);
+  if (isNaN(num)) return isRTL ? toPersianDigits(val) : String(val);
   const clean = Number.isInteger(num) ? String(num) : num.toFixed(0);
-  return isRTL ? `${clean} سانتی‌متر` : `${clean} cm`;
+  return isRTL ? `${toPersianDigits(clean)} سانتی‌متر` : `${clean} cm`;
 }
 
 export function formatWeight(
@@ -66,9 +82,9 @@ export function formatWeight(
 ): string {
   if (val === null || val === undefined || val === '') return '';
   const num = typeof val === 'number' ? val : parseFloat(String(val));
-  if (isNaN(num)) return String(val);
+  if (isNaN(num)) return isRTL ? toPersianDigits(val) : String(val);
   const clean = Number.isInteger(num) ? String(num) : num.toFixed(0);
-  return isRTL ? `${clean} کیلوگرم` : `${clean} kg`;
+  return isRTL ? `${toPersianDigits(clean)} کیلوگرم` : `${clean} kg`;
 }
 
 export function formatBoolean(
@@ -79,7 +95,10 @@ export function formatBoolean(
   return isRTL ? (val ? 'بله' : 'خیر') : (val ? 'Yes' : 'No');
 }
 
-export function formatIranianPhoneNumber(phone?: string | null): string {
+export function formatIranianPhoneNumber(
+  phone?: string | null,
+  isRTL: boolean = false
+): string {
   if (!phone) return '—';
   let cleaned = String(phone)
     .replace(/[۰-۹]/g, (d) => String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d)))
@@ -95,5 +114,5 @@ export function formatIranianPhoneNumber(phone?: string | null): string {
   } else if (cleaned.length === 10 && cleaned.startsWith('9')) {
     cleaned = '0' + cleaned;
   }
-  return cleaned;
+  return isRTL ? toPersianDigits(cleaned) : cleaned;
 }

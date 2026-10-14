@@ -6,7 +6,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { apiClient } from '@/services/api/client';
 import { toggleBookmark } from '@/services/profileService';
 import { useTranslation } from '@/context/LanguageContext';
-import { formatHeight, formatWeight, formatDate, formatBoolean } from '@/utils/formatters';
+import { formatHeight, formatWeight, formatDate, formatBoolean, toPersianDigits } from '@/utils/formatters';
 import {
   ChevronLeftIcon,
   CheckCircleIcon,
@@ -161,19 +161,28 @@ export default function PublicCandidateProfilePage() {
 
   const DetailRow = ({ label, value, badge }: { label: string; value?: any; badge?: boolean }) => {
     let display: React.ReactNode = value;
+    const isTech = label.toLowerCase().includes('email') || label.toLowerCase().includes('website') || label.toLowerCase().includes('url');
+
     if (value === true) display = isRTL ? 'بله' : 'Yes';
     else if (value === false) display = isRTL ? 'خیر' : 'No';
-    else if (Array.isArray(value)) {
+    else if (typeof value === 'number') {
+      display = isRTL ? toPersianDigits(value) : String(value);
+    } else if (Array.isArray(value)) {
       display = value.length ? (
         <div className={`flex flex-wrap gap-1.5 ${isRTL ? 'justify-start sm:justify-end' : 'justify-start sm:justify-end'}`}>
-          {value.map((v, i) => (
-            <span
-              key={i}
-              className="inline-flex px-2 py-0.5 rounded-lg bg-gray-100 dark:bg-gray-800 text-xs font-medium text-gray-800 dark:text-gray-200"
-            >
-              {t(String(v).trim())}
-            </span>
-          ))}
+          {value.map((v, i) => {
+            const str = String(v).trim();
+            const trans = t(str);
+            const formatted = isRTL && !isTech ? toPersianDigits(trans) : trans;
+            return (
+              <span
+                key={i}
+                className="inline-flex px-2 py-0.5 rounded-lg bg-gray-100 dark:bg-gray-800 text-xs font-medium text-gray-800 dark:text-gray-200"
+              >
+                {formatted}
+              </span>
+            );
+          })}
         </div>
       ) : '—';
     } else if (typeof value === 'string' && value.trim()) {
@@ -182,12 +191,16 @@ export default function PublicCandidateProfilePage() {
         display = isRTL ? 'هیچکدام' : 'None';
       } else if (trimmed.includes(',') && !trimmed.startsWith('{')) {
         const parts = trimmed.split(',').map((p) => p.trim()).filter(Boolean);
-        display = parts.map((p) => t(p)).join('، ');
+        display = parts.map((p) => {
+          const trans = t(p);
+          return isRTL && !isTech ? toPersianDigits(trans) : trans;
+        }).join(isRTL ? '، ' : ', ');
       } else {
-        display = t(trimmed);
+        const trans = t(trimmed);
+        display = isRTL && !isTech ? toPersianDigits(trans) : trans;
       }
     } else if (value === 0) {
-      display = '0';
+      display = isRTL ? '۰' : '0';
     } else if (!value) {
       display = '—';
     }
@@ -298,7 +311,7 @@ export default function PublicCandidateProfilePage() {
                 <span className="w-2 h-2 rounded-full bg-emerald-500" title="Active"></span>
               </div>
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                {age ? `${age} ${t("Years")}` : '—'} • {personal?.birth_location ? t(personal.birth_location) : '—'} • {t("Registered Member")}
+                {age ? `${isRTL ? toPersianDigits(age) : age} ${t("Years")}` : '—'} • {personal?.birth_location ? t(personal.birth_location) : '—'} • {t("Registered Member")}
               </p>
             </div>
           </div>
@@ -403,7 +416,7 @@ export default function PublicCandidateProfilePage() {
                 <span>👤</span> {t("Personal Information")}
               </h3>
               <DetailRow label="Birth Location / City" value={personal?.birth_location} />
-              <DetailRow label="Age" value={age ? `${age} ${t("Years")}` : '—'} />
+              <DetailRow label="Age" value={age ? `${isRTL ? toPersianDigits(age) : age} ${t("Years")}` : '—'} />
               <DetailRow label="Education Degree" value={personal?.education} badge />
               <DetailRow label="Major / Degree Details" value={personal?.degree} />
               <DetailRow label="Sadat Lineage (سید)" value={personal?.sadat} />
@@ -460,7 +473,7 @@ export default function PublicCandidateProfilePage() {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1">
               <DetailRow label="Gender" value={personal?.gender} />
-              <DetailRow label="Age" value={age ? `${age} ${t("Years")}` : '—'} />
+              <DetailRow label="Age" value={age ? `${isRTL ? toPersianDigits(age) : age} ${t("Years")}` : '—'} />
               <DetailRow label="Birth Location / City" value={personal?.birth_location} />
               <DetailRow label="Sadat Lineage (سید)" value={personal?.sadat} />
               <DetailRow label="Education Degree" value={personal?.education} badge />

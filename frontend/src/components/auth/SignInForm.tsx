@@ -8,7 +8,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { useTranslation } from "@/context/LanguageContext";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -21,6 +21,8 @@ export default function SignInForm() {
   const { login } = useAuth();
   const { t, isRTL } = useTranslation();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const loggedOut = searchParams.get("logged_out") === "true";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,6 +56,12 @@ export default function SignInForm() {
               {t("Enter your username and password to sign in!")}
             </p>
           </div>
+
+          {loggedOut && !error && (
+            <div className="p-3 mb-4 text-sm text-emerald-700 bg-emerald-100 rounded-xl dark:bg-emerald-950/40 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+              {t("Logged out successfully.")}
+            </div>
+          )}
 
           {error && (
             <div className="p-3 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-900/30 dark:text-red-400">

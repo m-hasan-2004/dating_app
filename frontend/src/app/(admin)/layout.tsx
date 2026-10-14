@@ -16,7 +16,7 @@ export default function AdminLayout({
 }) {
   const { isExpanded, isHovered, isMobileOpen } = useSidebar();
   const { user, loading, isAuthenticated } = useAuth();
-  const { isRTL } = useLanguage();
+  const { isRTL, t } = useLanguage();
   const router = useRouter();
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export default function AdminLayout({
       <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-950">
         <div className="flex flex-col items-center gap-3">
           <div className="w-10 h-10 border-3 border-brand-500 border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-xs font-semibold text-gray-500 dark:text-gray-400">Verifying session...</p>
+          <p className="text-xs font-semibold text-gray-500 dark:text-gray-400">{t("Verifying session...")}</p>
         </div>
       </div>
     );
@@ -43,7 +43,7 @@ export default function AdminLayout({
       <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-950">
         <div className="flex flex-col items-center gap-3">
           <div className="w-8 h-8 border-2 border-brand-500 border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-xs font-semibold text-gray-500 dark:text-gray-400">Redirecting to sign in...</p>
+          <p className="text-xs font-semibold text-gray-500 dark:text-gray-400">{t("Redirecting to sign in...")}</p>
         </div>
       </div>
     );

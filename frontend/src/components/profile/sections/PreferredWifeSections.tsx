@@ -179,7 +179,7 @@ export function FutureSpouseOriginalitiesSection({
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-md w-full">
         <div className="p-6 max-h-[80vh] overflow-y-auto w-full">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-            {editingItem ? 'Edit' : 'Add'} Future Spouse Ethnicity
+            {editingItem ? t('Edit') : t('Add')} {t('Future Spouse Ethnicity')}
           </h2>
           <div className="space-y-4">
             <FormField label="Ethnicity" name="future_spouse_ethnicity" type="select" value={state.future_spouse_ethnicity} onChange={handleChange} options={ETHNICITY_OPTIONS} required />
@@ -280,7 +280,7 @@ export function PreferredWifeIntellectualSection({
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-2xl w-full">
         <div className="p-6 max-h-[80vh] overflow-y-auto w-full">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-            {data ? 'Edit' : 'Add'} Preferred Wife Intellectual Information
+            {data ? t('Edit') : t('Add')} {t('Preferred Wife Intellectual Information')}
           </h2>
           <div className="space-y-4">
             <FormField label="Appearance Type" name="appearance_type" type="multiselect" value={state.appearance_type} onChange={handleChange} options={APPEARANCE_OPTIONS} />
@@ -376,7 +376,7 @@ export function PreferredWifePersonalSection({
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-2xl w-full">
         <div className="p-6 max-h-[80vh] overflow-y-auto w-full">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-            {data ? 'Edit' : 'Add'} Preferred Wife Personal Information
+            {data ? t('Edit') : t('Add')} {t('Preferred Wife Personal Information')}
           </h2>
           <div className="space-y-4">
             <FormField label="Education Level" name="education_level" type="text" value={state.education_level} onChange={handleChange} />
@@ -481,7 +481,7 @@ export function PreferredWifePhysicalSection({
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-2xl w-full">
         <div className="p-6 max-h-[80vh] overflow-y-auto w-full">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-            {data ? 'Edit' : 'Add'} Preferred Wife Physical Information
+            {data ? t('Edit') : t('Add')} {t('Preferred Wife Physical Information')}
           </h2>
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
@@ -563,7 +563,7 @@ export function PreferredWifeExtraSection({
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-lg w-full">
         <div className="p-6 max-h-[80vh] overflow-y-auto w-full">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-            {data ? 'Edit' : 'Add'} Preferred Wife Extra Information
+            {data ? t('Edit') : t('Add')} {t('Preferred Wife Extra Information')}
           </h2>
           <div className="space-y-4">
             <FormField label="Additional Explanations" name="additional_explanations" type="textarea" value={state.additional_explanations} onChange={handleChange} rows={5} />

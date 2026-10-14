@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { useTranslation } from '@/context/LanguageContext';
-import { formatBoolean } from '@/utils/formatters';
+import { formatBoolean, toPersianDigits } from '@/utils/formatters';
 
 interface DisplayRowProps {
   label: string;
@@ -12,21 +12,33 @@ interface DisplayRowProps {
 const DisplayRow: React.FC<DisplayRowProps> = ({ label, value, valueClassName }) => {
   const { t, isRTL } = useTranslation();
 
+  const isTechnicalKey =
+    label.toLowerCase().includes('email') ||
+    label.toLowerCase().includes('website') ||
+    label.toLowerCase().includes('url');
+
   let renderedValue: React.ReactNode = value;
   if (typeof value === 'boolean') {
     renderedValue = formatBoolean(value, isRTL);
+  } else if (typeof value === 'number') {
+    renderedValue = isRTL ? toPersianDigits(value) : String(value);
   } else if (Array.isArray(value)) {
     if (value.length === 0) {
       renderedValue = null;
     } else {
       renderedValue = (
         <span>
-          {value.map((v, idx) => (
-            <React.Fragment key={idx}>
-              {t(String(v).trim())}
-              {idx < value.length - 1 ? '، ' : ''}
-            </React.Fragment>
-          ))}
+          {value.map((v, idx) => {
+            const str = String(v).trim();
+            const trans = t(str);
+            const formatted = isRTL && !isTechnicalKey ? toPersianDigits(trans) : trans;
+            return (
+              <React.Fragment key={idx}>
+                {formatted}
+                {idx < value.length - 1 ? (isRTL ? '، ' : ', ') : ''}
+              </React.Fragment>
+            );
+          })}
         </span>
       );
     }
@@ -38,17 +50,31 @@ const DisplayRow: React.FC<DisplayRowProps> = ({ label, value, valueClassName })
       try {
         const parsed = JSON.parse(trimmed.replace(/'/g, '"'));
         if (Array.isArray(parsed)) {
-          renderedValue = parsed.map((p) => t(String(p).trim())).join('، ');
+          renderedValue = parsed
+            .map((p) => {
+              const trans = t(String(p).trim());
+              return isRTL && !isTechnicalKey ? toPersianDigits(trans) : trans;
+            })
+            .join(isRTL ? '، ' : ', ');
         } else {
-          renderedValue = t(trimmed);
+          const trans = t(trimmed);
+          renderedValue = isRTL && !isTechnicalKey ? toPersianDigits(trans) : trans;
         }
       } catch {
-        renderedValue = t(trimmed);
+        const trans = t(trimmed);
+        renderedValue = isRTL && !isTechnicalKey ? toPersianDigits(trans) : trans;
       }
     } else if (trimmed.includes(',') && !trimmed.startsWith('{')) {
-      renderedValue = trimmed.split(',').map((p) => t(p.trim())).join('، ');
+      renderedValue = trimmed
+        .split(',')
+        .map((p) => {
+          const trans = t(p.trim());
+          return isRTL && !isTechnicalKey ? toPersianDigits(trans) : trans;
+        })
+        .join(isRTL ? '، ' : ', ');
     } else {
-      renderedValue = t(trimmed);
+      const trans = t(trimmed);
+      renderedValue = isRTL && !isTechnicalKey ? toPersianDigits(trans) : trans;
     }
   }
 
@@ -64,3 +90,4 @@ const DisplayRow: React.FC<DisplayRowProps> = ({ label, value, valueClassName })
 
 export { DisplayRow };
 export default DisplayRow;
+

@@ -149,7 +149,7 @@ export function IntroducedSubjectsSection({
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-2xl w-full">
         <div className="p-6 max-h-[80vh] overflow-y-auto w-full">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-            {editingItem ? 'Edit' : 'Add'} Introduced Subject
+            {editingItem ? t('Edit') : t('Add')} {t('Introduced Subject')}
           </h2>
           <div className="space-y-4">
             <FormField label="Username" name="username" type="text" value={state.username} onChange={handleChange} required />
@@ -252,7 +252,7 @@ export function SubjectDetailsSection({
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-2xl w-full">
         <div className="p-6 max-h-[80vh] overflow-y-auto w-full">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-            {data ? 'Edit' : 'Add'} Subject Details
+            {data ? t('Edit') : t('Add')} {t('Subject Details')}
           </h2>
           <div className="space-y-4">
             <FormField label="Preferred Dates and Times" name="preferred_date_times" type="textarea" value={state.preferred_date_times} onChange={handleChange} />

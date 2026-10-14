@@ -10,6 +10,7 @@ import { fetchAccessCodes, type AccessCode } from '@/services/accessCodeService'
 import { AdminMetrics } from '@/components/dashboard/AdminMetrics';
 import { AccessCodesOverview } from '@/components/dashboard/AccessCodesOverview';
 import { RecentUsersTable } from '@/components/dashboard/RecentUsersTable';
+import { toPersianDigits } from '@/utils/formatters';
 import {
   LockIcon,
   UserCircleIcon,
@@ -202,7 +203,7 @@ function AdminDashboardView() {
 // 2. USER DASHBOARD VIEW (Normal Candidates)
 // ==========================================
 function UserDashboardView({ user }: { user: any }) {
-  const { t } = useTranslation();
+  const { t, isRTL } = useTranslation();
   const [candidates, setCandidates] = useState<CandidateProfile[]>([]);
   const [bookmarksCount, setBookmarksCount] = useState<number>(0);
   const [loading, setLoading] = useState(true);
@@ -259,7 +260,7 @@ function UserDashboardView({ user }: { user: any }) {
               </span>
               {user?.middle_man_code && (
                 <span className="px-3 py-1 text-xs font-medium rounded-full bg-black/20 text-white/90">
-                  {t("Ref")}: {user.middle_man_code}
+                  {t("Ref")}: {isRTL ? toPersianDigits(user.middle_man_code) : user.middle_man_code}
                 </span>
               )}
             </div>
@@ -311,7 +312,7 @@ function UserDashboardView({ user }: { user: any }) {
             </div>
             <div>
               <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t("Saved Bookmarks")}</p>
-              <p className="text-xl font-extrabold text-gray-900 dark:text-white mt-0.5">{bookmarksCount} {t("Shortlisted")}</p>
+              <p className="text-xl font-extrabold text-gray-900 dark:text-white mt-0.5">{isRTL ? toPersianDigits(bookmarksCount) : bookmarksCount} {t("Shortlisted")}</p>
             </div>
           </div>
           <ArrowRightIcon className="w-4 h-4 text-gray-400 group-hover:text-amber-500 transition-colors" />
@@ -402,7 +403,7 @@ function UserDashboardView({ user }: { user: any }) {
                       </div>
                       <div>
                         <h4 className="text-xs font-bold text-gray-900 dark:text-white">@{cand.username}</h4>
-                        <p className="text-[11px] text-gray-500 dark:text-gray-400">{cand.age ? `${cand.age} ${t("Years")}` : '—'} • {t(loc)}</p>
+                        <p className="text-[11px] text-gray-500 dark:text-gray-400">{cand.age ? `${isRTL ? toPersianDigits(cand.age) : cand.age} ${t("Years")}` : '—'} • {t(loc)}</p>
                       </div>
                     </div>
 

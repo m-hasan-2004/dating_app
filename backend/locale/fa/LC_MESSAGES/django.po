@@ -6987,3 +6987,9 @@ msgstr ""
 
 #~ msgid "Tocher Type of Future Wife"
 #~ msgstr "نوع مهریه همسر آینده"
+
+msgid "Logged out successfully."
+msgstr "با موفقیت از حساب کاربری خارج شدید."
+
+msgid "No active session found."
+msgstr "هیچ نشست فعالی یافت نشد."

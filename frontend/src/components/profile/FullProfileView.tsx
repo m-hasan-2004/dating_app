@@ -4,7 +4,7 @@ import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/hooks/use-auth';
 import { useTranslation } from '@/context/LanguageContext';
-import { formatDate, formatIranianPhoneNumber } from '@/utils/formatters';
+import { formatDate, formatIranianPhoneNumber, toPersianDigits } from '@/utils/formatters';
 import {
   getUser,
   fetchPersonalInformation,
@@ -337,7 +337,7 @@ export function FullProfileView({
       <div className="flex items-center justify-center py-24">
         <div className="text-center">
           <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-4 border-brand-500 border-t-transparent" />
-          <p className="text-sm text-gray-500">Loading profile data...</p>
+          <p className="text-sm text-gray-500">{t('Loading profile data...')}</p>
         </div>
       </div>
     );
@@ -347,7 +347,7 @@ export function FullProfileView({
     return (
       <div className="rounded-lg bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 px-6 py-8 text-center">
         <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
-        <button onClick={loadAll} className="mt-3 text-sm font-medium text-red-600 hover:underline">Retry</button>
+        <button onClick={loadAll} className="mt-3 text-sm font-medium text-red-600 hover:underline">{t('Retry')}</button>
       </div>
     );
   }
@@ -422,8 +422,8 @@ export function FullProfileView({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-sm">
             <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">{t('Username')}:</span><span className="text-gray-900 dark:text-white font-medium">{displayUser.username}</span></div>
             <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">{t('Email')}:</span><span className="text-gray-900 dark:text-white font-medium">{displayUser.email}</span></div>
-            <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">{t('Phone')}:</span><span className="text-gray-900 dark:text-white font-medium font-mono">{formatIranianPhoneNumber(displayUser.phone_number)}</span></div>
-            <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">{t('Middle Man Code')}:</span><span className="text-gray-900 dark:text-white font-medium">{displayUser.middle_man_code ?? '—'}</span></div>
+            <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">{t('Phone')}:</span><span className="text-gray-900 dark:text-white font-medium font-mono">{formatIranianPhoneNumber(displayUser.phone_number, isRTL)}</span></div>
+            <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">{t('Middle Man Code')}:</span><span className="text-gray-900 dark:text-white font-medium">{displayUser.middle_man_code ? (isRTL ? toPersianDigits(displayUser.middle_man_code) : displayUser.middle_man_code) : '—'}</span></div>
             <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">{t('Status')}:</span>
               <span className={displayUser.is_active ? 'text-green-600 dark:text-green-400 font-semibold' : 'text-red-600 dark:text-red-400 font-semibold'}>
                 {displayUser.is_active ? t('Active') : t('Inactive')}
@@ -582,7 +582,7 @@ export function FullProfileView({
         </>
       )}
 
-      {/* {t('Change Account Info')} Modal */}
+      {/* Change Account Information Modal */}
       <Modal
         isOpen={isAccountModalOpen}
         onClose={() => setIsAccountModalOpen(false)}
@@ -595,7 +595,7 @@ export function FullProfileView({
               <PencilIcon className="w-4 h-4" />
             </div>
             <h3 className="text-base font-bold text-gray-900 dark:text-white">
-              {t('Change Account Info')}rmation
+              {t('Change Account Information')}
             </h3>
           </div>
           <button
@@ -622,7 +622,7 @@ export function FullProfileView({
           {/* 1. Email */}
           <div>
             <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Email Address
+              {t('Email Address')}
             </label>
             <input
               type="email"
@@ -638,11 +638,11 @@ export function FullProfileView({
           {/* 2. Phone Number */}
           <div>
             <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Phone Number
+              {t('Phone Number')}
             </label>
             <input
               type="text"
-              placeholder="+989..."
+              placeholder={isRTL ? "۰۹..." : "+989..."}
               value={accountForm.phone_number}
               onChange={(e) =>
                 setAccountForm({ ...accountForm, phone_number: e.target.value })
@@ -654,11 +654,11 @@ export function FullProfileView({
           {/* 3. Middle Man Code */}
           <div>
             <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Middle Man Code
+              {t('Middle Man Code')}
             </label>
             <input
               type="text"
-              placeholder="Enter reference or middle man code"
+              placeholder={t('Enter reference or middle man code')}
               value={accountForm.middle_man_code}
               onChange={(e) =>
                 setAccountForm({
@@ -673,17 +673,17 @@ export function FullProfileView({
           {/* 4. Password (Optional) */}
           <div className="pt-2 border-t border-gray-100 dark:border-gray-800">
             <p className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-3">
-              Change Password (Optional)
+              {t('Change Password (Optional)')}
             </p>
             <div className="space-y-3">
               <div>
                 <label className="block text-xs text-gray-500 dark:text-gray-400 mb-1">
-                  New Password (leave blank to keep unchanged)
+                  {t('New Password (leave blank to keep unchanged)')}
                 </label>
                 <input
                   type="password"
                   minLength={8}
-                  placeholder="Min. 8 characters"
+                  placeholder={t('Min. 8 characters')}
                   value={accountForm.password}
                   onChange={(e) =>
                     setAccountForm({
@@ -697,12 +697,12 @@ export function FullProfileView({
 
               <div>
                 <label className="block text-xs text-gray-500 dark:text-gray-400 mb-1">
-                  Confirm New Password
+                  {t('Confirm New Password')}
                 </label>
                 <input
                   type="password"
                   minLength={8}
-                  placeholder="Confirm new password"
+                  placeholder={t('Confirm new password')}
                   value={accountForm.confirmPassword}
                   onChange={(e) =>
                     setAccountForm({

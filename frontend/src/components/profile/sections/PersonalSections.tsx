@@ -260,7 +260,7 @@ export function PersonalsInformationSection({ data, onReload, isCollapsed, onTog
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-2xl w-full">
         <div className="p-6 max-h-[80vh] overflow-y-auto">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-            {data ? 'Edit' : 'Add'} Personals Information
+            {data ? t('Edit') : t('Add')} {t('Personal Information')}
           </h2>
           <div className="space-y-4">
             <FormField label="Gender" name="gender" type="select" value={state.gender} onChange={handleChange} options={GENDER_OPTIONS} required />

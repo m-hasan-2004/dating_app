@@ -20,7 +20,7 @@ import {
   GridIcon,
   ListIcon,
 } from '@/icons';
-import { formatHeight, formatWeight } from '@/utils/formatters';
+import { formatHeight, formatWeight, toPersianDigits } from '@/utils/formatters';
 
 const LOCATION_OPTIONS = [
   { value: 'Tehran', labelFa: 'تهران', labelEn: 'Tehran' },
@@ -744,7 +744,7 @@ export default function CandidateSearchPage() {
                               @{cand.username}
                             </h3>
                             <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-                              <span>{cand.age ? `${cand.age} ${t("Years")}` : '—'}</span>
+                              <span>{cand.age ? `${isRTL ? toPersianDigits(cand.age) : cand.age} ${t("Years")}` : '—'}</span>
                               <span>•</span>
                               <span className="truncate max-w-[90px]">{t(loc)}</span>
                             </div>
@@ -925,7 +925,7 @@ export default function CandidateSearchPage() {
                               </div>
                             </td>
                             <td className="px-3 py-3.5 text-xs text-gray-600 dark:text-gray-300">
-                              {cand.age ? `${cand.age} ${t("Years")}` : '—'} • {t(loc)}
+                              {cand.age ? `${isRTL ? toPersianDigits(cand.age) : cand.age} ${t("Years")}` : '—'} • {t(loc)}
                             </td>
                             <td className="px-3 py-3.5 text-xs text-gray-600 dark:text-gray-300 truncate max-w-[120px]">
                               {t(edu)}
@@ -955,17 +955,17 @@ export default function CandidateSearchPage() {
           ) : (
             <div className="rounded-3xl border border-dashed border-gray-300 bg-white dark:border-gray-800 dark:bg-white/[0.01] p-12 text-center">
               <h3 className="text-base font-bold text-gray-900 dark:text-white">
-                No candidates matched your search criteria
+                {t("No candidates matched your search criteria")}
               </h3>
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 mb-4">
-                Try expanding your selected filters in the right sidebar or clear all filters.
+                {t("Try expanding your selected filters in the right sidebar or clear all filters.")}
               </p>
               <button
                 type="button"
                 onClick={handleResetFilters}
                 className="px-4 py-2 text-xs font-semibold rounded-xl bg-brand-500 text-white hover:bg-brand-600 transition-colors cursor-pointer"
               >
-                Clear All Search Filters
+                {t("Clear All Search Filters")}
               </button>
             </div>
           )}
@@ -974,7 +974,7 @@ export default function CandidateSearchPage() {
           {data && data.total_pages > 1 && (
             <div className="flex items-center justify-between gap-4 px-4 py-3 rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.02]">
               <span className="text-xs text-gray-500 dark:text-gray-400">
-                Page <strong className="text-gray-800 dark:text-white">{data.page}</strong> of <strong className="text-gray-800 dark:text-white">{data.total_pages}</strong>
+                {t("Page")} <strong className="text-gray-800 dark:text-white">{isRTL ? toPersianDigits(data.page) : data.page}</strong> {t("of")} <strong className="text-gray-800 dark:text-white">{isRTL ? toPersianDigits(data.total_pages) : data.total_pages}</strong>
               </span>
 
               <div className="flex items-center gap-1.5">
@@ -984,7 +984,7 @@ export default function CandidateSearchPage() {
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   className="px-3 py-1 text-xs font-medium rounded-xl border border-gray-200 text-gray-600 hover:bg-gray-50 disabled:opacity-40 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800 cursor-pointer"
                 >
-                  Prev
+                  {t("Prev")}
                 </button>
                 {Array.from({ length: Math.min(5, data.total_pages) }).map((_, idx) => {
                   const pNum = idx + 1;
@@ -999,7 +999,7 @@ export default function CandidateSearchPage() {
                           : 'border border-gray-200 text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300'
                       }`}
                     >
-                      {pNum}
+                      {isRTL ? toPersianDigits(pNum) : pNum}
                     </button>
                   );
                 })}
@@ -1009,7 +1009,7 @@ export default function CandidateSearchPage() {
                   onClick={() => setPage((p) => Math.min(data.total_pages, p + 1))}
                   className="px-3 py-1 text-xs font-medium rounded-xl border border-gray-200 text-gray-600 hover:bg-gray-50 disabled:opacity-40 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800 cursor-pointer"
                 >
-                  Next
+                  {t("Next")}
                 </button>
               </div>
             </div>

@@ -328,7 +328,7 @@ export function FinancialInformationSection({
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-2xl w-full">
         <div className="p-6 max-h-[80vh] overflow-y-auto w-full">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-            {data ? 'Edit' : 'Add'} Financial Information
+            {data ? t('Edit') : t('Add')} {t('Financial Information')}
           </h2>
           <div className="space-y-4">
             <FormField label="Job" name="job" type="text" value={state.job} onChange={handleChange} />
@@ -480,7 +480,7 @@ export function IntellectualInformationSection({
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-3xl w-full">
         <div className="p-6 max-h-[80vh] overflow-y-auto w-full">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-            {data ? 'Edit' : 'Add'} Intellectual Information
+            {data ? t('Edit') : t('Add')} {t('Intellectual Information')}
           </h2>
           <div className="space-y-4">
             <FormField label="Marriage Goals & Purposes" name="marriage_goals_purposes" type="textarea" value={state.marriage_goals_purposes} onChange={handleChange} />

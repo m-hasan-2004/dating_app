@@ -157,7 +157,7 @@ export function ExHusbandChildStatusSection({
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-lg w-full">
         <div className="p-6 max-h-[80vh] overflow-y-auto w-full">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-            {editingItem ? 'Edit' : 'Add'} Ex-Husband Child Record
+            {editingItem ? t('Edit') : t('Add')} {t('Ex-Husband Child Record')}
           </h2>
           <div className="space-y-4">
             <FormField label="Gender" name="gender" type="select" value={state.gender} onChange={handleChange} options={GENDER_OPTIONS} required />
@@ -267,7 +267,7 @@ export function SistersSection({
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-lg w-full">
         <div className="p-6 max-h-[80vh] overflow-y-auto w-full">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-            {editingItem ? 'Edit' : 'Add'} Sister
+            {editingItem ? t('Edit') : t('Add')} {t('Sister')}
           </h2>
           <div className="space-y-4">
             <FormField label="Alive" name="status" type="boolean" value={state.status} onChange={handleChange} hint="Is she alive?" />
@@ -367,7 +367,7 @@ export function BrothersSection({
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-lg w-full">
         <div className="p-6 max-h-[80vh] overflow-y-auto w-full">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-            {editingItem ? 'Edit' : 'Add'} Brother
+            {editingItem ? t('Edit') : t('Add')} {t('Brother')}
           </h2>
           <div className="space-y-4">
             <FormField label="Alive" name="status" type="boolean" value={state.status} onChange={handleChange} hint="Is he alive?" />
@@ -482,7 +482,7 @@ export function GroomsSection({
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-lg w-full">
         <div className="p-6 max-h-[80vh] overflow-y-auto w-full">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-            {editingItem ? 'Edit' : 'Add'} Groom
+            {editingItem ? t('Edit') : t('Add')} {t('Groom')}
           </h2>
           <div className="space-y-4">
             <FormField label="Role" name="groom_or" type="select" value={state.groom_or} onChange={handleChange} options={GROOM_OR_OPTIONS} required />
@@ -598,7 +598,7 @@ export function BridesWivesSection({
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-lg w-full">
         <div className="p-6 max-h-[80vh] overflow-y-auto w-full">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
-            {editingItem ? 'Edit' : 'Add'} Bride or Wife
+            {editingItem ? t('Edit') : t('Add')} {t('Bride or Wife')}
           </h2>
           <div className="space-y-4">
             <FormField label="Role" name="bride_or" type="select" value={state.bride_or} onChange={handleChange} options={BRIDE_OR_OPTIONS} required />

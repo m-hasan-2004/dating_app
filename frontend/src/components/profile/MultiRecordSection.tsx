@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { PlusIcon, PencilIcon, TrashBinIcon, ChevronDownIcon, ChevronUpIcon } from '@/icons';
 import { useTranslation } from '@/context/LanguageContext';
+import { toPersianDigits } from '@/utils/formatters';
 
 export interface MultiRecordSectionProps<T extends { id: number }> {
   title: string;
@@ -26,7 +27,7 @@ function MultiRecordSection<T extends { id: number }>({
   isCollapsed,
   onToggleCollapse,
 }: MultiRecordSectionProps<T>) {
-  const { t } = useTranslation();
+  const { t, isRTL } = useTranslation();
   const [internalCollapsed, setInternalCollapsed] = useState(false);
   const collapsed = isCollapsed !== undefined ? isCollapsed : internalCollapsed;
 
@@ -39,12 +40,12 @@ function MultiRecordSection<T extends { id: number }>({
   };
 
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] transition-all">
+    <div className="rounded-2xl border border-gray-200 hover:border-gray-300 bg-white dark:border-gray-800 dark:bg-white/[0.03] shadow-xs transition-all">
       <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-gray-800">
         <div className="flex items-center gap-2">
           <h3 className="text-base font-semibold text-gray-800 dark:text-white/90">{t(title)}</h3>
           <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 font-medium">
-            {records.length}
+            {isRTL ? toPersianDigits(records.length) : records.length}
           </span>
         </div>
         <div className="flex items-center gap-3">
@@ -87,7 +88,9 @@ function MultiRecordSection<T extends { id: number }>({
               <div key={item.id} className="px-6 py-4">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">#{index + 1}</p>
+                    <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+                      #{isRTL ? toPersianDigits(index + 1) : index + 1}
+                    </p>
                     {renderRecord(item, index)}
                   </div>
                   <div className="flex items-center gap-2 shrink-0">

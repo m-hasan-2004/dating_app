@@ -37,7 +37,7 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({
   };
 
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] transition-all">
+    <div className="rounded-2xl border border-gray-200 hover:border-gray-300 bg-white dark:border-gray-800 dark:bg-white/[0.03] shadow-xs transition-all">
       <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-gray-800">
         <h3 className="text-base font-semibold text-gray-800 dark:text-white/90">{t(title)}</h3>
         <div className="flex items-center gap-3">
