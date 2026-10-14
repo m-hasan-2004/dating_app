@@ -407,9 +407,11 @@ class UserRegistrationSerializer(serializers.Serializer):
     """
 
     username = serializers.CharField(max_length=150)
-    email = serializers.EmailField()
+    email = serializers.EmailField(required=False, allow_blank=True, allow_null=True)
     phone_number = PhoneNumberField(region="IR")
-    access_code = serializers.CharField(max_length=50)
+    access_code = serializers.CharField(
+        max_length=50, required=False, allow_blank=True, allow_null=True
+    )
     password = serializers.CharField(write_only=True, style={"input_type": "password"})
     password2 = serializers.CharField(write_only=True, style={"input_type": "password"})
     middle_man_code = serializers.CharField(
@@ -417,7 +419,9 @@ class UserRegistrationSerializer(serializers.Serializer):
     )
 
     def validate_access_code(self, value):
-        """Ensure the access code exists and is still active."""
+        """Ensure the access code exists and is still active if provided."""
+        if not value:
+            return value
         try:
             validate_active_access_code(value)
         except DjangoValidationError as exc:
@@ -435,6 +439,8 @@ class UserRegistrationSerializer(serializers.Serializer):
         return value
 
     def validate_email(self, value):
+        if not value:
+            return value
         if User.objects.filter(email=value).exists():
             raise serializers.ValidationError(_("A user with that email already exists."))
         return value
@@ -445,7 +451,25 @@ class UserRegistrationSerializer(serializers.Serializer):
         return value
 
     def validate(self, attrs):
-        """Ensure the two password fields match."""
+        """Check dynamic requirements based on SiteSetting and ensure passwords match."""
+        from core.models import SiteSetting
+
+        site_settings = SiteSetting.get_settings()
+
+        # Check access code requirement
+        access_code = attrs.get("access_code")
+        if site_settings.require_access_code and not access_code:
+            raise serializers.ValidationError(
+                {"access_code": [_("This field is required.")]}
+            )
+
+        # Check email requirement
+        email = attrs.get("email")
+        if site_settings.require_email and not email:
+            raise serializers.ValidationError(
+                {"email": [_("This field is required.")]}
+            )
+
         if attrs.get("password") != attrs.get("password2"):
             raise serializers.ValidationError(
                 {"password2": _("The two password fields didn't match.")}
@@ -453,14 +477,17 @@ class UserRegistrationSerializer(serializers.Serializer):
         return attrs
 
     def create(self, validated_data):
-        """Create the user via the custom manager (consumes the access code)."""
+        """Create the user via the custom manager (consumes or auto-generates the access code)."""
         validated_data.pop("password2")
         password = validated_data.pop("password")
+        email = validated_data.get("email") or None
+        access_code = validated_data.get("access_code") or None
+
         try:
             user = User.objects.create_user(
                 username=validated_data["username"],
-                email=validated_data["email"],
-                access_code=validated_data["access_code"],
+                email=email,
+                access_code=access_code,
                 password=password,
                 phone_number=validated_data["phone_number"],
                 middle_man_code=validated_data.get("middle_man_code"),

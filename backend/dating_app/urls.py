@@ -24,6 +24,8 @@ urlpatterns = i18n_patterns(
 
 urlpatterns += [
     path("__debug__/", include("debug_toolbar.urls")),
+    # API: core system endpoints (site-settings, etc.)
+    path("api/", include("core.urls")),
     # API: all users/auth/profile endpoints under /api/
     path("api/", include("users.urls")),
     # OpenAPI schema + Swagger UI + Redoc

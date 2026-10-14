@@ -20,33 +20,48 @@ from uuid import uuid4
 
 class UserManager(BaseUserManager):
     def create_user(
-        self, username, email, access_code=None, password=None, **extra_fields
+        self, username, email=None, access_code=None, password=None, **extra_fields
     ):
         """
         Create and return a regular user with the given username, email, access code, and password.
+        Respects site settings for whether access code and email are mandatory.
         """
+        from core.models import SiteSetting
+        from django.db import transaction
+
+        site_settings = SiteSetting.get_settings()
+
         if not email:
-            raise ValueError(_("The Email field must be set."))
-        if not access_code:
-            raise ValueError(_("The Access Code must be set."))
+            if site_settings.require_email:
+                raise ValueError(_("The Email field must be set."))
+            email = None
+        else:
+            email = self.normalize_email(email)
 
-        # Validate the access code
-        validate_active_access_code(access_code)
-        code = AccessCode.objects.get(code=access_code)
+        with transaction.atomic(using=self._db):
+            if not access_code:
+                if not site_settings.require_access_code:
+                    code_obj = AccessCode.objects.create()
+                    access_code = str(code_obj.code)
+                else:
+                    raise ValueError(_("The Access Code must be set."))
 
-        email = self.normalize_email(email)
-        username = self.model.normalize_username(username)
-        user = self.model(
-            username=username, email=email, access_code=access_code, **extra_fields
-        )
-        user.set_password(password)
-        user.save(using=self._db)
+            # Validate the access code
+            validate_active_access_code(access_code)
+            code = AccessCode.objects.get(code=access_code)
 
-        # Mark the access code as used
-        code.active = False
-        code.save()
+            username = self.model.normalize_username(username)
+            user = self.model(
+                username=username, email=email, access_code=access_code, **extra_fields
+            )
+            user.set_password(password)
+            user.save(using=self._db)
 
-        return user
+            # Mark the access code as used
+            code.active = False
+            code.save()
+
+            return user
 
     def create_superuser(self, username, email, password=None, **extra_fields):
         """

@@ -2,6 +2,13 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  env: {
+    NEXT_PUBLIC_SITE_SETTING:
+      process.env.site_setting ??
+      process.env.SITE_SETTING ??
+      process.env.NEXT_PUBLIC_SITE_SETTING ??
+      "true",
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,

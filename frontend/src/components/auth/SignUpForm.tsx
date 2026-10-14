@@ -5,8 +5,12 @@ import Label from "@/components/form/Label";
 import Button from "@/components/ui/button/Button";
 import { EyeCloseIcon, EyeIcon } from "@/icons";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { registerApi } from "@/services/api/auth";
+import {
+  getRegistrationConfigApi,
+  RegistrationConfig,
+} from "@/services/api/siteSettings";
 import { useAuth } from "@/hooks/use-auth";
 import { useTranslation } from "@/context/LanguageContext";
 import { useRouter } from "next/navigation";
@@ -26,10 +30,30 @@ export default function SignUpForm() {
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [config, setConfig] = useState<RegistrationConfig>({
+    require_access_code: true,
+    require_email: true,
+  });
 
   const { login } = useAuth();
   const { t, isRTL } = useTranslation();
   const router = useRouter();
+
+  useEffect(() => {
+    let mounted = true;
+    getRegistrationConfigApi()
+      .then((cfg) => {
+        if (mounted && cfg) {
+          setConfig(cfg);
+        }
+      })
+      .catch((err) => {
+        console.warn("Could not fetch registration config, using defaults:", err);
+      });
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const convertPersianToEnglishDigits = (str: string) => {
     return str
@@ -56,8 +80,8 @@ export default function SignUpForm() {
   const validateForm = (): boolean => {
     const errors: Record<string, string> = {};
 
-    // 1. Access Code
-    if (!formData.access_code.trim()) {
+    // 1. Access Code (only required if config.require_access_code is true)
+    if (config.require_access_code && !formData.access_code.trim()) {
       errors.access_code = t("Please enter your invitation access code.");
     }
 
@@ -71,11 +95,11 @@ export default function SignUpForm() {
       errors.username = t("Username can only contain English letters, numbers, and underscores.");
     }
 
-    // 3. Email
+    // 3. Email (required only if config.require_email is true; if optional, validate format only if provided)
     const trimmedEmail = formData.email.trim();
-    if (!trimmedEmail) {
+    if (config.require_email && !trimmedEmail) {
       errors.email = t("Please enter your email address.");
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+    } else if (trimmedEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
       errors.email = t("Please enter a valid email address.");
     }
 
@@ -126,15 +150,23 @@ export default function SignUpForm() {
 
     try {
       const normalizedPhone = convertPersianToEnglishDigits(formData.phone_number.trim());
-      await registerApi({
+      const payload: any = {
         username: formData.username.trim(),
-        email: formData.email.trim(),
         phone_number: normalizedPhone,
-        access_code: formData.access_code.trim(),
         password: formData.password,
         password2: formData.password2,
         middle_man_code: formData.middle_man_code.trim() || undefined,
-      });
+      };
+
+      if (formData.email.trim()) {
+        payload.email = formData.email.trim();
+      }
+
+      if (config.require_access_code || formData.access_code.trim()) {
+        payload.access_code = formData.access_code.trim();
+      }
+
+      await registerApi(payload);
 
       // Auto-login upon successful registration and redirect to profile completion
       await login({
@@ -144,7 +176,12 @@ export default function SignUpForm() {
 
       router.push("/profile");
     } catch (err: any) {
-      setError(err.message || t("Registration failed. Please check your access code and details."));
+      setError(
+        err.message ||
+          (config.require_access_code
+            ? t("Registration failed. Please check your access code and details.")
+            : t("Registration failed. Please check your details and try again."))
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -156,10 +193,14 @@ export default function SignUpForm() {
         <div>
           <div className="mb-5 sm:mb-8">
             <h1 className="mb-2 font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md">
-              {t("Sign Up (Access Code Required)")}
+              {config.require_access_code
+                ? t("Sign Up (Access Code Required)")
+                : t("Sign Up")}
             </h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              {t("Enter your invitation access code and details to create an account.")}
+              {config.require_access_code
+                ? t("Enter your invitation access code and details to create an account.")
+                : t("Enter your details to create an account.")}
             </p>
           </div>
 
@@ -172,22 +213,24 @@ export default function SignUpForm() {
           <div>
             <form onSubmit={handleSubmit} noValidate>
               <div className="space-y-4">
-                {/* Access Code */}
-                <div>
-                  <Label>
-                    {t("Access Code")} <span className="text-error-500">*</span>
-                  </Label>
-                  <Input
-                    type="text"
-                    name="access_code"
-                    placeholder={t("Enter your invitation access code")}
-                    value={formData.access_code}
-                    onChange={handleChange}
-                    error={Boolean(fieldErrors.access_code)}
-                    hint={fieldErrors.access_code}
-                    required
-                  />
-                </div>
+                {/* Access Code (rendered only when required by platform settings) */}
+                {config.require_access_code && (
+                  <div>
+                    <Label>
+                      {t("Access Code")} <span className="text-error-500">*</span>
+                    </Label>
+                    <Input
+                      type="text"
+                      name="access_code"
+                      placeholder={t("Enter your invitation access code")}
+                      value={formData.access_code}
+                      onChange={handleChange}
+                      error={Boolean(fieldErrors.access_code)}
+                      hint={fieldErrors.access_code}
+                      required
+                    />
+                  </div>
+                )}
 
                 {/* Username */}
                 <div>
@@ -210,17 +253,28 @@ export default function SignUpForm() {
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div>
                     <Label>
-                      {t("Email")} <span className="text-error-500">*</span>
+                      {t("Email")}{" "}
+                      {config.require_email ? (
+                        <span className="text-error-500">*</span>
+                      ) : (
+                        <span className="text-xs text-gray-400 font-normal">
+                          ({t("Optional")})
+                        </span>
+                      )}
                     </Label>
                     <Input
                       type="email"
                       name="email"
-                      placeholder={t("Enter email")}
+                      placeholder={
+                        config.require_email
+                          ? t("Enter email")
+                          : t("Enter email (optional)")
+                      }
                       value={formData.email}
                       onChange={handleChange}
                       error={Boolean(fieldErrors.email)}
                       hint={fieldErrors.email}
-                      required
+                      required={config.require_email}
                     />
                   </div>
                   <div>

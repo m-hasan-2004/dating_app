@@ -27,9 +27,9 @@ export interface LoginResponse {
 
 export interface RegisterPayload {
   username: string;
-  email: string;
+  email?: string;
   phone_number: string;
-  access_code: string;
+  access_code?: string;
   password: string;
   password2?: string;
   middle_man_code?: string;

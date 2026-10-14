@@ -22,6 +22,17 @@ class IsStaffOrSuperUser(permissions.BasePermission):
         )
 
 
+class IsSuperUser(permissions.BasePermission):
+    """Allows access only to authenticated superusers."""
+
+    def has_permission(self, request, view):
+        return bool(
+            request.user
+            and request.user.is_authenticated
+            and getattr(request.user, "is_superuser", False)
+        )
+
+
 class IsOwnerOrAdmin(permissions.BasePermission):
     """
     Object-level permission.

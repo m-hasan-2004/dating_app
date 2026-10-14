@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -87,8 +87,43 @@ const AppSidebar: React.FC = () => {
   const { isRTL, t } = useLanguage();
   const pathname = usePathname();
 
-  const isAdmin = Boolean(user?.is_staff || (user as any)?.is_superuser);
-  const navItems = ALL_NAV_ITEMS.filter((item) => !item.adminOnly || isAdmin);
+  const isSuperUser = Boolean((user as any)?.is_superuser);
+  const siteSettingEnabled =
+    String(
+      process.env.NEXT_PUBLIC_SITE_SETTING ??
+      process.env.site_setting ??
+      "true"
+    ).toLowerCase() === "true";
+
+  const isAdmin = Boolean(user?.is_staff || isSuperUser);
+
+  const navItems = ALL_NAV_ITEMS.filter((item) => !item.adminOnly || isAdmin).map((item) => {
+    if (item.name === "Management" && item.subItems) {
+      const filteredSubItems = item.subItems.filter((sub) => {
+        if (sub.path === "/site-settings") {
+          return siteSettingEnabled && isSuperUser;
+        }
+        return true;
+      });
+
+      // Add Site Settings if enabled and superuser and not yet present
+      const hasSiteSettings = filteredSubItems.some((sub) => sub.path === "/site-settings");
+      if (siteSettingEnabled && isSuperUser && !hasSiteSettings) {
+        return {
+          ...item,
+          subItems: [
+            ...filteredSubItems,
+            { name: "Site Settings", path: "/site-settings", pro: false },
+          ],
+        };
+      }
+      return {
+        ...item,
+        subItems: filteredSubItems,
+      };
+    }
+    return item;
+  });
 
   const [openSubmenu, setOpenSubmenu] = useState<{
     type: "main" | "others";
