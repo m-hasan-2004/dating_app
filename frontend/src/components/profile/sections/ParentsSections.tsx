@@ -8,6 +8,7 @@ import ProfileSection from '@/components/profile/ProfileSection';
 import DisplayRow from '@/components/profile/DisplayRow';
 import FormField, { useFormState, SelectOption } from '@/components/profile/FormField';
 import { formatDate, formatBoolean } from '@/utils/formatters';
+import { formatApiError } from '@/utils/errorFormatter';
 import type { Mother, Father, EducationEnum, OriginalityEnum } from '@/services/profileService';
 import { createMother, updateMother, createFather, updateFather } from '@/services/profileService';
 
@@ -53,17 +54,19 @@ export function MotherSection({
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const { state, handleChange, reset } = useFormState(defaultParentForm(data));
+  const { state, handleChange, reset, fieldErrors, setFieldErrors } = useFormState(defaultParentForm(data));
 
   const openModal = () => {
     reset(defaultParentForm(data));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
   const handleSave = async () => {
     setSaving(true);
     setError('');
+    setFieldErrors({});
     try {
       const payload = {
         ...state,
@@ -77,7 +80,9 @@ export function MotherSection({
       setOpen(false);
       onReload();
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to save');
+      const formatted = formatApiError(e, t, isRTL);
+      setFieldErrors(formatted.fieldErrors);
+      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
     } finally {
       setSaving(false);
     }
@@ -101,14 +106,14 @@ export function MotherSection({
             {data ? t('Edit') : t('Add')} {t('Mother')}
           </h2>
           <div className="space-y-4">
-            <FormField label="Language" name="language" type="text" value={state.language} onChange={handleChange} required />
-            <FormField label="Birth Date" name="birth_date" type="date" value={state.birth_date} onChange={handleChange} required />
-            <FormField label="Job" name="job" type="text" value={state.job} onChange={handleChange} required />
-            <FormField label="Originality" name="originality" type="select" value={state.originality} onChange={handleChange} options={ORIGINALITY_OPTIONS} required />
-            <FormField label="Education" name="education" type="select" value={state.education} onChange={handleChange} options={EDUCATION_OPTIONS} required />
-            <FormField label="Alive" name="alive" type="boolean" value={state.alive} onChange={handleChange} />
+            <FormField label="Language" name="language" type="text" value={state.language} onChange={handleChange} required error={fieldErrors.language} />
+            <FormField label="Birth Date" name="birth_date" type="date" value={state.birth_date} onChange={handleChange} required error={fieldErrors.birth_date} />
+            <FormField label="Job" name="job" type="text" value={state.job} onChange={handleChange} required error={fieldErrors.job} />
+            <FormField label="Originality" name="originality" type="select" value={state.originality} onChange={handleChange} options={ORIGINALITY_OPTIONS} required error={fieldErrors.originality} />
+            <FormField label="Education" name="education" type="select" value={state.education} onChange={handleChange} options={EDUCATION_OPTIONS} required error={fieldErrors.education} />
+            <FormField label="Alive" name="alive" type="boolean" value={state.alive} onChange={handleChange} error={fieldErrors.alive} />
             {!state.alive && (
-              <FormField label="Death Date" name="death_date" type="date" value={state.death_date} onChange={handleChange} />
+              <FormField label="Death Date" name="death_date" type="date" value={state.death_date} onChange={handleChange} error={fieldErrors.death_date} />
             )}
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
@@ -137,17 +142,19 @@ export function FatherSection({
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const { state, handleChange, reset } = useFormState(defaultParentForm(data));
+  const { state, handleChange, reset, fieldErrors, setFieldErrors } = useFormState(defaultParentForm(data));
 
   const openModal = () => {
     reset(defaultParentForm(data));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
   const handleSave = async () => {
     setSaving(true);
     setError('');
+    setFieldErrors({});
     try {
       const payload = {
         ...state,
@@ -161,7 +168,9 @@ export function FatherSection({
       setOpen(false);
       onReload();
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to save');
+      const formatted = formatApiError(e, t, isRTL);
+      setFieldErrors(formatted.fieldErrors);
+      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
     } finally {
       setSaving(false);
     }
@@ -185,14 +194,14 @@ export function FatherSection({
             {data ? t('Edit') : t('Add')} {t('Father')}
           </h2>
           <div className="space-y-4">
-            <FormField label="Language" name="language" type="text" value={state.language} onChange={handleChange} required />
-            <FormField label="Birth Date" name="birth_date" type="date" value={state.birth_date} onChange={handleChange} required />
-            <FormField label="Job" name="job" type="text" value={state.job} onChange={handleChange} required />
-            <FormField label="Originality" name="originality" type="select" value={state.originality} onChange={handleChange} options={ORIGINALITY_OPTIONS} required />
-            <FormField label="Education" name="education" type="select" value={state.education} onChange={handleChange} options={EDUCATION_OPTIONS} required />
-            <FormField label="Alive" name="alive" type="boolean" value={state.alive} onChange={handleChange} />
+            <FormField label="Language" name="language" type="text" value={state.language} onChange={handleChange} required error={fieldErrors.language} />
+            <FormField label="Birth Date" name="birth_date" type="date" value={state.birth_date} onChange={handleChange} required error={fieldErrors.birth_date} />
+            <FormField label="Job" name="job" type="text" value={state.job} onChange={handleChange} required error={fieldErrors.job} />
+            <FormField label="Originality" name="originality" type="select" value={state.originality} onChange={handleChange} options={ORIGINALITY_OPTIONS} required error={fieldErrors.originality} />
+            <FormField label="Education" name="education" type="select" value={state.education} onChange={handleChange} options={EDUCATION_OPTIONS} required error={fieldErrors.education} />
+            <FormField label="Alive" name="alive" type="boolean" value={state.alive} onChange={handleChange} error={fieldErrors.alive} />
             {!state.alive && (
-              <FormField label="Death Date" name="death_date" type="date" value={state.death_date} onChange={handleChange} />
+              <FormField label="Death Date" name="death_date" type="date" value={state.death_date} onChange={handleChange} error={fieldErrors.death_date} />
             )}
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}

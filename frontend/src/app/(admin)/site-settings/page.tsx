@@ -666,7 +666,7 @@ export default function SiteSettingsPage() {
                   disabled={isSaving}
                   className="text-red-600 border-red-200 hover:bg-red-50 dark:border-red-800/40 dark:hover:bg-red-950/20"
                 >
-                  ↺ {t("Restore to Default")}
+                  ↺ {isRTL ? "بازنشانی به حالت پیش‌فرض" : t("Restore to Default")}
                 </Button>
 
                 <Button

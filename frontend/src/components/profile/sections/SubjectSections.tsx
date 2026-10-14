@@ -9,6 +9,7 @@ import MultiRecordSection from '@/components/profile/MultiRecordSection';
 import DisplayRow from '@/components/profile/DisplayRow';
 import FormField, { useFormState, SelectOption } from '@/components/profile/FormField';
 import { formatDate } from '@/utils/formatters';
+import { formatApiError } from '@/utils/errorFormatter';
 import type { SubjectDetails, SignupFeeTypeEnum } from '@/services/profileService';
 import type { IntroducedSubjectsInformation } from '@/services/profileMultiService';
 import { createSubjectDetails, updateSubjectDetails } from '@/services/profileService';
@@ -55,12 +56,13 @@ export function IntroducedSubjectsSection({
   const [editingItem, setEditingItem] = useState<IntroducedSubjectsInformation | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const { state, handleChange, reset } = useFormState(defaultIntroducedForm(null));
+  const { state, handleChange, reset, fieldErrors, setFieldErrors } = useFormState(defaultIntroducedForm(null));
 
   const handleAdd = () => {
     setEditingItem(null);
     reset(defaultIntroducedForm(null));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
@@ -68,6 +70,7 @@ export function IntroducedSubjectsSection({
     setEditingItem(item);
     reset(defaultIntroducedForm(item));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
@@ -84,6 +87,7 @@ export function IntroducedSubjectsSection({
   const handleSave = async () => {
     setSaving(true);
     setError('');
+    setFieldErrors({});
     try {
       const payload = {
         username: state.username,
@@ -104,7 +108,9 @@ export function IntroducedSubjectsSection({
       setOpen(false);
       onReload();
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to save');
+      const formatted = formatApiError(e, t, isRTL);
+      setFieldErrors(formatted.fieldErrors);
+      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
     } finally {
       setSaving(false);
     }
@@ -152,18 +158,18 @@ export function IntroducedSubjectsSection({
             {editingItem ? t('Edit') : t('Add')} {t('Introduced Subject')}
           </h2>
           <div className="space-y-4">
-            <FormField label="Username" name="username" type="text" value={state.username} onChange={handleChange} required />
-            <FormField label="Birth Date" name="birth_date" type="date" value={state.birth_date} onChange={handleChange} />
+            <FormField label="Username" name="username" type="text" value={state.username} onChange={handleChange} required error={fieldErrors.username} />
+            <FormField label="Birth Date" name="birth_date" type="date" value={state.birth_date} onChange={handleChange} error={fieldErrors.birth_date} />
             <div className="grid grid-cols-2 gap-4">
-              <FormField label="Positive Assessment" name="positive" type="boolean" value={state.positive} onChange={handleChange} />
-              <FormField label="Negative Assessment" name="negative" type="boolean" value={state.negative} onChange={handleChange} />
+              <FormField label="Positive Assessment" name="positive" type="boolean" value={state.positive} onChange={handleChange} error={fieldErrors.positive} />
+              <FormField label="Negative Assessment" name="negative" type="boolean" value={state.negative} onChange={handleChange} error={fieldErrors.negative} />
             </div>
-            <FormField label="Reason" name="reason" type="textarea" value={state.reason} onChange={handleChange} />
-            <FormField label="Dates of Meetings" name="dates_of_meetings" type="textarea" value={state.dates_of_meetings} onChange={handleChange} />
-            <FormField label="Result & Regards" name="result_regards" type="textarea" value={state.result_regards} onChange={handleChange} />
+            <FormField label="Reason" name="reason" type="textarea" value={state.reason} onChange={handleChange} error={fieldErrors.reason} />
+            <FormField label="Dates of Meetings" name="dates_of_meetings" type="textarea" value={state.dates_of_meetings} onChange={handleChange} error={fieldErrors.dates_of_meetings} />
+            <FormField label="Result & Regards" name="result_regards" type="textarea" value={state.result_regards} onChange={handleChange} error={fieldErrors.result_regards} />
             <div className="grid grid-cols-2 gap-4">
-              <FormField label="Cost of Introduction" name="cost_of_introduction" type="text" value={state.cost_of_introduction} onChange={handleChange} />
-              <FormField label="Cost of Meeting" name="cost_of_meeting" type="text" value={state.cost_of_meeting} onChange={handleChange} />
+              <FormField label="Cost of Introduction" name="cost_of_introduction" type="text" value={state.cost_of_introduction} onChange={handleChange} error={fieldErrors.cost_of_introduction} />
+              <FormField label="Cost of Meeting" name="cost_of_meeting" type="text" value={state.cost_of_meeting} onChange={handleChange} error={fieldErrors.cost_of_meeting} />
             </div>
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
@@ -202,21 +208,23 @@ export function SubjectDetailsSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t, isRTL } = useTranslation();
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const { state, handleChange, reset } = useFormState(defaultSubjectDetailsForm(data));
+  const { state, handleChange, reset, fieldErrors, setFieldErrors } = useFormState(defaultSubjectDetailsForm(data));
 
   const openModal = () => {
     reset(defaultSubjectDetailsForm(data));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
   const handleSave = async () => {
     setSaving(true);
     setError('');
+    setFieldErrors({});
     try {
       const payload = {
         ...state,
@@ -231,7 +239,9 @@ export function SubjectDetailsSection({
       setOpen(false);
       onReload();
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to save');
+      const formatted = formatApiError(e, t, isRTL);
+      setFieldErrors(formatted.fieldErrors);
+      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
     } finally {
       setSaving(false);
     }
@@ -255,15 +265,15 @@ export function SubjectDetailsSection({
             {data ? t('Edit') : t('Add')} {t('Subject Details')}
           </h2>
           <div className="space-y-4">
-            <FormField label="Preferred Dates and Times" name="preferred_date_times" type="textarea" value={state.preferred_date_times} onChange={handleChange} />
-            <FormField label="Signup Fee Type" name="signup_fee_type" type="select" value={state.signup_fee_type} onChange={handleChange} options={FEE_TYPE_OPTIONS} />
+            <FormField label="Preferred Dates and Times" name="preferred_date_times" type="textarea" value={state.preferred_date_times} onChange={handleChange} error={fieldErrors.preferred_date_times} />
+            <FormField label="Signup Fee Type" name="signup_fee_type" type="select" value={state.signup_fee_type} onChange={handleChange} options={FEE_TYPE_OPTIONS} error={fieldErrors.signup_fee_type} />
             {state.signup_fee_type === 'card' && (
-              <FormField label="Account / Card Number" name="account_number" type="text" value={state.account_number} onChange={handleChange} />
+              <FormField label="Account / Card Number" name="account_number" type="text" value={state.account_number} onChange={handleChange} error={fieldErrors.account_number} />
             )}
-            <FormField label="Bank Name" name="bank_name" type="text" value={state.bank_name} onChange={handleChange} />
-            <FormField label="Target Gender" name="gender_target" type="text" value={state.gender_target} onChange={handleChange} />
-            <FormField label="Fee Amount" name="amount" type="text" value={state.amount} onChange={handleChange} />
-            <FormField label="Professional Opinion" name="professional_opinion" type="textarea" value={state.professional_opinion} onChange={handleChange} />
+            <FormField label="Bank Name" name="bank_name" type="text" value={state.bank_name} onChange={handleChange} error={fieldErrors.bank_name || fieldErrors.bank} />
+            <FormField label="Target Gender" name="gender_target" type="text" value={state.gender_target} onChange={handleChange} error={fieldErrors.gender_target} />
+            <FormField label="Fee Amount" name="amount" type="text" value={state.amount} onChange={handleChange} error={fieldErrors.amount} />
+            <FormField label="Professional Opinion" name="professional_opinion" type="textarea" value={state.professional_opinion} onChange={handleChange} error={fieldErrors.professional_opinion} />
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">

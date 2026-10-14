@@ -8,6 +8,7 @@ import MultiRecordSection from '@/components/profile/MultiRecordSection';
 import DisplayRow from '@/components/profile/DisplayRow';
 import FormField, { useFormState, SelectOption } from '@/components/profile/FormField';
 import { formatDate, formatBoolean } from '@/utils/formatters';
+import { formatApiError } from '@/utils/errorFormatter';
 import type {
   ExHusbandChildStatus,
   Sister,
@@ -84,12 +85,13 @@ export function ExHusbandChildStatusSection({
   const [editingItem, setEditingItem] = useState<ExHusbandChildStatus | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const { state, handleChange, reset } = useFormState(defaultExChildForm(null));
+  const { state, handleChange, reset, fieldErrors, setFieldErrors } = useFormState(defaultExChildForm(null));
 
   const handleAdd = () => {
     setEditingItem(null);
     reset(defaultExChildForm(null));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
@@ -97,6 +99,7 @@ export function ExHusbandChildStatusSection({
     setEditingItem(item);
     reset(defaultExChildForm(item));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
@@ -113,6 +116,7 @@ export function ExHusbandChildStatusSection({
   const handleSave = async () => {
     setSaving(true);
     setError('');
+    setFieldErrors({});
     try {
       const payload = {
         ...state,
@@ -127,7 +131,9 @@ export function ExHusbandChildStatusSection({
       setOpen(false);
       onReload();
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to save');
+      const formatted = formatApiError(e, t, isRTL);
+      setFieldErrors(formatted.fieldErrors);
+      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
     } finally {
       setSaving(false);
     }
@@ -160,11 +166,11 @@ export function ExHusbandChildStatusSection({
             {editingItem ? t('Edit') : t('Add')} {t('Ex-Husband Child Record')}
           </h2>
           <div className="space-y-4">
-            <FormField label="Gender" name="gender" type="select" value={state.gender} onChange={handleChange} options={GENDER_OPTIONS} required />
-            <FormField label="Status" name="status" type="boolean" value={state.status} onChange={handleChange} hint={t("Has child from ex-husband?")} />
-            <FormField label="Birth Date" name="birth_date" type="date" value={state.birth_date} onChange={handleChange} />
-            <FormField label="Custody" name="custody" type="select" value={state.custody} onChange={handleChange} options={CUSTODY_OPTIONS} required />
-            <FormField label="Living Location" name="living_location" type="text" value={state.living_location} onChange={handleChange} />
+            <FormField label="Gender" name="gender" type="select" value={state.gender} onChange={handleChange} options={GENDER_OPTIONS} required error={fieldErrors.gender} />
+            <FormField label="Status" name="status" type="boolean" value={state.status} onChange={handleChange} hint={t("Has child from ex-husband?")} error={fieldErrors.status} />
+            <FormField label="Birth Date" name="birth_date" type="date" value={state.birth_date} onChange={handleChange} error={fieldErrors.birth_date} />
+            <FormField label="Custody" name="custody" type="select" value={state.custody} onChange={handleChange} options={CUSTODY_OPTIONS} required error={fieldErrors.custody} />
+            <FormField label="Living Location" name="living_location" type="text" value={state.living_location} onChange={handleChange} error={fieldErrors.living_location} />
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
@@ -198,17 +204,18 @@ export function SistersSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t, isRTL } = useTranslation();
   const [open, setOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<Sister | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const { state, handleChange, reset } = useFormState(defaultRelativeForm(null));
+  const { state, handleChange, reset, fieldErrors, setFieldErrors } = useFormState(defaultRelativeForm(null));
 
   const handleAdd = () => {
     setEditingItem(null);
     reset(defaultRelativeForm(null));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
@@ -216,6 +223,7 @@ export function SistersSection({
     setEditingItem(item);
     reset(defaultRelativeForm(item));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
@@ -232,6 +240,7 @@ export function SistersSection({
   const handleSave = async () => {
     setSaving(true);
     setError('');
+    setFieldErrors({});
     try {
       if (editingItem?.id) {
         await updateSister(editingItem.id, state as any);
@@ -241,7 +250,9 @@ export function SistersSection({
       setOpen(false);
       onReload();
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to save');
+      const formatted = formatApiError(e, t, isRTL);
+      setFieldErrors(formatted.fieldErrors);
+      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
     } finally {
       setSaving(false);
     }
@@ -270,9 +281,9 @@ export function SistersSection({
             {editingItem ? t('Edit') : t('Add')} {t('Sister')}
           </h2>
           <div className="space-y-4">
-            <FormField label="Alive" name="status" type="boolean" value={state.status} onChange={handleChange} />
-            <FormField label="Education" name="education" type="select" value={state.education} onChange={handleChange} options={EDUCATION_OPTIONS} required />
-            <FormField label="Job" name="job" type="text" value={state.job} onChange={handleChange} required />
+            <FormField label="Alive" name="status" type="boolean" value={state.status} onChange={handleChange} error={fieldErrors.status} />
+            <FormField label="Education" name="education" type="select" value={state.education} onChange={handleChange} options={EDUCATION_OPTIONS} required error={fieldErrors.education} />
+            <FormField label="Job" name="job" type="text" value={state.job} onChange={handleChange} required error={fieldErrors.job} />
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
@@ -298,17 +309,18 @@ export function BrothersSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t, isRTL } = useTranslation();
   const [open, setOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<Brother | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const { state, handleChange, reset } = useFormState(defaultRelativeForm(null));
+  const { state, handleChange, reset, fieldErrors, setFieldErrors } = useFormState(defaultRelativeForm(null));
 
   const handleAdd = () => {
     setEditingItem(null);
     reset(defaultRelativeForm(null));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
@@ -316,6 +328,7 @@ export function BrothersSection({
     setEditingItem(item);
     reset(defaultRelativeForm(item));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
@@ -332,6 +345,7 @@ export function BrothersSection({
   const handleSave = async () => {
     setSaving(true);
     setError('');
+    setFieldErrors({});
     try {
       if (editingItem?.id) {
         await updateBrother(editingItem.id, state as any);
@@ -341,7 +355,9 @@ export function BrothersSection({
       setOpen(false);
       onReload();
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to save');
+      const formatted = formatApiError(e, t, isRTL);
+      setFieldErrors(formatted.fieldErrors);
+      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
     } finally {
       setSaving(false);
     }
@@ -370,9 +386,9 @@ export function BrothersSection({
             {editingItem ? t('Edit') : t('Add')} {t('Brother')}
           </h2>
           <div className="space-y-4">
-            <FormField label="Alive" name="status" type="boolean" value={state.status} onChange={handleChange} />
-            <FormField label="Education" name="education" type="select" value={state.education} onChange={handleChange} options={EDUCATION_OPTIONS} required />
-            <FormField label="Job" name="job" type="text" value={state.job} onChange={handleChange} required />
+            <FormField label="Alive" name="status" type="boolean" value={state.status} onChange={handleChange} error={fieldErrors.status} />
+            <FormField label="Education" name="education" type="select" value={state.education} onChange={handleChange} options={EDUCATION_OPTIONS} required error={fieldErrors.education} />
+            <FormField label="Job" name="job" type="text" value={state.job} onChange={handleChange} required error={fieldErrors.job} />
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
@@ -412,17 +428,18 @@ export function GroomsSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t, isRTL } = useTranslation();
   const [open, setOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<Groom | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const { state, handleChange, reset } = useFormState(defaultGroomForm(null));
+  const { state, handleChange, reset, fieldErrors, setFieldErrors } = useFormState(defaultGroomForm(null));
 
   const handleAdd = () => {
     setEditingItem(null);
     reset(defaultGroomForm(null));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
@@ -430,6 +447,7 @@ export function GroomsSection({
     setEditingItem(item);
     reset(defaultGroomForm(item));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
@@ -446,6 +464,7 @@ export function GroomsSection({
   const handleSave = async () => {
     setSaving(true);
     setError('');
+    setFieldErrors({});
     try {
       if (editingItem?.id) {
         await updateGroom(editingItem.id, state as any);
@@ -455,7 +474,9 @@ export function GroomsSection({
       setOpen(false);
       onReload();
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to save');
+      const formatted = formatApiError(e, t, isRTL);
+      setFieldErrors(formatted.fieldErrors);
+      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
     } finally {
       setSaving(false);
     }
@@ -485,10 +506,10 @@ export function GroomsSection({
             {editingItem ? t('Edit') : t('Add')} {t('Groom')}
           </h2>
           <div className="space-y-4">
-            <FormField label="Role" name="groom_or" type="select" value={state.groom_or} onChange={handleChange} options={GROOM_OR_OPTIONS} required />
-            <FormField label="Alive" name="status" type="boolean" value={state.status} onChange={handleChange} />
-            <FormField label="Education" name="education" type="select" value={state.education} onChange={handleChange} options={EDUCATION_OPTIONS} required />
-            <FormField label="Job" name="job" type="text" value={state.job} onChange={handleChange} required />
+            <FormField label="Role" name="groom_or" type="select" value={state.groom_or} onChange={handleChange} options={GROOM_OR_OPTIONS} required error={fieldErrors.groom_or} />
+            <FormField label="Alive" name="status" type="boolean" value={state.status} onChange={handleChange} error={fieldErrors.status} />
+            <FormField label="Education" name="education" type="select" value={state.education} onChange={handleChange} options={EDUCATION_OPTIONS} required error={fieldErrors.education} />
+            <FormField label="Job" name="job" type="text" value={state.job} onChange={handleChange} required error={fieldErrors.job} />
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
@@ -528,17 +549,18 @@ export function BridesWivesSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t, isRTL } = useTranslation();
   const [open, setOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<BrideOrWife | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const { state, handleChange, reset } = useFormState(defaultBrideForm(null));
+  const { state, handleChange, reset, fieldErrors, setFieldErrors } = useFormState(defaultBrideForm(null));
 
   const handleAdd = () => {
     setEditingItem(null);
     reset(defaultBrideForm(null));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
@@ -546,6 +568,7 @@ export function BridesWivesSection({
     setEditingItem(item);
     reset(defaultBrideForm(item));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
@@ -562,6 +585,7 @@ export function BridesWivesSection({
   const handleSave = async () => {
     setSaving(true);
     setError('');
+    setFieldErrors({});
     try {
       if (editingItem?.id) {
         await updateBrideOrWife(editingItem.id, state as any);
@@ -571,7 +595,9 @@ export function BridesWivesSection({
       setOpen(false);
       onReload();
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to save');
+      const formatted = formatApiError(e, t, isRTL);
+      setFieldErrors(formatted.fieldErrors);
+      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
     } finally {
       setSaving(false);
     }
@@ -601,10 +627,10 @@ export function BridesWivesSection({
             {editingItem ? t('Edit') : t('Add')} {t('Bride or Wife')}
           </h2>
           <div className="space-y-4">
-            <FormField label="Role" name="bride_or" type="select" value={state.bride_or} onChange={handleChange} options={BRIDE_OR_OPTIONS} required />
-            <FormField label="Alive" name="status" type="boolean" value={state.status} onChange={handleChange} />
-            <FormField label="Education" name="education" type="select" value={state.education} onChange={handleChange} options={EDUCATION_OPTIONS} required />
-            <FormField label="Job" name="job" type="text" value={state.job} onChange={handleChange} required />
+            <FormField label="Role" name="bride_or" type="select" value={state.bride_or} onChange={handleChange} options={BRIDE_OR_OPTIONS} required error={fieldErrors.bride_or} />
+            <FormField label="Alive" name="status" type="boolean" value={state.status} onChange={handleChange} error={fieldErrors.status} />
+            <FormField label="Education" name="education" type="select" value={state.education} onChange={handleChange} options={EDUCATION_OPTIONS} required error={fieldErrors.education} />
+            <FormField label="Job" name="job" type="text" value={state.job} onChange={handleChange} required error={fieldErrors.job} />
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">

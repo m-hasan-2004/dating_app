@@ -172,6 +172,23 @@ const AGE_PRESETS = [
   { labelFa: '+۵۰', labelEn: '50+', min: 50, max: 99 },
 ];
 
+const HEIGHT_PRESETS = [
+  { labelFa: 'زیر ۱۶۰', labelEn: '< 160', min: 140, max: 159 },
+  { labelFa: '۱۶۰-۱۷۰', labelEn: '160-170', min: 160, max: 170 },
+  { labelFa: '۱۷۰-۱۸۰', labelEn: '170-180', min: 170, max: 180 },
+  { labelFa: '۱۸۰-۱۹۰', labelEn: '180-190', min: 180, max: 190 },
+  { labelFa: '+۱۹۰', labelEn: '190+', min: 190, max: 220 },
+];
+
+const WEIGHT_PRESETS = [
+  { labelFa: 'زیر ۵۰', labelEn: '< 50', min: 35, max: 49 },
+  { labelFa: '۵۰-۶۰', labelEn: '50-60', min: 50, max: 60 },
+  { labelFa: '۶۰-۷۰', labelEn: '60-70', min: 60, max: 70 },
+  { labelFa: '۷۰-۸۵', labelEn: '70-85', min: 70, max: 85 },
+  { labelFa: '۸۵-۱۰۰', labelEn: '85-100', min: 85, max: 100 },
+  { labelFa: '+۱۰۰', labelEn: '100+', min: 100, max: 180 },
+];
+
 interface PillOption {
   value: string;
   label?: string;
@@ -685,6 +702,38 @@ export default function CandidateSearchPage() {
                     </button>
                   </span>
                 )}
+                {(minHeight || maxHeight) && (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-brand-50 text-brand-700 dark:bg-brand-950/40 dark:text-brand-300">
+                    <span>
+                      {isRTL
+                        ? `قد: ${minHeight ? toPersianDigits(minHeight) : '—'} تا ${maxHeight ? toPersianDigits(maxHeight) : '—'} cm`
+                        : `Height: ${minHeight || '—'} - ${maxHeight || '—'} cm`}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => { setMinHeight(''); setMaxHeight(''); setPage(1); }}
+                      className="hover:text-red-500 font-bold ml-0.5 cursor-pointer"
+                    >
+                      ×
+                    </button>
+                  </span>
+                )}
+                {(minWeight || maxWeight) && (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-brand-50 text-brand-700 dark:bg-brand-950/40 dark:text-brand-300">
+                    <span>
+                      {isRTL
+                        ? `وزن: ${minWeight ? toPersianDigits(minWeight) : '—'} تا ${maxWeight ? toPersianDigits(maxWeight) : '—'} kg`
+                        : `Weight: ${minWeight || '—'} - ${maxWeight || '—'} kg`}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => { setMinWeight(''); setMaxWeight(''); setPage(1); }}
+                      className="hover:text-red-500 font-bold ml-0.5 cursor-pointer"
+                    >
+                      ×
+                    </button>
+                  </span>
+                )}
                 {selectedLocations.map((loc) => (
                   <span key={loc} className="px-2 py-0.5 rounded-lg bg-brand-50 text-brand-700 dark:bg-brand-950/40 dark:text-brand-300">
                     {t(loc)}
@@ -1139,40 +1188,115 @@ export default function CandidateSearchPage() {
                 </div>
               </div>
 
-              {/* Height & Weight */}
+              {/* Height Range */}
               <div className="py-3 space-y-2">
                 <span className="font-bold text-gray-800 dark:text-gray-200 text-xs">
-                  {isRTL ? "قد و وزن (سانتی‌متر / کیلوگرم)" : "Height & Weight (cm / kg)"}
+                  {isRTL ? "محدوده قد (سانتی‌متر)" : "Height Range (cm)"}
                 </span>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="flex items-center gap-2">
                   <input
                     type="number"
-                    placeholder={isRTL ? "حداقل قد (cm)" : "Min cm"}
+                    placeholder={isRTL ? "حداقل قد" : "Min cm"}
                     value={minHeight}
                     onChange={(e) => { setMinHeight(e.target.value); setPage(1); }}
-                    className="w-full px-2 py-1 text-xs border border-gray-300 rounded-lg dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                    className={`w-full px-2 py-1 text-xs border rounded-lg dark:bg-gray-800 dark:text-white transition-all ${
+                      minHeight ? 'border-brand-500 ring-1 ring-brand-500 font-bold bg-brand-50/20 text-brand-700 dark:text-brand-300' : 'border-gray-300 dark:border-gray-700'
+                    }`}
                   />
+                  <span className="text-gray-400 font-bold">-</span>
                   <input
                     type="number"
-                    placeholder={isRTL ? "حداکثر قد (cm)" : "Max cm"}
+                    placeholder={isRTL ? "حداکثر قد" : "Max cm"}
                     value={maxHeight}
                     onChange={(e) => { setMaxHeight(e.target.value); setPage(1); }}
-                    className="w-full px-2 py-1 text-xs border border-gray-300 rounded-lg dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                    className={`w-full px-2 py-1 text-xs border rounded-lg dark:bg-gray-800 dark:text-white transition-all ${
+                      maxHeight ? 'border-brand-500 ring-1 ring-brand-500 font-bold bg-brand-50/20 text-brand-700 dark:text-brand-300' : 'border-gray-300 dark:border-gray-700'
+                    }`}
                   />
+                </div>
+                <div className="flex flex-wrap gap-1 pt-1">
+                  {HEIGHT_PRESETS.map((preset) => {
+                    const isPresetActive = minHeight === String(preset.min) && maxHeight === String(preset.max);
+                    return (
+                      <button
+                        key={preset.labelEn}
+                        type="button"
+                        onClick={() => {
+                          if (isPresetActive) {
+                            setMinHeight('');
+                            setMaxHeight('');
+                          } else {
+                            setMinHeight(String(preset.min));
+                            setMaxHeight(String(preset.max));
+                          }
+                          setPage(1);
+                        }}
+                        className={`px-2 py-0.5 text-[10px] rounded-lg transition-all cursor-pointer font-medium ${
+                          isPresetActive
+                            ? 'bg-brand-500 text-white font-bold shadow-xs'
+                            : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-brand-50 hover:text-brand-600'
+                        }`}
+                      >
+                        {isRTL ? preset.labelFa : preset.labelEn}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Weight Range */}
+              <div className="py-3 space-y-2">
+                <span className="font-bold text-gray-800 dark:text-gray-200 text-xs">
+                  {isRTL ? "محدوده وزن (کیلوگرم)" : "Weight Range (kg)"}
+                </span>
+                <div className="flex items-center gap-2">
                   <input
                     type="number"
-                    placeholder={isRTL ? "حداقل وزن (kg)" : "Min kg"}
+                    placeholder={isRTL ? "حداقل وزن" : "Min kg"}
                     value={minWeight}
                     onChange={(e) => { setMinWeight(e.target.value); setPage(1); }}
-                    className="w-full px-2 py-1 text-xs border border-gray-300 rounded-lg dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                    className={`w-full px-2 py-1 text-xs border rounded-lg dark:bg-gray-800 dark:text-white transition-all ${
+                      minWeight ? 'border-brand-500 ring-1 ring-brand-500 font-bold bg-brand-50/20 text-brand-700 dark:text-brand-300' : 'border-gray-300 dark:border-gray-700'
+                    }`}
                   />
+                  <span className="text-gray-400 font-bold">-</span>
                   <input
                     type="number"
-                    placeholder={isRTL ? "حداکثر وزن (kg)" : "Max kg"}
+                    placeholder={isRTL ? "حداکثر وزن" : "Max kg"}
                     value={maxWeight}
                     onChange={(e) => { setMaxWeight(e.target.value); setPage(1); }}
-                    className="w-full px-2 py-1 text-xs border border-gray-300 rounded-lg dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                    className={`w-full px-2 py-1 text-xs border rounded-lg dark:bg-gray-800 dark:text-white transition-all ${
+                      maxWeight ? 'border-brand-500 ring-1 ring-brand-500 font-bold bg-brand-50/20 text-brand-700 dark:text-brand-300' : 'border-gray-300 dark:border-gray-700'
+                    }`}
                   />
+                </div>
+                <div className="flex flex-wrap gap-1 pt-1">
+                  {WEIGHT_PRESETS.map((preset) => {
+                    const isPresetActive = minWeight === String(preset.min) && maxWeight === String(preset.max);
+                    return (
+                      <button
+                        key={preset.labelEn}
+                        type="button"
+                        onClick={() => {
+                          if (isPresetActive) {
+                            setMinWeight('');
+                            setMaxWeight('');
+                          } else {
+                            setMinWeight(String(preset.min));
+                            setMaxWeight(String(preset.max));
+                          }
+                          setPage(1);
+                        }}
+                        className={`px-2 py-0.5 text-[10px] rounded-lg transition-all cursor-pointer font-medium ${
+                          isPresetActive
+                            ? 'bg-brand-500 text-white font-bold shadow-xs'
+                            : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-brand-50 hover:text-brand-600'
+                        }`}
+                      >
+                        {isRTL ? preset.labelFa : preset.labelEn}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 

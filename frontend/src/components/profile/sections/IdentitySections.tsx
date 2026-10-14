@@ -9,6 +9,7 @@ import DisplayRow from '@/components/profile/DisplayRow';
 import FormField, { useFormState, SelectOption } from '@/components/profile/FormField';
 import { toArray, formatMultiValue } from '@/components/profile/profileUtils';
 import { formatDate, formatHeight, formatWeight } from '@/utils/formatters';
+import { formatApiError } from '@/utils/errorFormatter';
 import type {
   IdentityInformation,
   BirthCertificateInformation,
@@ -130,17 +131,19 @@ export function IdentityInformationSection({
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const { state, handleChange, reset } = useFormState(defaultIdentityForm(data));
+  const { state, handleChange, reset, fieldErrors, setFieldErrors } = useFormState(defaultIdentityForm(data));
 
   const openModal = () => {
     reset(defaultIdentityForm(data));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
   const handleSave = async () => {
     setSaving(true);
     setError('');
+    setFieldErrors({});
     try {
       const payload = {
         ...state,
@@ -155,7 +158,9 @@ export function IdentityInformationSection({
       setOpen(false);
       onReload();
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to save');
+      const formatted = formatApiError(e, t, isRTL);
+      setFieldErrors(formatted.fieldErrors);
+      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
     } finally {
       setSaving(false);
     }
@@ -198,39 +203,39 @@ export function IdentityInformationSection({
           </h2>
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
-              <FormField label="First Name" name="first_name" type="text" value={state.first_name} onChange={handleChange} required />
-              <FormField label="Last Name" name="last_name" type="text" value={state.last_name} onChange={handleChange} required />
+              <FormField label="First Name" name="first_name" type="text" value={state.first_name} onChange={handleChange} required error={fieldErrors.first_name} />
+              <FormField label="Last Name" name="last_name" type="text" value={state.last_name} onChange={handleChange} required error={fieldErrors.last_name} />
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <FormField label="Father's Name" name="father_name" type="text" value={state.father_name} onChange={handleChange} />
-              <FormField label="Eitta Number" name="eitta_number" type="text" value={state.eitta_number} onChange={handleChange} />
+              <FormField label="Father's Name" name="father_name" type="text" value={state.father_name} onChange={handleChange} error={fieldErrors.father_name} />
+              <FormField label="Eitta Number" name="eitta_number" type="text" value={state.eitta_number} onChange={handleChange} error={fieldErrors.eitta_number} />
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <FormField label="Landline Phone" name="landline_phone" type="text" value={state.landline_phone} onChange={handleChange} />
-              <FormField label="Mother's Phone" name="mother_phone" type="text" value={state.mother_phone} onChange={handleChange} />
+              <FormField label="Landline Phone" name="landline_phone" type="text" value={state.landline_phone} onChange={handleChange} error={fieldErrors.landline_phone} />
+              <FormField label="Mother's Phone" name="mother_phone" type="text" value={state.mother_phone} onChange={handleChange} error={fieldErrors.mother_phone} />
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <FormField label="Father's Phone" name="father_phone" type="text" value={state.father_phone} onChange={handleChange} />
-              <FormField label="Originality" name="originality" type="text" value={state.originality} onChange={handleChange} />
+              <FormField label="Father's Phone" name="father_phone" type="text" value={state.father_phone} onChange={handleChange} error={fieldErrors.father_phone} />
+              <FormField label="Originality" name="originality" type="text" value={state.originality} onChange={handleChange} error={fieldErrors.originality} />
             </div>
-            <FormField label="Home Address" name="home_address" type="textarea" value={state.home_address} onChange={handleChange} />
-            <FormField label="Work Address" name="work_address" type="textarea" value={state.work_address} onChange={handleChange} />
+            <FormField label="Home Address" name="home_address" type="textarea" value={state.home_address} onChange={handleChange} error={fieldErrors.home_address} />
+            <FormField label="Work Address" name="work_address" type="textarea" value={state.work_address} onChange={handleChange} error={fieldErrors.work_address} />
             <div className="grid grid-cols-2 gap-4">
-              <FormField label="Education" name="education" type="select" value={state.education} onChange={handleChange} options={EDUCATION_OPTIONS} />
-              <FormField label="Job / Profession" name="job" type="text" value={state.job} onChange={handleChange} />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <FormField label="Insurance" name="insurance" type="text" value={state.insurance} onChange={handleChange} />
-              <FormField label="Income" name="income" type="text" value={state.income} onChange={handleChange} />
-            </div>
-            <FormField label="Assets / Capital" name="assets" type="multiselect" value={state.assets} onChange={handleChange} options={CAPITAL_OPTIONS} />
-            <div className="grid grid-cols-2 gap-4">
-              <FormField label="Height (cm)" name="height" type="number" value={state.height} onChange={handleChange} />
-              <FormField label="Weight (kg)" name="weight" type="number" value={state.weight} onChange={handleChange} />
+              <FormField label="Education" name="education" type="select" value={state.education} onChange={handleChange} options={EDUCATION_OPTIONS} error={fieldErrors.education} />
+              <FormField label="Job / Profession" name="job" type="text" value={state.job} onChange={handleChange} error={fieldErrors.job} />
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <FormField label="Preferred Meeting Time" name="prefered_meeting_time" type="text" value={state.prefered_meeting_time} onChange={handleChange} />
-              <FormField label="Payment Type" name="type_of_payment" type="select" value={state.type_of_payment} onChange={handleChange} options={PAYMENT_TYPE_OPTIONS} />
+              <FormField label="Insurance" name="insurance" type="text" value={state.insurance} onChange={handleChange} error={fieldErrors.insurance} />
+              <FormField label="Income" name="income" type="text" value={state.income} onChange={handleChange} error={fieldErrors.income} />
+            </div>
+            <FormField label="Assets / Capital" name="assets" type="multiselect" value={state.assets} onChange={handleChange} options={CAPITAL_OPTIONS} error={fieldErrors.assets} />
+            <div className="grid grid-cols-2 gap-4">
+              <FormField label="Height (cm)" name="height" type="number" value={state.height} onChange={handleChange} error={fieldErrors.height} />
+              <FormField label="Weight (kg)" name="weight" type="number" value={state.weight} onChange={handleChange} error={fieldErrors.weight} />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <FormField label="Preferred Meeting Time" name="prefered_meeting_time" type="text" value={state.prefered_meeting_time} onChange={handleChange} error={fieldErrors.prefered_meeting_time} />
+              <FormField label="Payment Type" name="type_of_payment" type="select" value={state.type_of_payment} onChange={handleChange} options={PAYMENT_TYPE_OPTIONS} error={fieldErrors.type_of_payment} />
             </div>
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
@@ -280,17 +285,19 @@ export function BirthCertificateSection({
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const { state, handleChange, reset } = useFormState(defaultBirthCertForm(data));
+  const { state, handleChange, reset, fieldErrors, setFieldErrors } = useFormState(defaultBirthCertForm(data));
 
   const openModal = () => {
     reset(defaultBirthCertForm(data));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
   const handleSave = async () => {
     setSaving(true);
     setError('');
+    setFieldErrors({});
     try {
       const payload = {
         ...state,
@@ -308,7 +315,9 @@ export function BirthCertificateSection({
       setOpen(false);
       onReload();
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to save');
+      const formatted = formatApiError(e, t, isRTL);
+      setFieldErrors(formatted.fieldErrors);
+      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
     } finally {
       setSaving(false);
     }
@@ -344,28 +353,28 @@ export function BirthCertificateSection({
           </h2>
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
-              <FormField label="National Code" name="national_code" type="text" value={state.national_code} onChange={handleChange} required />
-              <FormField label="Birth Certificate Serial" name="birth_certificate_serial" type="text" value={state.birth_certificate_serial} onChange={handleChange} required />
+              <FormField label="National Code" name="national_code" type="text" value={state.national_code} onChange={handleChange} required error={fieldErrors.national_code} />
+              <FormField label="Birth Certificate Serial" name="birth_certificate_serial" type="text" value={state.birth_certificate_serial} onChange={handleChange} required error={fieldErrors.birth_certificate_serial} />
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <FormField label="Birth Certificate Location" name="birth_certificate_location" type="text" value={state.birth_certificate_location} onChange={handleChange} required />
-              <FormField label="Birth Date" name="birth_date" type="date" value={state.birth_date} onChange={handleChange} required />
+              <FormField label="Birth Certificate Location" name="birth_certificate_location" type="text" value={state.birth_certificate_location} onChange={handleChange} required error={fieldErrors.birth_certificate_location} />
+              <FormField label="Birth Date" name="birth_date" type="date" value={state.birth_date} onChange={handleChange} required error={fieldErrors.birth_date} />
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <FormField label="Marriage Experience" name="marriage_experince" type="select" value={state.marriage_experince} onChange={handleChange} options={MARRIAGE_EXPERIENCE_OPTIONS} />
-              <FormField label="Marriage Status" name="marriage_status" type="select" value={state.marriage_status} onChange={handleChange} options={MARRIAGE_STATUS_OPTIONS} />
+              <FormField label="Marriage Experience" name="marriage_experince" type="select" value={state.marriage_experince} onChange={handleChange} options={MARRIAGE_EXPERIENCE_OPTIONS} error={fieldErrors.marriage_experince} />
+              <FormField label="Marriage Status" name="marriage_status" type="select" value={state.marriage_status} onChange={handleChange} options={MARRIAGE_STATUS_OPTIONS} error={fieldErrors.marriage_status} />
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <FormField label="Contract Date" name="contract_date" type="date" value={state.contract_date} onChange={handleChange} />
-              <FormField label="Marriage Date" name="marriage_date" type="date" value={state.marriage_date} onChange={handleChange} />
+              <FormField label="Contract Date" name="contract_date" type="date" value={state.contract_date} onChange={handleChange} error={fieldErrors.contract_date} />
+              <FormField label="Marriage Date" name="marriage_date" type="date" value={state.marriage_date} onChange={handleChange} error={fieldErrors.marriage_date} />
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <FormField label="Divorce Date" name="divorce_date" type="date" value={state.divorce_date} onChange={handleChange} />
-              <FormField label="Husband Death Date" name="husband_death_date" type="date" value={state.husband_death_date} onChange={handleChange} />
+              <FormField label="Divorce Date" name="divorce_date" type="date" value={state.divorce_date} onChange={handleChange} error={fieldErrors.divorce_date} />
+              <FormField label="Husband Death Date" name="husband_death_date" type="date" value={state.husband_death_date} onChange={handleChange} error={fieldErrors.husband_death_date} />
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <FormField label="Children" name="children" type="select" value={state.children} onChange={handleChange} options={CHILDREN_OPTIONS} />
-              <FormField label="Children Custody" name="children_custody" type="select" value={state.children_custody} onChange={handleChange} options={CHILDREN_CUSTODY_OPTIONS} />
+              <FormField label="Children" name="children" type="select" value={state.children} onChange={handleChange} options={CHILDREN_OPTIONS} error={fieldErrors.children} />
+              <FormField label="Children Custody" name="children_custody" type="select" value={state.children_custody} onChange={handleChange} options={CHILDREN_CUSTODY_OPTIONS} error={fieldErrors.children_custody} />
             </div>
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}

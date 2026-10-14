@@ -9,6 +9,7 @@ import DisplayRow from '@/components/profile/DisplayRow';
 import FormField, { useFormState, SelectOption } from '@/components/profile/FormField';
 import { toArray, formatMultiValue } from '@/components/profile/profileUtils';
 import { formatDate, formatBoolean } from '@/utils/formatters';
+import { formatApiError } from '@/utils/errorFormatter';
 import type {
   PersonalInformation,
   GenderEnum,
@@ -174,7 +175,7 @@ export function PersonalsInformationSection({ data, onReload, isCollapsed, onTog
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const { state, handleChange, reset } = useFormState(defaultPersonalForm(data));
+  const { state, handleChange, reset, fieldErrors, setFieldErrors } = useFormState(defaultPersonalForm(data));
 
   const openModal = () => {
     reset(defaultPersonalForm(data));
@@ -198,7 +199,9 @@ export function PersonalsInformationSection({ data, onReload, isCollapsed, onTog
       setOpen(false);
       onReload();
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to save');
+      const formatted = formatApiError(e, t, isRTL);
+      setFieldErrors(formatted.fieldErrors);
+      setError(formatted.message || t("Please fix the errors in the form before submitting."));
     } finally {
       setSaving(false);
     }
@@ -256,33 +259,33 @@ export function PersonalsInformationSection({ data, onReload, isCollapsed, onTog
             {data ? t('Edit') : t('Add')} {t('Personal Information')}
           </h2>
           <div className="space-y-4">
-            <FormField label="Gender" name="gender" type="select" value={state.gender} onChange={handleChange} options={GENDER_OPTIONS} required />
-            <FormField label="Sadat" name="sadat" type="boolean" value={state.sadat} onChange={handleChange} hint="Is the user a Sadat?" />
-            <FormField label="Birth Date" name="birth_date" type="date" value={state.birth_date} onChange={handleChange} required />
-            <FormField label="Birth Location" name="birth_location" type="text" value={state.birth_location} onChange={handleChange} />
-            <FormField label="Education" name="education" type="select" value={state.education} onChange={handleChange} options={EDUCATION_OPTIONS} required />
-            <FormField label="Degree" name="degree" type="text" value={state.degree} onChange={handleChange} hint={t("Select the degree of the user.")} />
-            <FormField label="Military Status" name="military_status" type="select" value={state.military_status} onChange={handleChange} options={MILITARY_OPTIONS} />
-            <FormField label="Military Status Explanation" name="military_status_explanation" type="textarea" value={state.military_status_explanation} onChange={handleChange} />
-            <FormField label="Income" name="income" type="select" value={state.income} onChange={handleChange} options={INCOME_OPTIONS} required />
-            <FormField label="Deposit" name="deposit" type="select" value={state.deposit} onChange={handleChange} options={DEPOSIT_OPTIONS} required />
-            <FormField label="Have Insurance" name="have_insurance" type="boolean" value={state.have_insurance} onChange={handleChange} />
+            <FormField label="Gender" name="gender" type="select" value={state.gender} onChange={handleChange} options={GENDER_OPTIONS} error={fieldErrors.gender} required />
+            <FormField label="Sadat" name="sadat" type="boolean" value={state.sadat} onChange={handleChange} hint="Is the user a Sadat?" error={fieldErrors.sadat} />
+            <FormField label="Birth Date" name="birth_date" type="date" value={state.birth_date} onChange={handleChange} error={fieldErrors.birth_date} required />
+            <FormField label="Birth Location" name="birth_location" type="text" value={state.birth_location} onChange={handleChange} error={fieldErrors.birth_location} />
+            <FormField label="Education" name="education" type="select" value={state.education} onChange={handleChange} options={EDUCATION_OPTIONS} error={fieldErrors.education} required />
+            <FormField label="Degree" name="degree" type="text" value={state.degree} onChange={handleChange} hint={t("Select the degree of the user.")} error={fieldErrors.degree} />
+            <FormField label="Military Status" name="military_status" type="select" value={state.military_status} onChange={handleChange} options={MILITARY_OPTIONS} error={fieldErrors.military_status} />
+            <FormField label="Military Status Explanation" name="military_status_explanation" type="textarea" value={state.military_status_explanation} onChange={handleChange} error={fieldErrors.military_status_explanation} />
+            <FormField label="Income" name="income" type="select" value={state.income} onChange={handleChange} options={INCOME_OPTIONS} error={fieldErrors.income} required />
+            <FormField label="Deposit" name="deposit" type="select" value={state.deposit} onChange={handleChange} options={DEPOSIT_OPTIONS} error={fieldErrors.deposit} required />
+            <FormField label="Have Insurance" name="have_insurance" type="boolean" value={state.have_insurance} onChange={handleChange} error={fieldErrors.have_insurance} />
             {state.have_insurance && (
               <>
-                <FormField label="Insurance Type" name="insurance_type" type="multiselect" value={state.insurance_type} onChange={handleChange} options={INSURANCE_TYPE_OPTIONS} />
-                <FormField label="Insurance Years" name="insurance_years" type="number" value={state.insurance_years} onChange={handleChange} />
+                <FormField label="Insurance Type" name="insurance_type" type="multiselect" value={state.insurance_type} onChange={handleChange} options={INSURANCE_TYPE_OPTIONS} error={fieldErrors.insurance_type} />
+                <FormField label="Insurance Years" name="insurance_years" type="number" value={state.insurance_years} onChange={handleChange} error={fieldErrors.insurance_years} />
               </>
             )}
-            <FormField label="Leisure Type" name="leisure_type" type="multiselect" value={state.leisure_type} onChange={handleChange} options={LEISURE_OPTIONS} />
-            <FormField label="Usage Cases" name="usage_cases" type="multiselect" value={state.usage_cases} onChange={handleChange} options={USAGE_CASES_OPTIONS} />
-            <FormField label="Usage Case Description" name="usage_case_description" type="textarea" value={state.usage_case_description} onChange={handleChange} hint={t("Like how many cigars or hookah a day.")} />
-            <FormField label="Tattoo" name="tatto" type="boolean" value={state.tatto} onChange={handleChange} />
+            <FormField label="Leisure Type" name="leisure_type" type="multiselect" value={state.leisure_type} onChange={handleChange} options={LEISURE_OPTIONS} error={fieldErrors.leisure_type} />
+            <FormField label="Usage Cases" name="usage_cases" type="multiselect" value={state.usage_cases} onChange={handleChange} options={USAGE_CASES_OPTIONS} error={fieldErrors.usage_cases} />
+            <FormField label="Usage Case Description" name="usage_case_description" type="textarea" value={state.usage_case_description} onChange={handleChange} hint={t("Like how many cigars or hookah a day.")} error={fieldErrors.usage_case_description} />
+            <FormField label="Tattoo" name="tatto" type="boolean" value={state.tatto} onChange={handleChange} error={fieldErrors.tatto} />
             {state.tatto && (
-              <FormField label="Tattoo Description" name="tatto_description" type="textarea" value={state.tatto_description} onChange={handleChange} hint={t("Like where on the body.")} />
+              <FormField label="Tattoo Description" name="tatto_description" type="textarea" value={state.tatto_description} onChange={handleChange} hint={t("Like where on the body.")} error={fieldErrors.tatto_description} />
             )}
-            <FormField label="Conviction or Arrest History" name="conviction_or_arrest_history" type="boolean" value={state.conviction_or_arrest_history} onChange={handleChange} />
+            <FormField label="Conviction or Arrest History" name="conviction_or_arrest_history" type="boolean" value={state.conviction_or_arrest_history} onChange={handleChange} error={fieldErrors.conviction_or_arrest_history} />
             {state.conviction_or_arrest_history && (
-              <FormField label="Conviction Reason" name="conviction_reason" type="textarea" value={state.conviction_reason} onChange={handleChange} />
+              <FormField label="Conviction Reason" name="conviction_reason" type="textarea" value={state.conviction_reason} onChange={handleChange} error={fieldErrors.conviction_reason} />
             )}
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}

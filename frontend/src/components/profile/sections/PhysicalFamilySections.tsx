@@ -9,6 +9,7 @@ import DisplayRow from '@/components/profile/DisplayRow';
 import FormField, { useFormState, SelectOption } from '@/components/profile/FormField';
 import { toArray, formatMultiValue } from '@/components/profile/profileUtils';
 import { formatDate, formatHeight, formatWeight, formatBoolean } from '@/utils/formatters';
+import { formatApiError } from '@/utils/errorFormatter';
 import type {
   PhysicalInformation,
   FamilyInformation,
@@ -69,14 +70,18 @@ const FAMILY_FIN_OPTIONS: SelectOption[] = [
 ].map((v) => ({ value: v, label: v }));
 
 const FAMILY_CONTACT_OPTIONS: SelectOption[] = [
-  'Excellent', 'Good', 'Average', 'Weak', 'None',
-].map((v) => ({ value: v, label: v }));
+  { value: 'Excellent', label: 'Excellent' },
+  { value: 'Good', label: 'Good' },
+  { value: 'Average', label: 'Average' },
+  { value: 'Weak', label: 'Weak' },
+  { value: 'None', label: 'No Contact' },
+];
 
 const ENGAGEMENT_OPTIONS: SelectOption[] = [
   { value: 'Engagement', label: 'Engagement' },
   { value: 'Contract', label: 'Contract' },
   { value: 'Wedding', label: 'Wedding' },
-  { value: 'None', label: 'None' },
+  { value: 'None', label: 'None (No History)' },
 ];
 
 /* ─── PhysicalInformationSection ───────────────────────────────────────── */
@@ -112,17 +117,19 @@ export function PhysicalInformationSection({
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const { state, handleChange, reset } = useFormState(defaultPhysicalForm(data));
+  const { state, handleChange, reset, fieldErrors, setFieldErrors } = useFormState(defaultPhysicalForm(data));
 
   const openModal = () => {
     reset(defaultPhysicalForm(data));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
   const handleSave = async () => {
     setSaving(true);
     setError('');
+    setFieldErrors({});
     try {
       const payload = {
         ...state,
@@ -143,7 +150,9 @@ export function PhysicalInformationSection({
       setOpen(false);
       onReload();
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to save');
+      const formatted = formatApiError(e, t, isRTL);
+      setFieldErrors(formatted.fieldErrors);
+      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
     } finally {
       setSaving(false);
     }
@@ -175,20 +184,20 @@ export function PhysicalInformationSection({
             {data ? t('Edit') : t('Add')} {t('Physical Information')}
           </h2>
           <div className="space-y-4">
-            <FormField label="Height (cm)" name="height" type="number" value={state.height} onChange={handleChange} />
-            <FormField label="Weight (kg)" name="weight" type="number" value={state.weight} onChange={handleChange} />
-            <FormField label="Skin Color" name="skin_color" type="select" value={state.skin_color} onChange={handleChange} options={SKIN_COLOR_OPTIONS} />
-            <FormField label="Eyes Color" name="eyes_color" type="select" value={state.eyes_color} onChange={handleChange} options={EYES_COLOR_OPTIONS} />
-            <FormField label="Blood Type" name="blood_type" type="select" value={state.blood_type} onChange={handleChange} options={BLOOD_TYPE_OPTIONS} />
-            <FormField label="Temperament" name="character_and_temperament" type="select" value={state.character_and_temperament} onChange={handleChange} options={TEMPERAMENT_OPTIONS} />
-            <FormField label="Glasses" name="glasses" type="boolean" value={state.glasses} onChange={handleChange} />
+            <FormField label="Height (cm)" name="height" type="number" value={state.height} onChange={handleChange} error={fieldErrors.height} />
+            <FormField label="Weight (kg)" name="weight" type="number" value={state.weight} onChange={handleChange} error={fieldErrors.weight} />
+            <FormField label="Skin Color" name="skin_color" type="select" value={state.skin_color} onChange={handleChange} options={SKIN_COLOR_OPTIONS} error={fieldErrors.skin_color} />
+            <FormField label="Eyes Color" name="eyes_color" type="select" value={state.eyes_color} onChange={handleChange} options={EYES_COLOR_OPTIONS} error={fieldErrors.eyes_color} />
+            <FormField label="Blood Type" name="blood_type" type="select" value={state.blood_type} onChange={handleChange} options={BLOOD_TYPE_OPTIONS} error={fieldErrors.blood_type} />
+            <FormField label="Temperament" name="character_and_temperament" type="select" value={state.character_and_temperament} onChange={handleChange} options={TEMPERAMENT_OPTIONS} error={fieldErrors.character_and_temperament} />
+            <FormField label="Glasses" name="glasses" type="boolean" value={state.glasses} onChange={handleChange} error={fieldErrors.glasses} />
             {state.glasses && (
-              <FormField label="Glasses Size / Number" name="glasses_size" type="text" value={state.glasses_size} onChange={handleChange} />
+              <FormField label="Glasses Size / Number" name="glasses_size" type="text" value={state.glasses_size} onChange={handleChange} error={fieldErrors.glasses_size} />
             )}
-            <FormField label="Body and Face Characteristics" name="body_and_face" type="multiselect" value={state.body_and_face} onChange={handleChange} options={BODY_FACE_OPTIONS} />
-            <FormField label="Disease / Surgery History" name="disease_or_surgery_history" type="boolean" value={state.disease_or_surgery_history} onChange={handleChange} />
+            <FormField label="Body and Face Characteristics" name="body_and_face" type="multiselect" value={state.body_and_face} onChange={handleChange} options={BODY_FACE_OPTIONS} error={fieldErrors.body_and_face} />
+            <FormField label="Disease / Surgery History" name="disease_or_surgery_history" type="boolean" value={state.disease_or_surgery_history} onChange={handleChange} error={fieldErrors.disease_or_surgery_history} />
             {state.disease_or_surgery_history && (
-              <FormField label="Disease / Surgery Details" name="medication_surgery_disease_type" type="textarea" value={state.medication_surgery_disease_type} onChange={handleChange} />
+              <FormField label="Disease / Surgery Details" name="medication_surgery_disease_type" type="textarea" value={state.medication_surgery_disease_type} onChange={handleChange} error={fieldErrors.medication_surgery_disease_type} />
             )}
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
@@ -232,17 +241,19 @@ export function FamilyInformationSection({
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const { state, handleChange, reset } = useFormState(defaultFamilyForm(data));
+  const { state, handleChange, reset, fieldErrors, setFieldErrors } = useFormState(defaultFamilyForm(data));
 
   const openModal = () => {
     reset(defaultFamilyForm(data));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
   const handleSave = async () => {
     setSaving(true);
     setError('');
+    setFieldErrors({});
     try {
       const payload = {
         ...state,
@@ -258,7 +269,9 @@ export function FamilyInformationSection({
       setOpen(false);
       onReload();
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to save');
+      const formatted = formatApiError(e, t, isRTL);
+      setFieldErrors(formatted.fieldErrors);
+      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
     } finally {
       setSaving(false);
     }
@@ -285,16 +298,16 @@ export function FamilyInformationSection({
             {data ? t('Edit') : t('Add')} {t('Family Information')}
           </h2>
           <div className="space-y-4">
-            <FormField label="Average Family Education" name="average_family_education" type="select" value={state.average_family_education} onChange={handleChange} options={FAMILY_EDU_OPTIONS} required />
-            <FormField label="Average Family Finance" name="average_family_finance" type="select" value={state.average_family_finance} onChange={handleChange} options={FAMILY_FIN_OPTIONS} required />
-            <FormField label="Family Divorce History" name="family_divorce_history" type="boolean" value={state.family_divorce_history} onChange={handleChange} />
+            <FormField label="Average Family Education" name="average_family_education" type="select" value={state.average_family_education} onChange={handleChange} options={FAMILY_EDU_OPTIONS} required error={fieldErrors.average_family_education} />
+            <FormField label="Average Family Finance" name="average_family_finance" type="select" value={state.average_family_finance} onChange={handleChange} options={FAMILY_FIN_OPTIONS} required error={fieldErrors.average_family_finance} />
+            <FormField label="Family Divorce History" name="family_divorce_history" type="boolean" value={state.family_divorce_history} onChange={handleChange} error={fieldErrors.family_divorce_history} />
             {state.family_divorce_history && (
-              <FormField label="Divorce Reason" name="family_divorce_reason" type="textarea" value={state.family_divorce_reason} onChange={handleChange} />
+              <FormField label="Divorce Reason" name="family_divorce_reason" type="textarea" value={state.family_divorce_reason} onChange={handleChange} error={fieldErrors.family_divorce_reason} />
             )}
-            <FormField label="Contact with Family" name="contact_with_family" type="select" value={state.contact_with_family} onChange={handleChange} options={FAMILY_CONTACT_OPTIONS} required />
-            <FormField label="Contact with Relatives" name="contact_with_relatives" type="select" value={state.contact_with_relatives} onChange={handleChange} options={FAMILY_CONTACT_OPTIONS} required />
-            <FormField label="Number of Sisters" name="number_of_sisters" type="number" value={state.number_of_sisters} onChange={handleChange} />
-            <FormField label="Number of Brothers" name="number_of_brothers" type="number" value={state.number_of_brothers} onChange={handleChange} />
+            <FormField label="Contact with Family" name="contact_with_family" type="select" value={state.contact_with_family} onChange={handleChange} options={FAMILY_CONTACT_OPTIONS} required error={fieldErrors.contact_with_family} />
+            <FormField label="Contact with Relatives" name="contact_with_relatives" type="select" value={state.contact_with_relatives} onChange={handleChange} options={FAMILY_CONTACT_OPTIONS} required error={fieldErrors.contact_with_relatives} />
+            <FormField label="Number of Sisters" name="number_of_sisters" type="number" value={state.number_of_sisters} onChange={handleChange} error={fieldErrors.number_of_sisters} />
+            <FormField label="Number of Brothers" name="number_of_brothers" type="number" value={state.number_of_brothers} onChange={handleChange} error={fieldErrors.number_of_brothers} />
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
@@ -335,17 +348,19 @@ export function EngagementStatusSection({
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const { state, handleChange, reset } = useFormState(defaultEngagementForm(data));
+  const { state, handleChange, reset, fieldErrors, setFieldErrors } = useFormState(defaultEngagementForm(data));
 
   const openModal = () => {
     reset(defaultEngagementForm(data));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
   const handleSave = async () => {
     setSaving(true);
     setError('');
+    setFieldErrors({});
     try {
       const payload = {
         ...state,
@@ -360,7 +375,9 @@ export function EngagementStatusSection({
       setOpen(false);
       onReload();
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to save');
+      const formatted = formatApiError(e, t, isRTL);
+      setFieldErrors(formatted.fieldErrors);
+      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
     } finally {
       setSaving(false);
     }
@@ -383,12 +400,12 @@ export function EngagementStatusSection({
             {data ? t('Edit') : t('Add')} {t('Engagements or Weddings Status')}
           </h2>
           <div className="space-y-4">
-            <FormField label="Status" name="status" type="select" value={state.status} onChange={handleChange} options={ENGAGEMENT_OPTIONS} required />
-            <FormField label="Contract Length" name="contract_length" type="text" value={state.contract_length} onChange={handleChange} />
-            <FormField label="Living Length" name="living_length" type="text" value={state.living_length} onChange={handleChange} />
-            <FormField label="Death Date" name="death_date" type="date" value={state.death_date} onChange={handleChange} />
-            <FormField label="Divorce Date" name="divorce_date" type="date" value={state.divorce_date} onChange={handleChange} />
-            <FormField label="Reason for Divorce or Death" name="reason_for_divorce_or_death" type="textarea" value={state.reason_for_divorce_or_death} onChange={handleChange} />
+            <FormField label="Status" name="status" type="select" value={state.status} onChange={handleChange} options={ENGAGEMENT_OPTIONS} required error={fieldErrors.status} />
+            <FormField label="Contract Length" name="contract_length" type="text" value={state.contract_length} onChange={handleChange} error={fieldErrors.contract_length} />
+            <FormField label="Living Length" name="living_length" type="text" value={state.living_length} onChange={handleChange} error={fieldErrors.living_length} />
+            <FormField label="Death Date" name="death_date" type="date" value={state.death_date} onChange={handleChange} error={fieldErrors.death_date} />
+            <FormField label="Divorce Date" name="divorce_date" type="date" value={state.divorce_date} onChange={handleChange} error={fieldErrors.divorce_date} />
+            <FormField label="Reason for Divorce or Death" name="reason_for_divorce_or_death" type="textarea" value={state.reason_for_divorce_or_death} onChange={handleChange} error={fieldErrors.reason_for_divorce_or_death} />
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">

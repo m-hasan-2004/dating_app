@@ -9,6 +9,7 @@ import DisplayRow from '@/components/profile/DisplayRow';
 import FormField, { useFormState, SelectOption } from '@/components/profile/FormField';
 import { toArray, formatMultiValue } from '@/components/profile/profileUtils';
 import { formatBoolean } from '@/utils/formatters';
+import { formatApiError } from '@/utils/errorFormatter';
 import type {
   FinancialInformation,
   IntellectualInformation,
@@ -270,17 +271,19 @@ export function FinancialInformationSection({
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const { state, handleChange, reset } = useFormState(defaultFinancialForm(data));
+  const { state, handleChange, reset, fieldErrors, setFieldErrors } = useFormState(defaultFinancialForm(data));
 
   const openModal = () => {
     reset(defaultFinancialForm(data));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
   const handleSave = async () => {
     setSaving(true);
     setError('');
+    setFieldErrors({});
     try {
       const payload = {
         ...state,
@@ -299,7 +302,9 @@ export function FinancialInformationSection({
       setOpen(false);
       onReload();
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to save');
+      const formatted = formatApiError(e, t, isRTL);
+      setFieldErrors(formatted.fieldErrors);
+      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
     } finally {
       setSaving(false);
     }
@@ -331,23 +336,23 @@ export function FinancialInformationSection({
             {data ? t('Edit') : t('Add')} {t('Financial Information')}
           </h2>
           <div className="space-y-4">
-            <FormField label="Job" name="job" type="text" value={state.job} onChange={handleChange} />
-            <FormField label="Current Residence Status" name="current_residence_status" type="select" value={state.current_residence_status} onChange={handleChange} options={RESIDENCE_OPTIONS} />
-            <FormField label="Ownership Status" name="ownership_status" type="select" value={state.ownership_status} onChange={handleChange} options={OWNERSHIP_OPTIONS} />
+            <FormField label="Job" name="job" type="text" value={state.job} onChange={handleChange} error={fieldErrors.job} />
+            <FormField label="Current Residence Status" name="current_residence_status" type="select" value={state.current_residence_status} onChange={handleChange} options={RESIDENCE_OPTIONS} error={fieldErrors.current_residence_status} />
+            <FormField label="Ownership Status" name="ownership_status" type="select" value={state.ownership_status} onChange={handleChange} options={OWNERSHIP_OPTIONS} error={fieldErrors.ownership_status} />
             {state.ownership_status === 'rent' && (
-              <FormField label="Rent Amount" name="rent_amount" type="number" value={state.rent_amount} onChange={handleChange} />
+              <FormField label="Rent Amount" name="rent_amount" type="number" value={state.rent_amount} onChange={handleChange} error={fieldErrors.rent_amount} />
             )}
-            <FormField label="Mortgage Amount" name="mortgage_amount" type="number" value={state.mortgage_amount} onChange={handleChange} />
-            <FormField label="Capital Assets" name="capital" type="multiselect" value={state.capital} onChange={handleChange} options={ASSETS_OPTIONS} />
-            <FormField label="Other Capital" name="other_capital" type="text" value={state.other_capital} onChange={handleChange} />
-            <FormField label="After Marriage Residence Status" name="after_marriage_residence_status" type="select" value={state.after_marriage_residence_status} onChange={handleChange} options={AFTER_MARRIAGE_RESIDENCE_OPTIONS} />
-            <FormField label="Ex-Spouse Financial Status" name="ex_spouse_financial_status" type="select" value={state.ex_spouse_financial_status} onChange={handleChange} options={EX_SPOUSE_FIN_OPTIONS} />
-            <FormField label="Ex-Spouse Financial Pay Status" name="ex_spouse_financial_pay_status" type="select" value={state.ex_spouse_financial_pay_status} onChange={handleChange} options={EX_SPOUSE_PAY_OPTIONS} />
-            <FormField label="Ex-Spouse Financial Amount" name="ex_spouse_financial_amount" type="number" value={state.ex_spouse_financial_amount} onChange={handleChange} />
-            <FormField label="Future Spouse Dowry Type" name="future_spouse_dowry_type" type="multiselect" value={state.future_spouse_dowry_type} onChange={handleChange} options={DOWRY_TYPE_OPTIONS} />
-            <FormField label="Future Spouse Dowry Amount" name="future_spose_dowry_amount" type="number" value={state.future_spose_dowry_amount} onChange={handleChange} />
-            <FormField label="Future Spouse Jahiziyeh" name="future_spose_jahiziyeh" type="select" value={state.future_spose_jahiziyeh} onChange={handleChange} options={JAHIZIYEH_OPTIONS} />
-            <FormField label="Future Spouse Jahiziyeh Explanation" name="future_spose_jahiziyeh_explanation" type="textarea" value={state.future_spose_jahiziyeh_explanation} onChange={handleChange} />
+            <FormField label="Mortgage Amount" name="mortgage_amount" type="number" value={state.mortgage_amount} onChange={handleChange} error={fieldErrors.mortgage_amount} />
+            <FormField label="Capital Assets" name="capital" type="multiselect" value={state.capital} onChange={handleChange} options={ASSETS_OPTIONS} error={fieldErrors.capital} />
+            <FormField label="Other Capital" name="other_capital" type="text" value={state.other_capital} onChange={handleChange} error={fieldErrors.other_capital} />
+            <FormField label="After Marriage Residence Status" name="after_marriage_residence_status" type="select" value={state.after_marriage_residence_status} onChange={handleChange} options={AFTER_MARRIAGE_RESIDENCE_OPTIONS} error={fieldErrors.after_marriage_residence_status} />
+            <FormField label="Ex-Spouse Financial Status" name="ex_spouse_financial_status" type="select" value={state.ex_spouse_financial_status} onChange={handleChange} options={EX_SPOUSE_FIN_OPTIONS} error={fieldErrors.ex_spouse_financial_status} />
+            <FormField label="Ex-Spouse Financial Pay Status" name="ex_spouse_financial_pay_status" type="select" value={state.ex_spouse_financial_pay_status} onChange={handleChange} options={EX_SPOUSE_PAY_OPTIONS} error={fieldErrors.ex_spouse_financial_pay_status} />
+            <FormField label="Ex-Spouse Financial Amount" name="ex_spouse_financial_amount" type="number" value={state.ex_spouse_financial_amount} onChange={handleChange} error={fieldErrors.ex_spouse_financial_amount} />
+            <FormField label="Future Spouse Dowry Type" name="future_spouse_dowry_type" type="multiselect" value={state.future_spouse_dowry_type} onChange={handleChange} options={DOWRY_TYPE_OPTIONS} error={fieldErrors.future_spouse_dowry_type} />
+            <FormField label="Future Spouse Dowry Amount" name="future_spose_dowry_amount" type="number" value={state.future_spose_dowry_amount} onChange={handleChange} error={fieldErrors.future_spose_dowry_amount} />
+            <FormField label="Future Spouse Jahiziyeh" name="future_spose_jahiziyeh" type="select" value={state.future_spose_jahiziyeh} onChange={handleChange} options={JAHIZIYEH_OPTIONS} error={fieldErrors.future_spose_jahiziyeh} />
+            <FormField label="Future Spouse Jahiziyeh Explanation" name="future_spose_jahiziyeh_explanation" type="textarea" value={state.future_spose_jahiziyeh_explanation} onChange={handleChange} error={fieldErrors.future_spose_jahiziyeh_explanation} />
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-gray-100 dark:border-gray-800">
@@ -405,17 +410,19 @@ export function IntellectualInformationSection({
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const { state, handleChange, reset } = useFormState(defaultIntellectualForm(data));
+  const { state, handleChange, reset, fieldErrors, setFieldErrors } = useFormState(defaultIntellectualForm(data));
 
   const openModal = () => {
     reset(defaultIntellectualForm(data));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
   const handleSave = async () => {
     setSaving(true);
     setError('');
+    setFieldErrors({});
     try {
       const payload = {
         ...state,
@@ -443,7 +450,9 @@ export function IntellectualInformationSection({
       setOpen(false);
       onReload();
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to save');
+      const formatted = formatApiError(e, t, isRTL);
+      setFieldErrors(formatted.fieldErrors);
+      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
     } finally {
       setSaving(false);
     }
@@ -483,29 +492,29 @@ export function IntellectualInformationSection({
             {data ? t('Edit') : t('Add')} {t('Intellectual Information')}
           </h2>
           <div className="space-y-4">
-            <FormField label="Marriage Goals & Purposes" name="marriage_goals_purposes" type="textarea" value={state.marriage_goals_purposes} onChange={handleChange} />
-            <FormField label="Opinion About Woman's Job" name="opinion_about_womans_job" type="multiselect" value={state.opinion_about_womans_job} onChange={handleChange} options={WOMAN_JOB_OPTIONS} />
-            <FormField label="Opinion About Woman's Education" name="opinion_about_womans_education" type="multiselect" value={state.opinion_about_womans_education} onChange={handleChange} options={WOMAN_EDU_OPTIONS} />
-            <FormField label="Pros of Yourself" name="pros_of_yourself" type="textarea" value={state.pros_of_yourself} onChange={handleChange} />
-            <FormField label="Cons of Yourself" name="cons_of_yourself" type="textarea" value={state.cons_of_yourself} onChange={handleChange} />
-            <FormField label="Type of Connection with Friends" name="type_of_connection_with_friends" type="select" value={state.type_of_connection_with_friends} onChange={handleChange} options={FRIEND_CONN_OPTIONS} />
-            <FormField label="Friends Connection Reason" name="friends_connection_reason" type="textarea" value={state.friends_connection_reason} onChange={handleChange} />
-            <FormField label="Political Orientation" name="political_orientation" type="boolean" value={state.political_orientation} onChange={handleChange} />
-            <FormField label="Opinion About Velayat Faqih" name="opinion_about_velayat_faqih" type="select" value={state.opinion_about_velayat_faqih} onChange={handleChange} options={VELAYAT_FAQIH_OPTIONS} />
-            <FormField label="Child Quantity Preference" name="opinion_about_child_quantity" type="select" value={state.opinion_about_child_quantity} onChange={handleChange} options={CHILD_QTY_OPTIONS} />
-            <FormField label="Contract Ceremony How" name="contract_how" type="select" value={state.contract_how} onChange={handleChange} options={CONTRACT_HOW_OPTIONS} />
-            <FormField label="Wedding Ceremony How" name="wedding_how" type="select" value={state.wedding_how} onChange={handleChange} options={WEDDING_HOW_OPTIONS} />
-            <FormField label="Worship and Prayer" name="worship_and_prayer" type="select" value={state.worship_and_prayer} onChange={handleChange} options={WORSHIP_OPTIONS} />
-            <FormField label="Fasting" name="fasting" type="select" value={state.fasting} onChange={handleChange} options={FASTING_OPTIONS} />
-            <FormField label="Fasting Explanation" name="fasting_explanation" type="textarea" value={state.fasting_explanation} onChange={handleChange} />
-            <FormField label="Cover Type in House" name="cover_type_house" type="select" value={state.cover_type_house} onChange={handleChange} options={COVER_HOUSE_OPTIONS} />
-            <FormField label="Cover Type in Society" name="cover_type_society" type="select" value={state.cover_type_society} onChange={handleChange} options={COVER_SOCIETY_OPTIONS} />
-            <FormField label="Religious Meetings Participation" name="participating_in_religious_meetings" type="select" value={state.participating_in_religious_meetings} onChange={handleChange} options={PARTICIPATION_OPTIONS} />
-            <FormField label="Music" name="music" type="select" value={state.music} onChange={handleChange} options={MUSIC_OPTIONS} />
-            <FormField label="Dance / Singing Assemblies" name="dance_singing_assemblies" type="select" value={state.dance_singing_assemblies} onChange={handleChange} options={MUSIC_OPTIONS} />
-            <FormField label="Innocent Contact with Non-Mahram" name="opinion_about_innocent_contact" type="select" value={state.opinion_about_innocent_contact} onChange={handleChange} options={INNOCENT_CONTACT_OPTIONS} />
-            <FormField label="Cover for Innocent Contact" name="cover_type_innocent_contact" type="select" value={state.cover_type_innocent_contact} onChange={handleChange} options={COVER_INNOCENT_OPTIONS} />
-            <FormField label="Decision Making for Choosing Spouse" name="decision_making_choosing_spouse" type="select" value={state.decision_making_choosing_spouse} onChange={handleChange} options={DECISION_MAKING_OPTIONS} />
+            <FormField label="Marriage Goals & Purposes" name="marriage_goals_purposes" type="textarea" value={state.marriage_goals_purposes} onChange={handleChange} error={fieldErrors.marriage_goals_purposes} />
+            <FormField label="Opinion About Woman's Job" name="opinion_about_womans_job" type="multiselect" value={state.opinion_about_womans_job} onChange={handleChange} options={WOMAN_JOB_OPTIONS} error={fieldErrors.opinion_about_womans_job} />
+            <FormField label="Opinion About Woman's Education" name="opinion_about_womans_education" type="multiselect" value={state.opinion_about_womans_education} onChange={handleChange} options={WOMAN_EDU_OPTIONS} error={fieldErrors.opinion_about_womans_education} />
+            <FormField label="Pros of Yourself" name="pros_of_yourself" type="textarea" value={state.pros_of_yourself} onChange={handleChange} error={fieldErrors.pros_of_yourself} />
+            <FormField label="Cons of Yourself" name="cons_of_yourself" type="textarea" value={state.cons_of_yourself} onChange={handleChange} error={fieldErrors.cons_of_yourself} />
+            <FormField label="Type of Connection with Friends" name="type_of_connection_with_friends" type="select" value={state.type_of_connection_with_friends} onChange={handleChange} options={FRIEND_CONN_OPTIONS} error={fieldErrors.type_of_connection_with_friends} />
+            <FormField label="Friends Connection Reason" name="friends_connection_reason" type="textarea" value={state.friends_connection_reason} onChange={handleChange} error={fieldErrors.friends_connection_reason} />
+            <FormField label="Political Orientation" name="political_orientation" type="boolean" value={state.political_orientation} onChange={handleChange} error={fieldErrors.political_orientation} />
+            <FormField label="Opinion About Velayat Faqih" name="opinion_about_velayat_faqih" type="select" value={state.opinion_about_velayat_faqih} onChange={handleChange} options={VELAYAT_FAQIH_OPTIONS} error={fieldErrors.opinion_about_velayat_faqih} />
+            <FormField label="Child Quantity Preference" name="opinion_about_child_quantity" type="select" value={state.opinion_about_child_quantity} onChange={handleChange} options={CHILD_QTY_OPTIONS} error={fieldErrors.opinion_about_child_quantity} />
+            <FormField label="Contract Ceremony How" name="contract_how" type="select" value={state.contract_how} onChange={handleChange} options={CONTRACT_HOW_OPTIONS} error={fieldErrors.contract_how} />
+            <FormField label="Wedding Ceremony How" name="wedding_how" type="select" value={state.wedding_how} onChange={handleChange} options={WEDDING_HOW_OPTIONS} error={fieldErrors.wedding_how} />
+            <FormField label="Worship and Prayer" name="worship_and_prayer" type="select" value={state.worship_and_prayer} onChange={handleChange} options={WORSHIP_OPTIONS} error={fieldErrors.worship_and_prayer} />
+            <FormField label="Fasting" name="fasting" type="select" value={state.fasting} onChange={handleChange} options={FASTING_OPTIONS} error={fieldErrors.fasting} />
+            <FormField label="Fasting Explanation" name="fasting_explanation" type="textarea" value={state.fasting_explanation} onChange={handleChange} error={fieldErrors.fasting_explanation} />
+            <FormField label="Cover Type in House" name="cover_type_house" type="select" value={state.cover_type_house} onChange={handleChange} options={COVER_HOUSE_OPTIONS} error={fieldErrors.cover_type_house} />
+            <FormField label="Cover Type in Society" name="cover_type_society" type="select" value={state.cover_type_society} onChange={handleChange} options={COVER_SOCIETY_OPTIONS} error={fieldErrors.cover_type_society} />
+            <FormField label="Religious Meetings Participation" name="participating_in_religious_meetings" type="select" value={state.participating_in_religious_meetings} onChange={handleChange} options={PARTICIPATION_OPTIONS} error={fieldErrors.participating_in_religious_meetings} />
+            <FormField label="Music" name="music" type="select" value={state.music} onChange={handleChange} options={MUSIC_OPTIONS} error={fieldErrors.music} />
+            <FormField label="Dance / Singing Assemblies" name="dance_singing_assemblies" type="select" value={state.dance_singing_assemblies} onChange={handleChange} options={MUSIC_OPTIONS} error={fieldErrors.dance_singing_assemblies} />
+            <FormField label="Innocent Contact with Non-Mahram" name="opinion_about_innocent_contact" type="select" value={state.opinion_about_innocent_contact} onChange={handleChange} options={INNOCENT_CONTACT_OPTIONS} error={fieldErrors.opinion_about_innocent_contact} />
+            <FormField label="Cover for Innocent Contact" name="cover_type_innocent_contact" type="select" value={state.cover_type_innocent_contact} onChange={handleChange} options={COVER_INNOCENT_OPTIONS} error={fieldErrors.cover_type_innocent_contact} />
+            <FormField label="Decision Making for Choosing Spouse" name="decision_making_choosing_spouse" type="select" value={state.decision_making_choosing_spouse} onChange={handleChange} options={DECISION_MAKING_OPTIONS} error={fieldErrors.decision_making_choosing_spouse} />
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">

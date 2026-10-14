@@ -38,6 +38,76 @@ export const FIELD_LABELS_FA: Record<string, string> = {
   contact_with_relatives: "میزان ارتباط با بستگان",
   custody: "حضانت",
   status: "وضعیت",
+  contract_date: "تاریخ عقد",
+  marriage_date: "تاریخ ازدواج",
+  divorce_date: "تاریخ طلاق",
+  death_date: "تاریخ فوت",
+  husband_death_date: "تاریخ فوت همسر",
+  body_and_face: "ویژگی‌های چهره و اندام",
+  blood_type: "گروه خونی",
+  skin_color: "رنگ پوست",
+  eyes_color: "رنگ چشم",
+  character_and_temperament: "طبع و مزاج",
+  glasses: "عینک",
+  glasses_size: "نمره عینک",
+  disease_or_surgery_history: "سابقه بیماری یا جراحی",
+  medication_surgery_disease_type: "نوع بیماری یا جراحی",
+  capital: "دارایی‌ها و سرمایه",
+  other_capital: "سایر سرمایه‌ها",
+  other_captial: "سایر سرمایه‌ها",
+  current_residence_status: "وضعیت مسکن فعلی",
+  ownership_status: "وضعیت مالکیت",
+  rent_amount: "مبلغ اجاره",
+  mortgage_amount: "مبلغ رهن",
+  after_marriage_residence_status: "وضعیت مسکن بعد از ازدواج",
+  ex_spouse_financial_status: "وضعیت مالی همسر سابق",
+  ex_spouse_financial_pay_status: "نحوه پرداخت به همسر سابق",
+  ex_spouse_financial_amount: "مبلغ پرداختی به همسر سابق",
+  future_spouse_dowry_type: "نوع مهریه مدنظر",
+  future_spose_dowry_amount: "میزان مهریه مدنظر",
+  future_spose_jahiziyeh: "وضعیت تهیه جهیزیه",
+  future_spose_jahiziyeh_explanation: "توضیحات جهیزیه",
+  height_min: "حداقل قد",
+  height_max: "حداکثر قد",
+  weight_min: "حداقل وزن",
+  weight_max: "حداکثر وزن",
+  education_level: "مقطع تحصیلی",
+  field_of_study: "رشته تحصیلی",
+  future_spouse_job: "شغل همسر مدنظر",
+  current_residence_location: "محل سکونت فعلی همسر",
+  after_marriage_residence_location: "محل سکونت پس از ازدواج",
+  future_spouse_ethnicity: "قومیت و اصالت مدنظر",
+  future_spouse_originality: "قومیت و اصالت مدنظر",
+  marriage_goals: "اهداف ازدواج",
+  marriage_goals_purposes: "اهداف ازدواج",
+  opinion_woman_job: "نظر در مورد اشتغال خانم",
+  opinion_about_womans_job: "نظر در مورد اشتغال خانم",
+  opinion_woman_edu: "نظر در مورد تحصیل خانم",
+  opinion_about_womans_education: "نظر در مورد تحصیل خانم",
+  pros_of_yourself: "نقاط قوت شما",
+  cons_of_yourself: "نقاط ضعف شما",
+  type_connection_friends: "نحوه ارتباط با دوستان",
+  type_of_connection_with_friends: "نحوه ارتباط با دوستان",
+  friends_connection_reason: "دلیل نحوه ارتباط با دوستان",
+  political_orientation: "گرایش سیاسی",
+  opinion_velayat_faqih: "نظر درباره ولایت فقیه",
+  opinion_about_velayat_faqih: "نظر درباره ولایت فقیه",
+  opinion_child_quantity: "تعداد فرزندان مدنظر",
+  opinion_about_child_quantity: "تعداد فرزندان مدنظر",
+  contract_how: "نحوه برگزاری مراسم عقد",
+  wedding_how: "نحوه برگزاری مراسم عروسی",
+  worship_prayer: "تقید به نماز",
+  fasting_status: "تقید به روزه",
+  society_cover: "پوشش در اجتماع",
+  music_status: "گوش دادن به موسیقی",
+  dance_singing_assemblies: "حضور در مجالس رقص و آواز",
+  smoking_status: "استعمال دخانیات",
+  hookah_status: "مصرف قلیان",
+  alcohol_status: "مصرف مشروبات الکلی",
+  drugs_status: "مصرف مواد مخدر",
+  alive: "در قید حیات",
+  originality: "اصالت",
+  additional_explanations: "توضیحات تکمیلی",
 };
 
 export const COMMON_ERROR_TRANSLATIONS_FA: Record<string, string> = {
@@ -49,7 +119,19 @@ export const COMMON_ERROR_TRANSLATIONS_FA: Record<string, string> = {
   "This email is already taken.": "این ایمیل قبلاً گرفته شده است.",
   "This field is required.": "این فیلد الزامی است.",
   "This field may not be blank.": "این فیلد نمی‌تواند خالی باشد.",
-  "This field may not be null.": "این فیلد نمی‌تواند تهی باشد.",
+  "This field may not be null.": "این فیلد نمی‌تواند خالی باشد.",
+  "Enter a valid date.": "لطفاً یک تاریخ معتبر وارد کنید.",
+  "Enter a valid date/time.": "لطفاً یک تاریخ و ساعت معتبر وارد کنید.",
+  "A valid number is required.": "لطفاً یک عدد معتبر وارد کنید.",
+  "A valid integer is required.": "لطفاً یک عدد صحیح معتبر وارد کنید.",
+  "Enter a whole number.": "لطفاً یک عدد کامل وارد کنید.",
+  "Enter a number.": "لطفاً یک عدد معتبر وارد کنید.",
+  "Invalid choice.": "گزینه انتخاب شده نامعتبر است.",
+  "Select a valid choice. That choice is not one of the available choices.": "گزینه انتخاب شده در میان گزینه‌های معتبر نیست.",
+  "Invalid choice for body and face.": "گزینه انتخاب شده برای چهره و اندام نامعتبر است.",
+  "Body and face is required.": "انتخاب ویژگی‌های چهره و اندام الزامی است.",
+  "Invalid selection for type of friends' connection.": "گزینه انتخاب شده برای ارتباط با دوستان نامعتبر است.",
+  "Please specify the type of connection you have with friends.": "لطفاً نحوه ارتباط خود با دوستان را مشخص کنید.",
   "The two password fields didn't match.": "رمزهای عبور وارد شده یکسان نیستند.",
   "Passwords do not match.": "رمزهای عبور وارد شده یکسان نیستند.",
   "Invalid credentials.": "نام کاربری یا رمز عبور اشتباه است.",
@@ -85,6 +167,9 @@ export const COMMON_ERROR_TRANSLATIONS_FA: Record<string, string> = {
   "Has child from ex-husband?": "آیا از همسر سابق فرزندی دارید؟",
   "Must be at least 18 years old": "حداقل سن باید ۱۸ سال باشد.",
   "Age cannot exceed 100 years": "سن نمی‌تواند بیشتر از ۱۰۰ سال باشد.",
+  "Ensure this value is greater than or equal to": "مقدار باید بزرگتر یا مساوی باشد.",
+  "Ensure this value is less than or equal to": "مقدار باید کوچکتر یا مساوی باشد.",
+  "Ensure this field has no more than": "تعداد کاراکترها بیش از حد مجاز است.",
 };
 
 /**
@@ -97,8 +182,36 @@ function translateMsg(msg: string, t?: (k: string) => string, isRTL: boolean = t
     const translated = t(trimmed);
     if (translated && translated !== trimmed) return translated;
   }
-  if (isRTL && COMMON_ERROR_TRANSLATIONS_FA[trimmed]) {
-    return COMMON_ERROR_TRANSLATIONS_FA[trimmed];
+  if (isRTL) {
+    if (COMMON_ERROR_TRANSLATIONS_FA[trimmed]) {
+      return COMMON_ERROR_TRANSLATIONS_FA[trimmed];
+    }
+    // Dynamic pattern matching
+    if (trimmed.includes("greater than or equal to")) {
+      const match = trimmed.match(/greater than or equal to\s+([\d.]+)/);
+      return match ? `مقدار باید بزرگتر یا مساوی با ${match[1]} باشد.` : "مقدار باید بزرگتر یا مساوی باشد.";
+    }
+    if (trimmed.includes("less than or equal to")) {
+      const match = trimmed.match(/less than or equal to\s+([\d.]+)/);
+      return match ? `مقدار باید کوچکتر یا مساوی با ${match[1]} باشد.` : "مقدار باید کوچکتر یا مساوی باشد.";
+    }
+    if (trimmed.includes("Ensure this field has no more than")) {
+      const match = trimmed.match(/no more than\s+(\d+)/);
+      return match ? `حداکثر طول مجاز ${match[1]} کاراکتر است.` : "تعداد کاراکترها بیش از حد مجاز است.";
+    }
+    if (trimmed.includes("Ensure this field has at least")) {
+      const match = trimmed.match(/at least\s+(\d+)/);
+      return match ? `حداقل طول مجاز ${match[1]} کاراکتر است.` : "تعداد کاراکترها کمتر از حد مجاز است.";
+    }
+    if (trimmed.startsWith("Invalid choice for") || trimmed.startsWith("Invalid selection for")) {
+      return "گزینه انتخاب شده نامعتبر است.";
+    }
+    if (trimmed.includes("valid number is required") || trimmed.includes("valid integer is required")) {
+      return "لطفاً یک عدد معتبر وارد کنید.";
+    }
+    if (trimmed.includes("valid date is required") || trimmed.includes("valid date")) {
+      return "لطفاً یک تاریخ معتبر وارد کنید.";
+    }
   }
   return trimmed;
 }

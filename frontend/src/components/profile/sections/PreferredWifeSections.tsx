@@ -9,6 +9,7 @@ import MultiRecordSection from '@/components/profile/MultiRecordSection';
 import DisplayRow from '@/components/profile/DisplayRow';
 import FormField, { useFormState, SelectOption } from '@/components/profile/FormField';
 import { toArray, formatMultiValue } from '@/components/profile/profileUtils';
+import { formatApiError } from '@/utils/errorFormatter';
 import type {
   PreferredWifeIntellectualInformation,
   PreferredWifePersonalInformation,
@@ -90,6 +91,23 @@ const SKIN_COLOR_OPTIONS: SelectOption[] = [
   'Whitish White', 'Red & White', 'Bright Greenish', 'Other',
 ].map((v) => ({ value: v, label: v }));
 
+const HEIGHT_PRESETS = [
+  { label: '< 160', min: '', max: '159' },
+  { label: '160 - 170', min: '160', max: '170' },
+  { label: '170 - 180', min: '170', max: '180' },
+  { label: '180 - 190', min: '180', max: '190' },
+  { label: '190+', min: '190', max: '' },
+];
+
+const WEIGHT_PRESETS = [
+  { label: '< 50', min: '', max: '49' },
+  { label: '50 - 60', min: '50', max: '60' },
+  { label: '60 - 70', min: '60', max: '70' },
+  { label: '70 - 85', min: '70', max: '85' },
+  { label: '85 - 100', min: '85', max: '100' },
+  { label: '100+', min: '100', max: '' },
+];
+
 /* ─── 1. FutureSpouseOriginalitiesSection ───────────────────────────────── */
 
 function defaultOriginalityForm(item?: FutureSposeOriginality | null) {
@@ -109,17 +127,18 @@ export function FutureSpouseOriginalitiesSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t, isRTL } = useTranslation();
   const [open, setOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<FutureSposeOriginality | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const { state, handleChange, reset } = useFormState(defaultOriginalityForm(null));
+  const { state, handleChange, reset, fieldErrors, setFieldErrors } = useFormState(defaultOriginalityForm(null));
 
   const handleAdd = () => {
     setEditingItem(null);
     reset(defaultOriginalityForm(null));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
@@ -127,6 +146,7 @@ export function FutureSpouseOriginalitiesSection({
     setEditingItem(item);
     reset(defaultOriginalityForm(item));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
@@ -143,6 +163,7 @@ export function FutureSpouseOriginalitiesSection({
   const handleSave = async () => {
     setSaving(true);
     setError('');
+    setFieldErrors({});
     try {
       const payload = {
         future_spouse_originality: state.future_spouse_ethnicity,
@@ -155,7 +176,9 @@ export function FutureSpouseOriginalitiesSection({
       setOpen(false);
       onReload();
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to save');
+      const formatted = formatApiError(e, t, isRTL);
+      setFieldErrors(formatted.fieldErrors);
+      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
     } finally {
       setSaving(false);
     }
@@ -182,7 +205,7 @@ export function FutureSpouseOriginalitiesSection({
             {editingItem ? t('Edit') : t('Add')} {t('Future Spouse Ethnicity')}
           </h2>
           <div className="space-y-4">
-            <FormField label="Ethnicity" name="future_spouse_ethnicity" type="select" value={state.future_spouse_ethnicity} onChange={handleChange} options={ETHNICITY_OPTIONS} required />
+            <FormField label="Ethnicity" name="future_spouse_ethnicity" type="select" value={state.future_spouse_ethnicity} onChange={handleChange} options={ETHNICITY_OPTIONS} required error={fieldErrors.future_spouse_ethnicity || fieldErrors.future_spouse_originality} />
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
@@ -228,17 +251,19 @@ export function PreferredWifeIntellectualSection({
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const { state, handleChange, reset } = useFormState(defaultPrefIntellectualForm(data));
+  const { state, handleChange, reset, fieldErrors, setFieldErrors } = useFormState(defaultPrefIntellectualForm(data));
 
   const openModal = () => {
     reset(defaultPrefIntellectualForm(data));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
   const handleSave = async () => {
     setSaving(true);
     setError('');
+    setFieldErrors({});
     try {
       const payload = {
         ...state,
@@ -255,7 +280,9 @@ export function PreferredWifeIntellectualSection({
       setOpen(false);
       onReload();
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to save');
+      const formatted = formatApiError(e, t, isRTL);
+      setFieldErrors(formatted.fieldErrors);
+      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
     } finally {
       setSaving(false);
     }
@@ -283,17 +310,17 @@ export function PreferredWifeIntellectualSection({
             {data ? t('Edit') : t('Add')} {t('Preferred Wife Intellectual Information')}
           </h2>
           <div className="space-y-4">
-            <FormField label="Appearance Type" name="appearance_type" type="multiselect" value={state.appearance_type} onChange={handleChange} options={APPEARANCE_OPTIONS} />
-            <FormField label="Age Difference" name="age_difference" type="multiselect" value={state.age_difference} onChange={handleChange} options={AGE_DIFF_OPTIONS} />
-            <FormField label="Family Religious Status Importance" name="future_spouse_family_religious_status_importance" type="select" value={state.future_spouse_family_religious_status_importance} onChange={handleChange} options={IMPORTANCE_OPTIONS} />
-            <FormField label="Family Financial Status Importance" name="future_spouse_family_financial_status_importance" type="select" value={state.future_spouse_family_financial_status_importance} onChange={handleChange} options={IMPORTANCE_OPTIONS} />
-            <FormField label="Marriage with Someone with Marriage Experience" name="marriage_with_someone_with_marriage_experience" type="multiselect" value={state.marriage_with_someone_with_marriage_experience} onChange={handleChange} options={MARRIAGE_EXP_OPTIONS} />
-            <FormField label="Marriage Experience Explanation" name="marriage_with_someone_explanation" type="textarea" value={state.marriage_with_someone_explanation} onChange={handleChange} />
-            <FormField label="Most Important Moral Feature" name="most_important_moral_feature" type="textarea" value={state.most_important_moral_feature} onChange={handleChange} />
-            <FormField label="Marriage with Disabled Person" name="marriage_with_disabled_person" type="select" value={state.marriage_with_disabled_person} onChange={handleChange} options={DISABLED_VETERAN_OPTIONS} />
-            <FormField label="Marriage with Veteran Person" name="marriage_with_veteran_person" type="select" value={state.marriage_with_veteran_person} onChange={handleChange} options={DISABLED_VETERAN_OPTIONS} />
-            <FormField label="Disabled / Veteran Explanation" name="marriage_disabled_veteran_explanation" type="textarea" value={state.marriage_disabled_veteran_explanation} onChange={handleChange} />
-            <FormField label="Red Flags / Dealbreakers" name="red_flags" type="textarea" value={state.red_flags} onChange={handleChange} />
+            <FormField label="Appearance Type" name="appearance_type" type="multiselect" value={state.appearance_type} onChange={handleChange} options={APPEARANCE_OPTIONS} error={fieldErrors.appearance_type} />
+            <FormField label="Age Difference" name="age_difference" type="multiselect" value={state.age_difference} onChange={handleChange} options={AGE_DIFF_OPTIONS} error={fieldErrors.age_difference} />
+            <FormField label="Family Religious Status Importance" name="future_spouse_family_religious_status_importance" type="select" value={state.future_spouse_family_religious_status_importance} onChange={handleChange} options={IMPORTANCE_OPTIONS} error={fieldErrors.future_spouse_family_religious_status_importance} />
+            <FormField label="Family Financial Status Importance" name="future_spouse_family_financial_status_importance" type="select" value={state.future_spouse_family_financial_status_importance} onChange={handleChange} options={IMPORTANCE_OPTIONS} error={fieldErrors.future_spouse_family_financial_status_importance} />
+            <FormField label="Marriage with Someone with Marriage Experience" name="marriage_with_someone_with_marriage_experience" type="multiselect" value={state.marriage_with_someone_with_marriage_experience} onChange={handleChange} options={MARRIAGE_EXP_OPTIONS} error={fieldErrors.marriage_with_someone_with_marriage_experience} />
+            <FormField label="Marriage Experience Explanation" name="marriage_with_someone_explanation" type="textarea" value={state.marriage_with_someone_explanation} onChange={handleChange} error={fieldErrors.marriage_with_someone_explanation} />
+            <FormField label="Most Important Moral Feature" name="most_important_moral_feature" type="textarea" value={state.most_important_moral_feature} onChange={handleChange} error={fieldErrors.most_important_moral_feature} />
+            <FormField label="Marriage with Disabled Person" name="marriage_with_disabled_person" type="select" value={state.marriage_with_disabled_person} onChange={handleChange} options={DISABLED_VETERAN_OPTIONS} error={fieldErrors.marriage_with_disabled_person} />
+            <FormField label="Marriage with Veteran Person" name="marriage_with_veteran_person" type="select" value={state.marriage_with_veteran_person} onChange={handleChange} options={DISABLED_VETERAN_OPTIONS} error={fieldErrors.marriage_with_veteran_person} />
+            <FormField label="Disabled / Veteran Explanation" name="marriage_disabled_veteran_explanation" type="textarea" value={state.marriage_disabled_veteran_explanation} onChange={handleChange} error={fieldErrors.marriage_disabled_veteran_explanation} />
+            <FormField label="Red Flags / Dealbreakers" name="red_flags" type="textarea" value={state.red_flags} onChange={handleChange} error={fieldErrors.red_flags} />
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
@@ -333,17 +360,19 @@ export function PreferredWifePersonalSection({
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const { state, handleChange, reset } = useFormState(defaultPrefPersonalForm(data));
+  const { state, handleChange, reset, fieldErrors, setFieldErrors } = useFormState(defaultPrefPersonalForm(data));
 
   const openModal = () => {
     reset(defaultPrefPersonalForm(data));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
   const handleSave = async () => {
     setSaving(true);
     setError('');
+    setFieldErrors({});
     try {
       const payload = {
         ...state,
@@ -357,7 +386,9 @@ export function PreferredWifePersonalSection({
       setOpen(false);
       onReload();
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to save');
+      const formatted = formatApiError(e, t, isRTL);
+      setFieldErrors(formatted.fieldErrors);
+      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
     } finally {
       setSaving(false);
     }
@@ -379,11 +410,11 @@ export function PreferredWifePersonalSection({
             {data ? t('Edit') : t('Add')} {t('Preferred Wife Personal Information')}
           </h2>
           <div className="space-y-4">
-            <FormField label="Education Level" name="education_level" type="text" value={state.education_level} onChange={handleChange} />
-            <FormField label="Field of Study" name="field_of_study" type="text" value={state.field_of_study} onChange={handleChange} />
-            <FormField label="Future Spouse Job" name="future_spouse_job" type="multiselect" value={state.future_spouse_job} onChange={handleChange} options={SPOUSE_JOB_OPTIONS} />
-            <FormField label="Current Residence Location" name="current_residence_location" type="text" value={state.current_residence_location} onChange={handleChange} />
-            <FormField label="After Marriage Residence Location" name="after_marriage_residence_location" type="select" value={state.after_marriage_residence_location} onChange={handleChange} options={SPOUSE_RESIDENCE_LOCATIONS} />
+            <FormField label="Education Level" name="education_level" type="text" value={state.education_level} onChange={handleChange} error={fieldErrors.education_level} />
+            <FormField label="Field of Study" name="field_of_study" type="text" value={state.field_of_study} onChange={handleChange} error={fieldErrors.field_of_study} />
+            <FormField label="Future Spouse Job" name="future_spouse_job" type="multiselect" value={state.future_spouse_job} onChange={handleChange} options={SPOUSE_JOB_OPTIONS} error={fieldErrors.future_spouse_job} />
+            <FormField label="Current Residence Location" name="current_residence_location" type="text" value={state.current_residence_location} onChange={handleChange} error={fieldErrors.current_residence_location} />
+            <FormField label="After Marriage Residence Location" name="after_marriage_residence_location" type="select" value={state.after_marriage_residence_location} onChange={handleChange} options={SPOUSE_RESIDENCE_LOCATIONS} error={fieldErrors.after_marriage_residence_location} />
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
@@ -423,17 +454,19 @@ export function PreferredWifePhysicalSection({
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const { state, handleChange, reset } = useFormState(defaultPrefPhysicalForm(data));
+  const { state, handleChange, reset, fieldErrors, setFieldErrors } = useFormState(defaultPrefPhysicalForm(data));
 
   const openModal = () => {
     reset(defaultPrefPhysicalForm(data));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
   const handleSave = async () => {
     setSaving(true);
     setError('');
+    setFieldErrors({});
     try {
       const payload = {
         ...state,
@@ -450,7 +483,9 @@ export function PreferredWifePhysicalSection({
       setOpen(false);
       onReload();
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to save');
+      const formatted = formatApiError(e, t, isRTL);
+      setFieldErrors(formatted.fieldErrors);
+      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
     } finally {
       setSaving(false);
     }
@@ -484,15 +519,75 @@ export function PreferredWifePhysicalSection({
             {data ? t('Edit') : t('Add')} {t('Preferred Wife Physical Information')}
           </h2>
           <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <FormField label="Min Height (cm)" name="height_min" type="number" value={state.height_min} onChange={handleChange} />
-              <FormField label="Max Height (cm)" name="height_max" type="number" value={state.height_max} onChange={handleChange} />
+            <div>
+              <div className="grid grid-cols-2 gap-4">
+                <FormField label="Min Height (cm)" name="height_min" type="number" value={state.height_min} onChange={handleChange} error={fieldErrors.height_min} />
+                <FormField label="Max Height (cm)" name="height_max" type="number" value={state.height_max} onChange={handleChange} error={fieldErrors.height_max} />
+              </div>
+              <div className="flex flex-wrap gap-1.5 pt-1.5">
+                {HEIGHT_PRESETS.map((p) => {
+                  const active = String(state.height_min || '') === p.min && String(state.height_max || '') === p.max;
+                  return (
+                    <button
+                      key={p.label}
+                      type="button"
+                      onClick={() => {
+                        if (active) {
+                          handleChange('height_min', '');
+                          handleChange('height_max', '');
+                        } else {
+                          handleChange('height_min', p.min);
+                          handleChange('height_max', p.max);
+                        }
+                      }}
+                      className={`px-2.5 py-1 text-xs rounded-lg font-medium transition-colors border ${
+                        active
+                          ? 'bg-brand-50 border-brand-500 text-brand-700 dark:bg-brand-950/40 dark:border-brand-500 dark:text-brand-300 ring-1 ring-brand-500'
+                          : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-transparent hover:bg-gray-200 dark:hover:bg-gray-700'
+                      }`}
+                    >
+                      {p.label}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <FormField label="Min Weight (kg)" name="weight_min" type="number" value={state.weight_min} onChange={handleChange} />
-              <FormField label="Max Weight (kg)" name="weight_max" type="number" value={state.weight_max} onChange={handleChange} />
+
+            <div>
+              <div className="grid grid-cols-2 gap-4">
+                <FormField label="Min Weight (kg)" name="weight_min" type="number" value={state.weight_min} onChange={handleChange} error={fieldErrors.weight_min} />
+                <FormField label="Max Weight (kg)" name="weight_max" type="number" value={state.weight_max} onChange={handleChange} error={fieldErrors.weight_max} />
+              </div>
+              <div className="flex flex-wrap gap-1.5 pt-1.5">
+                {WEIGHT_PRESETS.map((p) => {
+                  const active = String(state.weight_min || '') === p.min && String(state.weight_max || '') === p.max;
+                  return (
+                    <button
+                      key={p.label}
+                      type="button"
+                      onClick={() => {
+                        if (active) {
+                          handleChange('weight_min', '');
+                          handleChange('weight_max', '');
+                        } else {
+                          handleChange('weight_min', p.min);
+                          handleChange('weight_max', p.max);
+                        }
+                      }}
+                      className={`px-2.5 py-1 text-xs rounded-lg font-medium transition-colors border ${
+                        active
+                          ? 'bg-brand-50 border-brand-500 text-brand-700 dark:bg-brand-950/40 dark:border-brand-500 dark:text-brand-300 ring-1 ring-brand-500'
+                          : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-transparent hover:bg-gray-200 dark:hover:bg-gray-700'
+                      }`}
+                    >
+                      {p.label}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-            <FormField label="Preferred Skin Colors" name="skin_color" type="multiselect" value={state.skin_color} onChange={handleChange} options={SKIN_COLOR_OPTIONS} />
+
+            <FormField label="Preferred Skin Colors" name="skin_color" type="multiselect" value={state.skin_color} onChange={handleChange} options={SKIN_COLOR_OPTIONS} error={fieldErrors.skin_color} />
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
@@ -524,21 +619,23 @@ export function PreferredWifeExtraSection({
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t, isRTL } = useTranslation();
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  const { state, handleChange, reset } = useFormState(defaultPrefExtraForm(data));
+  const { state, handleChange, reset, fieldErrors, setFieldErrors } = useFormState(defaultPrefExtraForm(data));
 
   const openModal = () => {
     reset(defaultPrefExtraForm(data));
     setError('');
+    setFieldErrors({});
     setOpen(true);
   };
 
   const handleSave = async () => {
     setSaving(true);
     setError('');
+    setFieldErrors({});
     try {
       if (data?.id) {
         await updatePreferredWifeExtraInformation(data.id, state as any);
@@ -548,7 +645,9 @@ export function PreferredWifeExtraSection({
       setOpen(false);
       onReload();
     } catch (e: any) {
-      setError(e?.message ?? 'Failed to save');
+      const formatted = formatApiError(e, t, isRTL);
+      setFieldErrors(formatted.fieldErrors);
+      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
     } finally {
       setSaving(false);
     }
@@ -566,7 +665,7 @@ export function PreferredWifeExtraSection({
             {data ? t('Edit') : t('Add')} {t('Preferred Wife Extra Information')}
           </h2>
           <div className="space-y-4">
-            <FormField label="Additional Explanations" name="additional_explanations" type="textarea" value={state.additional_explanations} onChange={handleChange} rows={5} />
+            <FormField label="Additional Explanations" name="additional_explanations" type="textarea" value={state.additional_explanations} onChange={handleChange} rows={5} error={fieldErrors.additional_explanations} />
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
