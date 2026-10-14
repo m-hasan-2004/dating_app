@@ -21,7 +21,7 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   className = "",
   disabled = false,
-  type = "button",
+  type,
 }) => {
   // Size Classes
   const sizeClasses = {

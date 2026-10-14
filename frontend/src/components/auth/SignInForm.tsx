@@ -117,7 +117,7 @@ export default function SignInForm() {
                   </Link>
                 </div>
                 <div>
-                  <Button className="w-full" size="sm" disabled={isSubmitting}>
+                  <Button className="w-full" size="sm" type="submit" disabled={isSubmitting}>
                     {isSubmitting ? t("Signing in...") : t("Sign in")}
                   </Button>
                 </div>

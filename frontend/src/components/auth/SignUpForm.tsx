@@ -383,7 +383,7 @@ export default function SignUpForm() {
 
                 {/* Submit Button */}
                 <div className="pt-2">
-                  <Button className="w-full" size="sm" disabled={isSubmitting}>
+                  <Button className="w-full" size="sm" type="submit" disabled={isSubmitting}>
                     {isSubmitting ? t("Creating Account...") : t("Sign Up")}
                   </Button>
                 </div>
