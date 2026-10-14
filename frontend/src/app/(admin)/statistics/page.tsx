@@ -16,6 +16,7 @@ import {
 import { useAuth } from '@/hooks/use-auth';
 import { useTranslation } from '@/context/LanguageContext';
 import { useRouter } from 'next/navigation';
+import { toPersianDigits } from '@/utils/formatters';
 
 type GenderFilter = 'all' | 'man' | 'woman';
 
@@ -91,25 +92,43 @@ export default function StatisticsPage() {
       '39 - 45': 0,
       '45+': 0,
     };
+    const ageLabelFa: Record<string, string> = {
+      'Under 22': 'زیر ۲۲',
+      '22 - 26': '۲۲ تا ۲۶',
+      '27 - 32': '۲۷ تا ۳۲',
+      '33 - 38': '۳۳ تا ۳۸',
+      '39 - 45': '۳۹ تا ۴۵',
+      '45+': 'بیش از ۴۵',
+    };
+    const ageLabelEn: Record<string, string> = {
+      'Under 22': 'Under 22',
+      '22 - 26': '22 - 26',
+      '27 - 32': '27 - 32',
+      '33 - 38': '33 - 38',
+      '39 - 45': '39 - 45',
+      '45+': '45+',
+    };
     const total = Object.values(raw).reduce((a, b) => a + b, 0) || 1;
     return Object.entries(raw).map(([range, count]) => ({
       range,
+      localizedRange: isRTL ? (ageLabelFa[range] || range) : (ageLabelEn[range] || range),
       count,
       percent: Math.round((count / total) * 100),
     }));
-  }, [stats]);
+  }, [stats, isRTL]);
 
-  // Income breakdown for currently selected cohort
+  // Income breakdown for currently selected cohort (guarantees all tiers including +100)
   const incomeData = useMemo(() => {
+    const ALL_INCOME_KEYS = ['no_income', '-10', '10-20', '20-30', '30-40', '40-50', '50-100', '+100'];
     const labelMapFa: Record<string, string> = {
       no_income: 'بدون درآمد',
-      '-10': 'زیر ۱۰ میلیون',
-      '10-20': '۱۰ تا ۲۰ میلیون',
-      '20-30': '۲۰ تا ۳۰ میلیون',
-      '30-40': '۳۰ تا ۴۰ میلیون',
-      '40-50': '۴۰ تا ۵۰ میلیون',
-      '50-100': '۵۰ تا ۱۰۰ میلیون',
-      '+100': 'بیش از ۱۰۰ میلیون',
+      '-10': 'زیر ۱۰ میلیون تومان',
+      '10-20': '۱۰ تا ۲۰ میلیون تومان',
+      '20-30': '۲۰ تا ۳۰ میلیون تومان',
+      '30-40': '۳۰ تا ۴۰ میلیون تومان',
+      '40-50': '۴۰ تا ۵۰ میلیون تومان',
+      '50-100': '۵۰ تا ۱۰۰ میلیون تومان',
+      '+100': 'بیش از ۱۰۰ میلیون تومان',
     };
     const labelMapEn: Record<string, string> = {
       no_income: 'No Income',
@@ -122,9 +141,16 @@ export default function StatisticsPage() {
       '+100': 'Over 100M',
     };
     const raw = stats?.income_breakdown || {};
-    const total = Object.values(raw).reduce((a, b) => a + b, 0) || 1;
-    return Object.entries(raw)
-      .sort((a, b) => b[1] - a[1])
+    const countsMap: Record<string, number> = {};
+    ALL_INCOME_KEYS.forEach((k) => {
+      countsMap[k] = raw[k] || 0;
+    });
+    Object.keys(raw).forEach((k) => {
+      if (countsMap[k] === undefined) countsMap[k] = raw[k];
+    });
+
+    const total = Object.values(countsMap).reduce((a, b) => a + b, 0) || 1;
+    return Object.entries(countsMap)
       .map(([key, count]) => ({
         key,
         label: isRTL ? (labelMapFa[key] || key) : (labelMapEn[key] || key),
@@ -228,7 +254,7 @@ export default function StatisticsPage() {
       {genderFilter !== 'all' && (
         <div className="rounded-xl px-4 py-2.5 bg-brand-50/70 border border-brand-200 dark:bg-brand-950/30 dark:border-brand-900/50 flex items-center justify-between text-xs text-brand-700 dark:text-brand-300">
           <span>
-            {t("Filtering charts and data specifically for:")} <strong>{cohortLabel}</strong> ({stats?.cohort_count ?? 0} {t("profiles")})
+            {t("Filtering charts and data specifically for:")} <strong>{cohortLabel}</strong> ({isRTL ? toPersianDigits(stats?.cohort_count ?? 0) : (stats?.cohort_count ?? 0)} {t("profiles")})
           </span>
           <button
             type="button"
@@ -368,9 +394,9 @@ export default function StatisticsPage() {
             {ageData.map((item) => (
               <div key={item.range}>
                 <div className="flex items-center justify-between text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  <span>{item.range} {t("Years Old")}</span>
+                  <span>{item.localizedRange} {t("Years Old")}</span>
                   <span className="font-semibold text-gray-900 dark:text-white">
-                    {item.count} {t("profiles")} ({item.percent}%)
+                    {isRTL ? toPersianDigits(item.count) : item.count} {t("profiles")} ({isRTL ? toPersianDigits(item.percent) : item.percent}%)
                   </span>
                 </div>
                 <div className="h-2.5 w-full rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
@@ -501,10 +527,12 @@ export default function StatisticsPage() {
               >
                 <div className="flex items-center justify-between text-xs mb-1">
                   <span className="font-medium text-gray-700 dark:text-gray-300">{inc.label}</span>
-                  <span className="font-bold text-emerald-600 dark:text-emerald-400">{inc.percent}%</span>
+                  <span className="font-bold text-emerald-600 dark:text-emerald-400">
+                    {isRTL ? toPersianDigits(inc.percent) : inc.percent}%
+                  </span>
                 </div>
                 <p className="text-xl font-bold text-gray-900 dark:text-white mt-1">
-                  {inc.count}{' '}
+                  {isRTL ? toPersianDigits(inc.count) : inc.count}{' '}
                   <span className="text-xs font-normal text-gray-400">{t("candidates")}</span>
                 </p>
                 <div className="h-1.5 w-full rounded-full bg-gray-200 dark:bg-gray-700 mt-2 overflow-hidden">

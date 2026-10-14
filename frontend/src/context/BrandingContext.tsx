@@ -4,45 +4,173 @@ import React, { createContext, useContext, useEffect, useState, useCallback } fr
 import { getRegistrationConfigApi } from '@/services/api/siteSettings';
 import { useTranslation } from '@/context/LanguageContext';
 
-export type ColorPalette = 'default' | 'emerald' | 'purple' | 'rose' | 'amber' | 'indigo';
+export type ColorPalette = 'default' | 'emerald' | 'purple' | 'rose' | 'amber' | 'indigo' | 'custom';
+
+function hexToRgb(hex: string): [number, number, number] | null {
+  const clean = hex.replace('#', '').trim();
+  if (clean.length === 3) {
+    const r = parseInt(clean[0] + clean[0], 16);
+    const g = parseInt(clean[1] + clean[1], 16);
+    const b = parseInt(clean[2] + clean[2], 16);
+    return [r, g, b];
+  }
+  if (clean.length === 6) {
+    const r = parseInt(clean.substring(0, 2), 16);
+    const g = parseInt(clean.substring(2, 4), 16);
+    const b = parseInt(clean.substring(4, 6), 16);
+    return [r, g, b];
+  }
+  return null;
+}
+
+function rgbToHsl(r: number, g: number, b: number): [number, number, number] {
+  r /= 255;
+  g /= 255;
+  b /= 255;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  let h = 0, s = 0, l = (max + min) / 2;
+
+  if (max !== min) {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+      case g: h = (b - r) / d + 2; break;
+      case b: h = (r - g) / d + 4; break;
+    }
+    h /= 6;
+  }
+  return [Math.round(h * 360), Math.round(s * 100), Math.round(l * 100)];
+}
+
+function hslToHex(h: number, s: number, l: number): string {
+  l /= 100;
+  const a = (s * Math.min(l, 1 - l)) / 100;
+  const f = (n: number) => {
+    const k = (n + h / 30) % 12;
+    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    return Math.round(255 * color).toString(16).padStart(2, '0');
+  };
+  return `#${f(0)}${f(8)}${f(4)}`;
+}
+
+export function generatePaletteFromHex(hex: string): Record<string, string> {
+  const rgb = hexToRgb(hex);
+  if (!rgb) return {};
+  const [h, s] = rgbToHsl(rgb[0], rgb[1], rgb[2]);
+
+  return {
+    '25': hslToHex(h, Math.min(s, 95), 98),
+    '50': hslToHex(h, Math.min(s, 95), 96),
+    '100': hslToHex(h, Math.min(s, 90), 91),
+    '200': hslToHex(h, Math.min(s, 85), 82),
+    '300': hslToHex(h, Math.min(s, 80), 71),
+    '400': hslToHex(h, Math.min(s, 75), 60),
+    '500': hex,
+    '600': hslToHex(h, Math.min(s + 5, 100), 44),
+    '700': hslToHex(h, Math.min(s + 10, 100), 35),
+    '800': hslToHex(h, Math.min(s + 10, 100), 27),
+    '900': hslToHex(h, Math.min(s + 10, 100), 20),
+    '950': hslToHex(h, Math.min(s + 15, 100), 12),
+  };
+}
 
 interface BrandingContextType {
   siteNameFa: string;
   siteNameEn: string;
   siteName: string;
+  siteTaglineFa: string;
+  siteTaglineEn: string;
+  siteTagline: string;
   colorPalette: ColorPalette;
+  customPrimaryColor: string;
+  customSecondaryColor: string;
   logoUrl: string;
+  faviconUrl: string;
   setColorPalette: (palette: ColorPalette) => void;
   setBranding: (data: {
     siteNameFa?: string;
     siteNameEn?: string;
+    siteTaglineFa?: string;
+    siteTaglineEn?: string;
     colorPalette?: ColorPalette;
+    customPrimaryColor?: string;
+    customSecondaryColor?: string;
     logoUrl?: string;
+    faviconUrl?: string;
   }) => void;
   refreshBranding: () => Promise<void>;
+  restoreDefaults: () => Promise<void>;
 }
 
-const BrandingContext = createContext<BrandingContextType>({
+const DEFAULT_BRANDING = {
   siteNameFa: 'سامانه همسان‌گزینی و ازدواج دائم',
   siteNameEn: 'TailAdmin Matchmaking',
-  siteName: 'سامانه همسان‌گزینی و ازدواج دائم',
-  colorPalette: 'default',
+  siteTaglineFa: 'پورتال همسان‌گزینی',
+  siteTaglineEn: 'Matchmaking Portal',
+  colorPalette: 'default' as ColorPalette,
+  customPrimaryColor: '',
+  customSecondaryColor: '',
   logoUrl: '',
+  faviconUrl: '',
+};
+
+const BrandingContext = createContext<BrandingContextType>({
+  ...DEFAULT_BRANDING,
+  siteName: DEFAULT_BRANDING.siteNameFa,
+  siteTagline: DEFAULT_BRANDING.siteTaglineFa,
   setColorPalette: () => {},
   setBranding: () => {},
   refreshBranding: async () => {},
+  restoreDefaults: async () => {},
 });
 
 export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { language } = useTranslation();
-  const [siteNameFa, setSiteNameFa] = useState('سامانه همسان‌گزینی و ازدواج دائم');
-  const [siteNameEn, setSiteNameEn] = useState('TailAdmin Matchmaking');
-  const [colorPalette, setColorPaletteState] = useState<ColorPalette>('default');
+  const { language, t } = useTranslation();
+  const [siteNameFa, setSiteNameFa] = useState(DEFAULT_BRANDING.siteNameFa);
+  const [siteNameEn, setSiteNameEn] = useState(DEFAULT_BRANDING.siteNameEn);
+  const [siteTaglineFa, setSiteTaglineFa] = useState(DEFAULT_BRANDING.siteTaglineFa);
+  const [siteTaglineEn, setSiteTaglineEn] = useState(DEFAULT_BRANDING.siteTaglineEn);
+  const [colorPalette, setColorPaletteState] = useState<ColorPalette>(DEFAULT_BRANDING.colorPalette);
+  const [customPrimaryColor, setCustomPrimaryColor] = useState(DEFAULT_BRANDING.customPrimaryColor);
+  const [customSecondaryColor, setCustomSecondaryColor] = useState(DEFAULT_BRANDING.customSecondaryColor);
   const [logoUrl, setLogoUrl] = useState('');
+  const [faviconUrl, setFaviconUrl] = useState('');
 
-  // Apply palette to <html> attribute
-  const applyPalette = useCallback((palette: ColorPalette) => {
-    if (typeof document !== 'undefined') {
+  // Dynamically update browser tab favicon icon
+  const updateTabFavicon = useCallback((url: string) => {
+    if (typeof document === 'undefined') return;
+    try {
+      let link: HTMLLinkElement | null = document.querySelector("link[rel*='icon']");
+      if (!link) {
+        link = document.createElement('link');
+        link.rel = 'shortcut icon';
+        document.getElementsByTagName('head')[0].appendChild(link);
+      }
+      link.href = url || '/favicon.ico';
+    } catch {
+      // Ignore in non-browser env
+    }
+  }, []);
+
+  // Apply colors to documentElement
+  const applyPalette = useCallback((palette: ColorPalette, primaryHex?: string) => {
+    if (typeof document === 'undefined') return;
+
+    if (palette === 'custom' && primaryHex && primaryHex.startsWith('#')) {
+      document.documentElement.removeAttribute('data-palette');
+      const shades = generatePaletteFromHex(primaryHex);
+      Object.entries(shades).forEach(([step, color]) => {
+        document.documentElement.style.setProperty(`--color-brand-${step}`, color);
+      });
+    } else {
+      // Clear custom inline styles
+      const steps = ['25', '50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950'];
+      steps.forEach((step) => {
+        document.documentElement.style.removeProperty(`--color-brand-${step}`);
+      });
+
       if (palette === 'default') {
         document.documentElement.removeAttribute('data-palette');
       } else {
@@ -51,54 +179,104 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   }, []);
 
-  const setColorPalette = useCallback((palette: ColorPalette) => {
+  const setColorPalette = useCallback((palette: ColorPalette, customHex?: string) => {
     setColorPaletteState(palette);
-    applyPalette(palette);
+    applyPalette(palette, customHex || customPrimaryColor);
     if (typeof window !== 'undefined') {
       localStorage.setItem('branding_color_palette', palette);
+      if (customHex) localStorage.setItem('branding_custom_primary', customHex);
     }
-  }, [applyPalette]);
+  }, [applyPalette, customPrimaryColor]);
 
   const setBranding = useCallback((data: {
     siteNameFa?: string;
     siteNameEn?: string;
+    siteTaglineFa?: string;
+    siteTaglineEn?: string;
     colorPalette?: ColorPalette;
+    customPrimaryColor?: string;
+    customSecondaryColor?: string;
     logoUrl?: string;
+    faviconUrl?: string;
   }) => {
     if (data.siteNameFa !== undefined) setSiteNameFa(data.siteNameFa);
     if (data.siteNameEn !== undefined) setSiteNameEn(data.siteNameEn);
-    if (data.colorPalette !== undefined) setColorPalette(data.colorPalette);
+    if (data.siteTaglineFa !== undefined) setSiteTaglineFa(data.siteTaglineFa);
+    if (data.siteTaglineEn !== undefined) setSiteTaglineEn(data.siteTaglineEn);
+    if (data.customPrimaryColor !== undefined) setCustomPrimaryColor(data.customPrimaryColor);
+    if (data.customSecondaryColor !== undefined) setCustomSecondaryColor(data.customSecondaryColor);
+    if (data.colorPalette !== undefined) {
+      setColorPaletteState(data.colorPalette);
+      applyPalette(data.colorPalette, data.customPrimaryColor || customPrimaryColor);
+    }
     if (data.logoUrl !== undefined) setLogoUrl(data.logoUrl);
-  }, [setColorPalette]);
+    if (data.faviconUrl !== undefined) {
+      setFaviconUrl(data.faviconUrl);
+      updateTabFavicon(data.faviconUrl || data.logoUrl || '');
+    } else if (data.logoUrl !== undefined) {
+      updateTabFavicon(data.logoUrl);
+    }
+  }, [applyPalette, customPrimaryColor, updateTabFavicon]);
 
   const refreshBranding = useCallback(async () => {
     try {
       const config = await getRegistrationConfigApi();
       if (config.site_name_fa) setSiteNameFa(config.site_name_fa);
       if (config.site_name_en) setSiteNameEn(config.site_name_en);
+      if (config.site_tagline_fa) setSiteTaglineFa(config.site_tagline_fa);
+      if (config.site_tagline_en) setSiteTaglineEn(config.site_tagline_en);
+      if (config.custom_primary_color !== undefined) setCustomPrimaryColor(config.custom_primary_color);
+      if (config.custom_secondary_color !== undefined) setCustomSecondaryColor(config.custom_secondary_color);
       if (config.color_palette) {
         const pal = config.color_palette as ColorPalette;
         setColorPaletteState(pal);
-        applyPalette(pal);
+        applyPalette(pal, config.custom_primary_color);
       }
       if (config.logo_url !== undefined) setLogoUrl(config.logo_url);
+      if (config.favicon_url !== undefined) {
+        setFaviconUrl(config.favicon_url);
+        updateTabFavicon(config.favicon_url || config.logo_url || '');
+      } else if (config.logo_url) {
+        updateTabFavicon(config.logo_url);
+      }
     } catch {
-      // Fallback gracefully to existing defaults
+      // Fallback gracefully
     }
-  }, [applyPalette]);
+  }, [applyPalette, updateTabFavicon]);
+
+  const restoreDefaults = useCallback(async () => {
+    setSiteNameFa(DEFAULT_BRANDING.siteNameFa);
+    setSiteNameEn(DEFAULT_BRANDING.siteNameEn);
+    setSiteTaglineFa(DEFAULT_BRANDING.siteTaglineFa);
+    setSiteTaglineEn(DEFAULT_BRANDING.siteTaglineEn);
+    setColorPaletteState('default');
+    setCustomPrimaryColor('');
+    setCustomSecondaryColor('');
+    setLogoUrl('');
+    setFaviconUrl('');
+    applyPalette('default');
+    updateTabFavicon('/favicon.ico');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('branding_color_palette');
+      localStorage.removeItem('branding_custom_primary');
+    }
+  }, [applyPalette, updateTabFavicon]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const cachedPalette = localStorage.getItem('branding_color_palette') as ColorPalette;
+      const cachedPrimary = localStorage.getItem('branding_custom_primary') || '';
+      if (cachedPrimary) setCustomPrimaryColor(cachedPrimary);
       if (cachedPalette) {
         setColorPaletteState(cachedPalette);
-        applyPalette(cachedPalette);
+        applyPalette(cachedPalette, cachedPrimary);
       }
     }
     refreshBranding();
   }, [applyPalette, refreshBranding]);
 
   const siteName = language === 'fa' ? siteNameFa : siteNameEn;
+  const siteTagline = language === 'fa' ? (siteTaglineFa || t('Matchmaking Portal')) : (siteTaglineEn || 'Matchmaking Portal');
 
   return (
     <BrandingContext.Provider
@@ -106,11 +284,18 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         siteNameFa,
         siteNameEn,
         siteName,
+        siteTaglineFa,
+        siteTaglineEn,
+        siteTagline,
         colorPalette,
+        customPrimaryColor,
+        customSecondaryColor,
         logoUrl,
+        faviconUrl,
         setColorPalette,
         setBranding,
         refreshBranding,
+        restoreDefaults,
       }}
     >
       {children}

@@ -334,8 +334,9 @@ class UserViewSet(viewsets.ModelViewSet):
                 key = str(edu).strip()
                 education_counts[key] = education_counts.get(key, 0) + 1
 
-        # Income breakdown
-        income_counts = {}
+        # Income breakdown - pre-initialize all defined tiers including +100
+        ALL_INCOME_KEYS = ['no_income', '-10', '10-20', '20-30', '30-40', '40-50', '50-100', '+100']
+        income_counts = {k: 0 for k in ALL_INCOME_KEYS}
         for inc in personal_qs.exclude(income="").values_list("income", flat=True):
             if inc:
                 key = str(inc).strip()

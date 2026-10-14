@@ -60,8 +60,13 @@ class PublicRegistrationConfigView(APIView):
             "require_email": settings_obj.require_email,
             "site_name_fa": settings_obj.site_name_fa,
             "site_name_en": settings_obj.site_name_en,
+            "site_tagline_fa": settings_obj.site_tagline_fa,
+            "site_tagline_en": settings_obj.site_tagline_en,
             "color_palette": settings_obj.color_palette,
+            "custom_primary_color": settings_obj.custom_primary_color,
+            "custom_secondary_color": settings_obj.custom_secondary_color,
             "logo_url": settings_obj.logo_url or "",
+            "favicon_url": settings_obj.favicon_url or "",
         }
         return Response(data, status=status.HTTP_200_OK)
 

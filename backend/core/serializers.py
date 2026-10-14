@@ -19,8 +19,13 @@ class SiteSettingSerializer(serializers.ModelSerializer):
             "require_email",
             "site_name_fa",
             "site_name_en",
+            "site_tagline_fa",
+            "site_tagline_en",
             "color_palette",
+            "custom_primary_color",
+            "custom_secondary_color",
             "logo_url",
+            "favicon_url",
             "updated_at",
             "updated_by",
             "updated_by_username",
@@ -35,8 +40,13 @@ class PublicRegistrationConfigSerializer(serializers.Serializer):
 
     require_access_code = serializers.BooleanField()
     require_email = serializers.BooleanField()
-    site_name_fa = serializers.CharField(default="همسان‌گزینی")
-    site_name_en = serializers.CharField(default="Matrimonial")
-    color_palette = serializers.CharField(default="brand")
+    site_name_fa = serializers.CharField(default="سامانه همسان‌گزینی و ازدواج دائم")
+    site_name_en = serializers.CharField(default="TailAdmin Matchmaking")
+    site_tagline_fa = serializers.CharField(default="پورتال همسان‌گزینی", allow_blank=True)
+    site_tagline_en = serializers.CharField(default="Matchmaking Portal", allow_blank=True)
+    color_palette = serializers.CharField(default="default")
+    custom_primary_color = serializers.CharField(default="", allow_blank=True)
+    custom_secondary_color = serializers.CharField(default="", allow_blank=True)
     logo_url = serializers.CharField(default="", allow_blank=True, allow_null=True)
+    favicon_url = serializers.CharField(default="", allow_blank=True, allow_null=True)
 

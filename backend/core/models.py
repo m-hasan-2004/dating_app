@@ -39,16 +39,48 @@ class SiteSetting(models.Model):
     color_palette = models.CharField(
         _("Color Palette"),
         max_length=50,
-        default="brand",
-        help_text=_("Visual color theme (brand, emerald, purple, rose, amber, indigo)."),
+        default="default",
+        help_text=_("Visual color theme (default, emerald, purple, rose, amber, indigo, custom)."),
     )
-    logo_url = models.CharField(
-        _("Logo URL or Identifier"),
-        max_length=500,
+    custom_primary_color = models.CharField(
+        _("Custom Primary Color"),
+        max_length=30,
         blank=True,
-        null=True,
         default="",
-        help_text=_("Custom logo URL or preset logo identifier."),
+        help_text=_("Arbitrary primary hex color (e.g. #465fff)."),
+    )
+    custom_secondary_color = models.CharField(
+        _("Custom Secondary Color"),
+        max_length=30,
+        blank=True,
+        default="",
+        help_text=_("Arbitrary secondary/accent hex color."),
+    )
+    site_tagline_fa = models.CharField(
+        _("Site Tagline (Persian)"),
+        max_length=150,
+        default="پورتال همسان‌گزینی",
+        blank=True,
+        help_text=_("Subtitle / Tagline displayed beneath site title in Persian."),
+    )
+    site_tagline_en = models.CharField(
+        _("Site Tagline (English)"),
+        max_length=150,
+        default="Matchmaking Portal",
+        blank=True,
+        help_text=_("Subtitle / Tagline displayed beneath site title in English."),
+    )
+    logo_url = models.TextField(
+        _("Logo URL, Base64 Image, or Path"),
+        blank=True,
+        default="",
+        help_text=_("Custom logo URL, local file path or base64 image string."),
+    )
+    favicon_url = models.TextField(
+        _("Favicon URL, Base64 Image, or Path"),
+        blank=True,
+        default="",
+        help_text=_("Custom favicon URL or base64 icon string."),
     )
     updated_at = models.DateTimeField(_("Updated at"), auto_now=True)
     updated_by = models.ForeignKey(
@@ -86,10 +118,15 @@ class SiteSetting(models.Model):
                 defaults={
                     "require_access_code": True,
                     "require_email": True,
-                    "site_name_fa": "همسان‌گزینی",
-                    "site_name_en": "Matrimonial",
-                    "color_palette": "brand",
+                    "site_name_fa": "سامانه همسان‌گزینی و ازدواج دائم",
+                    "site_name_en": "TailAdmin Matchmaking",
+                    "color_palette": "default",
+                    "custom_primary_color": "",
+                    "custom_secondary_color": "",
+                    "site_tagline_fa": "پورتال همسان‌گزینی",
+                    "site_tagline_en": "Matchmaking Portal",
                     "logo_url": "",
+                    "favicon_url": "",
                 },
             )
             return obj
@@ -98,8 +135,13 @@ class SiteSetting(models.Model):
             return cls(
                 require_access_code=True,
                 require_email=True,
-                site_name_fa="همسان‌گزینی",
-                site_name_en="Matrimonial",
-                color_palette="brand",
+                site_name_fa="سامانه همسان‌گزینی و ازدواج دائم",
+                site_name_en="TailAdmin Matchmaking",
+                color_palette="default",
+                custom_primary_color="",
+                custom_secondary_color="",
+                site_tagline_fa="پورتال همسان‌گزینی",
+                site_tagline_en="Matchmaking Portal",
                 logo_url="",
+                favicon_url="",
             )

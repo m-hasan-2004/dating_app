@@ -20,6 +20,7 @@ import {
   ArrowRightIcon,
   CheckCircleIcon,
 } from '@/icons';
+import WelcomeGuideModal from '@/components/onboarding/WelcomeGuideModal';
 
 // ==========================================
 // 1. ADMIN DASHBOARD VIEW (Staff Only)
@@ -496,9 +497,10 @@ export default function DashboardPage() {
     );
   }
 
-  if (isAdmin) {
-    return <AdminDashboardView />;
-  }
-
-  return <UserDashboardView user={user} />;
+  return (
+    <>
+      {isAdmin ? <AdminDashboardView /> : <UserDashboardView user={user} />}
+      <WelcomeGuideModal />
+    </>
+  );
 }

@@ -387,24 +387,6 @@ export default function UsersListPage() {
             <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">
               {t("Actions")} ({selectedUserIds.length} {t("selected")}):
             </span>
-            <select
-              value={selectedBatchAction}
-              onChange={(e) => {
-                const action = e.target.value as any;
-                setSelectedBatchAction(action);
-                if (action) {
-                  runBatchAction(action);
-                }
-              }}
-              disabled={selectedUserIds.length === 0 || batchActionLoading}
-              className="px-3 py-1.5 text-xs font-medium border border-gray-300 rounded-lg dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500 disabled:opacity-50"
-            >
-              <option value="">{t("Choose an action...")}</option>
-              <option value="enable">{t("Enable Selected")}</option>
-              <option value="disable">{t("Disable Selected")}</option>
-              <option value="make_staff">{t("Change Role: Staff / Admin")}</option>
-              <option value="make_normal">{t("Change Role: Normal User")}</option>
-            </select>
 
             <button
               type="button"

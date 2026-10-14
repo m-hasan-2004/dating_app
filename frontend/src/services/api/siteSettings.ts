@@ -6,8 +6,13 @@ export interface SiteSettings {
   require_email: boolean;
   site_name_fa?: string;
   site_name_en?: string;
+  site_tagline_fa?: string;
+  site_tagline_en?: string;
   color_palette?: string;
+  custom_primary_color?: string;
+  custom_secondary_color?: string;
   logo_url?: string;
+  favicon_url?: string;
   updated_at?: string;
   updated_by?: number | null;
   updated_by_username?: string | null;
@@ -18,8 +23,13 @@ export interface RegistrationConfig {
   require_email: boolean;
   site_name_fa?: string;
   site_name_en?: string;
+  site_tagline_fa?: string;
+  site_tagline_en?: string;
   color_palette?: string;
+  custom_primary_color?: string;
+  custom_secondary_color?: string;
   logo_url?: string;
+  favicon_url?: string;
 }
 
 /**

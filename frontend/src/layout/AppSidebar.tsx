@@ -86,7 +86,7 @@ const AppSidebar: React.FC = () => {
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
   const { user } = useAuth();
   const { isRTL, t } = useLanguage();
-  const { siteName, logoUrl } = useBranding();
+  const { siteName, logoUrl, siteTagline } = useBranding();
   const pathname = usePathname();
 
   const isSuperUser = Boolean((user as any)?.is_superuser);
@@ -354,7 +354,7 @@ const AppSidebar: React.FC = () => {
                 {siteName}
               </span>
               <span className="text-[10px] text-brand-600 dark:text-brand-400 font-medium">
-                {t("Matchmaking Portal")}
+                {siteTagline ? t(siteTagline) : t("Matchmaking Portal")}
               </span>
             </div>
           )}

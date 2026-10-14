@@ -169,6 +169,10 @@ export default function SignUpForm() {
 
       await registerApi(payload);
 
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('show_onboarding_guide', 'true');
+      }
+
       // Auto-login upon successful registration and redirect to profile completion
       await login({
         username: formData.username.trim(),
