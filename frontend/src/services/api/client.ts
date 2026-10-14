@@ -90,10 +90,21 @@ export async function apiClient<T = any>(
         errorData = { detail: response.statusText };
       }
 
-      const errorMessage =
-        errorData.detail ||
-        errorData.message ||
-        (typeof errorData === "object" ? JSON.stringify(errorData) : "An unexpected error occurred");
+      let errorMessage = errorData.detail || errorData.message;
+      if (!errorMessage && typeof errorData === "object" && errorData !== null) {
+        const parts: string[] = [];
+        for (const [key, val] of Object.entries(errorData)) {
+          const text = Array.isArray(val) ? val.join(" ") : String(val);
+          if (key === "detail" || key === "non_field_errors") {
+            parts.push(text);
+          } else {
+            parts.push(`${key}: ${text}`);
+          }
+        }
+        errorMessage = parts.join(" | ") || "An unexpected error occurred";
+      } else if (!errorMessage) {
+        errorMessage = "An unexpected error occurred";
+      }
 
       throw new ApiError(response.status, errorMessage, errorData);
     }

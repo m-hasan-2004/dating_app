@@ -17,6 +17,10 @@ class SiteSettingSerializer(serializers.ModelSerializer):
             "id",
             "require_access_code",
             "require_email",
+            "site_name_fa",
+            "site_name_en",
+            "color_palette",
+            "logo_url",
             "updated_at",
             "updated_by",
             "updated_by_username",
@@ -26,8 +30,13 @@ class SiteSettingSerializer(serializers.ModelSerializer):
 
 class PublicRegistrationConfigSerializer(serializers.Serializer):
     """
-    Publicly exposed registration configuration for signup forms.
+    Publicly exposed registration & branding configuration for frontend apps and signup forms.
     """
 
     require_access_code = serializers.BooleanField()
     require_email = serializers.BooleanField()
+    site_name_fa = serializers.CharField(default="همسان‌گزینی")
+    site_name_en = serializers.CharField(default="Matrimonial")
+    color_palette = serializers.CharField(default="brand")
+    logo_url = serializers.CharField(default="", allow_blank=True, allow_null=True)
+

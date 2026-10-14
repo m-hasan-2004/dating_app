@@ -309,19 +309,19 @@ export function FinancialInformationSection({
     <>
       <ProfileSection title="Financial Information" onEdit={openModal} isEmpty={!data} isCollapsed={isCollapsed} onToggleCollapse={onToggleCollapse}>
         <DisplayRow label="Job" value={data?.job} />
-        <DisplayRow label="Current Residence" value={data?.current_residence_status} />
-        <DisplayRow label="Ownership Status" value={data?.ownership_status} />
+        <DisplayRow label="Current Residence" value={formatMultiValue(data?.current_residence_status, RESIDENCE_OPTIONS, t)} />
+        <DisplayRow label="Ownership Status" value={formatMultiValue(data?.ownership_status, OWNERSHIP_OPTIONS, t)} />
         <DisplayRow label="Rent Amount" value={data?.rent_amount} />
         <DisplayRow label="Mortgage Amount" value={data?.mortgage_amount} />
         <DisplayRow label="Capital Assets" value={formatMultiValue(data?.capital, ASSETS_OPTIONS, t)} />
         <DisplayRow label="Other Capital" value={data?.other_capital} />
-        <DisplayRow label="After Marriage Residence" value={data?.after_marriage_residence_status} />
-        <DisplayRow label="Ex-Spouse Financial Status" value={data?.ex_spouse_financial_status} />
-        <DisplayRow label="Ex-Spouse Financial Pay Status" value={data?.ex_spouse_financial_pay_status} />
+        <DisplayRow label="After Marriage Residence" value={formatMultiValue(data?.after_marriage_residence_status, AFTER_MARRIAGE_RESIDENCE_OPTIONS, t)} />
+        <DisplayRow label="Ex-Spouse Financial Status" value={formatMultiValue(data?.ex_spouse_financial_status, EX_SPOUSE_FIN_OPTIONS, t)} />
+        <DisplayRow label="Ex-Spouse Financial Pay Status" value={formatMultiValue(data?.ex_spouse_financial_pay_status, EX_SPOUSE_PAY_OPTIONS, t)} />
         <DisplayRow label="Ex-Spouse Financial Amount" value={data?.ex_spouse_financial_amount} />
         <DisplayRow label="Future Spouse Dowry Type" value={formatMultiValue(data?.future_spouse_dowry_type, DOWRY_TYPE_OPTIONS, t)} />
         <DisplayRow label="Future Spouse Dowry Amount" value={data?.future_spose_dowry_amount} />
-        <DisplayRow label="Future Spouse Jahiziyeh" value={data?.future_spose_jahiziyeh} />
+        <DisplayRow label="Future Spouse Jahiziyeh" value={formatMultiValue(data?.future_spose_jahiziyeh, JAHIZIYEH_OPTIONS, t)} />
         <DisplayRow label="Jahiziyeh Explanation" value={data?.future_spose_jahiziyeh_explanation} />
       </ProfileSection>
 
@@ -457,24 +457,24 @@ export function IntellectualInformationSection({
         <DisplayRow label="Opinion About Woman's Education" value={formatMultiValue(data?.opinion_about_womans_education, WOMAN_EDU_OPTIONS, t)} />
         <DisplayRow label="Pros of Yourself" value={data?.pros_of_yourself} />
         <DisplayRow label="Cons of Yourself" value={data?.cons_of_yourself} />
-        <DisplayRow label="Friend Connection" value={data?.type_of_connection_with_friends} />
+        <DisplayRow label="Friend Connection" value={formatMultiValue(data?.type_of_connection_with_friends, FRIEND_CONN_OPTIONS, t)} />
         <DisplayRow label="Friends Connection Reason" value={data?.friends_connection_reason} />
         <DisplayRow label="Political Orientation" value={data?.political_orientation !== undefined ? formatBoolean(data.political_orientation, isRTL) : null} />
-        <DisplayRow label="Opinion About Velayat Faqih" value={data?.opinion_about_velayat_faqih} />
-        <DisplayRow label="Child Quantity Preference" value={data?.opinion_about_child_quantity} />
-        <DisplayRow label="Contract Ceremony" value={data?.contract_how} />
-        <DisplayRow label="Wedding Ceremony" value={data?.wedding_how} />
-        <DisplayRow label="Worship & Prayer" value={data?.worship_and_prayer} />
-        <DisplayRow label="Fasting" value={data?.fasting} />
+        <DisplayRow label="Opinion About Velayat Faqih" value={formatMultiValue(data?.opinion_about_velayat_faqih, VELAYAT_FAQIH_OPTIONS, t)} />
+        <DisplayRow label="Child Quantity Preference" value={formatMultiValue(data?.opinion_about_child_quantity, CHILD_QTY_OPTIONS, t)} />
+        <DisplayRow label="Contract Ceremony" value={formatMultiValue(data?.contract_how, CONTRACT_HOW_OPTIONS, t)} />
+        <DisplayRow label="Wedding Ceremony" value={formatMultiValue(data?.wedding_how, WEDDING_HOW_OPTIONS, t)} />
+        <DisplayRow label="Worship & Prayer" value={formatMultiValue(data?.worship_and_prayer, WORSHIP_OPTIONS, t)} />
+        <DisplayRow label="Fasting" value={formatMultiValue(data?.fasting, FASTING_OPTIONS, t)} />
         <DisplayRow label="Fasting Explanation" value={data?.fasting_explanation} />
-        <DisplayRow label="Cover Type (House)" value={data?.cover_type_house} />
-        <DisplayRow label="Cover Type (Society)" value={data?.cover_type_society} />
-        <DisplayRow label="Religious Meetings" value={data?.participating_in_religious_meetings} />
-        <DisplayRow label="Music" value={data?.music} />
-        <DisplayRow label="Dance / Singing Assemblies" value={data?.dance_singing_assemblies} />
-        <DisplayRow label="Opinion on Innocent Contact (Non-Mahram)" value={data?.opinion_about_innocent_contact} />
-        <DisplayRow label="Cover for Innocent Contact" value={data?.cover_type_innocent_contact} />
-        <DisplayRow label="Decision Making in Choosing Spouse" value={data?.decision_making_choosing_spouse} />
+        <DisplayRow label="Cover Type (House)" value={formatMultiValue(data?.cover_type_house, COVER_HOUSE_OPTIONS, t)} />
+        <DisplayRow label="Cover Type (Society)" value={formatMultiValue(data?.cover_type_society, COVER_SOCIETY_OPTIONS, t)} />
+        <DisplayRow label="Religious Meetings" value={formatMultiValue(data?.participating_in_religious_meetings, PARTICIPATION_OPTIONS, t)} />
+        <DisplayRow label="Music" value={formatMultiValue(data?.music, MUSIC_OPTIONS, t)} />
+        <DisplayRow label="Dance / Singing Assemblies" value={formatMultiValue(data?.dance_singing_assemblies, MUSIC_OPTIONS, t)} />
+        <DisplayRow label="Opinion on Innocent Contact (Non-Mahram)" value={formatMultiValue(data?.opinion_about_innocent_contact, INNOCENT_CONTACT_OPTIONS, t)} />
+        <DisplayRow label="Cover for Innocent Contact" value={formatMultiValue(data?.cover_type_innocent_contact, COVER_INNOCENT_OPTIONS, t)} />
+        <DisplayRow label="Decision Making in Choosing Spouse" value={formatMultiValue(data?.decision_making_choosing_spouse, DECISION_MAKING_OPTIONS, t)} />
       </ProfileSection>
 
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-3xl w-full">

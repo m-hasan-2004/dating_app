@@ -58,5 +58,10 @@ class PublicRegistrationConfigView(APIView):
         data = {
             "require_access_code": settings_obj.require_access_code,
             "require_email": settings_obj.require_email,
+            "site_name_fa": settings_obj.site_name_fa,
+            "site_name_en": settings_obj.site_name_en,
+            "color_palette": settings_obj.color_palette,
+            "logo_url": settings_obj.logo_url or "",
         }
         return Response(data, status=status.HTTP_200_OK)
+

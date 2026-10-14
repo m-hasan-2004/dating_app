@@ -4,6 +4,10 @@ export interface SiteSettings {
   id?: number;
   require_access_code: boolean;
   require_email: boolean;
+  site_name_fa?: string;
+  site_name_en?: string;
+  color_palette?: string;
+  logo_url?: string;
   updated_at?: string;
   updated_by?: number | null;
   updated_by_username?: string | null;
@@ -12,6 +16,10 @@ export interface SiteSettings {
 export interface RegistrationConfig {
   require_access_code: boolean;
   require_email: boolean;
+  site_name_fa?: string;
+  site_name_en?: string;
+  color_palette?: string;
+  logo_url?: string;
 }
 
 /**
@@ -27,7 +35,7 @@ export async function getSiteSettingsApi(): Promise<SiteSettings> {
  * Update system runtime settings (superadmin only).
  */
 export async function updateSiteSettingsApi(
-  payload: Partial<Pick<SiteSettings, "require_access_code" | "require_email">>
+  payload: Partial<SiteSettings>
 ): Promise<SiteSettings> {
   return apiClient<SiteSettings>("/api/site-settings/", {
     method: "PATCH",

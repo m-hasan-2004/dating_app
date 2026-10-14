@@ -14,6 +14,7 @@ import {
 import { useAuth } from "@/hooks/use-auth";
 import { useTranslation } from "@/context/LanguageContext";
 import { useRouter } from "next/navigation";
+import { formatApiError } from "@/utils/errorFormatter";
 
 export default function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -176,8 +177,12 @@ export default function SignUpForm() {
 
       router.push("/profile");
     } catch (err: any) {
+      const formatted = formatApiError(err, t, isRTL);
+      if (formatted.fieldErrors && Object.keys(formatted.fieldErrors).length > 0) {
+        setFieldErrors((prev) => ({ ...prev, ...formatted.fieldErrors }));
+      }
       setError(
-        err.message ||
+        formatted.message ||
           (config.require_access_code
             ? t("Registration failed. Please check your access code and details.")
             : t("Registration failed. Please check your details and try again."))
@@ -303,6 +308,8 @@ export default function SignUpForm() {
                     placeholder={t("Introducer code if available")}
                     value={formData.middle_man_code}
                     onChange={handleChange}
+                    error={Boolean(fieldErrors.middle_man_code)}
+                    hint={fieldErrors.middle_man_code}
                   />
                 </div>
 

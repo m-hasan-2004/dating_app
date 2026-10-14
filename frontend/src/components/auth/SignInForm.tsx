@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { useTranslation } from "@/context/LanguageContext";
 import { useRouter, useSearchParams } from "next/navigation";
+import { formatApiError } from "@/utils/errorFormatter";
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -33,12 +34,8 @@ export default function SignInForm() {
       await login({ username, password });
       router.push("/");
     } catch (err: any) {
-      const msg = err.message || "";
-      if (msg.toLowerCase().includes("invalid credentials")) {
-        setError(t("Invalid credentials."));
-      } else {
-        setError(t(msg) || t("Failed to sign in. Please check your credentials."));
-      }
+      const formatted = formatApiError(err, t, isRTL);
+      setError(formatted.message || t("Failed to sign in. Please check your credentials."));
     } finally {
       setIsSubmitting(false);
     }

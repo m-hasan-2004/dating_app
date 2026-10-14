@@ -241,10 +241,10 @@ export function SubjectDetailsSection({
     <>
       <ProfileSection title="Subject Details" onEdit={openModal} isEmpty={!data} isCollapsed={isCollapsed} onToggleCollapse={onToggleCollapse}>
         <DisplayRow label="Preferred Date / Times" value={data?.preferred_date_times} />
-        <DisplayRow label="Signup Fee Type" value={data?.signup_fee_type === 'cash' ? 'Cash' : data?.signup_fee_type === 'card' ? 'Card' : data?.signup_fee_type} />
+        <DisplayRow label="Signup Fee Type" value={data?.signup_fee_type === 'cash' ? t('Cash') : data?.signup_fee_type === 'card' ? t('Card') : data?.signup_fee_type ? t(data.signup_fee_type) : null} />
         <DisplayRow label="Account / Card Number" value={data?.account_number} />
         <DisplayRow label="Bank Name" value={data?.bank_name ?? data?.bank} />
-        <DisplayRow label="Target Gender" value={data?.gender_target} />
+        <DisplayRow label="Target Gender" value={data?.gender_target ? t(data.gender_target) : null} />
         <DisplayRow label="Fee Amount" value={data?.amount} />
         <DisplayRow label="Professional Opinion" value={data?.professional_opinion} />
       </ProfileSection>

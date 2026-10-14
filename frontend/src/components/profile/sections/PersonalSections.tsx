@@ -28,15 +28,8 @@ import {
 /* ─── option arrays ──────────────────────────────────────────────────── */
 
 const GENDER_OPTIONS: SelectOption[] = [
-  { value: 'Man', label: 'Man' },
   { value: 'man', label: 'Man' },
-  { value: 'Woman', label: 'Woman' },
   { value: 'woman', label: 'Woman' },
-  { value: 'boy', label: 'Boy' },
-  { value: 'girl', label: 'Girl' },
-  { value: 'seperated', label: 'Separated' },
-  { value: 'separated', label: 'Separated' },
-  { value: 'deceased', label: 'Deceased' },
 ];
 
 const EDUCATION_OPTIONS: SelectOption[] = [
@@ -268,7 +261,7 @@ export function PersonalsInformationSection({ data, onReload, isCollapsed, onTog
             <FormField label="Birth Date" name="birth_date" type="date" value={state.birth_date} onChange={handleChange} required />
             <FormField label="Birth Location" name="birth_location" type="text" value={state.birth_location} onChange={handleChange} />
             <FormField label="Education" name="education" type="select" value={state.education} onChange={handleChange} options={EDUCATION_OPTIONS} required />
-            <FormField label="Degree" name="degree" type="text" value={state.degree} onChange={handleChange} hint="Select the degree of the user." />
+            <FormField label="Degree" name="degree" type="text" value={state.degree} onChange={handleChange} hint={t("Select the degree of the user.")} />
             <FormField label="Military Status" name="military_status" type="select" value={state.military_status} onChange={handleChange} options={MILITARY_OPTIONS} />
             <FormField label="Military Status Explanation" name="military_status_explanation" type="textarea" value={state.military_status_explanation} onChange={handleChange} />
             <FormField label="Income" name="income" type="select" value={state.income} onChange={handleChange} options={INCOME_OPTIONS} required />
@@ -282,10 +275,10 @@ export function PersonalsInformationSection({ data, onReload, isCollapsed, onTog
             )}
             <FormField label="Leisure Type" name="leisure_type" type="multiselect" value={state.leisure_type} onChange={handleChange} options={LEISURE_OPTIONS} />
             <FormField label="Usage Cases" name="usage_cases" type="multiselect" value={state.usage_cases} onChange={handleChange} options={USAGE_CASES_OPTIONS} />
-            <FormField label="Usage Case Description" name="usage_case_description" type="textarea" value={state.usage_case_description} onChange={handleChange} hint="Like how many cigars or hookah a day." />
+            <FormField label="Usage Case Description" name="usage_case_description" type="textarea" value={state.usage_case_description} onChange={handleChange} hint={t("Like how many cigars or hookah a day.")} />
             <FormField label="Tattoo" name="tatto" type="boolean" value={state.tatto} onChange={handleChange} />
             {state.tatto && (
-              <FormField label="Tattoo Description" name="tatto_description" type="textarea" value={state.tatto_description} onChange={handleChange} hint="Like where on the body." />
+              <FormField label="Tattoo Description" name="tatto_description" type="textarea" value={state.tatto_description} onChange={handleChange} hint={t("Like where on the body.")} />
             )}
             <FormField label="Conviction or Arrest History" name="conviction_or_arrest_history" type="boolean" value={state.conviction_or_arrest_history} onChange={handleChange} />
             {state.conviction_or_arrest_history && (

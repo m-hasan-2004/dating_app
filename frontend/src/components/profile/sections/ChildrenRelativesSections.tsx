@@ -47,8 +47,8 @@ const EDUCATION_OPTIONS: SelectOption[] = [
 /* ─── 1. ExHusbandChildStatusSection ───────────────────────────────────── */
 
 const GENDER_OPTIONS: SelectOption[] = [
-  { value: 'boy', label: 'Boy' },
-  { value: 'girl', label: 'Girl' },
+  { value: 'boy', label: 'Man' },
+  { value: 'girl', label: 'Woman' },
 ];
 
 const CUSTODY_OPTIONS: SelectOption[] = [
@@ -161,7 +161,7 @@ export function ExHusbandChildStatusSection({
           </h2>
           <div className="space-y-4">
             <FormField label="Gender" name="gender" type="select" value={state.gender} onChange={handleChange} options={GENDER_OPTIONS} required />
-            <FormField label="Status" name="status" type="boolean" value={state.status} onChange={handleChange} hint="Has child from ex-husband?" />
+            <FormField label="Status" name="status" type="boolean" value={state.status} onChange={handleChange} hint={t("Has child from ex-husband?")} />
             <FormField label="Birth Date" name="birth_date" type="date" value={state.birth_date} onChange={handleChange} />
             <FormField label="Custody" name="custody" type="select" value={state.custody} onChange={handleChange} options={CUSTODY_OPTIONS} required />
             <FormField label="Living Location" name="living_location" type="text" value={state.living_location} onChange={handleChange} />
@@ -270,7 +270,7 @@ export function SistersSection({
             {editingItem ? t('Edit') : t('Add')} {t('Sister')}
           </h2>
           <div className="space-y-4">
-            <FormField label="Alive" name="status" type="boolean" value={state.status} onChange={handleChange} hint="Is she alive?" />
+            <FormField label="Alive" name="status" type="boolean" value={state.status} onChange={handleChange} />
             <FormField label="Education" name="education" type="select" value={state.education} onChange={handleChange} options={EDUCATION_OPTIONS} required />
             <FormField label="Job" name="job" type="text" value={state.job} onChange={handleChange} required />
           </div>
@@ -370,7 +370,7 @@ export function BrothersSection({
             {editingItem ? t('Edit') : t('Add')} {t('Brother')}
           </h2>
           <div className="space-y-4">
-            <FormField label="Alive" name="status" type="boolean" value={state.status} onChange={handleChange} hint="Is he alive?" />
+            <FormField label="Alive" name="status" type="boolean" value={state.status} onChange={handleChange} />
             <FormField label="Education" name="education" type="select" value={state.education} onChange={handleChange} options={EDUCATION_OPTIONS} required />
             <FormField label="Job" name="job" type="text" value={state.job} onChange={handleChange} required />
           </div>

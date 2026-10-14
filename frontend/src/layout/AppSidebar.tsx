@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useSidebar } from "../context/SidebarContext";
 import { useAuth } from "@/hooks/use-auth";
 import { useLanguage } from "@/context/LanguageContext";
+import { useBranding } from "@/context/BrandingContext";
 import {
   CalenderIcon,
   ChevronDownIcon,
@@ -85,6 +86,7 @@ const AppSidebar: React.FC = () => {
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
   const { user } = useAuth();
   const { isRTL, t } = useLanguage();
+  const { siteName, logoUrl } = useBranding();
   const pathname = usePathname();
 
   const isSuperUser = Boolean((user as any)?.is_superuser);
@@ -336,31 +338,25 @@ const AppSidebar: React.FC = () => {
           !isExpanded && !isHovered ? "lg:justify-center" : "justify-start"
         }`}
       >
-        <Link href="/">
-          {isExpanded || isHovered || isMobileOpen ? (
-            <>
-              <Image
-                className="dark:hidden"
-                src="/images/logo/logo.svg"
-                alt="Logo"
-                width={150}
-                height={40}
-              />
-              <Image
-                className="hidden dark:block"
-                src="/images/logo/logo-dark.svg"
-                alt="Logo"
-                width={150}
-                height={40}
-              />
-            </>
+        <Link href="/" className="flex items-center gap-3">
+          {logoUrl ? (
+            <img src={logoUrl} alt={siteName} className="h-9 w-auto max-w-[150px] object-contain rounded-lg" />
           ) : (
-            <Image
-              src="/images/logo/logo-icon.svg"
-              alt="Logo"
-              width={32}
-              height={32}
-            />
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-600 to-brand-400 flex items-center justify-center text-white shadow-md shadow-brand-500/20 shrink-0">
+              <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+            </div>
+          )}
+          {(isExpanded || isHovered || isMobileOpen) && (
+            <div className="flex flex-col min-w-0">
+              <span className="font-extrabold text-gray-900 dark:text-white text-sm sm:text-base tracking-tight truncate max-w-[180px]">
+                {siteName}
+              </span>
+              <span className="text-[10px] text-brand-600 dark:text-brand-400 font-medium">
+                {t("Matchmaking Portal")}
+              </span>
+            </div>
           )}
         </Link>
       </div>

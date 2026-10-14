@@ -69,6 +69,9 @@ class TestSiteSettingsAPI:
         assert res.status_code == status.HTTP_200_OK
         assert res.data["require_access_code"] is False
         assert res.data["require_email"] is True
+        assert "site_name_fa" in res.data
+        assert "site_name_en" in res.data
+        assert "color_palette" in res.data
 
     def test_site_settings_permissions(self, api_client, regular_user, staff_user, superuser):
         # 1. Anonymous user -> 401
@@ -91,23 +94,33 @@ class TestSiteSettingsAPI:
         assert res.status_code == status.HTTP_200_OK
         assert "require_access_code" in res.data
         assert "require_email" in res.data
+        assert "site_name_fa" in res.data
 
     def test_site_settings_patch_by_superuser(self, api_client, superuser):
         api_client.force_authenticate(user=superuser)
         res = api_client.patch(
             "/api/site-settings/",
-            {"require_access_code": False, "require_email": False},
+            {
+                "require_access_code": False,
+                "require_email": False,
+                "site_name_fa": "همسان‌گزینی آسمانی",
+                "color_palette": "emerald",
+            },
             format="json",
         )
         assert res.status_code == status.HTTP_200_OK
         assert res.data["require_access_code"] is False
         assert res.data["require_email"] is False
+        assert res.data["site_name_fa"] == "همسان‌گزینی آسمانی"
+        assert res.data["color_palette"] == "emerald"
         assert res.data["updated_by_username"] == superuser.username
 
         # Verify DB updated
         setting = SiteSetting.get_settings()
         assert setting.require_access_code is False
         assert setting.require_email is False
+        assert setting.site_name_fa == "همسان‌گزینی آسمانی"
+        assert setting.color_palette == "emerald"
 
 
 @pytest.mark.django_db

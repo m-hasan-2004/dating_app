@@ -653,7 +653,7 @@ export default function CandidateSearchPage() {
                   <span>{t("Filters")}</span>
                   {activeFilterCount > 0 && (
                     <span className="w-4 h-4 rounded-full bg-brand-500 text-white text-[10px] flex items-center justify-center font-bold">
-                      {activeFilterCount}
+                      {isRTL ? toPersianDigits(activeFilterCount) : activeFilterCount}
                     </span>
                   )}
                 </button>
@@ -663,10 +663,26 @@ export default function CandidateSearchPage() {
             {/* Active Filter Chips */}
             {activeFilterCount > 0 && (
               <div className="flex flex-wrap items-center gap-1.5 pt-2 border-t border-gray-100 dark:border-gray-800 text-xs">
-                <span className="text-[11px] font-semibold text-gray-400">{isRTL ? 'فیلترهای فعال:' : 'Active:'} ({activeFilterCount})</span>
+                <span className="text-[11px] font-semibold text-gray-400">{isRTL ? 'فیلترهای فعال:' : 'Active:'} ({isRTL ? toPersianDigits(activeFilterCount) : activeFilterCount})</span>
                 {keyword && (
                   <span className="px-2 py-0.5 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
                     &quot;{keyword}&quot;
+                  </span>
+                )}
+                {(minAge || maxAge) && (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-brand-50 text-brand-700 dark:bg-brand-950/40 dark:text-brand-300">
+                    <span>
+                      {isRTL
+                        ? `سن: ${minAge ? toPersianDigits(minAge) : '۱۸'} تا ${maxAge ? toPersianDigits(maxAge) : '۱۰۰'}`
+                        : `Age: ${minAge || '18'} - ${maxAge || '100'}`}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => { setMinAge(''); setMaxAge(''); setPage(1); }}
+                      className="hover:text-red-500 font-bold ml-0.5 cursor-pointer"
+                    >
+                      ×
+                    </button>
                   </span>
                 )}
                 {selectedLocations.map((loc) => (
@@ -1029,7 +1045,7 @@ export default function CandidateSearchPage() {
                 </h2>
                 {activeFilterCount > 0 && (
                   <span className="w-5 h-5 rounded-full bg-brand-500 text-white text-[10px] flex items-center justify-center font-bold">
-                    {activeFilterCount}
+                    {isRTL ? toPersianDigits(activeFilterCount) : activeFilterCount}
                   </span>
                 )}
               </div>
@@ -1076,7 +1092,9 @@ export default function CandidateSearchPage() {
                     placeholder={isRTL ? "حداقل" : "Min"}
                     value={minAge}
                     onChange={(e) => { setMinAge(e.target.value); setPage(1); }}
-                    className="w-full px-2 py-1 text-xs border border-gray-300 rounded-lg dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                    className={`w-full px-2 py-1 text-xs border rounded-lg dark:bg-gray-800 dark:text-white transition-all ${
+                      minAge ? 'border-brand-500 ring-1 ring-brand-500 font-bold bg-brand-50/20 text-brand-700 dark:text-brand-300' : 'border-gray-300 dark:border-gray-700'
+                    }`}
                   />
                   <span className="text-gray-400 font-bold">-</span>
                   <input
@@ -1086,24 +1104,38 @@ export default function CandidateSearchPage() {
                     placeholder={isRTL ? "حداکثر" : "Max"}
                     value={maxAge}
                     onChange={(e) => { setMaxAge(e.target.value); setPage(1); }}
-                    className="w-full px-2 py-1 text-xs border border-gray-300 rounded-lg dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                    className={`w-full px-2 py-1 text-xs border rounded-lg dark:bg-gray-800 dark:text-white transition-all ${
+                      maxAge ? 'border-brand-500 ring-1 ring-brand-500 font-bold bg-brand-50/20 text-brand-700 dark:text-brand-300' : 'border-gray-300 dark:border-gray-700'
+                    }`}
                   />
                 </div>
                 <div className="flex flex-wrap gap-1 pt-1">
-                  {AGE_PRESETS.map((preset) => (
-                    <button
-                      key={preset.labelEn}
-                      type="button"
-                      onClick={() => {
-                        setMinAge(String(preset.min));
-                        setMaxAge(String(preset.max));
-                        setPage(1);
-                      }}
-                      className="px-2 py-0.5 text-[10px] rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-brand-50 hover:text-brand-600 transition-colors cursor-pointer"
-                    >
-                      {isRTL ? preset.labelFa : preset.labelEn}
-                    </button>
-                  ))}
+                  {AGE_PRESETS.map((preset) => {
+                    const isPresetActive = minAge === String(preset.min) && maxAge === String(preset.max);
+                    return (
+                      <button
+                        key={preset.labelEn}
+                        type="button"
+                        onClick={() => {
+                          if (isPresetActive) {
+                            setMinAge('');
+                            setMaxAge('');
+                          } else {
+                            setMinAge(String(preset.min));
+                            setMaxAge(String(preset.max));
+                          }
+                          setPage(1);
+                        }}
+                        className={`px-2 py-0.5 text-[10px] rounded-lg transition-all cursor-pointer font-medium ${
+                          isPresetActive
+                            ? 'bg-brand-500 text-white font-bold shadow-xs'
+                            : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-brand-50 hover:text-brand-600'
+                        }`}
+                      >
+                        {isRTL ? preset.labelFa : preset.labelEn}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 

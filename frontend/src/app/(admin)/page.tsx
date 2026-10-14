@@ -265,7 +265,7 @@ function UserDashboardView({ user }: { user: any }) {
               )}
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-              {t("Welcome back")}, {displayName}!
+              {t("Welcome back")}, <bdi className="text-amber-300">{displayName}</bdi>!
             </h1>
             <p className="text-sm text-white/85 leading-relaxed">
               {t("Explore opposite gender profiles matching your personal criteria")}

@@ -54,7 +54,7 @@ export const Modal: React.FC<ModalProps> = ({
   const contentClasses = isFullscreen
     ? "w-full h-full"
     : twMerge(
-        "relative w-full max-w-lg rounded-3xl bg-white dark:bg-gray-900 shadow-2xl overflow-hidden border border-gray-300 dark:border-gray-700 ring-1 ring-black/5 dark:ring-white/10 mx-auto",
+        "relative w-full max-w-lg rounded-3xl bg-white dark:bg-gray-900 shadow-2xl overflow-hidden border-2 border-gray-300 dark:border-gray-600 ring-2 ring-black/10 dark:ring-white/15 mx-auto",
         className
       );
 

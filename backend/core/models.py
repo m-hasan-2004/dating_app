@@ -24,6 +24,32 @@ class SiteSetting(models.Model):
             "When disabled, providing an email address becomes optional during registration."
         ),
     )
+    site_name_fa = models.CharField(
+        _("Site Name (Persian)"),
+        max_length=150,
+        default="همسان‌گزینی",
+        help_text=_("Site name displayed in Persian locale."),
+    )
+    site_name_en = models.CharField(
+        _("Site Name (English)"),
+        max_length=150,
+        default="Matrimonial",
+        help_text=_("Site name displayed in English locale."),
+    )
+    color_palette = models.CharField(
+        _("Color Palette"),
+        max_length=50,
+        default="brand",
+        help_text=_("Visual color theme (brand, emerald, purple, rose, amber, indigo)."),
+    )
+    logo_url = models.CharField(
+        _("Logo URL or Identifier"),
+        max_length=500,
+        blank=True,
+        null=True,
+        default="",
+        help_text=_("Custom logo URL or preset logo identifier."),
+    )
     updated_at = models.DateTimeField(_("Updated at"), auto_now=True)
     updated_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -60,9 +86,20 @@ class SiteSetting(models.Model):
                 defaults={
                     "require_access_code": True,
                     "require_email": True,
+                    "site_name_fa": "همسان‌گزینی",
+                    "site_name_en": "Matrimonial",
+                    "color_palette": "brand",
+                    "logo_url": "",
                 },
             )
             return obj
         except Exception:
             # Fallback for migrations or pre-db initialization
-            return cls(require_access_code=True, require_email=True)
+            return cls(
+                require_access_code=True,
+                require_email=True,
+                site_name_fa="همسان‌گزینی",
+                site_name_en="Matrimonial",
+                color_palette="brand",
+                logo_url="",
+            )

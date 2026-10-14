@@ -6993,3 +6993,67 @@ msgstr "با موفقیت از حساب کاربری خارج شدید."
 
 msgid "No active session found."
 msgstr "هیچ نشست فعالی یافت نشد."
+
+msgid "A user with that username already exists."
+msgstr "این نام کاربری قبلاً گرفته شده است."
+
+msgid "A user with that email already exists."
+msgstr "این ایمیل قبلاً گرفته شده است."
+
+msgid "A user with that phone number already exists."
+msgstr "این شماره تلفن قبلاً گرفته شده است."
+
+msgid "Invalid credentials."
+msgstr "اطلاعات ورود نادرست است."
+
+msgid "Account is disabled."
+msgstr "حساب کاربری غیرفعال شده است."
+
+msgid "Session already active."
+msgstr "نشست کاربری از قبل فعال است."
+
+msgid "Current password is incorrect."
+msgstr "رمز عبور فعلی نادرست است."
+
+msgid "New password cannot be the same as old password."
+msgstr "رمز عبور جدید نمی‌تواند مشابه رمز عبور قبلی باشد."
+
+msgid "The two password fields didn't match."
+msgstr "رمزهای عبور وارد شده یکسان نیستند."
+
+msgid "Registration successful. Please log in."
+msgstr "ثبت‌نام با موفقیت انجام شد. لطفاً وارد شوید."
+
+msgid "Invalid access code."
+msgstr "کد دسترسی نامعتبر است."
+
+msgid "Access code is invalid."
+msgstr "کد دسترسی نامعتبر است."
+
+msgid "Please enter a valid mobile number (e.g. 09123456789)."
+msgstr "لطفاً شماره تلفن همراه معتبر وارد کنید."
+
+msgid "Enter a valid phone number (e.g. 0912 345 6789) or a valid phone number with country code."
+msgstr "لطفاً یک شماره تلفن همراه معتبر وارد کنید."
+
+msgid "The phone number entered is not valid."
+msgstr "شماره تلفن وارد شده معتبر نیست."
+
+msgid "Must be at least 18 years old"
+msgstr "حداقل سن باید ۱۸ سال باشد."
+
+msgid "Age cannot exceed 100 years"
+msgstr "سن نمی‌تواند بیشتر از ۱۰۰ سال باشد."
+
+msgid "Password must be at least 8 characters long."
+msgstr "رمز عبور باید حداقل ۸ کاراکتر باشد."
+
+msgid "Password must contain both letters and numbers."
+msgstr "رمز عبور باید شامل حروف و اعداد باشد."
+
+msgid "You cannot review your own candidate profile."
+msgstr "شما نمی‌توانید به پروفایل خودتان بازخورد دهید."
+
+msgid "You have already reviewed this candidate profile."
+msgstr "شما قبلاً این پروفایل را ارزیابی کرده‌اید."
+

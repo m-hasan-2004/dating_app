@@ -5,6 +5,7 @@ import { SidebarProvider } from '@/context/SidebarContext';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { AuthProvider } from '@/hooks/use-auth';
 import { LanguageProvider } from '@/context/LanguageContext';
+import { BrandingProvider } from '@/context/BrandingContext';
 import { LanguageToggleButton } from '@/components/common/LanguageToggleButton';
 
 const outfit = Outfit({
@@ -20,14 +21,16 @@ export default function RootLayout({
     <html lang="fa" dir="rtl" suppressHydrationWarning>
       <body className={`${outfit.className} dark:bg-gray-900`} suppressHydrationWarning>
         <LanguageProvider>
-          <ThemeProvider>
-            <AuthProvider>
-              <SidebarProvider>
-                {children}
-                <LanguageToggleButton />
-              </SidebarProvider>
-            </AuthProvider>
-          </ThemeProvider>
+          <BrandingProvider>
+            <ThemeProvider>
+              <AuthProvider>
+                <SidebarProvider>
+                  {children}
+                  <LanguageToggleButton />
+                </SidebarProvider>
+              </AuthProvider>
+            </ThemeProvider>
+          </BrandingProvider>
         </LanguageProvider>
       </body>
     </html>
