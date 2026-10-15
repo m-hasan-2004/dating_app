@@ -444,7 +444,7 @@ export default function UsersListPage() {
                 <th className={`px-4 py-3.5 font-semibold text-slate-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Status")}</th>
                 <th className={`px-4 py-3.5 font-semibold text-slate-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Role")}</th>
                 <th className={`px-4 py-3.5 font-semibold text-slate-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Joined")}</th>
-                <th className={`px-4 py-3.5 font-semibold text-slate-600 dark:text-gray-300 ${isRTL ? 'text-left' : 'text-right'}`}>{t("Actions")}</th>
+                <th className={`px-4 py-3.5 font-semibold text-slate-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Actions")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-gray-800">
@@ -526,7 +526,7 @@ export default function UsersListPage() {
                       <td className={`px-4 py-4 text-slate-500 dark:text-gray-400 text-xs ${isRTL ? 'text-right' : 'text-left'}`}>
                         {user.date_joined ? formatDate(user.date_joined, isRTL) : '—'}
                       </td>
-                      <td className={`px-4 py-4 ${isRTL ? 'text-left' : 'text-right'}`}>
+                      <td className={`px-4 py-4 ${isRTL ? 'text-right' : 'text-left'}`}>
                         <div className="inline-flex items-center gap-2">
                           <Link
                             href={`/users/${user.id}/profile`}

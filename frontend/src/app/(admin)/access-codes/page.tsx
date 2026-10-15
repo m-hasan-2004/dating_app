@@ -311,36 +311,35 @@ export default function AccessCodesManagement() {
 
           {/* Actions toolbar */}
           <div className="flex items-center gap-3 flex-wrap">
-            {hasSelection && (
-              <>
-                <button
-                  onClick={handleActivateSelected}
-                  disabled={bulkSubmitting}
-                  className="inline-flex items-center justify-center font-semibold gap-2 rounded-xl px-4 py-2.5 text-sm bg-emerald-600 text-white shadow-xs hover:bg-emerald-700 disabled:opacity-50 transition-all cursor-pointer"
-                >
-                  <CheckLineIcon className="w-4 h-4" />
-                  {t("Activate")} ({selectedIds.size})
-                </button>
+            <button
+              type="button"
+              onClick={handleActivateSelected}
+              disabled={!hasSelection || bulkSubmitting}
+              className="inline-flex items-center justify-center font-semibold gap-2 rounded-xl px-4 py-2.5 text-sm bg-emerald-600 text-white shadow-xs hover:bg-emerald-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
+            >
+              <CheckLineIcon className="w-4 h-4" />
+              {hasSelection ? `${t("Activate")} (${selectedIds.size})` : t("Activate")}
+            </button>
 
-                <button
-                  onClick={handleDeactivateSelected}
-                  disabled={bulkSubmitting}
-                  className="inline-flex items-center justify-center font-semibold gap-2 rounded-xl px-4 py-2.5 text-sm bg-amber-500 text-white shadow-xs hover:bg-amber-600 disabled:opacity-50 transition-all cursor-pointer"
-                >
-                  <CloseLineIcon className="w-4 h-4" />
-                  {t("Deactivate")} ({selectedIds.size})
-                </button>
+            <button
+              type="button"
+              onClick={handleDeactivateSelected}
+              disabled={!hasSelection || bulkSubmitting}
+              className="inline-flex items-center justify-center font-semibold gap-2 rounded-xl px-4 py-2.5 text-sm bg-amber-500 text-white shadow-xs hover:bg-amber-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
+            >
+              <CloseLineIcon className="w-4 h-4" />
+              {hasSelection ? `${t("Deactivate")} (${selectedIds.size})` : t("Deactivate")}
+            </button>
 
-                <button
-                  onClick={() => setIsDeleteSelectedOpen(true)}
-                  disabled={bulkSubmitting}
-                  className="inline-flex items-center justify-center font-semibold gap-2 rounded-xl px-4 py-2.5 text-sm bg-rose-600 text-white shadow-xs hover:bg-rose-700 disabled:opacity-50 transition-all cursor-pointer"
-                >
-                  <TrashBinIcon className="w-4 h-4" />
-                  {t("Delete")} ({selectedIds.size})
-                </button>
-              </>
-            )}
+            <button
+              type="button"
+              onClick={() => setIsDeleteSelectedOpen(true)}
+              disabled={!hasSelection || bulkSubmitting}
+              className="inline-flex items-center justify-center font-semibold gap-2 rounded-xl px-4 py-2.5 text-sm bg-rose-600 text-white shadow-xs hover:bg-rose-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
+            >
+              <TrashBinIcon className="w-4 h-4" />
+              {hasSelection ? `${t("Delete")} (${selectedIds.size})` : t("Delete")}
+            </button>
 
             <Button onClick={handleOpenCreate} startIcon={<PlusIcon className="w-4 h-4" />}>
               {t("Generate Access Code")}
@@ -392,7 +391,7 @@ export default function AccessCodesManagement() {
                   <TableCell isHeader className={`py-3.5 px-4 ${isRTL ? 'text-right' : 'text-left'} text-xs font-semibold text-slate-500 uppercase tracking-wider`}>
                     {t("Date Created")}
                   </TableCell>
-                  <TableCell isHeader className={`py-3.5 px-4 ${isRTL ? 'text-left' : 'text-right'} text-xs font-semibold text-slate-500 uppercase tracking-wider`}>
+                  <TableCell isHeader className={`py-3.5 px-4 ${isRTL ? 'text-right' : 'text-left'} text-xs font-semibold text-slate-500 uppercase tracking-wider`}>
                     {t("Actions")}
                   </TableCell>
                 </TableRow>
@@ -432,8 +431,8 @@ export default function AccessCodesManagement() {
                     <TableCell className={`py-3 px-4 text-sm text-slate-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>
                       {item.date_created ? formatDate(item.date_created, isRTL) : "-"}
                     </TableCell>
-                    <TableCell className={`py-3 px-4 text-sm ${isRTL ? 'text-left' : 'text-right'}`}>
-                      <div className={`flex items-center ${isRTL ? 'justify-start' : 'justify-end'} gap-2`}>
+                    <TableCell className={`py-3 px-4 text-sm ${isRTL ? 'text-right' : 'text-left'}`}>
+                      <div className="flex items-center justify-start gap-2">
                         {/* Copy Code Button */}
                         <button
                           onClick={() => handleCopyCode(item.id, item.code)}

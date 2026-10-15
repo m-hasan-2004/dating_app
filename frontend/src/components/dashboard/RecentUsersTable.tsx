@@ -44,7 +44,7 @@ export function RecentUsersTable({ users, loading }: RecentUsersTableProps) {
               <th className={`px-6 py-3.5 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Phone")}</th>
               <th className={`px-6 py-3.5 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Status")}</th>
               <th className={`px-6 py-3.5 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Joined")}</th>
-              <th className={`px-6 py-3.5 ${isRTL ? 'text-left' : 'text-right'}`}>{t("Action")}</th>
+              <th className={`px-6 py-3.5 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Action")}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100 dark:divide-gray-800">
@@ -88,7 +88,7 @@ export function RecentUsersTable({ users, loading }: RecentUsersTableProps) {
                   <td className="px-6 py-3.5 text-slate-600 dark:text-slate-300 text-xs font-medium">
                     {u.date_joined ? formatDate(u.date_joined, isRTL) : '—'}
                   </td>
-                  <td className={`px-6 py-3.5 ${isRTL ? 'text-left' : 'text-right'}`}>
+                  <td className={`px-6 py-3.5 ${isRTL ? 'text-right' : 'text-left'}`}>
                     <Link
                       href={`/users/${u.id}/profile`}
                       className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-lg text-[var(--color-primary)] bg-[var(--color-primary)]/10 hover:bg-[var(--color-primary)]/20 dark:bg-brand-950/40 dark:text-brand-400 transition-colors"
