@@ -44,11 +44,11 @@ const AppHeader: React.FC = () => {
   }, []);
 
   return (
-    <header className="sticky top-0 flex w-full bg-white/95 backdrop-blur-md border-b border-slate-200/80 z-[9999] dark:border-gray-800 dark:bg-gray-900/95 shadow-2xs">
+    <header className="sticky top-0 flex w-full bg-white/95 backdrop-blur-md border-b-[1.5px] border-slate-300 z-[9999] dark:border-gray-800 dark:bg-gray-900/95 shadow-xs">
       <div className="flex flex-col items-center justify-between grow lg:flex-row lg:px-6">
         <div className="flex items-center justify-between w-full gap-2 px-3 py-3 border-b border-slate-200/80 dark:border-gray-800 sm:gap-4 lg:justify-normal lg:border-b-0 lg:px-0 lg:py-3.5">
           <button
-            className="items-center justify-center w-10 h-10 text-slate-500 border-slate-200/80 rounded-xl hover:bg-slate-100 hover:text-slate-800 dark:border-gray-800 lg:flex dark:text-gray-400 dark:hover:bg-gray-800 lg:h-10 lg:w-10 lg:border transition-all cursor-pointer"
+            className="items-center justify-center w-10 h-10 text-slate-600 border-[1.5px] border-slate-300 rounded-xl hover:bg-slate-100 hover:text-slate-900 hover:border-[var(--color-primary)] dark:border-gray-800 lg:flex dark:text-gray-400 dark:hover:bg-gray-800 lg:h-10 lg:w-10 lg:border transition-all cursor-pointer shadow-2xs"
             onClick={handleToggle}
             aria-label="Toggle Sidebar"
           >

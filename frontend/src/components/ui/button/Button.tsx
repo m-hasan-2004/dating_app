@@ -32,9 +32,9 @@ const Button: React.FC<ButtonProps> = ({
   // Variant Classes
   const variantClasses = {
     primary:
-      "bg-[var(--color-primary)] text-white shadow-xs hover:brightness-95 active:brightness-90 transition-all font-semibold focus:ring-2 focus:ring-[var(--color-primary)]/25 focus:ring-offset-2 outline-none disabled:opacity-50",
+      "bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] text-white shadow-md hover:shadow-[0_8px_20px_-4px_rgba(var(--color-primary-rgb),0.45)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-200 font-semibold focus:ring-2 focus:ring-[var(--color-primary)]/40 focus:ring-offset-2 outline-none disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-none",
     outline:
-      "bg-white text-slate-700 border border-slate-300 hover:bg-slate-50 hover:text-slate-900 shadow-2xs font-semibold dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-200",
+      "bg-white text-slate-700 border-[1.5px] border-slate-300 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/[0.06] shadow-xs hover:shadow-[0_4px_12px_rgba(var(--color-primary-rgb),0.18)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition-all duration-200 font-semibold dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 dark:hover:border-[var(--color-primary)] dark:hover:bg-[var(--color-primary)]/10 dark:hover:text-white",
   };
 
   return (

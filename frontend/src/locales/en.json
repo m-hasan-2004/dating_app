@@ -13,6 +13,8 @@
   "Calendar": "Calendar",
   "Saved": "Saved",
   "Enable Language Switcher": "Enable Language Switcher",
+  "Enabled": "Enabled",
+  "Disabled": "Disabled",
   "Control visibility of the language toggle button across the entire platform. When disabled, the language switcher button is completely hidden from users.": "Control visibility of the language toggle button across the entire platform. When disabled, the language switcher button is completely hidden from users.",
   "Sign Out": "Sign Out",
   "Sign out": "Sign Out",

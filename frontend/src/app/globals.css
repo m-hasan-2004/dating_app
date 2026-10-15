@@ -270,11 +270,17 @@ html[data-palette="indigo"] {
 /*
   Dynamic Dark/Light Canvas & Surface tokens mapping
 */
+html:not(.dark) {
+  --color-slate-50: var(--color-canvas-light, #f1f5f9);
+  background-color: var(--color-canvas-light, #f1f5f9);
+}
+
 html.dark,
 .dark {
   --color-gray-900: var(--color-canvas-dark, #101828);
   --color-gray-dark: var(--color-canvas-dark-surface, #18152e);
   --color-gray-800: var(--color-canvas-dark-border, #1f2a37);
+  background-color: var(--color-canvas-dark, #101828);
 }
 
 @layer base {
@@ -301,13 +307,13 @@ html.dark,
     transition-duration: 200ms;
   }
   body {
-    background-color: var(--color-canvas-light, #f8fafc);
+    background-color: var(--color-canvas-light, #f1f5f9) !important;
     color: #0f172a;
     @apply relative font-normal font-outfit z-1;
   }
   .dark body,
   html.dark body {
-    background-color: var(--color-canvas-dark, #101828);
+    background-color: var(--color-canvas-dark, #101828) !important;
     color: #f8fafc;
   }
 }
@@ -317,11 +323,11 @@ html.dark,
 }
 
 @utility menu-item-active {
-  @apply bg-[var(--color-primary)]/10 text-[var(--color-primary)] font-semibold rtl:border-r-4 ltr:border-l-4 border-[var(--color-primary)] shadow-2xs dark:bg-[var(--color-primary)]/[0.14] dark:text-[var(--color-brand-400)];
+  @apply bg-gradient-to-r from-[var(--color-primary)]/15 to-[var(--color-accent)]/10 text-[var(--color-primary)] font-bold rtl:border-r-4 ltr:border-l-4 border-[var(--color-primary)] shadow-xs dark:bg-[var(--color-primary)]/[0.16] dark:text-[var(--color-brand-400)];
 }
 
 @utility menu-item-inactive {
-  @apply text-slate-600 hover:bg-slate-100 hover:text-slate-900 group-hover:text-slate-900 dark:text-gray-300 dark:hover:bg-white/5 dark:hover:text-gray-200;
+  @apply text-slate-700 hover:bg-slate-100 hover:text-slate-900 group-hover:text-slate-900 dark:text-gray-300 dark:hover:bg-white/5 dark:hover:text-gray-200 transition-all;
 }
 
 @utility menu-item-icon {
@@ -921,38 +927,79 @@ html[dir="rtl"] body {
   -webkit-backdrop-filter: blur(12px) !important;
 }
 
-/* Enhanced visibility frames & depth in Light & Dark mode */
-html:not(.dark) div[class*="rounded-2xl"],
-html:not(.dark) div[class*="rounded-3xl"],
-html:not(.dark) a[class*="rounded-2xl"],
-html:not(.dark) a[class*="rounded-3xl"] {
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 2px 8px -2px rgba(0, 0, 0, 0.05);
+/* Enhanced visibility frames & depth in Light mode */
+html:not(.dark) div[class*="rounded-2xl"][class*="p-"],
+html:not(.dark) div[class*="rounded-3xl"][class*="p-"],
+html:not(.dark) a[class*="rounded-2xl"][class*="p-"],
+html:not(.dark) a[class*="rounded-3xl"][class*="p-"] {
+  border-width: 1.5px;
+  border-color: #cbd5e1;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 4px 14px -2px rgba(15, 23, 42, 0.05);
 }
 
-html:not(.dark) div[class*="rounded-2xl"]:hover,
-html:not(.dark) div[class*="rounded-3xl"]:hover,
-html:not(.dark) a[class*="rounded-2xl"]:hover,
-html:not(.dark) a[class*="rounded-3xl"]:hover {
-  box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+html:not(.dark) div[class*="rounded-2xl"][class*="p-"]:hover,
+html:not(.dark) div[class*="rounded-3xl"][class*="p-"]:hover,
+html:not(.dark) a[class*="rounded-2xl"][class*="p-"]:hover,
+html:not(.dark) a[class*="rounded-3xl"][class*="p-"]:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 10px 25px -4px rgba(var(--color-primary-rgb), 0.18), 0 4px 10px -2px rgba(15, 23, 42, 0.06);
 }
 
-/* High visibility interactive hovers for buttons, links, and chips */
+/* Universal high-impact interactive hover & animations for all buttons, action links, and chips */
 button:not(:disabled),
+[role="button"]:not(:disabled),
 a[href] {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.18s ease,
+              background-color 0.18s ease,
+              color 0.18s ease,
+              filter 0.18s ease;
 }
 
-button:not(:disabled):hover,
-a[href]:hover {
-  filter: contrast(106%);
-}
-
+/* Universal hover lift & vibrant shadow across light mode */
 html:not(.dark) button:not(:disabled):hover,
-html:not(.dark) a[href]:hover {
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.06);
+html:not(.dark) [role="button"]:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px -2px rgba(var(--color-primary-rgb), 0.28), 0 2px 6px -1px rgba(0, 0, 0, 0.06);
 }
 
-button:not(:disabled):active,
-a[href]:active {
-  transform: scale(0.98);
+html:not(.dark) a[href][class*="rounded"]:not([class*="text-"]):hover,
+html:not(.dark) a[href][class*="px-"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px -2px rgba(var(--color-primary-rgb), 0.25), 0 2px 6px -1px rgba(0, 0, 0, 0.06);
 }
+
+/* Primary buttons hover glow with dynamic primary/accent color */
+button[class*="bg-[var(--color-primary)]"]:not(:disabled):hover,
+a[class*="bg-[var(--color-primary)]"]:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 8px 24px -2px rgba(var(--color-primary-rgb), 0.45) !important;
+}
+
+/* Active press feedback on all buttons and clickable elements */
+button:not(:disabled):active,
+[role="button"]:not(:disabled):active,
+a[href]:active {
+  transform: translateY(0) scale(0.97) !important;
+  transition-duration: 0.08s;
+}
+
+/* Crisp form inputs with dynamic primary focus in Light mode */
+html:not(.dark) input:not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="range"]),
+html:not(.dark) select,
+html:not(.dark) textarea {
+  border-width: 1.5px;
+  border-color: #cbd5e1;
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+html:not(.dark) input:not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="range"]):focus,
+html:not(.dark) select:focus,
+html:not(.dark) textarea:focus {
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.2) !important;
+  outline: none !important;
+}
+

@@ -91,7 +91,7 @@ interface BrandingContextType {
   enableLanguageSwitcher: boolean;
   logoUrl: string;
   faviconUrl: string;
-  setColorPalette: (palette: ColorPalette) => void;
+  setColorPalette: (palette: ColorPalette, customHex?: string, customSecHex?: string) => void;
   setCanvasColors: (light?: string, dark?: string) => void;
   setBranding: (data: {
     siteNameFa?: string;
@@ -173,6 +173,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     if (typeof document === 'undefined') return;
     if (lightHex && lightHex.startsWith('#')) {
       document.documentElement.style.setProperty('--color-canvas-light', lightHex);
+      document.documentElement.style.setProperty('--color-slate-50', lightHex);
       const rgb = hexToRgb(lightHex);
       if (rgb) {
         const [h, s, l] = rgbToHsl(rgb[0], rgb[1], rgb[2]);
@@ -181,6 +182,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       }
     } else {
       document.documentElement.style.removeProperty('--color-canvas-light');
+      document.documentElement.style.removeProperty('--color-slate-50');
       document.documentElement.style.removeProperty('--color-canvas-light-border');
     }
     if (darkHex && darkHex.startsWith('#')) {
@@ -219,7 +221,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, [applyCanvasColors, canvasLightColor, canvasDarkColor]);
 
   // Apply colors to documentElement
-  const applyPalette = useCallback((palette: ColorPalette, primaryHex?: string) => {
+  const applyPalette = useCallback((palette: ColorPalette, primaryHex?: string, secondaryHex?: string) => {
     if (typeof document === 'undefined') return;
 
     if (palette === 'custom' && primaryHex && primaryHex.startsWith('#')) {
@@ -233,7 +235,13 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       if (rgb) {
         document.documentElement.style.setProperty('--color-primary-rgb', `${rgb[0]}, ${rgb[1]}, ${rgb[2]}`);
       }
-      document.documentElement.style.setProperty('--color-accent', shades['600'] || primaryHex);
+
+      const accent = secondaryHex && secondaryHex.startsWith('#') ? secondaryHex : (shades['600'] || primaryHex);
+      document.documentElement.style.setProperty('--color-accent', accent);
+      const secRgb = hexToRgb(accent);
+      if (secRgb) {
+        document.documentElement.style.setProperty('--color-accent-rgb', `${secRgb[0]}, ${secRgb[1]}, ${secRgb[2]}`);
+      }
     } else {
       // Clear custom inline styles
       const steps = ['25', '50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950'];
@@ -243,6 +251,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       document.documentElement.style.removeProperty('--color-primary');
       document.documentElement.style.removeProperty('--color-primary-rgb');
       document.documentElement.style.removeProperty('--color-accent');
+      document.documentElement.style.removeProperty('--color-accent-rgb');
 
       if (palette === 'default') {
         document.documentElement.removeAttribute('data-palette');
@@ -252,15 +261,17 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   }, []);
 
-
-  const setColorPalette = useCallback((palette: ColorPalette, customHex?: string) => {
+  const setColorPalette = useCallback((palette: ColorPalette, customHex?: string, customSecHex?: string) => {
     setColorPaletteState(palette);
-    applyPalette(palette, customHex || customPrimaryColor);
+    const prim = customHex || customPrimaryColor;
+    const sec = customSecHex || customSecondaryColor;
+    applyPalette(palette, prim, sec);
     if (typeof window !== 'undefined') {
       localStorage.setItem('branding_color_palette', palette);
       if (customHex) localStorage.setItem('branding_custom_primary', customHex);
+      if (customSecHex) localStorage.setItem('branding_custom_secondary', customSecHex);
     }
-  }, [applyPalette, customPrimaryColor]);
+  }, [applyPalette, customPrimaryColor, customSecondaryColor]);
 
   const setBranding = useCallback((data: {
     siteNameFa?: string;
@@ -307,7 +318,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
     if (data.colorPalette !== undefined) {
       setColorPaletteState(data.colorPalette);
-      applyPalette(data.colorPalette, data.customPrimaryColor || customPrimaryColor);
+      applyPalette(data.colorPalette, data.customPrimaryColor || customPrimaryColor, data.customSecondaryColor || customSecondaryColor);
     }
     if (data.logoUrl !== undefined) setLogoUrl(data.logoUrl);
     if (data.faviconUrl !== undefined) {
@@ -316,7 +327,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     } else if (data.logoUrl !== undefined) {
       updateTabFavicon(data.logoUrl);
     }
-  }, [applyCanvasColors, applyPalette, canvasDarkColor, canvasLightColor, customPrimaryColor, updateTabFavicon]);
+  }, [applyCanvasColors, applyPalette, canvasDarkColor, canvasLightColor, customPrimaryColor, customSecondaryColor, updateTabFavicon]);
 
   const refreshBranding = useCallback(async () => {
     try {
@@ -341,7 +352,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       if (config.color_palette) {
         const pal = config.color_palette as ColorPalette;
         setColorPaletteState(pal);
-        applyPalette(pal, config.custom_primary_color);
+        applyPalette(pal, config.custom_primary_color, config.custom_secondary_color);
       }
       if (config.logo_url !== undefined) setLogoUrl(config.logo_url);
       if (config.favicon_url !== undefined) {
@@ -374,6 +385,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     if (typeof window !== 'undefined') {
       localStorage.removeItem('branding_color_palette');
       localStorage.removeItem('branding_custom_primary');
+      localStorage.removeItem('branding_custom_secondary');
       localStorage.removeItem('branding_canvas_light');
       localStorage.removeItem('branding_canvas_dark');
       localStorage.removeItem('branding_enable_language_switcher');
@@ -384,10 +396,12 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     if (typeof window !== 'undefined') {
       const cachedPalette = localStorage.getItem('branding_color_palette') as ColorPalette;
       const cachedPrimary = localStorage.getItem('branding_custom_primary') || '';
+      const cachedSecondary = localStorage.getItem('branding_custom_secondary') || '';
       const cachedCanvasLight = localStorage.getItem('branding_canvas_light') || '';
       const cachedCanvasDark = localStorage.getItem('branding_canvas_dark') || '';
       const cachedEnableLang = localStorage.getItem('branding_enable_language_switcher');
       if (cachedPrimary) setCustomPrimaryColor(cachedPrimary);
+      if (cachedSecondary) setCustomSecondaryColor(cachedSecondary);
       if (cachedCanvasLight) setCanvasLightColor(cachedCanvasLight);
       if (cachedCanvasDark) setCanvasDarkColor(cachedCanvasDark);
       if (cachedEnableLang !== null) setEnableLanguageSwitcher(cachedEnableLang === 'true');
@@ -396,7 +410,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       }
       if (cachedPalette) {
         setColorPaletteState(cachedPalette);
-        applyPalette(cachedPalette, cachedPrimary);
+        applyPalette(cachedPalette, cachedPrimary, cachedSecondary);
       }
     }
     refreshBranding();

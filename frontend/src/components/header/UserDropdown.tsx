@@ -21,16 +21,16 @@ export default function UserDropdown() {
 
   return (
     <div className="flex items-center gap-2">
-      {/* Profile Button / User Info */}
+      {/* Profile Button */}
       <Link
         href="/profile"
-        className="flex items-center gap-2 px-3 py-1.5 text-xs sm:text-sm font-semibold text-slate-800 bg-white border border-slate-300 rounded-full hover:border-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 hover:text-[var(--color-primary)] shadow-xs hover:shadow-sm dark:border-slate-700/80 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-[var(--color-primary)] dark:hover:bg-[var(--color-primary)]/20 transition-all cursor-pointer group"
+        className="flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 text-xs sm:text-sm font-semibold text-slate-800 bg-white border-[1.5px] border-slate-300 rounded-full hover:border-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 hover:text-[var(--color-primary)] shadow-sm hover:shadow-md hover:-translate-y-0.5 dark:border-slate-700/80 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-[var(--color-primary)] dark:hover:bg-[var(--color-primary)]/20 transition-all cursor-pointer group"
         title={t("Profile")}
       >
         <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold text-slate-700 dark:text-slate-200 group-hover:bg-[var(--color-primary)] group-hover:text-white transition-colors">
           {user?.username ? user.username.charAt(0).toUpperCase() : "U"}
         </span>
-        <span className="max-w-[100px] sm:max-w-[150px] truncate">{displayName}</span>
+        <span className="font-bold text-slate-900 dark:text-white">{t("Profile")}</span>
       </Link>
 
       {/* Sign Out Button (Placed at extreme edge: Left in RTL, Right in LTR) */}
@@ -38,7 +38,7 @@ export default function UserDropdown() {
         <button
           type="button"
           onClick={handleLogout}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-xs sm:text-sm font-semibold text-rose-600 bg-rose-50/90 border border-rose-200 rounded-full hover:bg-rose-100 hover:text-rose-700 hover:border-rose-300 dark:text-rose-400 dark:bg-rose-950/30 dark:border-rose-900/50 dark:hover:bg-rose-900/50 dark:hover:border-rose-700 transition-all cursor-pointer shadow-xs hover:shadow-sm group active:scale-95"
+          className="flex items-center gap-1.5 px-3 py-1.5 text-xs sm:text-sm font-semibold text-rose-600 bg-rose-50 border-[1.5px] border-rose-300 rounded-full hover:bg-rose-100 hover:text-rose-700 hover:border-rose-400 dark:text-rose-400 dark:bg-rose-950/30 dark:border-rose-900/50 dark:hover:bg-rose-900/50 dark:hover:border-rose-700 transition-all cursor-pointer shadow-sm hover:shadow-md hover:-translate-y-0.5 group active:scale-95"
           title={t("Sign Out")}
         >
           <svg

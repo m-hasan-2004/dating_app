@@ -313,10 +313,10 @@ const AppSidebar: React.FC = () => {
   };
 
   const sidebarPos = isRTL
-    ? `right-0 border-l border-slate-200/80 dark:border-gray-800 ${
+    ? `right-0 border-l-[1.5px] border-slate-300 dark:border-gray-800 ${
         isMobileOpen ? "translate-x-0" : "translate-x-full"
       } lg:translate-x-0`
-    : `left-0 border-r border-slate-200/80 dark:border-gray-800 ${
+    : `left-0 border-r-[1.5px] border-slate-300 dark:border-gray-800 ${
         isMobileOpen ? "translate-x-0" : "-translate-x-full"
       } lg:translate-x-0`;
 
@@ -381,26 +381,30 @@ const AppSidebar: React.FC = () => {
             {renderMenuItems(coreNavItems, "core")}
           </div>
 
-          {/* Divider between Core and System sections */}
-          <div className="my-2 border-t border-slate-200/80 dark:border-gray-800" />
+          {/* System & Management Group (Admins & Staff only) */}
+          {systemNavItems.length > 0 && (
+            <>
+              {/* Divider between Core and System sections */}
+              <div className="my-2 border-t border-slate-200/80 dark:border-gray-800" />
 
-          {/* System & Management Group */}
-          <div>
-            <h2
-              className={`mb-2.5 text-[11px] font-bold tracking-wider uppercase flex leading-[20px] text-slate-400 dark:text-gray-500 px-3 ${
-                !isExpanded && !isHovered
-                  ? "lg:justify-center"
-                  : "justify-start"
-              }`}
-            >
-              {isExpanded || isHovered || isMobileOpen ? (
-                t("System & Management")
-              ) : (
-                <HorizontaLDots />
-              )}
-            </h2>
-            {renderMenuItems(systemNavItems, "system")}
-          </div>
+              <div>
+                <h2
+                  className={`mb-2.5 text-[11px] font-bold tracking-wider uppercase flex leading-[20px] text-slate-400 dark:text-gray-500 px-3 ${
+                    !isExpanded && !isHovered
+                      ? "lg:justify-center"
+                      : "justify-start"
+                  }`}
+                >
+                  {isExpanded || isHovered || isMobileOpen ? (
+                    t("System & Management")
+                  ) : (
+                    <HorizontaLDots />
+                  )}
+                </h2>
+                {renderMenuItems(systemNavItems, "system")}
+              </div>
+            </>
+          )}
         </nav>
       </div>
     </aside>

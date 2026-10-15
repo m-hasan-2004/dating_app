@@ -27,11 +27,11 @@ const PALETTES: { id: ColorPalette; nameKey: string; color: string }[] = [
 ];
 
 const LIGHT_CANVAS_PRESETS = [
-  { id: "default", nameKey: "Default Soft Slate", color: "#f8fafc" },
+  { id: "default", nameKey: "Default Soft Slate", color: "#f1f5f9" },
+  { id: "cool", nameKey: "Cool Gray", color: "#e2e8f0" },
   { id: "white", nameKey: "Pure White", color: "#ffffff" },
-  { id: "cool", nameKey: "Cool Gray", color: "#f1f5f9" },
   { id: "warm", nameKey: "Warm Zinc", color: "#fafaf9" },
-  { id: "amber", nameKey: "Soft Cream", color: "#fffbeb" },
+  { id: "amber", nameKey: "Soft Cream", color: "#fef3c7" },
 ];
 
 const DARK_CANVAS_PRESETS = [
@@ -45,7 +45,7 @@ const DARK_CANVAS_PRESETS = [
 export default function SiteSettingsPage() {
   const { user, loading: authLoading } = useAuth();
   const { t, isRTL } = useLanguage();
-  const { setBranding, restoreDefaults, setCanvasColors, canvasLightColor: currentCanvasLight, canvasDarkColor: currentCanvasDark } = useBranding();
+  const { setBranding, restoreDefaults, setCanvasColors, setColorPalette: setContextColorPalette, canvasLightColor: currentCanvasLight, canvasDarkColor: currentCanvasDark } = useBranding();
   const router = useRouter();
 
   const logoFileInputRef = useRef<HTMLInputElement>(null);
@@ -174,7 +174,7 @@ export default function SiteSettingsPage() {
       setColorPalette("default");
       setCustomPrimaryColor("#465fff");
       setCustomSecondaryColor("#3641f5");
-      setCanvasLightColor("#f8fafc");
+      setCanvasLightColor("#f1f5f9");
       setCanvasDarkColor("#131127");
       setLogoUrl("");
       setFaviconUrl("");
@@ -224,7 +224,7 @@ export default function SiteSettingsPage() {
       if (updated.color_palette) setColorPalette(updated.color_palette as ColorPalette);
       if (updated.custom_primary_color !== undefined) setCustomPrimaryColor(updated.custom_primary_color || "#465fff");
       if (updated.custom_secondary_color !== undefined) setCustomSecondaryColor(updated.custom_secondary_color || "#3641f5");
-      if (updated.canvas_light_color !== undefined) setCanvasLightColor(updated.canvas_light_color || "#f8fafc");
+      if (updated.canvas_light_color !== undefined) setCanvasLightColor(updated.canvas_light_color || "#f1f5f9");
       if (updated.canvas_dark_color !== undefined) setCanvasDarkColor(updated.canvas_dark_color || "#131127");
       if (updated.logo_url !== undefined) setLogoUrl(updated.logo_url);
       if (updated.favicon_url !== undefined) setFaviconUrl(updated.favicon_url);
@@ -488,7 +488,10 @@ export default function SiteSettingsPage() {
                         <button
                           key={pal.id}
                           type="button"
-                          onClick={() => setColorPalette(pal.id)}
+                          onClick={() => {
+                            setColorPalette(pal.id);
+                            setContextColorPalette(pal.id);
+                          }}
                           className={`flex flex-col items-center gap-2 p-3 rounded-2xl border transition-all cursor-pointer text-center ${
                             isSelected
                               ? `border-[var(--color-primary)] bg-[var(--color-primary)]/10 dark:bg-brand-950/30 ring-2 ring-offset-2 ring-slate-400 dark:ring-offset-gray-900 shadow-xs font-bold`
@@ -536,6 +539,7 @@ export default function SiteSettingsPage() {
                         setColorPalette("custom");
                         setCustomPrimaryColor("#465fff");
                         setCustomSecondaryColor("#3641f5");
+                        setContextColorPalette("custom", "#465fff", "#3641f5");
                       }}
                       className="text-xs"
                     >
@@ -545,13 +549,15 @@ export default function SiteSettingsPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                     {/* Primary Color Picker */}
-                    <div className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 border border-slate-200/80 dark:border-gray-700 rounded-xl shadow-2xs">
+                    <div className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 border-[1.5px] border-slate-300 dark:border-gray-700 rounded-xl shadow-2xs">
                       <input
                         type="color"
                         value={customPrimaryColor || "#465fff"}
                         onChange={(e) => {
-                          setCustomPrimaryColor(e.target.value);
+                          const val = e.target.value;
+                          setCustomPrimaryColor(val);
                           setColorPalette("custom");
+                          setContextColorPalette("custom", val, customSecondaryColor);
                         }}
                         className="w-10 h-10 rounded-lg border-0 cursor-pointer p-0 bg-transparent"
                       />
@@ -563,8 +569,10 @@ export default function SiteSettingsPage() {
                           type="text"
                           value={customPrimaryColor}
                           onChange={(e) => {
-                            setCustomPrimaryColor(e.target.value);
+                            const val = e.target.value;
+                            setCustomPrimaryColor(val);
                             setColorPalette("custom");
+                            setContextColorPalette("custom", val, customSecondaryColor);
                           }}
                           placeholder="#465fff"
                           className="w-full text-xs font-mono py-1 px-2 border border-slate-300 dark:border-gray-700 rounded bg-white dark:bg-gray-900 text-slate-800 dark:text-white focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)]"
@@ -573,13 +581,15 @@ export default function SiteSettingsPage() {
                     </div>
 
                     {/* Secondary Accent Color Picker */}
-                    <div className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 border border-slate-200/80 dark:border-gray-700 rounded-xl shadow-2xs">
+                    <div className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 border-[1.5px] border-slate-300 dark:border-gray-700 rounded-xl shadow-2xs">
                       <input
                         type="color"
                         value={customSecondaryColor || "#3641f5"}
                         onChange={(e) => {
-                          setCustomSecondaryColor(e.target.value);
+                          const val = e.target.value;
+                          setCustomSecondaryColor(val);
                           setColorPalette("custom");
+                          setContextColorPalette("custom", customPrimaryColor, val);
                         }}
                         className="w-10 h-10 rounded-lg border-0 cursor-pointer p-0 bg-transparent"
                       />
@@ -591,8 +601,10 @@ export default function SiteSettingsPage() {
                           type="text"
                           value={customSecondaryColor}
                           onChange={(e) => {
-                            setCustomSecondaryColor(e.target.value);
+                            const val = e.target.value;
+                            setCustomSecondaryColor(val);
                             setColorPalette("custom");
+                            setContextColorPalette("custom", customPrimaryColor, val);
                           }}
                           placeholder="#3641f5"
                           className="w-full text-xs font-mono py-1 px-2 border border-slate-300 dark:border-gray-700 rounded bg-white dark:bg-gray-900 text-slate-800 dark:text-white focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)]"
@@ -625,8 +637,8 @@ export default function SiteSettingsPage() {
                         <button
                           type="button"
                           onClick={() => {
-                            setCanvasLightColor("#f8fafc");
-                            setCanvasColors("#f8fafc", canvasDarkColor);
+                            setCanvasLightColor("#f1f5f9");
+                            setCanvasColors("#f1f5f9", canvasDarkColor);
                           }}
                           className="text-[11px] text-[var(--color-primary)] hover:underline font-medium cursor-pointer"
                         >
