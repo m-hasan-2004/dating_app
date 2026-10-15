@@ -42,9 +42,9 @@ const COLOR_CLASSES: Record<string, { bg: string; text: string; dot: string }> =
     dot: "bg-green-500",
   },
   primary: {
-    bg: "bg-brand-100 dark:bg-brand-950/50 text-brand-700 dark:text-brand-300 border-brand-200 dark:border-brand-800",
-    text: "text-brand-600 dark:text-brand-400",
-    dot: "bg-brand-500",
+    bg: "bg-[var(--color-primary)]/15 dark:bg-[var(--color-primary)]/20 text-[var(--color-primary)] border-[var(--color-primary)]/30 dark:border-[var(--color-primary)]/40",
+    text: "text-[var(--color-primary)]",
+    dot: "bg-[var(--color-primary)]",
   },
   warning: {
     bg: "bg-amber-100 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800",
@@ -318,16 +318,16 @@ export const Calendar: React.FC = () => {
     : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] shadow-sm overflow-hidden">
+    <div className="rounded-2xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] shadow-xs overflow-hidden">
       {/* Calendar Toolbar Header */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-6 py-5 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-white/[0.01]">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-6 py-5 border-b border-slate-100 dark:border-gray-800 bg-slate-50/50 dark:bg-white/[0.01]">
         {/* Month Navigation & Title */}
         <div className="flex items-center gap-3">
-          <div className="flex items-center rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-xs overflow-hidden">
+          <div className="flex items-center rounded-xl border border-slate-200/80 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-2xs overflow-hidden">
             <button
               type="button"
               onClick={handlePrevMonth}
-              className="p-2 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors cursor-pointer"
+              className="p-2 hover:bg-slate-50 dark:hover:bg-gray-700 text-slate-700 dark:text-gray-300 transition-colors cursor-pointer"
               title={isRTL ? "ماه قبل" : "Previous Month"}
             >
               <ChevronLeftIcon className={`w-4 h-4 ${isRTL ? "rotate-180" : ""}`} />
@@ -335,21 +335,21 @@ export const Calendar: React.FC = () => {
             <button
               type="button"
               onClick={handleToday}
-              className="px-3 py-1.5 text-xs font-semibold text-gray-700 dark:text-gray-200 border-x border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer"
+              className="px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-gray-200 border-x border-slate-200/80 dark:border-gray-700 hover:bg-slate-50 dark:hover:bg-gray-700 transition-colors cursor-pointer"
             >
               {isRTL ? "امروز" : "Today"}
             </button>
             <button
               type="button"
               onClick={handleNextMonth}
-              className="p-2 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 transition-colors cursor-pointer"
+              className="p-2 hover:bg-slate-50 dark:hover:bg-gray-700 text-slate-700 dark:text-gray-300 transition-colors cursor-pointer"
               title={isRTL ? "ماه بعد" : "Next Month"}
             >
               <ChevronLeftIcon className={`w-4 h-4 ${isRTL ? "" : "rotate-180"}`} />
             </button>
           </div>
 
-          <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
+          <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
             {currentMonthTitle}
           </h2>
         </div>
@@ -359,7 +359,7 @@ export const Calendar: React.FC = () => {
           <button
             type="button"
             onClick={() => handleDayClick(new Date().toISOString().split("T")[0])}
-            className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-xl bg-brand-500 hover:bg-brand-600 text-white shadow-sm transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-xl bg-[var(--color-primary)] hover:brightness-95 text-white shadow-xs transition-colors cursor-pointer"
           >
             <PlusIcon className="w-4 h-4" />
             {isRTL ? "افزودن رویداد جدید" : "Add Event"}
@@ -368,7 +368,7 @@ export const Calendar: React.FC = () => {
       </div>
 
       {/* Weekday Columns Header */}
-      <div className="grid grid-cols-7 border-b border-gray-100 dark:border-gray-800 bg-gray-50/80 dark:bg-gray-800/40 text-center text-xs font-semibold text-gray-600 dark:text-gray-300 py-3">
+      <div className="grid grid-cols-7 border-b border-slate-100 dark:border-gray-800 bg-slate-50/80 dark:bg-gray-800/40 text-center text-xs font-semibold text-slate-600 dark:text-gray-300 py-3">
         {weekDayHeaders.map((day, idx) => (
           <div
             key={day}
@@ -380,7 +380,7 @@ export const Calendar: React.FC = () => {
       </div>
 
       {/* Month Days Grid */}
-      <div className="grid grid-cols-7 divide-x divide-y divide-gray-100 dark:divide-gray-800 bg-white dark:bg-transparent min-h-[560px]">
+      <div className="grid grid-cols-7 divide-x divide-y divide-slate-100 dark:divide-gray-800 bg-white dark:bg-transparent min-h-[560px]">
         {activeDaysGrid.map((cell, index) => {
           // Find matching events for this cell's date
           const cellEvents = events.filter(
@@ -393,28 +393,28 @@ export const Calendar: React.FC = () => {
             <div
               key={`${cell.gregorianStr}-${index}`}
               onClick={() => handleDayClick(cell.gregorianStr)}
-              className={`p-2 sm:p-2.5 min-h-[95px] flex flex-col justify-between transition-colors cursor-pointer hover:bg-brand-50/20 dark:hover:bg-brand-950/10 ${
+              className={`p-2 sm:p-2.5 min-h-[95px] flex flex-col justify-between transition-colors cursor-pointer hover:bg-[var(--color-primary)]/5 dark:hover:bg-white/[0.02] ${
                 !cell.isCurrentMonth
-                  ? "bg-gray-50/40 dark:bg-gray-900/20 text-gray-400 dark:text-gray-600"
-                  : "text-gray-800 dark:text-gray-200"
-              } ${cell.isToday ? "bg-brand-50/30 dark:bg-brand-950/20 ring-1 ring-inset ring-brand-500/40" : ""}`}
+                  ? "bg-slate-50/40 dark:bg-gray-900/20 text-slate-400 dark:text-gray-600"
+                  : "text-slate-800 dark:text-gray-200"
+              } ${cell.isToday ? "bg-[var(--color-primary)]/10 dark:bg-[var(--color-primary)]/20 ring-1 ring-inset ring-[var(--color-primary)]/30" : ""}`}
             >
               {/* Day Header */}
               <div className="flex items-center justify-between">
                 <span
                   className={`inline-flex items-center justify-center w-6 h-6 text-xs font-bold rounded-full ${
                     cell.isToday
-                      ? "bg-brand-500 text-white shadow-xs"
+                      ? "bg-[var(--color-primary)] text-white shadow-xs"
                       : cell.isCurrentMonth
-                      ? "text-gray-800 dark:text-gray-200"
-                      : "text-gray-400 dark:text-gray-600"
+                      ? "text-slate-800 dark:text-gray-200"
+                      : "text-slate-400 dark:text-gray-600"
                   }`}
                 >
                   {isRTL ? toPersianDigits(cell.dayNum) : cell.dayNum}
                 </span>
 
                 {cell.isToday && (
-                  <span className="text-[10px] font-medium text-brand-600 dark:text-brand-400">
+                  <span className="text-[10px] font-medium text-[var(--color-primary)]">
                     {isRTL ? "امروز" : "Today"}
                   </span>
                 )}
@@ -445,9 +445,9 @@ export const Calendar: React.FC = () => {
       {/* ── ADD / EDIT EVENT MODAL ───────────────────────────────────── */}
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} className="max-w-lg w-full" showCloseButton={false}>
         <div className="p-6 w-full" dir={isRTL ? "rtl" : "ltr"}>
-          <div className="flex items-center justify-between pb-3 mb-4 border-b border-gray-100 dark:border-gray-800">
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
-              <CalenderIcon className="w-5 h-5 text-brand-500" />
+          <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-100 dark:border-gray-800">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <CalenderIcon className="w-5 h-5 text-[var(--color-primary)]" />
               {selectedEvent
                 ? isRTL
                   ? "ویرایش رویداد"
@@ -470,7 +470,7 @@ export const Calendar: React.FC = () => {
 
           <form onSubmit={handleSaveEvent} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1">
                 {isRTL ? "عنوان رویداد" : "Event Title"}
               </label>
               <input
@@ -479,17 +479,17 @@ export const Calendar: React.FC = () => {
                 value={modalTitle}
                 onChange={(e) => setModalTitle(e.target.value)}
                 placeholder={isRTL ? "مثلا: جلسه خواستگاری و معرفی" : "e.g. Intro Meeting"}
-                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+                className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl bg-white text-slate-800 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1">
                 {isRTL ? "نوع و رنگ رویداد" : "Event Category / Color"}
               </label>
               <div className="grid grid-cols-4 gap-2">
                 {[
-                  { key: "primary", label: isRTL ? "اصلی" : "Primary", color: "bg-blue-500" },
+                  { key: "primary", label: isRTL ? "اصلی" : "Primary", color: "bg-[var(--color-primary)]" },
                   { key: "success", label: isRTL ? "موفق" : "Success", color: "bg-green-500" },
                   { key: "warning", label: isRTL ? "هشدار" : "Warning", color: "bg-amber-500" },
                   { key: "danger", label: isRTL ? "مهم" : "Danger", color: "bg-red-500" },
@@ -500,8 +500,8 @@ export const Calendar: React.FC = () => {
                     onClick={() => setModalCategory(item.key as any)}
                     className={`flex items-center justify-center gap-1.5 py-2 px-2 rounded-xl text-xs font-medium border transition-all cursor-pointer ${
                       modalCategory === item.key
-                        ? "border-brand-500 bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-400 ring-2 ring-brand-500/20"
-                        : "border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"
+                        ? "border-[var(--color-primary)] bg-[var(--color-primary)]/10 dark:bg-[var(--color-primary)]/20 text-[var(--color-primary)] ring-2 ring-[var(--color-primary)]/20"
+                        : "border-slate-200/80 dark:border-gray-700 hover:bg-slate-50 dark:hover:bg-gray-800 text-slate-700 dark:text-gray-300"
                     }`}
                   >
                     <span className={`w-2.5 h-2.5 rounded-full ${item.color}`} />
@@ -513,7 +513,7 @@ export const Calendar: React.FC = () => {
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">
+                <label className="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1">
                   {isRTL ? "تاریخ شروع" : "Start Date"}
                 </label>
                 <input
@@ -521,33 +521,33 @@ export const Calendar: React.FC = () => {
                   required
                   value={modalStartDate}
                   onChange={(e) => setModalStartDate(e.target.value)}
-                  className="w-full px-3 py-2 text-xs border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+                  className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl bg-white text-slate-800 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]"
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 mb-1">
+                <label className="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1">
                   {isRTL ? "تاریخ پایان" : "End Date"}
                 </label>
                 <input
                   type="date"
                   value={modalEndDate}
                   onChange={(e) => setModalEndDate(e.target.value)}
-                  className="w-full px-3 py-2 text-xs border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+                  className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl bg-white text-slate-800 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]"
                 />
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-2 pt-4 border-t border-gray-100 dark:border-gray-800">
+            <div className="flex items-center justify-end gap-2 pt-4 border-t border-slate-100 dark:border-gray-800">
               <button
                 type="button"
                 onClick={() => setIsModalOpen(false)}
-                className="px-4 py-2 text-xs font-semibold rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer"
+                className="px-4 py-2 text-xs font-semibold rounded-xl border border-slate-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-slate-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-700 transition-colors shadow-2xs cursor-pointer"
               >
                 {t("Cancel")}
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 text-xs font-semibold rounded-xl bg-brand-500 hover:bg-brand-600 text-white shadow-sm transition-colors cursor-pointer"
+                className="px-4 py-2 text-xs font-semibold rounded-xl bg-[var(--color-primary)] hover:brightness-95 text-white shadow-xs transition-colors cursor-pointer"
               >
                 {selectedEvent
                   ? isRTL

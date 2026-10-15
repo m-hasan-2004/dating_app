@@ -37,7 +37,7 @@ type NavItem = {
   adminOnly?: boolean;
 };
 
-const ALL_NAV_ITEMS: NavItem[] = [
+const CORE_NAV_ITEMS: NavItem[] = [
   {
     icon: <GridIcon />,
     name: "Dashboard",
@@ -54,15 +54,23 @@ const ALL_NAV_ITEMS: NavItem[] = [
     path: "/profile/bookmarks",
   },
   {
-    icon: <PieChartIcon />,
-    name: "Statistics",
-    path: "/statistics",
-    adminOnly: true,
+    icon: <CalenderIcon />,
+    name: "Calendar",
+    path: "/calendar",
   },
+];
+
+const SYSTEM_NAV_ITEMS: NavItem[] = [
   {
     icon: <UserCircleIcon />,
     name: "User Profile",
     path: "/profile",
+  },
+  {
+    icon: <PieChartIcon />,
+    name: "Statistics",
+    path: "/statistics",
+    adminOnly: true,
   },
   {
     icon: <LockIcon />,
@@ -73,14 +81,7 @@ const ALL_NAV_ITEMS: NavItem[] = [
       { name: "Access Codes", path: "/access-codes", pro: false },
     ],
   },
-  {
-    icon: <CalenderIcon />,
-    name: "Calendar",
-    path: "/calendar",
-  },
 ];
-
-const othersItems: NavItem[] = [];
 
 const AppSidebar: React.FC = () => {
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
@@ -99,7 +100,9 @@ const AppSidebar: React.FC = () => {
 
   const isAdmin = Boolean(user?.is_staff || isSuperUser);
 
-  const navItems = ALL_NAV_ITEMS.filter((item) => !item.adminOnly || isAdmin).map((item) => {
+  const coreNavItems = CORE_NAV_ITEMS;
+
+  const systemNavItems = SYSTEM_NAV_ITEMS.filter((item) => !item.adminOnly || isAdmin).map((item) => {
     if (item.name === "Management" && item.subItems) {
       const filteredSubItems = item.subItems.filter((sub) => {
         if (sub.path === "/site-settings") {
@@ -128,7 +131,7 @@ const AppSidebar: React.FC = () => {
   });
 
   const [openSubmenu, setOpenSubmenu] = useState<{
-    type: "main" | "others";
+    type: "core" | "system";
     index: number;
   } | null>(null);
   const [subMenuHeight, setSubMenuHeight] = useState<Record<string, number>>({});
@@ -137,11 +140,11 @@ const AppSidebar: React.FC = () => {
   const isActive = useCallback((path: string) => path === pathname, [pathname]);
 
   const renderMenuItems = (
-    navItems: NavItem[],
-    menuType: "main" | "others"
+    items: NavItem[],
+    menuType: "core" | "system"
   ) => (
-    <ul className="flex flex-col gap-4">
-      {navItems.map((nav, index) => (
+    <ul className="flex flex-col gap-2">
+      {items.map((nav, index) => (
         <li key={nav.name}>
           {nav.subItems ? (
             <button
@@ -166,14 +169,14 @@ const AppSidebar: React.FC = () => {
                 {nav.icon}
               </span>
               {(isExpanded || isHovered || isMobileOpen) && (
-                <span className="menu-item-text">{t(nav.name)}</span>
+                <span className="menu-item-text font-medium">{t(nav.name)}</span>
               )}
               {(isExpanded || isHovered || isMobileOpen) && (
                 <ChevronDownIcon
                   className={`${isRTL ? "mr-auto" : "ml-auto"} w-5 h-5 transition-transform duration-200 ${
                     openSubmenu?.type === menuType &&
                     openSubmenu?.index === index
-                      ? "rotate-180 text-brand-500"
+                      ? "rotate-180 text-[var(--color-primary)]"
                       : ""
                   }`}
                 />
@@ -197,7 +200,7 @@ const AppSidebar: React.FC = () => {
                   {nav.icon}
                 </span>
                 {(isExpanded || isHovered || isMobileOpen) && (
-                  <span className="menu-item-text">{t(nav.name)}</span>
+                  <span className="menu-item-text font-medium">{t(nav.name)}</span>
                 )}
               </Link>
             )
@@ -215,7 +218,7 @@ const AppSidebar: React.FC = () => {
                     : "0px",
               }}
             >
-              <ul className={`mt-2 space-y-1 ${isRTL ? "mr-9" : "ml-9"}`}>
+              <ul className={`mt-1.5 space-y-1 ${isRTL ? "mr-8" : "ml-8"}`}>
                 {nav.subItems.map((subItem) => (
                   <li key={subItem.name}>
                     <Link
@@ -263,16 +266,19 @@ const AppSidebar: React.FC = () => {
   );
 
   useEffect(() => {
-    // Check if current path matches any submenu item
     let submenuMatched = false;
-    ["main", "others"].forEach((menuType) => {
-      const items = menuType === "main" ? navItems : othersItems;
+    const menuGroups: { type: "core" | "system"; items: NavItem[] }[] = [
+      { type: "core", items: coreNavItems },
+      { type: "system", items: systemNavItems },
+    ];
+
+    menuGroups.forEach(({ type, items }) => {
       items.forEach((nav, index) => {
         if (nav.subItems) {
           nav.subItems.forEach((subItem) => {
             if (isActive(subItem.path)) {
               setOpenSubmenu({
-                type: menuType as "main" | "others",
+                type,
                 index,
               });
               submenuMatched = true;
@@ -299,7 +305,7 @@ const AppSidebar: React.FC = () => {
     }
   }, [openSubmenu]);
 
-  const handleSubmenuToggle = (index: number, menuType: "main" | "others") => {
+  const handleSubmenuToggle = (index: number, menuType: "core" | "system") => {
     setOpenSubmenu((prevOpenSubmenu) => {
       if (
         prevOpenSubmenu &&
@@ -313,16 +319,16 @@ const AppSidebar: React.FC = () => {
   };
 
   const sidebarPos = isRTL
-    ? `right-0 border-l border-gray-200 dark:border-gray-800 ${
+    ? `right-0 border-l border-slate-200/80 dark:border-gray-800 ${
         isMobileOpen ? "translate-x-0" : "translate-x-full"
       } lg:translate-x-0`
-    : `left-0 border-r border-gray-200 dark:border-gray-800 ${
+    : `left-0 border-r border-slate-200/80 dark:border-gray-800 ${
         isMobileOpen ? "translate-x-0" : "-translate-x-full"
       } lg:translate-x-0`;
 
   return (
     <aside
-      className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 bg-white dark:bg-gray-900 text-gray-900 h-screen transition-all duration-300 ease-in-out z-50 ${sidebarPos} 
+      className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-4 bg-white dark:bg-gray-900 text-slate-800 dark:text-gray-100 h-screen transition-all duration-300 ease-in-out z-50 shadow-xs ${sidebarPos} 
         ${
           isExpanded || isMobileOpen
             ? "w-[290px]"
@@ -334,7 +340,7 @@ const AppSidebar: React.FC = () => {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
-        className={`py-8 flex ${
+        className={`py-6 flex ${
           !isExpanded && !isHovered ? "lg:justify-center" : "justify-start"
         }`}
       >
@@ -342,7 +348,7 @@ const AppSidebar: React.FC = () => {
           {logoUrl ? (
             <img src={logoUrl} alt={siteName} className="h-9 w-auto max-w-[150px] object-contain rounded-lg" />
           ) : (
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-600 to-brand-400 flex items-center justify-center text-white shadow-md shadow-brand-500/20 shrink-0">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[var(--color-primary)] to-[var(--color-accent)] flex items-center justify-center text-white shadow-sm shrink-0">
               <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
                 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
               </svg>
@@ -350,54 +356,56 @@ const AppSidebar: React.FC = () => {
           )}
           {(isExpanded || isHovered || isMobileOpen) && (
             <div className="flex flex-col min-w-0">
-              <span className="font-extrabold text-gray-900 dark:text-white text-sm sm:text-base tracking-tight truncate max-w-[180px]">
+              <span className="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base tracking-tight truncate max-w-[180px]">
                 {siteName}
               </span>
-              <span className="text-[10px] text-brand-600 dark:text-brand-400 font-medium">
+              <span className="text-[10px] text-[var(--color-primary)] dark:text-brand-400 font-semibold">
                 {siteTagline ? t(siteTagline) : t("Matchmaking Portal")}
               </span>
             </div>
           )}
         </Link>
       </div>
-      <div className="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">
-        <nav className="mb-6">
-          <div className="flex flex-col gap-4">
-            <div>
-              <h2
-                className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
-                  !isExpanded && !isHovered
-                    ? "lg:justify-center"
-                    : "justify-start"
-                }`}
-              >
-                {isExpanded || isHovered || isMobileOpen ? (
-                  t("Menu")
-                ) : (
-                  <HorizontaLDots />
-                )}
-              </h2>
-              {renderMenuItems(navItems, "main")}
-            </div>
 
-            {othersItems.length > 0 && (
-              <div className="">
-                <h2
-                  className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
-                    !isExpanded && !isHovered
-                      ? "lg:justify-center"
-                      : "justify-start"
-                  }`}
-                >
-                  {isExpanded || isHovered || isMobileOpen ? (
-                    t("Others")
-                  ) : (
-                    <HorizontaLDots />
-                  )}
-                </h2>
-                {renderMenuItems(othersItems, "others")}
-              </div>
-            )}
+      <div className="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar flex-1 pb-6">
+        <nav className="space-y-4">
+          {/* Core Navigation Group */}
+          <div>
+            <h2
+              className={`mb-2.5 text-[11px] font-bold tracking-wider uppercase flex leading-[20px] text-slate-400 dark:text-gray-500 px-3 ${
+                !isExpanded && !isHovered
+                  ? "lg:justify-center"
+                  : "justify-start"
+              }`}
+            >
+              {isExpanded || isHovered || isMobileOpen ? (
+                t("Menu")
+              ) : (
+                <HorizontaLDots />
+              )}
+            </h2>
+            {renderMenuItems(coreNavItems, "core")}
+          </div>
+
+          {/* Divider between Core and System sections */}
+          <div className="my-2 border-t border-slate-200/80 dark:border-gray-800" />
+
+          {/* System & Management Group */}
+          <div>
+            <h2
+              className={`mb-2.5 text-[11px] font-bold tracking-wider uppercase flex leading-[20px] text-slate-400 dark:text-gray-500 px-3 ${
+                !isExpanded && !isHovered
+                  ? "lg:justify-center"
+                  : "justify-start"
+              }`}
+            >
+              {isExpanded || isHovered || isMobileOpen ? (
+                t("System & Management")
+              ) : (
+                <HorizontaLDots />
+              )}
+            </h2>
+            {renderMenuItems(systemNavItems, "system")}
           </div>
         </nav>
       </div>

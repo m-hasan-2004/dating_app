@@ -37,14 +37,14 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({
   };
 
   return (
-    <div className="rounded-2xl border border-gray-200 hover:border-gray-300 bg-white dark:border-gray-800 dark:bg-white/[0.03] shadow-xs transition-all">
-      <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-gray-800">
-        <h3 className="text-base font-semibold text-gray-800 dark:text-white/90">{t(title)}</h3>
+    <div className="rounded-2xl border border-slate-200/80 hover:border-slate-300 bg-white dark:border-gray-800 dark:bg-white/[0.03] shadow-xs transition-all">
+      <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-gray-800">
+        <h3 className="text-base font-semibold text-slate-900 dark:text-white/90">{t(title)}</h3>
         <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={handleToggle}
-            className="inline-flex items-center gap-1 text-xs font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors px-2 py-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800/60 cursor-pointer"
+            className="inline-flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-slate-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors px-2 py-1 rounded-md hover:bg-slate-100 dark:hover:bg-gray-800/60 cursor-pointer"
             title={collapsed ? t('Expand') : t('Collapse')}
           >
             {collapsed ? (
@@ -62,7 +62,7 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({
           <button
             type="button"
             onClick={onEdit}
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-brand-500 hover:text-brand-600 transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-primary)] hover:brightness-90 transition-colors cursor-pointer"
           >
             {isEmpty ? <PlusIcon className="w-4 h-4" /> : <PencilIcon className="w-4 h-4" />}
             {isEmpty ? t('Add') : t('Edit')}
@@ -72,9 +72,9 @@ const ProfileSection: React.FC<ProfileSectionProps> = ({
       {!collapsed && (
         <div className="px-6 py-4">
           {loading ? (
-            <p className="text-sm text-gray-400 dark:text-gray-500">{t('Loading...')}</p>
+            <p className="text-sm text-slate-400 dark:text-gray-500">{t('Loading...')}</p>
           ) : isEmpty ? (
-            <p className="text-sm text-gray-400 dark:text-gray-500 italic">{emptyText ? t(emptyText) : t('No data yet. Click Add to fill in.')}</p>
+            <p className="text-sm text-slate-400 dark:text-gray-500 italic">{emptyText ? t(emptyText) : t('No data yet. Click Add to fill in.')}</p>
           ) : (
             children
           )}

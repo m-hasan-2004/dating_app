@@ -201,12 +201,12 @@ export default function SignUpForm() {
       <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto sm:pt-10">
         <div>
           <div className="mb-5 sm:mb-8">
-            <h1 className="mb-2 font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md">
+            <h1 className="mb-2 font-bold text-slate-900 text-title-sm dark:text-white/90 sm:text-title-md">
               {config.require_access_code
                 ? t("Sign Up (Access Code Required)")
                 : t("Sign Up")}
             </h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-sm text-slate-500 dark:text-gray-400">
               {config.require_access_code
                 ? t("Enter your invitation access code and details to create an account.")
                 : t("Enter your details to create an account.")}
@@ -383,7 +383,7 @@ export default function SignUpForm() {
                         }
                       }}
                     />
-                    <p className="inline-block font-normal text-xs text-gray-500 dark:text-gray-400">
+                    <p className="inline-block font-normal text-xs text-slate-500 dark:text-gray-400">
                       {t("I agree to the Terms, Conditions, and Privacy Policy")}
                     </p>
                   </div>
@@ -402,11 +402,11 @@ export default function SignUpForm() {
             </form>
 
             <div className="mt-5 pb-5">
-              <p className="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
+              <p className="text-sm font-normal text-center text-slate-700 dark:text-gray-400 sm:text-start">
                 {t("Already have an account?")}{" "}
                 <Link
                   href="/signin"
-                  className="text-brand-500 hover:text-brand-600 dark:text-brand-400 font-semibold"
+                  className="text-[var(--color-primary)] hover:brightness-90 dark:text-brand-400 font-semibold"
                 >
                   {t("Sign In")}
                 </Link>

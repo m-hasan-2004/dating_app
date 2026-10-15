@@ -50,6 +50,8 @@
   --color-brand-800: #252dae;
   --color-brand-900: #262e89;
   --color-brand-950: #161950;
+  --color-primary: var(--color-primary);
+  --color-accent: var(--color-accent);
 
   --color-blue-light-25: #f5fbff;
   --color-blue-light-50: #f0f9ff;
@@ -167,7 +169,13 @@
   --z-index-999999: 999999;
 }
 
-/* ─── Dynamic Branding Color Palettes ───────────────────────────────────── */
+/* ─── Dynamic Branding Color Palettes & Tokens ─────────────────────────── */
+:root {
+  --color-primary: #465fff;
+  --color-primary-rgb: 70, 95, 255;
+  --color-accent: #3641f5;
+}
+
 html[data-palette="emerald"] {
   --color-brand-25: #f0fdf4;
   --color-brand-50: #ecfdf5;
@@ -181,6 +189,9 @@ html[data-palette="emerald"] {
   --color-brand-800: #065f46;
   --color-brand-900: #064e3b;
   --color-brand-950: #022c22;
+  --color-primary: #10b981;
+  --color-primary-rgb: 16, 185, 129;
+  --color-accent: #059669;
 }
 
 html[data-palette="purple"] {
@@ -196,6 +207,9 @@ html[data-palette="purple"] {
   --color-brand-800: #5b21b6;
   --color-brand-900: #4c1d95;
   --color-brand-950: #2e1065;
+  --color-primary: #8b5cf6;
+  --color-primary-rgb: 139, 92, 246;
+  --color-accent: #7c3aed;
 }
 
 html[data-palette="rose"] {
@@ -211,6 +225,9 @@ html[data-palette="rose"] {
   --color-brand-800: #9f1239;
   --color-brand-900: #881337;
   --color-brand-950: #4c0519;
+  --color-primary: #f43f5e;
+  --color-primary-rgb: 244, 63, 94;
+  --color-accent: #e11d48;
 }
 
 html[data-palette="amber"] {
@@ -226,6 +243,9 @@ html[data-palette="amber"] {
   --color-brand-800: #92400e;
   --color-brand-900: #78350f;
   --color-brand-950: #451a03;
+  --color-primary: #f59e0b;
+  --color-primary-rgb: 245, 158, 11;
+  --color-accent: #d97706;
 }
 
 html[data-palette="indigo"] {
@@ -241,7 +261,11 @@ html[data-palette="indigo"] {
   --color-brand-800: #3730a3;
   --color-brand-900: #312e81;
   --color-brand-950: #1e1b4b;
+  --color-primary: #6366f1;
+  --color-primary-rgb: 99, 102, 241;
+  --color-accent: #4f46e5;
 }
+
 
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
@@ -264,32 +288,32 @@ html[data-palette="indigo"] {
     cursor: pointer;
   }
   body {
-    @apply relative font-normal font-outfit z-1 bg-gray-50;
+    @apply relative font-normal font-outfit z-1 bg-slate-50 text-slate-800 dark:bg-gray-900 dark:text-gray-100;
   }
 }
 
 @utility menu-item {
-  @apply relative flex items-center w-full gap-3 px-3 py-2 font-medium rounded-lg text-theme-sm;
+  @apply relative flex items-center w-full gap-3 px-3.5 py-2.5 font-medium rounded-xl text-theme-sm transition-all;
 }
 
 @utility menu-item-active {
-  @apply bg-brand-50 text-brand-500 dark:bg-brand-500/[0.12] dark:text-brand-400;
+  @apply bg-[var(--color-primary)]/10 text-[var(--color-primary)] font-semibold rtl:border-r-4 ltr:border-l-4 border-[var(--color-primary)] shadow-2xs dark:bg-[var(--color-primary)]/[0.14] dark:text-[var(--color-brand-400)];
 }
 
 @utility menu-item-inactive {
-  @apply text-gray-700 hover:bg-gray-100 group-hover:text-gray-700 dark:text-gray-300 dark:hover:bg-white/5 dark:hover:text-gray-300;
+  @apply text-slate-600 hover:bg-slate-100 hover:text-slate-900 group-hover:text-slate-900 dark:text-gray-300 dark:hover:bg-white/5 dark:hover:text-gray-200;
 }
 
 @utility menu-item-icon {
-  @apply text-gray-500 group-hover:text-gray-700 dark:text-gray-400;
+  @apply text-slate-400 group-hover:text-slate-600 dark:text-gray-400;
 }
 
 @utility menu-item-icon-active {
-  @apply text-brand-500 dark:text-brand-400;
+  @apply text-[var(--color-primary)] dark:text-[var(--color-brand-400)];
 }
 
 @utility menu-item-icon-inactive {
-  @apply text-gray-500 group-hover:text-gray-700 dark:text-gray-400 dark:group-hover:text-gray-300;
+  @apply text-slate-400 group-hover:text-slate-600 dark:text-gray-400 dark:group-hover:text-gray-300;
 }
 
 @utility menu-item-arrow {
@@ -297,36 +321,37 @@ html[data-palette="indigo"] {
 }
 
 @utility menu-item-arrow-active {
-  @apply rotate-180 text-brand-500 dark:text-brand-400;
+  @apply rotate-180 text-[var(--color-primary)] dark:text-[var(--color-brand-400)];
 }
 
 @utility menu-item-arrow-inactive {
-  @apply text-gray-500 group-hover:text-gray-700 dark:text-gray-400 dark:group-hover:text-gray-300;
+  @apply text-slate-400 group-hover:text-slate-600 dark:text-gray-400 dark:group-hover:text-gray-300;
 }
 
 @utility menu-dropdown-item {
-  @apply relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-theme-sm font-medium;
+  @apply relative flex items-center gap-3 rounded-lg px-3 py-2 text-theme-sm font-medium transition-all;
 }
 
 @utility menu-dropdown-item-active {
-  @apply bg-brand-50 text-brand-500 dark:bg-brand-500/[0.12] dark:text-brand-400;
+  @apply bg-[var(--color-primary)]/10 text-[var(--color-primary)] font-semibold rtl:border-r-2 ltr:border-l-2 border-[var(--color-primary)] dark:bg-[var(--color-primary)]/[0.14] dark:text-[var(--color-brand-400)];
 }
 
 @utility menu-dropdown-item-inactive {
-  @apply text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-white/5;
+  @apply text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-200;
 }
 
 @utility menu-dropdown-badge {
-  @apply block rounded-full px-2.5 py-0.5 text-xs font-medium uppercase text-brand-500 dark:text-brand-400;
+  @apply block rounded-full px-2 py-0.5 text-[10px] font-bold uppercase text-[var(--color-primary)] dark:text-brand-400;
 }
 
 @utility menu-dropdown-badge-active {
-  @apply bg-brand-100 dark:bg-brand-500/20;
+  @apply bg-[var(--color-primary)]/15 dark:bg-brand-500/20;
 }
 
 @utility menu-dropdown-badge-inactive {
-  @apply bg-brand-50 group-hover:bg-brand-100 dark:bg-brand-500/15 dark:group-hover:bg-brand-500/20;
+  @apply bg-slate-100 group-hover:bg-slate-200 dark:bg-brand-500/15 dark:group-hover:bg-brand-500/20;
 }
+
 
 @utility no-scrollbar {
   /* Chrome, Safari and Opera */

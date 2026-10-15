@@ -220,17 +220,17 @@ export default function UsersListPage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-800 dark:text-white">{t("User Management")}</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">{t("User Management")}</h1>
+          <p className="text-sm text-slate-500 dark:text-gray-400">
             {t("View, search, batch manage, and edit dating app user profiles and access roles.")}
           </p>
         </div>
         <div className="flex items-center gap-3">
           <Link
             href="/access-codes"
-            className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-xl border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 transition-colors shadow-sm"
+            className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-xl border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 hover:text-slate-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 transition-all shadow-2xs"
           >
-            <LockIcon className="w-4 h-4 text-brand-500" />
+            <LockIcon className="w-4 h-4 text-[var(--color-primary)]" />
             {t("Access Codes")}
           </Link>
         </div>
@@ -238,26 +238,26 @@ export default function UsersListPage() {
 
       {/* System-wide True Overview Stats (Database-wide) */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4">
-          <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{t("Total Users")}</p>
-          <p className="text-2xl font-bold text-gray-900 dark:text-white mt-1">
+        <div className="rounded-2xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4.5 shadow-xs">
+          <p className="text-xs font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider">{t("Total Users")}</p>
+          <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">
             {stats ? stats.total_users : totalCount}
           </p>
         </div>
-        <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4">
-          <p className="text-xs font-medium text-green-600 dark:text-green-400 uppercase tracking-wider">{t("Active Users")}</p>
-          <p className="text-2xl font-bold text-green-600 dark:text-green-400 mt-1">
+        <div className="rounded-2xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4.5 shadow-xs">
+          <p className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">{t("Active Users")}</p>
+          <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">
             {stats ? stats.active_users : '—'}
           </p>
         </div>
-        <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4">
-          <p className="text-xs font-medium text-red-600 dark:text-red-400 uppercase tracking-wider">{t("Inactive Users")}</p>
-          <p className="text-2xl font-bold text-red-600 dark:text-red-400 mt-1">
+        <div className="rounded-2xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4.5 shadow-xs">
+          <p className="text-xs font-semibold text-rose-600 dark:text-rose-400 uppercase tracking-wider">{t("Inactive Users")}</p>
+          <p className="text-2xl font-bold text-rose-600 dark:text-rose-400 mt-1">
             {stats ? stats.inactive_users : '—'}
           </p>
         </div>
-        <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4">
-          <p className="text-xs font-medium text-blue-600 dark:text-blue-400 uppercase tracking-wider">{t("Staff & Mediators")}</p>
+        <div className="rounded-2xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4.5 shadow-xs">
+          <p className="text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider">{t("Staff & Mediators")}</p>
           <p className="text-2xl font-bold text-blue-600 dark:text-blue-400 mt-1">
             {stats ? stats.staff_users : '—'}
           </p>
@@ -279,7 +279,7 @@ export default function UsersListPage() {
       )}
 
       {/* Filter & Search Bar + Selection & Actions Toolbar */}
-      <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4 space-y-4">
+      <div className="rounded-2xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-4.5 space-y-4 shadow-xs">
         {/* Row 1: Search and Filters */}
         <div className="flex flex-col lg:flex-row gap-3 items-stretch lg:items-center justify-between">
           <div className="relative flex-1 max-w-lg">
@@ -291,7 +291,7 @@ export default function UsersListPage() {
                 setSearchQuery(e.target.value);
                 setPage(1);
               }}
-              className="w-full pl-3 pr-4 py-2 text-sm border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+              className="w-full pl-3 pr-4 py-2 text-sm border border-slate-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] transition-all"
             />
           </div>
 
@@ -303,7 +303,7 @@ export default function UsersListPage() {
                 setStatusFilter(e.target.value as any);
                 setPage(1);
               }}
-              className="px-3 py-2 text-sm border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+              className="px-3 py-2 text-sm border border-slate-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] transition-all"
             >
               <option value="all">{t("All Status")}</option>
               <option value="active">{t("Active Only")}</option>
@@ -317,7 +317,7 @@ export default function UsersListPage() {
                 setRoleFilter(e.target.value as any);
                 setPage(1);
               }}
-              className="px-3 py-2 text-sm border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+              className="px-3 py-2 text-sm border border-slate-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] transition-all"
             >
               <option value="all">{t("All Roles")}</option>
               <option value="staff">{t("Staff / Admin")}</option>
@@ -325,7 +325,7 @@ export default function UsersListPage() {
             </select>
 
             {/* Page Size Selector */}
-            <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+            <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-gray-400">
               <span>{t("Per page:")}</span>
               <select
                 value={pageSize}
@@ -333,7 +333,7 @@ export default function UsersListPage() {
                   setPageSize(Number(e.target.value));
                   setPage(1);
                 }}
-                className="px-2.5 py-1.5 text-sm border border-gray-300 rounded-lg dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+                className="px-2.5 py-1.5 text-sm border border-slate-300 rounded-lg dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] transition-all"
               >
                 {PAGE_SIZE_OPTIONS.map((opt) => (
                   <option key={opt} value={opt}>
@@ -346,28 +346,28 @@ export default function UsersListPage() {
         </div>
 
         {/* Row 2: Select 1 to N Helper & Batch Actions Menu */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-gray-100 dark:border-gray-800">
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100 dark:border-gray-800">
           {/* Selection helpers (1 to N) */}
           <div className="flex flex-wrap items-center gap-2 text-xs">
-            <span className="font-semibold text-gray-600 dark:text-gray-300">{t("Select:")}</span>
+            <span className="font-semibold text-slate-600 dark:text-gray-300">{t("Select:")}</span>
             <button
               type="button"
               onClick={handleSelectAllOnPage}
-              className="px-2.5 py-1 rounded-lg border border-gray-200 bg-gray-50 hover:bg-gray-100 text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 transition-colors cursor-pointer"
+              className="px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 transition-colors cursor-pointer"
             >
               {isAllOnPageSelected ? t('Deselect All') : `${t('All on Page')} (${users.length})`}
             </button>
             <button
               type="button"
               onClick={handleSelectActiveOnPage}
-              className="px-2.5 py-1 rounded-lg border border-gray-200 bg-gray-50 hover:bg-gray-100 text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 transition-colors cursor-pointer"
+              className="px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 transition-colors cursor-pointer"
             >
               {t("Active on Page")}
             </button>
             <button
               type="button"
               onClick={handleSelectInactiveOnPage}
-              className="px-2.5 py-1 rounded-lg border border-gray-200 bg-gray-50 hover:bg-gray-100 text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 transition-colors cursor-pointer"
+              className="px-2.5 py-1 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 transition-colors cursor-pointer"
             >
               {t("Inactive on Page")}
             </button>
@@ -375,7 +375,7 @@ export default function UsersListPage() {
               <button
                 type="button"
                 onClick={() => setSelectedUserIds([])}
-                className="text-red-500 hover:underline px-1 cursor-pointer"
+                className="text-rose-500 hover:underline px-1 cursor-pointer font-semibold"
               >
                 {t("Clear")} ({selectedUserIds.length})
               </button>
@@ -384,7 +384,7 @@ export default function UsersListPage() {
 
           {/* Batch Actions Selector */}
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">
+            <span className="text-xs font-semibold text-slate-600 dark:text-gray-300">
               {t("Actions")} ({selectedUserIds.length} {t("selected")}):
             </span>
 
@@ -392,7 +392,7 @@ export default function UsersListPage() {
               type="button"
               onClick={() => runBatchAction('enable')}
               disabled={selectedUserIds.length === 0 || batchActionLoading}
-              className="px-2.5 py-1.5 text-xs font-medium rounded-lg bg-green-600 hover:bg-green-700 text-white transition-colors disabled:opacity-40 cursor-pointer"
+              className="px-2.5 py-1.5 text-xs font-semibold rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white transition-colors disabled:opacity-40 cursor-pointer shadow-2xs"
             >
               {t("Enable")}
             </button>
@@ -400,7 +400,7 @@ export default function UsersListPage() {
               type="button"
               onClick={() => runBatchAction('disable')}
               disabled={selectedUserIds.length === 0 || batchActionLoading}
-              className="px-2.5 py-1.5 text-xs font-medium rounded-lg bg-amber-600 hover:bg-amber-700 text-white transition-colors disabled:opacity-40 cursor-pointer"
+              className="px-2.5 py-1.5 text-xs font-semibold rounded-lg bg-amber-600 hover:bg-amber-700 text-white transition-colors disabled:opacity-40 cursor-pointer shadow-2xs"
             >
               {t("Disable")}
             </button>
@@ -408,7 +408,7 @@ export default function UsersListPage() {
               type="button"
               onClick={() => runBatchAction('make_staff')}
               disabled={selectedUserIds.length === 0 || batchActionLoading}
-              className="px-2.5 py-1.5 text-xs font-medium rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition-colors disabled:opacity-40 cursor-pointer"
+              className="px-2.5 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 hover:bg-blue-700 text-white transition-colors disabled:opacity-40 cursor-pointer shadow-2xs"
             >
               {t("Set Staff")}
             </button>
@@ -416,7 +416,7 @@ export default function UsersListPage() {
               type="button"
               onClick={() => runBatchAction('make_normal')}
               disabled={selectedUserIds.length === 0 || batchActionLoading}
-              className="px-2.5 py-1.5 text-xs font-medium rounded-lg bg-gray-600 hover:bg-gray-700 text-white transition-colors disabled:opacity-40 cursor-pointer"
+              className="px-2.5 py-1.5 text-xs font-semibold rounded-lg bg-slate-600 hover:bg-slate-700 text-white transition-colors disabled:opacity-40 cursor-pointer shadow-2xs"
             >
               {t("Set Normal")}
             </button>
@@ -425,39 +425,39 @@ export default function UsersListPage() {
       </div>
 
       {/* Users Table */}
-      <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] overflow-hidden shadow-sm">
+      <div className="rounded-2xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] overflow-hidden shadow-xs">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-gray-50 dark:bg-gray-800/60 border-b border-gray-100 dark:border-gray-800">
+            <thead className="bg-slate-50/80 dark:bg-gray-800/60 border-b border-slate-100 dark:border-gray-800">
               <tr>
-                <th className="w-12 px-4 py-3 text-center">
+                <th className="w-12 px-4 py-3.5 text-center">
                   <input
                     type="checkbox"
                     checked={isAllOnPageSelected}
                     onChange={handleSelectAllOnPage}
-                    className="w-4 h-4 rounded text-brand-500 border-gray-300 dark:border-gray-700 dark:bg-gray-800 focus:ring-brand-500"
+                    className="w-4 h-4 rounded text-[var(--color-primary)] border-slate-300 dark:border-gray-700 dark:bg-gray-800 focus:ring-[var(--color-primary)]"
                     title={t("Select all on this page")}
                   />
                 </th>
-                <th className={`px-4 py-3 font-semibold text-gray-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>{t("User")}</th>
-                <th className={`px-4 py-3 font-semibold text-gray-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Phone")}</th>
-                <th className={`px-4 py-3 font-semibold text-gray-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Status")}</th>
-                <th className={`px-4 py-3 font-semibold text-gray-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Role")}</th>
-                <th className={`px-4 py-3 font-semibold text-gray-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Joined")}</th>
-                <th className={`px-4 py-3 font-semibold text-gray-600 dark:text-gray-300 ${isRTL ? 'text-left' : 'text-right'}`}>{t("Actions")}</th>
+                <th className={`px-4 py-3.5 font-semibold text-slate-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>{t("User")}</th>
+                <th className={`px-4 py-3.5 font-semibold text-slate-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Phone")}</th>
+                <th className={`px-4 py-3.5 font-semibold text-slate-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Status")}</th>
+                <th className={`px-4 py-3.5 font-semibold text-slate-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Role")}</th>
+                <th className={`px-4 py-3.5 font-semibold text-slate-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Joined")}</th>
+                <th className={`px-4 py-3.5 font-semibold text-slate-600 dark:text-gray-300 ${isRTL ? 'text-left' : 'text-right'}`}>{t("Actions")}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
+            <tbody className="divide-y divide-slate-100 dark:divide-gray-800">
               {loading ? (
                 <tr>
-                  <td colSpan={7} className="px-6 py-12 text-center text-gray-400">
-                    <div className="mx-auto mb-2 h-6 w-6 animate-spin rounded-full border-2 border-brand-500 border-t-transparent" />
+                  <td colSpan={7} className="px-6 py-12 text-center text-slate-400">
+                    <div className="mx-auto mb-2 h-6 w-6 animate-spin rounded-full border-2 border-[var(--color-primary)] border-t-transparent" />
                     {t("Loading matching users...")}
                   </td>
                 </tr>
               ) : users.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="px-6 py-12 text-center text-gray-400 italic">
+                  <td colSpan={7} className="px-6 py-12 text-center text-slate-400 italic">
                     {t("No users found matching your search or filters.")}
                   </td>
                 </tr>
@@ -467,8 +467,8 @@ export default function UsersListPage() {
                   return (
                     <tr
                       key={user.id}
-                      className={`hover:bg-gray-50/80 dark:hover:bg-white/[0.02] transition-colors ${
-                        isSelected ? 'bg-brand-50/40 dark:bg-brand-950/20' : ''
+                      className={`hover:bg-slate-50/70 dark:hover:bg-white/[0.02] transition-colors ${
+                        isSelected ? 'bg-[var(--color-primary)]/10 dark:bg-brand-950/20' : ''
                       }`}
                     >
                       <td className="px-4 py-4 text-center">
@@ -476,23 +476,23 @@ export default function UsersListPage() {
                           type="checkbox"
                           checked={isSelected}
                           onChange={() => handleSelectOne(user.id)}
-                          className="w-4 h-4 rounded text-brand-500 border-gray-300 dark:border-gray-700 dark:bg-gray-800 focus:ring-brand-500"
+                          className="w-4 h-4 rounded text-[var(--color-primary)] border-slate-300 dark:border-gray-700 dark:bg-gray-800 focus:ring-[var(--color-primary)]"
                         />
                       </td>
-                      <td className={`px-4 py-4 font-medium text-gray-900 dark:text-white ${isRTL ? 'text-right' : 'text-left'}`}>
-                        <div className="flex items-center gap-2">
-                          <div className="w-8 h-8 rounded-full bg-brand-100 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400 flex items-center justify-center font-bold text-xs uppercase">
+                      <td className={`px-4 py-4 font-medium text-slate-900 dark:text-white ${isRTL ? 'text-right' : 'text-left'}`}>
+                        <div className="flex items-center gap-2.5">
+                          <div className="w-8 h-8 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] dark:bg-brand-950/60 flex items-center justify-center font-bold text-xs uppercase">
                             {user.username.slice(0, 2)}
                           </div>
                           <div>
-                            <p className="font-semibold text-gray-900 dark:text-white">{user.username}</p>
+                            <p className="font-semibold text-slate-900 dark:text-white">{user.username}</p>
                             {user.middle_man_code && (
-                              <p className="text-xs text-gray-400">{t("Ref")}: {user.middle_man_code}</p>
+                              <p className="text-xs text-slate-400">{t("Ref")}: {user.middle_man_code}</p>
                             )}
                           </div>
                         </div>
                       </td>
-                      <td className={`px-4 py-4 text-gray-600 dark:text-gray-400 font-mono ${isRTL ? 'text-right' : 'text-left'}`}>
+                      <td className={`px-4 py-4 text-slate-600 dark:text-gray-400 font-mono text-xs ${isRTL ? 'text-right' : 'text-left'}`}>
                         {formatIranianPhoneNumber(user.phone_number)}
                       </td>
                       <td className={`px-4 py-4 ${isRTL ? 'text-right' : 'text-left'}`}>
@@ -501,8 +501,8 @@ export default function UsersListPage() {
                           onClick={() => handleToggleActive(user)}
                           className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold cursor-pointer transition-opacity hover:opacity-80 ${
                             user.is_active
-                              ? 'bg-green-100 text-green-700 dark:bg-green-950/40 dark:text-green-400'
-                              : 'bg-red-100 text-red-700 dark:bg-red-950/40 dark:text-red-400'
+                              ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400'
+                              : 'bg-rose-100 text-rose-700 dark:bg-rose-950/40 dark:text-rose-400'
                           }`}
                           title={t("Click to toggle status")}
                         >
@@ -516,21 +516,21 @@ export default function UsersListPage() {
                           className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold cursor-pointer transition-opacity hover:opacity-80 ${
                             user.is_staff
                               ? 'bg-blue-100 text-blue-700 dark:bg-blue-950/40 dark:text-blue-400'
-                              : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
+                              : 'bg-slate-100 text-slate-600 dark:bg-gray-800 dark:text-gray-400'
                           }`}
                           title={t("Click to toggle staff role")}
                         >
                           {user.is_staff ? t('Staff') : t('User')}
                         </button>
                       </td>
-                      <td className={`px-4 py-4 text-gray-500 dark:text-gray-400 text-xs ${isRTL ? 'text-right' : 'text-left'}`}>
+                      <td className={`px-4 py-4 text-slate-500 dark:text-gray-400 text-xs ${isRTL ? 'text-right' : 'text-left'}`}>
                         {user.date_joined ? formatDate(user.date_joined, isRTL) : '—'}
                       </td>
                       <td className={`px-4 py-4 ${isRTL ? 'text-left' : 'text-right'}`}>
                         <div className="inline-flex items-center gap-2">
                           <Link
                             href={`/users/${user.id}/profile`}
-                            className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-lg text-brand-600 bg-brand-50 hover:bg-brand-100 dark:bg-brand-950/40 dark:text-brand-400 dark:hover:bg-brand-950/60 transition-colors"
+                            className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-lg text-[var(--color-primary)] bg-[var(--color-primary)]/10 hover:bg-[var(--color-primary)]/20 dark:bg-brand-950/40 dark:text-brand-400 transition-colors"
                           >
                             <UserCircleIcon className="w-3.5 h-3.5" />
                             {t("Profile")}
@@ -538,10 +538,10 @@ export default function UsersListPage() {
                           <button
                             type="button"
                             onClick={() => handleToggleActive(user)}
-                            className={`px-2.5 py-1 text-xs font-medium rounded-lg transition-colors cursor-pointer ${
+                            className={`px-2.5 py-1 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
                               user.is_active
-                                ? 'text-amber-700 bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:text-amber-400 dark:hover:bg-amber-950/60'
-                                : 'text-green-700 bg-green-50 hover:bg-green-100 dark:bg-green-950/40 dark:text-green-400 dark:hover:bg-green-950/60'
+                                ? 'text-amber-700 bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:text-amber-400'
+                                : 'text-emerald-700 bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/40 dark:text-emerald-400'
                             }`}
                             title={user.is_active ? t('Deactivate user account') : t('Activate user account')}
                           >
@@ -558,18 +558,18 @@ export default function UsersListPage() {
         </div>
 
         {/* Pagination Bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-6 py-4 border-t border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-white/[0.01]">
-          <span className="text-xs text-gray-500 dark:text-gray-400">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-6 py-4 border-t border-slate-100 dark:border-gray-800 bg-slate-50/60 dark:bg-white/[0.01]">
+          <span className="text-xs text-slate-500 dark:text-gray-400">
             {t('Showing')}{' '}
-            <span className="font-semibold text-gray-700 dark:text-gray-300">
+            <span className="font-semibold text-slate-700 dark:text-gray-300">
               {totalCount === 0 ? 0 : (page - 1) * pageSize + 1}
             </span>{' '}
             {t('to')}{' '}
-            <span className="font-semibold text-gray-700 dark:text-gray-300">
+            <span className="font-semibold text-slate-700 dark:text-gray-300">
               {Math.min(page * pageSize, totalCount)}
             </span>{' '}
             {t('of')}{' '}
-            <span className="font-semibold text-gray-700 dark:text-gray-300">{totalCount}</span> {t('matching users')}
+            <span className="font-semibold text-slate-700 dark:text-gray-300">{totalCount}</span> {t('matching users')}
           </span>
 
           <div className="flex items-center gap-2">
@@ -577,12 +577,12 @@ export default function UsersListPage() {
               type="button"
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page <= 1 || loading}
-              className="px-3 py-1.5 text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 disabled:opacity-40 transition-colors cursor-pointer"
+              className="px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 disabled:opacity-40 transition-colors cursor-pointer shadow-2xs"
             >
               {t("Previous")}
             </button>
 
-            <span className="text-xs font-medium text-gray-700 dark:text-gray-300 px-2">
+            <span className="text-xs font-semibold text-slate-700 dark:text-gray-300 px-2">
               {t("Page")} {page} {t("of")} {totalPages}
             </span>
 
@@ -590,7 +590,7 @@ export default function UsersListPage() {
               type="button"
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page >= totalPages || loading}
-              className="px-3 py-1.5 text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 disabled:opacity-40 transition-colors cursor-pointer"
+              className="px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 disabled:opacity-40 transition-colors cursor-pointer shadow-2xs"
             >
               {t("Next")}
             </button>

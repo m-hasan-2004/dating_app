@@ -15,26 +15,27 @@ const ComponentCard: React.FC<ComponentCardProps> = ({
 }) => {
   return (
     <div
-      className={`rounded-2xl border border-gray-200 hover:border-gray-300 bg-white dark:border-gray-800 dark:bg-white/[0.03] shadow-sm transition-all ${className}`}
+      className={`rounded-2xl border border-slate-200/80 hover:border-slate-300/90 bg-white dark:border-gray-800 dark:bg-white/[0.03] shadow-xs hover:shadow-sm transition-all ${className}`}
     >
       {/* Card Header */}
-      <div className="px-6 py-5">
-        <h3 className="text-base font-medium text-gray-800 dark:text-white/90">
+      <div className="px-6 py-4.5 border-b border-slate-100 dark:border-gray-800">
+        <h3 className="text-base font-bold text-slate-900 dark:text-white/90">
           {title}
         </h3>
         {desc && (
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-1 text-xs sm:text-sm text-slate-500 dark:text-gray-400">
             {desc}
           </p>
         )}
       </div>
 
       {/* Card Body */}
-      <div className="p-4 border-t border-gray-100 dark:border-gray-800 sm:p-6">
+      <div className="p-4 sm:p-6">
         <div className="space-y-6">{children}</div>
       </div>
     </div>
   );
+
 };
 
 export default ComponentCard;

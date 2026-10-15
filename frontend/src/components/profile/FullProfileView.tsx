@@ -357,19 +357,19 @@ export function FullProfileView({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           {backUrl && (
-            <Link href={backUrl} className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors">
+            <Link href={backUrl} className="text-sm text-slate-500 hover:text-slate-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors">
               {isRTL ? '→ بازگشت' : '← Back'}
             </Link>
           )}
           <div>
-            <h1 className="text-2xl font-semibold text-gray-800 dark:text-white">
+            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
               {displayUser?.username
                 ? isRTL
                   ? `پروفایل ${displayUser.username}`
                   : `${displayUser.username}'s Profile`
                 : t('Complete Profile')}
             </h1>
-            {displayUser?.email && <p className="text-sm text-gray-500 dark:text-gray-400">{displayUser.email}</p>}
+            {displayUser?.email && <p className="text-sm text-slate-500 dark:text-gray-400">{displayUser.email}</p>}
           </div>
         </div>
 
@@ -389,16 +389,16 @@ export function FullProfileView({
           <button
             type="button"
             onClick={toggleCollapseAll}
-            className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-xl border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700/60 transition-colors shadow-sm"
+            className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-xl border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700/60 transition-colors shadow-2xs"
           >
             {allCollapsed ? (
               <>
-                <ChevronDownIcon className="w-3.5 h-3.5 text-brand-500" />
+                <ChevronDownIcon className="w-3.5 h-3.5 text-[var(--color-primary)]" />
                 <span>{t('Expand All')}</span>
               </>
             ) : (
               <>
-                <ChevronUpIcon className="w-3.5 h-3.5 text-brand-500" />
+                <ChevronUpIcon className="w-3.5 h-3.5 text-[var(--color-primary)]" />
                 <span>{t('Collapse All')}</span>
               </>
             )}
@@ -407,29 +407,29 @@ export function FullProfileView({
       </div>
 
       {displayUser && (
-        <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] px-6 py-4 shadow-sm">
+        <div className="rounded-2xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] px-6 py-4 shadow-xs">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-base font-semibold text-gray-800 dark:text-white">{t('Account Info')}</h3>
+            <h3 className="text-base font-semibold text-slate-900 dark:text-white">{t('Account Info')}</h3>
             <button
               type="button"
               onClick={openAccountModal}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700/60 transition-colors shadow-xs cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700/60 transition-colors shadow-2xs cursor-pointer"
             >
-              <PencilIcon className="w-3.5 h-3.5 text-brand-500" />
+              <PencilIcon className="w-3.5 h-3.5 text-[var(--color-primary)]" />
               {t('Change Account Info')}
             </button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-sm">
-            <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">{t('Username')}:</span><span className="text-gray-900 dark:text-white font-medium">{displayUser.username}</span></div>
-            <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">{t('Email')}:</span><span className="text-gray-900 dark:text-white font-medium">{displayUser.email}</span></div>
-            <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">{t('Phone')}:</span><span className="text-gray-900 dark:text-white font-medium font-mono">{formatIranianPhoneNumber(displayUser.phone_number, isRTL)}</span></div>
-            <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">{t('Middle Man Code')}:</span><span className="text-gray-900 dark:text-white font-medium">{displayUser.middle_man_code ? (isRTL ? toPersianDigits(displayUser.middle_man_code) : displayUser.middle_man_code) : '—'}</span></div>
-            <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">{t('Status')}:</span>
+            <div className="flex gap-2"><span className="text-slate-500 dark:text-gray-400 shrink-0">{t('Username')}:</span><span className="text-slate-900 dark:text-white font-medium">{displayUser.username}</span></div>
+            <div className="flex gap-2"><span className="text-slate-500 dark:text-gray-400 shrink-0">{t('Email')}:</span><span className="text-slate-900 dark:text-white font-medium">{displayUser.email}</span></div>
+            <div className="flex gap-2"><span className="text-slate-500 dark:text-gray-400 shrink-0">{t('Phone')}:</span><span className="text-slate-900 dark:text-white font-medium font-mono">{formatIranianPhoneNumber(displayUser.phone_number, isRTL)}</span></div>
+            <div className="flex gap-2"><span className="text-slate-500 dark:text-gray-400 shrink-0">{t('Middle Man Code')}:</span><span className="text-slate-900 dark:text-white font-medium">{displayUser.middle_man_code ? (isRTL ? toPersianDigits(displayUser.middle_man_code) : displayUser.middle_man_code) : '—'}</span></div>
+            <div className="flex gap-2"><span className="text-slate-500 dark:text-gray-400 shrink-0">{t('Status')}:</span>
               <span className={displayUser.is_active ? 'text-green-600 dark:text-green-400 font-semibold' : 'text-red-600 dark:text-red-400 font-semibold'}>
                 {displayUser.is_active ? t('Active') : t('Inactive')}
               </span>
             </div>
-            <div className="flex gap-2"><span className="text-gray-500 dark:text-gray-400 shrink-0">{t('Joined')}:</span><span className="text-gray-900 dark:text-white font-medium">{displayUser.date_joined ? formatDate(displayUser.date_joined, isRTL) : '—'}</span></div>
+            <div className="flex gap-2"><span className="text-slate-500 dark:text-gray-400 shrink-0">{t('Joined')}:</span><span className="text-slate-900 dark:text-white font-medium">{displayUser.date_joined ? formatDate(displayUser.date_joined, isRTL) : '—'}</span></div>
           </div>
         </div>
       )}
@@ -589,19 +589,19 @@ export function FullProfileView({
         showCloseButton={false}
         className="p-6 max-w-lg w-full"
       >
-        <div className="flex items-center justify-between pb-4 border-b border-gray-100 dark:border-gray-800">
+        <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-gray-800">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-brand-50 text-brand-600 dark:bg-brand-950/40 dark:text-brand-400 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)] dark:bg-[var(--color-primary)]/20 dark:text-[var(--color-primary)] flex items-center justify-center">
               <PencilIcon className="w-4 h-4" />
             </div>
-            <h3 className="text-base font-bold text-gray-900 dark:text-white">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white">
               {t('Change Account Information')}
             </h3>
           </div>
           <button
             type="button"
             onClick={() => setIsAccountModalOpen(false)}
-            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+            className="text-slate-400 hover:text-slate-600 dark:hover:text-gray-200"
           >
             ✕
           </button>
@@ -621,7 +621,7 @@ export function FullProfileView({
 
           {/* 1. Email */}
           <div>
-            <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-xs font-medium text-slate-700 dark:text-gray-300 mb-1">
               {t('Email Address')}
             </label>
             <input
@@ -631,13 +631,13 @@ export function FullProfileView({
               onChange={(e) =>
                 setAccountForm({ ...accountForm, email: e.target.value })
               }
-              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+              className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl bg-white text-slate-800 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]"
             />
           </div>
 
           {/* 2. Phone Number */}
           <div>
-            <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-xs font-medium text-slate-700 dark:text-gray-300 mb-1">
               {t('Phone Number')}
             </label>
             <input
@@ -647,13 +647,13 @@ export function FullProfileView({
               onChange={(e) =>
                 setAccountForm({ ...accountForm, phone_number: e.target.value })
               }
-              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+              className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl bg-white text-slate-800 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]"
             />
           </div>
 
           {/* 3. Middle Man Code */}
           <div>
-            <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-xs font-medium text-slate-700 dark:text-gray-300 mb-1">
               {t('Middle Man Code')}
             </label>
             <input
@@ -666,18 +666,18 @@ export function FullProfileView({
                   middle_man_code: e.target.value,
                 })
               }
-              className="w-full px-3 py-2 text-sm border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+              className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl bg-white text-slate-800 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]"
             />
           </div>
 
           {/* 4. Password (Optional) */}
-          <div className="pt-2 border-t border-gray-100 dark:border-gray-800">
-            <p className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-3">
+          <div className="pt-2 border-t border-slate-100 dark:border-gray-800">
+            <p className="text-xs font-semibold text-slate-700 dark:text-gray-300 mb-3">
               {t('Change Password (Optional)')}
             </p>
             <div className="space-y-3">
               <div>
-                <label className="block text-xs text-gray-500 dark:text-gray-400 mb-1">
+                <label className="block text-xs text-slate-500 dark:text-gray-400 mb-1">
                   {t('New Password (leave blank to keep unchanged)')}
                 </label>
                 <input
@@ -691,12 +691,12 @@ export function FullProfileView({
                       password: e.target.value,
                     })
                   }
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+                  className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl bg-white text-slate-800 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs text-gray-500 dark:text-gray-400 mb-1">
+                <label className="block text-xs text-slate-500 dark:text-gray-400 mb-1">
                   {t('Confirm New Password')}
                 </label>
                 <input
@@ -710,24 +710,24 @@ export function FullProfileView({
                       confirmPassword: e.target.value,
                     })
                   }
-                  className="w-full px-3 py-2 text-sm border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+                  className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl bg-white text-slate-800 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]"
                 />
               </div>
             </div>
           </div>
 
-          <div className="flex items-center justify-end gap-2 pt-4 border-t border-gray-100 dark:border-gray-800">
+          <div className="flex items-center justify-end gap-2 pt-4 border-t border-slate-100 dark:border-gray-800">
             <button
               type="button"
               onClick={() => setIsAccountModalOpen(false)}
-              className="px-4 py-2 text-xs font-medium rounded-xl border border-gray-200 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors"
+              className="px-4 py-2 text-xs font-medium rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors shadow-2xs"
             >
               {t('Cancel')}
             </button>
             <button
               type="submit"
               disabled={accountLoading}
-              className="px-4 py-2 text-xs font-medium rounded-xl bg-brand-500 text-white hover:bg-brand-600 disabled:opacity-50 transition-colors"
+              className="px-4 py-2 text-xs font-medium rounded-xl bg-[var(--color-primary)] text-white hover:brightness-95 disabled:opacity-50 transition-colors shadow-xs"
             >
               {accountLoading ? t('Saving...') : t('Save Changes')}
             </button>

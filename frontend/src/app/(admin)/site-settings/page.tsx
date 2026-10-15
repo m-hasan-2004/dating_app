@@ -239,7 +239,7 @@ export default function SiteSettingsPage() {
 
         {isLoading ? (
           <div className="flex items-center justify-center py-16">
-            <div className="w-10 h-10 border-4 border-brand-500 border-t-transparent rounded-full animate-spin"></div>
+            <div className="w-10 h-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full animate-spin"></div>
           </div>
         ) : (
           <form onSubmit={handleSave} className="space-y-6">
@@ -252,10 +252,10 @@ export default function SiteSettingsPage() {
             >
               <div className="space-y-6">
                 {/* Setting 1: Require Access Code */}
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 border border-gray-200 rounded-2xl dark:border-gray-800 bg-gray-50/50 dark:bg-white/[0.02] gap-4">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 border border-slate-200/80 rounded-2xl dark:border-gray-800 bg-slate-50/70 dark:bg-white/[0.02] gap-4">
                   <div className="space-y-1 max-w-2xl">
                     <div className="flex items-center gap-2">
-                      <h3 className="text-base font-semibold text-gray-800 dark:text-white">
+                      <h3 className="text-base font-semibold text-slate-800 dark:text-white">
                         {t("Require Access Code on Signup")}
                       </h3>
                       {requireAccessCode ? (
@@ -268,7 +268,7 @@ export default function SiteSettingsPage() {
                         </Badge>
                       )}
                     </div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+                    <p className="text-sm text-slate-500 dark:text-gray-400 leading-relaxed">
                       {t(
                         "When enabled, prospective users must enter an active invitation access code during registration. When disabled, the access code field is omitted from the signup form, and the platform automatically creates and consumes an access code for the user at registration."
                       )}
@@ -283,16 +283,16 @@ export default function SiteSettingsPage() {
                       onChange={(e) => setRequireAccessCode(e.target.checked)}
                     />
                     <div
-                      className={`w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-brand-500`}
+                      className={`w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[var(--color-primary)]`}
                     ></div>
                   </label>
                 </div>
 
                 {/* Setting 2: Require Email */}
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 border border-gray-200 rounded-2xl dark:border-gray-800 bg-gray-50/50 dark:bg-white/[0.02] gap-4">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 border border-slate-200/80 rounded-2xl dark:border-gray-800 bg-slate-50/70 dark:bg-white/[0.02] gap-4">
                   <div className="space-y-1 max-w-2xl">
                     <div className="flex items-center gap-2">
-                      <h3 className="text-base font-semibold text-gray-800 dark:text-white">
+                      <h3 className="text-base font-semibold text-slate-800 dark:text-white">
                         {t("Require Email on Signup")}
                       </h3>
                       {requireEmail ? (
@@ -305,7 +305,7 @@ export default function SiteSettingsPage() {
                         </Badge>
                       )}
                     </div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+                    <p className="text-sm text-slate-500 dark:text-gray-400 leading-relaxed">
                       {t(
                         "When enabled, users must provide a valid email address during signup. When disabled, providing an email address becomes optional during registration."
                       )}
@@ -320,7 +320,7 @@ export default function SiteSettingsPage() {
                       onChange={(e) => setRequireEmail(e.target.checked)}
                     />
                     <div
-                      className={`w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-brand-500`}
+                      className={`w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[var(--color-primary)]`}
                     ></div>
                   </label>
                 </div>
@@ -338,7 +338,7 @@ export default function SiteSettingsPage() {
                 {/* Site Names & Taglines */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-800 dark:text-white mb-2">
+                    <label className="block text-sm font-semibold text-slate-800 dark:text-white mb-2">
                       {t("Site Name (Persian)")}
                     </label>
                     <input
@@ -346,15 +346,15 @@ export default function SiteSettingsPage() {
                       value={siteNameFa}
                       onChange={(e) => setSiteNameFa(e.target.value)}
                       placeholder="سامانه همسان‌گزینی و ازدواج دائم"
-                      className="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
+                      className="w-full px-4 py-2.5 text-sm border border-slate-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] transition-all"
                     />
-                    <p className="text-xs text-gray-400 mt-1.5">
+                    <p className="text-xs text-slate-400 mt-1.5">
                       {isRTL ? "عنوانی که در هدر، سایدبار و صفحات ورود نمایش داده می‌شود." : "Displayed in headers, sidebar and auth pages in Persian mode."}
                     </p>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-800 dark:text-white mb-2">
+                    <label className="block text-sm font-semibold text-slate-800 dark:text-white mb-2">
                       {t("Site Name (English)")}
                     </label>
                     <input
@@ -362,15 +362,15 @@ export default function SiteSettingsPage() {
                       value={siteNameEn}
                       onChange={(e) => setSiteNameEn(e.target.value)}
                       placeholder="TailAdmin Matchmaking"
-                      className="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
+                      className="w-full px-4 py-2.5 text-sm border border-slate-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] transition-all"
                     />
-                    <p className="text-xs text-gray-400 mt-1.5">
+                    <p className="text-xs text-slate-400 mt-1.5">
                       {isRTL ? "عنوانی که در حالت انگلیسی سایت نمایش داده می‌شود." : "Displayed when application language is switched to English."}
                     </p>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-800 dark:text-white mb-2">
+                    <label className="block text-sm font-semibold text-slate-800 dark:text-white mb-2">
                       {t("Site Tagline (Persian)")}
                     </label>
                     <input
@@ -378,15 +378,15 @@ export default function SiteSettingsPage() {
                       value={siteTaglineFa}
                       onChange={(e) => setSiteTaglineFa(e.target.value)}
                       placeholder="پورتال همسان‌گزینی"
-                      className="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
+                      className="w-full px-4 py-2.5 text-sm border border-slate-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] transition-all"
                     />
-                    <p className="text-xs text-gray-400 mt-1.5">
+                    <p className="text-xs text-slate-400 mt-1.5">
                       {isRTL ? "زیرعنوان گوشه بالای سایدبار زیر نام سامانه در زبان فارسی." : "Sidebar subtitle displayed under site title in Persian mode."}
                     </p>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-800 dark:text-white mb-2">
+                    <label className="block text-sm font-semibold text-slate-800 dark:text-white mb-2">
                       {t("Site Tagline (English)")}
                     </label>
                     <input
@@ -394,9 +394,9 @@ export default function SiteSettingsPage() {
                       value={siteTaglineEn}
                       onChange={(e) => setSiteTaglineEn(e.target.value)}
                       placeholder="Matchmaking Portal"
-                      className="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
+                      className="w-full px-4 py-2.5 text-sm border border-slate-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] transition-all"
                     />
-                    <p className="text-xs text-gray-400 mt-1.5">
+                    <p className="text-xs text-slate-400 mt-1.5">
                       {isRTL ? "زیرعنوان گوشه بالای سایدبار زیر نام سامانه در زبان انگلیسی." : "Sidebar subtitle displayed under site title in English mode."}
                     </p>
                   </div>
@@ -404,7 +404,7 @@ export default function SiteSettingsPage() {
 
                 {/* Color Palette Presets */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-800 dark:text-white mb-3">
+                  <label className="block text-sm font-semibold text-slate-800 dark:text-white mb-3">
                     {t("Color Palette")}
                   </label>
                   <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
@@ -417,8 +417,8 @@ export default function SiteSettingsPage() {
                           onClick={() => setColorPalette(pal.id)}
                           className={`flex flex-col items-center gap-2 p-3 rounded-2xl border transition-all cursor-pointer text-center ${
                             isSelected
-                              ? `border-brand-500 bg-brand-50/40 dark:bg-brand-950/30 ring-2 ring-brand-500/50 shadow-sm font-bold`
-                              : "border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700 bg-white dark:bg-gray-900"
+                              ? `border-[var(--color-primary)] bg-[var(--color-primary)]/10 dark:bg-brand-950/30 ring-2 ring-offset-2 ring-slate-400 dark:ring-offset-gray-900 shadow-xs font-bold`
+                              : "border-slate-200/80 dark:border-gray-800 hover:border-slate-300 dark:hover:border-gray-700 bg-white dark:bg-gray-900"
                           }`}
                         >
                           <div
@@ -431,7 +431,7 @@ export default function SiteSettingsPage() {
                               </svg>
                             )}
                           </div>
-                          <span className="text-[11px] font-semibold text-gray-800 dark:text-white/90 truncate max-w-full">
+                          <span className="text-[11px] font-semibold text-slate-800 dark:text-white/90 truncate max-w-full">
                             {t(pal.nameKey)}
                           </span>
                         </button>
@@ -441,13 +441,13 @@ export default function SiteSettingsPage() {
                 </div>
 
                 {/* Arbitrary Color Picker Section */}
-                <div className="p-5 rounded-2xl border border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-white/[0.02] space-y-4">
+                <div className="p-5 rounded-2xl border border-slate-200/80 dark:border-gray-800 bg-slate-50/70 dark:bg-white/[0.02] space-y-4">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div>
-                      <h4 className="text-sm font-bold text-gray-900 dark:text-white">
+                      <h4 className="text-sm font-bold text-slate-900 dark:text-white">
                         {t("Custom Palette & Color Picker")}
                       </h4>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                      <p className="text-xs text-slate-500 dark:text-gray-400">
                         {isRTL
                           ? "می‌توانید با انتخاب پالت سفارشی، هر رنگ دلخواهی را انتخاب کنید تا به صورت زنده در تمام دکمه‌ها، آیکون‌ها و بخش‌های سایت اعمال شود."
                           : "Pick any custom primary and accent hex color to dynamically theme the entire portal."}
@@ -471,7 +471,7 @@ export default function SiteSettingsPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                     {/* Primary Color Picker */}
-                    <div className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl">
+                    <div className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 border border-slate-200/80 dark:border-gray-700 rounded-xl shadow-2xs">
                       <input
                         type="color"
                         value={customPrimaryColor || "#465fff"}
@@ -482,7 +482,7 @@ export default function SiteSettingsPage() {
                         className="w-10 h-10 rounded-lg border-0 cursor-pointer p-0 bg-transparent"
                       />
                       <div className="flex-1 min-w-0">
-                        <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300">
+                        <label className="block text-xs font-semibold text-slate-700 dark:text-gray-300">
                           {t("Custom Primary Color")}
                         </label>
                         <input
@@ -493,13 +493,13 @@ export default function SiteSettingsPage() {
                             setColorPalette("custom");
                           }}
                           placeholder="#465fff"
-                          className="w-full text-xs font-mono py-1 px-2 border border-gray-200 dark:border-gray-700 rounded bg-gray-50 dark:bg-gray-900 dark:text-white"
+                          className="w-full text-xs font-mono py-1 px-2 border border-slate-300 dark:border-gray-700 rounded bg-white dark:bg-gray-900 text-slate-800 dark:text-white focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)]"
                         />
                       </div>
                     </div>
 
                     {/* Secondary Accent Color Picker */}
-                    <div className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl">
+                    <div className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 border border-slate-200/80 dark:border-gray-700 rounded-xl shadow-2xs">
                       <input
                         type="color"
                         value={customSecondaryColor || "#3641f5"}
@@ -510,7 +510,7 @@ export default function SiteSettingsPage() {
                         className="w-10 h-10 rounded-lg border-0 cursor-pointer p-0 bg-transparent"
                       />
                       <div className="flex-1 min-w-0">
-                        <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300">
+                        <label className="block text-xs font-semibold text-slate-700 dark:text-gray-300">
                           {t("Custom Accent Color")}
                         </label>
                         <input
@@ -521,7 +521,7 @@ export default function SiteSettingsPage() {
                             setColorPalette("custom");
                           }}
                           placeholder="#3641f5"
-                          className="w-full text-xs font-mono py-1 px-2 border border-gray-200 dark:border-gray-700 rounded bg-gray-50 dark:bg-gray-900 dark:text-white"
+                          className="w-full text-xs font-mono py-1 px-2 border border-slate-300 dark:border-gray-700 rounded bg-white dark:bg-gray-900 text-slate-800 dark:text-white focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)]"
                         />
                       </div>
                     </div>
@@ -531,9 +531,9 @@ export default function SiteSettingsPage() {
                 {/* Logo & Favicon Picker with Local File Explorer & Tab Favicon */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2">
                   {/* Logo Picker */}
-                  <div className="space-y-3 p-4 border border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-gray-900">
+                  <div className="space-y-3 p-4.5 border border-slate-200/80 dark:border-gray-800 rounded-2xl bg-white dark:bg-gray-900 shadow-2xs">
                     <div className="flex items-center justify-between">
-                      <label className="block text-sm font-bold text-gray-800 dark:text-white">
+                      <label className="block text-sm font-bold text-slate-800 dark:text-white">
                         {t("Logo")}
                       </label>
                       <input
@@ -559,11 +559,11 @@ export default function SiteSettingsPage() {
                       value={logoUrl}
                       onChange={(e) => setLogoUrl(e.target.value)}
                       placeholder="https://example.com/logo.png or Base64 / Local Path"
-                      className="w-full px-3 py-2 text-xs border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-1 focus:ring-brand-500 font-mono"
+                      className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] font-mono"
                     />
 
                     {logoUrl && (
-                      <div className="flex items-center gap-3 p-2 bg-gray-50 dark:bg-gray-800/60 rounded-xl border border-gray-100 dark:border-gray-700">
+                      <div className="flex items-center gap-3 p-2 bg-slate-50 dark:bg-gray-800/60 rounded-xl border border-slate-200/80 dark:border-gray-700">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={logoUrl}
@@ -579,7 +579,7 @@ export default function SiteSettingsPage() {
                         </button>
                       </div>
                     )}
-                    <p className="text-xs text-gray-400">
+                    <p className="text-xs text-slate-400">
                       {isRTL
                         ? "می‌توانید مستقیماً فایلی از سیستم انتخاب کنید یا آدرس آن را وارد نمایید."
                         : "Browse a local image file or enter an external image URL."}
@@ -587,9 +587,9 @@ export default function SiteSettingsPage() {
                   </div>
 
                   {/* Favicon Browser Tab Icon */}
-                  <div className="space-y-3 p-4 border border-gray-200 dark:border-gray-800 rounded-2xl bg-white dark:bg-gray-900">
+                  <div className="space-y-3 p-4.5 border border-slate-200/80 dark:border-gray-800 rounded-2xl bg-white dark:bg-gray-900 shadow-2xs">
                     <div className="flex items-center justify-between">
-                      <label className="block text-sm font-bold text-gray-800 dark:text-white">
+                      <label className="block text-sm font-bold text-slate-800 dark:text-white">
                         {t("Browser Tab Favicon")}
                       </label>
                       <input
@@ -615,18 +615,18 @@ export default function SiteSettingsPage() {
                       value={faviconUrl}
                       onChange={(e) => setFaviconUrl(e.target.value)}
                       placeholder="https://example.com/favicon.ico or Base64 / Local Path"
-                      className="w-full px-3 py-2 text-xs border border-gray-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-1 focus:ring-brand-500 font-mono"
+                      className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] font-mono"
                     />
 
                     {faviconUrl && (
-                      <div className="flex items-center gap-3 p-2 bg-gray-50 dark:bg-gray-800/60 rounded-xl border border-gray-100 dark:border-gray-700">
+                      <div className="flex items-center gap-3 p-2 bg-slate-50 dark:bg-gray-800/60 rounded-xl border border-slate-200/80 dark:border-gray-700">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={faviconUrl}
                           alt="Favicon Preview"
                           className="w-8 h-8 object-contain rounded-md"
                         />
-                        <span className="text-xs text-gray-500">{t("Active Tab Icon")}</span>
+                        <span className="text-xs text-slate-500">{t("Active Tab Icon")}</span>
                         <button
                           type="button"
                           onClick={() => setFaviconUrl("")}
@@ -636,7 +636,7 @@ export default function SiteSettingsPage() {
                         </button>
                       </div>
                     )}
-                    <p className="text-xs text-gray-400">
+                    <p className="text-xs text-slate-400">
                       {isRTL
                         ? "این آیکون در تب مرورگر (کنار نام سایت در برگه مرورگر) قرار می‌گیرد."
                         : "Applies to the browser tab icon next to the title."}
@@ -647,8 +647,8 @@ export default function SiteSettingsPage() {
             </ComponentCard>
 
             {/* Metadata Info & Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-gray-200 dark:border-gray-800">
-              <div className="text-xs text-gray-400 dark:text-gray-500">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-200/80 dark:border-gray-800">
+              <div className="text-xs text-slate-400 dark:text-gray-500">
                 {settings && settings.updated_at && (
                   <span>
                     {t("Last modified")}: {formatDate(settings.updated_at)}

@@ -276,33 +276,33 @@ export default function AccessCodesManagement() {
         {/* Top Controls */}
         <div className="flex flex-col gap-4 mb-6 sm:flex-row sm:items-center sm:justify-between">
           {/* Status Filter Tabs */}
-          <div className="flex items-center gap-2 p-1 bg-gray-100 dark:bg-gray-800 rounded-xl w-fit">
+          <div className="flex items-center gap-1.5 p-1 bg-slate-100 dark:bg-gray-800 rounded-xl w-fit border border-slate-200/60 dark:border-gray-700/60">
             <button
               onClick={() => setFilterStatus("all")}
-              className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors cursor-pointer ${
+              className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all cursor-pointer ${
                 filterStatus === "all"
-                  ? "bg-white dark:bg-gray-700 text-brand-500 shadow-xs"
-                  : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                  ? "bg-white dark:bg-gray-700 text-[var(--color-primary)] shadow-2xs"
+                  : "text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white"
               }`}
             >
               {t("All")}
             </button>
             <button
               onClick={() => setFilterStatus("active")}
-              className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors cursor-pointer ${
+              className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all cursor-pointer ${
                 filterStatus === "active"
-                  ? "bg-white dark:bg-gray-700 text-brand-500 shadow-xs"
-                  : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                  ? "bg-white dark:bg-gray-700 text-[var(--color-primary)] shadow-2xs"
+                  : "text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white"
               }`}
             >
               {t("Active")}
             </button>
             <button
               onClick={() => setFilterStatus("inactive")}
-              className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors cursor-pointer ${
+              className={`px-4 py-2 text-sm font-semibold rounded-lg transition-all cursor-pointer ${
                 filterStatus === "inactive"
-                  ? "bg-white dark:bg-gray-700 text-brand-500 shadow-xs"
-                  : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                  ? "bg-white dark:bg-gray-700 text-[var(--color-primary)] shadow-2xs"
+                  : "text-slate-600 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white"
               }`}
             >
               {t("Inactive")}
@@ -316,7 +316,7 @@ export default function AccessCodesManagement() {
                 <button
                   onClick={handleActivateSelected}
                   disabled={bulkSubmitting}
-                  className="inline-flex items-center justify-center font-medium gap-2 rounded-lg px-4 py-2.5 text-sm bg-green-600 text-white shadow-theme-xs hover:bg-green-700 disabled:opacity-50 transition-colors cursor-pointer"
+                  className="inline-flex items-center justify-center font-semibold gap-2 rounded-xl px-4 py-2.5 text-sm bg-emerald-600 text-white shadow-xs hover:bg-emerald-700 disabled:opacity-50 transition-all cursor-pointer"
                 >
                   <CheckLineIcon className="w-4 h-4" />
                   {t("Activate")} ({selectedIds.size})
@@ -325,7 +325,7 @@ export default function AccessCodesManagement() {
                 <button
                   onClick={handleDeactivateSelected}
                   disabled={bulkSubmitting}
-                  className="inline-flex items-center justify-center font-medium gap-2 rounded-lg px-4 py-2.5 text-sm bg-amber-500 text-white shadow-theme-xs hover:bg-amber-600 disabled:opacity-50 transition-colors cursor-pointer"
+                  className="inline-flex items-center justify-center font-semibold gap-2 rounded-xl px-4 py-2.5 text-sm bg-amber-500 text-white shadow-xs hover:bg-amber-600 disabled:opacity-50 transition-all cursor-pointer"
                 >
                   <CloseLineIcon className="w-4 h-4" />
                   {t("Deactivate")} ({selectedIds.size})
@@ -334,7 +334,7 @@ export default function AccessCodesManagement() {
                 <button
                   onClick={() => setIsDeleteSelectedOpen(true)}
                   disabled={bulkSubmitting}
-                  className="inline-flex items-center justify-center font-medium gap-2 rounded-lg px-4 py-2.5 text-sm bg-red-600 text-white shadow-theme-xs hover:bg-red-700 disabled:opacity-50 transition-colors cursor-pointer"
+                  className="inline-flex items-center justify-center font-semibold gap-2 rounded-xl px-4 py-2.5 text-sm bg-rose-600 text-white shadow-xs hover:bg-rose-700 disabled:opacity-50 transition-all cursor-pointer"
                 >
                   <TrashBinIcon className="w-4 h-4" />
                   {t("Delete")} ({selectedIds.size})
@@ -350,59 +350,59 @@ export default function AccessCodesManagement() {
 
         {/* Error Alert */}
         {error && (
-          <div className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-900/30 dark:text-red-400">
+          <div className="p-4 mb-4 text-sm text-rose-700 bg-rose-50 border border-rose-200 rounded-xl dark:bg-red-900/30 dark:text-red-400">
             {error}
           </div>
         )}
 
         {/* Table / Loading State */}
         {loading ? (
-          <div className="py-12 text-center text-gray-500 dark:text-gray-400">
+          <div className="py-12 text-center text-slate-400 dark:text-gray-400">
             {t("Loading access codes...")}
           </div>
         ) : accessCodes.length === 0 ? (
-          <div className="py-12 text-center text-gray-500 dark:text-gray-400">
+          <div className="py-12 text-center text-slate-400 dark:text-gray-400">
             {t("No access codes found.")}
           </div>
         ) : (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto rounded-xl border border-slate-200/80 dark:border-gray-800">
             <Table>
-              <TableHeader className="border-b border-gray-200 dark:border-gray-800">
+              <TableHeader className="border-b border-slate-200/80 dark:border-gray-800 bg-slate-50/80 dark:bg-gray-800/60">
                 <TableRow>
                   {/* Select-all checkbox */}
-                  <TableCell isHeader className="py-3 px-4 w-10">
+                  <TableCell isHeader className="py-3.5 px-4 w-10">
                     <input
                       type="checkbox"
                       checked={isAllSelected}
                       ref={(el) => { if (el) el.indeterminate = isIndeterminate; }}
                       onChange={toggleSelectAll}
-                      className="w-4 h-4 rounded border-gray-300 text-brand-500 cursor-pointer"
+                      className="w-4 h-4 rounded border-slate-300 text-[var(--color-primary)] focus:ring-[var(--color-primary)] cursor-pointer"
                       aria-label={t("Select all")}
                     />
                   </TableCell>
-                  <TableCell isHeader className={`py-3 px-4 ${isRTL ? 'text-right' : 'text-left'} text-xs font-semibold text-gray-500 uppercase tracking-wider`}>
+                  <TableCell isHeader className={`py-3.5 px-4 ${isRTL ? 'text-right' : 'text-left'} text-xs font-semibold text-slate-500 uppercase tracking-wider`}>
                     {t("ID")}
                   </TableCell>
-                  <TableCell isHeader className={`py-3 px-4 ${isRTL ? 'text-right' : 'text-left'} text-xs font-semibold text-gray-500 uppercase tracking-wider`}>
+                  <TableCell isHeader className={`py-3.5 px-4 ${isRTL ? 'text-right' : 'text-left'} text-xs font-semibold text-slate-500 uppercase tracking-wider`}>
                     {t("Code")}
                   </TableCell>
-                  <TableCell isHeader className={`py-3 px-4 ${isRTL ? 'text-right' : 'text-left'} text-xs font-semibold text-gray-500 uppercase tracking-wider`}>
+                  <TableCell isHeader className={`py-3.5 px-4 ${isRTL ? 'text-right' : 'text-left'} text-xs font-semibold text-slate-500 uppercase tracking-wider`}>
                     {t("Status")}
                   </TableCell>
-                  <TableCell isHeader className={`py-3 px-4 ${isRTL ? 'text-right' : 'text-left'} text-xs font-semibold text-gray-500 uppercase tracking-wider`}>
+                  <TableCell isHeader className={`py-3.5 px-4 ${isRTL ? 'text-right' : 'text-left'} text-xs font-semibold text-slate-500 uppercase tracking-wider`}>
                     {t("Date Created")}
                   </TableCell>
-                  <TableCell isHeader className={`py-3 px-4 ${isRTL ? 'text-left' : 'text-right'} text-xs font-semibold text-gray-500 uppercase tracking-wider`}>
+                  <TableCell isHeader className={`py-3.5 px-4 ${isRTL ? 'text-left' : 'text-right'} text-xs font-semibold text-slate-500 uppercase tracking-wider`}>
                     {t("Actions")}
                   </TableCell>
                 </TableRow>
               </TableHeader>
-              <TableBody className="divide-y divide-gray-200 dark:divide-gray-800">
+              <TableBody className="divide-y divide-slate-100 dark:divide-gray-800">
                 {accessCodes.map((item) => (
                   <TableRow
                     key={item.id}
-                    className={`hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors ${
-                      selectedIds.has(item.id) ? "bg-brand-50 dark:bg-brand-900/10" : ""
+                    className={`hover:bg-slate-50/70 dark:hover:bg-gray-800/50 transition-colors ${
+                      selectedIds.has(item.id) ? "bg-[var(--color-primary)]/10 dark:bg-brand-900/10" : ""
                     }`}
                   >
                     <TableCell className="py-3 px-4 w-10">
@@ -410,16 +410,16 @@ export default function AccessCodesManagement() {
                         type="checkbox"
                         checked={selectedIds.has(item.id)}
                         onChange={() => toggleSelectOne(item.id)}
-                        className="w-4 h-4 rounded border-gray-300 text-brand-500 cursor-pointer"
+                        className="w-4 h-4 rounded border-slate-300 text-[var(--color-primary)] focus:ring-[var(--color-primary)] cursor-pointer"
                         aria-label={`Select row ${item.id}`}
                       />
                     </TableCell>
-                    <TableCell className={`py-3 px-4 text-sm font-medium text-gray-900 dark:text-white ${isRTL ? 'text-right' : 'text-left'}`}>
+                    <TableCell className={`py-3 px-4 text-sm font-semibold text-slate-900 dark:text-white ${isRTL ? 'text-right' : 'text-left'}`}>
                       #{item.id}
                     </TableCell>
                     <TableCell
                       onClick={() => handleCopyCode(item.id, item.code)}
-                      className={`py-3 px-4 text-sm font-mono font-semibold text-brand-600 dark:text-brand-400 cursor-pointer hover:underline select-all ${isRTL ? 'text-right' : 'text-left'}`}
+                      className={`py-3 px-4 text-sm font-mono font-semibold text-[var(--color-primary)] dark:text-brand-400 cursor-pointer hover:underline select-all ${isRTL ? 'text-right' : 'text-left'}`}
                       title={t("Click to copy code")}
                     >
                       {item.code}
@@ -429,7 +429,7 @@ export default function AccessCodesManagement() {
                         {item.active ? t("Active") : t("Inactive")}
                       </Badge>
                     </TableCell>
-                    <TableCell className={`py-3 px-4 text-sm text-gray-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>
+                    <TableCell className={`py-3 px-4 text-sm text-slate-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>
                       {item.date_created ? formatDate(item.date_created, isRTL) : "-"}
                     </TableCell>
                     <TableCell className={`py-3 px-4 text-sm ${isRTL ? 'text-left' : 'text-right'}`}>

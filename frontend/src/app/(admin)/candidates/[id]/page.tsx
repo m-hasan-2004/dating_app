@@ -206,14 +206,14 @@ export default function PublicCandidateProfilePage() {
     }
 
     return (
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between py-2.5 border-b border-gray-100 dark:border-gray-800/80 last:border-0 gap-1.5">
-        <span className="text-xs font-medium text-gray-500 dark:text-gray-400 shrink-0">{t(label)}</span>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between py-2.5 border-b border-slate-100 dark:border-gray-800/80 last:border-0 gap-1.5">
+        <span className="text-xs font-semibold text-slate-500 dark:text-gray-400 shrink-0">{t(label)}</span>
         {badge && typeof display === 'string' && display !== '—' ? (
-          <span className="inline-flex px-2.5 py-0.5 text-xs font-semibold rounded-lg bg-brand-50 text-brand-600 dark:bg-brand-950/40 dark:text-brand-400 w-fit">
+          <span className="inline-flex px-2.5 py-0.5 text-xs font-semibold rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)] dark:bg-brand-950/40 dark:text-brand-400 w-fit">
             {display}
           </span>
         ) : (
-          <span className={`text-xs font-semibold text-gray-900 dark:text-white ${isRTL ? 'sm:text-left' : 'sm:text-right'} break-words max-w-md`}>
+          <span className={`text-xs font-semibold text-slate-900 dark:text-white ${isRTL ? 'sm:text-left' : 'sm:text-right'} break-words max-w-md`}>
             {display}
           </span>
         )}
@@ -266,7 +266,7 @@ export default function PublicCandidateProfilePage() {
       <div className="flex items-center justify-between gap-4">
         <Link
           href="/search"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-600 hover:text-brand-500 dark:text-gray-400 dark:hover:text-white transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-[var(--color-primary)] dark:text-gray-400 dark:hover:text-white transition-colors"
         >
           <ChevronLeftIcon className={`w-4 h-4 ${isRTL ? 'rotate-180' : ''}`} />
           <span>{t("Back to Candidate Directory")}</span>
@@ -279,7 +279,7 @@ export default function PublicCandidateProfilePage() {
             className={`inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold rounded-2xl transition-all cursor-pointer border ${
               isBookmarked
                 ? 'bg-amber-100 text-amber-600 border-amber-300 dark:bg-amber-950/40 dark:text-amber-400 dark:border-amber-700 shadow-xs'
-                : 'bg-white text-gray-700 border-gray-200 hover:border-amber-400 hover:text-amber-500 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700'
+                : 'bg-white text-slate-700 border-slate-300 hover:border-amber-400 hover:text-amber-500 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 shadow-2xs'
             }`}
           >
             <svg className={`w-4 h-4 ${isBookmarked ? 'fill-current text-amber-500' : 'fill-none stroke-current stroke-2'}`} viewBox="0 0 24 24">
@@ -291,8 +291,8 @@ export default function PublicCandidateProfilePage() {
       </div>
 
       {/* Hero Header Banner */}
-      <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] overflow-hidden shadow-sm">
-        <div className={`h-36 ${isFemale ? 'bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600' : 'bg-gradient-to-r from-brand-500 via-indigo-600 to-blue-600'} p-6 relative flex items-end justify-between`}>
+      <div className="rounded-3xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] overflow-hidden shadow-xs">
+        <div className={`h-36 ${isFemale ? 'bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600' : 'bg-gradient-to-r from-[var(--color-primary)] via-indigo-600 to-blue-600'} p-6 relative flex items-end justify-between`}>
           <span className="absolute top-4 right-4 px-3 py-1 text-[11px] font-bold rounded-full bg-white/20 backdrop-blur-md text-white border border-white/30">
             {t("Public Verified Candidate Profile")}
           </span>
@@ -301,16 +301,16 @@ export default function PublicCandidateProfilePage() {
         <div className="px-6 pb-6 pt-0 relative flex flex-col sm:flex-row sm:items-end justify-between gap-4 -mt-14 sm:-mt-12">
           <div className="flex flex-col sm:flex-row items-center sm:items-end gap-4 text-center sm:text-left">
             <div className={`w-24 h-24 rounded-3xl border-4 border-white dark:border-gray-900 shadow-xl flex items-center justify-center font-extrabold text-2xl text-white ${
-              isFemale ? 'bg-pink-600' : 'bg-brand-600'
+              isFemale ? 'bg-pink-600' : 'bg-[var(--color-primary)]'
             }`}>
               {user.username.slice(0, 2).toUpperCase()}
             </div>
             <div>
               <div className="flex items-center justify-center sm:justify-start gap-2">
-                <h1 className="text-xl font-bold text-gray-900 dark:text-white">@{user.username}</h1>
+                <h1 className="text-xl font-bold text-slate-900 dark:text-white">@{user.username}</h1>
                 <span className="w-2 h-2 rounded-full bg-emerald-500" title="Active"></span>
               </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+              <p className="text-xs text-slate-500 dark:text-gray-400 mt-1">
                 {age ? `${isRTL ? toPersianDigits(age) : age} ${t("Years")}` : '—'} • {personal?.birth_location ? t(personal.birth_location) : '—'} • {t("Registered Member")}
               </p>
             </div>
@@ -318,21 +318,21 @@ export default function PublicCandidateProfilePage() {
 
           <div className="flex flex-wrap justify-center sm:justify-end gap-2 text-xs">
             {personal?.education && (
-              <span className="px-3 py-1 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium">
+              <span className="px-3 py-1 rounded-xl bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-gray-300 font-semibold border border-slate-200/60 dark:border-gray-700">
                 🎓 {t(personal.education)}
               </span>
             )}
             {financial?.job && (
-              <span className="px-3 py-1 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium">
+              <span className="px-3 py-1 rounded-xl bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-gray-300 font-semibold border border-slate-200/60 dark:border-gray-700">
                 💼 {t(financial.job)}
               </span>
             )}
             {birth?.marriage_experince === 'no' ? (
-              <span className="px-3 py-1 rounded-xl bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 font-semibold">
+              <span className="px-3 py-1 rounded-xl bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 font-semibold border border-emerald-200 dark:border-emerald-800">
                 {t("Never Married")}
               </span>
             ) : birth?.marriage_experince === 'yes' ? (
-              <span className="px-3 py-1 rounded-xl bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 font-semibold">
+              <span className="px-3 py-1 rounded-xl bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 font-semibold border border-amber-200 dark:border-amber-800">
                 {t("Divorced / Has Experience")}
               </span>
             ) : null}
@@ -342,46 +342,46 @@ export default function PublicCandidateProfilePage() {
 
       {/* Highlights Metrics Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
-        <div className="p-4 rounded-2xl bg-white dark:bg-white/[0.02] border border-gray-200 dark:border-gray-800 text-center">
-          <span className="text-[11px] font-medium text-gray-400">{t("Height / Weight")}</span>
-          <p className="text-sm font-bold text-gray-900 dark:text-white mt-1">
+        <div className="p-4 rounded-2xl bg-white dark:bg-white/[0.02] border border-slate-200/80 dark:border-gray-800 text-center shadow-2xs">
+          <span className="text-[11px] font-semibold text-slate-400">{t("Height / Weight")}</span>
+          <p className="text-sm font-bold text-slate-900 dark:text-white mt-1">
             {physical?.height ? formatHeight(physical.height, isRTL) : '—'} / {physical?.weight ? formatWeight(physical.weight, isRTL) : '—'}
           </p>
         </div>
-        <div className="p-4 rounded-2xl bg-white dark:bg-white/[0.02] border border-gray-200 dark:border-gray-800 text-center">
-          <span className="text-[11px] font-medium text-gray-400">{t("Housing Ownership")}</span>
-          <p className="text-sm font-bold text-gray-900 dark:text-white mt-1">
+        <div className="p-4 rounded-2xl bg-white dark:bg-white/[0.02] border border-slate-200/80 dark:border-gray-800 text-center shadow-2xs">
+          <span className="text-[11px] font-semibold text-slate-400">{t("Housing Ownership")}</span>
+          <p className="text-sm font-bold text-slate-900 dark:text-white mt-1">
             {financial?.ownership_status ? t(financial.ownership_status) : '—'}
           </p>
         </div>
-        <div className="p-4 rounded-2xl bg-white dark:bg-white/[0.02] border border-gray-200 dark:border-gray-800 text-center">
-          <span className="text-[11px] font-medium text-gray-400">{t("Monthly Income")}</span>
-          <p className="text-sm font-bold text-gray-900 dark:text-white mt-1">
+        <div className="p-4 rounded-2xl bg-white dark:bg-white/[0.02] border border-slate-200/80 dark:border-gray-800 text-center shadow-2xs">
+          <span className="text-[11px] font-semibold text-slate-400">{t("Monthly Income")}</span>
+          <p className="text-sm font-bold text-slate-900 dark:text-white mt-1">
             {personal?.income ? t(personal.income) : '—'}
           </p>
         </div>
-        <div className="p-4 rounded-2xl bg-white dark:bg-white/[0.02] border border-gray-200 dark:border-gray-800 text-center">
-          <span className="text-[11px] font-medium text-gray-400">{t("Skin Complexion")}</span>
-          <p className="text-sm font-bold text-gray-900 dark:text-white mt-1">
+        <div className="p-4 rounded-2xl bg-white dark:bg-white/[0.02] border border-slate-200/80 dark:border-gray-800 text-center shadow-2xs">
+          <span className="text-[11px] font-semibold text-slate-400">{t("Skin Complexion")}</span>
+          <p className="text-sm font-bold text-slate-900 dark:text-white mt-1">
             {physical?.skin_color ? t(physical.skin_color) : '—'}
           </p>
         </div>
-        <div className="p-4 rounded-2xl bg-white dark:bg-white/[0.02] border border-gray-200 dark:border-gray-800 text-center">
-          <span className="text-[11px] font-medium text-gray-400">{t("Prayer Commitment")}</span>
-          <p className="text-sm font-bold text-gray-900 dark:text-white mt-1">
+        <div className="p-4 rounded-2xl bg-white dark:bg-white/[0.02] border border-slate-200/80 dark:border-gray-800 text-center shadow-2xs">
+          <span className="text-[11px] font-semibold text-slate-400">{t("Prayer Commitment")}</span>
+          <p className="text-sm font-bold text-slate-900 dark:text-white mt-1">
             {intellectual?.worship_and_prayer || intellectual?.worship_prayer ? t(intellectual?.worship_and_prayer || intellectual?.worship_prayer) : '—'}
           </p>
         </div>
-        <div className="p-4 rounded-2xl bg-white dark:bg-white/[0.02] border border-gray-200 dark:border-gray-800 text-center">
-          <span className="text-[11px] font-medium text-gray-400">{t("Society Cover & Hijab")}</span>
-          <p className="text-sm font-bold text-gray-900 dark:text-white mt-1">
+        <div className="p-4 rounded-2xl bg-white dark:bg-white/[0.02] border border-slate-200/80 dark:border-gray-800 text-center shadow-2xs">
+          <span className="text-[11px] font-semibold text-slate-400">{t("Society Cover & Hijab")}</span>
+          <p className="text-sm font-bold text-slate-900 dark:text-white mt-1">
             {intellectual?.cover_type_society ? t(intellectual.cover_type_society) : '—'}
           </p>
         </div>
       </div>
 
       {/* Navigation Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-gray-200 dark:border-gray-800 scrollbar-none">
+      <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-slate-200/80 dark:border-gray-800 scrollbar-none">
         {[
           { key: 'overview', label: 'Overview' },
           { key: 'personal', label: 'Personal Information' },
@@ -398,8 +398,8 @@ export default function PublicCandidateProfilePage() {
             onClick={() => setActiveTab(tab.key as any)}
             className={`px-4 py-2 text-xs font-semibold rounded-2xl whitespace-nowrap transition-all cursor-pointer ${
               activeTab === tab.key
-                ? 'bg-brand-500 text-white shadow-xs'
-                : 'bg-white text-gray-600 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
+                ? 'bg-[var(--color-primary)] text-white shadow-xs'
+                : 'bg-white text-slate-700 hover:bg-slate-100 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 border border-slate-200/80 dark:border-gray-700'
             }`}
           >
             {t(tab.label)}
@@ -411,8 +411,8 @@ export default function PublicCandidateProfilePage() {
       <div className="space-y-6">
         {activeTab === 'overview' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-3">
-              <h3 className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2 pb-2 border-b border-gray-100 dark:border-gray-800">
+            <div className="rounded-3xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-xs space-y-3">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-gray-800">
                 <span>👤</span> {t("Personal Information")}
               </h3>
               <DetailRow label="Birth Location / City" value={personal?.birth_location} />
@@ -425,8 +425,8 @@ export default function PublicCandidateProfilePage() {
               <DetailRow label="Leisure & Hobbies" value={personal?.leisure_type} />
             </div>
 
-            <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-3">
-              <h3 className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2 pb-2 border-b border-gray-100 dark:border-gray-800">
+            <div className="rounded-3xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-xs space-y-3">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-gray-800">
                 <span>🕌</span> {t("Religious & Intellectual Outlook")}
               </h3>
               <DetailRow label="Prayer & Worship" value={intellectual?.worship_and_prayer || intellectual?.worship_prayer} badge />
@@ -438,8 +438,8 @@ export default function PublicCandidateProfilePage() {
               <DetailRow label="Marriage Goals" value={intellectual?.marriage_goals_purposes} />
             </div>
 
-            <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-3">
-              <h3 className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2 pb-2 border-b border-gray-100 dark:border-gray-800">
+            <div className="rounded-3xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-xs space-y-3">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-gray-800">
                 <span>💰</span> {t("Financial & Living")}
               </h3>
               <DetailRow label="Career / Job" value={financial?.job} badge />
@@ -451,8 +451,8 @@ export default function PublicCandidateProfilePage() {
               <DetailRow label="Jahiziyeh" value={financial?.future_spose_jahiziyeh} />
             </div>
 
-            <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-3">
-              <h3 className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2 pb-2 border-b border-gray-100 dark:border-gray-800">
+            <div className="rounded-3xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-xs space-y-3">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-gray-800">
                 <span>🎯</span> {t("Preferred Future Spouse")}
               </h3>
               <DetailRow label="Desired Appearance" value={prefIntellectual?.appearance_type} />
@@ -467,8 +467,8 @@ export default function PublicCandidateProfilePage() {
         )}
 
         {activeTab === 'personal' && (
-          <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-4">
-            <h3 className="text-sm font-bold text-gray-900 dark:text-white pb-2 border-b border-gray-100 dark:border-gray-800">
+          <div className="rounded-3xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-xs space-y-4">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white pb-2 border-b border-slate-100 dark:border-gray-800">
               {t("Personal Information & Lifestyle")}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1">
@@ -497,8 +497,8 @@ export default function PublicCandidateProfilePage() {
         )}
 
         {activeTab === 'physical' && (
-          <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-4">
-            <h3 className="text-sm font-bold text-gray-900 dark:text-white pb-2 border-b border-gray-100 dark:border-gray-800">
+          <div className="rounded-3xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-xs space-y-4">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white pb-2 border-b border-slate-100 dark:border-gray-800">
               {t("Physical & Health Information")}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1">
@@ -518,8 +518,8 @@ export default function PublicCandidateProfilePage() {
         )}
 
         {activeTab === 'intellectual' && (
-          <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-4">
-            <h3 className="text-sm font-bold text-gray-900 dark:text-white pb-2 border-b border-gray-100 dark:border-gray-800">
+          <div className="rounded-3xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-xs space-y-4">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white pb-2 border-b border-slate-100 dark:border-gray-800">
               {t("Religious, Intellectual & Lifestyle Values")}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1">
@@ -552,8 +552,8 @@ export default function PublicCandidateProfilePage() {
 
         {activeTab === 'family' && (
           <div className="space-y-6">
-            <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-4">
-              <h3 className="text-sm font-bold text-gray-900 dark:text-white pb-2 border-b border-gray-100 dark:border-gray-800">
+            <div className="rounded-3xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-xs space-y-4">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white pb-2 border-b border-slate-100 dark:border-gray-800">
                 {t("Family Heritage & Parents")}
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1">
@@ -583,15 +583,15 @@ export default function PublicCandidateProfilePage() {
             {/* Sisters & Brothers Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {sisters.length > 0 && (
-                <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-3">
-                  <h4 className="text-xs font-bold uppercase text-gray-500 dark:text-gray-400">
+                <div className="rounded-3xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-xs space-y-3">
+                  <h4 className="text-xs font-bold uppercase text-slate-500 dark:text-gray-400">
                     {t("Sisters Details")} ({sisters.length})
                   </h4>
                   <div className="space-y-2">
                     {sisters.map((sis, idx) => (
-                      <div key={sis.id || idx} className="p-3 rounded-2xl bg-gray-50 dark:bg-gray-800/40 text-xs flex justify-between items-center">
-                        <span>{t("Sister")} #{idx + 1}: {sis.education ? t(sis.education) : '—'}</span>
-                        <span className="font-semibold text-gray-700 dark:text-gray-300">{sis.job ? t(sis.job) : '—'}</span>
+                      <div key={sis.id || idx} className="p-3 rounded-2xl bg-slate-50 dark:bg-gray-800/40 text-xs flex justify-between items-center border border-slate-100 dark:border-gray-800">
+                        <span className="text-slate-700 dark:text-gray-300">{t("Sister")} #{idx + 1}: {sis.education ? t(sis.education) : '—'}</span>
+                        <span className="font-semibold text-slate-900 dark:text-white">{sis.job ? t(sis.job) : '—'}</span>
                       </div>
                     ))}
                   </div>
@@ -599,15 +599,15 @@ export default function PublicCandidateProfilePage() {
               )}
 
               {brothers.length > 0 && (
-                <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-3">
-                  <h4 className="text-xs font-bold uppercase text-gray-500 dark:text-gray-400">
+                <div className="rounded-3xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-xs space-y-3">
+                  <h4 className="text-xs font-bold uppercase text-slate-500 dark:text-gray-400">
                     {t("Brothers Details")} ({brothers.length})
                   </h4>
                   <div className="space-y-2">
                     {brothers.map((bro, idx) => (
-                      <div key={bro.id || idx} className="p-3 rounded-2xl bg-gray-50 dark:bg-gray-800/40 text-xs flex justify-between items-center">
-                        <span>{t("Brother")} #{idx + 1}: {bro.education ? t(bro.education) : '—'}</span>
-                        <span className="font-semibold text-gray-700 dark:text-gray-300">{bro.job ? t(bro.job) : '—'}</span>
+                      <div key={bro.id || idx} className="p-3 rounded-2xl bg-slate-50 dark:bg-gray-800/40 text-xs flex justify-between items-center border border-slate-100 dark:border-gray-800">
+                        <span className="text-slate-700 dark:text-gray-300">{t("Brother")} #{idx + 1}: {bro.education ? t(bro.education) : '—'}</span>
+                        <span className="font-semibold text-slate-900 dark:text-white">{bro.job ? t(bro.job) : '—'}</span>
                       </div>
                     ))}
                   </div>
@@ -619,15 +619,15 @@ export default function PublicCandidateProfilePage() {
             {(grooms.length > 0 || brides.length > 0) && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {grooms.length > 0 && (
-                  <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-3">
-                    <h4 className="text-xs font-bold uppercase text-gray-500 dark:text-gray-400">
+                  <div className="rounded-3xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-xs space-y-3">
+                    <h4 className="text-xs font-bold uppercase text-slate-500 dark:text-gray-400">
                       {t("Grooms & Sisters-in-law Details")} ({grooms.length})
                     </h4>
                     <div className="space-y-2">
                       {grooms.map((g, idx) => (
-                        <div key={g.id || idx} className="p-3 rounded-2xl bg-gray-50 dark:bg-gray-800/40 text-xs flex justify-between items-center">
-                          <span>#{idx + 1} {g.groom_or ? t(g.groom_or) : t('Groom')}: {g.education ? t(g.education) : '—'}</span>
-                          <span className="font-semibold text-gray-700 dark:text-gray-300">{g.job ? t(g.job) : '—'}</span>
+                        <div key={g.id || idx} className="p-3 rounded-2xl bg-slate-50 dark:bg-gray-800/40 text-xs flex justify-between items-center border border-slate-100 dark:border-gray-800">
+                          <span className="text-slate-700 dark:text-gray-300">#{idx + 1} {g.groom_or ? t(g.groom_or) : t('Groom')}: {g.education ? t(g.education) : '—'}</span>
+                          <span className="font-semibold text-slate-900 dark:text-white">{g.job ? t(g.job) : '—'}</span>
                         </div>
                       ))}
                     </div>
@@ -635,15 +635,15 @@ export default function PublicCandidateProfilePage() {
                 )}
 
                 {brides.length > 0 && (
-                  <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-3">
-                    <h4 className="text-xs font-bold uppercase text-gray-500 dark:text-gray-400">
+                  <div className="rounded-3xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-xs space-y-3">
+                    <h4 className="text-xs font-bold uppercase text-slate-500 dark:text-gray-400">
                       {t("Brides & Brothers-in-law Details")} ({brides.length})
                     </h4>
                     <div className="space-y-2">
                       {brides.map((b, idx) => (
-                        <div key={b.id || idx} className="p-3 rounded-2xl bg-gray-50 dark:bg-gray-800/40 text-xs flex justify-between items-center">
-                          <span>#{idx + 1} {b.bride_or ? t(b.bride_or) : t('Bride')}: {b.education ? t(b.education) : '—'}</span>
-                          <span className="font-semibold text-gray-700 dark:text-gray-300">{b.job ? t(b.job) : '—'}</span>
+                        <div key={b.id || idx} className="p-3 rounded-2xl bg-slate-50 dark:bg-gray-800/40 text-xs flex justify-between items-center border border-slate-100 dark:border-gray-800">
+                          <span className="text-slate-700 dark:text-gray-300">#{idx + 1} {b.bride_or ? t(b.bride_or) : t('Bride')}: {b.education ? t(b.education) : '—'}</span>
+                          <span className="font-semibold text-slate-900 dark:text-white">{b.job ? t(b.job) : '—'}</span>
                         </div>
                       ))}
                     </div>
@@ -655,8 +655,8 @@ export default function PublicCandidateProfilePage() {
         )}
 
         {activeTab === 'financial' && (
-          <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-4">
-            <h3 className="text-sm font-bold text-gray-900 dark:text-white pb-2 border-b border-gray-100 dark:border-gray-800">
+          <div className="rounded-3xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-xs space-y-4">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white pb-2 border-b border-slate-100 dark:border-gray-800">
               {t("Financial & Residence Status")}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1">
@@ -681,8 +681,8 @@ export default function PublicCandidateProfilePage() {
 
         {activeTab === 'marriage' && (
           <div className="space-y-6">
-            <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-4">
-              <h3 className="text-sm font-bold text-gray-900 dark:text-white pb-2 border-b border-gray-100 dark:border-gray-800">
+            <div className="rounded-3xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-xs space-y-4">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-white pb-2 border-b border-slate-100 dark:border-gray-800">
                 {t("Marriage Experience & History")}
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1">
@@ -701,21 +701,21 @@ export default function PublicCandidateProfilePage() {
 
             {/* Children List from Previous Marriage (No birth date shown for privacy) */}
             {childrenList.length > 0 && (
-              <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-3">
-                <h4 className="text-xs font-bold uppercase text-gray-500 dark:text-gray-400">
+              <div className="rounded-3xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-xs space-y-3">
+                <h4 className="text-xs font-bold uppercase text-slate-500 dark:text-gray-400">
                   {t("Children from Prior Marriage")} ({childrenList.length})
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {childrenList.map((ch, idx) => (
-                    <div key={ch.id || idx} className="p-4 rounded-2xl bg-gray-50 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-800 space-y-1 text-xs">
-                      <p className="font-bold text-gray-800 dark:text-gray-200">
+                    <div key={ch.id || idx} className="p-4 rounded-2xl bg-slate-50 dark:bg-gray-800/40 border border-slate-100 dark:border-gray-800 space-y-1 text-xs">
+                      <p className="font-bold text-slate-800 dark:text-gray-200">
                         #{idx + 1} {t("Child")}: {ch.gender ? t(ch.gender) : '—'}
                       </p>
-                      <p className="text-gray-500 dark:text-gray-400">
+                      <p className="text-slate-500 dark:text-gray-400">
                         {t("Custody")}: {ch.custody ? t(ch.custody) : '—'}
                       </p>
                       {ch.living_location && (
-                        <p className="text-gray-500 dark:text-gray-400">
+                        <p className="text-slate-500 dark:text-gray-400">
                           {t("Living Location")}: {ch.living_location}
                         </p>
                       )}
@@ -728,8 +728,8 @@ export default function PublicCandidateProfilePage() {
         )}
 
         {activeTab === 'preferred' && (
-          <div className="rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm space-y-4">
-            <h3 className="text-sm font-bold text-gray-900 dark:text-white pb-2 border-b border-gray-100 dark:border-gray-800">
+          <div className="rounded-3xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-xs space-y-4">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white pb-2 border-b border-slate-100 dark:border-gray-800">
               {t("Preferred Future Spouse Criteria")}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1">

@@ -79,10 +79,10 @@ const DisplayRow: React.FC<DisplayRowProps> = ({ label, value, valueClassName })
   }
 
   return (
-    <div className="flex items-start justify-between py-2 border-b border-gray-100 dark:border-gray-800 last:border-0">
-      <span className="text-sm font-medium text-gray-500 dark:text-gray-400 min-w-0 mx-2 shrink-0">{t(label)}</span>
-      <span className={`text-sm text-gray-900 dark:text-white break-words ${valueClassName ?? ''}`}>
-        {renderedValue !== null && renderedValue !== undefined && renderedValue !== '' ? renderedValue : <span className="text-gray-400 italic">—</span>}
+    <div className="flex items-start justify-between py-2 border-b border-slate-100 dark:border-gray-800 last:border-0">
+      <span className="text-sm font-medium text-slate-500 dark:text-gray-400 min-w-0 mx-2 shrink-0">{t(label)}</span>
+      <span className={`text-sm text-slate-900 dark:text-white break-words ${valueClassName ?? ''}`}>
+        {renderedValue !== null && renderedValue !== undefined && renderedValue !== '' ? renderedValue : <span className="text-slate-400 italic">—</span>}
       </span>
     </div>
   );

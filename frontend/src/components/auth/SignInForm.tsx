@@ -46,10 +46,10 @@ export default function SignInForm() {
       <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto sm:pt-10">
         <div>
           <div className="mb-5 sm:mb-8">
-            <h1 className="mb-2 font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md">
+            <h1 className="mb-2 font-bold text-slate-900 text-title-sm dark:text-white/90 sm:text-title-md">
               {t("Sign In")}
             </h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-sm text-slate-500 dark:text-gray-400">
               {t("Enter your username and password to sign in!")}
             </p>
           </div>
@@ -100,9 +100,9 @@ export default function SignInForm() {
                       }`}
                     >
                       {showPassword ? (
-                        <EyeIcon className="fill-gray-500 dark:fill-gray-400" />
+                        <EyeIcon className="fill-slate-500 dark:fill-gray-400" />
                       ) : (
-                        <EyeCloseIcon className="fill-gray-500 dark:fill-gray-400" />
+                        <EyeCloseIcon className="fill-slate-500 dark:fill-gray-400" />
                       )}
                     </span>
                   </div>
@@ -110,13 +110,13 @@ export default function SignInForm() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <Checkbox checked={isChecked} onChange={setIsChecked} />
-                    <span className="block font-normal text-gray-700 text-theme-sm dark:text-gray-400">
+                    <span className="block font-normal text-slate-700 text-theme-sm dark:text-gray-400">
                       {t("Keep me logged in")}
                     </span>
                   </div>
                   <Link
                     href="/forgot-password"
-                    className="text-sm text-brand-500 hover:text-brand-600 dark:text-brand-400"
+                    className="text-sm text-[var(--color-primary)] hover:brightness-90 dark:text-brand-400"
                   >
                     {t("Forgot password?")}
                   </Link>
@@ -130,11 +130,11 @@ export default function SignInForm() {
             </form>
 
             <div className="mt-5">
-              <p className="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
+              <p className="text-sm font-normal text-center text-slate-700 dark:text-gray-400 sm:text-start">
                 {t("Don't have an account?")}{" "}
                 <Link
                   href="/signup"
-                  className="text-brand-500 hover:text-brand-600 dark:text-brand-400 font-semibold"
+                  className="text-[var(--color-primary)] hover:brightness-90 dark:text-brand-400 font-semibold"
                 >
                   {t("Sign Up")}
                 </Link>

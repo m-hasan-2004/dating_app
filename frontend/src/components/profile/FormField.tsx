@@ -63,14 +63,15 @@ const FormField: React.FC<FormFieldProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const inputBaseClass = `w-full px-3 py-2 text-sm rounded-xl border transition-all ${
+  const inputBaseClass = `w-full px-3.5 py-2.5 text-sm rounded-xl border transition-all ${
     error
       ? 'border-red-500 ring-1 ring-red-500 bg-red-50/10 text-red-900 dark:text-red-200 focus:border-red-500 focus:ring-red-500'
-      : 'border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500'
+      : 'bg-white border-slate-300 dark:border-gray-700 dark:bg-gray-800 text-slate-800 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]'
   }`;
-  const labelClass = 'block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1.5';
-  const hintClass = 'text-xs text-gray-500 mt-1';
+  const labelClass = 'block text-xs font-bold text-slate-700 dark:text-gray-300 mb-1.5';
+  const hintClass = 'text-xs text-slate-500 dark:text-gray-400 mt-1';
   const errorClass = 'text-xs text-red-600 dark:text-red-400 mt-1 font-medium flex items-center gap-1';
+
 
   const renderInput = () => {
     switch (type) {
@@ -126,24 +127,25 @@ const FormField: React.FC<FormFieldProps> = ({
         };
         return (
           <div
-            className={`grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-60 overflow-y-auto p-3 border rounded-xl ${
+            className={`grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-60 overflow-y-auto p-3 border rounded-xl bg-white dark:bg-gray-800 ${
               error
                 ? 'border-red-500 ring-1 ring-red-500 bg-red-50/10'
-                : 'border-gray-300 dark:border-gray-700'
+                : 'border-slate-300 dark:border-gray-700'
             }`}
           >
             {options?.map((opt) => (
-              <label key={opt.value} className="flex items-center space-x-2 text-sm cursor-pointer p-1 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800">
+              <label key={opt.value} className="flex items-center gap-2 text-sm cursor-pointer p-1.5 rounded-lg hover:bg-slate-50 dark:hover:bg-gray-700/50 transition-colors">
                 <input
                   type="checkbox"
                   checked={selectedValues.includes(opt.value)}
                   onChange={(e) => handleCheckboxChange(opt.value, e.target.checked)}
-                  className="rounded text-brand-500 focus:ring-brand-500 dark:border-gray-600 dark:bg-gray-700"
+                  className="rounded border-slate-300 text-[var(--color-primary)] focus:ring-[var(--color-primary)] dark:border-gray-600 dark:bg-gray-700"
                 />
-                <span className="text-gray-700 dark:text-gray-300 text-xs font-medium">{t(opt.label)}</span>
+                <span className="text-slate-700 dark:text-gray-300 text-xs font-medium">{t(opt.label)}</span>
               </label>
             ))}
           </div>
+
         );
       case 'boolean':
         return (
@@ -155,7 +157,7 @@ const FormField: React.FC<FormFieldProps> = ({
                 checked={!!value}
                 onChange={(e) => onChange(name, e.target.checked)}
               />
-              <div className={`block w-10 h-6 rounded-full transition-colors ${value ? 'bg-brand-500' : 'bg-gray-300 dark:bg-gray-600'}`}></div>
+              <div className={`block w-10 h-6 rounded-full transition-colors ${value ? 'bg-[var(--color-primary)]' : 'bg-slate-300 dark:bg-gray-600'}`}></div>
               <div className={`absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform ${value ? 'transform translate-x-4' : ''}`}></div>
             </div>
           </label>

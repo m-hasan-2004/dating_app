@@ -68,7 +68,7 @@ export const Modal: React.FC<ModalProps> = ({
   const contentClasses = isFullscreen
     ? "w-full h-full min-h-screen"
     : twMerge(
-        "relative w-full max-w-lg rounded-3xl bg-white dark:bg-gray-900 shadow-2xl overflow-hidden border-2 border-gray-300 dark:border-gray-600 ring-2 ring-black/10 dark:ring-white/15 mx-auto text-start",
+        "relative w-full max-w-lg rounded-3xl bg-white dark:bg-gray-900 shadow-2xl overflow-hidden border border-slate-200/90 dark:border-gray-700 ring-1 ring-slate-900/5 dark:ring-white/10 mx-auto text-start",
         className
       );
 
@@ -98,7 +98,7 @@ export const Modal: React.FC<ModalProps> = ({
               type="button"
               className={`absolute ${
                 isRTL ? "left-4" : "right-4"
-              } top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-400 transition-colors hover:bg-gray-200 hover:text-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white cursor-pointer`}
+              } top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-400 transition-colors hover:bg-slate-200 hover:text-slate-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white cursor-pointer`}
               title={isRTL ? "بستن" : "Close"}
             >
               <svg

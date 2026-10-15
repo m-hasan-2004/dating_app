@@ -40,11 +40,11 @@ function MultiRecordSection<T extends { id: number }>({
   };
 
   return (
-    <div className="rounded-2xl border border-gray-200 hover:border-gray-300 bg-white dark:border-gray-800 dark:bg-white/[0.03] shadow-xs transition-all">
-      <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-gray-800">
+    <div className="rounded-2xl border border-slate-200/80 hover:border-slate-300 bg-white dark:border-gray-800 dark:bg-white/[0.03] shadow-xs transition-all">
+      <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-gray-800">
         <div className="flex items-center gap-2">
-          <h3 className="text-base font-semibold text-gray-800 dark:text-white/90">{t(title)}</h3>
-          <span className="text-xs px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 font-medium">
+          <h3 className="text-base font-semibold text-slate-900 dark:text-white/90">{t(title)}</h3>
+          <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 dark:bg-gray-800 text-slate-600 dark:text-gray-400 font-medium">
             {isRTL ? toPersianDigits(records.length) : records.length}
           </span>
         </div>
@@ -52,7 +52,7 @@ function MultiRecordSection<T extends { id: number }>({
           <button
             type="button"
             onClick={handleToggle}
-            className="inline-flex items-center gap-1 text-xs font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors px-2 py-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800/60 cursor-pointer"
+            className="inline-flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-slate-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors px-2 py-1 rounded-md hover:bg-slate-100 dark:hover:bg-gray-800/60 cursor-pointer"
             title={collapsed ? t('Expand') : t('Collapse')}
           >
             {collapsed ? (
@@ -70,7 +70,7 @@ function MultiRecordSection<T extends { id: number }>({
           <button
             type="button"
             onClick={onAdd}
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-brand-500 hover:text-brand-600 transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--color-primary)] hover:brightness-90 transition-colors cursor-pointer"
           >
             <PlusIcon className="w-4 h-4" />
             {t('Add')}
@@ -78,17 +78,17 @@ function MultiRecordSection<T extends { id: number }>({
         </div>
       </div>
       {!collapsed && (
-        <div className="divide-y divide-gray-100 dark:divide-gray-800">
+        <div className="divide-y divide-slate-100 dark:divide-gray-800">
           {loading ? (
-            <p className="px-6 py-4 text-sm text-gray-400">{t('Loading...')}</p>
+            <p className="px-6 py-4 text-sm text-slate-400">{t('Loading...')}</p>
           ) : records.length === 0 ? (
-            <p className="px-6 py-4 text-sm text-gray-400 italic">{t('No records yet.')}</p>
+            <p className="px-6 py-4 text-sm text-slate-400 italic">{t('No records yet.')}</p>
           ) : (
             records.map((item, index) => (
               <div key={item.id} className="px-6 py-4">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+                    <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
                       #{isRTL ? toPersianDigits(index + 1) : index + 1}
                     </p>
                     {renderRecord(item, index)}
@@ -97,7 +97,7 @@ function MultiRecordSection<T extends { id: number }>({
                     <button
                       type="button"
                       onClick={() => onEdit(item)}
-                      className="p-1.5 text-brand-500 hover:bg-brand-50 dark:hover:bg-brand-950/30 rounded-lg transition-colors cursor-pointer"
+                      className="p-1.5 text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 rounded-lg transition-colors cursor-pointer"
                       title={t('Edit')}
                     >
                       <PencilIcon className="w-4 h-4" />

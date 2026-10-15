@@ -164,12 +164,21 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       Object.entries(shades).forEach(([step, color]) => {
         document.documentElement.style.setProperty(`--color-brand-${step}`, color);
       });
+      const rgb = hexToRgb(primaryHex);
+      document.documentElement.style.setProperty('--color-primary', primaryHex);
+      if (rgb) {
+        document.documentElement.style.setProperty('--color-primary-rgb', `${rgb[0]}, ${rgb[1]}, ${rgb[2]}`);
+      }
+      document.documentElement.style.setProperty('--color-accent', shades['600'] || primaryHex);
     } else {
       // Clear custom inline styles
       const steps = ['25', '50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950'];
       steps.forEach((step) => {
         document.documentElement.style.removeProperty(`--color-brand-${step}`);
       });
+      document.documentElement.style.removeProperty('--color-primary');
+      document.documentElement.style.removeProperty('--color-primary-rgb');
+      document.documentElement.style.removeProperty('--color-accent');
 
       if (palette === 'default') {
         document.documentElement.removeAttribute('data-palette');
@@ -178,6 +187,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       }
     }
   }, []);
+
 
   const setColorPalette = useCallback((palette: ColorPalette, customHex?: string) => {
     setColorPaletteState(palette);

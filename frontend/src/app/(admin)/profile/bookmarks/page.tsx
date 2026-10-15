@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
@@ -60,20 +60,20 @@ export default function BookmarksPage() {
       )}
 
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-3xl bg-gradient-to-r from-amber-500/10 via-brand-500/5 to-transparent border border-amber-500/20 dark:border-amber-500/10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-3xl bg-gradient-to-r from-amber-500/10 via-[var(--color-primary)]/5 to-transparent border border-amber-500/20 dark:border-amber-500/10 shadow-xs">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight flex items-center gap-2.5">
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight flex items-center gap-2.5">
             <span className="text-amber-500">★</span>
             {t("Saved Candidate Bookmarks")}
           </h1>
-          <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mt-1">
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-gray-300 mt-1">
             {t("Manage your shortlisted candidate profiles for easy review and future introduction coordination.")}
           </p>
         </div>
 
         <Link
           href="/search"
-          className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold rounded-2xl bg-brand-500 text-white hover:bg-brand-600 transition-all shadow-sm"
+          className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold rounded-2xl bg-[var(--color-primary)] text-white hover:brightness-95 transition-all shadow-xs"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 1114 0z" />
@@ -83,16 +83,16 @@ export default function BookmarksPage() {
       </div>
 
       {/* Count & Status */}
-      <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 px-1">
+      <div className="flex items-center justify-between text-xs text-slate-500 dark:text-gray-400 px-1">
         <span>
-          {t("Total saved")}: <strong className="text-gray-900 dark:text-white font-bold">{bookmarks.length}</strong> {t("candidates")}
+          {t("Total saved")}: <strong className="text-slate-900 dark:text-white font-bold">{bookmarks.length}</strong> {t("candidates")}
         </span>
-        {loading && <span className="text-brand-500 font-medium animate-pulse">{t("Loading...")}</span>}
+        {loading && <span className="text-[var(--color-primary)] font-medium animate-pulse">{t("Loading...")}</span>}
       </div>
 
       {/* Error */}
       {error && (
-        <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 dark:bg-red-950/30 dark:border-red-800 dark:text-red-400 text-sm">
+        <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 dark:bg-red-950/30 dark:border-red-800 dark:text-red-400 text-sm">
           {error}
         </div>
       )}
@@ -101,7 +101,7 @@ export default function BookmarksPage() {
       {loading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="h-72 rounded-3xl bg-gray-100 dark:bg-gray-800/40 animate-pulse border border-gray-200 dark:border-gray-800" />
+            <div key={i} className="h-72 rounded-3xl bg-slate-100 dark:bg-gray-800/40 animate-pulse border border-slate-200/80 dark:border-gray-800" />
           ))}
         </div>
       ) : bookmarks.length > 0 ? (
@@ -114,7 +114,7 @@ export default function BookmarksPage() {
             return (
               <div
                 key={cand.id}
-                className="group relative rounded-3xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-5 shadow-sm hover:shadow-xl hover:border-amber-400/60 dark:hover:border-amber-500/40 transition-all flex flex-col justify-between"
+                className="group relative rounded-3xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-5 shadow-xs hover:shadow-md hover:border-amber-400/60 dark:hover:border-amber-500/40 transition-all flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-start justify-between gap-3">
@@ -123,16 +123,16 @@ export default function BookmarksPage() {
                         className={`w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-sm shadow-md transition-transform group-hover:scale-105 ${
                           isFemale
                             ? 'bg-gradient-to-br from-pink-500 to-rose-600 text-white shadow-pink-500/20'
-                            : 'bg-gradient-to-br from-brand-500 to-indigo-600 text-white shadow-brand-500/20'
+                            : 'bg-gradient-to-br from-[var(--color-primary)] to-indigo-600 text-white shadow-brand-500/20'
                         }`}
                       >
                         {cand.username.slice(0, 2).toUpperCase()}
                       </div>
                       <div>
-                        <h3 className="font-bold text-gray-900 dark:text-white text-sm group-hover:text-amber-500 transition-colors">
+                        <h3 className="font-bold text-slate-900 dark:text-white text-sm group-hover:text-amber-500 transition-colors">
                           @{cand.username}
                         </h3>
-                        <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                        <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-gray-400 mt-0.5">
                           <span>{cand.age ? `${cand.age} ${t("Years")}` : '—'}</span>
                           <span>•</span>
                           <span className="truncate max-w-[100px]">{t(loc)}</span>
@@ -143,7 +143,7 @@ export default function BookmarksPage() {
                     <button
                       type="button"
                       onClick={() => handleRemoveBookmark(cand)}
-                      className="p-2 rounded-xl text-amber-500 hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-950/40 dark:hover:text-red-400 transition-colors cursor-pointer"
+                      className="p-2 rounded-xl text-amber-500 hover:bg-rose-50 hover:text-rose-500 dark:hover:bg-red-950/40 dark:hover:text-red-400 transition-colors cursor-pointer"
                       title={t("Remove Bookmark")}
                     >
                       <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
@@ -153,18 +153,18 @@ export default function BookmarksPage() {
                   </div>
 
                   <div className="my-4 space-y-2 text-xs">
-                    <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
-                      <span className="text-gray-400">🎓</span>
+                    <div className="flex items-center gap-2 text-slate-700 dark:text-gray-300">
+                      <span className="text-slate-400">🎓</span>
                       <span className="truncate font-medium">{t(edu)}</span>
                     </div>
 
-                    <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
-                      <span className="text-gray-400">💼</span>
+                    <div className="flex items-center gap-2 text-slate-700 dark:text-gray-300">
+                      <span className="text-slate-400">💼</span>
                       <span className="truncate font-medium">{cand.job ? t(cand.job) : '—'}</span>
                     </div>
 
-                    <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-                      <span className="text-gray-400">📏</span>
+                    <div className="flex items-center gap-2 text-slate-600 dark:text-gray-400">
+                      <span className="text-slate-400">📏</span>
                       <span>
                         {cand.height ? `${cand.height} cm` : '—'} / {cand.weight ? `${cand.weight} kg` : '—'}
                       </span>
@@ -172,10 +172,10 @@ export default function BookmarksPage() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 pt-2 border-t border-gray-100 dark:border-gray-800/80">
+                <div className="flex items-center gap-2 pt-2 border-t border-slate-100 dark:border-gray-800/80">
                   <Link
                     href={`/candidates/${cand.id}`}
-                    className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 text-xs font-semibold rounded-2xl bg-gray-50 text-gray-700 hover:bg-brand-500 hover:text-white dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-brand-500 dark:hover:text-white transition-all shadow-2xs"
+                    className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 text-xs font-semibold rounded-2xl bg-slate-100 text-slate-700 hover:bg-[var(--color-primary)] hover:text-white dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-brand-500 dark:hover:text-white transition-all shadow-2xs"
                   >
                     <UserCircleIcon className="w-3.5 h-3.5" />
                     <span>{t("View Profile")}</span>
@@ -184,7 +184,7 @@ export default function BookmarksPage() {
                   <button
                     type="button"
                     onClick={() => handleRemoveBookmark(cand)}
-                    className="p-2 text-xs font-medium text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-2xl transition-colors"
+                    className="p-2 text-xs font-medium text-rose-500 hover:bg-rose-50 dark:hover:bg-red-950/30 rounded-2xl transition-colors"
                     title={t("Remove Bookmark")}
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -197,19 +197,19 @@ export default function BookmarksPage() {
           })}
         </div>
       ) : (
-        <div className="rounded-3xl border border-dashed border-gray-300 dark:border-gray-800 bg-white dark:bg-white/[0.01] p-12 text-center">
+        <div className="rounded-3xl border border-dashed border-slate-300 dark:border-gray-800 bg-white dark:bg-white/[0.01] p-12 text-center shadow-xs">
           <div className="w-16 h-16 rounded-full bg-amber-50 dark:bg-amber-950/40 text-amber-500 flex items-center justify-center mx-auto text-2xl mb-3 shadow-xs">
             ★
           </div>
-          <h3 className="text-base font-bold text-gray-900 dark:text-white">
+          <h3 className="text-base font-bold text-slate-900 dark:text-white">
             {t("No Candidates Bookmarked Yet")}
           </h3>
-          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 max-w-md mx-auto">
+          <p className="text-xs text-slate-500 dark:text-gray-400 mt-1 max-w-md mx-auto">
             {t("Browse the candidate discovery directory and click the star icon on profiles you wish to shortlist.")}
           </p>
           <Link
             href="/search"
-            className="inline-block mt-4 px-5 py-2.5 text-xs font-semibold rounded-2xl bg-brand-500 text-white hover:bg-brand-600 transition-colors shadow-sm"
+            className="inline-block mt-4 px-5 py-2.5 text-xs font-semibold rounded-2xl bg-[var(--color-primary)] text-white hover:brightness-95 transition-all shadow-xs"
           >
             {t("Open Candidate Search")}
           </Link>

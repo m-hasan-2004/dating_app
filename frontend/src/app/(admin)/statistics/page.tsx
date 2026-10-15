@@ -267,17 +267,17 @@ export default function StatisticsPage() {
       )}
 
       {/* Row 1: Pure Gender Ratio Card (Men vs Women Only) */}
-      <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm">
+      <div className="rounded-2xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-xs">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h3 className="text-base font-bold text-gray-800 dark:text-white">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white">
               {t("Gender Distribution Ratio")}
             </h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
+            <p className="text-xs text-slate-500 dark:text-gray-400">
               {t("Exact ratio of registered Men / Boys vs. Women / Girls")}
             </p>
           </div>
-          <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-brand-50 text-brand-600 dark:bg-brand-950/40">
+          <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] dark:bg-brand-950/40">
             {t("Pure Ratio")} (100%)
           </span>
         </div>
@@ -349,24 +349,24 @@ export default function StatisticsPage() {
 
         {/* Proportional 2-Color Ratio Meter (Men vs Women Only) */}
         <div className="mt-5">
-          <div className="h-4 w-full rounded-full bg-gray-100 dark:bg-gray-800 flex overflow-hidden shadow-inner">
+          <div className="h-4 w-full rounded-full bg-slate-100 dark:bg-gray-800 flex overflow-hidden shadow-inner">
             <div
               className="h-full bg-gradient-to-r from-blue-600 to-blue-500 transition-all duration-500"
               style={{ width: `${genderRatio.men_percentage}%` }}
               title={`${t("Men")}: ${genderRatio.men_percentage}%`}
             />
             <div
-              className="h-full bg-gradient-to-r from-pink-500 to-pink-600 transition-all duration-500"
+              className="h-full bg-gradient-to-r from-rose-500 to-pink-500 transition-all duration-500"
               style={{ width: `${genderRatio.women_percentage}%` }}
               title={`${t("Women")}: ${genderRatio.women_percentage}%`}
             />
           </div>
-          <div className="flex items-center justify-between text-xs font-medium text-gray-600 dark:text-gray-300 mt-2.5">
+          <div className="flex items-center justify-between text-xs font-medium text-slate-600 dark:text-gray-300 mt-2.5">
             <span className="flex items-center gap-1.5">
               <span className="w-3 h-3 rounded-full bg-blue-500" /> {t("Men / Boys")} ({genderRatio.men_percentage}%)
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded-full bg-pink-500" /> {t("Women / Girls")} ({genderRatio.women_percentage}%)
+              <span className="w-3 h-3 rounded-full bg-rose-500" /> {t("Women / Girls")} ({genderRatio.women_percentage}%)
             </span>
           </div>
         </div>
@@ -375,17 +375,17 @@ export default function StatisticsPage() {
       {/* Row 2: Age Cohorts + Housing Assets Breakdown */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Age Cohorts Bar Chart */}
-        <div className="lg:col-span-7 rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm">
+        <div className="lg:col-span-7 rounded-2xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-xs">
           <div className="flex items-center justify-between mb-5">
             <div>
-              <h3 className="text-base font-bold text-gray-800 dark:text-white">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">
                 {t("Age Distribution")} — {cohortLabel}
               </h3>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
+              <p className="text-xs text-slate-500 dark:text-gray-400">
                 {t("Candidate age cohorts based on verified birth dates")}
               </p>
             </div>
-            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-purple-50 text-purple-600 dark:bg-purple-950/40">
+            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] dark:bg-brand-950/40">
               {t("Age Brackets")}
             </span>
           </div>
@@ -393,15 +393,15 @@ export default function StatisticsPage() {
           <div className="space-y-4">
             {ageData.map((item) => (
               <div key={item.range}>
-                <div className="flex items-center justify-between text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <div className="flex items-center justify-between text-xs font-medium text-slate-700 dark:text-gray-300 mb-1">
                   <span>{item.localizedRange} {t("Years Old")}</span>
-                  <span className="font-semibold text-gray-900 dark:text-white">
+                  <span className="font-semibold text-slate-900 dark:text-white">
                     {isRTL ? toPersianDigits(item.count) : item.count} {t("profiles")} ({isRTL ? toPersianDigits(item.percent) : item.percent}%)
                   </span>
                 </div>
-                <div className="h-2.5 w-full rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
+                <div className="h-2.5 w-full rounded-full bg-slate-100 dark:bg-gray-800 overflow-hidden">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-purple-600 to-indigo-500 transition-all duration-500"
+                    className="h-full rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] transition-all duration-500"
                     style={{ width: `${Math.min(100, Math.max(3, item.percent))}%` }}
                   />
                 </div>
@@ -411,7 +411,8 @@ export default function StatisticsPage() {
         </div>
 
         {/* Housing Ownership Donut */}
-        <div className="lg:col-span-5 rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm flex flex-col justify-between">
+        <div className="lg:col-span-5 rounded-2xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-xs flex flex-col justify-between">
+
           <div>
             <div className="flex items-center justify-between mb-4">
               <div>
@@ -461,13 +462,13 @@ export default function StatisticsPage() {
       </div>
 
       {/* Row 3: Academic Qualifications */}
-      <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm">
+      <div className="rounded-2xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-xs">
         <div className="flex items-center justify-between mb-5">
           <div>
-            <h3 className="text-base font-bold text-gray-800 dark:text-white">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white">
               {t("Education Qualifications")} — {cohortLabel}
             </h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
+            <p className="text-xs text-slate-500 dark:text-gray-400">
               {t("Highest academic and seminary degrees among all candidates")}
             </p>
           </div>
@@ -478,19 +479,19 @@ export default function StatisticsPage() {
 
         <div className="space-y-3.5">
           {educationData.length === 0 ? (
-            <p className="text-xs text-gray-400 italic py-4">{t("No education records found for this cohort.")}</p>
+            <p className="text-xs text-slate-400 italic py-4">{t("No education records found for this cohort.")}</p>
           ) : (
             educationData.map((edu) => (
               <div key={edu.name}>
-                <div className="flex items-center justify-between text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
+                <div className="flex items-center justify-between text-xs font-medium text-slate-700 dark:text-gray-300 mb-1">
                   <span>{t(edu.name)}</span>
-                  <span className="font-semibold text-gray-900 dark:text-white">
+                  <span className="font-semibold text-slate-900 dark:text-white">
                     {edu.count} ({edu.percent}%)
                   </span>
                 </div>
-                <div className="h-2.5 w-full rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
+                <div className="h-2.5 w-full rounded-full bg-slate-100 dark:bg-gray-800 overflow-hidden">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-brand-500 to-cyan-500 transition-all duration-500"
+                    className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-500"
                     style={{ width: `${Math.min(100, Math.max(3, edu.percent))}%` }}
                   />
                 </div>
@@ -501,13 +502,13 @@ export default function StatisticsPage() {
       </div>
 
       {/* Row 4: Income & Financial Brackets */}
-      <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm">
+      <div className="rounded-2xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-xs">
         <div className="flex items-center justify-between mb-5">
           <div>
-            <h3 className="text-base font-bold text-gray-800 dark:text-white">
+            <h3 className="text-base font-bold text-slate-900 dark:text-white">
               {t("Income & Financial Brackets")} — {cohortLabel}
             </h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
+            <p className="text-xs text-slate-500 dark:text-gray-400">
               {t("Monthly income distribution declared by all candidates")}
             </p>
           </div>
@@ -518,24 +519,24 @@ export default function StatisticsPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {incomeData.length === 0 ? (
-            <p className="text-xs text-gray-400 italic py-4 col-span-3">{t("No income data for this cohort.")}</p>
+            <p className="text-xs text-slate-400 italic py-4 col-span-3">{t("No income data for this cohort.")}</p>
           ) : (
             incomeData.map((inc) => (
               <div
                 key={inc.key}
-                className="p-4 rounded-xl bg-gray-50/80 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-800/60"
+                className="p-4 rounded-xl bg-slate-50/80 dark:bg-gray-800/40 border border-slate-200/80 dark:border-gray-800/60 shadow-2xs"
               >
                 <div className="flex items-center justify-between text-xs mb-1">
-                  <span className="font-medium text-gray-700 dark:text-gray-300">{inc.label}</span>
+                  <span className="font-medium text-slate-700 dark:text-gray-300">{inc.label}</span>
                   <span className="font-bold text-emerald-600 dark:text-emerald-400">
                     {isRTL ? toPersianDigits(inc.percent) : inc.percent}%
                   </span>
                 </div>
-                <p className="text-xl font-bold text-gray-900 dark:text-white mt-1">
+                <p className="text-xl font-bold text-slate-900 dark:text-white mt-1">
                   {isRTL ? toPersianDigits(inc.count) : inc.count}{' '}
-                  <span className="text-xs font-normal text-gray-400">{t("candidates")}</span>
+                  <span className="text-xs font-normal text-slate-400">{t("candidates")}</span>
                 </p>
-                <div className="h-1.5 w-full rounded-full bg-gray-200 dark:bg-gray-700 mt-2 overflow-hidden">
+                <div className="h-1.5 w-full rounded-full bg-slate-200/80 dark:bg-gray-700 mt-2 overflow-hidden">
                   <div
                     className="h-full rounded-full bg-emerald-500"
                     style={{ width: `${Math.min(100, Math.max(4, inc.percent))}%` }}
@@ -546,6 +547,7 @@ export default function StatisticsPage() {
           )}
         </div>
       </div>
+
     </div>
   );
 }

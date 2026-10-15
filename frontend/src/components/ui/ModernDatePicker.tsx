@@ -176,7 +176,7 @@ export default function ModernDatePicker({
           } ${
             error
               ? 'border-red-500 ring-1 ring-red-500 bg-red-50/10 text-red-900 dark:text-red-200 focus:border-red-500 focus:ring-red-500'
-              : 'border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500'
+              : 'bg-white border-slate-300 dark:border-gray-700 dark:bg-gray-800 text-slate-800 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]'
           }`}
           dir="ltr"
         />
@@ -186,7 +186,7 @@ export default function ModernDatePicker({
           onClick={() => !disabled && setIsOpen(!isOpen)}
           className={`absolute ${
             isRTL ? 'left-2.5' : 'right-2.5'
-          } p-1 text-gray-400 hover:text-brand-500 transition-colors cursor-pointer`}
+          } p-1 text-slate-400 hover:text-[var(--color-primary)] transition-colors cursor-pointer`}
           title={isRTL ? 'انتخاب تاریخ از تقویم' : 'Pick date from calendar'}
         >
           <svg className="w-5 h-5 fill-none stroke-current stroke-2" viewBox="0 0 24 24">
@@ -216,13 +216,13 @@ export default function ModernDatePicker({
             {/* Centering wrapper */}
             <div className="flex min-h-full items-center justify-center p-4 text-center">
               <div
-                className="relative w-full max-w-sm sm:max-w-md rounded-3xl bg-white dark:bg-gray-900 shadow-2xl border-2 border-gray-300 dark:border-gray-600 ring-2 ring-black/10 dark:ring-white/15 p-5 sm:p-6 text-start mx-auto"
+                className="relative w-full max-w-sm sm:max-w-md rounded-3xl bg-white dark:bg-gray-900 shadow-2xl border border-slate-200/90 dark:border-gray-700 ring-1 ring-slate-900/5 dark:ring-white/10 p-5 sm:p-6 text-start mx-auto"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Header */}
-                <div className="flex items-center justify-between pb-3 mb-3 border-b border-gray-100 dark:border-gray-800">
+                <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-100 dark:border-gray-800">
                   <div className="flex items-center gap-2.5">
-                    <span className="p-2 rounded-xl bg-brand-50 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400">
+                    <span className="p-2 rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)] dark:bg-[var(--color-primary)]/20 dark:text-[var(--color-primary)]">
                       <svg
                         className="w-5 h-5 fill-none stroke-current stroke-2"
                         viewBox="0 0 24 24"
@@ -234,10 +234,10 @@ export default function ModernDatePicker({
                       </svg>
                     </span>
                     <div>
-                      <h3 className="text-sm font-bold text-gray-900 dark:text-white">
+                      <h3 className="text-sm font-bold text-slate-900 dark:text-white">
                         {isRTL ? 'انتخاب تاریخ' : 'Select Date'}
                       </h3>
-                      <p className="text-[11px] text-gray-500 dark:text-gray-400">
+                      <p className="text-[11px] text-slate-500 dark:text-gray-400">
                         {isRTL ? 'تقویم خورشیدی / شمسی' : 'Gregorian Calendar'}
                       </p>
                     </div>
@@ -246,7 +246,7 @@ export default function ModernDatePicker({
                   <button
                     type="button"
                     onClick={() => setIsOpen(false)}
-                    className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-400 transition-colors hover:bg-gray-200 hover:text-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white cursor-pointer"
+                    className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-slate-400 transition-colors hover:bg-slate-200 hover:text-slate-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white cursor-pointer"
                     title={isRTL ? 'بستن' : 'Close'}
                   >
                     <svg
@@ -268,7 +268,7 @@ export default function ModernDatePicker({
                   /* Persian / Jalali Calendar */
                   <div className="space-y-4">
                     {/* Month & Year Selectors with navigation buttons */}
-                    <div className="flex items-center justify-between gap-2 p-1.5 rounded-2xl bg-gray-50 dark:bg-gray-800/60 border border-gray-100 dark:border-gray-800">
+                    <div className="flex items-center justify-between gap-2 p-1.5 rounded-2xl bg-slate-50 dark:bg-gray-800/60 border border-slate-200/80 dark:border-gray-800">
                       <button
                         type="button"
                         onClick={() => {
@@ -279,7 +279,7 @@ export default function ModernDatePicker({
                             setCurrentMonth(currentMonth - 1);
                           }
                         }}
-                        className="p-1.5 px-2.5 rounded-xl hover:bg-white dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 shadow-xs transition cursor-pointer font-bold"
+                        className="p-1.5 px-2.5 rounded-xl hover:bg-white dark:hover:bg-gray-700 text-slate-700 dark:text-gray-300 shadow-2xs transition cursor-pointer font-bold"
                         title="ماه قبل"
                       >
                         ‹
@@ -289,7 +289,7 @@ export default function ModernDatePicker({
                         <select
                           value={currentMonth}
                           onChange={(e) => setCurrentMonth(Number(e.target.value))}
-                          className="px-2.5 py-1.5 text-xs font-bold rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500/20 cursor-pointer"
+                          className="px-2.5 py-1.5 text-xs font-bold rounded-xl border border-slate-200/80 dark:border-gray-700 bg-white dark:bg-gray-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 cursor-pointer"
                         >
                           {PERSIAN_MONTH_NAMES.map((m, idx) => (
                             <option key={idx + 1} value={idx + 1}>
@@ -301,7 +301,7 @@ export default function ModernDatePicker({
                         <select
                           value={currentYear}
                           onChange={(e) => setCurrentYear(Number(e.target.value))}
-                          className="px-2.5 py-1.5 text-xs font-bold rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500/20 cursor-pointer"
+                          className="px-2.5 py-1.5 text-xs font-bold rounded-xl border border-slate-200/80 dark:border-gray-700 bg-white dark:bg-gray-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 cursor-pointer"
                         >
                           {jalaliYears.map((yr) => (
                             <option key={yr} value={yr}>
@@ -321,7 +321,7 @@ export default function ModernDatePicker({
                             setCurrentMonth(currentMonth + 1);
                           }
                         }}
-                        className="p-1.5 px-2.5 rounded-xl hover:bg-white dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 shadow-xs transition cursor-pointer font-bold"
+                        className="p-1.5 px-2.5 rounded-xl hover:bg-white dark:hover:bg-gray-700 text-slate-700 dark:text-gray-300 shadow-2xs transition cursor-pointer font-bold"
                         title="ماه بعد"
                       >
                         ›
@@ -333,7 +333,7 @@ export default function ModernDatePicker({
                       {PERSIAN_WEEKDAY_SHORT.map((wd, i) => (
                         <span
                           key={i}
-                          className="text-xs font-bold text-gray-400 dark:text-gray-500 py-1"
+                          className="text-xs font-bold text-slate-400 dark:text-gray-500 py-1"
                         >
                           {wd}
                         </span>
@@ -368,10 +368,10 @@ export default function ModernDatePicker({
                             onClick={() => handleSelectJalaliDay(dayNum)}
                             className={`h-9 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center justify-center ${
                               isSelected
-                                ? 'bg-brand-500 text-white font-bold shadow-md shadow-brand-500/30 ring-2 ring-brand-500'
+                                ? 'bg-[var(--color-primary)] text-white font-bold shadow-xs ring-2 ring-[var(--color-primary)]/20'
                                 : isToday
-                                ? 'border-2 border-brand-500 text-brand-600 dark:text-brand-400 font-bold hover:bg-brand-50 dark:hover:bg-brand-950/40'
-                                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                                ? 'border-2 border-[var(--color-primary)] text-[var(--color-primary)] font-bold hover:bg-[var(--color-primary)]/10'
+                                : 'text-slate-700 dark:text-gray-300 hover:bg-slate-100 dark:hover:bg-gray-800'
                             }`}
                           >
                             {toPersianDigits(dayNum)}
@@ -381,7 +381,7 @@ export default function ModernDatePicker({
                     </div>
 
                     {/* Footer Actions */}
-                    <div className="flex items-center justify-between pt-3 border-t border-gray-100 dark:border-gray-800 text-xs">
+                    <div className="flex items-center justify-between pt-3 border-t border-slate-100 dark:border-gray-800 text-xs">
                       <button
                         type="button"
                         onClick={() => {
@@ -389,7 +389,7 @@ export default function ModernDatePicker({
                           setCurrentMonth(todayJalali.month);
                           handleSelectJalaliDay(todayJalali.day);
                         }}
-                        className="font-bold text-brand-600 dark:text-brand-400 hover:underline cursor-pointer flex items-center gap-1"
+                        className="font-bold text-[var(--color-primary)] hover:underline cursor-pointer flex items-center gap-1"
                       >
                         <span>امروز:</span>
                         <span dir="ltr">
@@ -410,7 +410,7 @@ export default function ModernDatePicker({
                         <button
                           type="button"
                           onClick={() => setIsOpen(false)}
-                          className="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer font-medium"
+                          className="px-3 py-1 bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-gray-300 rounded-lg hover:bg-slate-200 dark:hover:bg-gray-700 transition cursor-pointer font-medium"
                         >
                           انصراف
                         </button>
@@ -427,9 +427,9 @@ export default function ModernDatePicker({
                         onChange(e.target.value);
                         setIsOpen(false);
                       }}
-                      className="w-full px-3 py-2 text-sm border rounded-xl dark:bg-gray-800 dark:text-white"
+                      className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl bg-white text-slate-800 dark:bg-gray-800 dark:text-white"
                     />
-                    <div className="flex justify-between items-center pt-2 border-t border-gray-100 dark:border-gray-800">
+                    <div className="flex justify-between items-center pt-2 border-t border-slate-100 dark:border-gray-800">
                       <button
                         type="button"
                         onClick={() => {
@@ -443,7 +443,7 @@ export default function ModernDatePicker({
                       <button
                         type="button"
                         onClick={() => setIsOpen(false)}
-                        className="px-3 py-1 text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition cursor-pointer font-medium"
+                        className="px-3 py-1 text-xs bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-gray-300 rounded-lg hover:bg-slate-200 dark:hover:bg-gray-700 transition cursor-pointer font-medium"
                       >
                         Close
                       </button>

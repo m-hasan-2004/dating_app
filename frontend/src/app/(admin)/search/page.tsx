@@ -213,21 +213,21 @@ function FilterPillGroup({
   const [isOpen, setIsOpen] = useState(defaultExpanded);
 
   return (
-    <div className="border-b border-gray-100 dark:border-gray-800/80 py-3 last:border-0">
+    <div className="border-b border-slate-100 dark:border-gray-800/80 py-3 last:border-0">
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between text-left text-xs font-bold text-gray-800 dark:text-white/90 hover:text-brand-500 transition-colors py-1 cursor-pointer"
+        className="w-full flex items-center justify-between text-left text-xs font-bold text-slate-800 dark:text-white/90 hover:text-[var(--color-primary)] transition-colors py-1 cursor-pointer"
       >
         <span className="flex items-center gap-2">
           <span>{t(title)}</span>
           {selected.length > 0 && (
-            <span className="px-1.5 py-0.2 text-[10px] font-bold rounded-full bg-brand-500 text-white">
+            <span className="px-1.5 py-0.2 text-[10px] font-bold rounded-full bg-[var(--color-primary)] text-white">
               {selected.length}
             </span>
           )}
         </span>
-        <span className="text-gray-400">
+        <span className="text-slate-400">
           {isOpen ? <ChevronUpIcon className="w-3.5 h-3.5" /> : <ChevronDownIcon className="w-3.5 h-3.5" />}
         </span>
       </button>
@@ -244,8 +244,8 @@ function FilterPillGroup({
                 onClick={() => onToggle(opt.value)}
                 className={`inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium rounded-xl border transition-all cursor-pointer ${
                   isSelected
-                    ? 'bg-brand-500 text-white border-brand-500 shadow-xs'
-                    : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100 hover:border-brand-300 dark:bg-white/[0.04] dark:border-gray-700/60 dark:text-gray-300 dark:hover:bg-white/[0.08]'
+                    ? 'bg-[var(--color-primary)]/15 text-[var(--color-primary)] border-[var(--color-primary)]/30 font-semibold shadow-2xs'
+                    : 'bg-slate-100 text-slate-700 border-slate-200/80 hover:bg-slate-200/80 hover:text-slate-900 hover:border-slate-300 dark:bg-white/[0.04] dark:border-gray-700/60 dark:text-gray-300 dark:hover:bg-white/[0.08]'
                 }`}
               >
                 {isSelected && <span className="font-bold text-[10px]">✓</span>}
@@ -1209,12 +1209,12 @@ export default function CandidateSearchPage() {
                     placeholder={isRTL ? "حداکثر قد" : "Max cm"}
                     value={maxHeight}
                     onChange={(e) => { setMaxHeight(e.target.value); setPage(1); }}
-                    className={`w-full px-2 py-1 text-xs border rounded-lg dark:bg-gray-800 dark:text-white transition-all ${
-                      maxHeight ? 'border-brand-500 ring-1 ring-brand-500 font-bold bg-brand-50/20 text-brand-700 dark:text-brand-300' : 'border-gray-300 dark:border-gray-700'
+                    className={`w-full px-2.5 py-1 text-xs border rounded-lg bg-white dark:bg-gray-800 dark:text-white transition-all ${
+                      maxHeight ? 'border-[var(--color-primary)] ring-1 ring-[var(--color-primary)] font-bold bg-[var(--color-primary)]/10 text-slate-900 dark:text-white' : 'border-slate-300 dark:border-gray-700'
                     }`}
                   />
                 </div>
-                <div className="flex flex-wrap gap-1 pt-1">
+                <div className="flex flex-wrap gap-1.5 pt-1">
                   {HEIGHT_PRESETS.map((preset) => {
                     const isPresetActive = minHeight === String(preset.min) && maxHeight === String(preset.max);
                     return (
@@ -1231,10 +1231,10 @@ export default function CandidateSearchPage() {
                           }
                           setPage(1);
                         }}
-                        className={`px-2 py-0.5 text-[10px] rounded-lg transition-all cursor-pointer font-medium ${
+                        className={`px-2 py-0.5 text-[10px] rounded-lg border transition-all cursor-pointer font-medium ${
                           isPresetActive
-                            ? 'bg-brand-500 text-white font-bold shadow-xs'
-                            : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-brand-50 hover:text-brand-600'
+                            ? 'bg-[var(--color-primary)]/15 text-[var(--color-primary)] border-[var(--color-primary)]/40 font-bold shadow-2xs'
+                            : 'bg-slate-100 text-slate-700 border-slate-200/80 hover:bg-slate-200/80 hover:text-slate-900 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700'
                         }`}
                       >
                         {isRTL ? preset.labelFa : preset.labelEn}
@@ -1246,7 +1246,7 @@ export default function CandidateSearchPage() {
 
               {/* Weight Range */}
               <div className="py-3 space-y-2">
-                <span className="font-bold text-gray-800 dark:text-gray-200 text-xs">
+                <span className="font-bold text-slate-800 dark:text-gray-200 text-xs">
                   {isRTL ? "محدوده وزن (کیلوگرم)" : "Weight Range (kg)"}
                 </span>
                 <div className="flex items-center gap-2">
@@ -1255,22 +1255,22 @@ export default function CandidateSearchPage() {
                     placeholder={isRTL ? "حداقل وزن" : "Min kg"}
                     value={minWeight}
                     onChange={(e) => { setMinWeight(e.target.value); setPage(1); }}
-                    className={`w-full px-2 py-1 text-xs border rounded-lg dark:bg-gray-800 dark:text-white transition-all ${
-                      minWeight ? 'border-brand-500 ring-1 ring-brand-500 font-bold bg-brand-50/20 text-brand-700 dark:text-brand-300' : 'border-gray-300 dark:border-gray-700'
+                    className={`w-full px-2.5 py-1 text-xs border rounded-lg bg-white dark:bg-gray-800 dark:text-white transition-all ${
+                      minWeight ? 'border-[var(--color-primary)] ring-1 ring-[var(--color-primary)] font-bold bg-[var(--color-primary)]/10 text-slate-900 dark:text-white' : 'border-slate-300 dark:border-gray-700'
                     }`}
                   />
-                  <span className="text-gray-400 font-bold">-</span>
+                  <span className="text-slate-400 font-bold">-</span>
                   <input
                     type="number"
                     placeholder={isRTL ? "حداکثر وزن" : "Max kg"}
                     value={maxWeight}
                     onChange={(e) => { setMaxWeight(e.target.value); setPage(1); }}
-                    className={`w-full px-2 py-1 text-xs border rounded-lg dark:bg-gray-800 dark:text-white transition-all ${
-                      maxWeight ? 'border-brand-500 ring-1 ring-brand-500 font-bold bg-brand-50/20 text-brand-700 dark:text-brand-300' : 'border-gray-300 dark:border-gray-700'
+                    className={`w-full px-2.5 py-1 text-xs border rounded-lg bg-white dark:bg-gray-800 dark:text-white transition-all ${
+                      maxWeight ? 'border-[var(--color-primary)] ring-1 ring-[var(--color-primary)] font-bold bg-[var(--color-primary)]/10 text-slate-900 dark:text-white' : 'border-slate-300 dark:border-gray-700'
                     }`}
                   />
                 </div>
-                <div className="flex flex-wrap gap-1 pt-1">
+                <div className="flex flex-wrap gap-1.5 pt-1">
                   {WEIGHT_PRESETS.map((preset) => {
                     const isPresetActive = minWeight === String(preset.min) && maxWeight === String(preset.max);
                     return (
@@ -1287,10 +1287,10 @@ export default function CandidateSearchPage() {
                           }
                           setPage(1);
                         }}
-                        className={`px-2 py-0.5 text-[10px] rounded-lg transition-all cursor-pointer font-medium ${
+                        className={`px-2 py-0.5 text-[10px] rounded-lg border transition-all cursor-pointer font-medium ${
                           isPresetActive
-                            ? 'bg-brand-500 text-white font-bold shadow-xs'
-                            : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-brand-50 hover:text-brand-600'
+                            ? 'bg-[var(--color-primary)]/15 text-[var(--color-primary)] border-[var(--color-primary)]/40 font-bold shadow-2xs'
+                            : 'bg-slate-100 text-slate-700 border-slate-200/80 hover:bg-slate-200/80 hover:text-slate-900 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700'
                         }`}
                       >
                         {isRTL ? preset.labelFa : preset.labelEn}
@@ -1298,6 +1298,7 @@ export default function CandidateSearchPage() {
                     );
                   })}
                 </div>
+
               </div>
 
               {/* Career Title */}

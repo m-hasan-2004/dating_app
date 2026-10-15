@@ -17,7 +17,7 @@ export function AccessCodesOverview({ total, active, used }: AccessCodesOverview
   const usedPercent = total > 0 ? Math.round((used / total) * 100) : 0;
 
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm flex flex-col justify-between">
+    <div className="rounded-2xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-xs flex flex-col justify-between">
       <div>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2.5">
@@ -25,10 +25,10 @@ export function AccessCodesOverview({ total, active, used }: AccessCodesOverview
               <LockIcon className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-gray-800 dark:text-white">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">
                 {t("Access Code Utilization")}
               </h3>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
+              <p className="text-xs text-slate-500 dark:text-gray-400">
                 {t("Invitation codes lifecycle & availability")}
               </p>
             </div>
@@ -37,9 +37,9 @@ export function AccessCodesOverview({ total, active, used }: AccessCodesOverview
 
         {/* Progress Bar */}
         <div className="mt-4">
-          <div className="h-3.5 w-full rounded-full bg-gray-100 dark:bg-gray-800 flex overflow-hidden">
+          <div className="h-3.5 w-full rounded-full bg-slate-100 dark:bg-gray-800 flex overflow-hidden">
             <div
-              className="h-full bg-green-500 transition-all duration-500"
+              className="h-full bg-emerald-500 transition-all duration-500"
               style={{ width: `${activePercent}%` }}
               title={`${t("Active")}: ${active} (${activePercent}%)`}
             />
@@ -49,9 +49,9 @@ export function AccessCodesOverview({ total, active, used }: AccessCodesOverview
               title={`${t("Used")}: ${used} (${usedPercent}%)`}
             />
           </div>
-          <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mt-2 font-medium">
+          <div className="flex items-center justify-between text-xs text-slate-500 dark:text-gray-400 mt-2 font-medium">
             <span className="flex items-center gap-1.5">
-              <span className="h-2.5 w-2.5 rounded-full bg-green-500 inline-block" />
+              <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 inline-block" />
               {t("Active Available")} ({active})
             </span>
             <span className="flex items-center gap-1.5">
@@ -63,13 +63,13 @@ export function AccessCodesOverview({ total, active, used }: AccessCodesOverview
 
         {/* Quick Stats Grid */}
         <div className="grid grid-cols-3 gap-3 mt-5 text-center">
-          <div className="p-3 rounded-xl bg-gray-50 dark:bg-gray-800/40 border border-gray-100 dark:border-gray-800">
-            <p className="text-xs text-gray-400">{t("Total Issued")}</p>
-            <p className="text-lg font-bold text-gray-900 dark:text-white mt-0.5">{total}</p>
+          <div className="p-3 rounded-xl bg-slate-50 dark:bg-gray-800/40 border border-slate-200/80 dark:border-gray-800">
+            <p className="text-xs text-slate-400">{t("Total Issued")}</p>
+            <p className="text-lg font-bold text-slate-900 dark:text-white mt-0.5">{total}</p>
           </div>
-          <div className="p-3 rounded-xl bg-green-50/50 dark:bg-green-950/20 border border-green-100 dark:border-green-900/30">
-            <p className="text-xs text-green-600 dark:text-green-400">{t("Active")}</p>
-            <p className="text-lg font-bold text-green-600 dark:text-green-400 mt-0.5">{active}</p>
+          <div className="p-3 rounded-xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/30">
+            <p className="text-xs text-emerald-600 dark:text-emerald-400">{t("Active")}</p>
+            <p className="text-lg font-bold text-emerald-600 dark:text-emerald-400 mt-0.5">{active}</p>
           </div>
           <div className="p-3 rounded-xl bg-purple-50/50 dark:bg-purple-950/20 border border-purple-100 dark:border-purple-900/30">
             <p className="text-xs text-purple-600 dark:text-purple-400">{t("Used")}</p>
@@ -78,11 +78,11 @@ export function AccessCodesOverview({ total, active, used }: AccessCodesOverview
         </div>
       </div>
 
-      <div className="mt-6 pt-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
-        <span className="text-xs text-gray-500">{t("Need more invitation codes?")}</span>
+      <div className="mt-6 pt-4 border-t border-slate-100 dark:border-gray-800 flex items-center justify-between">
+        <span className="text-xs text-slate-500">{t("Need more invitation codes?")}</span>
         <Link
           href="/access-codes"
-          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-brand-500 text-white hover:bg-brand-600 transition-colors shadow-sm"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-[var(--color-primary)] text-white hover:brightness-95 transition-all shadow-xs"
         >
           <PlusIcon className="w-3.5 h-3.5" />
           {t("Generate Access Code")}

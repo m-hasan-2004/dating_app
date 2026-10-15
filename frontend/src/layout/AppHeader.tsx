@@ -42,11 +42,11 @@ const AppHeader: React.FC = () => {
   }, []);
 
   return (
-    <header className="sticky top-0 flex w-full bg-white border-gray-200 z-99999 dark:border-gray-800 dark:bg-gray-900 lg:border-b">
+    <header className="sticky top-0 flex w-full bg-white/95 backdrop-blur-md border-b border-slate-200/80 z-[9999] dark:border-gray-800 dark:bg-gray-900/95 shadow-2xs">
       <div className="flex flex-col items-center justify-between grow lg:flex-row lg:px-6">
-        <div className="flex items-center justify-between w-full gap-2 px-3 py-3 border-b border-gray-200 dark:border-gray-800 sm:gap-4 lg:justify-normal lg:border-b-0 lg:px-0 lg:py-4">
+        <div className="flex items-center justify-between w-full gap-2 px-3 py-3 border-b border-slate-200/80 dark:border-gray-800 sm:gap-4 lg:justify-normal lg:border-b-0 lg:px-0 lg:py-3.5">
           <button
-            className="items-center justify-center w-10 h-10 text-gray-500 border-gray-200 rounded-lg z-99999 dark:border-gray-800 lg:flex dark:text-gray-400 lg:h-11 lg:w-11 lg:border"
+            className="items-center justify-center w-10 h-10 text-slate-500 border-slate-200/80 rounded-xl hover:bg-slate-100 hover:text-slate-800 dark:border-gray-800 lg:flex dark:text-gray-400 dark:hover:bg-gray-800 lg:h-10 lg:w-10 lg:border transition-all cursor-pointer"
             onClick={handleToggle}
             aria-label="Toggle Sidebar"
           >
@@ -94,7 +94,7 @@ const AppHeader: React.FC = () => {
                     <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                   </svg>
                 </div>
-                <span className="font-bold text-gray-900 dark:text-white text-sm truncate max-w-[150px]">
+                <span className="font-extrabold text-slate-900 dark:text-white text-sm truncate max-w-[150px]">
                   {siteName}
                 </span>
               </div>
@@ -103,7 +103,7 @@ const AppHeader: React.FC = () => {
 
           <button
             onClick={toggleApplicationMenu}
-            className="flex items-center justify-center w-10 h-10 text-gray-700 rounded-lg z-99999 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 lg:hidden"
+            className="flex items-center justify-center w-10 h-10 text-slate-700 rounded-xl hover:bg-slate-100 dark:text-gray-400 dark:hover:bg-gray-800 lg:hidden cursor-pointer"
           >
             <svg
               width="24"
@@ -132,9 +132,10 @@ const AppHeader: React.FC = () => {
             {/* Bookmarks Button */}
             <Link
               href="/profile/bookmarks"
-              className="flex items-center justify-center w-10 h-10 text-gray-700 transition-all bg-white border border-gray-200 rounded-full hover:border-amber-400 hover:bg-amber-50/50 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400 dark:hover:border-amber-500/50 dark:hover:bg-amber-950/20 group"
+              className="flex items-center justify-center w-10 h-10 text-slate-700 transition-all bg-white border border-slate-200/80 rounded-full hover:border-amber-400 hover:bg-amber-50/50 shadow-2xs dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400 dark:hover:border-amber-500/50 dark:hover:bg-amber-950/20 group"
               title="Saved Bookmarks"
             >
+
               <svg className="w-4 h-4 fill-current text-amber-500 transition-transform group-hover:scale-110" viewBox="0 0 24 24">
                 <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
               </svg>
