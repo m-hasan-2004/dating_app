@@ -86,9 +86,12 @@ interface BrandingContextType {
   colorPalette: ColorPalette;
   customPrimaryColor: string;
   customSecondaryColor: string;
+  canvasLightColor: string;
+  canvasDarkColor: string;
   logoUrl: string;
   faviconUrl: string;
   setColorPalette: (palette: ColorPalette) => void;
+  setCanvasColors: (light?: string, dark?: string) => void;
   setBranding: (data: {
     siteNameFa?: string;
     siteNameEn?: string;
@@ -97,6 +100,8 @@ interface BrandingContextType {
     colorPalette?: ColorPalette;
     customPrimaryColor?: string;
     customSecondaryColor?: string;
+    canvasLightColor?: string;
+    canvasDarkColor?: string;
     logoUrl?: string;
     faviconUrl?: string;
   }) => void;
@@ -112,6 +117,8 @@ const DEFAULT_BRANDING = {
   colorPalette: 'default' as ColorPalette,
   customPrimaryColor: '',
   customSecondaryColor: '',
+  canvasLightColor: '',
+  canvasDarkColor: '',
   logoUrl: '',
   faviconUrl: '',
 };
@@ -121,6 +128,7 @@ const BrandingContext = createContext<BrandingContextType>({
   siteName: DEFAULT_BRANDING.siteNameFa,
   siteTagline: DEFAULT_BRANDING.siteTaglineFa,
   setColorPalette: () => {},
+  setCanvasColors: () => {},
   setBranding: () => {},
   refreshBranding: async () => {},
   restoreDefaults: async () => {},
@@ -135,6 +143,8 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [colorPalette, setColorPaletteState] = useState<ColorPalette>(DEFAULT_BRANDING.colorPalette);
   const [customPrimaryColor, setCustomPrimaryColor] = useState(DEFAULT_BRANDING.customPrimaryColor);
   const [customSecondaryColor, setCustomSecondaryColor] = useState(DEFAULT_BRANDING.customSecondaryColor);
+  const [canvasLightColor, setCanvasLightColor] = useState(DEFAULT_BRANDING.canvasLightColor);
+  const [canvasDarkColor, setCanvasDarkColor] = useState(DEFAULT_BRANDING.canvasDarkColor);
   const [logoUrl, setLogoUrl] = useState('');
   const [faviconUrl, setFaviconUrl] = useState('');
 
@@ -153,6 +163,39 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       // Ignore in non-browser env
     }
   }, []);
+
+  // Apply canvas light and dark colors to root
+  const applyCanvasColors = useCallback((lightHex?: string, darkHex?: string) => {
+    if (typeof document === 'undefined') return;
+    if (lightHex && lightHex.startsWith('#')) {
+      document.documentElement.style.setProperty('--color-canvas-light', lightHex);
+    } else {
+      document.documentElement.style.removeProperty('--color-canvas-light');
+    }
+    if (darkHex && darkHex.startsWith('#')) {
+      document.documentElement.style.setProperty('--color-canvas-dark', darkHex);
+    } else {
+      document.documentElement.style.removeProperty('--color-canvas-dark');
+    }
+  }, []);
+
+  const setCanvasColors = useCallback((lightHex?: string, darkHex?: string) => {
+    if (lightHex !== undefined) {
+      setCanvasLightColor(lightHex);
+      if (typeof window !== 'undefined') {
+        if (lightHex) localStorage.setItem('branding_canvas_light', lightHex);
+        else localStorage.removeItem('branding_canvas_light');
+      }
+    }
+    if (darkHex !== undefined) {
+      setCanvasDarkColor(darkHex);
+      if (typeof window !== 'undefined') {
+        if (darkHex) localStorage.setItem('branding_canvas_dark', darkHex);
+        else localStorage.removeItem('branding_canvas_dark');
+      }
+    }
+    applyCanvasColors(lightHex !== undefined ? lightHex : canvasLightColor, darkHex !== undefined ? darkHex : canvasDarkColor);
+  }, [applyCanvasColors, canvasLightColor, canvasDarkColor]);
 
   // Apply colors to documentElement
   const applyPalette = useCallback((palette: ColorPalette, primaryHex?: string) => {
@@ -206,6 +249,8 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     colorPalette?: ColorPalette;
     customPrimaryColor?: string;
     customSecondaryColor?: string;
+    canvasLightColor?: string;
+    canvasDarkColor?: string;
     logoUrl?: string;
     faviconUrl?: string;
   }) => {
@@ -215,6 +260,23 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     if (data.siteTaglineEn !== undefined) setSiteTaglineEn(data.siteTaglineEn);
     if (data.customPrimaryColor !== undefined) setCustomPrimaryColor(data.customPrimaryColor);
     if (data.customSecondaryColor !== undefined) setCustomSecondaryColor(data.customSecondaryColor);
+    if (data.canvasLightColor !== undefined) {
+      setCanvasLightColor(data.canvasLightColor);
+      if (typeof window !== 'undefined') {
+        if (data.canvasLightColor) localStorage.setItem('branding_canvas_light', data.canvasLightColor);
+        else localStorage.removeItem('branding_canvas_light');
+      }
+    }
+    if (data.canvasDarkColor !== undefined) {
+      setCanvasDarkColor(data.canvasDarkColor);
+      if (typeof window !== 'undefined') {
+        if (data.canvasDarkColor) localStorage.setItem('branding_canvas_dark', data.canvasDarkColor);
+        else localStorage.removeItem('branding_canvas_dark');
+      }
+    }
+    if (data.canvasLightColor !== undefined || data.canvasDarkColor !== undefined) {
+      applyCanvasColors(data.canvasLightColor ?? canvasLightColor, data.canvasDarkColor ?? canvasDarkColor);
+    }
     if (data.colorPalette !== undefined) {
       setColorPaletteState(data.colorPalette);
       applyPalette(data.colorPalette, data.customPrimaryColor || customPrimaryColor);
@@ -226,7 +288,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     } else if (data.logoUrl !== undefined) {
       updateTabFavicon(data.logoUrl);
     }
-  }, [applyPalette, customPrimaryColor, updateTabFavicon]);
+  }, [applyCanvasColors, applyPalette, canvasDarkColor, canvasLightColor, customPrimaryColor, updateTabFavicon]);
 
   const refreshBranding = useCallback(async () => {
     try {
@@ -237,6 +299,14 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       if (config.site_tagline_en) setSiteTaglineEn(config.site_tagline_en);
       if (config.custom_primary_color !== undefined) setCustomPrimaryColor(config.custom_primary_color);
       if (config.custom_secondary_color !== undefined) setCustomSecondaryColor(config.custom_secondary_color);
+      if (config.canvas_light_color !== undefined) {
+        setCanvasLightColor(config.canvas_light_color);
+        applyCanvasColors(config.canvas_light_color, config.canvas_dark_color);
+      }
+      if (config.canvas_dark_color !== undefined) {
+        setCanvasDarkColor(config.canvas_dark_color);
+        applyCanvasColors(config.canvas_light_color, config.canvas_dark_color);
+      }
       if (config.color_palette) {
         const pal = config.color_palette as ColorPalette;
         setColorPaletteState(pal);
@@ -252,7 +322,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     } catch {
       // Fallback gracefully
     }
-  }, [applyPalette, updateTabFavicon]);
+  }, [applyCanvasColors, applyPalette, updateTabFavicon]);
 
   const restoreDefaults = useCallback(async () => {
     setSiteNameFa(DEFAULT_BRANDING.siteNameFa);
@@ -262,28 +332,40 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setColorPaletteState('default');
     setCustomPrimaryColor('');
     setCustomSecondaryColor('');
+    setCanvasLightColor('');
+    setCanvasDarkColor('');
     setLogoUrl('');
     setFaviconUrl('');
     applyPalette('default');
+    applyCanvasColors('', '');
     updateTabFavicon('/favicon.ico');
     if (typeof window !== 'undefined') {
       localStorage.removeItem('branding_color_palette');
       localStorage.removeItem('branding_custom_primary');
+      localStorage.removeItem('branding_canvas_light');
+      localStorage.removeItem('branding_canvas_dark');
     }
-  }, [applyPalette, updateTabFavicon]);
+  }, [applyCanvasColors, applyPalette, updateTabFavicon]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const cachedPalette = localStorage.getItem('branding_color_palette') as ColorPalette;
       const cachedPrimary = localStorage.getItem('branding_custom_primary') || '';
+      const cachedCanvasLight = localStorage.getItem('branding_canvas_light') || '';
+      const cachedCanvasDark = localStorage.getItem('branding_canvas_dark') || '';
       if (cachedPrimary) setCustomPrimaryColor(cachedPrimary);
+      if (cachedCanvasLight) setCanvasLightColor(cachedCanvasLight);
+      if (cachedCanvasDark) setCanvasDarkColor(cachedCanvasDark);
+      if (cachedCanvasLight || cachedCanvasDark) {
+        applyCanvasColors(cachedCanvasLight, cachedCanvasDark);
+      }
       if (cachedPalette) {
         setColorPaletteState(cachedPalette);
         applyPalette(cachedPalette, cachedPrimary);
       }
     }
     refreshBranding();
-  }, [applyPalette, refreshBranding]);
+  }, [applyCanvasColors, applyPalette, refreshBranding]);
 
   const siteName = language === 'fa' ? siteNameFa : siteNameEn;
   const siteTagline = language === 'fa' ? (siteTaglineFa || t('Matchmaking Portal')) : (siteTaglineEn || 'Matchmaking Portal');
@@ -300,9 +382,12 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         colorPalette,
         customPrimaryColor,
         customSecondaryColor,
+        canvasLightColor,
+        canvasDarkColor,
         logoUrl,
         faviconUrl,
         setColorPalette,
+        setCanvasColors,
         setBranding,
         refreshBranding,
         restoreDefaults,

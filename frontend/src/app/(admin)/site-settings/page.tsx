@@ -26,10 +26,26 @@ const PALETTES: { id: ColorPalette; nameKey: string; color: string }[] = [
   { id: "custom", nameKey: "Custom Color", color: "#ec4899" },
 ];
 
+const LIGHT_CANVAS_PRESETS = [
+  { id: "default", nameKey: "Default Soft Slate", color: "#f8fafc" },
+  { id: "white", nameKey: "Pure White", color: "#ffffff" },
+  { id: "cool", nameKey: "Cool Gray", color: "#f1f5f9" },
+  { id: "warm", nameKey: "Warm Zinc", color: "#fafaf9" },
+  { id: "amber", nameKey: "Soft Cream", color: "#fffbeb" },
+];
+
+const DARK_CANVAS_PRESETS = [
+  { id: "default", nameKey: "Deep Royal Purple", color: "#131127" },
+  { id: "navy", nameKey: "Dark Navy Slate", color: "#101828" },
+  { id: "obsidian", nameKey: "Obsidian Slate", color: "#0f172a" },
+  { id: "carbon", nameKey: "Pitch Black", color: "#09090b" },
+  { id: "charcoal", nameKey: "Dark Charcoal", color: "#1a2231" },
+];
+
 export default function SiteSettingsPage() {
   const { user, loading: authLoading } = useAuth();
   const { t, isRTL } = useLanguage();
-  const { setBranding, restoreDefaults } = useBranding();
+  const { setBranding, restoreDefaults, setCanvasColors, canvasLightColor: currentCanvasLight, canvasDarkColor: currentCanvasDark } = useBranding();
   const router = useRouter();
 
   const logoFileInputRef = useRef<HTMLInputElement>(null);
@@ -53,6 +69,8 @@ export default function SiteSettingsPage() {
   const [colorPalette, setColorPalette] = useState<ColorPalette>("default");
   const [customPrimaryColor, setCustomPrimaryColor] = useState<string>("#465fff");
   const [customSecondaryColor, setCustomSecondaryColor] = useState<string>("#3641f5");
+  const [canvasLightColor, setCanvasLightColor] = useState<string>(currentCanvasLight || "#f8fafc");
+  const [canvasDarkColor, setCanvasDarkColor] = useState<string>(currentCanvasDark || "#131127");
   const [logoUrl, setLogoUrl] = useState<string>("");
   const [faviconUrl, setFaviconUrl] = useState<string>("");
 
@@ -85,6 +103,8 @@ export default function SiteSettingsPage() {
       if (data.color_palette) setColorPalette(data.color_palette as ColorPalette);
       if (data.custom_primary_color) setCustomPrimaryColor(data.custom_primary_color);
       if (data.custom_secondary_color) setCustomSecondaryColor(data.custom_secondary_color);
+      if (data.canvas_light_color) setCanvasLightColor(data.canvas_light_color);
+      if (data.canvas_dark_color) setCanvasDarkColor(data.canvas_dark_color);
       if (data.logo_url) setLogoUrl(data.logo_url);
       if (data.favicon_url) setFaviconUrl(data.favicon_url);
     } catch (err: any) {
@@ -135,6 +155,8 @@ export default function SiteSettingsPage() {
         color_palette: "default",
         custom_primary_color: "",
         custom_secondary_color: "",
+        canvas_light_color: "",
+        canvas_dark_color: "",
         logo_url: "",
         favicon_url: "",
       };
@@ -148,6 +170,8 @@ export default function SiteSettingsPage() {
       setColorPalette("default");
       setCustomPrimaryColor("#465fff");
       setCustomSecondaryColor("#3641f5");
+      setCanvasLightColor("#f8fafc");
+      setCanvasDarkColor("#131127");
       setLogoUrl("");
       setFaviconUrl("");
 
@@ -178,6 +202,8 @@ export default function SiteSettingsPage() {
         color_palette: colorPalette,
         custom_primary_color: colorPalette === "custom" ? customPrimaryColor : "",
         custom_secondary_color: colorPalette === "custom" ? customSecondaryColor : "",
+        canvas_light_color: canvasLightColor,
+        canvas_dark_color: canvasDarkColor,
         logo_url: logoUrl,
         favicon_url: faviconUrl,
       });
@@ -192,6 +218,8 @@ export default function SiteSettingsPage() {
       if (updated.color_palette) setColorPalette(updated.color_palette as ColorPalette);
       if (updated.custom_primary_color !== undefined) setCustomPrimaryColor(updated.custom_primary_color || "#465fff");
       if (updated.custom_secondary_color !== undefined) setCustomSecondaryColor(updated.custom_secondary_color || "#3641f5");
+      if (updated.canvas_light_color !== undefined) setCanvasLightColor(updated.canvas_light_color || "#f8fafc");
+      if (updated.canvas_dark_color !== undefined) setCanvasDarkColor(updated.canvas_dark_color || "#131127");
       if (updated.logo_url !== undefined) setLogoUrl(updated.logo_url);
       if (updated.favicon_url !== undefined) setFaviconUrl(updated.favicon_url);
 
@@ -204,6 +232,8 @@ export default function SiteSettingsPage() {
         colorPalette: updated.color_palette as ColorPalette,
         customPrimaryColor: updated.custom_primary_color,
         customSecondaryColor: updated.custom_secondary_color,
+        canvasLightColor: updated.canvas_light_color,
+        canvasDarkColor: updated.canvas_dark_color,
         logoUrl: updated.logo_url,
         faviconUrl: updated.favicon_url,
       });
@@ -522,6 +552,166 @@ export default function SiteSettingsPage() {
                           }}
                           placeholder="#3641f5"
                           className="w-full text-xs font-mono py-1 px-2 border border-slate-300 dark:border-gray-700 rounded bg-white dark:bg-gray-900 text-slate-800 dark:text-white focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)]"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Canvas Base Background Colors (Light & Dark Mode) */}
+                <div className="p-5 rounded-2xl border border-slate-200/80 dark:border-gray-800 bg-slate-50/70 dark:bg-white/[0.02] space-y-5">
+                  <div>
+                    <h4 className="text-sm font-bold text-slate-900 dark:text-white">
+                      {t("Light & Dark Mode Background Colors")}
+                    </h4>
+                    <p className="text-xs text-slate-500 dark:text-gray-400 mt-0.5">
+                      {isRTL
+                        ? "تنظیم رنگ پس‌زمینه سایت برای حالت روشن (دیفالت: سفید/طوسی نرم) و حالت تاریک (دیفالت: بنفش تیره/سرمه‌ای). می‌توانید از پالت‌های آماده انتخاب کنید یا رنگ دلخواه خود را تعیین کنید."
+                        : "Customize canvas background tone for both Light mode (default: soft slate/white) and Dark mode (default: deep purple/slate). Choose presets or enter custom hex."}
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    {/* Light Mode Canvas Background */}
+                    <div className="p-4 rounded-xl border border-slate-200 bg-white dark:bg-gray-800/80 dark:border-gray-700 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-slate-800 dark:text-white flex items-center gap-1.5">
+                          ☀️ {t("Light Mode Canvas Background")}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setCanvasLightColor("#f8fafc");
+                            setCanvasColors("#f8fafc", canvasDarkColor);
+                          }}
+                          className="text-[11px] text-[var(--color-primary)] hover:underline font-medium cursor-pointer"
+                        >
+                          {t("Reset to Default")}
+                        </button>
+                      </div>
+
+                      {/* Presets */}
+                      <div className="flex items-center gap-2">
+                        {LIGHT_CANVAS_PRESETS.map((p) => {
+                          const active = canvasLightColor.toLowerCase() === p.color.toLowerCase();
+                          return (
+                            <button
+                              key={p.id}
+                              type="button"
+                              onClick={() => {
+                                setCanvasLightColor(p.color);
+                                setCanvasColors(p.color, canvasDarkColor);
+                              }}
+                              className={`w-7 h-7 rounded-full border-2 transition-all cursor-pointer flex items-center justify-center ${
+                                active
+                                  ? "border-[var(--color-primary)] scale-110 shadow-sm"
+                                  : "border-slate-300 dark:border-gray-600 hover:scale-105"
+                              }`}
+                              style={{ backgroundColor: p.color }}
+                              title={t(p.nameKey)}
+                            >
+                              {active && (
+                                <svg className="w-3.5 h-3.5 text-slate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                                </svg>
+                              )}
+                            </button>
+                          );
+                        })}
+                      </div>
+
+                      {/* Custom Picker */}
+                      <div className="flex items-center gap-2.5 pt-1">
+                        <input
+                          type="color"
+                          value={canvasLightColor || "#f8fafc"}
+                          onChange={(e) => {
+                            setCanvasLightColor(e.target.value);
+                            setCanvasColors(e.target.value, canvasDarkColor);
+                          }}
+                          className="w-9 h-9 rounded-lg border-0 cursor-pointer p-0 bg-transparent shrink-0"
+                        />
+                        <input
+                          type="text"
+                          value={canvasLightColor}
+                          onChange={(e) => {
+                            setCanvasLightColor(e.target.value);
+                            setCanvasColors(e.target.value, canvasDarkColor);
+                          }}
+                          placeholder="#f8fafc"
+                          className="w-full text-xs font-mono py-1.5 px-2.5 border border-slate-300 dark:border-gray-700 rounded-lg bg-slate-50 dark:bg-gray-900 text-slate-800 dark:text-white focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)]"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Dark Mode Canvas Background */}
+                    <div className="p-4 rounded-xl border border-slate-200 bg-white dark:bg-gray-800/80 dark:border-gray-700 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-slate-800 dark:text-white flex items-center gap-1.5">
+                          🌙 {t("Dark Mode Canvas Background")}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setCanvasDarkColor("#131127");
+                            setCanvasColors(canvasLightColor, "#131127");
+                          }}
+                          className="text-[11px] text-[var(--color-primary)] hover:underline font-medium cursor-pointer"
+                        >
+                          {t("Reset to Default")}
+                        </button>
+                      </div>
+
+                      {/* Presets */}
+                      <div className="flex items-center gap-2">
+                        {DARK_CANVAS_PRESETS.map((p) => {
+                          const active = canvasDarkColor.toLowerCase() === p.color.toLowerCase();
+                          return (
+                            <button
+                              key={p.id}
+                              type="button"
+                              onClick={() => {
+                                setCanvasDarkColor(p.color);
+                                setCanvasColors(canvasLightColor, p.color);
+                              }}
+                              className={`w-7 h-7 rounded-full border-2 transition-all cursor-pointer flex items-center justify-center ${
+                                active
+                                  ? "border-[var(--color-primary)] scale-110 shadow-sm"
+                                  : "border-slate-300 dark:border-gray-600 hover:scale-105"
+                              }`}
+                              style={{ backgroundColor: p.color }}
+                              title={t(p.nameKey)}
+                            >
+                              {active && (
+                                <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                                </svg>
+                              )}
+                            </button>
+                          );
+                        })}
+                      </div>
+
+                      {/* Custom Picker */}
+                      <div className="flex items-center gap-2.5 pt-1">
+                        <input
+                          type="color"
+                          value={canvasDarkColor || "#131127"}
+                          onChange={(e) => {
+                            setCanvasDarkColor(e.target.value);
+                            setCanvasColors(canvasLightColor, e.target.value);
+                          }}
+                          className="w-9 h-9 rounded-lg border-0 cursor-pointer p-0 bg-transparent shrink-0"
+                        />
+                        <input
+                          type="text"
+                          value={canvasDarkColor}
+                          onChange={(e) => {
+                            setCanvasDarkColor(e.target.value);
+                            setCanvasColors(canvasLightColor, e.target.value);
+                          }}
+                          placeholder="#131127"
+                          className="w-full text-xs font-mono py-1.5 px-2.5 border border-slate-300 dark:border-gray-700 rounded-lg bg-slate-50 dark:bg-gray-900 text-slate-800 dark:text-white focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)]"
                         />
                       </div>
                     </div>

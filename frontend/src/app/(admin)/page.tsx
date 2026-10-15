@@ -21,6 +21,7 @@ import {
   CheckCircleIcon,
 } from '@/icons';
 import WelcomeGuideModal from '@/components/onboarding/WelcomeGuideModal';
+import { fetchProfileCompletionStatus, type ProfileCompletionResult } from '@/utils/profileCompletion';
 
 // ==========================================
 // 1. ADMIN DASHBOARD VIEW (Staff Only)
@@ -207,14 +208,16 @@ function UserDashboardView({ user }: { user: any }) {
   const { t, isRTL } = useTranslation();
   const [candidates, setCandidates] = useState<CandidateProfile[]>([]);
   const [bookmarksCount, setBookmarksCount] = useState<number>(0);
+  const [profileCompletion, setProfileCompletion] = useState<ProfileCompletionResult | null>(null);
   const [loading, setLoading] = useState(true);
 
   const loadUserData = useCallback(async () => {
     setLoading(true);
     try {
-      const [candRes, bmRes] = await Promise.all([
+      const [candRes, bmRes, compRes] = await Promise.all([
         searchCandidates({ page_size: 4 }).catch(() => null),
         fetchBookmarks().catch(() => []),
+        fetchProfileCompletionStatus().catch(() => null),
       ]);
 
       if (candRes?.results) {
@@ -222,6 +225,9 @@ function UserDashboardView({ user }: { user: any }) {
       }
       const bms = Array.isArray(bmRes) ? bmRes : ((bmRes as any)?.results ?? []);
       setBookmarksCount(bms.length);
+      if (compRes) {
+        setProfileCompletion(compRes);
+      }
     } catch (e) {
       console.error('Failed to load user dashboard feed', e);
     } finally {
@@ -341,18 +347,35 @@ function UserDashboardView({ user }: { user: any }) {
         {/* My Profile */}
         <Link
           href="/profile"
-          className="group rounded-3xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-5 hover:border-emerald-500 dark:hover:border-emerald-500/60 transition-all shadow-xs hover:shadow-md flex items-center justify-between"
+          className="group rounded-3xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-5 hover:border-emerald-500 dark:hover:border-emerald-500/60 transition-all shadow-xs hover:shadow-md flex flex-col justify-between gap-3 relative overflow-hidden"
         >
-          <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-500 flex items-center justify-center shadow-xs group-hover:scale-110 transition-transform">
-              <UserCircleIcon className="w-6 h-6" />
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3.5">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-500 flex items-center justify-center shadow-xs group-hover:scale-110 transition-transform shrink-0">
+                <UserCircleIcon className="w-6 h-6" />
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider">{t("Personal Profile")}</p>
+                <div className="flex items-baseline gap-1.5 mt-0.5">
+                  <span className="text-xl font-extrabold text-emerald-600 dark:text-emerald-400">
+                    {profileCompletion ? (isRTL ? `${toPersianDigits(profileCompletion.percentage)}٪` : `${profileCompletion.percentage}%`) : t("Active & Ready")}
+                  </span>
+                  <span className="text-xs font-medium text-slate-500 dark:text-gray-400 truncate max-w-[140px]">
+                    {profileCompletion ? (isRTL ? profileCompletion.statusTextFa : profileCompletion.statusTextEn) : t("Active & Ready")}
+                  </span>
+                </div>
+              </div>
             </div>
-            <div>
-              <p className="text-xs font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider">{t("Personal Profile")}</p>
-              <p className="text-xl font-extrabold text-emerald-600 dark:text-emerald-400 mt-0.5">{t("Active & Ready")}</p>
-            </div>
+            <ArrowRightIcon className="w-4 h-4 text-slate-400 group-hover:text-emerald-500 transition-colors shrink-0" />
           </div>
-          <ArrowRightIcon className="w-4 h-4 text-slate-400 group-hover:text-emerald-500 transition-colors" />
+
+          {/* Mini Progress Bar */}
+          <div className="w-full bg-slate-100 dark:bg-gray-800 rounded-full h-1.5 overflow-hidden">
+            <div
+              className="bg-gradient-to-r from-emerald-500 to-[var(--color-primary)] h-1.5 rounded-full transition-all duration-500"
+              style={{ width: `${profileCompletion?.percentage ?? 100}%` }}
+            />
+          </div>
         </Link>
       </div>
 

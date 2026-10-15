@@ -24,6 +24,8 @@ class SiteSettingSerializer(serializers.ModelSerializer):
             "color_palette",
             "custom_primary_color",
             "custom_secondary_color",
+            "canvas_light_color",
+            "canvas_dark_color",
             "logo_url",
             "favicon_url",
             "updated_at",
@@ -47,6 +49,8 @@ class PublicRegistrationConfigSerializer(serializers.Serializer):
     color_palette = serializers.CharField(default="default")
     custom_primary_color = serializers.CharField(default="", allow_blank=True)
     custom_secondary_color = serializers.CharField(default="", allow_blank=True)
+    canvas_light_color = serializers.CharField(default="", allow_blank=True)
+    canvas_dark_color = serializers.CharField(default="", allow_blank=True)
     logo_url = serializers.CharField(default="", allow_blank=True, allow_null=True)
     favicon_url = serializers.CharField(default="", allow_blank=True, allow_null=True)
 

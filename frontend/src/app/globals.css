@@ -287,8 +287,22 @@ html[data-palette="indigo"] {
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+  a,
+  button,
+  [role="button"] {
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
+  }
   body {
-    @apply relative font-normal font-outfit z-1 bg-slate-50 text-slate-800 dark:bg-gray-900 dark:text-gray-100;
+    background-color: var(--color-canvas-light, #f8fafc);
+    color: #1e293b;
+    @apply relative font-normal font-outfit z-1;
+  }
+  .dark body,
+  html.dark body {
+    background-color: var(--color-canvas-dark, #101828);
+    color: #f3f4f6;
   }
 }
 

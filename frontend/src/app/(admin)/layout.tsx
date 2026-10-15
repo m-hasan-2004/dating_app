@@ -63,7 +63,7 @@ export default function AdminLayout({
     : "lg:ml-[90px]";
 
   return (
-    <div className="min-h-screen xl:flex bg-slate-50 dark:bg-gray-900">
+    <div className="min-h-screen xl:flex bg-[var(--color-canvas-light,#f8fafc)] dark:bg-[var(--color-canvas-dark,#101828)]">
       {/* Sidebar and Backdrop */}
       <AppSidebar />
       <Backdrop />

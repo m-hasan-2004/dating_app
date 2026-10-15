@@ -65,6 +65,8 @@ class PublicRegistrationConfigView(APIView):
             "color_palette": settings_obj.color_palette,
             "custom_primary_color": settings_obj.custom_primary_color,
             "custom_secondary_color": settings_obj.custom_secondary_color,
+            "canvas_light_color": settings_obj.canvas_light_color or "",
+            "canvas_dark_color": settings_obj.canvas_dark_color or "",
             "logo_url": settings_obj.logo_url or "",
             "favicon_url": settings_obj.favicon_url or "",
         }

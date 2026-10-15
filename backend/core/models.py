@@ -56,6 +56,20 @@ class SiteSetting(models.Model):
         default="",
         help_text=_("Arbitrary secondary/accent hex color."),
     )
+    canvas_light_color = models.CharField(
+        _("Canvas Light Mode Color"),
+        max_length=30,
+        blank=True,
+        default="",
+        help_text=_("Custom light mode canvas background color (default #f8fafc)."),
+    )
+    canvas_dark_color = models.CharField(
+        _("Canvas Dark Mode Color"),
+        max_length=30,
+        blank=True,
+        default="",
+        help_text=_("Custom dark mode canvas background color (default #101828)."),
+    )
     site_tagline_fa = models.CharField(
         _("Site Tagline (Persian)"),
         max_length=150,

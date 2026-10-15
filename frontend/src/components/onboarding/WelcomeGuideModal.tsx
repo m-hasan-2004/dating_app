@@ -96,18 +96,10 @@ export default function WelcomeGuideModal() {
     <Modal isOpen={isOpen} onClose={handleClose} className="max-w-xl w-full p-0 overflow-hidden">
       <div className="relative p-6 sm:p-8 flex flex-col items-center text-center">
         {/* Top Header Badge */}
-        <div className="flex items-center justify-between w-full mb-4">
+        <div className="flex items-center justify-start w-full mb-4">
           <span className={`px-3 py-1 text-xs font-bold rounded-full ${current.badgeColor}`}>
             {isRTL ? `مرحله ${currentStep + 1} از ۳` : `Step ${currentStep + 1} of 3`}
           </span>
-
-          <button
-            type="button"
-            onClick={handleClose}
-            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-sm font-medium cursor-pointer"
-          >
-            {t("Skip")}
-          </button>
         </div>
 
         {/* Visual Graphic */}

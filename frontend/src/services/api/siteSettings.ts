@@ -11,6 +11,8 @@ export interface SiteSettings {
   color_palette?: string;
   custom_primary_color?: string;
   custom_secondary_color?: string;
+  canvas_light_color?: string;
+  canvas_dark_color?: string;
   logo_url?: string;
   favicon_url?: string;
   updated_at?: string;
@@ -28,6 +30,8 @@ export interface RegistrationConfig {
   color_palette?: string;
   custom_primary_color?: string;
   custom_secondary_color?: string;
+  canvas_light_color?: string;
+  canvas_dark_color?: string;
   logo_url?: string;
   favicon_url?: string;
 }

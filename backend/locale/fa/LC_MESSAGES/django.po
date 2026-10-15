@@ -3674,7 +3674,7 @@ msgstr "سن الزامی ۱۸ سال است."
 #: core/utils/validators/user_validators.py:35
 #: core/utils/validators/user_validators.py:258
 msgid "Age cannot exceed 100 years"
-msgstr "شغل نباید از ۱۵۰ کاراکتر بیشتر باشد."
+msgstr "سن نمی‌تواند بیشتر از ۱۰۰ سال باشد."
 
 #: core/utils/validators/user_validators.py:39
 msgid "Marriage date cannot be after divorce date"
@@ -4354,13 +4354,11 @@ msgstr "وضعیت ارتباط با فامیل"
 
 #: users/user_related_models/family_information_model.py:62
 msgid "Number of Sisters"
-msgstr ""
+msgstr "تعداد خواهران"
 
 #: users/user_related_models/family_information_model.py:68
-#, fuzzy
-#| msgid "Brothers"
 msgid "Number of Brothers"
-msgstr "برادران"
+msgstr "تعداد برادران"
 
 #: users/user_related_models/family_information_model.py:102
 msgid "Family Information"
@@ -7018,16 +7016,10 @@ msgstr "رمز عبور فعلی نادرست است."
 msgid "New password cannot be the same as old password."
 msgstr "رمز عبور جدید نمی‌تواند مشابه رمز عبور قبلی باشد."
 
-msgid "The two password fields didn't match."
-msgstr "رمزهای عبور وارد شده یکسان نیستند."
-
 msgid "Registration successful. Please log in."
 msgstr "ثبت‌نام با موفقیت انجام شد. لطفاً وارد شوید."
 
 msgid "Invalid access code."
-msgstr "کد دسترسی نامعتبر است."
-
-msgid "Access code is invalid."
 msgstr "کد دسترسی نامعتبر است."
 
 msgid "Please enter a valid mobile number (e.g. 09123456789)."
@@ -7038,12 +7030,6 @@ msgstr "لطفاً یک شماره تلفن همراه معتبر وارد کن�
 
 msgid "The phone number entered is not valid."
 msgstr "شماره تلفن وارد شده معتبر نیست."
-
-msgid "Must be at least 18 years old"
-msgstr "حداقل سن باید ۱۸ سال باشد."
-
-msgid "Age cannot exceed 100 years"
-msgstr "سن نمی‌تواند بیشتر از ۱۰۰ سال باشد."
 
 msgid "Password must be at least 8 characters long."
 msgstr "رمز عبور باید حداقل ۸ کاراکتر باشد."

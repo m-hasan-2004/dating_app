@@ -13,7 +13,6 @@ import {
   GridIcon,
   HorizontaLDots,
   PieChartIcon,
-  UserCircleIcon,
   LockIcon,
 } from "../icons/index";
 
@@ -61,11 +60,6 @@ const CORE_NAV_ITEMS: NavItem[] = [
 ];
 
 const SYSTEM_NAV_ITEMS: NavItem[] = [
-  {
-    icon: <UserCircleIcon />,
-    name: "User Profile",
-    path: "/profile",
-  },
   {
     icon: <PieChartIcon />,
     name: "Statistics",
