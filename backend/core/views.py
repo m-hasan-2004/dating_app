@@ -58,6 +58,7 @@ class PublicRegistrationConfigView(APIView):
         data = {
             "require_access_code": settings_obj.require_access_code,
             "require_email": settings_obj.require_email,
+            "enable_language_switcher": getattr(settings_obj, "enable_language_switcher", True),
             "site_name_fa": settings_obj.site_name_fa,
             "site_name_en": settings_obj.site_name_en,
             "site_tagline_fa": settings_obj.site_tagline_fa,

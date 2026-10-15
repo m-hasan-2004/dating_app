@@ -2,9 +2,15 @@
 
 import React from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import { useBranding } from "@/context/BrandingContext";
 
 export const LanguageToggleButton: React.FC = () => {
   const { language, toggleLanguage, isRTL } = useLanguage();
+  const { enableLanguageSwitcher } = useBranding();
+
+  if (!enableLanguageSwitcher) {
+    return null;
+  }
 
   return (
     <button

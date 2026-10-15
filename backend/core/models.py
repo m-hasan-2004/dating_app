@@ -24,6 +24,13 @@ class SiteSetting(models.Model):
             "When disabled, providing an email address becomes optional during registration."
         ),
     )
+    enable_language_switcher = models.BooleanField(
+        _("Enable language switcher"),
+        default=True,
+        help_text=_(
+            "When disabled, the language toggle button is hidden across the site."
+        ),
+    )
     site_name_fa = models.CharField(
         _("Site Name (Persian)"),
         max_length=150,
@@ -132,6 +139,7 @@ class SiteSetting(models.Model):
                 defaults={
                     "require_access_code": True,
                     "require_email": True,
+                    "enable_language_switcher": True,
                     "site_name_fa": "سامانه همسان‌گزینی و ازدواج دائم",
                     "site_name_en": "TailAdmin Matchmaking",
                     "color_palette": "default",
@@ -149,6 +157,7 @@ class SiteSetting(models.Model):
             return cls(
                 require_access_code=True,
                 require_email=True,
+                enable_language_switcher=True,
                 site_name_fa="سامانه همسان‌گزینی و ازدواج دائم",
                 site_name_en="TailAdmin Matchmaking",
                 color_palette="default",

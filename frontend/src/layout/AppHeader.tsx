@@ -128,49 +128,14 @@ const AppHeader: React.FC = () => {
         <div
           className={`${
             isApplicationMenuOpen ? "flex" : "hidden"
-          } items-center justify-between w-full gap-4 px-5 py-4 lg:flex shadow-theme-md lg:justify-end lg:px-0 lg:shadow-none`}
+          } items-center justify-between w-full gap-3 px-5 py-3 lg:flex lg:justify-end lg:px-0 lg:shadow-none`}
         >
-          <div className="flex items-center gap-2 2xsm:gap-3">
-            {/* Profile Quick Link */}
-            <Link
-              href="/profile"
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs sm:text-sm font-medium text-slate-700 bg-white border border-slate-200/80 rounded-full hover:border-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 hover:text-[var(--color-primary)] shadow-2xs dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-[var(--color-primary)] dark:hover:bg-[var(--color-primary)]/20 transition-all cursor-pointer group"
-              title={t("Profile")}
-            >
-              <svg
-                className="w-4 h-4 text-slate-500 group-hover:text-[var(--color-primary)] dark:text-gray-400 dark:group-hover:text-[var(--color-primary)] transition-colors"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
-              <span>{t("Profile")}</span>
-            </Link>
-
-            {/* Bookmarks Button */}
-            <Link
-              href="/profile/bookmarks"
-              className="flex items-center justify-center w-10 h-10 text-slate-700 transition-all bg-white border border-slate-200/80 rounded-full hover:border-amber-400 hover:bg-amber-50/50 shadow-2xs dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400 dark:hover:border-amber-500/50 dark:hover:bg-amber-950/20 group"
-              title="Saved Bookmarks"
-            >
-
-              <svg className="w-4 h-4 fill-current text-amber-500 transition-transform group-hover:scale-110" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-              </svg>
-            </Link>
-
+          <div className="flex items-center gap-2 sm:gap-3">
             {/* <!-- Dark Mode Toggler --> */}
             <ThemeToggleButton />
-            {/* <!-- Dark Mode Toggler --> */}
+            {/* <!-- User Area: Profile & Sign Out --> */}
+            <UserDropdown />
           </div>
-          {/* <!-- User Area --> */}
-          <UserDropdown /> 
-    
         </div>
       </div>
     </header>

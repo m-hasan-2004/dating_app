@@ -15,10 +15,10 @@ const ComponentCard: React.FC<ComponentCardProps> = ({
 }) => {
   return (
     <div
-      className={`rounded-2xl border border-slate-200/80 hover:border-slate-300/90 bg-white dark:border-gray-800 dark:bg-white/[0.03] shadow-xs hover:shadow-sm transition-all ${className}`}
+      className={`rounded-2xl border-[1.5px] border-slate-300 hover:border-slate-400 bg-white dark:border-slate-700/80 dark:hover:border-slate-600 dark:bg-white/[0.03] shadow-[0_2px_8px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)] transition-all duration-200 ${className}`}
     >
       {/* Card Header */}
-      <div className="px-6 py-4.5 border-b border-slate-100 dark:border-gray-800">
+      <div className="px-6 py-4.5 border-b border-slate-200 dark:border-slate-800">
         <h3 className="text-base font-bold text-slate-900 dark:text-white/90">
           {title}
         </h3>

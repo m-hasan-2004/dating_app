@@ -1,8 +1,6 @@
 import {
   fetchPersonalInformation,
   fetchPhysicalInformation,
-  fetchIdentityInformation,
-  fetchBirthCertificateInformation,
   fetchFamilyInformation,
   fetchMothers,
   fetchFathers,
@@ -11,16 +9,10 @@ import {
   fetchPreferredWifeIntellectualInformation,
   fetchPreferredWifePersonalInformation,
   fetchPreferredWifePhysicalInformation,
-  fetchPreferredWifeExtraInformation,
   extractFirst,
 } from '@/services/profileService';
 import {
   fetchFutureSpouseOriginalities,
-  fetchSisters,
-  fetchBrothers,
-  fetchGrooms,
-  fetchBrideOrWives,
-  fetchExHusbandChildStatuses,
 } from '@/services/profileMultiService';
 
 export interface SectionScore {
@@ -48,19 +40,20 @@ function hasValue(val: any): boolean {
   return true;
 }
 
-function countFilledFields(obj: any, keys: string[]): number {
-  if (!obj || typeof obj !== 'object') return 0;
-  let filled = 0;
-  for (const k of keys) {
-    if (hasValue(obj[k])) filled++;
+function isSectionFilled(obj: any, specificKeys?: string[]): boolean {
+  if (!obj || typeof obj !== 'object') return false;
+  if (Array.isArray(obj)) return obj.length > 0;
+  const ignoreKeys = new Set(['id', 'user', 'created_at', 'updated_at', 'middle_man']);
+  const keysToCheck = specificKeys && specificKeys.length > 0 ? specificKeys : Object.keys(obj);
+  for (const k of keysToCheck) {
+    if (ignoreKeys.has(k)) continue;
+    if (hasValue(obj[k])) return true;
   }
-  return filled;
+  return false;
 }
 
 export function computeProfileCompletion(raw: {
   personalInfo?: any;
-  identityInfo?: any;
-  birthCertInfo?: any;
   physicalInfo?: any;
   familyInfo?: any;
   mother?: any;
@@ -70,7 +63,6 @@ export function computeProfileCompletion(raw: {
   prefWifeIntellectual?: any;
   prefWifePersonal?: any;
   prefWifePhysical?: any;
-  prefWifeExtra?: any;
   futureSpouseOriginalities?: any[];
   // Non-mandatory/conditional sections:
   sisters?: any[];
@@ -82,187 +74,130 @@ export function computeProfileCompletion(raw: {
 }): ProfileCompletionResult {
   const sections: SectionScore[] = [];
 
-  // 1. Personal Information (weight 12)
-  const personalFields = ['gender', 'birth_date', 'birth_location', 'education', 'job', 'income'];
-  const pFilled = countFilledFields(raw.personalInfo, personalFields);
-  const pScore = personalFields.length > 0 ? Math.min(1, pFilled / (personalFields.length * 0.7)) : 0;
+  // 1. Personal Information (weight 10)
+  const pFilled = isSectionFilled(raw.personalInfo);
   sections.push({
     nameKey: 'Personal Information',
     nameFa: 'اطلاعات فردی',
-    weight: 12,
-    score: pScore,
-    isComplete: pScore >= 0.8,
+    weight: 10,
+    score: pFilled ? 1.0 : 0,
+    isComplete: pFilled,
   });
 
-  // 2. Identity Information (weight 6)
-  const idFields = ['first_name', 'last_name', 'father_name', 'gender'];
-  const idFilled = countFilledFields(raw.identityInfo, idFields);
-  const idScore = idFields.length > 0 ? Math.min(1, idFilled / 3) : 0;
-  sections.push({
-    nameKey: 'Identity Information',
-    nameFa: 'اطلاعات هویتی و ثبت احوال',
-    weight: 6,
-    score: idScore,
-    isComplete: idScore >= 0.8,
-  });
-
-  // 3. Birth Certificate Information (weight 6)
-  const bcFields = ['birth_certificate_number', 'national_code', 'issue_place'];
-  const bcFilled = countFilledFields(raw.birthCertInfo, bcFields);
-  const bcScore = bcFields.length > 0 ? Math.min(1, bcFilled / 2) : 0;
-  sections.push({
-    nameKey: 'Birth Certificate',
-    nameFa: 'اطلاعات شناسنامه‌ای',
-    weight: 6,
-    score: bcScore,
-    isComplete: bcScore >= 0.8,
-  });
-
-  // 4. Physical Information (weight 8)
-  const phyFields = ['height', 'weight', 'skin_color', 'eyes_color', 'body_and_face'];
-  const phyFilled = countFilledFields(raw.physicalInfo, phyFields);
-  const phyScore = phyFields.length > 0 ? Math.min(1, phyFilled / 3) : 0;
+  // 2. Physical Information (weight 9)
+  const phyFilled = isSectionFilled(raw.physicalInfo);
   sections.push({
     nameKey: 'Physical Information',
     nameFa: 'اطلاعات جسمی و فیزیکی',
-    weight: 8,
-    score: phyScore,
-    isComplete: phyScore >= 0.8,
+    weight: 9,
+    score: phyFilled ? 1.0 : 0,
+    isComplete: phyFilled,
   });
 
-  // 5. Family Information (weight 8)
-  const famFields = ['average_family_education', 'average_family_finance', 'contact_with_family'];
-  const famFilled = countFilledFields(raw.familyInfo, famFields);
-  const famScore = famFields.length > 0 ? Math.min(1, famFilled / 2) : 0;
+  // 3. Family Information (weight 9)
+  const famFilled = isSectionFilled(raw.familyInfo);
   sections.push({
     nameKey: 'Family Information',
     nameFa: 'اطلاعات خانوادگی',
-    weight: 8,
-    score: famScore,
-    isComplete: famScore >= 0.8,
+    weight: 9,
+    score: famFilled ? 1.0 : 0,
+    isComplete: famFilled,
   });
 
-  // 6. Mother (weight 7)
-  const motherFields = ['alive', 'education', 'job', 'originality'];
-  const mFilled = countFilledFields(raw.mother, motherFields);
-  const mScore = motherFields.length > 0 ? Math.min(1, mFilled / 2) : 0;
+  // 4. Mother Information (weight 9)
+  const mFilled = isSectionFilled(raw.mother);
   sections.push({
     nameKey: 'Mother Information',
     nameFa: 'اطلاعات مادر',
-    weight: 7,
-    score: mScore,
-    isComplete: mScore >= 0.8,
+    weight: 9,
+    score: mFilled ? 1.0 : 0,
+    isComplete: mFilled,
   });
 
-  // 7. Father (weight 7)
-  const fatherFields = ['alive', 'education', 'job', 'originality'];
-  const fFilled = countFilledFields(raw.father, fatherFields);
-  const fScore = fatherFields.length > 0 ? Math.min(1, fFilled / 2) : 0;
+  // 5. Father Information (weight 9)
+  const fFilled = isSectionFilled(raw.father);
   sections.push({
     nameKey: 'Father Information',
     nameFa: 'اطلاعات پدر',
-    weight: 7,
-    score: fScore,
-    isComplete: fScore >= 0.8,
+    weight: 9,
+    score: fFilled ? 1.0 : 0,
+    isComplete: fFilled,
   });
 
-  // 8. Financial Information (weight 10)
-  const finFields = ['current_residence_status', 'ownership_status', 'capital'];
-  const finFilled = countFilledFields(raw.financialInfo, finFields);
-  const finScore = finFields.length > 0 ? Math.min(1, finFilled / 2) : 0;
+  // 6. Financial Information (weight 10)
+  const finFilled = isSectionFilled(raw.financialInfo);
   sections.push({
     nameKey: 'Financial Information',
     nameFa: 'اطلاعات مالی و اقتصادی',
     weight: 10,
-    score: finScore,
-    isComplete: finScore >= 0.8,
+    score: finFilled ? 1.0 : 0,
+    isComplete: finFilled,
   });
 
-  // 9. Intellectual & Beliefs (weight 12)
-  const intFields = ['worship_prayer', 'fasting', 'cover_type_society', 'marriage_goals'];
-  const intFilled = countFilledFields(raw.intellectualInfo, intFields);
-  const intScore = intFields.length > 0 ? Math.min(1, intFilled / 2) : 0;
+  // 7. Intellectual & Beliefs (weight 10)
+  const intFilled = isSectionFilled(raw.intellectualInfo);
   sections.push({
     nameKey: 'Intellectual & Beliefs',
     nameFa: 'اطلاعات فکری و عقیدتی',
-    weight: 12,
-    score: intScore,
-    isComplete: intScore >= 0.8,
+    weight: 10,
+    score: intFilled ? 1.0 : 0,
+    isComplete: intFilled,
   });
 
-  // 10. Preferred Spouse Intellectual (weight 7)
-  const pwiFields = ['cover_type_society', 'worship_prayer', 'fasting'];
-  const pwiFilled = countFilledFields(raw.prefWifeIntellectual, pwiFields);
-  const pwiScore = pwiFields.length > 0 ? Math.min(1, pwiFilled / 2) : 0;
+  // 8. Preferred Spouse Intellectual (weight 9)
+  const pwiFilled = isSectionFilled(raw.prefWifeIntellectual);
   sections.push({
     nameKey: 'Preferred Spouse Intellectual',
     nameFa: 'معیارهای فکری همسر مدنظر',
-    weight: 7,
-    score: pwiScore,
-    isComplete: pwiScore >= 0.8,
+    weight: 9,
+    score: pwiFilled ? 1.0 : 0,
+    isComplete: pwiFilled,
   });
 
-  // 11. Preferred Spouse Ethnicity / Originality (weight 5)
-  const origScore = Array.isArray(raw.futureSpouseOriginalities) && raw.futureSpouseOriginalities.length > 0 ? 1 : 0;
+  // 9. Preferred Spouse Ethnicity / Originality (weight 8)
+  const origFilled = Array.isArray(raw.futureSpouseOriginalities) && raw.futureSpouseOriginalities.length > 0;
   sections.push({
     nameKey: 'Preferred Spouse Ethnicity',
     nameFa: 'معیارهای قومیتی و اصالت همسر',
-    weight: 5,
-    score: origScore,
-    isComplete: origScore > 0,
+    weight: 8,
+    score: origFilled ? 1.0 : 0,
+    isComplete: origFilled,
   });
 
-  // 12. Preferred Spouse Personal (weight 6)
-  const pwpFields = ['min_age', 'max_age', 'education', 'job_status'];
-  const pwpFilled = countFilledFields(raw.prefWifePersonal, pwpFields);
-  const pwpScore = pwpFields.length > 0 ? Math.min(1, pwpFilled / 2) : 0;
+  // 10. Preferred Spouse Personal (weight 9)
+  const pwpFilled = isSectionFilled(raw.prefWifePersonal);
   sections.push({
     nameKey: 'Preferred Spouse Personal',
     nameFa: 'معیارهای فردی همسر مدنظر',
-    weight: 6,
-    score: pwpScore,
-    isComplete: pwpScore >= 0.8,
+    weight: 9,
+    score: pwpFilled ? 1.0 : 0,
+    isComplete: pwpFilled,
   });
 
-  // 13. Preferred Spouse Physical (weight 6)
-  const pwphyFields = ['min_height', 'max_height', 'skin_color'];
-  const pwphyFilled = countFilledFields(raw.prefWifePhysical, pwphyFields);
-  const pwphyScore = pwphyFields.length > 0 ? Math.min(1, pwphyFilled / 2) : 0;
+  // 11. Preferred Spouse Physical (weight 8)
+  const pwphyFilled = isSectionFilled(raw.prefWifePhysical);
   sections.push({
     nameKey: 'Preferred Spouse Physical',
     nameFa: 'معیارهای ظاهری همسر مدنظر',
-    weight: 6,
-    score: pwphyScore,
-    isComplete: pwphyScore >= 0.8,
+    weight: 8,
+    score: pwphyFilled ? 1.0 : 0,
+    isComplete: pwphyFilled,
   });
 
-  // 14. Preferred Spouse Extra (weight 5)
-  const pweFields = ['special_conditions', 'extra_explanation'];
-  const pweFilled = countFilledFields(raw.prefWifeExtra, pweFields);
-  const pweScore = pweFilled > 0 ? 1 : 0.5; // lenient default if other sections are filled
-  sections.push({
-    nameKey: 'Preferred Spouse Extra',
-    nameFa: 'سایر معیارهای همسر مدنظر',
-    weight: 5,
-    score: pweScore,
-    isComplete: pweScore >= 0.8,
-  });
-
-  // Calculate Weighted Percentage (Only mandatory core sections counted)
-  // Optional sections (engagement, previous children, sisters, brothers, grooms, brides)
-  // DO NOT penalize users who have none!
+  // Calculate Weighted Percentage
+  // Note: birthCertInfo, identityInfo, and prefWifeExtra are completely excluded.
   const totalWeight = sections.reduce((sum, s) => sum + s.weight, 0);
   const earnedWeight = sections.reduce((sum, s) => sum + s.score * s.weight, 0);
   const percentage = Math.round(Math.min(100, Math.max(0, (earnedWeight / totalWeight) * 100)));
 
-  const isReady = percentage >= 75;
-  const statusTextFa = percentage >= 90
+  const isReady = percentage >= 70;
+  const statusTextFa = percentage >= 95
     ? 'تکمیل ۱۰۰٪ و آماده همسان‌گزینی'
     : percentage >= 70
     ? `فعال و تکمیل (${percentage}٪)`
     : `در حال تکمیل (${percentage}٪)`;
 
-  const statusTextEn = percentage >= 90
+  const statusTextEn = percentage >= 95
     ? '100% Complete & Ready'
     : percentage >= 70
     ? `Active & Ready (${percentage}%)`
@@ -288,8 +223,6 @@ export async function fetchProfileCompletionStatus(forceRefresh = false): Promis
   try {
     const [
       personalRes,
-      identityRes,
-      birthCertRes,
       physicalRes,
       familyRes,
       motherRes,
@@ -299,12 +232,9 @@ export async function fetchProfileCompletionStatus(forceRefresh = false): Promis
       prefWifeIntRes,
       prefWifePerRes,
       prefWifePhyRes,
-      prefWifeExtRes,
       spouseOrigRes,
     ] = await Promise.all([
       fetchPersonalInformation().catch(() => null),
-      fetchIdentityInformation().catch(() => null),
-      fetchBirthCertificateInformation().catch(() => null),
       fetchPhysicalInformation().catch(() => null),
       fetchFamilyInformation().catch(() => null),
       fetchMothers().catch(() => null),
@@ -314,14 +244,11 @@ export async function fetchProfileCompletionStatus(forceRefresh = false): Promis
       fetchPreferredWifeIntellectualInformation().catch(() => null),
       fetchPreferredWifePersonalInformation().catch(() => null),
       fetchPreferredWifePhysicalInformation().catch(() => null),
-      fetchPreferredWifeExtraInformation().catch(() => null),
       fetchFutureSpouseOriginalities().catch(() => []),
     ]);
 
     const result = computeProfileCompletion({
       personalInfo: extractFirst(personalRes as any),
-      identityInfo: extractFirst(identityRes as any),
-      birthCertInfo: extractFirst(birthCertRes as any),
       physicalInfo: extractFirst(physicalRes as any),
       familyInfo: extractFirst(familyRes as any),
       mother: extractFirst(motherRes as any),
@@ -331,7 +258,6 @@ export async function fetchProfileCompletionStatus(forceRefresh = false): Promis
       prefWifeIntellectual: extractFirst(prefWifeIntRes as any),
       prefWifePersonal: extractFirst(prefWifePerRes as any),
       prefWifePhysical: extractFirst(prefWifePhyRes as any),
-      prefWifeExtra: extractFirst(prefWifeExtRes as any),
       futureSpouseOriginalities: Array.isArray(spouseOrigRes) ? spouseOrigRes : (spouseOrigRes as any)?.results ?? [],
     });
 

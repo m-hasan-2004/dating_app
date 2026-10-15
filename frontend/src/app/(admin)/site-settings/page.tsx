@@ -62,6 +62,7 @@ export default function SiteSettingsPage() {
   const [settings, setSettings] = useState<SiteSettings | null>(null);
   const [requireAccessCode, setRequireAccessCode] = useState<boolean>(true);
   const [requireEmail, setRequireEmail] = useState<boolean>(true);
+  const [enableLanguageSwitcher, setEnableLanguageSwitcher] = useState<boolean>(true);
   const [siteNameFa, setSiteNameFa] = useState<string>("سامانه همسان‌گزینی و ازدواج دائم");
   const [siteNameEn, setSiteNameEn] = useState<string>("TailAdmin Matchmaking");
   const [siteTaglineFa, setSiteTaglineFa] = useState<string>("پورتال همسان‌گزینی");
@@ -96,6 +97,7 @@ export default function SiteSettingsPage() {
       setSettings(data);
       setRequireAccessCode(data.require_access_code);
       setRequireEmail(data.require_email);
+      if (data.enable_language_switcher !== undefined) setEnableLanguageSwitcher(data.enable_language_switcher);
       if (data.site_name_fa) setSiteNameFa(data.site_name_fa);
       if (data.site_name_en) setSiteNameEn(data.site_name_en);
       if (data.site_tagline_fa) setSiteTaglineFa(data.site_tagline_fa);
@@ -148,6 +150,7 @@ export default function SiteSettingsPage() {
     setError(null);
     try {
       const defaults = {
+        enable_language_switcher: true,
         site_name_fa: "سامانه همسان‌گزینی و ازدواج دائم",
         site_name_en: "TailAdmin Matchmaking",
         site_tagline_fa: "پورتال همسان‌گزینی",
@@ -163,6 +166,7 @@ export default function SiteSettingsPage() {
 
       const updated = await updateSiteSettingsApi(defaults);
       setSettings(updated);
+      setEnableLanguageSwitcher(true);
       setSiteNameFa(defaults.site_name_fa);
       setSiteNameEn(defaults.site_name_en);
       setSiteTaglineFa(defaults.site_tagline_fa);
@@ -195,6 +199,7 @@ export default function SiteSettingsPage() {
       const updated = await updateSiteSettingsApi({
         require_access_code: requireAccessCode,
         require_email: requireEmail,
+        enable_language_switcher: enableLanguageSwitcher,
         site_name_fa: siteNameFa,
         site_name_en: siteNameEn,
         site_tagline_fa: siteTaglineFa,
@@ -211,6 +216,7 @@ export default function SiteSettingsPage() {
       setSettings(updated);
       setRequireAccessCode(updated.require_access_code);
       setRequireEmail(updated.require_email);
+      if (updated.enable_language_switcher !== undefined) setEnableLanguageSwitcher(updated.enable_language_switcher);
       if (updated.site_name_fa) setSiteNameFa(updated.site_name_fa);
       if (updated.site_name_en) setSiteNameEn(updated.site_name_en);
       if (updated.site_tagline_fa) setSiteTaglineFa(updated.site_tagline_fa);
@@ -225,6 +231,7 @@ export default function SiteSettingsPage() {
 
       // Sync active branding site-wide instantly
       setBranding({
+        enableLanguageSwitcher: updated.enable_language_switcher,
         siteNameFa: updated.site_name_fa,
         siteNameEn: updated.site_name_en,
         siteTaglineFa: updated.site_tagline_fa,
@@ -348,6 +355,43 @@ export default function SiteSettingsPage() {
                       className="sr-only peer"
                       checked={requireEmail}
                       onChange={(e) => setRequireEmail(e.target.checked)}
+                    />
+                    <div
+                      className={`w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[var(--color-primary)]`}
+                    ></div>
+                  </label>
+                </div>
+
+                {/* Setting 3: Enable Language Switcher */}
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 border border-slate-200/80 rounded-2xl dark:border-gray-800 bg-slate-50/70 dark:bg-white/[0.02] gap-4">
+                  <div className="space-y-1 max-w-2xl">
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-base font-semibold text-slate-800 dark:text-white">
+                        {t("Enable Language Switcher")}
+                      </h3>
+                      {enableLanguageSwitcher ? (
+                        <Badge variant="solid" color="success" size="sm">
+                          {t("Enabled")}
+                        </Badge>
+                      ) : (
+                        <Badge variant="solid" color="warning" size="sm">
+                          {t("Disabled")}
+                        </Badge>
+                      )}
+                    </div>
+                    <p className="text-sm text-slate-500 dark:text-gray-400 leading-relaxed">
+                      {t(
+                        "Control visibility of the language toggle button across the entire platform. When disabled, the language switcher button is completely hidden from users."
+                      )}
+                    </p>
+                  </div>
+
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      className="sr-only peer"
+                      checked={enableLanguageSwitcher}
+                      onChange={(e) => setEnableLanguageSwitcher(e.target.checked)}
                     />
                     <div
                       className={`w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[var(--color-primary)]`}

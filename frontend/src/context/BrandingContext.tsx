@@ -88,6 +88,7 @@ interface BrandingContextType {
   customSecondaryColor: string;
   canvasLightColor: string;
   canvasDarkColor: string;
+  enableLanguageSwitcher: boolean;
   logoUrl: string;
   faviconUrl: string;
   setColorPalette: (palette: ColorPalette) => void;
@@ -102,6 +103,7 @@ interface BrandingContextType {
     customSecondaryColor?: string;
     canvasLightColor?: string;
     canvasDarkColor?: string;
+    enableLanguageSwitcher?: boolean;
     logoUrl?: string;
     faviconUrl?: string;
   }) => void;
@@ -119,6 +121,7 @@ const DEFAULT_BRANDING = {
   customSecondaryColor: '',
   canvasLightColor: '',
   canvasDarkColor: '',
+  enableLanguageSwitcher: true,
   logoUrl: '',
   faviconUrl: '',
 };
@@ -145,6 +148,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [customSecondaryColor, setCustomSecondaryColor] = useState(DEFAULT_BRANDING.customSecondaryColor);
   const [canvasLightColor, setCanvasLightColor] = useState(DEFAULT_BRANDING.canvasLightColor);
   const [canvasDarkColor, setCanvasDarkColor] = useState(DEFAULT_BRANDING.canvasDarkColor);
+  const [enableLanguageSwitcher, setEnableLanguageSwitcher] = useState(DEFAULT_BRANDING.enableLanguageSwitcher);
   const [logoUrl, setLogoUrl] = useState('');
   const [faviconUrl, setFaviconUrl] = useState('');
 
@@ -169,13 +173,30 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     if (typeof document === 'undefined') return;
     if (lightHex && lightHex.startsWith('#')) {
       document.documentElement.style.setProperty('--color-canvas-light', lightHex);
+      const rgb = hexToRgb(lightHex);
+      if (rgb) {
+        const [h, s, l] = rgbToHsl(rgb[0], rgb[1], rgb[2]);
+        const borderHex = hslToHex(h, Math.max(10, s), Math.max(68, l - 16));
+        document.documentElement.style.setProperty('--color-canvas-light-border', borderHex);
+      }
     } else {
       document.documentElement.style.removeProperty('--color-canvas-light');
+      document.documentElement.style.removeProperty('--color-canvas-light-border');
     }
     if (darkHex && darkHex.startsWith('#')) {
       document.documentElement.style.setProperty('--color-canvas-dark', darkHex);
+      const rgb = hexToRgb(darkHex);
+      if (rgb) {
+        const [h, s, l] = rgbToHsl(rgb[0], rgb[1], rgb[2]);
+        const surfaceHex = hslToHex(h, Math.min(100, s + 4), Math.min(90, l + 4));
+        const borderHex = hslToHex(h, Math.min(100, s + 6), Math.min(90, l + 12));
+        document.documentElement.style.setProperty('--color-canvas-dark-surface', surfaceHex);
+        document.documentElement.style.setProperty('--color-canvas-dark-border', borderHex);
+      }
     } else {
       document.documentElement.style.removeProperty('--color-canvas-dark');
+      document.documentElement.style.removeProperty('--color-canvas-dark-surface');
+      document.documentElement.style.removeProperty('--color-canvas-dark-border');
     }
   }, []);
 
@@ -251,6 +272,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     customSecondaryColor?: string;
     canvasLightColor?: string;
     canvasDarkColor?: string;
+    enableLanguageSwitcher?: boolean;
     logoUrl?: string;
     faviconUrl?: string;
   }) => {
@@ -276,6 +298,12 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
     if (data.canvasLightColor !== undefined || data.canvasDarkColor !== undefined) {
       applyCanvasColors(data.canvasLightColor ?? canvasLightColor, data.canvasDarkColor ?? canvasDarkColor);
+    }
+    if (data.enableLanguageSwitcher !== undefined) {
+      setEnableLanguageSwitcher(data.enableLanguageSwitcher);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('branding_enable_language_switcher', String(data.enableLanguageSwitcher));
+      }
     }
     if (data.colorPalette !== undefined) {
       setColorPaletteState(data.colorPalette);
@@ -307,6 +335,9 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setCanvasDarkColor(config.canvas_dark_color);
         applyCanvasColors(config.canvas_light_color, config.canvas_dark_color);
       }
+      if (config.enable_language_switcher !== undefined) {
+        setEnableLanguageSwitcher(config.enable_language_switcher);
+      }
       if (config.color_palette) {
         const pal = config.color_palette as ColorPalette;
         setColorPaletteState(pal);
@@ -334,6 +365,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setCustomSecondaryColor('');
     setCanvasLightColor('');
     setCanvasDarkColor('');
+    setEnableLanguageSwitcher(true);
     setLogoUrl('');
     setFaviconUrl('');
     applyPalette('default');
@@ -344,6 +376,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       localStorage.removeItem('branding_custom_primary');
       localStorage.removeItem('branding_canvas_light');
       localStorage.removeItem('branding_canvas_dark');
+      localStorage.removeItem('branding_enable_language_switcher');
     }
   }, [applyCanvasColors, applyPalette, updateTabFavicon]);
 
@@ -353,9 +386,11 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       const cachedPrimary = localStorage.getItem('branding_custom_primary') || '';
       const cachedCanvasLight = localStorage.getItem('branding_canvas_light') || '';
       const cachedCanvasDark = localStorage.getItem('branding_canvas_dark') || '';
+      const cachedEnableLang = localStorage.getItem('branding_enable_language_switcher');
       if (cachedPrimary) setCustomPrimaryColor(cachedPrimary);
       if (cachedCanvasLight) setCanvasLightColor(cachedCanvasLight);
       if (cachedCanvasDark) setCanvasDarkColor(cachedCanvasDark);
+      if (cachedEnableLang !== null) setEnableLanguageSwitcher(cachedEnableLang === 'true');
       if (cachedCanvasLight || cachedCanvasDark) {
         applyCanvasColors(cachedCanvasLight, cachedCanvasDark);
       }
@@ -384,6 +419,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         customSecondaryColor,
         canvasLightColor,
         canvasDarkColor,
+        enableLanguageSwitcher,
         logoUrl,
         faviconUrl,
         setColorPalette,
