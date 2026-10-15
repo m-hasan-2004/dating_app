@@ -149,6 +149,10 @@
   --shadow-theme-xl:
     0px 20px 24px -4px rgba(16, 24, 40, 0.08),
     0px 8px 8px -4px rgba(16, 24, 40, 0.03);
+  --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.03);
+  --shadow-soft-hover: 0 10px 25px -3px rgba(0, 0, 0, 0.08), 0 4px 10px -2px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.03);
+  --shadow-card-hover: 0 10px 25px -3px rgba(0, 0, 0, 0.08), 0 4px 10px -2px rgba(0, 0, 0, 0.04);
   --shadow-datepicker: -5px 0 0 #262d3c, 5px 0 0 #262d3c;
   --shadow-focus-ring: 0px 0px 0px 4px rgba(70, 95, 255, 0.12);
   --shadow-slider-navigation:
@@ -331,7 +335,7 @@ html.dark,
 }
 
 @utility menu-item-icon {
-  @apply text-slate-400 group-hover:text-slate-600 dark:text-gray-400;
+  @apply text-slate-500 group-hover:text-slate-700 dark:text-gray-300;
 }
 
 @utility menu-item-icon-active {
@@ -339,7 +343,7 @@ html.dark,
 }
 
 @utility menu-item-icon-inactive {
-  @apply text-slate-400 group-hover:text-slate-600 dark:text-gray-400 dark:group-hover:text-gray-300;
+  @apply text-slate-500 group-hover:text-slate-700 dark:text-gray-300 dark:group-hover:text-white;
 }
 
 @utility menu-item-arrow {
@@ -351,7 +355,7 @@ html.dark,
 }
 
 @utility menu-item-arrow-inactive {
-  @apply text-slate-400 group-hover:text-slate-600 dark:text-gray-400 dark:group-hover:text-gray-300;
+  @apply text-slate-500 group-hover:text-slate-700 dark:text-gray-300 dark:group-hover:text-white;
 }
 
 @utility menu-dropdown-item {
@@ -363,7 +367,7 @@ html.dark,
 }
 
 @utility menu-dropdown-item-inactive {
-  @apply text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-200;
+  @apply text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-gray-300 dark:hover:bg-white/5 dark:hover:text-white;
 }
 
 @utility menu-dropdown-badge {
@@ -372,6 +376,34 @@ html.dark,
 
 @utility menu-dropdown-badge-active {
   @apply bg-[var(--color-primary)]/15 dark:bg-brand-500/20;
+}
+
+@utility shadow-soft {
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.03);
+}
+
+@utility shadow-soft-hover {
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.08), 0 4px 10px -2px rgba(0, 0, 0, 0.04);
+}
+
+@utility card-elevated {
+  @apply relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-soft transition-all duration-200 hover:shadow-soft-hover hover:border-slate-300 dark:border-slate-800 dark:bg-white/[0.03] dark:hover:border-slate-700;
+}
+
+@utility stat-kpi-value {
+  @apply font-extrabold tabular-nums tracking-tight text-slate-900 dark:text-white text-3xl sm:text-4xl;
+}
+
+@utility stat-kpi-label {
+  @apply text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300;
+}
+
+@utility text-subtle {
+  @apply text-slate-600 dark:text-slate-300;
+}
+
+@utility text-meta {
+  @apply text-slate-500 dark:text-slate-400 text-xs;
 }
 
 @utility menu-dropdown-badge-inactive {

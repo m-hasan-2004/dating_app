@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useMemo } from 'react';
 
@@ -35,17 +35,17 @@ export function LocationDemographics({ locationBreakdown }: LocationDemographics
   }, [locationBreakdown]);
 
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-sm">
+    <div className="rounded-2xl border border-gray-200/90 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-soft hover:shadow-soft-hover transition-shadow">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="text-base font-bold text-gray-800 dark:text-white">
+          <h3 className="text-base font-bold text-gray-900 dark:text-white">
             Candidate Demographics by Location
           </h3>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
+          <p className="text-xs font-medium text-gray-600 dark:text-gray-300">
             Regional distribution across provinces
           </p>
         </div>
-        <span className="text-xs font-semibold text-brand-500 bg-brand-50 dark:bg-brand-950/40 px-2.5 py-1 rounded-full">
+        <span className="text-xs font-bold text-[var(--color-primary)] bg-[var(--color-primary)]/10 dark:bg-brand-950/40 px-2.5 py-1 rounded-full border border-[var(--color-primary)]/20">
           Regional Stats
         </span>
       </div>
@@ -53,9 +53,9 @@ export function LocationDemographics({ locationBreakdown }: LocationDemographics
       <div className="space-y-3.5 mt-5">
         {locations.map((loc) => (
           <div key={loc.name}>
-            <div className="flex items-center justify-between text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
+            <div className="flex items-center justify-between text-xs font-semibold text-gray-700 dark:text-gray-200 mb-1">
               <span>{loc.name}</span>
-              <span className="font-semibold text-gray-900 dark:text-white">
+              <span className="font-bold tabular-nums text-gray-900 dark:text-white">
                 {loc.count} candidates ({loc.percentage}%)
               </span>
             </div>

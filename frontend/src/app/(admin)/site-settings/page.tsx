@@ -286,7 +286,7 @@ export default function SiteSettingsPage() {
                         </Badge>
                       )}
                     </div>
-                    <p className="text-sm text-slate-500 dark:text-gray-400 leading-relaxed">
+                    <p className="text-sm text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
                       {t(
                         "When enabled, prospective users must enter an active invitation access code during registration. When disabled, the access code field is omitted from the signup form, and the platform automatically creates and consumes an access code for the user at registration."
                       )}
@@ -329,7 +329,7 @@ export default function SiteSettingsPage() {
                         </Badge>
                       )}
                     </div>
-                    <p className="text-sm text-slate-500 dark:text-gray-400 leading-relaxed">
+                    <p className="text-sm text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
                       {t(
                         "When enabled, users must provide a valid email address during signup. When disabled, providing an email address becomes optional during registration."
                       )}
@@ -372,7 +372,7 @@ export default function SiteSettingsPage() {
                         </Badge>
                       )}
                     </div>
-                    <p className="text-sm text-slate-500 dark:text-gray-400 leading-relaxed">
+                    <p className="text-sm text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
                       {t(
                         "Control visibility of the language toggle button across the entire platform. When disabled, the language switcher button is completely hidden from users."
                       )}
@@ -415,7 +415,7 @@ export default function SiteSettingsPage() {
                       placeholder="سامانه همسان‌گزینی و ازدواج دائم"
                       className="w-full px-4 py-2.5 text-sm border border-slate-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] transition-all"
                     />
-                    <p className="text-xs text-slate-400 mt-1.5">
+                    <p className="text-xs text-slate-600 dark:text-slate-300 font-medium mt-1.5">
                       {isRTL ? "عنوانی که در هدر، سایدبار و صفحات ورود نمایش داده می‌شود." : "Displayed in headers, sidebar and auth pages in Persian mode."}
                     </p>
                   </div>
@@ -431,7 +431,7 @@ export default function SiteSettingsPage() {
                       placeholder="TailAdmin Matchmaking"
                       className="w-full px-4 py-2.5 text-sm border border-slate-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] transition-all"
                     />
-                    <p className="text-xs text-slate-400 mt-1.5">
+                    <p className="text-xs text-slate-600 dark:text-slate-300 font-medium mt-1.5">
                       {isRTL ? "عنوانی که در حالت انگلیسی سایت نمایش داده می‌شود." : "Displayed when application language is switched to English."}
                     </p>
                   </div>
@@ -447,7 +447,7 @@ export default function SiteSettingsPage() {
                       placeholder="پورتال همسان‌گزینی"
                       className="w-full px-4 py-2.5 text-sm border border-slate-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] transition-all"
                     />
-                    <p className="text-xs text-slate-400 mt-1.5">
+                    <p className="text-xs text-slate-600 dark:text-slate-300 font-medium mt-1.5">
                       {isRTL ? "زیرعنوان گوشه بالای سایدبار زیر نام سامانه در زبان فارسی." : "Sidebar subtitle displayed under site title in Persian mode."}
                     </p>
                   </div>
@@ -463,7 +463,7 @@ export default function SiteSettingsPage() {
                       placeholder="Matchmaking Portal"
                       className="w-full px-4 py-2.5 text-sm border border-slate-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] transition-all"
                     />
-                    <p className="text-xs text-slate-400 mt-1.5">
+                    <p className="text-xs text-slate-600 dark:text-slate-300 font-medium mt-1.5">
                       {isRTL ? "زیرعنوان گوشه بالای سایدبار زیر نام سامانه در زبان انگلیسی." : "Sidebar subtitle displayed under site title in English mode."}
                     </p>
                   </div>
@@ -475,7 +475,7 @@ export default function SiteSettingsPage() {
                     <h4 className="text-sm font-bold text-slate-900 dark:text-white">
                       {t("Custom Palette & Color Picker")}
                     </h4>
-                    <p className="text-xs text-slate-500 dark:text-gray-400 mt-0.5">
+                    <p className="text-xs text-slate-600 dark:text-slate-300 font-medium mt-0.5">
                       {isRTL
                         ? "انتخاب رنگ اصلی و رنگ تأکیدی سامانه با استفاده از انتخاب‌گر رنگ یا کد هگز دلخواه."
                         : "Pick any custom primary and accent hex color to dynamically theme the entire portal."}
@@ -555,7 +555,7 @@ export default function SiteSettingsPage() {
                     <h4 className="text-sm font-bold text-slate-900 dark:text-white">
                       {t("Light & Dark Mode Background Colors")}
                     </h4>
-                    <p className="text-xs text-slate-500 dark:text-gray-400 mt-0.5">
+                    <p className="text-xs text-slate-600 dark:text-slate-300 font-medium mt-0.5">
                       {isRTL
                         ? "تنظیم رنگ پس‌زمینه سایت برای حالت روشن (دیفالت: سفید/طوسی نرم) و حالت تاریک (دیفالت: بنفش تیره/سرمه‌ای) با انتخاب‌گر رنگ یا کد هگز."
                         : "Customize canvas background tone for both Light mode (default: soft slate/white) and Dark mode (default: deep purple/slate) using color pickers or hex code."}
@@ -700,7 +700,7 @@ export default function SiteSettingsPage() {
                         </button>
                       </div>
                     )}
-                    <p className="text-xs text-slate-400">
+                    <p className="text-xs text-slate-600 dark:text-slate-300 font-medium">
                       {isRTL
                         ? "می‌توانید مستقیماً فایلی از سیستم انتخاب کنید یا آدرس آن را وارد نمایید."
                         : "Browse a local image file or enter an external image URL."}
@@ -747,7 +747,7 @@ export default function SiteSettingsPage() {
                           alt="Favicon Preview"
                           className="w-8 h-8 object-contain rounded-md"
                         />
-                        <span className="text-xs text-slate-500">{t("Active Tab Icon")}</span>
+                        <span className="text-xs text-slate-600 dark:text-slate-300 font-medium">{t("Active Tab Icon")}</span>
                         <button
                           type="button"
                           onClick={() => setFaviconUrl("")}
@@ -757,7 +757,7 @@ export default function SiteSettingsPage() {
                         </button>
                       </div>
                     )}
-                    <p className="text-xs text-slate-400">
+                    <p className="text-xs text-slate-600 dark:text-slate-300 font-medium">
                       {isRTL
                         ? "این آیکون در تب مرورگر (کنار نام سایت در برگه مرورگر) قرار می‌گیرد."
                         : "Applies to the browser tab icon next to the title."}
@@ -769,7 +769,7 @@ export default function SiteSettingsPage() {
 
             {/* Metadata Info & Action Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-200/80 dark:border-gray-800">
-              <div className="text-xs text-slate-400 dark:text-gray-500">
+              <div className="text-xs text-slate-600 dark:text-slate-300 font-medium">
                 {settings && settings.updated_at && (
                   <span>
                     {t("Last modified")}: {formatDate(settings.updated_at)}

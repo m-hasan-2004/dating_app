@@ -72,10 +72,10 @@ function AdminDashboardView() {
       {/* Title Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
+          <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">
             {t("Admin Panel Dashboard")}
           </h1>
-          <p className="text-sm text-slate-500 dark:text-gray-400">
+          <p className="text-sm font-medium text-slate-600 dark:text-slate-300 mt-1">
             {t("Platform overview, live candidate metrics, access code management, and demographic reports.")}
           </p>
         </div>
@@ -90,7 +90,7 @@ function AdminDashboardView() {
           </Link>
           <Link
             href="/users"
-            className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-xl border-[1.5px] border-slate-300 bg-white text-slate-700 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/[0.06] dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 transition-all shadow-xs hover:-translate-y-0.5 active:translate-y-0"
+            className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold rounded-xl border border-slate-300/90 bg-white text-slate-700 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/[0.06] dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 transition-all shadow-xs hover:-translate-y-0.5 active:translate-y-0"
           >
             <UserCircleIcon className="w-4 h-4 text-[var(--color-primary)]" />
             {t("Manage Users")}
@@ -109,7 +109,7 @@ function AdminDashboardView() {
       />
 
       {/* Statistics Hub Spotlight Banner */}
-      <div className="rounded-3xl border-[1.5px] border-[var(--color-primary)]/30 bg-gradient-to-r from-[var(--color-primary)]/10 via-[var(--color-accent)]/10 to-transparent dark:border-brand-900/50 dark:from-brand-950/40 dark:via-brand-950/20 p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-md hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200">
+      <div className="rounded-3xl border border-[var(--color-primary)]/30 bg-gradient-to-r from-[var(--color-primary)]/10 via-[var(--color-accent)]/10 to-transparent dark:border-brand-900/50 dark:from-brand-950/40 dark:via-brand-950/20 p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-soft hover:shadow-soft-hover hover:-translate-y-0.5 transition-all duration-200">
         <div className="flex items-start gap-4">
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-accent)] text-white shadow-md">
             <PieChartIcon className="h-6 w-6" />
@@ -118,7 +118,7 @@ function AdminDashboardView() {
             <h3 className="text-lg font-bold text-slate-900 dark:text-white">
               {t("Demographic & Candidate Statistics")}
             </h3>
-            <p className="text-sm text-slate-600 dark:text-gray-400 mt-0.5">
+            <p className="text-sm font-medium text-slate-600 dark:text-slate-300 mt-1">
               {t("Explore in-depth charts and breakdowns for gender ratios, age cohorts, academic qualifications, income brackets, and real-estate ownership.")}
             </p>
           </div>
@@ -145,50 +145,50 @@ function AdminDashboardView() {
         <div className="lg:col-span-6 flex flex-col justify-between gap-4">
           <Link
             href="/users"
-            className="group rounded-2xl border-[1.5px] border-slate-300 bg-white p-5 dark:border-slate-700/80 dark:bg-white/[0.03] hover:border-[var(--color-primary)] transition-all shadow-md hover:shadow-xl hover:-translate-y-1 flex items-center justify-between"
+            className="group rounded-2xl border border-slate-200/90 bg-white p-5 dark:border-slate-800 dark:bg-white/[0.03] hover:border-[var(--color-primary)] transition-all shadow-soft hover:shadow-soft-hover hover:-translate-y-0.5 flex items-center justify-between"
           >
             <div className="flex items-center gap-3.5">
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)] border border-[var(--color-primary)]/20 dark:bg-blue-950/50 group-hover:scale-110 transition-transform">
                 <UserCircleIcon className="h-6 w-6" />
               </div>
               <div>
-                <h4 className="font-semibold text-slate-900 dark:text-white text-sm">{t("User Directory & Management")}</h4>
-                <p className="text-xs text-slate-500 dark:text-gray-400">{t("Search, filter, and batch manage candidates")}</p>
+                <h4 className="font-bold text-slate-900 dark:text-white text-sm">{t("User Directory & Management")}</h4>
+                <p className="text-xs font-medium text-slate-600 dark:text-slate-300 mt-0.5">{t("Search, filter, and batch manage candidates")}</p>
               </div>
             </div>
-            <ArrowRightIcon className="w-4 h-4 text-slate-400 group-hover:text-[var(--color-primary)] transition-colors" />
+            <ArrowRightIcon className="w-4 h-4 text-slate-500 group-hover:text-[var(--color-primary)] transition-colors dark:text-slate-400" />
           </Link>
 
           <Link
             href="/statistics"
-            className="group rounded-2xl border-[1.5px] border-slate-300 bg-white p-5 dark:border-slate-700/80 dark:bg-white/[0.03] hover:border-[var(--color-accent)] transition-all shadow-md hover:shadow-xl hover:-translate-y-1 flex items-center justify-between"
+            className="group rounded-2xl border border-slate-200/90 bg-white p-5 dark:border-slate-800 dark:bg-white/[0.03] hover:border-[var(--color-accent)] transition-all shadow-soft hover:shadow-soft-hover hover:-translate-y-0.5 flex items-center justify-between"
           >
             <div className="flex items-center gap-3.5">
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--color-accent)]/10 text-[var(--color-accent)] border border-[var(--color-accent)]/20 dark:bg-purple-950/50 group-hover:scale-110 transition-transform">
                 <PieChartIcon className="h-6 w-6" />
               </div>
               <div>
-                <h4 className="font-semibold text-slate-900 dark:text-white text-sm">{t("Comprehensive Analytics")}</h4>
-                <p className="text-xs text-slate-500 dark:text-gray-400">{t("Age, gender, education & income charts")}</p>
+                <h4 className="font-bold text-slate-900 dark:text-white text-sm">{t("Comprehensive Analytics")}</h4>
+                <p className="text-xs font-medium text-slate-600 dark:text-slate-300 mt-0.5">{t("Age, gender, education & income charts")}</p>
               </div>
             </div>
-            <ArrowRightIcon className="w-4 h-4 text-slate-400 group-hover:text-[var(--color-accent)] transition-colors" />
+            <ArrowRightIcon className="w-4 h-4 text-slate-500 group-hover:text-[var(--color-accent)] transition-colors dark:text-slate-400" />
           </Link>
 
           <Link
             href="/profile"
-            className="group rounded-2xl border-[1.5px] border-slate-300 bg-white p-5 dark:border-slate-700/80 dark:bg-white/[0.03] hover:border-[var(--color-primary)] transition-all shadow-md hover:shadow-xl hover:-translate-y-1 flex items-center justify-between"
+            className="group rounded-2xl border border-slate-200/90 bg-white p-5 dark:border-slate-800 dark:bg-white/[0.03] hover:border-[var(--color-primary)] transition-all shadow-soft hover:shadow-soft-hover hover:-translate-y-0.5 flex items-center justify-between"
           >
             <div className="flex items-center gap-3.5">
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--color-primary)]/15 to-[var(--color-accent)]/15 text-[var(--color-primary)] border border-[var(--color-primary)]/20 dark:bg-brand-950/50 group-hover:scale-110 transition-transform">
                 <BoltIcon className="h-6 w-6" />
               </div>
               <div>
-                <h4 className="font-semibold text-slate-900 dark:text-white text-sm">{t("My Admin Profile")}</h4>
-                <p className="text-xs text-slate-500 dark:text-gray-400">{t("View and edit personal matching profile")}</p>
+                <h4 className="font-bold text-slate-900 dark:text-white text-sm">{t("My Admin Profile")}</h4>
+                <p className="text-xs font-medium text-slate-600 dark:text-slate-300 mt-0.5">{t("View and edit personal matching profile")}</p>
               </div>
             </div>
-            <ArrowRightIcon className="w-4 h-4 text-slate-400 group-hover:text-[var(--color-primary)] transition-colors" />
+            <ArrowRightIcon className="w-4 h-4 text-slate-500 group-hover:text-[var(--color-primary)] transition-colors dark:text-slate-400" />
           </Link>
         </div>
       </div>
@@ -309,7 +309,7 @@ function UserDashboardView({ user }: { user: any }) {
         {/* Bookmarks */}
         <Link
           href="/profile/bookmarks"
-          className="group relative overflow-hidden rounded-3xl border-[1.5px] border-slate-300 bg-white dark:border-slate-700/80 dark:bg-white/[0.03] p-5 hover:border-amber-400 dark:hover:border-amber-500/60 transition-all shadow-md hover:shadow-xl hover:-translate-y-1 flex items-center justify-between cursor-pointer before:absolute before:top-0 before:inset-x-0 before:h-1 before:bg-amber-400"
+          className="group relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white dark:border-slate-800 dark:bg-white/[0.03] p-5 hover:border-amber-400 dark:hover:border-amber-500/60 transition-all shadow-soft hover:shadow-soft-hover hover:-translate-y-0.5 flex items-center justify-between cursor-pointer before:absolute before:top-0 before:inset-x-0 before:h-1 before:bg-amber-400"
         >
           <div className="flex items-center gap-3.5">
             <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950/40 text-amber-500 flex items-center justify-center shadow-xs group-hover:scale-110 transition-transform">
@@ -318,17 +318,17 @@ function UserDashboardView({ user }: { user: any }) {
               </svg>
             </div>
             <div>
-              <p className="text-xs font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider">{t("Saved Bookmarks")}</p>
-              <p className="text-xl font-extrabold text-slate-900 dark:text-white mt-0.5">{isRTL ? toPersianDigits(bookmarksCount) : bookmarksCount} {t("Shortlisted")}</p>
+              <p className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider">{t("Saved Bookmarks")}</p>
+              <p className="text-2xl sm:text-3xl font-extrabold tabular-nums tracking-tight text-slate-900 dark:text-white mt-1">{isRTL ? toPersianDigits(bookmarksCount) : bookmarksCount} {t("Shortlisted")}</p>
             </div>
           </div>
-          <ArrowRightIcon className="w-4 h-4 text-slate-400 group-hover:text-amber-500 transition-colors" />
+          <ArrowRightIcon className="w-4 h-4 text-slate-500 group-hover:text-amber-500 transition-colors dark:text-slate-400" />
         </Link>
 
         {/* Discovery Directory */}
         <Link
           href="/search"
-          className="group relative overflow-hidden rounded-3xl border-[1.5px] border-slate-300 bg-white dark:border-slate-700/80 dark:bg-white/[0.03] p-5 hover:border-[var(--color-primary)] dark:hover:border-brand-500/60 transition-all shadow-md hover:shadow-xl hover:-translate-y-1 flex items-center justify-between cursor-pointer before:absolute before:top-0 before:inset-x-0 before:h-1 before:bg-gradient-to-r before:from-[var(--color-primary)] before:to-[var(--color-accent)]"
+          className="group relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white dark:border-slate-800 dark:bg-white/[0.03] p-5 hover:border-[var(--color-primary)] dark:hover:border-brand-500/60 transition-all shadow-soft hover:shadow-soft-hover hover:-translate-y-0.5 flex items-center justify-between cursor-pointer before:absolute before:top-0 before:inset-x-0 before:h-1 before:bg-gradient-to-r before:from-[var(--color-primary)] before:to-[var(--color-accent)]"
         >
           <div className="flex items-center gap-3.5">
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--color-primary)]/15 to-[var(--color-accent)]/15 text-[var(--color-primary)] border border-[var(--color-primary)]/20 dark:bg-brand-950/40 flex items-center justify-center shadow-xs group-hover:scale-110 transition-transform">
@@ -337,17 +337,17 @@ function UserDashboardView({ user }: { user: any }) {
               </svg>
             </div>
             <div>
-              <p className="text-xs font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider">{t("Candidate Search")}</p>
-              <p className="text-xl font-extrabold text-slate-900 dark:text-white mt-0.5">{t("Explore Directory")}</p>
+              <p className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider">{t("Candidate Search")}</p>
+              <p className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white mt-1">{t("Explore Directory")}</p>
             </div>
           </div>
-          <ArrowRightIcon className="w-4 h-4 text-slate-400 group-hover:text-[var(--color-primary)] transition-colors" />
+          <ArrowRightIcon className="w-4 h-4 text-slate-500 group-hover:text-[var(--color-primary)] transition-colors dark:text-slate-400" />
         </Link>
 
         {/* My Profile */}
         <Link
           href="/profile"
-          className="group relative overflow-hidden rounded-3xl border-[1.5px] border-slate-300 bg-white dark:border-slate-700/80 dark:bg-white/[0.03] p-5 hover:border-emerald-500 dark:hover:border-emerald-500/60 transition-all shadow-md hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between gap-3 cursor-pointer before:absolute before:top-0 before:inset-x-0 before:h-1 before:bg-emerald-500"
+          className="group relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white dark:border-slate-800 dark:bg-white/[0.03] p-5 hover:border-emerald-500 dark:hover:border-emerald-500/60 transition-all shadow-soft hover:shadow-soft-hover hover:-translate-y-0.5 flex flex-col justify-between gap-3 cursor-pointer before:absolute before:top-0 before:inset-x-0 before:h-1 before:bg-emerald-500"
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3.5">
@@ -355,18 +355,18 @@ function UserDashboardView({ user }: { user: any }) {
                 <UserCircleIcon className="w-6 h-6" />
               </div>
               <div>
-                <p className="text-xs font-semibold text-slate-500 dark:text-gray-400 uppercase tracking-wider">{t("Personal Profile")}</p>
-                <div className="flex items-baseline gap-1.5 mt-0.5">
-                  <span className="text-xl font-extrabold text-emerald-600 dark:text-emerald-400">
+                <p className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider">{t("Personal Profile")}</p>
+                <div className="flex items-baseline gap-1.5 mt-1">
+                  <span className="text-2xl sm:text-3xl font-extrabold tabular-nums tracking-tight text-emerald-600 dark:text-emerald-400">
                     {profileCompletion ? (isRTL ? `${toPersianDigits(profileCompletion.percentage)}٪` : `${profileCompletion.percentage}%`) : t("Active & Ready")}
                   </span>
-                  <span className="text-xs font-medium text-slate-500 dark:text-gray-400 truncate max-w-[140px]">
+                  <span className="text-xs font-medium text-slate-600 dark:text-slate-300 truncate max-w-[140px]">
                     {profileCompletion ? (isRTL ? profileCompletion.statusTextFa : profileCompletion.statusTextEn) : t("Active & Ready")}
                   </span>
                 </div>
               </div>
             </div>
-            <ArrowRightIcon className="w-4 h-4 text-slate-400 group-hover:text-emerald-500 transition-colors shrink-0" />
+            <ArrowRightIcon className="w-4 h-4 text-slate-500 group-hover:text-emerald-500 transition-colors shrink-0 dark:text-slate-400" />
           </div>
 
           {/* Mini Progress Bar */}
@@ -386,7 +386,7 @@ function UserDashboardView({ user }: { user: any }) {
             <h2 className="text-base font-bold text-slate-900 dark:text-white">
               {t("Recommended Candidate Matches")}
             </h2>
-            <p className="text-xs text-slate-500 dark:text-gray-400">
+            <p className="text-xs font-medium text-slate-600 dark:text-slate-300 mt-0.5">
               {t("Opposite gender candidates tailored to your search criteria and demographic filters.")}
             </p>
           </div>
@@ -416,7 +416,7 @@ function UserDashboardView({ user }: { user: any }) {
               return (
                 <div
                   key={cand.id}
-                  className="rounded-3xl border-[1.5px] border-slate-300 bg-white dark:border-slate-700/80 dark:bg-white/[0.03] p-5 shadow-md hover:shadow-xl hover:-translate-y-1 hover:border-[var(--color-primary)] transition-all duration-200 flex flex-col justify-between"
+                  className="rounded-3xl border border-slate-200/90 bg-white dark:border-slate-800 dark:bg-white/[0.03] p-5 shadow-soft hover:shadow-soft-hover hover:-translate-y-0.5 hover:border-[var(--color-primary)]/50 transition-all duration-200 flex flex-col justify-between"
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-center gap-2.5">
@@ -427,7 +427,7 @@ function UserDashboardView({ user }: { user: any }) {
                       </div>
                       <div>
                         <h4 className="text-xs font-bold text-slate-900 dark:text-white">@{cand.username}</h4>
-                        <p className="text-[11px] text-slate-500 dark:text-gray-400">{cand.age ? `${isRTL ? toPersianDigits(cand.age) : cand.age} ${t("Years")}` : '—'} • {t(loc)}</p>
+                        <p className="text-[11px] font-medium text-slate-600 dark:text-slate-300">{cand.age ? `${isRTL ? toPersianDigits(cand.age) : cand.age} ${t("Years")}` : '—'} • {t(loc)}</p>
                       </div>
                     </div>
 

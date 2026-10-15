@@ -18,7 +18,7 @@ export function AccessCodesOverview({ total, active, used }: AccessCodesOverview
   const usedPercent = total > 0 ? Math.round((used / total) * 100) : 0;
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border-[1.5px] border-slate-300 bg-white dark:border-slate-700/80 dark:bg-white/[0.03] p-6 shadow-md hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between before:absolute before:top-0 before:inset-x-0 before:h-1 before:bg-gradient-to-r before:from-[var(--color-primary)] before:to-[var(--color-accent)]">
+    <div className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white dark:border-slate-800 dark:bg-white/[0.03] p-6 shadow-soft hover:shadow-soft-hover transition-all duration-200 flex flex-col justify-between before:absolute before:top-0 before:inset-x-0 before:h-1 before:bg-gradient-to-r before:from-[var(--color-primary)] before:to-[var(--color-accent)]">
       <div>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2.5">
@@ -29,7 +29,7 @@ export function AccessCodesOverview({ total, active, used }: AccessCodesOverview
               <h3 className="text-base font-bold text-slate-900 dark:text-white">
                 {t("Access Code Utilization")}
               </h3>
-              <p className="text-xs text-slate-500 dark:text-gray-400">
+              <p className="text-xs font-medium text-slate-600 dark:text-slate-300">
                 {t("Invitation codes lifecycle & availability")}
               </p>
             </div>
@@ -50,7 +50,7 @@ export function AccessCodesOverview({ total, active, used }: AccessCodesOverview
               title={`${t("Used")}: ${used} (${usedPercent}%)`}
             />
           </div>
-          <div className="flex items-center justify-between text-xs text-slate-600 dark:text-gray-400 mt-2 font-semibold">
+          <div className="flex items-center justify-between text-xs text-slate-700 dark:text-slate-300 mt-2 font-semibold">
             <span className="flex items-center gap-1.5">
               <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-primary)] inline-block shadow-xs" />
               {t("Active Available")} ({isRTL ? toPersianDigits(active) : active})
@@ -64,23 +64,23 @@ export function AccessCodesOverview({ total, active, used }: AccessCodesOverview
 
         {/* Quick Stats Grid */}
         <div className="grid grid-cols-3 gap-3 mt-5 text-center">
-          <div className="p-3 rounded-xl bg-gradient-to-br from-[var(--color-primary)]/10 to-[var(--color-accent)]/10 dark:bg-brand-950/20 border-[1.5px] border-[var(--color-primary)]/30 dark:border-[var(--color-primary)]/40 shadow-2xs">
+          <div className="p-3 rounded-xl bg-gradient-to-br from-[var(--color-primary)]/10 to-[var(--color-accent)]/10 dark:bg-brand-950/20 border border-[var(--color-primary)]/30 dark:border-[var(--color-primary)]/40 shadow-2xs">
             <p className="text-xs font-bold text-[var(--color-primary)]">{t("Total Issued")}</p>
-            <p className="text-lg font-bold text-[var(--color-primary)] mt-0.5">{isRTL ? toPersianDigits(total) : total}</p>
+            <p className="text-2xl sm:text-3xl font-extrabold tabular-nums tracking-tight text-[var(--color-primary)] mt-1">{isRTL ? toPersianDigits(total) : total}</p>
           </div>
-          <div className="p-3 rounded-xl bg-[var(--color-primary)]/10 dark:bg-brand-950/20 border-[1.5px] border-[var(--color-primary)]/30 dark:border-[var(--color-primary)]/40 shadow-2xs">
+          <div className="p-3 rounded-xl bg-[var(--color-primary)]/10 dark:bg-brand-950/20 border border-[var(--color-primary)]/30 dark:border-[var(--color-primary)]/40 shadow-2xs">
             <p className="text-xs font-bold text-[var(--color-primary)]">{t("Active")}</p>
-            <p className="text-lg font-bold text-[var(--color-primary)] mt-0.5">{isRTL ? toPersianDigits(active) : active}</p>
+            <p className="text-2xl sm:text-3xl font-extrabold tabular-nums tracking-tight text-[var(--color-primary)] mt-1">{isRTL ? toPersianDigits(active) : active}</p>
           </div>
-          <div className="p-3 rounded-xl bg-[var(--color-accent)]/10 dark:bg-purple-950/20 border-[1.5px] border-[var(--color-accent)]/30 dark:border-[var(--color-accent)]/40 shadow-2xs">
+          <div className="p-3 rounded-xl bg-[var(--color-accent)]/10 dark:bg-purple-950/20 border border-[var(--color-accent)]/30 dark:border-[var(--color-accent)]/40 shadow-2xs">
             <p className="text-xs font-bold text-[var(--color-accent)]">{t("Used")}</p>
-            <p className="text-lg font-bold text-[var(--color-accent)] mt-0.5">{isRTL ? toPersianDigits(used) : used}</p>
+            <p className="text-2xl sm:text-3xl font-extrabold tabular-nums tracking-tight text-[var(--color-accent)] mt-1">{isRTL ? toPersianDigits(used) : used}</p>
           </div>
         </div>
       </div>
 
-      <div className="mt-6 pt-4 border-t border-slate-200 dark:border-gray-800 flex items-center justify-between">
-        <span className="text-xs text-slate-500 dark:text-gray-400">{t("Need more invitation codes?")}</span>
+      <div className="mt-6 pt-4 border-t border-slate-200/80 dark:border-gray-800 flex items-center justify-between">
+        <span className="text-xs font-medium text-slate-600 dark:text-slate-300">{t("Need more invitation codes?")}</span>
         <Link
           href="/access-codes"
           className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-xl bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] text-white hover:brightness-105 transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
