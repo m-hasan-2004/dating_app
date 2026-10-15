@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { LockIcon, PlusIcon } from '@/icons';
 import { useTranslation } from '@/context/LanguageContext';
+import { toPersianDigits } from '@/utils/formatters';
 
 interface AccessCodesOverviewProps {
   total: number;
@@ -12,7 +13,7 @@ interface AccessCodesOverviewProps {
 }
 
 export function AccessCodesOverview({ total, active, used }: AccessCodesOverviewProps) {
-  const { t } = useTranslation();
+  const { t, isRTL } = useTranslation();
   const activePercent = total > 0 ? Math.round((active / total) * 100) : 0;
   const usedPercent = total > 0 ? Math.round((used / total) * 100) : 0;
 
@@ -52,28 +53,28 @@ export function AccessCodesOverview({ total, active, used }: AccessCodesOverview
           <div className="flex items-center justify-between text-xs text-slate-600 dark:text-gray-400 mt-2 font-semibold">
             <span className="flex items-center gap-1.5">
               <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-primary)] inline-block shadow-xs" />
-              {t("Active Available")} ({active})
+              {t("Active Available")} ({isRTL ? toPersianDigits(active) : active})
             </span>
             <span className="flex items-center gap-1.5">
               <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-accent)] inline-block shadow-xs" />
-              {t("Consumed / Used")} ({used})
+              {t("Consumed / Used")} ({isRTL ? toPersianDigits(used) : used})
             </span>
           </div>
         </div>
 
         {/* Quick Stats Grid */}
         <div className="grid grid-cols-3 gap-3 mt-5 text-center">
-          <div className="p-3 rounded-xl bg-slate-50 dark:bg-gray-800/40 border-[1.5px] border-slate-300 dark:border-gray-800 shadow-2xs">
-            <p className="text-xs font-semibold text-slate-500">{t("Total Issued")}</p>
-            <p className="text-lg font-bold text-slate-900 dark:text-white mt-0.5">{total}</p>
+          <div className="p-3 rounded-xl bg-gradient-to-br from-[var(--color-primary)]/10 to-[var(--color-accent)]/10 dark:bg-brand-950/20 border-[1.5px] border-[var(--color-primary)]/30 dark:border-[var(--color-primary)]/40 shadow-2xs">
+            <p className="text-xs font-bold text-[var(--color-primary)]">{t("Total Issued")}</p>
+            <p className="text-lg font-bold text-[var(--color-primary)] mt-0.5">{isRTL ? toPersianDigits(total) : total}</p>
           </div>
-          <div className="p-3 rounded-xl bg-[var(--color-primary)]/10 dark:bg-brand-950/20 border-[1.5px] border-[var(--color-primary)]/25 shadow-2xs">
+          <div className="p-3 rounded-xl bg-[var(--color-primary)]/10 dark:bg-brand-950/20 border-[1.5px] border-[var(--color-primary)]/30 dark:border-[var(--color-primary)]/40 shadow-2xs">
             <p className="text-xs font-bold text-[var(--color-primary)]">{t("Active")}</p>
-            <p className="text-lg font-bold text-[var(--color-primary)] mt-0.5">{active}</p>
+            <p className="text-lg font-bold text-[var(--color-primary)] mt-0.5">{isRTL ? toPersianDigits(active) : active}</p>
           </div>
-          <div className="p-3 rounded-xl bg-[var(--color-accent)]/10 dark:bg-purple-950/20 border-[1.5px] border-[var(--color-accent)]/25 shadow-2xs">
+          <div className="p-3 rounded-xl bg-[var(--color-accent)]/10 dark:bg-purple-950/20 border-[1.5px] border-[var(--color-accent)]/30 dark:border-[var(--color-accent)]/40 shadow-2xs">
             <p className="text-xs font-bold text-[var(--color-accent)]">{t("Used")}</p>
-            <p className="text-lg font-bold text-[var(--color-accent)] mt-0.5">{used}</p>
+            <p className="text-lg font-bold text-[var(--color-accent)] mt-0.5">{isRTL ? toPersianDigits(used) : used}</p>
           </div>
         </div>
       </div>
