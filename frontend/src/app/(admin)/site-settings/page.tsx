@@ -264,7 +264,13 @@ export default function SiteSettingsPage() {
             >
               <div className="space-y-6">
                 {/* Setting 1: Require Access Code */}
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 border border-slate-200/80 rounded-2xl dark:border-gray-800 bg-slate-50/70 dark:bg-white/[0.02] gap-4">
+                <div
+                  className={`flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 border-[1.5px] rounded-2xl transition-all gap-4 shadow-xs ${
+                    requireAccessCode
+                      ? "border-[var(--color-primary)]/60 bg-[var(--color-primary)]/[0.03] dark:border-[var(--color-primary)]/50 dark:bg-[var(--color-primary)]/[0.04]"
+                      : "border-slate-300 dark:border-slate-700/80 bg-white dark:bg-white/[0.02]"
+                  }`}
+                >
                   <div className="space-y-1 max-w-2xl">
                     <div className="flex items-center gap-2">
                       <h3 className="text-base font-semibold text-slate-800 dark:text-white">
@@ -287,7 +293,7 @@ export default function SiteSettingsPage() {
                     </p>
                   </div>
 
-                  <label className="relative inline-flex items-center cursor-pointer">
+                  <label className="relative inline-flex items-center cursor-pointer shrink-0 select-none hover:scale-105 active:scale-95 transition-transform">
                     <input
                       type="checkbox"
                       className="sr-only peer"
@@ -295,13 +301,19 @@ export default function SiteSettingsPage() {
                       onChange={(e) => setRequireAccessCode(e.target.checked)}
                     />
                     <div
-                      className={`w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[var(--color-primary)]`}
+                      className="w-12 h-7 bg-slate-300 dark:bg-slate-700 border-2 border-slate-400 dark:border-slate-500 rounded-full peer peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[var(--color-primary)]/40 peer-checked:bg-[var(--color-primary)] peer-checked:border-[var(--color-primary)] shadow-inner transition-all duration-200 hover:border-slate-500 dark:hover:border-slate-400 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-slate-300 dark:after:border-slate-400 after:rounded-full after:h-5 after:w-5 after:shadow-md after:transition-all peer-checked:after:translate-x-5 peer-checked:after:border-white"
                     ></div>
                   </label>
                 </div>
 
                 {/* Setting 2: Require Email */}
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 border border-slate-200/80 rounded-2xl dark:border-gray-800 bg-slate-50/70 dark:bg-white/[0.02] gap-4">
+                <div
+                  className={`flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 border-[1.5px] rounded-2xl transition-all gap-4 shadow-xs ${
+                    requireEmail
+                      ? "border-[var(--color-primary)]/60 bg-[var(--color-primary)]/[0.03] dark:border-[var(--color-primary)]/50 dark:bg-[var(--color-primary)]/[0.04]"
+                      : "border-slate-300 dark:border-slate-700/80 bg-white dark:bg-white/[0.02]"
+                  }`}
+                >
                   <div className="space-y-1 max-w-2xl">
                     <div className="flex items-center gap-2">
                       <h3 className="text-base font-semibold text-slate-800 dark:text-white">
@@ -324,7 +336,7 @@ export default function SiteSettingsPage() {
                     </p>
                   </div>
 
-                  <label className="relative inline-flex items-center cursor-pointer">
+                  <label className="relative inline-flex items-center cursor-pointer shrink-0 select-none hover:scale-105 active:scale-95 transition-transform">
                     <input
                       type="checkbox"
                       className="sr-only peer"
@@ -332,13 +344,19 @@ export default function SiteSettingsPage() {
                       onChange={(e) => setRequireEmail(e.target.checked)}
                     />
                     <div
-                      className={`w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[var(--color-primary)]`}
+                      className="w-12 h-7 bg-slate-300 dark:bg-slate-700 border-2 border-slate-400 dark:border-slate-500 rounded-full peer peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[var(--color-primary)]/40 peer-checked:bg-[var(--color-primary)] peer-checked:border-[var(--color-primary)] shadow-inner transition-all duration-200 hover:border-slate-500 dark:hover:border-slate-400 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-slate-300 dark:after:border-slate-400 after:rounded-full after:h-5 after:w-5 after:shadow-md after:transition-all peer-checked:after:translate-x-5 peer-checked:after:border-white"
                     ></div>
                   </label>
                 </div>
 
                 {/* Setting 3: Enable Language Switcher */}
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 border border-slate-200/80 rounded-2xl dark:border-gray-800 bg-slate-50/70 dark:bg-white/[0.02] gap-4">
+                <div
+                  className={`flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 border-[1.5px] rounded-2xl transition-all gap-4 shadow-xs ${
+                    enableLanguageSwitcher
+                      ? "border-[var(--color-primary)]/60 bg-[var(--color-primary)]/[0.03] dark:border-[var(--color-primary)]/50 dark:bg-[var(--color-primary)]/[0.04]"
+                      : "border-slate-300 dark:border-slate-700/80 bg-white dark:bg-white/[0.02]"
+                  }`}
+                >
                   <div className="space-y-1 max-w-2xl">
                     <div className="flex items-center gap-2">
                       <h3 className="text-base font-semibold text-slate-800 dark:text-white">
@@ -361,7 +379,7 @@ export default function SiteSettingsPage() {
                     </p>
                   </div>
 
-                  <label className="relative inline-flex items-center cursor-pointer">
+                  <label className="relative inline-flex items-center cursor-pointer shrink-0 select-none hover:scale-105 active:scale-95 transition-transform">
                     <input
                       type="checkbox"
                       className="sr-only peer"
@@ -369,7 +387,7 @@ export default function SiteSettingsPage() {
                       onChange={(e) => setEnableLanguageSwitcher(e.target.checked)}
                     />
                     <div
-                      className={`w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[var(--color-primary)]`}
+                      className="w-12 h-7 bg-slate-300 dark:bg-slate-700 border-2 border-slate-400 dark:border-slate-500 rounded-full peer peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[var(--color-primary)]/40 peer-checked:bg-[var(--color-primary)] peer-checked:border-[var(--color-primary)] shadow-inner transition-all duration-200 hover:border-slate-500 dark:hover:border-slate-400 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-slate-300 dark:after:border-slate-400 after:rounded-full after:h-5 after:w-5 after:shadow-md after:transition-all peer-checked:after:translate-x-5 peer-checked:after:border-white"
                     ></div>
                   </label>
                 </div>
