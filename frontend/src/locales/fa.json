@@ -2268,5 +2268,10 @@
   "Skip": "رد شدن",
   "Previous": "قبلی",
   "Next Step": "مرحله بعد",
-  "Got it & Get Started": "متوجه شدم و شروع"
+  "Got it & Get Started": "متوجه شدم و شروع",
+  "Showing": "نمایش",
+  "to": "تا",
+  "matching users": "کاربر منطبق",
+  "Loading matching users...": "در حال بارگذاری کاربران...",
+  "No users found matching your search or filters.": "هیچ کاربری مطابق با جستجو یا فیلترهای شما یافت نشد."
 }

@@ -20,7 +20,7 @@ import {
 } from '@/icons';
 import { useAuth } from '@/hooks/use-auth';
 import { useTranslation } from '@/context/LanguageContext';
-import { formatDate, formatIranianPhoneNumber } from '@/utils/formatters';
+import { formatDate, formatIranianPhoneNumber, formatNumber } from '@/utils/formatters';
 import { useRouter } from 'next/navigation';
 
 const PAGE_SIZE_OPTIONS = [5, 10, 20, 50, 100];
@@ -561,15 +561,18 @@ export default function UsersListPage() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-6 py-4 border-t border-slate-100 dark:border-gray-800 bg-slate-50/60 dark:bg-white/[0.01]">
           <span className="text-xs text-slate-500 dark:text-gray-400">
             {t('Showing')}{' '}
-            <span className="font-semibold text-slate-700 dark:text-gray-300">
-              {totalCount === 0 ? 0 : (page - 1) * pageSize + 1}
+            <span className="font-semibold text-slate-700 dark:text-gray-300 tabular-nums">
+              {formatNumber(totalCount === 0 ? 0 : (page - 1) * pageSize + 1, isRTL)}
             </span>{' '}
             {t('to')}{' '}
-            <span className="font-semibold text-slate-700 dark:text-gray-300">
-              {Math.min(page * pageSize, totalCount)}
+            <span className="font-semibold text-slate-700 dark:text-gray-300 tabular-nums">
+              {formatNumber(Math.min(page * pageSize, totalCount), isRTL)}
             </span>{' '}
             {t('of')}{' '}
-            <span className="font-semibold text-slate-700 dark:text-gray-300">{totalCount}</span> {t('matching users')}
+            <span className="font-semibold text-slate-700 dark:text-gray-300 tabular-nums">
+              {formatNumber(totalCount, isRTL)}
+            </span>{' '}
+            {t('matching users')}
           </span>
 
           <div className="flex items-center gap-2">
@@ -582,8 +585,8 @@ export default function UsersListPage() {
               {t("Previous")}
             </button>
 
-            <span className="text-xs font-semibold text-slate-700 dark:text-gray-300 px-2">
-              {t("Page")} {page} {t("of")} {totalPages}
+            <span className="text-xs font-semibold text-slate-700 dark:text-gray-300 px-2 tabular-nums">
+              {t("Page")} {formatNumber(page, isRTL)} {t("of")} {formatNumber(totalPages, isRTL)}
             </span>
 
             <button

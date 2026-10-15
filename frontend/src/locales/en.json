@@ -1714,5 +1714,10 @@
   "Skip": "Skip",
   "Previous": "Previous",
   "Next Step": "Next Step",
-  "Got it & Get Started": "Got it & Get Started"
+  "Got it & Get Started": "Got it & Get Started",
+  "Showing": "Showing",
+  "to": "to",
+  "matching users": "matching users",
+  "Loading matching users...": "Loading matching users...",
+  "No users found matching your search or filters.": "No users found matching your search or filters."
 }
