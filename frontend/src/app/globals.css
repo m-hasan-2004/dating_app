@@ -871,4 +871,11 @@ html[dir="rtl"] body {
   scrollbar-color: rgba(75, 85, 99, 0.45) transparent;
 }
 
+/* Modal backdrop blur & frosted glass effect */
+.modal-backdrop {
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+
 
