@@ -52,12 +52,12 @@ export function AdminMetrics({
       </div>
 
       {/* Active Profiles */}
-      <div className="relative overflow-hidden rounded-2xl border-[1.5px] border-slate-300 bg-white p-5 dark:border-slate-700/80 dark:bg-white/[0.03] shadow-md hover:shadow-xl hover:-translate-y-1 hover:border-emerald-500 transition-all duration-200 cursor-pointer before:absolute before:top-0 before:inset-x-0 before:h-1 before:bg-emerald-500">
+      <div className="relative overflow-hidden rounded-2xl border-[1.5px] border-slate-300 bg-white p-5 dark:border-slate-700/80 dark:bg-white/[0.03] shadow-md hover:shadow-xl hover:-translate-y-1 hover:border-[var(--color-primary)] transition-all duration-200 cursor-pointer before:absolute before:top-0 before:inset-x-0 before:h-1 before:bg-[var(--color-primary)]">
         <div className="flex items-center justify-between">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-200 dark:bg-emerald-950/50 dark:border-emerald-800">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--color-primary)]/15 text-[var(--color-primary)] border border-[var(--color-primary)]/25 dark:bg-brand-950/50">
             <CheckCircleIcon className="h-6 w-6" />
           </div>
-          <span className="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-700 border border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-800">
+          <span className="inline-flex items-center rounded-full bg-[var(--color-primary)]/10 px-2.5 py-1 text-xs font-bold text-[var(--color-primary)] border border-[var(--color-primary)]/20 dark:bg-brand-950/40 dark:text-[var(--color-primary)]">
             {isRTL ? toPersianDigits(activePercent) : activePercent}% {t("Active Rate")}
           </span>
         </div>
@@ -75,12 +75,12 @@ export function AdminMetrics({
       </div>
 
       {/* Staff & Mediators */}
-      <div className="relative overflow-hidden rounded-2xl border-[1.5px] border-slate-300 bg-white p-5 dark:border-slate-700/80 dark:bg-white/[0.03] shadow-md hover:shadow-xl hover:-translate-y-1 hover:border-[var(--color-primary)] transition-all duration-200 cursor-pointer before:absolute before:top-0 before:inset-x-0 before:h-1 before:bg-[var(--color-primary)]">
+      <div className="relative overflow-hidden rounded-2xl border-[1.5px] border-slate-300 bg-white p-5 dark:border-slate-700/80 dark:bg-white/[0.03] shadow-md hover:shadow-xl hover:-translate-y-1 hover:border-[var(--color-accent)] transition-all duration-200 cursor-pointer before:absolute before:top-0 before:inset-x-0 before:h-1 before:bg-[var(--color-accent)]">
         <div className="flex items-center justify-between">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 text-blue-600 border border-blue-200 dark:bg-blue-950/50 dark:border-blue-800">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--color-accent)]/15 text-[var(--color-accent)] border border-[var(--color-accent)]/25 dark:bg-purple-950/50">
             <UserCircleIcon className="h-6 w-6" />
           </div>
-          <span className="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-1 text-xs font-bold text-blue-700 border border-blue-200 dark:bg-blue-950/40 dark:text-blue-400 dark:border-blue-800">
+          <span className="inline-flex items-center rounded-full bg-[var(--color-accent)]/10 px-2.5 py-1 text-xs font-bold text-[var(--color-accent)] border border-[var(--color-accent)]/20 dark:bg-purple-950/40 dark:text-[var(--color-accent)]">
             {t("Admin Team")}
           </span>
         </div>

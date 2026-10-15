@@ -242,13 +242,13 @@ function FilterPillGroup({
                 key={opt.value}
                 type="button"
                 onClick={() => onToggle(opt.value)}
-                className={`inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-medium rounded-xl border transition-all cursor-pointer ${
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl border-[1.5px] transition-all cursor-pointer ${
                   isSelected
-                    ? 'bg-[var(--color-primary)]/15 text-[var(--color-primary)] border-[var(--color-primary)]/30 font-semibold shadow-2xs'
-                    : 'bg-slate-100 text-slate-700 border-slate-200/80 hover:bg-slate-200/80 hover:text-slate-900 hover:border-slate-300 dark:bg-white/[0.04] dark:border-gray-700/60 dark:text-gray-300 dark:hover:bg-white/[0.08]'
+                    ? 'bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] text-white border-transparent shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0'
+                    : 'bg-white dark:bg-gray-800 text-slate-800 dark:text-slate-200 border-slate-300 dark:border-slate-700 hover:border-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 hover:text-[var(--color-primary)] shadow-2xs hover:shadow-xs hover:-translate-y-0.5 active:translate-y-0'
                 }`}
               >
-                {isSelected && <span className="font-bold text-[10px]">✓</span>}
+                {isSelected && <span className="font-bold text-[11px]">✓</span>}
                 <span>{labelText}</span>
               </button>
             );
@@ -1141,11 +1141,11 @@ export default function CandidateSearchPage() {
                     placeholder={isRTL ? "حداقل" : "Min"}
                     value={minAge}
                     onChange={(e) => { setMinAge(e.target.value); setPage(1); }}
-                    className={`w-full px-2 py-1 text-xs border rounded-lg dark:bg-gray-800 dark:text-white transition-all ${
-                      minAge ? 'border-brand-500 ring-1 ring-brand-500 font-bold bg-brand-50/20 text-brand-700 dark:text-brand-300' : 'border-gray-300 dark:border-gray-700'
+                    className={`w-full px-2.5 py-1 text-xs border rounded-lg bg-white dark:bg-gray-800 dark:text-white transition-all ${
+                      minAge ? 'border-[var(--color-primary)] ring-1 ring-[var(--color-primary)] font-bold bg-[var(--color-primary)]/10 text-slate-900 dark:text-white' : 'border-slate-300 dark:border-gray-700'
                     }`}
                   />
-                  <span className="text-gray-400 font-bold">-</span>
+                  <span className="text-slate-400 font-bold">-</span>
                   <input
                     type="number"
                     min="18"
@@ -1153,12 +1153,12 @@ export default function CandidateSearchPage() {
                     placeholder={isRTL ? "حداکثر" : "Max"}
                     value={maxAge}
                     onChange={(e) => { setMaxAge(e.target.value); setPage(1); }}
-                    className={`w-full px-2 py-1 text-xs border rounded-lg dark:bg-gray-800 dark:text-white transition-all ${
-                      maxAge ? 'border-brand-500 ring-1 ring-brand-500 font-bold bg-brand-50/20 text-brand-700 dark:text-brand-300' : 'border-gray-300 dark:border-gray-700'
+                    className={`w-full px-2.5 py-1 text-xs border rounded-lg bg-white dark:bg-gray-800 dark:text-white transition-all ${
+                      maxAge ? 'border-[var(--color-primary)] ring-1 ring-[var(--color-primary)] font-bold bg-[var(--color-primary)]/10 text-slate-900 dark:text-white' : 'border-slate-300 dark:border-gray-700'
                     }`}
                   />
                 </div>
-                <div className="flex flex-wrap gap-1 pt-1">
+                <div className="flex flex-wrap gap-1.5 pt-1">
                   {AGE_PRESETS.map((preset) => {
                     const isPresetActive = minAge === String(preset.min) && maxAge === String(preset.max);
                     return (
@@ -1175,10 +1175,10 @@ export default function CandidateSearchPage() {
                           }
                           setPage(1);
                         }}
-                        className={`px-2 py-0.5 text-[10px] rounded-lg transition-all cursor-pointer font-medium ${
+                        className={`px-2.5 py-1 text-xs rounded-xl border-[1.5px] transition-all cursor-pointer font-semibold ${
                           isPresetActive
-                            ? 'bg-brand-500 text-white font-bold shadow-xs'
-                            : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-brand-50 hover:text-brand-600'
+                            ? 'bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] text-white border-transparent shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0'
+                            : 'bg-white dark:bg-gray-800 text-slate-800 dark:text-slate-200 border-slate-300 dark:border-slate-700 hover:border-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 hover:text-[var(--color-primary)] shadow-2xs hover:shadow-xs hover:-translate-y-0.5 active:translate-y-0'
                         }`}
                       >
                         {isRTL ? preset.labelFa : preset.labelEn}
@@ -1190,7 +1190,7 @@ export default function CandidateSearchPage() {
 
               {/* Height Range */}
               <div className="py-3 space-y-2">
-                <span className="font-bold text-gray-800 dark:text-gray-200 text-xs">
+                <span className="font-bold text-slate-800 dark:text-gray-200 text-xs">
                   {isRTL ? "محدوده قد (سانتی‌متر)" : "Height Range (cm)"}
                 </span>
                 <div className="flex items-center gap-2">
@@ -1199,11 +1199,11 @@ export default function CandidateSearchPage() {
                     placeholder={isRTL ? "حداقل قد" : "Min cm"}
                     value={minHeight}
                     onChange={(e) => { setMinHeight(e.target.value); setPage(1); }}
-                    className={`w-full px-2 py-1 text-xs border rounded-lg dark:bg-gray-800 dark:text-white transition-all ${
-                      minHeight ? 'border-brand-500 ring-1 ring-brand-500 font-bold bg-brand-50/20 text-brand-700 dark:text-brand-300' : 'border-gray-300 dark:border-gray-700'
+                    className={`w-full px-2.5 py-1 text-xs border rounded-lg bg-white dark:bg-gray-800 dark:text-white transition-all ${
+                      minHeight ? 'border-[var(--color-primary)] ring-1 ring-[var(--color-primary)] font-bold bg-[var(--color-primary)]/10 text-slate-900 dark:text-white' : 'border-slate-300 dark:border-gray-700'
                     }`}
                   />
-                  <span className="text-gray-400 font-bold">-</span>
+                  <span className="text-slate-400 font-bold">-</span>
                   <input
                     type="number"
                     placeholder={isRTL ? "حداکثر قد" : "Max cm"}
@@ -1231,10 +1231,10 @@ export default function CandidateSearchPage() {
                           }
                           setPage(1);
                         }}
-                        className={`px-2 py-0.5 text-[10px] rounded-lg border transition-all cursor-pointer font-medium ${
+                        className={`px-2.5 py-1 text-xs rounded-xl border-[1.5px] transition-all cursor-pointer font-semibold ${
                           isPresetActive
-                            ? 'bg-[var(--color-primary)]/15 text-[var(--color-primary)] border-[var(--color-primary)]/40 font-bold shadow-2xs'
-                            : 'bg-slate-100 text-slate-700 border-slate-200/80 hover:bg-slate-200/80 hover:text-slate-900 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700'
+                            ? 'bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] text-white border-transparent shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0'
+                            : 'bg-white dark:bg-gray-800 text-slate-800 dark:text-slate-200 border-slate-300 dark:border-slate-700 hover:border-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 hover:text-[var(--color-primary)] shadow-2xs hover:shadow-xs hover:-translate-y-0.5 active:translate-y-0'
                         }`}
                       >
                         {isRTL ? preset.labelFa : preset.labelEn}
@@ -1287,10 +1287,10 @@ export default function CandidateSearchPage() {
                           }
                           setPage(1);
                         }}
-                        className={`px-2 py-0.5 text-[10px] rounded-lg border transition-all cursor-pointer font-medium ${
+                        className={`px-2.5 py-1 text-xs rounded-xl border-[1.5px] transition-all cursor-pointer font-semibold ${
                           isPresetActive
-                            ? 'bg-[var(--color-primary)]/15 text-[var(--color-primary)] border-[var(--color-primary)]/40 font-bold shadow-2xs'
-                            : 'bg-slate-100 text-slate-700 border-slate-200/80 hover:bg-slate-200/80 hover:text-slate-900 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700'
+                            ? 'bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] text-white border-transparent shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0'
+                            : 'bg-white dark:bg-gray-800 text-slate-800 dark:text-slate-200 border-slate-300 dark:border-slate-700 hover:border-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 hover:text-[var(--color-primary)] shadow-2xs hover:shadow-xs hover:-translate-y-0.5 active:translate-y-0'
                         }`}
                       >
                         {isRTL ? preset.labelFa : preset.labelEn}

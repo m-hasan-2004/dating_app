@@ -16,31 +16,6 @@ import {
 } from "@/services/api/siteSettings";
 import { formatDate } from "@/utils/formatters";
 
-const PALETTES: { id: ColorPalette; nameKey: string; color: string }[] = [
-  { id: "default", nameKey: "Default Blue", color: "#465fff" },
-  { id: "emerald", nameKey: "Emerald Green", color: "#10b981" },
-  { id: "purple", nameKey: "Royal Purple", color: "#8b5cf6" },
-  { id: "rose", nameKey: "Rose Red", color: "#f43f5e" },
-  { id: "amber", nameKey: "Warm Amber", color: "#f59e0b" },
-  { id: "indigo", nameKey: "Indigo", color: "#6366f1" },
-  { id: "custom", nameKey: "Custom Color", color: "#ec4899" },
-];
-
-const LIGHT_CANVAS_PRESETS = [
-  { id: "default", nameKey: "Default Soft Slate", color: "#f1f5f9" },
-  { id: "cool", nameKey: "Cool Gray", color: "#e2e8f0" },
-  { id: "white", nameKey: "Pure White", color: "#ffffff" },
-  { id: "warm", nameKey: "Warm Zinc", color: "#fafaf9" },
-  { id: "amber", nameKey: "Soft Cream", color: "#fef3c7" },
-];
-
-const DARK_CANVAS_PRESETS = [
-  { id: "default", nameKey: "Deep Royal Purple", color: "#131127" },
-  { id: "navy", nameKey: "Dark Navy Slate", color: "#101828" },
-  { id: "obsidian", nameKey: "Obsidian Slate", color: "#0f172a" },
-  { id: "carbon", nameKey: "Pitch Black", color: "#09090b" },
-  { id: "charcoal", nameKey: "Dark Charcoal", color: "#1a2231" },
-];
 
 export default function SiteSettingsPage() {
   const { user, loading: authLoading } = useAuth();
@@ -204,9 +179,9 @@ export default function SiteSettingsPage() {
         site_name_en: siteNameEn,
         site_tagline_fa: siteTaglineFa,
         site_tagline_en: siteTaglineEn,
-        color_palette: colorPalette,
-        custom_primary_color: colorPalette === "custom" ? customPrimaryColor : "",
-        custom_secondary_color: colorPalette === "custom" ? customSecondaryColor : "",
+        color_palette: "custom",
+        custom_primary_color: customPrimaryColor,
+        custom_secondary_color: customSecondaryColor,
         canvas_light_color: canvasLightColor,
         canvas_dark_color: canvasDarkColor,
         logo_url: logoUrl,
@@ -476,78 +451,20 @@ export default function SiteSettingsPage() {
                   </div>
                 </div>
 
-                {/* Color Palette Presets */}
-                <div>
-                  <label className="block text-sm font-semibold text-slate-800 dark:text-white mb-3">
-                    {t("Color Palette")}
-                  </label>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
-                    {PALETTES.map((pal) => {
-                      const isSelected = colorPalette === pal.id;
-                      return (
-                        <button
-                          key={pal.id}
-                          type="button"
-                          onClick={() => {
-                            setColorPalette(pal.id);
-                            setContextColorPalette(pal.id);
-                          }}
-                          className={`flex flex-col items-center gap-2 p-3 rounded-2xl border transition-all cursor-pointer text-center ${
-                            isSelected
-                              ? `border-[var(--color-primary)] bg-[var(--color-primary)]/10 dark:bg-brand-950/30 ring-2 ring-offset-2 ring-slate-400 dark:ring-offset-gray-900 shadow-xs font-bold`
-                              : "border-slate-200/80 dark:border-gray-800 hover:border-slate-300 dark:hover:border-gray-700 bg-white dark:bg-gray-900"
-                          }`}
-                        >
-                          <div
-                            className="w-7 h-7 rounded-full shadow-md flex items-center justify-center text-white"
-                            style={{ backgroundColor: pal.color }}
-                          >
-                            {isSelected && (
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                              </svg>
-                            )}
-                          </div>
-                          <span className="text-[11px] font-semibold text-slate-800 dark:text-white/90 truncate max-w-full">
-                            {t(pal.nameKey)}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
                 {/* Arbitrary Color Picker Section */}
                 <div className="p-5 rounded-2xl border border-slate-200/80 dark:border-gray-800 bg-slate-50/70 dark:bg-white/[0.02] space-y-4">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                    <div>
-                      <h4 className="text-sm font-bold text-slate-900 dark:text-white">
-                        {t("Custom Palette & Color Picker")}
-                      </h4>
-                      <p className="text-xs text-slate-500 dark:text-gray-400">
-                        {isRTL
-                          ? "می‌توانید با انتخاب پالت سفارشی، هر رنگ دلخواهی را انتخاب کنید تا به صورت زنده در تمام دکمه‌ها، آیکون‌ها و بخش‌های سایت اعمال شود."
-                          : "Pick any custom primary and accent hex color to dynamically theme the entire portal."}
-                      </p>
-                    </div>
-
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => {
-                        setColorPalette("custom");
-                        setCustomPrimaryColor("#465fff");
-                        setCustomSecondaryColor("#3641f5");
-                        setContextColorPalette("custom", "#465fff", "#3641f5");
-                      }}
-                      className="text-xs"
-                    >
-                      {t("Switch to Custom Picker")}
-                    </Button>
+                  <div>
+                    <h4 className="text-sm font-bold text-slate-900 dark:text-white">
+                      {t("Custom Palette & Color Picker")}
+                    </h4>
+                    <p className="text-xs text-slate-500 dark:text-gray-400 mt-0.5">
+                      {isRTL
+                        ? "انتخاب رنگ اصلی و رنگ تأکیدی سامانه با استفاده از انتخاب‌گر رنگ یا کد هگز دلخواه."
+                        : "Pick any custom primary and accent hex color to dynamically theme the entire portal."}
+                    </p>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
                     {/* Primary Color Picker */}
                     <div className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 border-[1.5px] border-slate-300 dark:border-gray-700 rounded-xl shadow-2xs">
                       <input
@@ -622,8 +539,8 @@ export default function SiteSettingsPage() {
                     </h4>
                     <p className="text-xs text-slate-500 dark:text-gray-400 mt-0.5">
                       {isRTL
-                        ? "تنظیم رنگ پس‌زمینه سایت برای حالت روشن (دیفالت: سفید/طوسی نرم) و حالت تاریک (دیفالت: بنفش تیره/سرمه‌ای). می‌توانید از پالت‌های آماده انتخاب کنید یا رنگ دلخواه خود را تعیین کنید."
-                        : "Customize canvas background tone for both Light mode (default: soft slate/white) and Dark mode (default: deep purple/slate). Choose presets or enter custom hex."}
+                        ? "تنظیم رنگ پس‌زمینه سایت برای حالت روشن (دیفالت: سفید/طوسی نرم) و حالت تاریک (دیفالت: بنفش تیره/سرمه‌ای) با انتخاب‌گر رنگ یا کد هگز."
+                        : "Customize canvas background tone for both Light mode (default: soft slate/white) and Dark mode (default: deep purple/slate) using color pickers or hex code."}
                     </p>
                   </div>
 
@@ -644,36 +561,6 @@ export default function SiteSettingsPage() {
                         >
                           {t("Reset to Default")}
                         </button>
-                      </div>
-
-                      {/* Presets */}
-                      <div className="flex items-center gap-2">
-                        {LIGHT_CANVAS_PRESETS.map((p) => {
-                          const active = canvasLightColor.toLowerCase() === p.color.toLowerCase();
-                          return (
-                            <button
-                              key={p.id}
-                              type="button"
-                              onClick={() => {
-                                setCanvasLightColor(p.color);
-                                setCanvasColors(p.color, canvasDarkColor);
-                              }}
-                              className={`w-7 h-7 rounded-full border-2 transition-all cursor-pointer flex items-center justify-center ${
-                                active
-                                  ? "border-[var(--color-primary)] scale-110 shadow-sm"
-                                  : "border-slate-300 dark:border-gray-600 hover:scale-105"
-                              }`}
-                              style={{ backgroundColor: p.color }}
-                              title={t(p.nameKey)}
-                            >
-                              {active && (
-                                <svg className="w-3.5 h-3.5 text-slate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                                </svg>
-                              )}
-                            </button>
-                          );
-                        })}
                       </div>
 
                       {/* Custom Picker */}
@@ -716,36 +603,6 @@ export default function SiteSettingsPage() {
                         >
                           {t("Reset to Default")}
                         </button>
-                      </div>
-
-                      {/* Presets */}
-                      <div className="flex items-center gap-2">
-                        {DARK_CANVAS_PRESETS.map((p) => {
-                          const active = canvasDarkColor.toLowerCase() === p.color.toLowerCase();
-                          return (
-                            <button
-                              key={p.id}
-                              type="button"
-                              onClick={() => {
-                                setCanvasDarkColor(p.color);
-                                setCanvasColors(canvasLightColor, p.color);
-                              }}
-                              className={`w-7 h-7 rounded-full border-2 transition-all cursor-pointer flex items-center justify-center ${
-                                active
-                                  ? "border-[var(--color-primary)] scale-110 shadow-sm"
-                                  : "border-slate-300 dark:border-gray-600 hover:scale-105"
-                              }`}
-                              style={{ backgroundColor: p.color }}
-                              title={t(p.nameKey)}
-                            >
-                              {active && (
-                                <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                                </svg>
-                              )}
-                            </button>
-                          );
-                        })}
                       </div>
 
                       {/* Custom Picker */}
