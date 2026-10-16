@@ -2197,5 +2197,7 @@
   "Download backup.sql": "دریافت فایل backup.sql",
   "Expected format: backup.sql": "فرمت مورد انتظار: backup.sql",
   "Server Backups Directory (/backups/)": "پشتیبان‌های ذخیره شده در سرور (/backups/)",
-  "Create Manual Backup": "ایجاد پشتیبان دستی"
+  "Create Manual Backup": "ایجاد پشتیبان دستی",
+  "Backup & Restore": "پشتیبان‌گیری و بازیابی",
+  "Database Backup & Restore": "پشتیبان‌گیری و بازیابی پایگاه داده"
 }

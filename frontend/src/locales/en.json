@@ -1719,5 +1719,7 @@
   "Download backup.sql": "Download backup.sql",
   "Expected format: backup.sql": "Expected format: backup.sql",
   "Server Backups Directory (/backups/)": "Server Backups Directory (/backups/)",
-  "Create Manual Backup": "Create Manual Backup"
+  "Create Manual Backup": "Create Manual Backup",
+  "Backup & Restore": "Backup & Restore",
+  "Database Backup & Restore": "Database Backup & Restore"
 }

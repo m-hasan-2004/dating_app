@@ -102,23 +102,29 @@ const AppSidebar: React.FC = () => {
         if (sub.path === "/site-settings") {
           return siteSettingEnabled && isSuperUser;
         }
+        if (sub.path === "/database-backup") {
+          return isSuperUser;
+        }
         return true;
       });
 
+      const newSubItems = [...filteredSubItems];
+
       // Add Site Settings if enabled and superuser and not yet present
-      const hasSiteSettings = filteredSubItems.some((sub) => sub.path === "/site-settings");
+      const hasSiteSettings = newSubItems.some((sub) => sub.path === "/site-settings");
       if (siteSettingEnabled && isSuperUser && !hasSiteSettings) {
-        return {
-          ...item,
-          subItems: [
-            ...filteredSubItems,
-            { name: "Site Settings", path: "/site-settings", pro: false },
-          ],
-        };
+        newSubItems.push({ name: "Site Settings", path: "/site-settings", pro: false });
       }
+
+      // Add Database Backup & Restore for superusers
+      const hasBackup = newSubItems.some((sub) => sub.path === "/database-backup");
+      if (isSuperUser && !hasBackup) {
+        newSubItems.push({ name: "Backup & Restore", path: "/database-backup", pro: false });
+      }
+
       return {
         ...item,
-        subItems: filteredSubItems,
+        subItems: newSubItems,
       };
     }
     return item;
