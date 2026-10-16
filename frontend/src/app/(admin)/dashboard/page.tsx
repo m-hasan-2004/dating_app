@@ -258,11 +258,16 @@ function UserDashboardView({ user }: { user: any }) {
   return (
     <div className="space-y-6">
       {/* Hero Welcome Card */}
-      <div className="relative overflow-hidden rounded-3xl border border-white/20 bg-gradient-to-br from-[var(--color-primary)] via-indigo-600 to-[var(--color-accent)] p-6 md:p-8 text-white shadow-xl">
+      <div
+        className="relative overflow-hidden rounded-3xl border border-white/20 p-6 md:p-8 text-white shadow-xl"
+        style={{
+          background: 'linear-gradient(135deg, var(--color-primary, #465fff) 0%, var(--color-accent, #3641f5) 100%)',
+        }}
+      >
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="max-w-xl space-y-2">
             <div className="flex items-center gap-2">
-              <span className="px-3 py-1 text-xs font-bold rounded-full bg-white/20 backdrop-blur-md text-white border border-white/20">
+              <span className="px-3 py-1 text-xs font-bold rounded-full bg-white/20 backdrop-blur-md text-white border border-white/25">
                 ✨ {t("Candidate Member")}
               </span>
               {user?.middle_man_code && (
@@ -272,9 +277,9 @@ function UserDashboardView({ user }: { user: any }) {
               )}
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-              {t("Welcome back")}, <bdi className="text-amber-300">{displayName}</bdi>!
+              {t("Welcome back")}, <bdi className="text-white drop-shadow-sm">{displayName}</bdi>!
             </h1>
-            <p className="text-sm text-white/85 leading-relaxed">
+            <p className="text-sm text-white/90 leading-relaxed">
               {t("Explore opposite gender profiles matching your personal criteria")}
             </p>
           </div>
@@ -282,7 +287,7 @@ function UserDashboardView({ user }: { user: any }) {
           <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 shrink-0">
             <Link
               href="/search"
-              className="inline-flex items-center gap-2 px-5 py-3 text-xs sm:text-sm font-bold rounded-2xl bg-white text-[var(--color-primary)] hover:bg-white/95 transition-all shadow-lg hover:shadow-[0_8px_24px_rgba(var(--color-primary-rgb),0.35)] hover:-translate-y-0.5 active:translate-y-0"
+              className="inline-flex items-center gap-2 px-5 py-3 text-xs sm:text-sm font-bold rounded-2xl bg-white text-[var(--color-primary)] hover:bg-white/95 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0"
             >
               <svg className="w-4 h-4 text-[var(--color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 1114 0z" />
@@ -291,7 +296,7 @@ function UserDashboardView({ user }: { user: any }) {
             </Link>
             <Link
               href="/profile"
-              className="inline-flex items-center gap-2 px-5 py-3 text-xs sm:text-sm font-semibold rounded-2xl bg-white/15 backdrop-blur-md text-white hover:bg-white/25 transition-all border border-white/20 hover:-translate-y-0.5 active:translate-y-0"
+              className="inline-flex items-center gap-2 px-5 py-3 text-xs sm:text-sm font-semibold rounded-2xl bg-white/15 backdrop-blur-md text-white hover:bg-white/25 transition-all border border-white/25 hover:-translate-y-0.5 active:translate-y-0"
             >
               <UserCircleIcon className="w-4 h-4" />
               <span>{t("My Profile")}</span>
@@ -299,9 +304,9 @@ function UserDashboardView({ user }: { user: any }) {
           </div>
         </div>
 
-        {/* Decorative Background Circles */}
-        <div className="absolute -top-24 -right-24 w-72 h-72 bg-white/10 rounded-full blur-2xl pointer-events-none" />
-        <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-purple-500/20 rounded-full blur-3xl pointer-events-none" />
+        {/* Decorative Background Accents matching palette */}
+        <div className="absolute -top-24 -right-24 w-72 h-72 bg-white/15 rounded-full blur-2xl pointer-events-none" />
+        <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-black/15 rounded-full blur-3xl pointer-events-none" />
       </div>
 
       {/* 3 Metric Cards */}
@@ -309,11 +314,11 @@ function UserDashboardView({ user }: { user: any }) {
         {/* Bookmarks */}
         <Link
           href="/profile/bookmarks"
-          className="group relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white dark:border-slate-800 dark:bg-white/[0.03] p-5 hover:border-amber-400 dark:hover:border-amber-500/60 transition-all shadow-soft hover:shadow-soft-hover hover:-translate-y-0.5 flex items-center justify-between cursor-pointer before:absolute before:top-0 before:inset-x-0 before:h-1 before:bg-amber-400"
+          className="group relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white dark:border-slate-800 dark:bg-white/[0.03] p-5 hover:border-[var(--color-primary)] dark:hover:border-[var(--color-primary)]/60 transition-all shadow-soft hover:shadow-soft-hover hover:-translate-y-0.5 flex items-center justify-between cursor-pointer before:absolute before:top-0 before:inset-x-0 before:h-1 before:bg-gradient-to-r before:from-[var(--color-primary)] before:to-[var(--color-accent)]"
         >
           <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950/40 text-amber-500 flex items-center justify-center shadow-xs group-hover:scale-110 transition-transform">
-              <svg className="w-6 h-6 fill-current text-amber-500" viewBox="0 0 24 24">
+            <div className="w-12 h-12 rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)] dark:bg-[var(--color-primary)]/20 flex items-center justify-center shadow-xs group-hover:scale-110 transition-transform">
+              <svg className="w-6 h-6 fill-current text-[var(--color-primary)]" viewBox="0 0 24 24">
                 <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
               </svg>
             </div>
@@ -322,16 +327,16 @@ function UserDashboardView({ user }: { user: any }) {
               <p className="text-2xl sm:text-3xl font-extrabold tabular-nums tracking-tight text-slate-900 dark:text-white mt-1">{isRTL ? toPersianDigits(bookmarksCount) : bookmarksCount} {t("Shortlisted")}</p>
             </div>
           </div>
-          <ArrowRightIcon className="w-4 h-4 text-slate-500 group-hover:text-amber-500 transition-colors dark:text-slate-400" />
+          <ArrowRightIcon className="w-4 h-4 text-slate-500 group-hover:text-[var(--color-primary)] transition-colors dark:text-slate-400" />
         </Link>
 
         {/* Discovery Directory */}
         <Link
           href="/search"
-          className="group relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white dark:border-slate-800 dark:bg-white/[0.03] p-5 hover:border-[var(--color-primary)] dark:hover:border-brand-500/60 transition-all shadow-soft hover:shadow-soft-hover hover:-translate-y-0.5 flex items-center justify-between cursor-pointer before:absolute before:top-0 before:inset-x-0 before:h-1 before:bg-gradient-to-r before:from-[var(--color-primary)] before:to-[var(--color-accent)]"
+          className="group relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white dark:border-slate-800 dark:bg-white/[0.03] p-5 hover:border-[var(--color-primary)] dark:hover:border-[var(--color-primary)]/60 transition-all shadow-soft hover:shadow-soft-hover hover:-translate-y-0.5 flex items-center justify-between cursor-pointer before:absolute before:top-0 before:inset-x-0 before:h-1 before:bg-gradient-to-r before:from-[var(--color-primary)] before:to-[var(--color-accent)]"
         >
           <div className="flex items-center gap-3.5">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[var(--color-primary)]/15 to-[var(--color-accent)]/15 text-[var(--color-primary)] border border-[var(--color-primary)]/20 dark:bg-brand-950/40 flex items-center justify-center shadow-xs group-hover:scale-110 transition-transform">
+            <div className="w-12 h-12 rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)] border border-[var(--color-primary)]/20 dark:bg-[var(--color-primary)]/20 flex items-center justify-center shadow-xs group-hover:scale-110 transition-transform">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 1114 0z" />
               </svg>
@@ -347,17 +352,17 @@ function UserDashboardView({ user }: { user: any }) {
         {/* My Profile */}
         <Link
           href="/profile"
-          className="group relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white dark:border-slate-800 dark:bg-white/[0.03] p-5 hover:border-emerald-500 dark:hover:border-emerald-500/60 transition-all shadow-soft hover:shadow-soft-hover hover:-translate-y-0.5 flex flex-col justify-between gap-3 cursor-pointer before:absolute before:top-0 before:inset-x-0 before:h-1 before:bg-emerald-500"
+          className="group relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white dark:border-slate-800 dark:bg-white/[0.03] p-5 hover:border-[var(--color-primary)] dark:hover:border-[var(--color-primary)]/60 transition-all shadow-soft hover:shadow-soft-hover hover:-translate-y-0.5 flex flex-col justify-between gap-3 cursor-pointer before:absolute before:top-0 before:inset-x-0 before:h-1 before:bg-gradient-to-r before:from-[var(--color-primary)] before:to-[var(--color-accent)]"
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3.5">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-500 border border-emerald-200 dark:border-emerald-800 flex items-center justify-center shadow-xs group-hover:scale-110 transition-transform shrink-0">
+              <div className="w-12 h-12 rounded-2xl bg-[var(--color-primary)]/10 text-[var(--color-primary)] border border-[var(--color-primary)]/20 dark:bg-[var(--color-primary)]/20 flex items-center justify-center shadow-xs group-hover:scale-110 transition-transform shrink-0">
                 <UserCircleIcon className="w-6 h-6" />
               </div>
               <div>
                 <p className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider">{t("Personal Profile")}</p>
                 <div className="flex items-baseline gap-1.5 mt-1">
-                  <span className="text-2xl sm:text-3xl font-extrabold tabular-nums tracking-tight text-emerald-600 dark:text-emerald-400">
+                  <span className="text-2xl sm:text-3xl font-extrabold tabular-nums tracking-tight text-[var(--color-primary)]">
                     {profileCompletion ? (isRTL ? `${toPersianDigits(profileCompletion.percentage)}٪` : `${profileCompletion.percentage}%`) : t("Active & Ready")}
                   </span>
                   <span className="text-xs font-medium text-slate-600 dark:text-slate-300 truncate max-w-[140px]">
@@ -366,13 +371,13 @@ function UserDashboardView({ user }: { user: any }) {
                 </div>
               </div>
             </div>
-            <ArrowRightIcon className="w-4 h-4 text-slate-500 group-hover:text-emerald-500 transition-colors shrink-0 dark:text-slate-400" />
+            <ArrowRightIcon className="w-4 h-4 text-slate-500 group-hover:text-[var(--color-primary)] transition-colors shrink-0 dark:text-slate-400" />
           </div>
 
           {/* Mini Progress Bar */}
           <div className="w-full bg-slate-100 dark:bg-gray-800 rounded-full h-1.5 overflow-hidden">
             <div
-              className="bg-gradient-to-r from-emerald-500 to-[var(--color-primary)] h-1.5 rounded-full transition-all duration-500"
+              className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] h-1.5 rounded-full transition-all duration-500"
               style={{ width: `${profileCompletion?.percentage ?? 100}%` }}
             />
           </div>

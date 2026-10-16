@@ -212,6 +212,59 @@ export function computeProfileCompletion(raw: {
   };
 }
 
+export async function fetchUserProfileCompletion(userId: string): Promise<ProfileCompletionResult> {
+  try {
+    const [
+      personalRes,
+      physicalRes,
+      familyRes,
+      motherRes,
+      fatherRes,
+      financialRes,
+      intellectualRes,
+      prefWifeIntRes,
+      prefWifePerRes,
+      prefWifePhyRes,
+      spouseOrigRes,
+    ] = await Promise.all([
+      fetchPersonalInformation({ user: userId } as any).catch(() => null),
+      fetchPhysicalInformation({ user: userId } as any).catch(() => null),
+      fetchFamilyInformation({ user: userId } as any).catch(() => null),
+      fetchMothers({ user: userId } as any).catch(() => null),
+      fetchFathers({ user: userId } as any).catch(() => null),
+      fetchFinancialInformation({ user: userId } as any).catch(() => null),
+      fetchIntellectualInformation({ user: userId } as any).catch(() => null),
+      fetchPreferredWifeIntellectualInformation({ user: userId } as any).catch(() => null),
+      fetchPreferredWifePersonalInformation({ user: userId } as any).catch(() => null),
+      fetchPreferredWifePhysicalInformation({ user: userId } as any).catch(() => null),
+      fetchFutureSpouseOriginalities({ user: userId } as any).catch(() => []),
+    ]);
+
+    return computeProfileCompletion({
+      personalInfo: extractFirst(personalRes as any),
+      physicalInfo: extractFirst(physicalRes as any),
+      familyInfo: extractFirst(familyRes as any),
+      mother: extractFirst(motherRes as any),
+      father: extractFirst(fatherRes as any),
+      financialInfo: extractFirst(financialRes as any),
+      intellectualInfo: extractFirst(intellectualRes as any),
+      prefWifeIntellectual: extractFirst(prefWifeIntRes as any),
+      prefWifePersonal: extractFirst(prefWifePerRes as any),
+      prefWifePhysical: extractFirst(prefWifePhyRes as any),
+      futureSpouseOriginalities: Array.isArray(spouseOrigRes) ? spouseOrigRes : (spouseOrigRes as any)?.results ?? [],
+    });
+  } catch (err) {
+    console.warn(`Failed to compute profile completion for user ${userId}:`, err);
+    return {
+      percentage: 0,
+      isReady: false,
+      statusTextFa: 'در حال تکمیل (۰٪)',
+      statusTextEn: 'In Progress (0%)',
+      sections: [],
+    };
+  }
+}
+
 let cachedCompletion: { result: ProfileCompletionResult; timestamp: number } | null = null;
 
 export async function fetchProfileCompletionStatus(forceRefresh = false): Promise<ProfileCompletionResult> {

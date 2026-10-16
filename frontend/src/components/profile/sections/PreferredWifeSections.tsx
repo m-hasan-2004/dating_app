@@ -92,7 +92,7 @@ const SKIN_COLOR_OPTIONS: SelectOption[] = [
 ].map((v) => ({ value: v, label: v }));
 
 const HEIGHT_PRESETS = [
-  { label: '< 160', min: '', max: '159' },
+  { label: '< 160', min: '0', max: '159' },
   { label: '160 - 170', min: '160', max: '170' },
   { label: '170 - 180', min: '170', max: '180' },
   { label: '180 - 190', min: '180', max: '190' },
@@ -100,7 +100,7 @@ const HEIGHT_PRESETS = [
 ];
 
 const WEIGHT_PRESETS = [
-  { label: '< 50', min: '', max: '49' },
+  { label: '< 50', min: '0', max: '49' },
   { label: '50 - 60', min: '50', max: '60' },
   { label: '60 - 70', min: '60', max: '70' },
   { label: '70 - 85', min: '70', max: '85' },
@@ -130,8 +130,12 @@ export function FutureSpouseOriginalitiesSection({
   const { t, isRTL } = useTranslation();
   const [open, setOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<FutureSposeOriginality | null>(null);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState<FutureSposeOriginality | null>(null);
+  const [deleting, setDeleting] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
+  const [deleteError, setDeleteError] = useState('');
   const { state, handleChange, reset, fieldErrors, setFieldErrors } = useFormState(defaultOriginalityForm(null));
 
   const handleAdd = () => {
@@ -150,13 +154,26 @@ export function FutureSpouseOriginalitiesSection({
     setOpen(true);
   };
 
-  const handleDelete = async (item: FutureSposeOriginality) => {
-    if (!confirm('Are you sure you want to delete this originality preference?')) return;
+  const handleDelete = (item: FutureSposeOriginality) => {
+    setItemToDelete(item);
+    setDeleteError('');
+    setDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!itemToDelete) return;
+    setDeleting(true);
+    setDeleteError('');
     try {
-      await deleteFutureSpouseOriginality(item.id);
+      await deleteFutureSpouseOriginality(itemToDelete.id);
+      setDeleteModalOpen(false);
+      setItemToDelete(null);
       onReload();
     } catch (e: any) {
-      alert(e?.message ?? 'Failed to delete');
+      const formatted = formatApiError(e, t, isRTL);
+      setDeleteError(formatted.message || t('Failed to delete'));
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -211,6 +228,48 @@ export function FutureSpouseOriginalitiesSection({
           <div className="flex justify-end gap-3 mt-6">
             <Button variant="outline" onClick={() => setOpen(false)}>{t('Cancel')}</Button>
             <Button onClick={handleSave} disabled={saving}>{saving ? t('Saving...') : t('Save')}</Button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Delete Confirmation Modal */}
+      <Modal isOpen={deleteModalOpen} onClose={() => !deleting && setDeleteModalOpen(false)} className="max-w-md w-full">
+        <div className="p-6 w-full">
+          <div className="flex items-center gap-3 text-red-600 dark:text-red-400 mb-3">
+            <div className="w-10 h-10 rounded-full bg-red-100 dark:bg-red-950/40 flex items-center justify-center shrink-0">
+              <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <h3 className="text-base font-bold text-gray-900 dark:text-white">
+              {t('Delete Future Spouse Ethnicity')}
+            </h3>
+          </div>
+          <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+            {isRTL
+              ? `آیا از حذف معیار «${itemToDelete?.future_spouse_ethnicity ?? itemToDelete?.future_spouse_originality ?? ''}» اطمینان دارید؟ این عملیات غیرقابل بازگشت است.`
+              : `Are you sure you want to delete "${itemToDelete?.future_spouse_ethnicity ?? itemToDelete?.future_spouse_originality ?? ''}"? This action cannot be undone.`}
+          </p>
+          {deleteError && (
+            <p className="mt-3 text-sm text-red-500 bg-red-50 dark:bg-red-950/30 p-2.5 rounded-lg border border-red-200 dark:border-red-800">
+              {deleteError}
+            </p>
+          )}
+          <div className="flex justify-end gap-3 mt-6">
+            <Button
+              variant="outline"
+              onClick={() => setDeleteModalOpen(false)}
+              disabled={deleting}
+            >
+              {t('Cancel')}
+            </Button>
+            <Button
+              onClick={confirmDelete}
+              disabled={deleting}
+              className="!bg-red-600 hover:!bg-red-700 !text-white"
+            >
+              {deleting ? t('Deleting...') : t('Delete')}
+            </Button>
           </div>
         </div>
       </Modal>

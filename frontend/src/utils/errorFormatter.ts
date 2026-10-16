@@ -11,6 +11,7 @@ export interface FormattedError {
 }
 
 export const FIELD_LABELS_FA: Record<string, string> = {
+  // Account & Registration
   username: "نام کاربری",
   phone_number: "شماره تلفن همراه",
   email: "ایمیل",
@@ -20,29 +21,36 @@ export const FIELD_LABELS_FA: Record<string, string> = {
   middle_man_code: "کد معرف",
   first_name: "نام",
   last_name: "نام خانوادگی",
-  gender: "جنسیت",
-  national_code: "کد ملی",
-  birth_date: "تاریخ تولد",
-  height: "قد",
-  weight: "وزن",
-  job: "شغل",
-  education: "تحصیلات",
-  province: "استان",
-  city: "شهر",
-  address: "آدرس",
-  living_location: "محل سکونت",
   old_password: "رمز عبور فعلی",
   new_password: "رمز عبور جدید",
   terms: "شرایط و قوانین",
-  contact_with_family: "میزان ارتباط با خانواده",
-  contact_with_relatives: "میزان ارتباط با بستگان",
-  custody: "حضانت",
-  status: "وضعیت",
-  contract_date: "تاریخ عقد",
-  marriage_date: "تاریخ ازدواج",
-  divorce_date: "تاریخ طلاق",
-  death_date: "تاریخ فوت",
-  husband_death_date: "تاریخ فوت همسر",
+
+  // Personal Information
+  gender: "جنسیت",
+  national_code: "کد ملی",
+  birth_date: "تاریخ تولد",
+  birth_location: "محل تولد",
+  education: "تحصیلات",
+  education_level: "مقطع تحصیلی",
+  degree: "رشته و گرایش تحصیلی",
+  military_status: "وضعیت نظام وظیفه",
+  military_status_explanation: "توضیحات نظام وظیفه",
+  income: "میزان درآمد ماهانه",
+  deposit: "میزان پس‌انداز و ودیعه",
+  have_insurance: "وضعیت بیمه",
+  insurance_type: "نوع بیمه",
+  insurance_years: "سابقه بیمه",
+  leisure_type: "اوقات فراغت و علایق",
+  usage_cases: "مصرف دخانیات یا مواد",
+  usage_case_description: "توضیحات مصرف دخانیات",
+  tatto: "تتو یا خالکوبی",
+  tatto_description: "توضیحات تتو",
+  conviction_or_arrest_history: "سابقه محکومیت یا بازداشت",
+  conviction_reason: "علت محکومیت یا بازداشت",
+
+  // Physical Information
+  height: "قد",
+  weight: "وزن",
   body_and_face: "ویژگی‌های چهره و اندام",
   blood_type: "گروه خونی",
   skin_color: "رنگ پوست",
@@ -52,6 +60,43 @@ export const FIELD_LABELS_FA: Record<string, string> = {
   glasses_size: "نمره عینک",
   disease_or_surgery_history: "سابقه بیماری یا جراحی",
   medication_surgery_disease_type: "نوع بیماری یا جراحی",
+
+  // Engagements and Weddings Statuses
+  status: "وضعیت",
+  contract_date: "تاریخ عقد",
+  marriage_date: "تاریخ ازدواج",
+  divorce_date: "تاریخ طلاق",
+  death_date: "تاریخ فوت",
+  husband_death_date: "تاریخ فوت همسر",
+  contract_length: "مدت زمان دوران عقد",
+  living_length: "مدت زندگی مشترک",
+  reason_for_divorce_or_death: "علت طلاق یا فوت همسر",
+
+  // Family Information
+  father_name: "نام پدر",
+  mother_name: "نام مادر",
+  parents_divorced: "وضعیت طلاق والدین",
+  father_alive: "حیات پدر",
+  mother_alive: "حیات مادر",
+  father_education: "تحصیلات پدر",
+  mother_education: "تحصیلات مادر",
+  father_job: "شغل پدر",
+  mother_job: "شغل مادر",
+  father_originality: "اصالت پدر",
+  mother_originality: "اصالت مادر",
+  contact_with_family: "میزان ارتباط با خانواده",
+  contact_with_relatives: "میزان ارتباط با بستگان",
+  family_culture: "فرهنگ خانواده",
+  average_family_education: "میانگین تحصیلات خانواده",
+  average_family_finance: "وضعیت مالی خانواده",
+
+  // Relatives / Children
+  custody: "حضانت فرزندان",
+  child_quantity: "تعداد فرزندان",
+  child_gender: "جنسیت فرزند",
+  ex_husband_child_count: "تعداد فرزندان از همسر سابق",
+
+  // Financial Information
   capital: "دارایی‌ها و سرمایه",
   other_capital: "سایر سرمایه‌ها",
   other_captial: "سایر سرمایه‌ها",
@@ -63,137 +108,210 @@ export const FIELD_LABELS_FA: Record<string, string> = {
   ex_spouse_financial_status: "وضعیت مالی همسر سابق",
   ex_spouse_financial_pay_status: "نحوه پرداخت به همسر سابق",
   ex_spouse_financial_amount: "مبلغ پرداختی به همسر سابق",
+  dowry_type: "نوع مهریه مدنظر",
   future_spouse_dowry_type: "نوع مهریه مدنظر",
+  dowry_amount: "میزان مهریه مدنظر",
   future_spose_dowry_amount: "میزان مهریه مدنظر",
+  jahiziyeh: "وضعیت تهیه جهیزیه",
   future_spose_jahiziyeh: "وضعیت تهیه جهیزیه",
+  jahiziyeh_explantion: "توضیحات جهیزیه",
   future_spose_jahiziyeh_explanation: "توضیحات جهیزیه",
-  height_min: "حداقل قد",
-  height_max: "حداکثر قد",
-  weight_min: "حداقل وزن",
-  weight_max: "حداکثر وزن",
-  education_level: "مقطع تحصیلی",
-  field_of_study: "رشته تحصیلی",
+
+  // Intellectual Information
+  marriage_goals: "اهداف و انتظارات از اصل ازدواج",
+  marriage_goals_purposes: "اهداف و انتظارات از اصل ازدواج",
+  opinion_woman_job: "نظر در مورد اشتغال خانم",
+  opinion_about_womans_job: "نظر در مورد اشتغال خانم",
+  opinion_woman_edu: "نظر در مورد ادامه تحصیل خانم",
+  opinion_about_womans_education: "نظر در مورد ادامه تحصیل خانم",
+  pros_of_yourself: "نقاط قوت و خصوصیات مثبت خود",
+  cons_of_yourself: "نقاط ضعف و خصوصیات منفی خود",
+  type_connection_friends: "کیفیت ارتباط با دوستان",
+  type_of_connection_with_friends: "کیفیت ارتباط با دوستان",
+  friends_connection_reason: "کیفیت و علت ارتباط با دوستان",
+  political_orientation: "گرایش و علایق سیاسی",
+  opinion_velayat_faqih: "نظر و التزام به ولایت فقیه",
+  opinion_about_velayat_faqih: "نظر و التزام به ولایت فقیه",
+  opinion_child_quantity: "تعداد فرزندان مدنظر",
+  opinion_about_child_quantity: "تعداد فرزندان مدنظر",
+  contract_how: "نحوه برگزاری مراسم عقد",
+  wedding_how: "نحوه برگزاری مراسم عروسی",
+  worship_prayer: "میزان تقید و پایبندی به نماز و عبادات",
+  worship_and_prayer: "میزان تقید و پایبندی به نماز و عبادات",
+  fasting: "میزان پایبندی به روزه گرفتن",
+  fasting_status: "میزان پایبندی به روزه گرفتن",
+  fasting_explanation: "توضیحات مربوط به روزه‌داری",
+  cover_type_house: "نوع پوشش در خانه",
+  cover_type_society: "پوشش و حجاب در جامعه",
+  society_cover: "پوشش و حجاب در جامعه",
+  participating_prayer_quran_meetings: "میزان شرکت در مجالس مذهبی و هیئات",
+  music: "میزان گوش دادن به موسیقی",
+  music_status: "میزان گوش دادن به موسیقی",
+  dance_singing_assemblies: "حضور در مجالس رقص و آواز",
+  opinion_innocent_contact: "ارتباط با نامحرم",
+  opinion_about_innocent_contact: "ارتباط با نامحرم",
+  cover_type_innocent_contact: "نوع پوشش در ارتباط با نامحرم",
+  decision_making_choosing_spouse: "نحوه تصمیم‌گیری در انتخاب همسر",
+
+  // Preferred Wife / Future Spouse
+  appearance_type: "تیپ و پوشش ظاهری مدنظر همسر",
+  age_difference: "اختلاف سنی مدنظر با همسر",
+  future_spouse_family_religious_status_importance: "میزان اهمیت وضعیت مذهبی خانواده همسر",
+  future_spouse_family_financial_status_importance: "میزان اهمیت وضعیت مالی خانواده همسر",
+  marriage_with_someone_with_marriage_experience: "ازدواج با فرد دارای تجربه عقد و ازدواج",
+  marriage_with_someone_explanation: "توضیحات سابقه ازدواج قبلی",
+  most_important_moral_feature: "مهم‌ترین ویژگی اخلاقی مدنظر همسر",
+  most_important_moral_feature_of_future_spouse: "مهم‌ترین ویژگی اخلاقی مدنظر همسر",
+  marriage_with_disabled: "ازدواج با فرد دارای معلولیت جسمی",
+  marriage_with_disabled_person: "ازدواج با فرد دارای معلولیت جسمی",
+  marriage_with_veteran: "ازدواج با فرد جانباز",
+  marriage_with_veteran_person: "ازدواج با فرد جانباز",
+  marriage_disabled_veteran_explanation: "توضیحات ازدواج با جانباز یا معلول",
+  red_flags: "خطوط قرمز و نبایدهای اخلاقی و رفتاری",
+  field_of_study: "رشته تحصیلی همسر",
   future_spouse_job: "شغل همسر مدنظر",
   current_residence_location: "محل سکونت فعلی همسر",
   after_marriage_residence_location: "محل سکونت پس از ازدواج",
   future_spouse_ethnicity: "قومیت و اصالت مدنظر",
   future_spouse_originality: "قومیت و اصالت مدنظر",
-  marriage_goals: "اهداف ازدواج",
-  marriage_goals_purposes: "اهداف ازدواج",
-  opinion_woman_job: "نظر در مورد اشتغال خانم",
-  opinion_about_womans_job: "نظر در مورد اشتغال خانم",
-  opinion_woman_edu: "نظر در مورد تحصیل خانم",
-  opinion_about_womans_education: "نظر در مورد تحصیل خانم",
-  pros_of_yourself: "نقاط قوت شما",
-  cons_of_yourself: "نقاط ضعف شما",
-  type_connection_friends: "نحوه ارتباط با دوستان",
-  type_of_connection_with_friends: "نحوه ارتباط با دوستان",
-  friends_connection_reason: "دلیل نحوه ارتباط با دوستان",
-  political_orientation: "گرایش سیاسی",
-  opinion_velayat_faqih: "نظر درباره ولایت فقیه",
-  opinion_about_velayat_faqih: "نظر درباره ولایت فقیه",
-  opinion_child_quantity: "تعداد فرزندان مدنظر",
-  opinion_about_child_quantity: "تعداد فرزندان مدنظر",
-  contract_how: "نحوه برگزاری مراسم عقد",
-  wedding_how: "نحوه برگزاری مراسم عروسی",
-  worship_prayer: "تقید به نماز",
-  fasting_status: "تقید به روزه",
-  society_cover: "پوشش در اجتماع",
-  music_status: "گوش دادن به موسیقی",
-  dance_singing_assemblies: "حضور در مجالس رقص و آواز",
+  height_min: "حداقل قد",
+  height_max: "حداکثر قد",
+  weight_min: "حداقل وزن",
+  weight_max: "حداکثر وزن",
+  additional_explanations: "توضیحات تکمیلی",
+
+  // General Location
+  province: "استان",
+  city: "شهر",
+  address: "آدرس",
+  living_location: "محل سکونت",
+  job: "شغل",
   smoking_status: "استعمال دخانیات",
   hookah_status: "مصرف قلیان",
   alcohol_status: "مصرف مشروبات الکلی",
   drugs_status: "مصرف مواد مخدر",
   alive: "در قید حیات",
   originality: "اصالت",
-  additional_explanations: "توضیحات تکمیلی",
 };
 
 export const COMMON_ERROR_TRANSLATIONS_FA: Record<string, string> = {
-  "A user with that phone number already exists.": "این شماره تلفن قبلاً گرفته شده است.",
-  "This phone number is already taken.": "این شماره تلفن قبلاً گرفته شده است.",
-  "A user with that username already exists.": "این نام کاربری قبلاً گرفته شده است.",
-  "This username is already taken.": "این نام کاربری قبلاً گرفته شده است.",
-  "A user with that email already exists.": "این ایمیل قبلاً گرفته شده است.",
-  "This email is already taken.": "این ایمیل قبلاً گرفته شده است.",
-  "This field is required.": "این فیلد الزامی است.",
-  "This field may not be blank.": "این فیلد نمی‌تواند خالی باشد.",
-  "This field may not be null.": "این فیلد نمی‌تواند خالی باشد.",
-  "Enter a valid date.": "لطفاً یک تاریخ معتبر وارد کنید.",
-  "Enter a valid date/time.": "لطفاً یک تاریخ و ساعت معتبر وارد کنید.",
+  // Required & Blank errors
+  "This field is required.": "تکمیل این بخش الزامی است.",
+  "This field may not be blank.": "این قسمت نباید خالی باشد.",
+  "This field may not be null.": "لطفاً یک گزینه را انتخاب کنید.",
+  "این مقدار نباید خالی باشد.": "تکمیل این بخش الزامی است.",
+  "این مقدار نباید توهی باشد.": "لطفاً یک گزینه را انتخاب کنید.",
+  "این مقدار نباید تهی باشد.": "لطفاً یک گزینه را انتخاب کنید.",
+
+  // Choices & Selection
+  "Invalid choice.": "لطفاً یک گزینه معتبر انتخاب نمایید.",
+  "Select a valid choice. That choice is not one of the available choices.": "گزینه انتخابی معتبر نیست؛ لطفاً از گزینه‌های موجود انتخاب کنید.",
+  '"" یک انتخاب معتبر نیست.': "لطفاً یک گزینه را انتخاب کنید.",
+  '"[]" یک انتخاب معتبر نیست.': "لطفاً حداقل یک گزینه را انتخاب کنید.",
+  "\"\" is not a valid choice.": "لطفاً یک گزینه را انتخاب کنید.",
+  "\"[]\" is not a valid choice.": "لطفاً حداقل یک گزینه را انتخاب کنید.",
+
+  // Dates
+  "Enter a valid date.": "لطفاً تاریخ را به صورت صحیح انتخاب یا وارد کنید.",
+  "Enter a valid date/time.": "لطفاً تاریخ و زمان را به درستی وارد کنید.",
+  "فرمت تاریخ اشتباه است. از یکی از این فرمت ها استفاده کنید: YYYY-MM-DD.": "فرمت تاریخ صحیح نیست (مثال صحیح: ۱۳۷۴/۰۶/۱۵).",
+
+  // Numbers
   "A valid number is required.": "لطفاً یک عدد معتبر وارد کنید.",
-  "A valid integer is required.": "لطفاً یک عدد صحیح معتبر وارد کنید.",
-  "Enter a whole number.": "لطفاً یک عدد کامل وارد کنید.",
-  "Enter a number.": "لطفاً یک عدد معتبر وارد کنید.",
-  "Invalid choice.": "گزینه انتخاب شده نامعتبر است.",
-  "Select a valid choice. That choice is not one of the available choices.": "گزینه انتخاب شده در میان گزینه‌های معتبر نیست.",
-  "Invalid choice for body and face.": "گزینه انتخاب شده برای چهره و اندام نامعتبر است.",
-  "Body and face is required.": "انتخاب ویژگی‌های چهره و اندام الزامی است.",
-  "Invalid selection for type of friends' connection.": "گزینه انتخاب شده برای ارتباط با دوستان نامعتبر است.",
-  "Please specify the type of connection you have with friends.": "لطفاً نحوه ارتباط خود با دوستان را مشخص کنید.",
+  "A valid integer is required.": "لطفاً یک عدد صحیح وارد کنید.",
+  "Enter a whole number.": "لطفاً یک عدد صحیح وارد نمایید.",
+  "Enter a number.": "لطفاً فقط مقدار عددی وارد کنید.",
+
+  // Auth & Account
+  "A user with that phone number already exists.": "این شماره تلفن قبلاً در سامانه ثبت شده است.",
+  "This phone number is already taken.": "این شماره تلفن قبلاً در سامانه ثبت شده است.",
+  "A user with that username already exists.": "این نام کاربری قبلاً انتخاب شده است.",
+  "This username is already taken.": "این نام کاربری قبلاً انتخاب شده است.",
+  "A user with that email already exists.": "این ایمیل قبلاً در سامانه ثبت شده است.",
+  "This email is already taken.": "این ایمیل قبلاً در سامانه ثبت شده است.",
   "The two password fields didn't match.": "رمزهای عبور وارد شده یکسان نیستند.",
   "Passwords do not match.": "رمزهای عبور وارد شده یکسان نیستند.",
-  "Invalid credentials.": "نام کاربری یا رمز عبور اشتباه است.",
+  "Invalid credentials.": "نام کاربری یا کلمه عبور نادرست است.",
   "Account is disabled.": "حساب کاربری شما غیرفعال شده است.",
-  "Session already active.": "نشست کاربری از قبل فعال است.",
-  "Invalid access code.": "کد دعوت نامعتبر یا منقضی شده است.",
-  "Access code is invalid.": "کد دعوت نامعتبر است.",
-  "Access code cannot be blank.": "کد دعوت نمی‌تواند خالی باشد.",
-  "Current password is incorrect.": "رمز عبور فعلی نادرست است.",
+  "Session already active.": "نشست کاربری شما فعال است.",
+  "Invalid access code.": "کد دعوت نامعتبر است یا منقضی شده است.",
+  "Access code is invalid.": "کد دعوت معتبر نمی‌باشد.",
+  "Access code cannot be blank.": "ورود کد دعوت الزامی است.",
+  "Current password is incorrect.": "رمز عبور فعلی اشتباه است.",
   "New password cannot be the same as old password.": "رمز عبور جدید نمی‌تواند مشابه رمز عبور قبلی باشد.",
   "Please enter your invitation access code.": "لطفاً کد دعوت خود را وارد کنید.",
-  "Please enter a username.": "لطفاً یک نام کاربری وارد کنید.",
+  "Please enter a username.": "لطفاً نام کاربری را وارد کنید.",
   "Username must be at least 3 characters.": "نام کاربری باید حداقل ۳ کاراکتر باشد.",
-  "Username can only contain English letters, numbers, and underscores.": "نام کاربری فقط می‌تواند شامل حروف انگلیسی، اعداد و زیرخط (_) باشد.",
-  "Please enter your email address.": "لطفاً آدرس ایمیل خود را وارد کنید.",
+  "Username can only contain English letters, numbers, and underscores.": "نام کاربری فقط می‌تواند شامل حروف انگلیسی، اعداد و زیرخط باشد.",
+  "Please enter your email address.": "لطفاً آدرس ایمیل را وارد کنید.",
   "Please enter a valid email address.": "لطفاً یک آدرس ایمیل معتبر وارد کنید.",
   "Enter a valid email address.": "لطفاً یک آدرس ایمیل معتبر وارد کنید.",
-  "Please enter your mobile phone number.": "لطفاً شماره تلفن همراه خود را وارد کنید.",
-  "Please enter a valid mobile number (e.g. 09123456789).": "لطفاً یک شماره همراه معتبر وارد کنید (مثال: ۰۹۱۲۳۴۵۶۷۸۹).",
+  "Please enter your mobile phone number.": "لطفاً شماره تلفن همراه را وارد کنید.",
+  "Please enter a valid mobile number (e.g. 09123456789).": "لطفاً شماره همراه معتبر ۱۱ رقمی وارد نمایید (مثال: ۰۹۱۲۳۴۵۶۷۸۹).",
   "Enter a valid phone number (e.g. 0912 345 6789) or a valid phone number with country code.": "شماره تلفن همراه معتبر نیست.",
-  "The phone number entered is not valid.": "شماره تلفن همراه معتبر نیست.",
-  "Please enter a password.": "لطفاً رمز عبور را وارد کنید.",
+  "The phone number entered is not valid.": "شماره تلفن همراه وارد شده معتبر نیست.",
+  "Please enter a password.": "لطفاً رمز عبور را وارد نمایید.",
   "Password must be at least 8 characters long.": "رمز عبور باید حداقل ۸ کاراکتر باشد.",
-  "Password must contain both letters and numbers.": "رمز عبور باید شامل حروف و اعداد باشد.",
+  "Password must contain both letters and numbers.": "رمز عبور باید هم شامل حروف و هم اعداد باشد.",
   "Please confirm your password.": "لطفاً تکرار رمز عبور را وارد کنید.",
-  "You must agree to the Terms, Conditions, and Privacy Policy.": "پذیرش شرایط و ضوابط الزامی است.",
-  "Please fix the errors in the form before submitting.": "لطفاً خطاهای فرم را برطرف نمایید.",
+  "You must agree to the Terms, Conditions, and Privacy Policy.": "پذیرش قوانین و شرایط سامانه الزامی است.",
+  "Please fix the errors in the form before submitting.": "لطفاً موارد مشخص‌شده در فرم را اصلاح نمایید.",
   "Registration failed. Please check your access code and details.": "ثبت‌نام ناموفق بود. لطفاً کد دعوت و مشخصات خود را بررسی کنید.",
-  "Registration failed. Please check your details and try again.": "ثبت‌نام ناموفق بود. لطفاً مشخصات خود را بررسی و دوباره تلاش کنید.",
-  "Failed to sign in. Please check your credentials.": "ورود ناموفق بود. لطفاً نام کاربری و رمز عبور را بررسی کنید.",
-  "Network error": "خطای ارتباط با سرور. لطفاً اتصال اینترنت خود را بررسی کنید.",
+  "Registration failed. Please check your details and try again.": "ثبت‌نام ناموفق بود. لطفاً مشخصات خود را بررسی و مجدداً تلاش کنید.",
+  "Failed to sign in. Please check your credentials.": "ورود ناموفق بود. نام کاربری یا کلمه عبور را بررسی کنید.",
+  "Network error": "خطای ارتباط با سرور. لطفاً اتصال اینترنت خود را بررسی نمایید.",
   "An unexpected error occurred": "خطای غیرمنتظره‌ای رخ داده است.",
-  "Has child from ex-husband?": "آیا از همسر سابق فرزندی دارید؟",
-  "Must be at least 18 years old": "حداقل سن باید ۱۸ سال باشد.",
-  "Age cannot exceed 100 years": "سن نمی‌تواند بیشتر از ۱۰۰ سال باشد.",
-  "Ensure this value is greater than or equal to": "مقدار باید بزرگتر یا مساوی باشد.",
-  "Ensure this value is less than or equal to": "مقدار باید کوچکتر یا مساوی باشد.",
-  "Ensure this field has no more than": "تعداد کاراکترها بیش از حد مجاز است.",
+  "Must be at least 18 years old": "حداقل سن مجاز ۱۸ سال است.",
+  "Age cannot exceed 100 years": "سن وارد شده معتبر نیست.",
 };
 
 /**
- * Translates a single message string using t() if available or the fallback FA map.
+ * Translates and humanizes a single error message string.
  */
 function translateMsg(msg: string, t?: (k: string) => string, isRTL: boolean = true): string {
   if (!msg) return "";
-  const trimmed = msg.trim();
+  let trimmed = msg.trim();
+
+  // Strip JSON array/quote wrappers if raw
+  if (trimmed.startsWith('["') && trimmed.endsWith('"]')) {
+    trimmed = trimmed.slice(2, -2).trim();
+  }
+
   if (t) {
     const translated = t(trimmed);
     if (translated && translated !== trimmed) return translated;
   }
+
   if (isRTL) {
     if (COMMON_ERROR_TRANSLATIONS_FA[trimmed]) {
       return COMMON_ERROR_TRANSLATIONS_FA[trimmed];
     }
-    // Dynamic pattern matching
+
+    // Direct pattern matches for known technical strings
+    if (trimmed.includes("یک انتخاب معتبر نیست")) {
+      if (trimmed.includes("[]")) return "لطفاً حداقل یک گزینه را انتخاب کنید.";
+      return "لطفاً یک گزینه را انتخاب کنید.";
+    }
+    if (trimmed.includes("is not a valid choice")) {
+      if (trimmed.includes("[]")) return "لطفاً حداقل یک گزینه را انتخاب کنید.";
+      return "لطفاً یک گزینه را انتخاب کنید.";
+    }
+    if (trimmed.includes("این مقدار نباید خالی باشد") || trimmed.includes("may not be blank")) {
+      return "تکمیل این بخش الزامی است.";
+    }
+    if (trimmed.includes("نباید توهی باشد") || trimmed.includes("نباید تهی باشد") || trimmed.includes("may not be null")) {
+      return "لطفاً یک گزینه را انتخاب کنید.";
+    }
+    if (trimmed.includes("فرمت تاریخ اشتباه است") || trimmed.includes("valid date format")) {
+      return "فرمت تاریخ صحیح نیست (مثال صحیح: ۱۳۷۴/۰۶/۱۵).";
+    }
     if (trimmed.includes("greater than or equal to")) {
       const match = trimmed.match(/greater than or equal to\s+([\d.]+)/);
-      return match ? `مقدار باید بزرگتر یا مساوی با ${match[1]} باشد.` : "مقدار باید بزرگتر یا مساوی باشد.";
+      return match ? `مقدار باید حداقل ${match[1]} باشد.` : "مقدار وارد شده کمتر از حد مجاز است.";
     }
     if (trimmed.includes("less than or equal to")) {
       const match = trimmed.match(/less than or equal to\s+([\d.]+)/);
-      return match ? `مقدار باید کوچکتر یا مساوی با ${match[1]} باشد.` : "مقدار باید کوچکتر یا مساوی باشد.";
+      return match ? `مقدار باید حداکثر ${match[1]} باشد.` : "مقدار وارد شده بیشتر از حد مجاز است.";
     }
     if (trimmed.includes("Ensure this field has no more than")) {
       const match = trimmed.match(/no more than\s+(\d+)/);
@@ -213,6 +331,7 @@ function translateMsg(msg: string, t?: (k: string) => string, isRTL: boolean = t
       return "لطفاً یک تاریخ معتبر وارد کنید.";
     }
   }
+
   return trimmed;
 }
 

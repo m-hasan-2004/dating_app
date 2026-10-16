@@ -173,7 +173,7 @@ const AGE_PRESETS = [
 ];
 
 const HEIGHT_PRESETS = [
-  { labelFa: 'زیر ۱۶۰', labelEn: '< 160', min: 140, max: 159 },
+  { labelFa: 'زیر ۱۶۰', labelEn: '< 160', min: 0, max: 159 },
   { labelFa: '۱۶۰-۱۷۰', labelEn: '160-170', min: 160, max: 170 },
   { labelFa: '۱۷۰-۱۸۰', labelEn: '170-180', min: 170, max: 180 },
   { labelFa: '۱۸۰-۱۹۰', labelEn: '180-190', min: 180, max: 190 },
@@ -1142,7 +1142,9 @@ export default function CandidateSearchPage() {
                     value={minAge}
                     onChange={(e) => { setMinAge(e.target.value); setPage(1); }}
                     className={`w-full px-2.5 py-1 text-xs border rounded-lg bg-white dark:bg-gray-800 dark:text-white transition-all ${
-                      minAge ? 'border-[var(--color-primary)] ring-1 ring-[var(--color-primary)] font-bold bg-[var(--color-primary)]/10 text-slate-900 dark:text-white' : 'border-slate-300 dark:border-gray-700'
+                      (minAge && Number(minAge) < 18)
+                        ? 'border-red-500 ring-1 ring-red-500 bg-red-50/20 text-red-900 dark:text-red-200'
+                        : minAge ? 'border-[var(--color-primary)] ring-1 ring-[var(--color-primary)] font-bold bg-[var(--color-primary)]/10 text-slate-900 dark:text-white' : 'border-slate-300 dark:border-gray-700'
                     }`}
                   />
                   <span className="text-slate-400 font-bold">-</span>
@@ -1154,10 +1156,18 @@ export default function CandidateSearchPage() {
                     value={maxAge}
                     onChange={(e) => { setMaxAge(e.target.value); setPage(1); }}
                     className={`w-full px-2.5 py-1 text-xs border rounded-lg bg-white dark:bg-gray-800 dark:text-white transition-all ${
-                      maxAge ? 'border-[var(--color-primary)] ring-1 ring-[var(--color-primary)] font-bold bg-[var(--color-primary)]/10 text-slate-900 dark:text-white' : 'border-slate-300 dark:border-gray-700'
+                      (maxAge && Number(maxAge) < 18)
+                        ? 'border-red-500 ring-1 ring-red-500 bg-red-50/20 text-red-900 dark:text-red-200'
+                        : maxAge ? 'border-[var(--color-primary)] ring-1 ring-[var(--color-primary)] font-bold bg-[var(--color-primary)]/10 text-slate-900 dark:text-white' : 'border-slate-300 dark:border-gray-700'
                     }`}
                   />
                 </div>
+                {((minAge && Number(minAge) < 18) || (maxAge && Number(maxAge) < 18)) && (
+                  <p className="text-[11px] text-red-600 dark:text-red-400 font-medium flex items-center gap-1">
+                    <span>⚠</span>
+                    <span>{isRTL ? "حداقل سن مجاز برای جستجو ۱۸ سال می‌باشد." : "Minimum allowed age is 18 years."}</span>
+                  </p>
+                )}
                 <div className="flex flex-wrap gap-1.5 pt-1">
                   {AGE_PRESETS.map((preset) => {
                     const isPresetActive = minAge === String(preset.min) && maxAge === String(preset.max);

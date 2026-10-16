@@ -20,7 +20,8 @@ import {
 } from '@/icons';
 import { useAuth } from '@/hooks/use-auth';
 import { useTranslation } from '@/context/LanguageContext';
-import { formatDate, formatIranianPhoneNumber, formatNumber } from '@/utils/formatters';
+import { formatDate, formatIranianPhoneNumber, formatNumber, toPersianDigits } from '@/utils/formatters';
+import { fetchUserProfileCompletion, ProfileCompletionResult } from '@/utils/profileCompletion';
 import { useRouter } from 'next/navigation';
 
 const PAGE_SIZE_OPTIONS = [5, 10, 20, 50, 100];
@@ -57,6 +58,7 @@ export default function UsersListPage() {
   const [selectedUserIds, setSelectedUserIds] = useState<string[]>([]);
   const [batchActionLoading, setBatchActionLoading] = useState(false);
   const [selectedBatchAction, setSelectedBatchAction] = useState<string>('');
+  const [completionMap, setCompletionMap] = useState<Record<string, ProfileCompletionResult>>({});
 
   const loadStats = useCallback(async () => {
     try {
@@ -90,12 +92,33 @@ export default function UsersListPage() {
       }
 
       const res = await fetchUsers(params);
+      let loadedUsers: User[] = [];
       if (Array.isArray(res)) {
+        loadedUsers = res;
         setUsers(res);
         setTotalCount(res.length);
       } else {
-        setUsers(res.results ?? []);
+        loadedUsers = res.results ?? [];
+        setUsers(loadedUsers);
         setTotalCount(res.count ?? 0);
+      }
+
+      // Fetch profile completion for each user on current page in background
+      if (loadedUsers.length > 0) {
+        Promise.all(
+          loadedUsers.map(async (u) => {
+            const comp = await fetchUserProfileCompletion(u.id);
+            return { id: u.id, comp };
+          })
+        ).then((results) => {
+          setCompletionMap((prev) => {
+            const next = { ...prev };
+            results.forEach((r) => {
+              next[r.id] = r.comp;
+            });
+            return next;
+          });
+        });
       }
     } catch (e: any) {
       setError(e?.message ?? t('Failed to load users'));
@@ -444,20 +467,21 @@ export default function UsersListPage() {
                 <th className={`px-4 py-3.5 font-semibold text-slate-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Status")}</th>
                 <th className={`px-4 py-3.5 font-semibold text-slate-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Role")}</th>
                 <th className={`px-4 py-3.5 font-semibold text-slate-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Joined")}</th>
+                <th className={`px-4 py-3.5 font-semibold text-slate-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>{isRTL ? "میزان تکمیل پروفایل" : "Profile Completion"}</th>
                 <th className={`px-4 py-3.5 font-semibold text-slate-600 dark:text-gray-300 ${isRTL ? 'text-right' : 'text-left'}`}>{t("Actions")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-gray-800">
               {loading ? (
                 <tr>
-                  <td colSpan={7} className="px-6 py-12 text-center text-slate-400">
+                  <td colSpan={8} className="px-6 py-12 text-center text-slate-400">
                     <div className="mx-auto mb-2 h-6 w-6 animate-spin rounded-full border-2 border-[var(--color-primary)] border-t-transparent" />
                     {t("Loading matching users...")}
                   </td>
                 </tr>
               ) : users.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="px-6 py-12 text-center text-slate-400 italic">
+                  <td colSpan={8} className="px-6 py-12 text-center text-slate-400 italic">
                     {t("No users found matching your search or filters.")}
                   </td>
                 </tr>
@@ -525,6 +549,23 @@ export default function UsersListPage() {
                       </td>
                       <td className={`px-4 py-4 text-slate-500 dark:text-gray-400 text-xs ${isRTL ? 'text-right' : 'text-left'}`}>
                         {user.date_joined ? formatDate(user.date_joined, isRTL) : '—'}
+                      </td>
+                      <td className={`px-4 py-4 ${isRTL ? 'text-right' : 'text-left'}`}>
+                        {completionMap[user.id] ? (
+                          <div className="flex items-center gap-2 max-w-[130px]">
+                            <div className="flex-1 bg-slate-100 dark:bg-gray-800 rounded-full h-1.5 overflow-hidden">
+                              <div
+                                className="bg-[var(--color-primary)] h-1.5 rounded-full transition-all"
+                                style={{ width: `${completionMap[user.id].percentage}%` }}
+                              />
+                            </div>
+                            <span className="text-xs font-bold text-slate-700 dark:text-slate-200">
+                              {isRTL ? `${toPersianDigits(completionMap[user.id].percentage)}٪` : `${completionMap[user.id].percentage}%`}
+                            </span>
+                          </div>
+                        ) : (
+                          <div className="h-1.5 w-16 bg-slate-100 dark:bg-gray-800 rounded-full animate-pulse" />
+                        )}
                       </td>
                       <td className={`px-4 py-4 ${isRTL ? 'text-right' : 'text-left'}`}>
                         <div className="inline-flex items-center gap-2">

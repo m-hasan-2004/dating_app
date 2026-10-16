@@ -25,7 +25,7 @@ import PageBreadcrumb from "@/components/common/PageBreadCrumb";
 import { PlusIcon, TrashBinIcon, CheckLineIcon, CloseLineIcon, CopyIcon } from "@/icons";
 import { useAuth } from "@/hooks/use-auth";
 import { useTranslation } from "@/context/LanguageContext";
-import { formatDate } from "@/utils/formatters";
+import { formatDate, toPersianDigits } from "@/utils/formatters";
 import { useRouter } from "next/navigation";
 
 export default function AccessCodesManagement() {
@@ -614,11 +614,9 @@ export default function AccessCodesManagement() {
             {t("Confirm Delete")}
           </h3>
           <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
-            {t("Are you sure you want to delete access code")}{" "}
-            <span className="font-mono font-semibold text-gray-900 dark:text-white">
-              &ldquo;{selectedCode?.code}&rdquo;
-            </span>
-            ?
+            {isRTL
+              ? "آیا از حذف این کد دسترسی اطمینان دارید؟ این عملیات غیرقابل بازگشت است."
+              : "Are you sure you want to delete this access code? This action cannot be undone."}
           </p>
 
           <div className="flex justify-center gap-3">
@@ -643,11 +641,23 @@ export default function AccessCodesManagement() {
             {t("Confirm Delete")}
           </h3>
           <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
-            {t("Are you sure you want to delete")}{" "}
-            <span className="font-semibold text-gray-900 dark:text-white">
-              {selectedIds.size} {t("selected")} {t("access code(s)")}
-            </span>
-            ? {t("This action cannot be undone.")}
+            {isRTL ? (
+              <>
+                آیا از حذف{" "}
+                <span className="font-semibold text-gray-900 dark:text-white">
+                  {toPersianDigits(selectedIds.size)} کد دسترسی انتخاب‌شده
+                </span>{" "}
+                اطمینان دارید؟ این عملیات غیرقابل بازگشت است.
+              </>
+            ) : (
+              <>
+                Are you sure you want to delete{" "}
+                <span className="font-semibold text-gray-900 dark:text-white">
+                  {selectedIds.size} selected access code(s)
+                </span>
+                ? This action cannot be undone.
+              </>
+            )}
           </p>
 
           <div className="flex justify-center gap-3">
