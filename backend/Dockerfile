@@ -1,5 +1,5 @@
 # Base image DockerFile - Updated to fix script issues
-FROM python:3.11-slim-bullseye
+FROM python:3.11-slim-bookworm
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1 \

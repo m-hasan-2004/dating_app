@@ -50,19 +50,16 @@ cd dating_app
 # 2. Configure Backend Environment
 cp backend/.env.example backend/.env
 
-# 3. Create or inspect the shared bridge network (if not existing)
-docker network create backend_app-network || true
-
-# 4. Launch entire stack via Docker Compose
+# 3. Launch entire stack via Docker Compose (creates network & volumes automatically)
 docker compose up -d --build
 
-# 5. Apply database migrations
+# 4. Apply database migrations
 docker compose exec web python manage.py migrate
 
-# 6. Create initial administrator (SuperUser)
-docker compose exec web python manage.py createsuperuser
+# 5. Create initial administrator (SuperUser)
+docker compose exec web python manage.py super1
 
-# 7. Access applications:
+# 6. Access applications:
 # Frontend Portal:   http://localhost:3000
 # Backend API:       http://localhost:8000
 # Django Admin:      http://localhost:8000/admin
@@ -103,7 +100,6 @@ docker compose exec web python manage.py createsuperuser
 
 3. **Run Application**:
    ```powershell
-   docker network create backend_app-network
    docker compose up -d --build
    ```
 
@@ -144,7 +140,6 @@ docker compose exec web python manage.py createsuperuser
 
 3. **Run Application**:
    ```bash
-   docker network create backend_app-network || true
    docker compose up -d --build
    ```
 
@@ -238,7 +233,7 @@ You should see 4 active services:
 To create an administrator account for accessing Django Admin and the Admin Dashboard:
 
 ```bash
-docker compose exec web python manage.py createsuperuser
+docker compose exec web python manage.py super1
 ```
 Follow the interactive prompts to define:
 - **Username** (e.g., `admin`)
@@ -283,31 +278,60 @@ docker compose exec web python manage.py migrate
 
 ---
 
+## Frontend Build Modes & Pre-Packaged Offline Artifacts
+
+The frontend Dockerfile supports two flexible compilation workflows:
+
+### Mode 1: Automated In-Docker Build (Default)
+Builds the Next.js standalone container inside Docker. It uses Docker BuildKit's persistent npm cache (`/root/.npm`), a Cloudflare edge mirror (`https://registry.yarnpkg.com/`), and tuned network timeouts (10 min) with limited socket concurrency (`maxsockets 3`) to ensure high reliability even on throttled internet connections:
+```bash
+docker compose up -d --build frontend
+```
+
+### Mode 2: Instant Pre-Packaged Artifacts (Zero-Download / Offline)
+If your development machine has slow or unstable access to npm registries during Docker builds, compile the Next.js assets on your host machine first:
+```powershell
+cd frontend
+
+# Step 1: Compile Next.js locally & package standalone assets into build_artifacts.tar.gz
+npm run build:docker
+
+# Step 2: Return to root and build the Docker container
+cd ..
+docker compose up -d --build frontend
+```
+When Docker detects `build_artifacts.tar.gz`, it bypasses `npm ci` and `next build` entirely, unpacking your pre-packaged standalone server and static assets in **1–2 seconds**.
+
+---
+
 ## Offline Image Transfer (Save & Load Docker Tarballs)
 
-If you need to deploy the project onto an air-gapped machine or transfer prebuilt images via USB/local network without pulling from Docker Hub:
+If you need to deploy the project onto an air-gapped machine or transfer prebuilt images to another device via USB/local network without pulling from Docker Hub or compiling:
 
 ### On Source Machine (Exporting Images):
 ```bash
-# Save frontend and backend images into tar files
-docker save -o dating_app_frontend.tar dating_app-frontend:latest
-docker save -o dating_app_backend.tar backend-web:latest
+# Save frontend, backend, database, and pgAdmin images into tar files
+docker save -o dating_app_frontend.tar dating_app_frontend:latest
+docker save -o dating_app_backend.tar dating_app_backend:latest
 docker save -o postgres_15.tar postgres:15-alpine
 docker save -o pgadmin.tar dpage/pgadmin4:latest
 ```
 
 ### On Target Machine (Importing Images):
 ```bash
-# Copy tar files and project folder to the target machine, then run:
+# 1. Copy the tar files along with the project repository (or docker-compose.yml and .env) to the target machine
+
+# 2. Import all saved Docker images:
 docker load -i dating_app_frontend.tar
 docker load -i dating_app_backend.tar
 docker load -i postgres_15.tar
 docker load -i pgadmin.tar
 
-# Start the stack without rebuilding
+# 3. Start the entire platform (Docker Compose manages the network automatically):
 cd dating_app
-docker network create backend_app-network || true
 docker compose up -d --no-build
+
+# 4. Apply database migrations:
 docker compose exec web python manage.py migrate
 ```
 
@@ -402,9 +426,8 @@ FRONTEND_PORT=3002 docker compose up -d
 ```
 
 ### 2. Container Name or Network Conflict
-If you encounter `network not found` or `container name conflict`:
+If you encounter `container name conflict` or want a clean restart:
 ```bash
-docker network create backend_app-network || true
 docker compose down
 docker compose up -d
 ```

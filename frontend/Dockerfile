@@ -5,20 +5,28 @@ FROM node:20-alpine AS builder
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
+ARG NPM_REGISTRY=https://registry.yarnpkg.com/
+
 COPY . .
 
 # If prebuilt artifacts archive exists, unpack directly; otherwise perform full build
-RUN if [ -f "build_artifacts.tar.gz" ]; then \
+RUN --mount=type=cache,target=/root/.npm \
+    set -e; \
+    if [ -f "build_artifacts.tar.gz" ]; then \
       echo "Deploying from optimized pre-packaged standalone artifacts..."; \
-      tar -xzf build_artifacts.tar.gz; \
+      tar -xvzf build_artifacts.tar.gz; \
     else \
-      echo "Building from source..."; \
-      npm config set fetch-retries 7; \
-      npm config set fetch-retry-mintimeout 30000; \
+      echo "Building from source via ${NPM_REGISTRY}..."; \
+      npm config set registry "${NPM_REGISTRY}"; \
+      npm config set maxsockets 3; \
+      npm config set fetch-retries 10; \
+      npm config set fetch-retry-mintimeout 20000; \
       npm config set fetch-retry-maxtimeout 180000; \
-      npm ci --no-audit; \
+      npm config set fetch-timeout 600000; \
+      npm ci --no-audit && \
       npm run build; \
     fi
+
 
 # ─── Stage 2: Production Runtime (Next.js Standalone + Nginx Alpine) ───
 FROM node:20-alpine AS runner

@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:docker": "next build && tar -czf build_artifacts.tar.gz public .next/standalone .next/static",
+    "package:artifacts": "tar -czf build_artifacts.tar.gz public .next/standalone .next/static",
     "start": "next start",
     "lint": "eslint ."
   },
