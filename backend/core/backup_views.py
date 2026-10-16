@@ -152,7 +152,30 @@ class DatabaseImportView(APIView):
                     for chunk in uploaded_file.chunks():
                         f_out.write(chunk)
 
-            # Execute psql to restore database
+            # Reset public schema first to prevent constraint violations and 'table already exists' conflicts
+            reset_sql = (
+                f"DROP SCHEMA IF EXISTS public CASCADE; "
+                f"CREATE SCHEMA public; "
+                f"GRANT ALL ON SCHEMA public TO {creds['user']}; "
+                f"GRANT ALL ON SCHEMA public TO public;"
+            )
+            reset_cmd = [
+                "psql",
+                "-h", creds["host"],
+                "-p", creds["port"],
+                "-U", creds["user"],
+                "-d", creds["name"],
+                "-c", reset_sql,
+            ]
+            subprocess.run(
+                reset_cmd,
+                env=env,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                check=False,
+            )
+
+            # Execute psql to restore database from SQL dump
             cmd = [
                 "psql",
                 "-h", creds["host"],
@@ -178,10 +201,27 @@ class DatabaseImportView(APIView):
                     status=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 )
 
+            # Run migrations to align any schema differences
+            try:
+                from django.core.management import call_command
+                call_command("migrate", interactive=False)
+            except Exception:
+                pass
+
+            # Calculate restored users
+            user_count = 0
+            try:
+                from django.contrib.auth import get_user_model
+                User = get_user_model()
+                user_count = User.objects.count()
+            except Exception:
+                pass
+
             return Response(
                 {
                     "status": "success",
-                    "message": "Database restored successfully from backup file.",
+                    "message": f"پایگاه داده با موفقیت بازیابی شد. تعداد کاربران بازیابی‌شده: {user_count} نفر",
+                    "user_count": user_count,
                     "details": proc.stdout.decode("utf-8", errors="replace")[-500:],
                 },
                 status=status.HTTP_200_OK,

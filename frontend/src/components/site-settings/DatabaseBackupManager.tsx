@@ -488,7 +488,7 @@ docker cp dating_app_web:/backups/dating_app_20231201_120000.sql.gz ./`}
                 type="button"
                 onClick={() =>
                   copyToClipboard(
-                    `docker cp ./backup.sql.gz dating_app_web:/backups/\ndocker compose exec web bash -c "gunzip -c /backups/backup.sql.gz | psql -h db -U hasan -d dating_app"\npsql -h db -U hasan -d dating_app < backup.sql`,
+                    `docker compose exec web psql -h db -U hasan -d dating_app -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public; GRANT ALL ON SCHEMA public TO hasan; GRANT ALL ON SCHEMA public TO public;"\ndocker cp ./backup.sql dating_app_web:/backups/\ndocker compose exec web bash -c "psql -h db -U hasan -d dating_app < /backups/backup.sql"`,
                     "restore-backup"
                   )
                 }
@@ -498,17 +498,20 @@ docker cp dating_app_web:/backups/dating_app_20231201_120000.sql.gz ./`}
               </button>
             </div>
             <div className="text-[11px] text-amber-200">
-              ⚠️ {isRTL ? "در صورت لزوم ابتدا دیتابیس را از طریق pgAdmin حذف (Drop) کنید." : "First Drop Using Pgadmin if required."}
+              ⚠️ {isRTL ? "توجه: در صورت اجرای دستی از ترمینال، ابتدا اسکیما یا دیتابیس را پاک کنید (از طریق وب به صورت خودکار انجام می‌شود):" : "Note: Clean schema before manual CLI restore (automated in Web UI):"}
             </div>
             <pre className="p-3 bg-black/60 rounded-xl text-xs font-mono text-amber-200 overflow-x-auto">
-{`# Copy backup to container
-docker cp ./backup.sql.gz dating_app_web:/backups/
+{`# 1. Clean schema to prevent table & user unique key conflicts
+docker compose exec web psql -h db -U hasan -d dating_app -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public; GRANT ALL ON SCHEMA public TO hasan; GRANT ALL ON SCHEMA public TO public;"
 
-# Restore database (compressed)
-docker compose exec web bash -c "gunzip -c /backups/backup.sql.gz | psql -h db -U hasan -d dating_app"
+# 2. Copy backup file to container
+docker cp ./backup.sql dating_app_web:/backups/
 
-# Uncompressed SQL file
-psql -h db -U hasan -d dating_app < backup.sql`}
+# 3. Restore database (uncompressed backup.sql)
+docker compose exec web bash -c "psql -h db -U hasan -d dating_app < /backups/backup.sql"
+
+# Or compressed (.sql.gz)
+docker compose exec web bash -c "gunzip -c /backups/backup.sql.gz | psql -h db -U hasan -d dating_app"`}
             </pre>
           </div>
 
