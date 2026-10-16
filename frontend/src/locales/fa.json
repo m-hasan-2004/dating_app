@@ -2190,5 +2190,12 @@
   "Instagram Page": "صفحه اینستاگرام",
   "All rights reserved. Dedicated to virtuous, permanent matrimony.": "تمامی حقوق مادی و معنوی محفوظ است. سامانه تسهیل ازدواج دائم و پیوند خانواده.",
   "Security & Ethical Pledge": "سوگند امانتداری و اخلاق",
-  "We pledge to protect your personal privacy and honor your trust with the highest standard of Islamic integrity.": "ما با ایمان به اهمیت تشکیل کانون خانواده، خود را متعهد به حفظ اسرار و صیانت از آبروی متقاضیان عزیز می‌دانیم."
+  "We pledge to protect your personal privacy and honor your trust with the highest standard of Islamic integrity.": "ما با ایمان به اهمیت تشکیل کانون خانواده، خود را متعهد به حفظ اسرار و صیانت از آبروی متقاضیان عزیز می‌دانیم.",
+  "Database Backup & Restore (Export / Import)": "پشتیبان‌گیری و بازیابی پایگاه داده (Export / Import)",
+  "Export Database": "خروجی گرفتن از پایگاه داده",
+  "Import Database": "وارد کردن دیتای پایگاه داده",
+  "Download backup.sql": "دریافت فایل backup.sql",
+  "Expected format: backup.sql": "فرمت مورد انتظار: backup.sql",
+  "Server Backups Directory (/backups/)": "پشتیبان‌های ذخیره شده در سرور (/backups/)",
+  "Create Manual Backup": "ایجاد پشتیبان دستی"
 }

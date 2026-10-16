@@ -382,29 +382,45 @@ Frontend translations are managed in JSON dictionaries under `frontend/src/local
 
 ## Backup and Restore
 
-### Automated Database Backups
-Automated database backups run inside the container via `cron` and are stored in the `dating_app_backups` Docker volume.
+### Web Portal Export & Import
+Superusers can manage database dumps directly from the Admin Portal (**Site Settings** at `/site-settings`):
+- **Export Database**: Download an immediate live dump as `backup.sql`.
+- **Import Database**: Upload and restore `backup.sql` or `backup.sql.gz` directly into PostgreSQL with confirmation dialogs.
+- **Server Backups Explorer**: Inspect and download automated backup files stored in `/backups/`.
+
+### Automated Backups
+Backups are created automatically every minute via cron jobs inside the container.
 
 ### Manual Backup
 ```bash
-# Trigger immediate backup
-docker compose exec web /usr/local/bin/backup_db.sh
+# Create backup
+docker-compose exec web /usr/local/bin/backup_db.sh
 
-# List available backups
-docker compose exec web ls -lh /backups/
+# List backups
+docker-compose exec web ls -la /backups/
 
-# Copy backup SQL to host
-docker cp dating_app_web:/backups/<backup_filename>.sql.gz ./
+# Copy backup to host
+docker cp dating_app_web:/backups/dating_app_20231201_120000.sql.gz ./
 ```
 
-### Restore Database
+### Restore from Backup
+First Drop Using Pgadmin:
 ```bash
-# Copy backup into container
-docker cp ./my_backup.sql.gz dating_app_web:/backups/
+# Copy backup to container
+docker cp ./backup.sql.gz dating_app_web:/backups/
 
-# Restore into database
-docker compose exec web bash -c "gunzip -c /backups/my_backup.sql.gz | psql -h db -U hasan -d dating_app"
+# Restore database
+docker-compose exec web bash -c "gunzip -c /backups/backup.sql.gz | psql -h db -U hasan -d dating_app"
+
+# Uncompressed SQL file
+psql -h db -U hasan -d dating_app < backup.sql
 ```
+
+### Backup Locations & Retention
+- **Container Path**: `/backups/`
+- **Host Volume**: `dating_app_backups` Docker volume
+- **Retention**: Last 24 hours of backups (1440 minutes)
+- **Expected Format**: `backup.sql`
 
 ---
 

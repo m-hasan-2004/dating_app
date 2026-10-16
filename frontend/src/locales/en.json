@@ -1712,5 +1712,12 @@
   "Instagram Page": "Instagram Page",
   "All rights reserved. Dedicated to virtuous, permanent matrimony.": "All rights reserved. Dedicated to virtuous, permanent matrimony.",
   "Security & Ethical Pledge": "Security & Ethical Pledge",
-  "We pledge to protect your personal privacy and honor your trust with the highest standard of Islamic integrity.": "We pledge to protect your personal privacy and honor your trust with the highest standard of Islamic integrity."
+  "We pledge to protect your personal privacy and honor your trust with the highest standard of Islamic integrity.": "We pledge to protect your personal privacy and honor your trust with the highest standard of Islamic integrity.",
+  "Database Backup & Restore (Export / Import)": "Database Backup & Restore (Export / Import)",
+  "Export Database": "Export Database",
+  "Import Database": "Import Database",
+  "Download backup.sql": "Download backup.sql",
+  "Expected format: backup.sql": "Expected format: backup.sql",
+  "Server Backups Directory (/backups/)": "Server Backups Directory (/backups/)",
+  "Create Manual Backup": "Create Manual Backup"
 }

@@ -15,6 +15,7 @@ import {
   SiteSettings,
 } from "@/services/api/siteSettings";
 import { formatDate } from "@/utils/formatters";
+import DatabaseBackupManager from "@/components/site-settings/DatabaseBackupManager";
 
 
 export default function SiteSettingsPage() {
@@ -802,6 +803,9 @@ export default function SiteSettingsPage() {
             </div>
           </form>
         )}
+
+        {/* Database Backup & Restore Manager */}
+        {!isLoading && <DatabaseBackupManager />}
       </div>
     </div>
   );

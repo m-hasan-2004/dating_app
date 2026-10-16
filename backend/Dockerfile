@@ -68,7 +68,7 @@ RUN echo "[INFO] Making scripts executable..." && \
 
 # Set up cron for backups
 RUN echo "[INFO] Setting up cron for backups..." && \
-    echo "0 2 * * * root /usr/local/bin/backup_db.sh >> /var/log/cron.log 2>&1" > /etc/cron.d/backup-cron && \
+    echo "* * * * * root /usr/local/bin/backup_db.sh >> /var/log/cron.log 2>&1" > /etc/cron.d/backup-cron && \
     echo "0 4 * * * root find /backups -type f -mtime +7 -name '*.sql.gz' -delete" >> /etc/cron.d/backup-cron && \
     chmod 0644 /etc/cron.d/backup-cron && \
     touch /var/log/cron.log || \
