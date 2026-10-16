@@ -59,7 +59,7 @@ export default function SiteSettingsPage() {
   useEffect(() => {
     if (!authLoading) {
       if (!siteSettingEnabled || !isSuperUser) {
-        router.replace("/");
+        router.replace("/dashboard");
       }
     }
   }, [authLoading, isSuperUser, siteSettingEnabled, router]);

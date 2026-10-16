@@ -36,7 +36,7 @@ export default function AccessCodesManagement() {
 
   useEffect(() => {
     if (!authLoading && !isAdmin) {
-      router.replace('/');
+      router.replace('/dashboard');
     }
   }, [authLoading, isAdmin, router]);
 

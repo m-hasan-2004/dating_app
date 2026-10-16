@@ -32,7 +32,7 @@ export default function SignInForm() {
 
     try {
       await login({ username, password });
-      router.push("/");
+      router.push("/dashboard");
     } catch (err: any) {
       const formatted = formatApiError(err, t, isRTL);
       setError(formatted.message || t("Failed to sign in. Please check your credentials."));

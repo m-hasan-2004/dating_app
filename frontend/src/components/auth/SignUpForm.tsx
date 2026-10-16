@@ -384,7 +384,30 @@ export default function SignUpForm() {
                       }}
                     />
                     <p className="inline-block font-normal text-xs text-slate-500 dark:text-gray-400">
-                      {t("I agree to the Terms, Conditions, and Privacy Policy")}
+                      {isRTL ? (
+                        <>
+                          با کلیه{' '}
+                          <Link
+                            href="/terms"
+                            target="_blank"
+                            className="font-bold text-[var(--color-primary)] hover:underline"
+                          >
+                            قوانین، مقررات و حریم خصوصی
+                          </Link>{' '}
+                          سامانه موافقم
+                        </>
+                      ) : (
+                        <>
+                          I agree to the{' '}
+                          <Link
+                            href="/terms"
+                            target="_blank"
+                            className="font-bold text-[var(--color-primary)] hover:underline"
+                          >
+                            Terms, Conditions, and Privacy Policy
+                          </Link>
+                        </>
+                      )}
                     </p>
                   </div>
                   {fieldErrors.terms && (

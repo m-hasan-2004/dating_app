@@ -14,7 +14,7 @@ export default function UserProfilePage() {
 
   useEffect(() => {
     if (!loading && !isAdmin) {
-      router.replace(userId ? `/candidates/${userId}` : '/');
+      router.replace(userId ? `/candidates/${userId}` : '/dashboard');
     }
   }, [loading, isAdmin, router, userId]);
 

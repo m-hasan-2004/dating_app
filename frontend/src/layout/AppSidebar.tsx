@@ -40,7 +40,7 @@ const CORE_NAV_ITEMS: NavItem[] = [
   {
     icon: <GridIcon />,
     name: "Dashboard",
-    path: "/",
+    path: "/dashboard",
   },
   {
     icon: <SearchNavIcon />,
@@ -338,7 +338,7 @@ const AppSidebar: React.FC = () => {
           !isExpanded && !isHovered ? "lg:justify-center" : "justify-start"
         }`}
       >
-        <Link href="/" className="flex items-center gap-3">
+        <Link href="/dashboard" className="flex items-center gap-3">
           {logoUrl ? (
             <img src={logoUrl} alt={siteName} className="h-9 w-auto max-w-[150px] object-contain rounded-lg" />
           ) : (

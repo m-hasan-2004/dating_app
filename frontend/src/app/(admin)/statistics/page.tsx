@@ -32,7 +32,7 @@ export default function StatisticsPage() {
 
   useEffect(() => {
     if (!authLoading && !isAdmin) {
-      router.replace('/');
+      router.replace('/dashboard');
     }
   }, [authLoading, isAdmin, router]);
 
@@ -185,7 +185,7 @@ export default function StatisticsPage() {
       <div className="rounded-3xl border border-red-200 bg-red-50 p-12 text-center dark:border-red-900/50 dark:bg-red-950/20">
         <h2 className="text-lg font-bold text-red-700 dark:text-red-400">{t("Admin Access Only")}</h2>
         <p className="text-xs text-red-600 dark:text-red-500 mt-1">{t("You do not have permission to view demographic statistics.")}</p>
-        <Link href="/" className="inline-block mt-4 px-4 py-2 text-xs font-semibold rounded-xl bg-brand-500 text-white">{t("Return to Dashboard")}</Link>
+        <Link href="/dashboard" className="inline-block mt-4 px-4 py-2 text-xs font-semibold rounded-xl bg-brand-500 text-white">{t("Return to Dashboard")}</Link>
       </div>
     );
   }
@@ -197,7 +197,7 @@ export default function StatisticsPage() {
         <div>
           <div className="flex items-center gap-2 mb-1">
             <Link
-              href="/"
+              href="/dashboard"
               className="inline-flex items-center gap-1 text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
             >
               <ChevronLeftIcon className={`w-3.5 h-3.5 ${isRTL ? 'rotate-180' : ''}`} />
