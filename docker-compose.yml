@@ -1,3 +1,5 @@
+name: dating_app
+
 # Root docker-compose.yml for Dating App (Full-Stack)
 services:
   frontend:

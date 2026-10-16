@@ -81,24 +81,15 @@ export default function HeroSection() {
                 </svg>
               </Link>
             ) : (
-              <>
-                <Link
-                  href="/signup"
-                  className="w-full sm:w-auto px-8 py-4 text-base font-extrabold rounded-2xl text-white bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] hover:brightness-105 active:scale-95 transition-all shadow-xl shadow-brand-500/25 flex items-center justify-center gap-2 group"
-                >
-                  <span>{t('Get Started Free')}</span>
-                  <svg className={`w-5 h-5 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform ${isRTL ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </Link>
-
-                <Link
-                  href="/signin"
-                  className="w-full sm:w-auto px-7 py-4 text-base font-bold rounded-2xl border-2 border-slate-300 dark:border-gray-700 bg-white/70 dark:bg-gray-800/70 text-slate-700 dark:text-slate-200 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] dark:hover:border-[var(--color-primary)] transition-all shadow-xs flex items-center justify-center gap-2"
-                >
-                  <span>{t('Sign In')}</span>
-                </Link>
-              </>
+              <Link
+                href="/signup"
+                className="w-full sm:w-auto px-8 py-4 text-base font-extrabold rounded-2xl text-white bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] hover:brightness-105 active:scale-95 transition-all shadow-xl shadow-brand-500/25 flex items-center justify-center gap-2 group"
+              >
+                <span>{t('Get Started Free')}</span>
+                <svg className={`w-5 h-5 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform ${isRTL ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </Link>
             )}
 
             <Link
