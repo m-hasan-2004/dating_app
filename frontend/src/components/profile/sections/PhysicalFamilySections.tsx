@@ -9,7 +9,7 @@ import DisplayRow from '@/components/profile/DisplayRow';
 import FormField, { useFormState, SelectOption } from '@/components/profile/FormField';
 import { toArray, formatMultiValue } from '@/components/profile/profileUtils';
 import { formatDate, formatHeight, formatWeight, formatBoolean } from '@/utils/formatters';
-import { formatApiError } from '@/utils/errorFormatter';
+import { formatApiError, bottomErrorMessage } from '@/utils/errorFormatter';
 import type {
   PhysicalInformation,
   FamilyInformation,
@@ -152,7 +152,7 @@ export function PhysicalInformationSection({
     } catch (e: any) {
       const formatted = formatApiError(e, t, isRTL);
       setFieldErrors(formatted.fieldErrors);
-      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
+      setError(bottomErrorMessage(formatted, t));
     } finally {
       setSaving(false);
     }
@@ -271,7 +271,7 @@ export function FamilyInformationSection({
     } catch (e: any) {
       const formatted = formatApiError(e, t, isRTL);
       setFieldErrors(formatted.fieldErrors);
-      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
+      setError(bottomErrorMessage(formatted, t));
     } finally {
       setSaving(false);
     }
@@ -324,7 +324,7 @@ export function FamilyInformationSection({
 
 function defaultEngagementForm(data: EngagementOrWeddingStatus | null) {
   return {
-    status: data?.status ?? ('' as EngagementStatusEnum),
+    status: ((Array.isArray(data?.status) ? data?.status[0] : data?.status) ?? '') as EngagementStatusEnum,
     contract_length: data?.contract_length ?? '',
     living_length: data?.living_length ?? '',
     death_date: data?.death_date ?? '',
@@ -377,7 +377,7 @@ export function EngagementStatusSection({
     } catch (e: any) {
       const formatted = formatApiError(e, t, isRTL);
       setFieldErrors(formatted.fieldErrors);
-      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
+      setError(bottomErrorMessage(formatted, t));
     } finally {
       setSaving(false);
     }

@@ -8,7 +8,7 @@ import ProfileSection from '@/components/profile/ProfileSection';
 import DisplayRow from '@/components/profile/DisplayRow';
 import FormField, { useFormState, SelectOption } from '@/components/profile/FormField';
 import { formatDate, formatBoolean } from '@/utils/formatters';
-import { formatApiError } from '@/utils/errorFormatter';
+import { formatApiError, bottomErrorMessage } from '@/utils/errorFormatter';
 import type { Mother, Father, EducationEnum, OriginalityEnum } from '@/services/profileService';
 import { createMother, updateMother, createFather, updateFather } from '@/services/profileService';
 
@@ -82,7 +82,7 @@ export function MotherSection({
     } catch (e: any) {
       const formatted = formatApiError(e, t, isRTL);
       setFieldErrors(formatted.fieldErrors);
-      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
+      setError(bottomErrorMessage(formatted, t));
     } finally {
       setSaving(false);
     }
@@ -170,7 +170,7 @@ export function FatherSection({
     } catch (e: any) {
       const formatted = formatApiError(e, t, isRTL);
       setFieldErrors(formatted.fieldErrors);
-      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
+      setError(bottomErrorMessage(formatted, t));
     } finally {
       setSaving(false);
     }

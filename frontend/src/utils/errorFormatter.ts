@@ -192,6 +192,72 @@ export const FIELD_LABELS_FA: Record<string, string> = {
   drugs_status: "مصرف مواد مخدر",
   alive: "در قید حیات",
   originality: "اصالت",
+  // Confidential / Identity & Birth Certificate
+  eitta_number: "شماره ایتا",
+  landline_phone: "تلفن ثابت",
+  mother_phone: "تلفن مادر",
+  father_phone: "تلفن پدر",
+  home_address: "آدرس منزل",
+  work_address: "آدرس محل کار",
+  insurance: "بیمه",
+  assets: "دارایی‌ها",
+  prefered_meeting_time: "اوقات پیشنهادی ملاقات",
+  type_of_payment: "نوع پرداخت",
+  payment_proof: "رسید پرداخت",
+  birth_certificate_serial: "سریال شناسنامه",
+  birth_certificate_location: "محل صدور شناسنامه",
+  marriage_experince: "تجربه ازدواج",
+  marriage_status: "وضعیت تاهل",
+  children: "فرزندان",
+  children_custody: "حضانت فرزندان",
+
+  // Relatives / Family Members
+  groom_or: "داماد یا زن داداش",
+  bride_or: "عروس یا شوهر خواهر",
+  number_of_sisters: "تعداد خواهران",
+  number_of_brothers: "تعداد برادران",
+  family_divorce_history: "سابقه طلاق در خانواده",
+  family_divorce_reason: "دلایل طلاق در خانواده",
+  language: "زبان",
+
+  // Subject details & Introduced
+  postive: "ارزیابی مثبت",
+  positive: "ارزیابی مثبت",
+  negative: "ارزیابی منفی",
+  reason: "علت",
+  dates_of_meetings: "تاریخ ملاقات‌ها",
+  result_and_regards: "نتیجه و ملاحظات",
+  result_regards: "نتیجه و ملاحظات",
+  cost_of_introduction: "هزینه معرفی",
+  cost_of_meeting: "هزینه ملاقات",
+  preferred_date_times: "اوقات پیشنهادی ملاقات",
+  signup_fee_type: "هزینه ثبت نام",
+  account_number: "شماره حساب",
+  bank: "نام بانک",
+  bank_name: "نام بانک",
+  gender_target: "نام و مشخصات صاحب حساب",
+  amount: "مبلغ",
+  professional_opinion: "نظر کلی کارشناسی",
+
+  // Preferred Wife & Miscellaneous
+  sadat: "سادات",
+  disease_or_surgery: "بیماری یا جراحی",
+  additional_explnation_marriage_with_someone: "توضیحات سابقه ازدواج قبلی",
+  marriage_with_veteran_disabled_explanation: "توضیحات ازدواج با معلول یا جانباز",
+  bookmarked_user: "کاربر نشان‌شده",
+  code: "کد دسترسی",
+  user: "کاربر",
+  id: "شناسه",
+  date_created: "تاریخ ایجاد",
+  date_joined: "تاریخ پیوستن",
+  last_login: "آخرین ورود",
+  is_superuser: "ابرکاربر",
+  is_staff: "وضعیت کارمندی",
+  is_active: "فعال",
+  active: "فعال",
+  groups: "گروه‌ها",
+  user_permissions: "اجازه‌های کاربر",
+  updated_at: "تاریخ به‌روزرسانی",
 };
 
 export const COMMON_ERROR_TRANSLATIONS_FA: Record<string, string> = {
@@ -404,4 +470,23 @@ export function formatApiError(
     fieldErrors,
     message: translateMsg(rawFallback, t, isRTL),
   };
+}
+
+/**
+ * Returns a short error message suitable for the bottom of a modal form.
+ * If there are field errors, returns a short prompt to fix inline errors.
+ * Otherwise returns the formatted error message (or the fallback prompt).
+ */
+export function bottomErrorMessage(
+  formatted: FormattedError,
+  t?: (k: string) => string
+): string {
+  const fixMessage = t
+    ? t("Please fix the errors in the form before submitting.")
+    : "Please fix the errors in the form before submitting.";
+
+  if (Object.keys(formatted.fieldErrors).length > 0) {
+    return fixMessage;
+  }
+  return formatted.message || fixMessage;
 }

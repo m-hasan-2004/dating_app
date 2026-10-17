@@ -9,7 +9,7 @@ import MultiRecordSection from '@/components/profile/MultiRecordSection';
 import DisplayRow from '@/components/profile/DisplayRow';
 import FormField, { useFormState, SelectOption } from '@/components/profile/FormField';
 import { toArray, formatMultiValue } from '@/components/profile/profileUtils';
-import { formatApiError } from '@/utils/errorFormatter';
+import { formatApiError, bottomErrorMessage } from '@/utils/errorFormatter';
 import type {
   PreferredWifeIntellectualInformation,
   PreferredWifePersonalInformation,
@@ -53,8 +53,14 @@ const APPEARANCE_OPTIONS: SelectOption[] = [
 ].map((v) => ({ value: v, label: v }));
 
 const AGE_DIFF_OPTIONS: SelectOption[] = [
-  'Same', 'Till 3', '3 to 7', '7 to 10', '10 to 15', 'Depends on the Looks', "Doesn't Matter",
-].map((v) => ({ value: v, label: v }));
+  { value: 'Same', label: 'Same' },
+  { value: 'Till 3', label: 'Till 3' },
+  { value: '3 to 7', label: '3 to 7' },
+  { value: '7 to 10', label: '7 to 10' },
+  { value: '10 to 15', label: '10 to 15' },
+  { value: 'Depends on the Looks', label: 'Depends on the Looks' },
+  { value: 'Doesn’t Matter', label: "Doesn't Matter" },
+];
 
 const IMPORTANCE_OPTIONS: SelectOption[] = [
   { value: 'too_much', label: 'Too Much' },
@@ -76,9 +82,18 @@ const DISABLED_VETERAN_OPTIONS: SelectOption[] = [
 ];
 
 const SPOUSE_JOB_OPTIONS: SelectOption[] = [
-  'Freelance', 'Military', 'Office', 'Teacher', 'Hoze M', 'Hoze N', 'hoze Sis',
-  'Womanly Job', 'No Job At All', 'Housekeeper', "Doesn't Matter",
-].map((v) => ({ value: v, label: v }));
+  { value: 'free', label: 'Freelance' },
+  { value: 'military', label: 'Military' },
+  { value: 'office', label: 'Office' },
+  { value: 'teacher', label: 'Teacher' },
+  { value: 'hoze_m', label: 'Hoze M' },
+  { value: 'hoze_n', label: 'Hoze N' },
+  { value: 'hoze_s', label: 'hoze Sis' },
+  { value: 'womanly', label: 'Womanly Job' },
+  { value: 'no_job', label: 'No Job At All' },
+  { value: 'housekeeper', label: 'Housekeeper' },
+  { value: 'Doesn’t Matter', label: "Doesn't Matter" },
+];
 
 const SPOUSE_RESIDENCE_LOCATIONS: SelectOption[] = [
   'Exactly Qom', 'Near Qom', 'Mega Cities', 'Anywhere in Iran',
@@ -88,8 +103,10 @@ const SPOUSE_RESIDENCE_LOCATIONS: SelectOption[] = [
 const SKIN_COLOR_OPTIONS: SelectOption[] = [
   'Very Bright', 'Bor', 'Fair', 'White', 'Wheat', 'Greenish', 'Olive',
   'Darken', 'Black', 'Bright Brown', 'Darken Brown', 'Bright', 'Yellow',
-  'Whitish White', 'Red & White', 'Bright Greenish', 'Other',
-].map((v) => ({ value: v, label: v }));
+  'Whitish White', 'Red & White', 'Bright Greenish',
+].map((v) => ({ value: v, label: v })).concat([
+  { value: 'other', label: 'Other' },
+]);
 
 const HEIGHT_PRESETS = [
   { label: '< 160', min: '0', max: '159' },
@@ -195,7 +212,7 @@ export function FutureSpouseOriginalitiesSection({
     } catch (e: any) {
       const formatted = formatApiError(e, t, isRTL);
       setFieldErrors(formatted.fieldErrors);
-      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
+      setError(bottomErrorMessage(formatted, t));
     } finally {
       setSaving(false);
     }
@@ -341,7 +358,7 @@ export function PreferredWifeIntellectualSection({
     } catch (e: any) {
       const formatted = formatApiError(e, t, isRTL);
       setFieldErrors(formatted.fieldErrors);
-      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
+      setError(bottomErrorMessage(formatted, t));
     } finally {
       setSaving(false);
     }
@@ -447,7 +464,7 @@ export function PreferredWifePersonalSection({
     } catch (e: any) {
       const formatted = formatApiError(e, t, isRTL);
       setFieldErrors(formatted.fieldErrors);
-      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
+      setError(bottomErrorMessage(formatted, t));
     } finally {
       setSaving(false);
     }
@@ -544,7 +561,7 @@ export function PreferredWifePhysicalSection({
     } catch (e: any) {
       const formatted = formatApiError(e, t, isRTL);
       setFieldErrors(formatted.fieldErrors);
-      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
+      setError(bottomErrorMessage(formatted, t));
     } finally {
       setSaving(false);
     }
@@ -706,7 +723,7 @@ export function PreferredWifeExtraSection({
     } catch (e: any) {
       const formatted = formatApiError(e, t, isRTL);
       setFieldErrors(formatted.fieldErrors);
-      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
+      setError(bottomErrorMessage(formatted, t));
     } finally {
       setSaving(false);
     }

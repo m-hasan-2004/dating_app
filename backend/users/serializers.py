@@ -25,6 +25,9 @@ from rest_framework.exceptions import AuthenticationFailed
 
 from phonenumber_field.serializerfields import PhoneNumberField
 
+from multiselectfield import MultiSelectField
+from multiselectfield.validators import MaxValueMultiFieldValidator
+from rest_framework.fields import to_choices_dict, flatten_choices_dict
 from core.utils.validators.shared import validate_active_access_code
 from users.user_related_models import (
     User,
@@ -55,6 +58,135 @@ from users.preferred_wife_models import (
     PreferredWifeIntellectualInformation,
     FutureSposeOriginality,
 )
+
+
+
+# ---------------------------------------------------------------------------
+# MultiSelect serializer field
+# ---------------------------------------------------------------------------
+
+
+class MultiSelectSerializerField(serializers.Field):
+    """
+    Dedicated serializer field for django-multiselectfield's MultiSelectField.
+
+    Accepts arrays of choice values (or single string values wrapped into a list),
+    validates every item against model choices, eliminates duplicates preserving
+    order, and returns comma-separated strings for DB storage.
+    to_representation always returns a list of choice keys.
+    """
+
+    default_error_messages = {
+        "invalid_choice": _('"{input}" is not a valid choice.'),
+        "required": _("This field is required."),
+        "null": _("This field may not be null."),
+    }
+
+    def __init__(self, choices=None, **kwargs):
+        self.choices = choices or []
+        self._valid_choices = set()
+        if self.choices:
+            grouped = to_choices_dict(self.choices)
+            flattened = flatten_choices_dict(grouped)
+            self._valid_choices = {str(k) for k in flattened.keys()}
+
+        self.allow_blank = kwargs.pop("allow_blank", False)
+        # Drop max_length because MultiSelectField uses underlying CharField max_length for CSV
+        kwargs.pop("max_length", None)
+        # Drop custom English model error_messages to preserve standard Persian translations
+        kwargs.pop("error_messages", None)
+
+        # Filter out MaxValueMultiFieldValidator from model validators as it misinterprets CSV strings
+        if "validators" in kwargs:
+            kwargs["validators"] = [
+                v
+                for v in kwargs["validators"]
+                if not isinstance(v, MaxValueMultiFieldValidator)
+            ]
+
+        if self.allow_blank and "required" not in kwargs:
+            kwargs["required"] = False
+
+        super().__init__(**kwargs)
+
+    def to_internal_value(self, data):
+        if data is None:
+            raw_items = []
+        elif isinstance(data, str):
+            data_stripped = data.strip()
+            if not data_stripped:
+                raw_items = []
+            elif "," in data_stripped:
+                raw_items = [x.strip() for x in data_stripped.split(",")]
+            else:
+                raw_items = [data_stripped]
+        elif isinstance(data, (list, tuple, set)):
+            raw_items = list(data)
+        else:
+            self.fail("invalid_choice", input=data)
+
+        # Filter out empty placeholders (None, empty strings, pure whitespace)
+        items = []
+        for x in raw_items:
+            if x is None:
+                continue
+            x_str = str(x).strip()
+            if not x_str:
+                continue
+            items.append(x_str)
+
+        # Handle empty input according to model blank/required constraints
+        if not items:
+            if not self.allow_blank:
+                self.fail("required")
+            return ""
+
+        # Validate each item against choices and preserve order without duplicates
+        unique_items = []
+        seen = set()
+        for item in items:
+            valid_item = item
+            if self._valid_choices and valid_item not in self._valid_choices:
+                if valid_item.replace("'", "’") in self._valid_choices:
+                    valid_item = valid_item.replace("'", "’")
+                elif valid_item.replace("’", "'") in self._valid_choices:
+                    valid_item = valid_item.replace("’", "'")
+                else:
+                    self.fail("invalid_choice", input=item)
+
+            if valid_item not in seen:
+                seen.add(valid_item)
+                unique_items.append(valid_item)
+
+        return ",".join(unique_items)
+
+    def to_representation(self, value):
+        if not value:
+            return []
+        if isinstance(value, (list, tuple, set)):
+            return [str(x) for x in value if x is not None and str(x) != ""]
+        if isinstance(value, str):
+            return [x.strip() for x in value.split(",") if x.strip()]
+        return [str(value)]
+
+
+# Register MultiSelectField with MultiSelectSerializerField on ModelSerializer
+serializers.ModelSerializer.serializer_field_mapping[MultiSelectField] = MultiSelectSerializerField
+
+# ModelSerializer.build_standard_field coerces any model field with choices into
+# serializer_choice_field (ChoiceField), ignoring serializer_field_mapping.
+# We wrap build_standard_field so MultiSelectField correctly uses MultiSelectSerializerField.
+_orig_build_standard_field = serializers.ModelSerializer.build_standard_field
+
+
+def _build_standard_field(self, field_name, model_field):
+    field_class, field_kwargs = _orig_build_standard_field(self, field_name, model_field)
+    if isinstance(model_field, MultiSelectField):
+        return MultiSelectSerializerField, field_kwargs
+    return field_class, field_kwargs
+
+
+serializers.ModelSerializer.build_standard_field = _build_standard_field
 
 
 # ---------------------------------------------------------------------------
@@ -797,7 +929,7 @@ class UserBookmarkSerializer(serializers.ModelSerializer):
             "email": u.email,
             "first_name": u.first_name,
             "last_name": u.last_name,
-            "gender": pers.gender if pers else "unknown",
+            "gender": (pers.gender[0] if isinstance(pers.gender, (list, tuple)) and pers.gender else (str(pers.gender) if pers and pers.gender else "unknown")),
             "birth_location": pers.birth_location if pers else None,
             "province": pers.birth_location if pers else None,
             "education": pers.education if pers else None,

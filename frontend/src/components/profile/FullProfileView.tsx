@@ -89,6 +89,7 @@ import {
 } from '@/components/profile/sections/SubjectSections';
 import { ChevronDownIcon, ChevronUpIcon, LockIcon, PencilIcon } from '@/icons';
 import { Modal } from '@/components/ui/modal';
+import { formatApiError, bottomErrorMessage } from '@/utils/errorFormatter';
 
 interface ProfileData {
   user: User | null;
@@ -202,7 +203,35 @@ export function FullProfileView({
   });
   const [accountLoading, setAccountLoading] = useState(false);
   const [accountError, setAccountError] = useState('');
+  const [accountFieldErrors, setAccountFieldErrors] = useState<Record<string, string>>({});
   const [accountSuccess, setAccountSuccess] = useState('');
+
+  const handleAccountFieldChange = (field: string, value: string) => {
+    setAccountForm((prev) => ({ ...prev, [field]: value }));
+    setAccountFieldErrors((prev) => {
+      if (!prev[field] && !(field === 'password' && prev.new_password) && !(field === 'confirmPassword' && (prev.password2 || prev.confirm_password))) {
+        return prev;
+      }
+      const next = { ...prev };
+      delete next[field];
+      if (field === 'password') delete next.new_password;
+      if (field === 'confirmPassword') {
+        delete next.password2;
+        delete next.confirm_password;
+      }
+      return next;
+    });
+    if (accountError) {
+      setAccountError('');
+    }
+  };
+
+  const closeAccountModal = () => {
+    setIsAccountModalOpen(false);
+    setAccountFieldErrors({});
+    setAccountError('');
+    setAccountSuccess('');
+  };
 
   const openAccountModal = () => {
     setAccountForm({
@@ -212,6 +241,7 @@ export function FullProfileView({
       password: '',
       confirmPassword: '',
     });
+    setAccountFieldErrors({});
     setAccountError('');
     setAccountSuccess('');
     setIsAccountModalOpen(true);
@@ -219,20 +249,28 @@ export function FullProfileView({
 
   const handleAccountSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (accountForm.password) {
+    setAccountError('');
+    setAccountFieldErrors({});
+    setAccountSuccess('');
+
+    if (accountForm.password || accountForm.confirmPassword) {
       if (accountForm.password.length < 8) {
-        setAccountError('New password must be at least 8 characters long');
+        setAccountFieldErrors({
+          password: t('Password must be at least 8 characters long.'),
+        });
+        setAccountError(t('Please fix the errors in the form before submitting.'));
         return;
       }
       if (accountForm.password !== accountForm.confirmPassword) {
-        setAccountError('Passwords do not match');
+        setAccountFieldErrors({
+          confirmPassword: t('Passwords do not match.'),
+        });
+        setAccountError(t('Please fix the errors in the form before submitting.'));
         return;
       }
     }
 
     setAccountLoading(true);
-    setAccountError('');
-    setAccountSuccess('');
     try {
       const targetId = displayUser?.id;
       if (targetId) {
@@ -247,13 +285,14 @@ export function FullProfileView({
         await updateUser(String(targetId), payload);
         await loadAll();
       }
-      setAccountSuccess('Account information updated successfully!');
+      setAccountSuccess(t('Account information updated successfully!'));
       setTimeout(() => {
-        setIsAccountModalOpen(false);
-        setAccountSuccess('');
+        closeAccountModal();
       }, 1200);
     } catch (err: any) {
-      setAccountError(err?.message ?? 'Failed to update account information');
+      const formatted = formatApiError(err, t, isRTL);
+      setAccountFieldErrors(formatted.fieldErrors);
+      setAccountError(bottomErrorMessage(formatted, t));
     } finally {
       setAccountLoading(false);
     }
@@ -585,7 +624,7 @@ export function FullProfileView({
       {/* Change Account Information Modal */}
       <Modal
         isOpen={isAccountModalOpen}
-        onClose={() => setIsAccountModalOpen(false)}
+        onClose={closeAccountModal}
         showCloseButton={false}
         className="p-6 max-w-lg w-full"
       >
@@ -600,7 +639,7 @@ export function FullProfileView({
           </div>
           <button
             type="button"
-            onClick={() => setIsAccountModalOpen(false)}
+            onClick={closeAccountModal}
             className="text-slate-400 hover:text-slate-600 dark:hover:text-gray-200"
           >
             ✕
@@ -608,11 +647,6 @@ export function FullProfileView({
         </div>
 
         <form onSubmit={handleAccountSubmit} className="space-y-4 pt-4">
-          {accountError && (
-            <div className="p-3 text-xs rounded-xl bg-red-50 text-red-600 dark:bg-red-950/30 dark:text-red-400 border border-red-200 dark:border-red-800">
-              {accountError}
-            </div>
-          )}
           {accountSuccess && (
             <div className="p-3 text-xs rounded-xl bg-green-50 text-green-600 dark:bg-green-950/30 dark:text-green-400 border border-green-200 dark:border-green-800">
               {accountSuccess}
@@ -628,11 +662,18 @@ export function FullProfileView({
               type="email"
               placeholder="user@example.com"
               value={accountForm.email}
-              onChange={(e) =>
-                setAccountForm({ ...accountForm, email: e.target.value })
-              }
-              className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl bg-white text-slate-800 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]"
+              onChange={(e) => handleAccountFieldChange('email', e.target.value)}
+              className={`w-full px-3 py-2 text-sm border rounded-xl bg-white text-slate-800 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 ${
+                accountFieldErrors.email
+                  ? 'border-red-500 ring-1 ring-red-500 bg-red-50/10 text-red-900 dark:text-red-200 focus:border-red-500 focus:ring-red-500'
+                  : 'border-slate-300 dark:border-gray-700 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]'
+              }`}
             />
+            {accountFieldErrors.email && (
+              <p className="text-xs text-red-600 dark:text-red-400 mt-1 font-medium flex items-center gap-1">
+                {accountFieldErrors.email}
+              </p>
+            )}
           </div>
 
           {/* 2. Phone Number */}
@@ -644,11 +685,18 @@ export function FullProfileView({
               type="text"
               placeholder={isRTL ? "۰۹..." : "+989..."}
               value={accountForm.phone_number}
-              onChange={(e) =>
-                setAccountForm({ ...accountForm, phone_number: e.target.value })
-              }
-              className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl bg-white text-slate-800 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]"
+              onChange={(e) => handleAccountFieldChange('phone_number', e.target.value)}
+              className={`w-full px-3 py-2 text-sm border rounded-xl bg-white text-slate-800 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 ${
+                accountFieldErrors.phone_number
+                  ? 'border-red-500 ring-1 ring-red-500 bg-red-50/10 text-red-900 dark:text-red-200 focus:border-red-500 focus:ring-red-500'
+                  : 'border-slate-300 dark:border-gray-700 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]'
+              }`}
             />
+            {accountFieldErrors.phone_number && (
+              <p className="text-xs text-red-600 dark:text-red-400 mt-1 font-medium flex items-center gap-1">
+                {accountFieldErrors.phone_number}
+              </p>
+            )}
           </div>
 
           {/* 3. Middle Man Code */}
@@ -660,14 +708,18 @@ export function FullProfileView({
               type="text"
               placeholder={t('Enter reference or middle man code')}
               value={accountForm.middle_man_code}
-              onChange={(e) =>
-                setAccountForm({
-                  ...accountForm,
-                  middle_man_code: e.target.value,
-                })
-              }
-              className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl bg-white text-slate-800 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]"
+              onChange={(e) => handleAccountFieldChange('middle_man_code', e.target.value)}
+              className={`w-full px-3 py-2 text-sm border rounded-xl bg-white text-slate-800 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 ${
+                accountFieldErrors.middle_man_code
+                  ? 'border-red-500 ring-1 ring-red-500 bg-red-50/10 text-red-900 dark:text-red-200 focus:border-red-500 focus:ring-red-500'
+                  : 'border-slate-300 dark:border-gray-700 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]'
+              }`}
             />
+            {accountFieldErrors.middle_man_code && (
+              <p className="text-xs text-red-600 dark:text-red-400 mt-1 font-medium flex items-center gap-1">
+                {accountFieldErrors.middle_man_code}
+              </p>
+            )}
           </div>
 
           {/* 4. Password (Optional) */}
@@ -685,14 +737,18 @@ export function FullProfileView({
                   minLength={8}
                   placeholder={t('Min. 8 characters')}
                   value={accountForm.password}
-                  onChange={(e) =>
-                    setAccountForm({
-                      ...accountForm,
-                      password: e.target.value,
-                    })
-                  }
-                  className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl bg-white text-slate-800 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]"
+                  onChange={(e) => handleAccountFieldChange('password', e.target.value)}
+                  className={`w-full px-3 py-2 text-sm border rounded-xl bg-white text-slate-800 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 ${
+                    accountFieldErrors.password || accountFieldErrors.new_password
+                      ? 'border-red-500 ring-1 ring-red-500 bg-red-50/10 text-red-900 dark:text-red-200 focus:border-red-500 focus:ring-red-500'
+                      : 'border-slate-300 dark:border-gray-700 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]'
+                  }`}
                 />
+                {(accountFieldErrors.password || accountFieldErrors.new_password) && (
+                  <p className="text-xs text-red-600 dark:text-red-400 mt-1 font-medium flex items-center gap-1">
+                    {accountFieldErrors.password || accountFieldErrors.new_password}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -704,22 +760,28 @@ export function FullProfileView({
                   minLength={8}
                   placeholder={t('Confirm new password')}
                   value={accountForm.confirmPassword}
-                  onChange={(e) =>
-                    setAccountForm({
-                      ...accountForm,
-                      confirmPassword: e.target.value,
-                    })
-                  }
-                  className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl bg-white text-slate-800 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]"
+                  onChange={(e) => handleAccountFieldChange('confirmPassword', e.target.value)}
+                  className={`w-full px-3 py-2 text-sm border rounded-xl bg-white text-slate-800 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 ${
+                    accountFieldErrors.confirmPassword || accountFieldErrors.password2 || accountFieldErrors.confirm_password
+                      ? 'border-red-500 ring-1 ring-red-500 bg-red-50/10 text-red-900 dark:text-red-200 focus:border-red-500 focus:ring-red-500'
+                      : 'border-slate-300 dark:border-gray-700 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]'
+                  }`}
                 />
+                {(accountFieldErrors.confirmPassword || accountFieldErrors.password2 || accountFieldErrors.confirm_password) && (
+                  <p className="text-xs text-red-600 dark:text-red-400 mt-1 font-medium flex items-center gap-1">
+                    {accountFieldErrors.confirmPassword || accountFieldErrors.password2 || accountFieldErrors.confirm_password}
+                  </p>
+                )}
               </div>
             </div>
           </div>
 
+          {accountError && <p className="mt-3 text-sm text-red-500">{accountError}</p>}
+
           <div className="flex items-center justify-end gap-2 pt-4 border-t border-slate-100 dark:border-gray-800">
             <button
               type="button"
-              onClick={() => setIsAccountModalOpen(false)}
+              onClick={closeAccountModal}
               className="px-4 py-2 text-xs font-medium rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors shadow-2xs"
             >
               {t('Cancel')}

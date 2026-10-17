@@ -9,7 +9,7 @@ import DisplayRow from '@/components/profile/DisplayRow';
 import FormField, { useFormState, SelectOption } from '@/components/profile/FormField';
 import { toArray, formatMultiValue } from '@/components/profile/profileUtils';
 import { formatBoolean } from '@/utils/formatters';
-import { formatApiError } from '@/utils/errorFormatter';
+import { formatApiError, bottomErrorMessage } from '@/utils/errorFormatter';
 import type {
   FinancialInformation,
   IntellectualInformation,
@@ -120,13 +120,22 @@ const JAHIZIYEH_OPTIONS: SelectOption[] = [
 /* ─── Intellectual Options ─────────────────────────────────────────────── */
 
 const WOMAN_JOB_OPTIONS: SelectOption[] = [
-  'Disagree', 'Agree', 'Must have a job', 'Depends on Work Environment',
-  'Depends on Job Type', 'Womanly Job', 'Housejob', 'Depends On Spouse Opinion',
-].map((v) => ({ value: v, label: v }));
+  { value: 'disagree', label: 'Disagree' },
+  { value: 'agree', label: 'Agree' },
+  { value: 'must_have_job', label: 'Must have a job' },
+  { value: 'depends_work_env', label: 'Depends on Work Environment' },
+  { value: 'depends_job_type', label: 'Depends on Job Type' },
+  { value: 'womanly_job', label: 'Womanly Job' },
+  { value: 'housejob', label: 'Housejob' },
+  { value: 'depends_spouse_opinion', label: 'Depends On Spouse Opinion' },
+];
 
 const WOMAN_EDU_OPTIONS: SelectOption[] = [
-  'Disagree', 'Agree', 'Depends on the Degree', 'Depends On Spouse Opinion',
-].map((v) => ({ value: v, label: v }));
+  { value: 'disagree', label: 'Disagree' },
+  { value: 'agree', label: 'Agree' },
+  { value: 'depends_degree', label: 'Depends on the Degree' },
+  { value: 'depends_spouse_opinion', label: 'Depends On Spouse Opinion' },
+];
 
 const FRIEND_CONN_OPTIONS: SelectOption[] = [
   'Excellent', 'Good', 'Average', 'Weak', 'None',
@@ -249,7 +258,7 @@ function defaultFinancialForm(data: FinancialInformation | null) {
     ex_spouse_financial_status: data?.ex_spouse_financial_status ?? ('' as ExSpouseFinancialStatusEnum),
     ex_spouse_financial_pay_status: data?.ex_spouse_financial_pay_status ?? ('' as ExSpouseFinancialPayStatusEnum),
     ex_spouse_financial_amount: data?.ex_spouse_financial_amount ?? '',
-    future_spouse_dowry_type: toArray(data?.future_spouse_dowry_type) as DowryTypeEnum[],
+    future_spouse_dowry_type: toArray((data as any)?.dowry_type ?? data?.future_spouse_dowry_type) as DowryTypeEnum[],
     future_spose_dowry_amount: data?.future_spose_dowry_amount ?? '',
     future_spose_jahiziyeh: data?.future_spose_jahiziyeh ?? ('' as JahiziyehEnum),
     future_spose_jahiziyeh_explanation: data?.future_spose_jahiziyeh_explanation ?? '',
@@ -287,12 +296,21 @@ export function FinancialInformationSection({
     try {
       const payload = {
         ...state,
+        dowry_type: state.future_spouse_dowry_type,
+        future_spouse_dowry_type: state.future_spouse_dowry_type,
+        dowry_amount: state.future_spose_dowry_amount,
+        future_spose_dowry_amount: state.future_spose_dowry_amount,
+        jahiziyeh: state.future_spose_jahiziyeh || null,
+        future_spose_jahiziyeh: state.future_spose_jahiziyeh || null,
+        jahiziyeh_explantion: state.future_spose_jahiziyeh_explanation,
+        future_spose_jahiziyeh_explanation: state.future_spose_jahiziyeh_explanation,
+        other_captial: state.other_capital,
+        other_capital: state.other_capital,
         current_residence_status: state.current_residence_status || null,
         ownership_status: state.ownership_status || null,
         after_marriage_residence_status: state.after_marriage_residence_status || null,
         ex_spouse_financial_status: state.ex_spouse_financial_status || null,
         ex_spouse_financial_pay_status: state.ex_spouse_financial_pay_status || null,
-        future_spose_jahiziyeh: state.future_spose_jahiziyeh || null,
       };
       if (data?.id) {
         await updateFinancialInformation(data.id, payload as any);
@@ -304,7 +322,7 @@ export function FinancialInformationSection({
     } catch (e: any) {
       const formatted = formatApiError(e, t, isRTL);
       setFieldErrors(formatted.fieldErrors);
-      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
+      setError(bottomErrorMessage(formatted, t));
     } finally {
       setSaving(false);
     }
@@ -324,7 +342,7 @@ export function FinancialInformationSection({
         <DisplayRow label="Ex-Spouse Financial Status" value={formatMultiValue(data?.ex_spouse_financial_status, EX_SPOUSE_FIN_OPTIONS, t)} />
         <DisplayRow label="Ex-Spouse Financial Pay Status" value={formatMultiValue(data?.ex_spouse_financial_pay_status, EX_SPOUSE_PAY_OPTIONS, t)} />
         <DisplayRow label="Ex-Spouse Financial Amount" value={data?.ex_spouse_financial_amount} />
-        <DisplayRow label="Future Spouse Dowry Type" value={formatMultiValue(data?.future_spouse_dowry_type, DOWRY_TYPE_OPTIONS, t)} />
+        <DisplayRow label="Future Spouse Dowry Type" value={formatMultiValue((data as any)?.dowry_type ?? data?.future_spouse_dowry_type, DOWRY_TYPE_OPTIONS, t)} />
         <DisplayRow label="Future Spouse Dowry Amount" value={data?.future_spose_dowry_amount} />
         <DisplayRow label="Future Spouse Jahiziyeh" value={formatMultiValue(data?.future_spose_jahiziyeh, JAHIZIYEH_OPTIONS, t)} />
         <DisplayRow label="Jahiziyeh Explanation" value={data?.future_spose_jahiziyeh_explanation} />
@@ -370,8 +388,8 @@ export function FinancialInformationSection({
 function defaultIntellectualForm(data: IntellectualInformation | null) {
   return {
     marriage_goals_purposes: data?.marriage_goals_purposes ?? '',
-    opinion_about_womans_job: toArray(data?.opinion_about_womans_job) as WomanJobOpinionEnum[],
-    opinion_about_womans_education: toArray(data?.opinion_about_womans_education) as WomanEducationOpinionEnum[],
+    opinion_about_womans_job: toArray((data as any)?.opinion_woman_job ?? data?.opinion_about_womans_job) as WomanJobOpinionEnum[],
+    opinion_about_womans_education: toArray((data as any)?.opinion_woman_edu ?? data?.opinion_about_womans_education) as WomanEducationOpinionEnum[],
     pros_of_yourself: data?.pros_of_yourself ?? '',
     cons_of_yourself: data?.cons_of_yourself ?? '',
     type_of_connection_with_friends: data?.type_of_connection_with_friends ?? ('' as FriendConnectionEnum),
@@ -384,14 +402,14 @@ function defaultIntellectualForm(data: IntellectualInformation | null) {
     worship_and_prayer: data?.worship_and_prayer ?? ('' as WorshipAndPrayerEnum),
     fasting: data?.fasting ?? ('' as FastingEnum),
     fasting_explanation: data?.fasting_explanation ?? '',
-    cover_type_house: data?.cover_type_house ?? ('' as CoverTypeHouseEnum),
-    cover_type_society: data?.cover_type_society ?? ('' as CoverTypeSocietyEnum),
+    cover_type_house: ((Array.isArray(data?.cover_type_house) ? data?.cover_type_house[0] : data?.cover_type_house) ?? '') as CoverTypeHouseEnum,
+    cover_type_society: ((Array.isArray(data?.cover_type_society) ? data?.cover_type_society[0] : data?.cover_type_society) ?? '') as CoverTypeSocietyEnum,
     participating_in_religious_meetings: data?.participating_in_religious_meetings ?? ('' as ParticipationEnum),
     music: data?.music ?? ('' as MusicEnum),
     dance_singing_assemblies: data?.dance_singing_assemblies ?? ('' as DanceSingingEnum),
     opinion_about_innocent_contact: data?.opinion_about_innocent_contact ?? ('' as InnocentContactEnum),
-    cover_type_innocent_contact: data?.cover_type_innocent_contact ?? ('' as CoverTypeInnocentContactEnum),
-    decision_making_choosing_spouse: data?.decision_making_choosing_spouse ?? ('' as DecisionMakingEnum),
+    cover_type_innocent_contact: ((Array.isArray(data?.cover_type_innocent_contact) ? data?.cover_type_innocent_contact[0] : data?.cover_type_innocent_contact) ?? '') as CoverTypeInnocentContactEnum,
+    decision_making_choosing_spouse: ((Array.isArray(data?.decision_making_choosing_spouse) ? data?.decision_making_choosing_spouse[0] : data?.decision_making_choosing_spouse) ?? '') as DecisionMakingEnum,
   };
 }
 
@@ -426,6 +444,10 @@ export function IntellectualInformationSection({
     try {
       const payload = {
         ...state,
+        opinion_woman_job: state.opinion_about_womans_job,
+        opinion_about_womans_job: state.opinion_about_womans_job,
+        opinion_woman_edu: state.opinion_about_womans_education,
+        opinion_about_womans_education: state.opinion_about_womans_education,
         type_of_connection_with_friends: state.type_of_connection_with_friends || null,
         opinion_about_velayat_faqih: state.opinion_about_velayat_faqih || null,
         opinion_about_child_quantity: state.opinion_about_child_quantity || null,
@@ -452,7 +474,7 @@ export function IntellectualInformationSection({
     } catch (e: any) {
       const formatted = formatApiError(e, t, isRTL);
       setFieldErrors(formatted.fieldErrors);
-      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
+      setError(bottomErrorMessage(formatted, t));
     } finally {
       setSaving(false);
     }
@@ -462,8 +484,8 @@ export function IntellectualInformationSection({
     <>
       <ProfileSection title="Intellectual Information" onEdit={openModal} isEmpty={!data} isCollapsed={isCollapsed} onToggleCollapse={onToggleCollapse}>
         <DisplayRow label="Marriage Goals & Purposes" value={data?.marriage_goals_purposes} />
-        <DisplayRow label="Opinion About Woman's Job" value={formatMultiValue(data?.opinion_about_womans_job, WOMAN_JOB_OPTIONS, t)} />
-        <DisplayRow label="Opinion About Woman's Education" value={formatMultiValue(data?.opinion_about_womans_education, WOMAN_EDU_OPTIONS, t)} />
+        <DisplayRow label="Opinion About Woman's Job" value={formatMultiValue((data as any)?.opinion_woman_job ?? data?.opinion_about_womans_job, WOMAN_JOB_OPTIONS, t)} />
+        <DisplayRow label="Opinion About Woman's Education" value={formatMultiValue((data as any)?.opinion_woman_edu ?? data?.opinion_about_womans_education, WOMAN_EDU_OPTIONS, t)} />
         <DisplayRow label="Pros of Yourself" value={data?.pros_of_yourself} />
         <DisplayRow label="Cons of Yourself" value={data?.cons_of_yourself} />
         <DisplayRow label="Friend Connection" value={formatMultiValue(data?.type_of_connection_with_friends, FRIEND_CONN_OPTIONS, t)} />

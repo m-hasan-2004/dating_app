@@ -8,7 +8,7 @@ import MultiRecordSection from '@/components/profile/MultiRecordSection';
 import DisplayRow from '@/components/profile/DisplayRow';
 import FormField, { useFormState, SelectOption } from '@/components/profile/FormField';
 import { formatDate, formatBoolean } from '@/utils/formatters';
-import { formatApiError } from '@/utils/errorFormatter';
+import { formatApiError, bottomErrorMessage } from '@/utils/errorFormatter';
 import type {
   ExHusbandChildStatus,
   Sister,
@@ -133,7 +133,7 @@ export function ExHusbandChildStatusSection({
     } catch (e: any) {
       const formatted = formatApiError(e, t, isRTL);
       setFieldErrors(formatted.fieldErrors);
-      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
+      setError(bottomErrorMessage(formatted, t));
     } finally {
       setSaving(false);
     }
@@ -252,7 +252,7 @@ export function SistersSection({
     } catch (e: any) {
       const formatted = formatApiError(e, t, isRTL);
       setFieldErrors(formatted.fieldErrors);
-      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
+      setError(bottomErrorMessage(formatted, t));
     } finally {
       setSaving(false);
     }
@@ -357,7 +357,7 @@ export function BrothersSection({
     } catch (e: any) {
       const formatted = formatApiError(e, t, isRTL);
       setFieldErrors(formatted.fieldErrors);
-      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
+      setError(bottomErrorMessage(formatted, t));
     } finally {
       setSaving(false);
     }
@@ -476,7 +476,7 @@ export function GroomsSection({
     } catch (e: any) {
       const formatted = formatApiError(e, t, isRTL);
       setFieldErrors(formatted.fieldErrors);
-      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
+      setError(bottomErrorMessage(formatted, t));
     } finally {
       setSaving(false);
     }
@@ -597,7 +597,7 @@ export function BridesWivesSection({
     } catch (e: any) {
       const formatted = formatApiError(e, t, isRTL);
       setFieldErrors(formatted.fieldErrors);
-      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
+      setError(bottomErrorMessage(formatted, t));
     } finally {
       setSaving(false);
     }

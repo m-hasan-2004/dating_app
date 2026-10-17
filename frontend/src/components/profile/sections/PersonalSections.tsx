@@ -9,7 +9,7 @@ import DisplayRow from '@/components/profile/DisplayRow';
 import FormField, { useFormState, SelectOption } from '@/components/profile/FormField';
 import { toArray, formatMultiValue } from '@/components/profile/profileUtils';
 import { formatDate, formatBoolean } from '@/utils/formatters';
-import { formatApiError } from '@/utils/errorFormatter';
+import { formatApiError, bottomErrorMessage } from '@/utils/errorFormatter';
 import type {
   PersonalInformation,
   GenderEnum,
@@ -29,8 +29,8 @@ import {
 /* ─── option arrays ──────────────────────────────────────────────────── */
 
 const GENDER_OPTIONS: SelectOption[] = [
-  { value: 'man', label: 'Man' },
-  { value: 'woman', label: 'Woman' },
+  { value: 'Man', label: 'Man' },
+  { value: 'Woman', label: 'Woman' },
 ];
 
 const EDUCATION_OPTIONS: SelectOption[] = [
@@ -138,7 +138,7 @@ const USAGE_CASES_OPTIONS: SelectOption[] = [
 
 function defaultPersonalForm(data: PersonalInformation | null) {
   return {
-    gender: data?.gender ?? ('' as GenderEnum),
+    gender: ((Array.isArray(data?.gender) ? data?.gender[0] : data?.gender) ?? '') as GenderEnum,
     sadat: data?.sadat ?? false,
     birth_date: data?.birth_date ?? '',
     birth_location: data?.birth_location ?? '',
@@ -201,7 +201,7 @@ export function PersonalsInformationSection({ data, onReload, isCollapsed, onTog
     } catch (e: any) {
       const formatted = formatApiError(e, t, isRTL);
       setFieldErrors(formatted.fieldErrors);
-      setError(formatted.message || t("Please fix the errors in the form before submitting."));
+      setError(bottomErrorMessage(formatted, t));
     } finally {
       setSaving(false);
     }

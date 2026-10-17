@@ -9,7 +9,7 @@ import MultiRecordSection from '@/components/profile/MultiRecordSection';
 import DisplayRow from '@/components/profile/DisplayRow';
 import FormField, { useFormState, SelectOption } from '@/components/profile/FormField';
 import { formatDate } from '@/utils/formatters';
-import { formatApiError } from '@/utils/errorFormatter';
+import { formatApiError, bottomErrorMessage } from '@/utils/errorFormatter';
 import type { SubjectDetails, SignupFeeTypeEnum } from '@/services/profileService';
 import type { IntroducedSubjectsInformation } from '@/services/profileMultiService';
 import { createSubjectDetails, updateSubjectDetails } from '@/services/profileService';
@@ -110,7 +110,7 @@ export function IntroducedSubjectsSection({
     } catch (e: any) {
       const formatted = formatApiError(e, t, isRTL);
       setFieldErrors(formatted.fieldErrors);
-      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
+      setError(bottomErrorMessage(formatted, t));
     } finally {
       setSaving(false);
     }
@@ -241,7 +241,7 @@ export function SubjectDetailsSection({
     } catch (e: any) {
       const formatted = formatApiError(e, t, isRTL);
       setFieldErrors(formatted.fieldErrors);
-      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
+      setError(bottomErrorMessage(formatted, t));
     } finally {
       setSaving(false);
     }

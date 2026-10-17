@@ -9,7 +9,7 @@ import DisplayRow from '@/components/profile/DisplayRow';
 import FormField, { useFormState, SelectOption } from '@/components/profile/FormField';
 import { toArray, formatMultiValue } from '@/components/profile/profileUtils';
 import { formatDate, formatHeight, formatWeight } from '@/utils/formatters';
-import { formatApiError } from '@/utils/errorFormatter';
+import { formatApiError, bottomErrorMessage } from '@/utils/errorFormatter';
 import type {
   IdentityInformation,
   BirthCertificateInformation,
@@ -160,7 +160,7 @@ export function IdentityInformationSection({
     } catch (e: any) {
       const formatted = formatApiError(e, t, isRTL);
       setFieldErrors(formatted.fieldErrors);
-      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
+      setError(bottomErrorMessage(formatted, t));
     } finally {
       setSaving(false);
     }
@@ -270,7 +270,7 @@ function defaultBirthCertForm(data: BirthCertificateInformation | null) {
     divorce_date: data?.divorce_date ?? '',
     husband_death_date: data?.husband_death_date ?? '',
     birth_date: data?.birth_date ?? '',
-    children: data?.children ?? ('none' as ChildrenEnum),
+    children: ((Array.isArray(data?.children) ? data?.children[0] : data?.children) ?? 'none') as ChildrenEnum,
     children_custody: data?.children_custody ?? ('' as ChildrenCustodyEnum),
   };
 }
@@ -287,6 +287,25 @@ export function BirthCertificateSection({
   const [error, setError] = useState('');
   const { state, handleChange, reset, fieldErrors, setFieldErrors } = useFormState(defaultBirthCertForm(data));
 
+  /* ─── conditional visibility ─────────────────────────────────────────── */
+  /* Marriage-specific fields only apply when the user has any marriage
+     experience ("yes" and "engagement_only" both show everything); "no"
+     keeps them (and the children fields) out of the modal and payload. */
+  const showMarriageFields = state.marriage_experince !== 'no';
+  // `children` may be a STRING (e.g. "none") or an ARRAY (multi-select) — handle both.
+  const rawChildren: unknown = state.children;
+  const childrenIsEmpty = Array.isArray(rawChildren)
+    ? rawChildren.length === 0 || (rawChildren.length === 1 && rawChildren[0] === 'none')
+    : !rawChildren || rawChildren === 'none';
+  const showCustody = showMarriageFields && !childrenIsEmpty;
+
+  /* Display-side conditions (server-stored data). */
+  const dataShowMarriageFields = data?.marriage_experince !== 'no';
+  const dataChildren: unknown = data?.children;
+  const dataChildrenEmpty = Array.isArray(dataChildren)
+    ? dataChildren.length === 0 || (dataChildren.length === 1 && dataChildren[0] === 'none')
+    : !dataChildren || dataChildren === 'none';
+
   const openModal = () => {
     reset(defaultBirthCertForm(data));
     setError('');
@@ -301,11 +320,16 @@ export function BirthCertificateSection({
     try {
       const payload = {
         ...state,
-        contract_date: state.contract_date || null,
-        marriage_date: state.marriage_date || null,
-        divorce_date: state.divorce_date || null,
-        husband_death_date: state.husband_death_date || null,
-        children_custody: state.children_custody || null,
+        // Hidden fields are neutralized so stale user input never reaches the API.
+        contract_date: showMarriageFields ? state.contract_date || null : null,
+        marriage_date: showMarriageFields ? state.marriage_date || null : null,
+        divorce_date: showMarriageFields ? state.divorce_date || null : null,
+        husband_death_date: showMarriageFields ? state.husband_death_date || null : null,
+        // `children` is a required MultiSelectSerializerField that rejects an
+        // empty list, so the neutral value is 'none' (validated server-side into ["none"]).
+        children: showMarriageFields && !childrenIsEmpty ? (state.children as ChildrenEnum) : 'none',
+        // ChoiceField (null/blank allowed) → null is the neutral hidden value.
+        children_custody: showCustody ? (state.children_custody as ChildrenCustodyEnum) || null : null,
       };
       if (data?.id) {
         await updateBirthCertificateInformation(data.id, payload as any);
@@ -317,7 +341,7 @@ export function BirthCertificateSection({
     } catch (e: any) {
       const formatted = formatApiError(e, t, isRTL);
       setFieldErrors(formatted.fieldErrors);
-      setError(formatted.message || t('Please fix the errors in the form before submitting.'));
+      setError(bottomErrorMessage(formatted, t));
     } finally {
       setSaving(false);
     }
@@ -338,12 +362,16 @@ export function BirthCertificateSection({
         <DisplayRow label="Birth Date" value={data?.birth_date ? formatDate(data.birth_date, isRTL) : null} />
         <DisplayRow label="Marriage Experience" value={data?.marriage_experince} />
         <DisplayRow label="Marriage Status" value={data?.marriage_status} />
-        <DisplayRow label="Contract Date" value={data?.contract_date ? formatDate(data.contract_date, isRTL) : null} />
-        <DisplayRow label="Marriage Date" value={data?.marriage_date ? formatDate(data.marriage_date, isRTL) : null} />
-        <DisplayRow label="Divorce Date" value={data?.divorce_date ? formatDate(data.divorce_date, isRTL) : null} />
-        <DisplayRow label="Husband Death Date" value={data?.husband_death_date ? formatDate(data.husband_death_date, isRTL) : null} />
-        <DisplayRow label="Children" value={data?.children} />
-        <DisplayRow label="Children Custody" value={data?.children_custody} />
+        {dataShowMarriageFields && (
+          <>
+            <DisplayRow label="Contract Date" value={data?.contract_date ? formatDate(data.contract_date, isRTL) : null} />
+            <DisplayRow label="Marriage Date" value={data?.marriage_date ? formatDate(data.marriage_date, isRTL) : null} />
+            <DisplayRow label="Divorce Date" value={data?.divorce_date ? formatDate(data.divorce_date, isRTL) : null} />
+            <DisplayRow label="Husband Death Date" value={data?.husband_death_date ? formatDate(data.husband_death_date, isRTL) : null} />
+            <DisplayRow label="Children" value={Array.isArray(data?.children) ? data?.children.join(", ") : data?.children} />
+            {!dataChildrenEmpty && <DisplayRow label="Children Custody" value={data?.children_custody} />}
+          </>
+        )}
       </ProfileSection>
 
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-2xl w-full">
@@ -364,18 +392,24 @@ export function BirthCertificateSection({
               <FormField label="Marriage Experience" name="marriage_experince" type="select" value={state.marriage_experince} onChange={handleChange} options={MARRIAGE_EXPERIENCE_OPTIONS} error={fieldErrors.marriage_experince} />
               <FormField label="Marriage Status" name="marriage_status" type="select" value={state.marriage_status} onChange={handleChange} options={MARRIAGE_STATUS_OPTIONS} error={fieldErrors.marriage_status} />
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <FormField label="Contract Date" name="contract_date" type="date" value={state.contract_date} onChange={handleChange} error={fieldErrors.contract_date} />
-              <FormField label="Marriage Date" name="marriage_date" type="date" value={state.marriage_date} onChange={handleChange} error={fieldErrors.marriage_date} />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <FormField label="Divorce Date" name="divorce_date" type="date" value={state.divorce_date} onChange={handleChange} error={fieldErrors.divorce_date} />
-              <FormField label="Husband Death Date" name="husband_death_date" type="date" value={state.husband_death_date} onChange={handleChange} error={fieldErrors.husband_death_date} />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <FormField label="Children" name="children" type="select" value={state.children} onChange={handleChange} options={CHILDREN_OPTIONS} error={fieldErrors.children} />
-              <FormField label="Children Custody" name="children_custody" type="select" value={state.children_custody} onChange={handleChange} options={CHILDREN_CUSTODY_OPTIONS} error={fieldErrors.children_custody} />
-            </div>
+            {showMarriageFields && (
+              <>
+                <div className="grid grid-cols-2 gap-4">
+                  <FormField label="Contract Date" name="contract_date" type="date" value={state.contract_date} onChange={handleChange} error={fieldErrors.contract_date} />
+                  <FormField label="Marriage Date" name="marriage_date" type="date" value={state.marriage_date} onChange={handleChange} error={fieldErrors.marriage_date} />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <FormField label="Divorce Date" name="divorce_date" type="date" value={state.divorce_date} onChange={handleChange} error={fieldErrors.divorce_date} />
+                  <FormField label="Husband Death Date" name="husband_death_date" type="date" value={state.husband_death_date} onChange={handleChange} error={fieldErrors.husband_death_date} />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <FormField label="Children" name="children" type="select" value={state.children} onChange={handleChange} options={CHILDREN_OPTIONS} error={fieldErrors.children} />
+                  {showCustody && (
+                    <FormField label="Children Custody" name="children_custody" type="select" value={state.children_custody} onChange={handleChange} options={CHILDREN_CUSTODY_OPTIONS} error={fieldErrors.children_custody} />
+                  )}
+                </div>
+              </>
+            )}
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">

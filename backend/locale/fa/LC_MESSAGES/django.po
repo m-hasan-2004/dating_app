@@ -414,7 +414,8 @@ msgstr "نوع پرداخت نامعتبر است."
 
 #: core/utils/error_msgs/model_error_messages.py:186
 msgid "Invalid file type. Only PDF, JPG, JPEG, and PNG files are allowed."
-msgstr "نوع فایل نامعتبر است. فقط فرمت های pdf, jpg, jpeg و png مورد قبول است."
+msgstr ""
+"نوع فایل نامعتبر است. فقط فرمت های pdf, jpg, jpeg و png مورد قبول است."
 
 #: core/utils/error_msgs/model_error_messages.py:190
 #: core/utils/error_msgs/model_error_messages.py:259
@@ -907,20 +908,18 @@ msgid "Selected value for bride or wife is invalid."
 msgstr "مقدار انتخاب شده نامعتبر است."
 
 #: core/utils/error_msgs/model_error_messages.py:439
-#, fuzzy
 #| msgid "Deposit is required."
 msgid "Number of sisters is required."
-msgstr "سپرده الزامی است."
+msgstr "تعداد خواهران الزامی است."
 
 #: core/utils/error_msgs/model_error_messages.py:440
 msgid "Number of sisters must be a positive number."
 msgstr "تعداد خواهر ها باید عدد مثبت باشد."
 
 #: core/utils/error_msgs/model_error_messages.py:443
-#, fuzzy
 #| msgid "Eyes color is required."
 msgid "Number of brothers is required."
-msgstr "رنگ چشم الزامی است."
+msgstr "تعداد برادران الزامی است."
 
 #: core/utils/error_msgs/model_error_messages.py:444
 msgid "Number of brothers must be a positive number."
@@ -1359,8 +1358,10 @@ msgid "Marriage with disabled & Veteran Explanation is required."
 msgstr "توضیحات ازدواج با معلول یا جانباز الزامی است."
 
 #: core/utils/error_msgs/preferred_wife_model_error_messages.py:89
-msgid "Marriage With Disabled & Veteran Explanation cannot exceed 150 characters."
-msgstr "توضیحات ازدواج با معلول یا جانباز نمی تواند بیشتر از ۱۵۰ کاراکتر باشد.."
+msgid ""
+"Marriage With Disabled & Veteran Explanation cannot exceed 150 characters."
+msgstr ""
+"توضیحات ازدواج با معلول یا جانباز نمی تواند بیشتر از ۱۵۰ کاراکتر باشد.."
 
 #: core/utils/error_msgs/preferred_wife_model_error_messages.py:93
 msgid "Red flags are required."
@@ -1488,7 +1489,9 @@ msgstr "آیا بیماری یا جراحی خاصی داشته‌اید؟"
 
 #: core/utils/help_texts/help_text.py:11
 msgid "Specify the type of medication, surgery, or disease if applicable."
-msgstr "در صورت داشتن بیماری، استفاده از داروی خاص یا سابقه جراحی با جزییات شرح دهید."
+msgstr ""
+"در صورت داشتن بیماری، استفاده از داروی خاص یا سابقه جراحی با جزییات شرح "
+"دهید."
 
 #: core/utils/help_texts/help_text.py:13
 msgid "Select the skin color of the user."
@@ -1522,7 +1525,8 @@ msgstr "جنسیت خود را انتخاب کنید."
 msgid "Is the user a Sadat?"
 msgstr "آیا کاربر از سادات است؟"
 
-#: core/utils/help_texts/help_text.py:24 core/utils/help_texts/help_text.py:163
+#: core/utils/help_texts/help_text.py:24
+#: core/utils/help_texts/help_text.py:163
 msgid "Enter the birth date of the user."
 msgstr "تاریخ تولد خود را وارد کنید."
 
@@ -1575,7 +1579,9 @@ msgid "Select the usage cases applicable to the user."
 msgstr "موارد استفاده‌ای که مرتبط به شما است را انتخاب کنید."
 
 #: core/utils/help_texts/help_text.py:40
-msgid "Provide additional details about usage cases. Like how many cigars or hookah a day."
+msgid ""
+"Provide additional details about usage cases. Like how many cigars or hookah"
+" a day."
 msgstr "توضیحات اضافی درباره میزان مصرف روزانه سیگار یا قلیان."
 
 #: core/utils/help_texts/help_text.py:42
@@ -1780,16 +1786,14 @@ msgid "Select the bride or wife from the available options."
 msgstr "اطلاعات وارده مربوط به عروس یا زن داداش است."
 
 #: core/utils/help_texts/help_text.py:113
-#, fuzzy
 #| msgid "Enter the income of the user."
 msgid "Enter the number of sisters you have."
-msgstr "درآمد خود را وارد کنید."
+msgstr "تعداد خواهران خود را وارد کنید."
 
 #: core/utils/help_texts/help_text.py:114
-#, fuzzy
 #| msgid "Enter the income of the user."
 msgid "Enter the number of brothers you have."
-msgstr "درآمد خود را وارد کنید."
+msgstr "تعداد برادران خود را وارد کنید."
 
 #: core/utils/help_texts/help_text.py:118
 msgid "Enter the first name of the user."
@@ -1957,7 +1961,9 @@ msgid "Designates whether the user can log into this admin site."
 msgstr "مشخص می‌کند که آیا کاربر می‌تواند وارد این سایت مدیریت شود."
 
 #: core/utils/help_texts/help_text.py:181
-msgid "Designates whether this user should be treated as active. Unselect this instead of deleting accounts."
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
 msgstr "به جای پاک کردن کاربر، تیک این گزینه را بزنید تا کاربر غیر فعال شود."
 
 #: core/utils/help_texts/help_text.py:183
@@ -1966,7 +1972,8 @@ msgstr "تاریخ و زمان پیوستن کاربر."
 
 #: core/utils/help_texts/help_text.py:187
 msgid "If you cannot fast due to sickness, please explain your condition."
-msgstr "اگر به علت بیماری قادر به روزه گرفتن نیستید، درباره بیماری توضیح دهید."
+msgstr ""
+"اگر به علت بیماری قادر به روزه گرفتن نیستید، درباره بیماری توضیح دهید."
 
 #: core/utils/help_texts/help_text.py:188
 msgid "Describe your goals and purposes for marriage in detail."
@@ -2058,7 +2065,9 @@ msgstr "نظر شما در مورد نوع پوشش زن در مهمانی در 
 
 #: core/utils/help_texts/help_text.py:221
 msgid "Select your decision-making approach when choosing a spouse."
-msgstr "در تصمیم گیری برای انتخاب همسر و ازدواج با افرادی که موسسه انتخاب می‌کند، آیا مستقل هستید یا دیگران برایتان تصمیم گیری می کنند؟"
+msgstr ""
+"در تصمیم گیری برای انتخاب همسر و ازدواج با افرادی که موسسه انتخاب می‌کند، "
+"آیا مستقل هستید یا دیگران برایتان تصمیم گیری می کنند؟"
 
 #: core/utils/help_texts/help_text.py:223
 #: core/utils/help_texts/help_text.py:237
@@ -2066,7 +2075,9 @@ msgid "Select the user associated with this information."
 msgstr "کاربری که این اطلاعات به آن مربوط است را انتخاب کنید."
 
 #: core/utils/help_texts/help_text.py:228
-msgid "Enter the username of the introduced subject. This should be unique and descriptive."
+msgid ""
+"Enter the username of the introduced subject. This should be unique and "
+"descriptive."
 msgstr "نام کاربری یا کد فرد معرفی شده را وارد کنید."
 
 #: core/utils/help_texts/help_text.py:230
@@ -2153,7 +2164,8 @@ msgid "Select the importance of the future spouse's family financial status."
 msgstr "اهمیت وضعیت مالی خانواده همسر آینده را انتخاب کنید."
 
 #: core/utils/help_texts/preferred_wife_help_text.py:34
-msgid "Select the preference for marriage with someone with marriage experience."
+msgid ""
+"Select the preference for marriage with someone with marriage experience."
 msgstr "آیا مایل به ازدواج با فردی دارای سابقه ازدواج هستید؟"
 
 #: core/utils/help_texts/preferred_wife_help_text.py:36
@@ -2181,15 +2193,21 @@ msgid "Enter any additional information that is not included in the form."
 msgstr "هر اطلاعات اضافی که در فرم درج نشده است وارد کنید."
 
 #: core/utils/help_texts/subject_help_texts.py:6
-msgid "Enter your preferred date and times for meetings (e.g., 'Weekdays after 6 PM, Weekends anytime')."
+msgid ""
+"Enter your preferred date and times for meetings (e.g., 'Weekdays after 6 "
+"PM, Weekends anytime')."
 msgstr "اوقات پیشنهادی ملاقات مد نظر متقاضی."
 
 #: core/utils/help_texts/subject_help_texts.py:9
-msgid "Select the payment method for the signup fee - Cash or Card (Transfer to Card)."
+msgid ""
+"Select the payment method for the signup fee - Cash or Card (Transfer to "
+"Card)."
 msgstr "نوع روش پرداخت را انتخاب کنید. (کارت به کارت / نقد)"
 
 #: core/utils/help_texts/subject_help_texts.py:12
-msgid "Enter your bank account number (10-20 digits). This is required if you select 'Card' as payment method."
+msgid ""
+"Enter your bank account number (10-20 digits). This is required if you "
+"select 'Card' as payment method."
 msgstr "در صورت انتخاب کارت به کارت، شماره کارت را وارد کنید."
 
 #: core/utils/help_texts/subject_help_texts.py:15
@@ -2205,7 +2223,9 @@ msgid "Enter the amount in Rials. Only numbers and decimal point are allowed."
 msgstr "میزان مبلغ را به ریال وارد کنید"
 
 #: core/utils/help_texts/subject_help_texts.py:24
-msgid "Enter any professional opinion or notes about the subject (max 1000 characters)."
+msgid ""
+"Enter any professional opinion or notes about the subject (max 1000 "
+"characters)."
 msgstr "نظر کارشناسی را با جزییات بنویسید."
 
 #: core/utils/model_choices/preferred_wife_model_choices.py:7
@@ -2356,35 +2376,35 @@ msgstr "کم"
 
 #: core/utils/model_choices/preferred_wife_model_choices.py:50
 msgid "فارس"
-msgstr ""
+msgstr "فارس"
 
 #: core/utils/model_choices/preferred_wife_model_choices.py:51
 msgid "لر"
-msgstr ""
+msgstr "لر"
 
 #: core/utils/model_choices/preferred_wife_model_choices.py:52
 msgid "ترک"
-msgstr ""
+msgstr "ترک"
 
 #: core/utils/model_choices/preferred_wife_model_choices.py:53
 msgid "کرد"
-msgstr ""
+msgstr "کرد"
 
 #: core/utils/model_choices/preferred_wife_model_choices.py:54
 msgid "لک"
-msgstr ""
+msgstr "لک"
 
 #: core/utils/model_choices/preferred_wife_model_choices.py:55
 msgid "تات"
-msgstr ""
+msgstr "تات"
 
 #: core/utils/model_choices/preferred_wife_model_choices.py:56
 msgid "عرب"
-msgstr ""
+msgstr "عرب"
 
 #: core/utils/model_choices/preferred_wife_model_choices.py:57
 msgid "بلوچ"
-msgstr ""
+msgstr "بلوچ"
 
 #: core/utils/model_choices/preferred_wife_model_choices.py:61
 #: core/utils/model_choices/user_model_choices.py:416
@@ -3663,7 +3683,8 @@ msgid "National code must be exactly 10 digits"
 msgstr "کد ملی باید دقیقا ۱۰ کاراکتر باشد."
 
 #: core/utils/validators/user_validators.py:26
-msgid "Birth certificate serial must contain only letters, numbers, and hyphens"
+msgid ""
+"Birth certificate serial must contain only letters, numbers, and hyphens"
 msgstr "سریال شناسنامه فقط میتواند شامل حروف، اعداد و خط تیره باشد."
 
 #: core/utils/validators/user_validators.py:33
@@ -3715,11 +3736,11 @@ msgstr "دلیل نمیتواند بیشتر از ۵۰۰ کاراکتر باشد
 
 #: core/utils/validators/user_validators.py:78
 msgid "Cannot be both positive and negative"
-msgstr ""
+msgstr "نمی‌تواند همزمان مثبت و منفی باشد."
 
 #: core/utils/validators/user_validators.py:80
 msgid "Must select either positive or negative"
-msgstr ""
+msgstr "باید یکی از گزینه‌های مثبت یا منفی را انتخاب کنید."
 
 #: core/utils/validators/user_validators.py:86
 msgid "Only PDF and image files (jpg, jpeg, png) are allowed"
@@ -3742,8 +3763,9 @@ msgid "Cannot provide divorce reason without divorce history"
 msgstr "بدون سابقه طلاق انتخاب علت طلاق ممکن نیست."
 
 #: core/utils/validators/user_validators.py:107
-msgid "Contact information must contain only letters, spaces, and basic punctuation"
-msgstr ""
+msgid ""
+"Contact information must contain only letters, spaces, and basic punctuation"
+msgstr "اطلاعات تماس فقط باید شامل حروف، فاصله و علائم نگارشی پایه باشد."
 
 #: core/utils/validators/user_validators.py:112
 msgid "Cannot have death date for someone who is alive"
@@ -3765,7 +3787,7 @@ msgstr "باید برای خانه اجاره ای نرخ اجاره وارد ک
 msgid ""
 "Amount must contain only letters, numbers, spaces, Persian characters, and "
 "commas"
-msgstr ""
+msgstr "مبلغ فقط باید شامل حروف، اعداد، فاصله، حروف فارسی و ویرگول باشد."
 
 #: core/utils/validators/user_validators.py:131
 msgid "Must provide explanation for other jahiziyeh type"
@@ -3773,11 +3795,11 @@ msgstr "توضیحات جهیزیه همسر آینده را بنویسید.."
 
 #: core/utils/validators/user_validators.py:141
 msgid "Language must contain only letters, spaces, and commas"
-msgstr ""
+msgstr "زبان فقط باید شامل حروف، فاصله و ویرگول باشد."
 
 #: core/utils/validators/user_validators.py:146
 msgid "Job must contain only letters, spaces, and hyphens"
-msgstr ""
+msgstr "شغل فقط باید شامل حروف، فاصله و خط تیره باشد."
 
 #: core/utils/validators/user_validators.py:151
 msgid "Cannot have death date for living parent"
@@ -3813,31 +3835,31 @@ msgstr "نظر شما در مورد تحصیلات زنان الزامی است.
 
 #: core/utils/validators/user_validators.py:203
 msgid "House covering type is inconsistent with society covering type"
-msgstr ""
+msgstr "نوع پوشش در منزل با نوع پوشش در اجتماع همخوانی ندارد."
 
 #: core/utils/validators/user_validators.py:209
 msgid "Covering type choices are inconsistent across different contexts"
-msgstr ""
+msgstr "گزینه‌های نوع پوشش در موقعیت‌های مختلف با یکدیگر همخوانی ندارند."
 
 #: core/utils/validators/user_validators.py:218
 msgid "Prayer and fasting habits appear inconsistent"
-msgstr ""
+msgstr "وضعیت پایبندی به نماز و روزه با یکدیگر همخوانی ندارند."
 
 #: core/utils/validators/user_validators.py:226
 msgid "Political orientation and Velayat Faqih opinion appear inconsistent"
-msgstr ""
+msgstr "جهت‌گیری سیاسی با نظر درباره ولایت فقیه همخوانی ندارد."
 
 #: core/utils/validators/user_validators.py:234
 msgid ""
 "Religious activities participation appears inconsistent with entertainment "
 "choices"
-msgstr ""
+msgstr "میزان شرکت در فعالیت‌های مذهبی با انتخاب‌های تفریحی همخوانی ندارد."
 
 #: core/utils/validators/user_validators.py:241
 msgid ""
 "No children preference is inconsistent with permanent marriage contract "
 "choice"
-msgstr ""
+msgstr "تمایل به نداشتن فرزند با انتخاب عقد دائم همخوانی ندارد."
 
 #: core/utils/validators/user_validators.py:325
 msgid "Insurance type is required when you have insurance"
@@ -3849,11 +3871,11 @@ msgstr "سال‌های بیمه الزامی است."
 
 #: core/utils/validators/user_validators.py:330
 msgid "Insurance type should not be provided when you don't have insurance"
-msgstr ""
+msgstr "در صورت نداشتن بیمه، نباید نوع بیمه را وارد کنید."
 
 #: core/utils/validators/user_validators.py:332
 msgid "Insurance years should not be provided when you don't have insurance"
-msgstr ""
+msgstr "در صورت نداشتن بیمه، نباید سابقه بیمه را وارد کنید."
 
 #: core/utils/validators/user_validators.py:344
 msgid "Username must be at least 3 characters long"
@@ -3881,7 +3903,7 @@ msgstr "کد معرف نباید از ۱۰۰ کاراکتر بیشتر باشد.
 
 #: core/utils/validators/user_validators.py:381
 msgid "Cannot have middle man code without access code"
-msgstr ""
+msgstr "نمی‌توان بدون کد دعوت، کد معرف (واسطه) را وارد کرد."
 
 #: core/utils/validators/user_validators.py:389
 msgid "Superuser must be staff"
@@ -3971,11 +3993,11 @@ msgstr "همه"
 
 #: users/admin_filters.py:149
 msgid "اصالت پدر"
-msgstr ""
+msgstr "اصالت پدر"
 
 #: users/admin_filters.py:163
 msgid "اصالت مادر"
-msgstr ""
+msgstr "اصالت مادر"
 
 #: users/apps.py:7
 msgid "Users"
@@ -4070,10 +4092,9 @@ msgid "Preferred Wife Intellectual Information"
 msgstr "اطلاعات عقیدتی همسر مورد نظر"
 
 #: users/preferred_wife_models/preferred_wife_intellectual_information.py:108
-#, fuzzy
 #| msgid "Future Spose Jahiziyeh"
 msgid "Future Spouse Ethnicity"
-msgstr "جهیزیه همسر آینده"
+msgstr "قومیت همسر آینده"
 
 #: users/preferred_wife_models/preferred_wife_intellectual_information.py:129
 msgid "FutureSposeOriginality"
@@ -4647,8 +4668,8 @@ msgstr "نوع پوشش در مهمانی در حضور نامحرم"
 #: users/user_related_models/intellectual_information_model.py:151
 msgid "Decision Making in Choosing a Spouse"
 msgstr ""
-"در تصمیم گیری برای انتخاب همسر و ازدواج با افرادی که موسسه انتخاب می‌کند، آیا "
-"مستقل هستید یا دیگران برایتان تصمیم گیری می کنند؟"
+"در تصمیم گیری برای انتخاب همسر و ازدواج با افرادی که موسسه انتخاب می‌کند، "
+"آیا مستقل هستید یا دیگران برایتان تصمیم گیری می کنند؟"
 
 #: users/user_related_models/intellectual_information_model.py:182
 #: users/user_related_models/intellectual_information_model.py:183
@@ -5208,20 +5229,20 @@ msgstr ""
 
 #: venv/Lib/site-packages/django/core/validators.py:22
 msgid "Enter a valid value."
-msgstr ""
+msgstr "یک مقدار معتبر وارد کنید."
 
 #: venv/Lib/site-packages/django/core/validators.py:104
 #: venv/Lib/site-packages/django/forms/fields.py:752
 msgid "Enter a valid URL."
-msgstr ""
+msgstr "یک نشانی اینترنتی (URL) معتبر وارد کنید."
 
 #: venv/Lib/site-packages/django/core/validators.py:165
 msgid "Enter a valid integer."
-msgstr ""
+msgstr "یک عدد صحیح معتبر وارد کنید."
 
 #: venv/Lib/site-packages/django/core/validators.py:176
 msgid "Enter a valid email address."
-msgstr ""
+msgstr "یک آدرس ایمیل معتبر وارد کنید."
 
 #. Translators: "letters" means latin letters: a-z and A-Z.
 #: venv/Lib/site-packages/django/core/validators.py:259
@@ -5231,8 +5252,8 @@ msgstr ""
 
 #: venv/Lib/site-packages/django/core/validators.py:267
 msgid ""
-"Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or "
-"hyphens."
+"Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or"
+" hyphens."
 msgstr ""
 
 #: venv/Lib/site-packages/django/core/validators.py:281
@@ -5377,6 +5398,8 @@ msgstr ""
 msgid ""
 "%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
 msgstr ""
+"فیلد %(field_label)s باید برای %(lookup_type)s %(date_field_label)s یکتا "
+"باشد."
 
 #: venv/Lib/site-packages/django/db/models/fields/__init__.py:173
 #, python-format
@@ -5386,12 +5409,12 @@ msgstr ""
 #: venv/Lib/site-packages/django/db/models/fields/__init__.py:1094
 #, python-format
 msgid "“%(value)s” value must be either True or False."
-msgstr ""
+msgstr "مقدار «%(value)s» باید True یا False باشد."
 
 #: venv/Lib/site-packages/django/db/models/fields/__init__.py:1095
 #, python-format
 msgid "“%(value)s” value must be either True, False, or None."
-msgstr ""
+msgstr "مقدار «%(value)s» باید True، False یا None باشد."
 
 #: venv/Lib/site-packages/django/db/models/fields/__init__.py:1097
 msgid "Boolean (Either True or False)"
@@ -5416,6 +5439,7 @@ msgid ""
 "“%(value)s” value has an invalid date format. It must be in YYYY-MM-DD "
 "format."
 msgstr ""
+"فرمت تاریخ مقدار «%(value)s» نامعتبر است. باید در فرمت YYYY-MM-DD باشد."
 
 #: venv/Lib/site-packages/django/db/models/fields/__init__.py:1358
 #: venv/Lib/site-packages/django/db/models/fields/__init__.py:1493
@@ -5423,7 +5447,7 @@ msgstr ""
 msgid ""
 "“%(value)s” value has the correct format (YYYY-MM-DD) but it is an invalid "
 "date."
-msgstr ""
+msgstr "مقدار «%(value)s» فرمت صحیح (YYYY-MM-DD) دارد اما تاریخ نامعتبر است."
 
 #: venv/Lib/site-packages/django/db/models/fields/__init__.py:1362
 msgid "Date (without time)"
@@ -5432,16 +5456,18 @@ msgstr ""
 #: venv/Lib/site-packages/django/db/models/fields/__init__.py:1489
 #, python-format
 msgid ""
-"“%(value)s” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[."
-"uuuuuu]][TZ] format."
+"“%(value)s” value has an invalid format. It must be in YYYY-MM-DD "
+"HH:MM[:ss[.uuuuuu]][TZ] format."
 msgstr ""
+"فرمت مقدار «%(value)s» نامعتبر است. باید در فرمت YYYY-MM-DD "
+"HH:MM[:ss[.uuuuuu]][TZ] باشد."
 
 #: venv/Lib/site-packages/django/db/models/fields/__init__.py:1497
 #, python-format
 msgid ""
-"“%(value)s” value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
-"[TZ]) but it is an invalid date/time."
-msgstr ""
+"“%(value)s” value has the correct format (YYYY-MM-DD "
+"HH:MM[:ss[.uuuuuu]][TZ]) but it is an invalid date/time."
+msgstr "مقدار «%(value)s» فرمت صحیح دارد اما تاریخ/زمان نامعتبر است."
 
 #: venv/Lib/site-packages/django/db/models/fields/__init__.py:1502
 msgid "Date (with time)"
@@ -5450,7 +5476,7 @@ msgstr ""
 #: venv/Lib/site-packages/django/db/models/fields/__init__.py:1626
 #, python-format
 msgid "“%(value)s” value must be a decimal number."
-msgstr ""
+msgstr "مقدار «%(value)s» باید یک عدد اعشاری باشد."
 
 #: venv/Lib/site-packages/django/db/models/fields/__init__.py:1628
 msgid "Decimal number"
@@ -5459,9 +5485,11 @@ msgstr ""
 #: venv/Lib/site-packages/django/db/models/fields/__init__.py:1789
 #, python-format
 msgid ""
-"“%(value)s” value has an invalid format. It must be in [DD] [[HH:]MM:]ss[."
-"uuuuuu] format."
+"“%(value)s” value has an invalid format. It must be in [DD] "
+"[[HH:]MM:]ss[.uuuuuu] format."
 msgstr ""
+"فرمت مقدار «%(value)s» نامعتبر است. باید در فرمت [DD] [[HH:]MM:]ss[.uuuuuu] "
+"باشد."
 
 #: venv/Lib/site-packages/django/db/models/fields/__init__.py:1793
 msgid "Duration"
@@ -5478,7 +5506,7 @@ msgstr "آدرس فایل"
 #: venv/Lib/site-packages/django/db/models/fields/__init__.py:1948
 #, python-format
 msgid "“%(value)s” value must be a float."
-msgstr ""
+msgstr "مقدار «%(value)s» باید یک عدد اعشاری (float) باشد."
 
 #: venv/Lib/site-packages/django/db/models/fields/__init__.py:1950
 msgid "Floating point number"
@@ -5487,7 +5515,7 @@ msgstr ""
 #: venv/Lib/site-packages/django/db/models/fields/__init__.py:1990
 #, python-format
 msgid "“%(value)s” value must be an integer."
-msgstr ""
+msgstr "مقدار «%(value)s» باید یک عدد صحیح باشد."
 
 #: venv/Lib/site-packages/django/db/models/fields/__init__.py:1992
 msgid "Integer"
@@ -5513,7 +5541,7 @@ msgstr "آدرس ip"
 #: venv/Lib/site-packages/django/db/models/fields/__init__.py:2238
 #, python-format
 msgid "“%(value)s” value must be either None, True or False."
-msgstr ""
+msgstr "مقدار «%(value)s» باید None، True یا False باشد."
 
 #: venv/Lib/site-packages/django/db/models/fields/__init__.py:2240
 msgid "Boolean (Either True, False or None)"
@@ -5546,13 +5574,14 @@ msgid ""
 "“%(value)s” value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] "
 "format."
 msgstr ""
+"فرمت مقدار «%(value)s» نامعتبر است. باید در فرمت HH:MM[:ss[.uuuuuu]] باشد."
 
 #: venv/Lib/site-packages/django/db/models/fields/__init__.py:2452
 #, python-format
 msgid ""
 "“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an "
 "invalid time."
-msgstr ""
+msgstr "مقدار «%(value)s» فرمت صحیح دارد اما زمان نامعتبر است."
 
 #: venv/Lib/site-packages/django/db/models/fields/__init__.py:2456
 msgid "Time"
@@ -5569,7 +5598,7 @@ msgstr ""
 #: venv/Lib/site-packages/django/db/models/fields/__init__.py:2653
 #, python-format
 msgid "“%(value)s” is not a valid UUID."
-msgstr ""
+msgstr "مقدار «%(value)s» یک شناسه UUID معتبر نیست."
 
 #: venv/Lib/site-packages/django/db/models/fields/__init__.py:2655
 msgid "Universally unique identifier"
@@ -5589,12 +5618,12 @@ msgstr "جیسان"
 
 #: venv/Lib/site-packages/django/db/models/fields/json.py:28
 msgid "Value must be valid JSON."
-msgstr ""
+msgstr "مقدار باید JSON معتبر باشد."
 
 #: venv/Lib/site-packages/django/db/models/fields/related.py:919
 #, python-format
 msgid "%(model)s instance with %(field)s %(value)r does not exist."
-msgstr ""
+msgstr "موردی از %(model)s با %(field)s برابر %(value)r وجود ندارد."
 
 #: venv/Lib/site-packages/django/db/models/fields/related.py:921
 msgid "Foreign Key (type determined by related field)"
@@ -5619,7 +5648,8 @@ msgid "Many-to-many relationship"
 msgstr "ارتباط چند به چند"
 
 #. Translators: If found as last label character, these punctuation
-#. characters will prevent the default label_suffix to be appended to the label
+#. characters will prevent the default label_suffix to be appended to the
+#. label
 #: venv/Lib/site-packages/django/forms/boundfield.py:184
 msgid ":?.!"
 msgstr ""
@@ -5649,7 +5679,7 @@ msgstr "مدت صحیح وارد کنید."
 #: venv/Lib/site-packages/django/forms/fields.py:552
 #, python-brace-format
 msgid "The number of days must be between {min_days} and {max_days}."
-msgstr ""
+msgstr "تعداد روزها باید بین {min_days} و {max_days} باشد."
 
 #: venv/Lib/site-packages/django/forms/fields.py:621
 msgid "No file was submitted. Check the encoding type on the form."
@@ -5665,7 +5695,8 @@ msgstr "فایل انتخاب شده خالی است."
 
 #: venv/Lib/site-packages/django/forms/fields.py:625
 #, python-format
-msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
+msgid ""
+"Ensure this filename has at most %(max)d character (it has %(length)d)."
 msgid_plural ""
 "Ensure this filename has at most %(max)d characters (it has %(length)d)."
 msgstr[0] ""
@@ -5686,25 +5717,25 @@ msgstr "فایل به فرمت عکس آپلود کنید."
 #: venv/Lib/site-packages/django/forms/models.py:1566
 #, python-format
 msgid "Select a valid choice. %(value)s is not one of the available choices."
-msgstr ""
+msgstr "یک گزینه معتبر انتخاب کنید. %(value)s از گزینه‌های موجود نیست."
 
 #: venv/Lib/site-packages/django/forms/fields.py:951
 #: venv/Lib/site-packages/django/forms/fields.py:1070
 #: venv/Lib/site-packages/django/forms/models.py:1564
 msgid "Enter a list of values."
-msgstr ""
+msgstr "یک لیست از مقادیر وارد کنید."
 
 #: venv/Lib/site-packages/django/forms/fields.py:1071
 msgid "Enter a complete value."
-msgstr ""
+msgstr "یک مقدار کامل وارد کنید."
 
 #: venv/Lib/site-packages/django/forms/fields.py:1313
 msgid "Enter a valid UUID."
-msgstr ""
+msgstr "یک شناسه UUID معتبر وارد کنید."
 
 #: venv/Lib/site-packages/django/forms/fields.py:1343
 msgid "Enter a valid JSON."
-msgstr ""
+msgstr "یک ساختار JSON معتبر وارد کنید."
 
 #. Translators: This is the default suffix added to form field labels
 #: venv/Lib/site-packages/django/forms/forms.py:98
@@ -5750,12 +5781,12 @@ msgstr ""
 #: venv/Lib/site-packages/django/forms/models.py:886
 #, python-format
 msgid "Please correct the duplicate data for %(field)s."
-msgstr ""
+msgstr "لطفاً داده تکراری را برای %(field)s اصلاح کنید."
 
 #: venv/Lib/site-packages/django/forms/models.py:891
 #, python-format
 msgid "Please correct the duplicate data for %(field)s, which must be unique."
-msgstr ""
+msgstr "لطفاً داده تکراری را برای %(field)s که باید یکتا باشد اصلاح کنید."
 
 #: venv/Lib/site-packages/django/forms/models.py:898
 #, python-format
@@ -5763,6 +5794,8 @@ msgid ""
 "Please correct the duplicate data for %(field_name)s which must be unique "
 "for the %(lookup)s in %(date_field)s."
 msgstr ""
+"لطفاً داده تکراری برای %(field_name)s را که باید برای %(lookup)s در "
+"%(date_field)s یکتا باشد اصلاح کنید."
 
 #: venv/Lib/site-packages/django/forms/models.py:907
 msgid "Please correct the duplicate values below."
@@ -5773,13 +5806,14 @@ msgid "The inline value did not match the parent instance."
 msgstr ""
 
 #: venv/Lib/site-packages/django/forms/models.py:1429
-msgid "Select a valid choice. That choice is not one of the available choices."
-msgstr ""
+msgid ""
+"Select a valid choice. That choice is not one of the available choices."
+msgstr "یک گزینه معتبر انتخاب کنید. آن گزینه از گزینه‌های موجود نیست."
 
 #: venv/Lib/site-packages/django/forms/models.py:1568
 #, python-format
 msgid "“%(pk)s” is not a valid value."
-msgstr ""
+msgstr "مقدار «%(pk)s» یک مقدار معتبر نیست."
 
 #: venv/Lib/site-packages/django/forms/utils.py:226
 #, python-format
@@ -6142,7 +6176,7 @@ msgstr ""
 
 #: venv/Lib/site-packages/django/utils/ipv6.py:20
 msgid "This is not a valid IPv6 address."
-msgstr ""
+msgstr "این یک آدرس IPv6 معتبر نیست."
 
 #: venv/Lib/site-packages/django/utils/text.py:129
 #, python-format
@@ -6227,11 +6261,11 @@ msgstr ""
 
 #: venv/Lib/site-packages/django/views/csrf.py:127
 msgid ""
-"If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or "
-"including the “Referrer-Policy: no-referrer” header, please remove them. The "
-"CSRF protection requires the “Referer” header to do strict referer checking. "
-"If you’re concerned about privacy, use alternatives like <a rel=\"noreferrer"
-"\" …> for links to third-party sites."
+"If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or"
+" including the “Referrer-Policy: no-referrer” header, please remove them. "
+"The CSRF protection requires the “Referer” header to do strict referer "
+"checking. If you’re concerned about privacy, use alternatives like <a "
+"rel=\"noreferrer\" …> for links to third-party sites."
 msgstr ""
 
 #: venv/Lib/site-packages/django/views/csrf.py:136
@@ -6282,8 +6316,8 @@ msgstr ""
 #: venv/Lib/site-packages/django/views/generic/dates.py:652
 #, python-format
 msgid ""
-"Future %(verbose_name_plural)s not available because %(class_name)s."
-"allow_future is False."
+"Future %(verbose_name_plural)s not available because "
+"%(class_name)s.allow_future is False."
 msgstr ""
 
 #: venv/Lib/site-packages/django/views/generic/dates.py:692
@@ -6339,10 +6373,10 @@ msgstr ""
 #: venv/Lib/site-packages/django/views/templates/default_urlconf.html:221
 #, python-format
 msgid ""
-"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
-"%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
-"\">DEBUG=True</a> is in your settings file and you have not configured any "
-"URLs."
+"You are seeing this page because <a "
+"href=\"https://docs.djangoproject.com/en/%(version)s/ref/settings/#debug\" "
+"target=\"_blank\" rel=\"noopener\">DEBUG=True</a> is in your settings file "
+"and you have not configured any URLs."
 msgstr ""
 
 #: venv/Lib/site-packages/django/views/templates/default_urlconf.html:229
@@ -6389,8 +6423,7 @@ msgstr ""
 #: venv/Lib/site-packages/drf_spectacular/views.py:45
 msgid ""
 "\n"
-"    OpenApi3 schema for this API. Format can be selected via content "
-"negotiation.\n"
+"    OpenApi3 schema for this API. Format can be selected via content negotiation.\n"
 "\n"
 "    - YAML: application/vnd.oai.openapi\n"
 "    - JSON: application/vnd.oai.openapi+json\n"
@@ -6427,6 +6460,318 @@ msgstr ""
 #: venv/Lib/site-packages/tests/tests/templatetags/test_to_jalali_template_tag.py:66
 msgid "%Y-%m-%d"
 msgstr ""
+
+msgid "Logged out successfully."
+msgstr "با موفقیت از حساب کاربری خارج شدید."
+
+msgid "No active session found."
+msgstr "هیچ نشست فعالی یافت نشد."
+
+msgid "A user with that username already exists."
+msgstr "این نام کاربری قبلاً گرفته شده است."
+
+msgid "A user with that email already exists."
+msgstr "این ایمیل قبلاً گرفته شده است."
+
+msgid "A user with that phone number already exists."
+msgstr "این شماره تلفن قبلاً گرفته شده است."
+
+msgid "Invalid credentials."
+msgstr "اطلاعات ورود نادرست است."
+
+msgid "Account is disabled."
+msgstr "حساب کاربری غیرفعال شده است."
+
+msgid "Session already active."
+msgstr "نشست کاربری از قبل فعال است."
+
+msgid "Current password is incorrect."
+msgstr "رمز عبور فعلی نادرست است."
+
+msgid "New password cannot be the same as old password."
+msgstr "رمز عبور جدید نمی‌تواند مشابه رمز عبور قبلی باشد."
+
+msgid "Registration successful. Please log in."
+msgstr "ثبت‌نام با موفقیت انجام شد. لطفاً وارد شوید."
+
+msgid "Invalid access code."
+msgstr "کد دسترسی نامعتبر است."
+
+msgid "Please enter a valid mobile number (e.g. 09123456789)."
+msgstr "لطفاً شماره تلفن همراه معتبر وارد کنید."
+
+msgid ""
+"Enter a valid phone number (e.g. 0912 345 6789) or a valid phone number with"
+" country code."
+msgstr "لطفاً یک شماره تلفن همراه معتبر وارد کنید."
+
+msgid "The phone number entered is not valid."
+msgstr "شماره تلفن وارد شده معتبر نیست."
+
+msgid "Password must be at least 8 characters long."
+msgstr "رمز عبور باید حداقل ۸ کاراکتر باشد."
+
+msgid "Password must contain both letters and numbers."
+msgstr "رمز عبور باید شامل حروف و اعداد باشد."
+
+msgid "You cannot review your own candidate profile."
+msgstr "شما نمی‌توانید به پروفایل خودتان بازخورد دهید."
+
+msgid "You have already reviewed this candidate profile."
+msgstr "شما قبلاً این پروفایل را ارزیابی کرده‌اید."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Current password is required to set a new password."
+msgstr "برای تنظیم رمز عبور جدید، وارد کردن رمز عبور فعلی الزامی است."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Refresh token is required (cookie or body)."
+msgstr "توکن نوسازی (کوکی یا در بدنه) الزامی است."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Access token cookie refreshed."
+msgstr "کوکی توکن دسترسی به‌روزرسانی شد."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "This field may not be blank."
+msgstr "این فیلد نمی‌تواند خالی باشد."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "This field may not be null."
+msgstr "این فیلد نمی‌تواند تهی باشد."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "This list may not be empty."
+msgstr "این لیست نمی‌تواند خالی باشد."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Ensure this field has no more than {max_length} characters."
+msgstr "طول این فیلد نباید بیشتر از {max_length} کاراکتر باشد."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Ensure this field has at least {min_length} characters."
+msgstr "طول این فیلد باید حداقل {min_length} کاراکتر باشد."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Ensure this field has no more than %(max)d characters."
+msgstr "طول این فیلد نباید بیشتر از %(max)d کاراکتر باشد."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Ensure this field has at least %(min)d characters."
+msgstr "طول این فیلد باید حداقل %(min)d کاراکتر باشد."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid ""
+"Ensure this value has no more than %(max)d characters (it has %(length)d)."
+msgstr ""
+"طول این مقدار باید حداکثر %(max)d کاراکتر باشد (در حال حاضر %(length)d "
+"کاراکتر دارد)."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Ensure this value has at least %(min)d characters (it has %(length)d)."
+msgstr ""
+"طول این مقدار باید حداقل %(min)d کاراکتر باشد (در حال حاضر %(length)d "
+"کاراکتر دارد)."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Ensure this value is greater than or equal to {min_value}."
+msgstr "این مقدار باید بزرگتر یا مساوی با {min_value} باشد."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Ensure this value is less than or equal to {max_value}."
+msgstr "این مقدار باید کوچکتر یا مساوی با {max_value} باشد."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Ensure that there are no more than {max_digits} digits in total."
+msgstr "تعداد کل ارقام نباید بیشتر از {max_digits} رقم باشد."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid ""
+"Ensure that there are no more than {max_decimal_places} decimal places."
+msgstr "تعداد ارقام اعشار نباید بیشتر از {max_decimal_places} رقم باشد."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid ""
+"Ensure that there are no more than {max_whole_digits} digits before the "
+"decimal point."
+msgstr "تعداد ارقام قبل از ممیز نباید بیشتر از {max_whole_digits} رقم باشد."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "A valid integer is required."
+msgstr "یک مقدار عددی معتبر لازم است."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "A valid number is required."
+msgstr "یک عدد معتبر نیاز است."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "A valid boolean is required."
+msgstr "یک مقدار بولین معتبر لازم است."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Must be a valid boolean."
+msgstr "باید یک مقدار بولین معتبر باشد."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Not a valid string."
+msgstr "یک رشته معتبر نیست."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "\"{input}\" is not a valid choice."
+msgstr "«{input}» یک انتخاب معتبر نیست."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Invalid choice."
+msgstr "گزینه انتخاب شده نامعتبر است."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Must be a valid UUID."
+msgstr "باید یک شناسه UUID معتبر باشد."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Expected a list of items but got type \"{input_type}\"."
+msgstr "باید یک لیست از مقادیر ارسال شود، اما «{input_type}» دریافت شد."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Expected a dictionary of items but got type \"{input_type}\"."
+msgstr "باید یک دیکشنری از مقادیر ارسال شود، اما «{input_type}» دریافت شد."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Invalid pk \"{pk_value}\" - object does not exist."
+msgstr "شناسه نامعتبر «{pk_value}» - این مورد وجود ندارد."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Incorrect type. Expected pk value, received {data_type}."
+msgstr ""
+"نوع داده نامعتبر است. مقدار شناسه (pk) مورد انتظار بود، اما {data_type} "
+"دریافت شد."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Invalid hyperlink - No URL match."
+msgstr "پیوند نامعتبر - نشانی URL منطبق یافت نشد."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Invalid hyperlink - Incorrect URL match."
+msgstr "پیوند نامعتبر - خطا در تطابق نشانی URL."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Invalid hyperlink - Object does not exist."
+msgstr "پیوند نامعتبر - مورد مورد نظر وجود ندارد."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Incorrect type. Expected URL string, received {data_type}."
+msgstr ""
+"نوع داده نامعتبر است. رشته نشانی URL مورد انتظار بود، اما {data_type} دریافت"
+" شد."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Date has wrong format. Use one of these formats instead: {format}."
+msgstr "فرمت تاریخ اشتباه است. از یکی از این فرمت‌ها استفاده کنید: {format}."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Time has wrong format. Use one of these formats instead: {format}."
+msgstr "فرمت زمان اشتباه است. از یکی از این فرمت‌ها استفاده کنید: {format}."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Datetime has wrong format. Use one of these formats instead: {format}."
+msgstr ""
+"فرمت تاریخ و زمان اشتباه است. از یکی از این فرمت‌ها استفاده کنید: {format}."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Duration has wrong format. Use one of these formats instead: {format}."
+msgstr ""
+"فرمت بازه زمانی اشتباه است. از یکی از این فرمت‌ها استفاده کنید: {format}."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid ""
+"Ensure this filename has at most {max_length} characters (it has {length})."
+msgstr ""
+"نام فایل باید حداکثر {max_length} کاراکتر باشد (در حال حاضر {length} کاراکتر"
+" دارد)."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "String value too large."
+msgstr "طول رشته بیش از حد مجاز است."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid ""
+"The submitted data was not a file. Check the encoding type on the form."
+msgstr "داده ارسال‌شده فایل نیست. فرمت کدگذاری فرم را بررسی کنید."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Passwords do not match."
+msgstr "رمزهای عبور وارد شده یکسان نیستند."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Please fix the errors in the form before submitting."
+msgstr "لطفاً موارد مشخص‌شده در فرم را اصلاح نمایید."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Registration failed. Please check your access code and details."
+msgstr "ثبت‌نام ناموفق بود. لطفاً کد دعوت و مشخصات خود را بررسی کنید."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Registration failed. Please check your details and try again."
+msgstr "ثبت‌نام ناموفق بود. لطفاً مشخصات خود را بررسی و مجدداً تلاش کنید."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Failed to sign in. Please check your credentials."
+msgstr "ورود ناموفق بود. نام کاربری یا کلمه عبور را بررسی کنید."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "An unexpected error occurred"
+msgstr "خطای غیرمنتظره‌ای رخ داده است."
+
+#. API validation / DRF / authentication translation
+#: backend/core/validation:1
+msgid "Network error"
+msgstr "خطای ارتباط با سرور. لطفاً اتصال اینترنت خود را بررسی نمایید."
 
 #~ msgid "Financial Informations"
 #~ msgstr "اطلاعات مالی"
@@ -6700,11 +7045,11 @@ msgstr ""
 #~ msgstr "رمز عبور شما تغییر یافت."
 
 #~ msgid ""
-#~ "Please enter your old password, for security’s sake, and then enter your "
-#~ "new password twice so we can verify you typed it in correctly."
+#~ "Please enter your old password, for security’s sake, and then enter your new"
+#~ " password twice so we can verify you typed it in correctly."
 #~ msgstr ""
-#~ "لطفا رمز عبور قبلی خود را وارد کرده و سپس رمز عبور جدید خود را دو بار "
-#~ "وارد کنید."
+#~ "لطفا رمز عبور قبلی خود را وارد کرده و سپس رمز عبور جدید خود را دو بار وارد "
+#~ "کنید."
 
 #~ msgid "View site"
 #~ msgstr "مشاهده سایت"
@@ -6985,61 +7330,3 @@ msgstr ""
 
 #~ msgid "Tocher Type of Future Wife"
 #~ msgstr "نوع مهریه همسر آینده"
-
-msgid "Logged out successfully."
-msgstr "با موفقیت از حساب کاربری خارج شدید."
-
-msgid "No active session found."
-msgstr "هیچ نشست فعالی یافت نشد."
-
-msgid "A user with that username already exists."
-msgstr "این نام کاربری قبلاً گرفته شده است."
-
-msgid "A user with that email already exists."
-msgstr "این ایمیل قبلاً گرفته شده است."
-
-msgid "A user with that phone number already exists."
-msgstr "این شماره تلفن قبلاً گرفته شده است."
-
-msgid "Invalid credentials."
-msgstr "اطلاعات ورود نادرست است."
-
-msgid "Account is disabled."
-msgstr "حساب کاربری غیرفعال شده است."
-
-msgid "Session already active."
-msgstr "نشست کاربری از قبل فعال است."
-
-msgid "Current password is incorrect."
-msgstr "رمز عبور فعلی نادرست است."
-
-msgid "New password cannot be the same as old password."
-msgstr "رمز عبور جدید نمی‌تواند مشابه رمز عبور قبلی باشد."
-
-msgid "Registration successful. Please log in."
-msgstr "ثبت‌نام با موفقیت انجام شد. لطفاً وارد شوید."
-
-msgid "Invalid access code."
-msgstr "کد دسترسی نامعتبر است."
-
-msgid "Please enter a valid mobile number (e.g. 09123456789)."
-msgstr "لطفاً شماره تلفن همراه معتبر وارد کنید."
-
-msgid "Enter a valid phone number (e.g. 0912 345 6789) or a valid phone number with country code."
-msgstr "لطفاً یک شماره تلفن همراه معتبر وارد کنید."
-
-msgid "The phone number entered is not valid."
-msgstr "شماره تلفن وارد شده معتبر نیست."
-
-msgid "Password must be at least 8 characters long."
-msgstr "رمز عبور باید حداقل ۸ کاراکتر باشد."
-
-msgid "Password must contain both letters and numbers."
-msgstr "رمز عبور باید شامل حروف و اعداد باشد."
-
-msgid "You cannot review your own candidate profile."
-msgstr "شما نمی‌توانید به پروفایل خودتان بازخورد دهید."
-
-msgid "You have already reviewed this candidate profile."
-msgstr "شما قبلاً این پروفایل را ارزیابی کرده‌اید."
-
