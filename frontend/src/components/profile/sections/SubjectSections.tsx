@@ -161,12 +161,12 @@ export function IntroducedSubjectsSection({
             <FormField label="Username" name="username" type="text" value={state.username} onChange={handleChange} required error={fieldErrors.username} />
             <FormField label="Birth Date" name="birth_date" type="date" value={state.birth_date} onChange={handleChange} error={fieldErrors.birth_date} />
             <div className="grid grid-cols-2 gap-4">
-              <FormField label="Positive Assessment" name="positive" type="boolean" value={state.positive} onChange={handleChange} error={fieldErrors.positive} />
+              <FormField label="Positive Assessment" name="positive" type="boolean" value={state.positive} onChange={handleChange} error={fieldErrors.positive || fieldErrors.postive} />
               <FormField label="Negative Assessment" name="negative" type="boolean" value={state.negative} onChange={handleChange} error={fieldErrors.negative} />
             </div>
             <FormField label="Reason" name="reason" type="textarea" value={state.reason} onChange={handleChange} error={fieldErrors.reason} />
             <FormField label="Dates of Meetings" name="dates_of_meetings" type="textarea" value={state.dates_of_meetings} onChange={handleChange} error={fieldErrors.dates_of_meetings} />
-            <FormField label="Result & Regards" name="result_regards" type="textarea" value={state.result_regards} onChange={handleChange} error={fieldErrors.result_regards} />
+            <FormField label="Result & Regards" name="result_regards" type="textarea" value={state.result_regards} onChange={handleChange} error={fieldErrors.result_regards || fieldErrors.result_and_regards} />
             <div className="grid grid-cols-2 gap-4">
               <FormField label="Cost of Introduction" name="cost_of_introduction" type="text" value={state.cost_of_introduction} onChange={handleChange} error={fieldErrors.cost_of_introduction} />
               <FormField label="Cost of Meeting" name="cost_of_meeting" type="text" value={state.cost_of_meeting} onChange={handleChange} error={fieldErrors.cost_of_meeting} />

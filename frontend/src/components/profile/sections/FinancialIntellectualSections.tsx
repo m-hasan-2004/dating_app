@@ -362,15 +362,15 @@ export function FinancialInformationSection({
             )}
             <FormField label="Mortgage Amount" name="mortgage_amount" type="number" value={state.mortgage_amount} onChange={handleChange} error={fieldErrors.mortgage_amount} />
             <FormField label="Capital Assets" name="capital" type="multiselect" value={state.capital} onChange={handleChange} options={ASSETS_OPTIONS} error={fieldErrors.capital} />
-            <FormField label="Other Capital" name="other_capital" type="text" value={state.other_capital} onChange={handleChange} error={fieldErrors.other_capital} />
+            <FormField label="Other Capital" name="other_capital" type="text" value={state.other_capital} onChange={handleChange} error={fieldErrors.other_capital || fieldErrors.other_captial} />
             <FormField label="After Marriage Residence Status" name="after_marriage_residence_status" type="select" value={state.after_marriage_residence_status} onChange={handleChange} options={AFTER_MARRIAGE_RESIDENCE_OPTIONS} error={fieldErrors.after_marriage_residence_status} />
             <FormField label="Ex-Spouse Financial Status" name="ex_spouse_financial_status" type="select" value={state.ex_spouse_financial_status} onChange={handleChange} options={EX_SPOUSE_FIN_OPTIONS} error={fieldErrors.ex_spouse_financial_status} />
             <FormField label="Ex-Spouse Financial Pay Status" name="ex_spouse_financial_pay_status" type="select" value={state.ex_spouse_financial_pay_status} onChange={handleChange} options={EX_SPOUSE_PAY_OPTIONS} error={fieldErrors.ex_spouse_financial_pay_status} />
             <FormField label="Ex-Spouse Financial Amount" name="ex_spouse_financial_amount" type="number" value={state.ex_spouse_financial_amount} onChange={handleChange} error={fieldErrors.ex_spouse_financial_amount} />
-            <FormField label="Future Spouse Dowry Type" name="future_spouse_dowry_type" type="multiselect" value={state.future_spouse_dowry_type} onChange={handleChange} options={DOWRY_TYPE_OPTIONS} error={fieldErrors.future_spouse_dowry_type} />
-            <FormField label="Future Spouse Dowry Amount" name="future_spose_dowry_amount" type="number" value={state.future_spose_dowry_amount} onChange={handleChange} error={fieldErrors.future_spose_dowry_amount} />
-            <FormField label="Future Spouse Jahiziyeh" name="future_spose_jahiziyeh" type="select" value={state.future_spose_jahiziyeh} onChange={handleChange} options={JAHIZIYEH_OPTIONS} error={fieldErrors.future_spose_jahiziyeh} />
-            <FormField label="Future Spouse Jahiziyeh Explanation" name="future_spose_jahiziyeh_explanation" type="textarea" value={state.future_spose_jahiziyeh_explanation} onChange={handleChange} error={fieldErrors.future_spose_jahiziyeh_explanation} />
+            <FormField label="Future Spouse Dowry Type" name="future_spouse_dowry_type" type="multiselect" value={state.future_spouse_dowry_type} onChange={handleChange} options={DOWRY_TYPE_OPTIONS} error={fieldErrors.future_spouse_dowry_type || fieldErrors.dowry_type} />
+            <FormField label="Future Spouse Dowry Amount" name="future_spose_dowry_amount" type="number" value={state.future_spose_dowry_amount} onChange={handleChange} error={fieldErrors.future_spose_dowry_amount || fieldErrors.dowry_amount} />
+            <FormField label="Future Spouse Jahiziyeh" name="future_spose_jahiziyeh" type="select" value={state.future_spose_jahiziyeh} onChange={handleChange} options={JAHIZIYEH_OPTIONS} error={fieldErrors.future_spose_jahiziyeh || fieldErrors.jahiziyeh} />
+            <FormField label="Future Spouse Jahiziyeh Explanation" name="future_spose_jahiziyeh_explanation" type="textarea" value={state.future_spose_jahiziyeh_explanation} onChange={handleChange} error={fieldErrors.future_spose_jahiziyeh_explanation || fieldErrors.jahiziyeh_explantion} />
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-gray-100 dark:border-gray-800">
@@ -515,8 +515,8 @@ export function IntellectualInformationSection({
           </h2>
           <div className="space-y-4">
             <FormField label="Marriage Goals & Purposes" name="marriage_goals_purposes" type="textarea" value={state.marriage_goals_purposes} onChange={handleChange} error={fieldErrors.marriage_goals_purposes} />
-            <FormField label="Opinion About Woman's Job" name="opinion_about_womans_job" type="multiselect" value={state.opinion_about_womans_job} onChange={handleChange} options={WOMAN_JOB_OPTIONS} error={fieldErrors.opinion_about_womans_job} />
-            <FormField label="Opinion About Woman's Education" name="opinion_about_womans_education" type="multiselect" value={state.opinion_about_womans_education} onChange={handleChange} options={WOMAN_EDU_OPTIONS} error={fieldErrors.opinion_about_womans_education} />
+            <FormField label="Opinion About Woman's Job" name="opinion_about_womans_job" type="multiselect" value={state.opinion_about_womans_job} onChange={handleChange} options={WOMAN_JOB_OPTIONS} error={fieldErrors.opinion_about_womans_job || fieldErrors.opinion_woman_job} />
+            <FormField label="Opinion About Woman's Education" name="opinion_about_womans_education" type="multiselect" value={state.opinion_about_womans_education} onChange={handleChange} options={WOMAN_EDU_OPTIONS} error={fieldErrors.opinion_about_womans_education || fieldErrors.opinion_woman_edu} />
             <FormField label="Pros of Yourself" name="pros_of_yourself" type="textarea" value={state.pros_of_yourself} onChange={handleChange} error={fieldErrors.pros_of_yourself} />
             <FormField label="Cons of Yourself" name="cons_of_yourself" type="textarea" value={state.cons_of_yourself} onChange={handleChange} error={fieldErrors.cons_of_yourself} />
             <FormField label="Type of Connection with Friends" name="type_of_connection_with_friends" type="select" value={state.type_of_connection_with_friends} onChange={handleChange} options={FRIEND_CONN_OPTIONS} error={fieldErrors.type_of_connection_with_friends} />

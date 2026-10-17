@@ -87,7 +87,7 @@ import {
   IntroducedSubjectsSection,
   SubjectDetailsSection,
 } from '@/components/profile/sections/SubjectSections';
-import { ChevronDownIcon, ChevronUpIcon, LockIcon, PencilIcon } from '@/icons';
+import { ChevronDownIcon, ChevronUpIcon, PencilIcon } from '@/icons';
 import { Modal } from '@/components/ui/modal';
 import { formatApiError, bottomErrorMessage } from '@/utils/errorFormatter';
 

@@ -195,7 +195,7 @@ export function PhysicalInformationSection({
               <FormField label="Glasses Size / Number" name="glasses_size" type="text" value={state.glasses_size} onChange={handleChange} error={fieldErrors.glasses_size} />
             )}
             <FormField label="Body and Face Characteristics" name="body_and_face" type="multiselect" value={state.body_and_face} onChange={handleChange} options={BODY_FACE_OPTIONS} error={fieldErrors.body_and_face} />
-            <FormField label="Disease / Surgery History" name="disease_or_surgery_history" type="boolean" value={state.disease_or_surgery_history} onChange={handleChange} error={fieldErrors.disease_or_surgery_history} />
+            <FormField label="Disease / Surgery History" name="disease_or_surgery_history" type="boolean" value={state.disease_or_surgery_history} onChange={handleChange} error={fieldErrors.disease_or_surgery_history || fieldErrors.disease_or_surgery} />
             {state.disease_or_surgery_history && (
               <FormField label="Disease / Surgery Details" name="medication_surgery_disease_type" type="textarea" value={state.medication_surgery_disease_type} onChange={handleChange} error={fieldErrors.medication_surgery_disease_type} />
             )}
