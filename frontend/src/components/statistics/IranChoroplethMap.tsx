@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from '@/context/LanguageContext';
 import { toPersianDigits } from '@/utils/formatters';
 
@@ -469,6 +469,46 @@ export default function IranChoroplethMap({
   const { t, isRTL } = useTranslation();
   const [hoveredProvince, setHoveredProvince] = useState<ProvinceMapItem | null>(null);
   const [mousePos, setMousePos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [zoomScale, setZoomScale] = useState<number>(1);
+  const [panOffset, setPanOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [isPanning, setIsPanning] = useState<boolean>(false);
+  const [startPan, setStartPan] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const mapContainerRef = React.useRef<HTMLDivElement | null>(null);
+
+  // Zoom with Ctrl + Scroll Wheel
+  useEffect(() => {
+    const container = mapContainerRef.current;
+    if (!container) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+        const delta = e.deltaY < 0 ? 0.15 : -0.15;
+        setZoomScale((prev) => {
+          const next = Math.min(Math.max(Number((prev + delta).toFixed(2)), 0.7), 3.5);
+          return next;
+        });
+      }
+    };
+
+    container.addEventListener('wheel', handleWheel, { passive: false });
+    return () => {
+      container.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
+
+  const handleResetZoom = () => {
+    setZoomScale(1);
+    setPanOffset({ x: 0, y: 0 });
+  };
+
+  const handleZoomIn = () => {
+    setZoomScale((prev) => Math.min(Number((prev + 0.25).toFixed(2)), 3.5));
+  };
+
+  const handleZoomOut = () => {
+    setZoomScale((prev) => Math.max(Number((prev - 0.25).toFixed(2)), 0.7));
+  };
 
   // Map candidates count and percentage to each province
   const provinceStats = React.useMemo(() => {
@@ -545,93 +585,165 @@ export default function IranChoroplethMap({
 
       {/* Map Graphic Container */}
       <div
-        className="relative w-full overflow-hidden rounded-2xl bg-gradient-to-b from-sky-50/50 via-slate-50/60 to-indigo-50/40 dark:from-gray-900/60 dark:via-gray-900/40 dark:to-blue-950/30 border border-slate-200/80 dark:border-gray-800 p-2 sm:p-6 flex items-center justify-center min-h-[480px]"
+        ref={mapContainerRef}
+        className={`relative w-full overflow-hidden rounded-2xl bg-gradient-to-b from-sky-50/50 via-slate-50/60 to-indigo-50/40 dark:from-gray-900/60 dark:via-gray-900/40 dark:to-blue-950/30 border border-slate-200/80 dark:border-gray-800 p-2 sm:p-6 flex items-center justify-center min-h-[500px] select-none ${
+          zoomScale > 1 ? (isPanning ? 'cursor-grabbing' : 'cursor-grab') : 'cursor-default'
+        }`}
+        onMouseDown={(e) => {
+          if (zoomScale > 1) {
+            setIsPanning(true);
+            setStartPan({ x: e.clientX - panOffset.x, y: e.clientY - panOffset.y });
+          }
+        }}
         onMouseMove={(e) => {
           const rect = e.currentTarget.getBoundingClientRect();
           setMousePos({
             x: e.clientX - rect.left,
             y: e.clientY - rect.top,
           });
+
+          if (isPanning && zoomScale > 1) {
+            setPanOffset({
+              x: e.clientX - startPan.x,
+              y: e.clientY - startPan.y,
+            });
+          }
+        }}
+        onMouseUp={() => setIsPanning(false)}
+        onMouseLeave={() => {
+          setIsPanning(false);
+          setHoveredProvince(null);
         }}
       >
+        {/* Floating Zoom / Pan Controls Toolbar */}
+        <div className="absolute top-4 left-4 z-20 flex items-center gap-1.5 p-1.5 rounded-2xl bg-white/90 dark:bg-slate-900/90 shadow-md backdrop-blur-md border border-slate-200/80 dark:border-slate-800 text-xs">
+          <button
+            type="button"
+            onClick={handleZoomIn}
+            title={isRTL ? "بزرگ‌نمایی (یا با نگه‌داشتن Ctrl و اسکرول ماوس)" : "Zoom In (or Ctrl + Scroll)"}
+            className="w-7 h-7 rounded-xl flex items-center justify-center text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors font-bold text-base cursor-pointer"
+          >
+            +
+          </button>
+          <span className="px-2 text-[11px] font-bold text-slate-600 dark:text-slate-300 min-w-10 text-center font-mono">
+            {isRTL ? toPersianDigits(Math.round(zoomScale * 100)) : Math.round(zoomScale * 100)}%
+          </span>
+          <button
+            type="button"
+            onClick={handleZoomOut}
+            title={isRTL ? "کوچک‌نمایی (یا با نگه‌داشتن Ctrl و اسکرول ماوس)" : "Zoom Out (or Ctrl + Scroll)"}
+            className="w-7 h-7 rounded-xl flex items-center justify-center text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors font-bold text-base cursor-pointer"
+          >
+            −
+          </button>
+          {zoomScale !== 1 && (
+            <button
+              type="button"
+              onClick={handleResetZoom}
+              title={isRTL ? "بازنشانی اندازه پیش‌فرض" : "Reset Zoom"}
+              className="px-2 py-1 rounded-xl text-[11px] font-bold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/40 transition-colors cursor-pointer"
+            >
+              {isRTL ? "ریست" : "Reset"}
+            </button>
+          )}
+        </div>
+
+        {/* Zoom Hint Tooltip Badge */}
+        <div className="absolute bottom-4 left-4 z-20 hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/70 text-white/90 text-[11px] font-medium backdrop-blur-sm pointer-events-none">
+          <kbd className="px-1.5 py-0.5 rounded bg-white/20 font-mono text-[10px]">Ctrl</kbd>
+          <span>+</span>
+          <span>{isRTL ? "اسکرول برای بزرگ‌نمایی نقشه" : "Scroll to Zoom"}</span>
+        </div>
+
         <svg
           viewBox="10 70 1020 930"
-          className="w-full h-auto max-h-[620px] select-none filter drop-shadow-md"
+          className="w-full h-auto max-h-[620px] select-none filter drop-shadow-md transition-transform duration-75"
         >
-          {/* Water Bodies (Caspian Sea & Persian Gulf / Oman Sea) */}
-          {IRAN_WATER_PATHS.map((wPath, i) => (
-            <path
-              key={i}
-              d={wPath}
-              fill="rgba(56, 189, 248, 0.22)"
-              stroke="rgba(14, 165, 233, 0.45)"
-              strokeWidth="1.2"
-              className="pointer-events-none"
-            />
-          ))}
+          {/* Zoom & Pan SVG Group */}
+          <g
+            transform={`translate(${panOffset.x}, ${panOffset.y}) scale(${zoomScale})`}
+            style={{
+              transformOrigin: '510px 530px',
+              transition: isPanning ? 'none' : 'transform 0.15s cubic-bezier(0.4, 0, 0.2, 1)',
+            }}
+          >
+            {/* Water Bodies (Caspian Sea & Persian Gulf / Oman Sea) */}
+            {IRAN_WATER_PATHS.map((wPath, i) => (
+              <path
+                key={i}
+                d={wPath}
+                fill="rgba(56, 189, 248, 0.22)"
+                stroke="rgba(14, 165, 233, 0.45)"
+                strokeWidth="1.2"
+                className="pointer-events-none"
+              />
+            ))}
 
-          {/* Water Body Labels */}
-          <text x="400" y="150" textAnchor="middle" className="text-[12px] font-bold fill-sky-600 dark:fill-sky-400 pointer-events-none select-none tracking-widest">
-            {isRTL ? "دریای خزر (کاسپین)" : "Caspian Sea"}
-          </text>
-          <text x="360" y="860" textAnchor="middle" className="text-[12px] font-bold fill-sky-600 dark:fill-sky-400 pointer-events-none select-none tracking-widest">
-            {isRTL ? "خلیج فارس" : "Persian Gulf"}
-          </text>
-          <text x="730" y="970" textAnchor="middle" className="text-[12px] font-bold fill-sky-600 dark:fill-sky-400 pointer-events-none select-none tracking-widest">
-            {isRTL ? "دریای عمان" : "Sea of Oman"}
-          </text>
+            {/* Water Body Labels */}
+            <text x="400" y="150" textAnchor="middle" className="text-[13px] font-bold fill-sky-600 dark:fill-sky-400 pointer-events-none select-none tracking-widest">
+              {isRTL ? "دریای خزر (کاسپین)" : "Caspian Sea"}
+            </text>
+            <text x="360" y="860" textAnchor="middle" className="text-[13px] font-bold fill-sky-600 dark:fill-sky-400 pointer-events-none select-none tracking-widest">
+              {isRTL ? "خلیج فارس" : "Persian Gulf"}
+            </text>
+            <text x="730" y="970" textAnchor="middle" className="text-[13px] font-bold fill-sky-600 dark:fill-sky-400 pointer-events-none select-none tracking-widest">
+              {isRTL ? "دریای عمان" : "Sea of Oman"}
+            </text>
 
-          {/* Province Vector Shapes */}
-          {provinceStats.list.map((prov) => {
-            const isHovered = hoveredProvince?.id === prov.id;
-            const fill = getProvinceFill(prov.count, isHovered);
+            {/* Province Vector Shapes */}
+            {provinceStats.list.map((prov) => {
+              const isHovered = hoveredProvince?.id === prov.id;
+              const fill = getProvinceFill(prov.count, isHovered);
 
-            return (
-              <g
-                key={prov.id}
-                onMouseEnter={() => setHoveredProvince(prov)}
-                onMouseLeave={() => setHoveredProvince(null)}
-                className="cursor-pointer transition-all duration-200"
-              >
-                <path
-                  d={prov.d}
-                  fill={fill}
-                  stroke={isHovered ? '#b45309' : '#475569'}
-                  strokeWidth={isHovered ? '2.5' : '1.3'}
-                  strokeLinejoin="round"
-                  className="transition-colors duration-150 hover:brightness-105"
-                />
-
-                {/* Province Pin & Text */}
-                <circle
-                  cx={prov.centerX}
-                  cy={prov.centerY}
-                  r={isHovered ? '5' : '3'}
-                  fill={isHovered ? '#ffffff' : prov.count > 0 ? '#1e3a8a' : '#64748b'}
-                  stroke={isHovered ? '#b45309' : '#ffffff'}
-                  strokeWidth="1.2"
-                />
-
-                <text
-                  x={prov.centerX}
-                  y={prov.centerY + 14}
-                  textAnchor="middle"
-                  className={`text-[10px] font-bold pointer-events-none transition-all ${
-                    isHovered
-                      ? 'fill-amber-950 dark:fill-amber-200 font-extrabold text-[12px]'
-                      : prov.count > 0
-                      ? 'fill-slate-900 dark:fill-white font-bold'
-                      : 'fill-slate-700 dark:fill-slate-200'
-                  }`}
-                  style={{
-                    textShadow: '0 1px 2px rgba(255,255,255,0.9), 0 0 3px rgba(255,255,255,0.7)',
-                  }}
+              return (
+                <g
+                  key={prov.id}
+                  onMouseEnter={() => setHoveredProvince(prov)}
+                  onMouseLeave={() => setHoveredProvince(null)}
+                  className="cursor-pointer transition-all duration-200"
                 >
-                  {isRTL ? prov.nameFa : prov.nameEn}
-                </text>
-              </g>
-            );
-          })}
+                  <path
+                    d={prov.d}
+                    fill={fill}
+                    stroke={isHovered ? '#b45309' : '#475569'}
+                    strokeWidth={isHovered ? '2.8' : '1.3'}
+                    strokeLinejoin="round"
+                    className="transition-colors duration-150 hover:brightness-105"
+                  />
+
+                  {/* Province Pin & Text */}
+                  <circle
+                    cx={prov.centerX}
+                    cy={prov.centerY}
+                    r={isHovered ? '6' : '3.5'}
+                    fill={isHovered ? '#ffffff' : prov.count > 0 ? '#1e3a8a' : '#64748b'}
+                    stroke={isHovered ? '#b45309' : '#ffffff'}
+                    strokeWidth="1.5"
+                  />
+
+                  <text
+                    x={prov.centerX}
+                    y={prov.centerY + 16}
+                    textAnchor="middle"
+                    className={`pointer-events-none transition-all ${
+                      isHovered
+                        ? 'fill-amber-950 dark:fill-amber-200 font-black text-[15px] sm:text-[16px]'
+                        : prov.count > 0
+                        ? 'fill-slate-900 dark:fill-white font-bold text-[12px] sm:text-[13px]'
+                        : 'fill-slate-800 dark:fill-slate-100 font-bold text-[12px] sm:text-[13px]'
+                    }`}
+                    style={{
+                      textShadow: isHovered
+                        ? '0 1px 3px rgba(255,255,255,1), 0 0 6px rgba(255,255,255,0.9), 0 0 2px rgba(0,0,0,0.3)'
+                        : '0 1px 2px rgba(255,255,255,0.95), 0 0 4px rgba(255,255,255,0.8)',
+                    }}
+                  >
+                    {isRTL ? prov.nameFa : prov.nameEn}
+                  </text>
+                </g>
+              );
+            })}
+          </g>
         </svg>
 
         {/* Floating Tooltip */}
