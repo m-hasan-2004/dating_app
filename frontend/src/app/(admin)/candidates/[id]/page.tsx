@@ -442,17 +442,6 @@ export default function PublicCandidateProfilePage() {
               <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-gray-800">
                 <span>👤</span> {t("Personal Information")}
               </h3>
-              <DetailRow
-                label="Virginity Status"
-                value={
-                  isVirgin === true
-                    ? (isRTL ? 'دوشیزه / باکره (بدون سابقه رابطه یا ازدواج)' : 'Virgin (No prior marriage / intercourse)')
-                    : isVirgin === false
-                    ? (isRTL ? 'غیر باکره (دارای سابقه ازدواج، رابطه یا جدایی)' : 'Non-Virgin (Has experience / Separated)')
-                    : '—'
-                }
-                badge
-              />
               <DetailRow label="Birth Location / City" value={personal?.birth_location} />
               <DetailRow label="Age" value={age ? `${isRTL ? toPersianDigits(age) : age} ${t("Years")}` : '—'} />
               <DetailRow label="Education Degree" value={personal?.education} badge />
@@ -511,17 +500,6 @@ export default function PublicCandidateProfilePage() {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1">
               <DetailRow label="Gender" value={personal?.gender} />
-              <DetailRow
-                label="Virginity Status"
-                value={
-                  isVirgin === true
-                    ? (isRTL ? 'دوشیزه / باکره' : 'Virgin')
-                    : isVirgin === false
-                    ? (isRTL ? 'غیر باکره' : 'Non-Virgin')
-                    : '—'
-                }
-                badge
-              />
               <DetailRow label="Age" value={age ? `${isRTL ? toPersianDigits(age) : age} ${t("Years")}` : '—'} />
               <DetailRow label="Birth Location / City" value={personal?.birth_location} />
               <DetailRow label="Sadat Lineage (سید)" value={personal?.sadat} />
