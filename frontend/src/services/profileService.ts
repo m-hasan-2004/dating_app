@@ -93,6 +93,8 @@ export interface PersonalInformation {
   tatto_description?: string | null;
   conviction_or_arrest_history: boolean;
   conviction_reason?: string | null;
+  prefered_meeting_time?: string | null;
+  type_of_payment?: string | null;
   user: string;
 }
 

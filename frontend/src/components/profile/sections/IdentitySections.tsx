@@ -116,8 +116,6 @@ function defaultIdentityForm(data: IdentityInformation | null) {
     assets: toArray(data?.assets),
     weight: data?.weight ?? '',
     height: data?.height ?? '',
-    prefered_meeting_time: data?.prefered_meeting_time ?? '',
-    type_of_payment: data?.type_of_payment ?? '',
   };
 }
 
@@ -192,8 +190,6 @@ export function IdentityInformationSection({
         <DisplayRow label="Assets / Capital" value={formatMultiValue(data?.assets, CAPITAL_OPTIONS, t)} />
         <DisplayRow label="Height" value={data?.height ? formatHeight(data.height, isRTL) : null} />
         <DisplayRow label="Weight" value={data?.weight ? formatWeight(data.weight, isRTL) : null} />
-        <DisplayRow label="Preferred Meeting Time" value={data?.prefered_meeting_time} />
-        <DisplayRow label="Type of Payment" value={data?.type_of_payment} />
       </ProfileSection>
 
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-2xl w-full">
@@ -232,10 +228,6 @@ export function IdentityInformationSection({
             <div className="grid grid-cols-2 gap-4">
               <FormField label="Height (cm)" name="height" type="number" value={state.height} onChange={handleChange} error={fieldErrors.height} />
               <FormField label="Weight (kg)" name="weight" type="number" value={state.weight} onChange={handleChange} error={fieldErrors.weight} />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <FormField label="Preferred Meeting Time" name="prefered_meeting_time" type="text" value={state.prefered_meeting_time} onChange={handleChange} error={fieldErrors.prefered_meeting_time} />
-              <FormField label="Payment Type" name="type_of_payment" type="select" value={state.type_of_payment} onChange={handleChange} options={PAYMENT_TYPE_OPTIONS} error={fieldErrors.type_of_payment} />
             </div>
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}

@@ -31,6 +31,13 @@ class SiteSetting(models.Model):
             "When disabled, the language toggle button is hidden across the site."
         ),
     )
+    enable_identity_and_birth_cert = models.BooleanField(
+        _("Enable Identity and Birth Certificate"),
+        default=True,
+        help_text=_(
+            "When disabled, birth certificate and identity sections are removed from profile and not required."
+        ),
+    )
     site_name_fa = models.CharField(
         _("Site Name (Persian)"),
         max_length=150,
@@ -153,6 +160,7 @@ class SiteSetting(models.Model):
                     "require_access_code": True,
                     "require_email": True,
                     "enable_language_switcher": True,
+                    "enable_identity_and_birth_cert": True,
                     "site_name_fa": "سامانه همسان‌گزینی و ازدواج دائم",
                     "site_name_en": "TailAdmin Matchmaking",
                     "color_palette": "default",
@@ -171,6 +179,7 @@ class SiteSetting(models.Model):
                 require_access_code=True,
                 require_email=True,
                 enable_language_switcher=True,
+                enable_identity_and_birth_cert=True,
                 site_name_fa="سامانه همسان‌گزینی و ازدواج دائم",
                 site_name_en="TailAdmin Matchmaking",
                 color_palette="default",

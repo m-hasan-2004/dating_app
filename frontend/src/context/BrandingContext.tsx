@@ -89,6 +89,7 @@ interface BrandingContextType {
   canvasLightColor: string;
   canvasDarkColor: string;
   enableLanguageSwitcher: boolean;
+  enableIdentityAndBirthCert: boolean;
   logoUrl: string;
   faviconUrl: string;
   fontFamily: string;
@@ -107,6 +108,7 @@ interface BrandingContextType {
     canvasLightColor?: string;
     canvasDarkColor?: string;
     enableLanguageSwitcher?: boolean;
+    enableIdentityAndBirthCert?: boolean;
     logoUrl?: string;
     faviconUrl?: string;
     fontFamily?: string;
@@ -127,6 +129,7 @@ const DEFAULT_BRANDING = {
   canvasLightColor: '',
   canvasDarkColor: '',
   enableLanguageSwitcher: true,
+  enableIdentityAndBirthCert: true,
   logoUrl: '',
   faviconUrl: '',
   fontFamily: 'Vazirmatn',
@@ -157,6 +160,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [canvasLightColor, setCanvasLightColor] = useState(DEFAULT_BRANDING.canvasLightColor);
   const [canvasDarkColor, setCanvasDarkColor] = useState(DEFAULT_BRANDING.canvasDarkColor);
   const [enableLanguageSwitcher, setEnableLanguageSwitcher] = useState(DEFAULT_BRANDING.enableLanguageSwitcher);
+  const [enableIdentityAndBirthCert, setEnableIdentityAndBirthCert] = useState(DEFAULT_BRANDING.enableIdentityAndBirthCert);
   const [logoUrl, setLogoUrl] = useState('');
   const [faviconUrl, setFaviconUrl] = useState('');
   const [fontFamily, setFontFamilyState] = useState(DEFAULT_BRANDING.fontFamily);
@@ -340,6 +344,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     canvasLightColor?: string;
     canvasDarkColor?: string;
     enableLanguageSwitcher?: boolean;
+    enableIdentityAndBirthCert?: boolean;
     logoUrl?: string;
     faviconUrl?: string;
     fontFamily?: string;
@@ -372,6 +377,12 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       setEnableLanguageSwitcher(data.enableLanguageSwitcher);
       if (typeof window !== 'undefined') {
         localStorage.setItem('branding_enable_language_switcher', String(data.enableLanguageSwitcher));
+      }
+    }
+    if (data.enableIdentityAndBirthCert !== undefined) {
+      setEnableIdentityAndBirthCert(data.enableIdentityAndBirthCert);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('branding_enable_identity_birth_cert', String(data.enableIdentityAndBirthCert));
       }
     }
     if (data.colorPalette !== undefined) {
@@ -422,6 +433,9 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       }
       if (config.enable_language_switcher !== undefined) {
         setEnableLanguageSwitcher(config.enable_language_switcher);
+      }
+      if (config.enable_identity_and_birth_cert !== undefined) {
+        setEnableIdentityAndBirthCert(config.enable_identity_and_birth_cert);
       }
       if (config.color_palette) {
         const pal = config.color_palette as ColorPalette;
@@ -484,6 +498,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       const cachedCanvasLight = localStorage.getItem('branding_canvas_light') || '';
       const cachedCanvasDark = localStorage.getItem('branding_canvas_dark') || '';
       const cachedEnableLang = localStorage.getItem('branding_enable_language_switcher');
+      const cachedEnableIdentity = localStorage.getItem('branding_enable_identity_birth_cert');
       const cachedFont = localStorage.getItem('branding_font_family') || 'Vazirmatn';
       const cachedCustomFont = localStorage.getItem('branding_custom_font_data') || '';
 
@@ -492,6 +507,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       if (cachedCanvasLight) setCanvasLightColor(cachedCanvasLight);
       if (cachedCanvasDark) setCanvasDarkColor(cachedCanvasDark);
       if (cachedEnableLang !== null) setEnableLanguageSwitcher(cachedEnableLang === 'true');
+      if (cachedEnableIdentity !== null) setEnableIdentityAndBirthCert(cachedEnableIdentity === 'true');
       if (cachedFont) {
         setFontFamilyState(cachedFont);
         if (cachedCustomFont) setCustomFontDataState(cachedCustomFont);
@@ -526,6 +542,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         canvasLightColor,
         canvasDarkColor,
         enableLanguageSwitcher,
+        enableIdentityAndBirthCert,
         logoUrl,
         faviconUrl,
         fontFamily,

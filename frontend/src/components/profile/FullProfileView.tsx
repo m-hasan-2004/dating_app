@@ -4,6 +4,7 @@ import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/hooks/use-auth';
 import { useTranslation } from '@/context/LanguageContext';
+import { useBranding } from '@/context/BrandingContext';
 import { formatDate, formatIranianPhoneNumber, toPersianDigits } from '@/utils/formatters';
 import {
   getUser,
@@ -160,6 +161,7 @@ export function FullProfileView({
 }) {
   const { user: authUser } = useAuth();
   const { t, isRTL } = useTranslation();
+  const { enableIdentityAndBirthCert } = useBranding();
 
   const [data, setData] = useState<ProfileData>({
     user: null, personalInfo: null, physicalInfo: null, identityInfo: null,
@@ -480,18 +482,22 @@ export function FullProfileView({
         isCollapsed={!!collapsedSections['personalInfo']}
         onToggleCollapse={() => toggleSection('personalInfo')}
       />
-      <IdentityInformationSection
-        data={data.identityInfo}
-        onReload={loadAll}
-        isCollapsed={!!collapsedSections['identityInfo']}
-        onToggleCollapse={() => toggleSection('identityInfo')}
-      />
-      <BirthCertificateSection
-        data={data.birthCertInfo}
-        onReload={loadAll}
-        isCollapsed={!!collapsedSections['birthCertInfo']}
-        onToggleCollapse={() => toggleSection('birthCertInfo')}
-      />
+      {enableIdentityAndBirthCert && (
+        <>
+          <IdentityInformationSection
+            data={data.identityInfo}
+            onReload={loadAll}
+            isCollapsed={!!collapsedSections['identityInfo']}
+            onToggleCollapse={() => toggleSection('identityInfo')}
+          />
+          <BirthCertificateSection
+            data={data.birthCertInfo}
+            onReload={loadAll}
+            isCollapsed={!!collapsedSections['birthCertInfo']}
+            onToggleCollapse={() => toggleSection('birthCertInfo')}
+          />
+        </>
+      )}
       <PhysicalInformationSection
         data={data.physicalInfo}
         onReload={loadAll}

@@ -1383,14 +1383,6 @@ export default function CandidateSearchPage() {
               />
 
               <FilterPillGroup
-                title="Marital History"
-                options={MARITAL_OPTIONS}
-                selected={selectedMaritals}
-                onToggle={(val) => toggleArrayItem(selectedMaritals, setSelectedMaritals, val)}
-                defaultExpanded={true}
-              />
-
-              <FilterPillGroup
                 title="Monthly Income"
                 options={INCOME_OPTIONS}
                 selected={selectedIncomes}

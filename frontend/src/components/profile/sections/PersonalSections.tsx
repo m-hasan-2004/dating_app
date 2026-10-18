@@ -137,6 +137,12 @@ const USAGE_CASES_OPTIONS: SelectOption[] = [
   { value: 'none', label: 'None' },
 ];
 
+const PAYMENT_TYPE_OPTIONS: SelectOption[] = [
+  { value: 'cash', label: 'Cash' },
+  { value: 'card', label: 'Card' },
+  { value: 'online', label: 'Online' },
+];
+
 /* ─── default form values ────────────────────────────────────────────── */
 
 function normalizeGender(val: any): GenderEnum {
@@ -173,6 +179,8 @@ function defaultPersonalForm(data: PersonalInformation | null) {
     tatto_description: data?.tatto_description ?? '',
     conviction_or_arrest_history: data?.conviction_or_arrest_history ?? false,
     conviction_reason: data?.conviction_reason ?? '',
+    prefered_meeting_time: data?.prefered_meeting_time ?? '',
+    type_of_payment: data?.type_of_payment ?? '',
   };
 }
 
@@ -266,6 +274,8 @@ export function PersonalsInformationSection({ data, onReload, isCollapsed, onTog
         <DisplayRow label="Tattoo Description" value={data?.tatto_description} />
         <DisplayRow label="Conviction / Arrest History" value={data?.conviction_or_arrest_history !== undefined ? formatBoolean(data.conviction_or_arrest_history, isRTL) : null} />
         <DisplayRow label="Conviction Reason" value={data?.conviction_reason} />
+        <DisplayRow label="Preferred Meeting Time" value={data?.prefered_meeting_time} />
+        <DisplayRow label="Type of Payment" value={labelFor(PAYMENT_TYPE_OPTIONS, data?.type_of_payment ?? '')} />
       </ProfileSection>
 
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-2xl w-full">
@@ -302,6 +312,10 @@ export function PersonalsInformationSection({ data, onReload, isCollapsed, onTog
             {state.conviction_or_arrest_history && (
               <FormField label="Conviction Reason" name="conviction_reason" type="textarea" value={state.conviction_reason} onChange={handleChange} error={fieldErrors.conviction_reason} />
             )}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <FormField label="Preferred Meeting Time" name="prefered_meeting_time" type="text" value={state.prefered_meeting_time} onChange={handleChange} error={fieldErrors.prefered_meeting_time} />
+              <FormField label="Type of Payment" name="type_of_payment" type="select" value={state.type_of_payment} onChange={handleChange} options={PAYMENT_TYPE_OPTIONS} error={fieldErrors.type_of_payment} />
+            </div>
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">

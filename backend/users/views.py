@@ -319,12 +319,22 @@ class UserViewSet(viewsets.ModelViewSet):
             birth_qs = birth_qs.filter(user_id__in=women_user_ids)
 
         location_counts = {}
+        # Collect locations from personal_qs (birth_location) first
+        for loc in personal_qs.exclude(birth_location="").values_list("birth_location", flat=True):
+            if loc:
+                items = loc if isinstance(loc, (list, tuple)) else [loc]
+                for item in items:
+                    key = str(item).strip()
+                    if key:
+                        location_counts[key] = location_counts.get(key, 0) + 1
+
+        # Fallback or supplement with identity_qs (originality) if location_counts is scarce
         for orig in identity_qs.exclude(originality="").values_list("originality", flat=True):
             if orig:
                 items = orig if isinstance(orig, (list, tuple)) else [orig]
                 for item in items:
                     key = str(item).strip()
-                    if key:
+                    if key and key not in location_counts:
                         location_counts[key] = location_counts.get(key, 0) + 1
 
         # Education breakdown

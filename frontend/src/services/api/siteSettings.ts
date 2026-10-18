@@ -5,6 +5,7 @@ export interface SiteSettings {
   require_access_code: boolean;
   require_email: boolean;
   enable_language_switcher?: boolean;
+  enable_identity_and_birth_cert?: boolean;
   site_name_fa?: string;
   site_name_en?: string;
   site_tagline_fa?: string;
@@ -27,6 +28,7 @@ export interface RegistrationConfig {
   require_access_code: boolean;
   require_email: boolean;
   enable_language_switcher?: boolean;
+  enable_identity_and_birth_cert?: boolean;
   site_name_fa?: string;
   site_name_en?: string;
   site_tagline_fa?: string;

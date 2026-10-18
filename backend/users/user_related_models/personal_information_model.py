@@ -144,6 +144,20 @@ class PersonalInformation(models.Model):
         error_messages=PersonalInfoErrorMessages.CONVICTION_REASON,
         help_text=PersonalInfoHelpText.CONVICTION_REASON,
     )
+    prefered_meeting_time = models.CharField(
+        _("Prefered Meeting Time"),
+        max_length=150,
+        blank=True,
+        null=True,
+        help_text=_("Preferred times for arranging meetings."),
+    )
+    type_of_payment = models.CharField(
+        _("Type of payment"),
+        max_length=50,
+        blank=True,
+        null=True,
+        help_text=_("Preferred payment method (cash, card, online)."),
+    )
 
     user = models.OneToOneField(
         "users.User",

@@ -39,6 +39,7 @@ export default function SiteSettingsPage() {
   const [requireAccessCode, setRequireAccessCode] = useState<boolean>(true);
   const [requireEmail, setRequireEmail] = useState<boolean>(true);
   const [enableLanguageSwitcher, setEnableLanguageSwitcher] = useState<boolean>(true);
+  const [enableIdentityAndBirthCert, setEnableIdentityAndBirthCert] = useState<boolean>(true);
   const [siteNameFa, setSiteNameFa] = useState<string>("سامانه همسان‌گزینی و ازدواج دائم");
   const [siteNameEn, setSiteNameEn] = useState<string>("TailAdmin Matchmaking");
   const [siteTaglineFa, setSiteTaglineFa] = useState<string>("پورتال همسان‌گزینی");
@@ -77,6 +78,7 @@ export default function SiteSettingsPage() {
       setRequireAccessCode(data.require_access_code);
       setRequireEmail(data.require_email);
       if (data.enable_language_switcher !== undefined) setEnableLanguageSwitcher(data.enable_language_switcher);
+      if (data.enable_identity_and_birth_cert !== undefined) setEnableIdentityAndBirthCert(data.enable_identity_and_birth_cert);
       if (data.site_name_fa) setSiteNameFa(data.site_name_fa);
       if (data.site_name_en) setSiteNameEn(data.site_name_en);
       if (data.site_tagline_fa) setSiteTaglineFa(data.site_tagline_fa);
@@ -210,6 +212,7 @@ export default function SiteSettingsPage() {
         require_access_code: requireAccessCode,
         require_email: requireEmail,
         enable_language_switcher: enableLanguageSwitcher,
+        enable_identity_and_birth_cert: enableIdentityAndBirthCert,
         site_name_fa: siteNameFa,
         site_name_en: siteNameEn,
         site_tagline_fa: siteTaglineFa,
@@ -229,6 +232,7 @@ export default function SiteSettingsPage() {
       setRequireAccessCode(updated.require_access_code);
       setRequireEmail(updated.require_email);
       if (updated.enable_language_switcher !== undefined) setEnableLanguageSwitcher(updated.enable_language_switcher);
+      if (updated.enable_identity_and_birth_cert !== undefined) setEnableIdentityAndBirthCert(updated.enable_identity_and_birth_cert);
       if (updated.site_name_fa) setSiteNameFa(updated.site_name_fa);
       if (updated.site_name_en) setSiteNameEn(updated.site_name_en);
       if (updated.site_tagline_fa) setSiteTaglineFa(updated.site_tagline_fa);
@@ -246,6 +250,7 @@ export default function SiteSettingsPage() {
       // Sync active branding site-wide instantly
       setBranding({
         enableLanguageSwitcher: updated.enable_language_switcher,
+        enableIdentityAndBirthCert: updated.enable_identity_and_birth_cert,
         siteNameFa: updated.site_name_fa,
         siteNameEn: updated.site_name_en,
         siteTaglineFa: updated.site_tagline_fa,
@@ -426,6 +431,49 @@ export default function SiteSettingsPage() {
                       className="sr-only peer"
                       checked={enableLanguageSwitcher}
                       onChange={(e) => setEnableLanguageSwitcher(e.target.checked)}
+                    />
+                    <div
+                      className="w-12 h-7 bg-slate-300 dark:bg-slate-700 border-2 border-slate-400 dark:border-slate-500 rounded-full peer peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[var(--color-primary)]/40 peer-checked:bg-[var(--color-primary)] peer-checked:border-[var(--color-primary)] shadow-inner transition-all duration-200 hover:border-slate-500 dark:hover:border-slate-400 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-slate-300 dark:after:border-slate-400 after:rounded-full after:h-5 after:w-5 after:shadow-md after:transition-all peer-checked:after:translate-x-5 peer-checked:after:border-white"
+                    ></div>
+                  </label>
+                </div>
+
+                {/* Setting 4: Enable Identity and Birth Certificate Information */}
+                <div
+                  className={`flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 border-[1.5px] rounded-2xl transition-all gap-4 shadow-xs ${
+                    enableIdentityAndBirthCert
+                      ? "border-[var(--color-primary)]/60 bg-[var(--color-primary)]/[0.03] dark:border-[var(--color-primary)]/50 dark:bg-[var(--color-primary)]/[0.04]"
+                      : "border-slate-300 dark:border-slate-700/80 bg-white dark:bg-white/[0.02]"
+                  }`}
+                >
+                  <div className="space-y-1 max-w-2xl">
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-base font-semibold text-slate-800 dark:text-white">
+                        {isRTL ? "دریافت اطلاعات شناسنامه‌ای و هویتی در پروفایل" : t("Enable Identity and Birth Certificate Information")}
+                      </h3>
+                      {enableIdentityAndBirthCert ? (
+                        <Badge variant="solid" color="success" size="sm">
+                          {t("Enabled")}
+                        </Badge>
+                      ) : (
+                        <Badge variant="solid" color="warning" size="sm">
+                          {t("Disabled")}
+                        </Badge>
+                      )}
+                    </div>
+                    <p className="text-sm text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
+                      {isRTL
+                        ? "در صورت غیرفعال‌سازی، دو بخش «اطلاعات شناسنامه‌ای» و «اطلاعات هویتی و ثبت احوال» از پروفایل کاربران حذف می‌شوند و نیازی به وارد کردن آن‌ها نیست، همچنین از محاسبه درصد تکمیل پروفایل نیز خارج خواهند شد."
+                        : "When disabled, both Birth Certificate and Identity Information sections are removed from user profiles and not required, and will be excluded from the completion percentage calculation."}
+                    </p>
+                  </div>
+
+                  <label className="relative inline-flex items-center cursor-pointer shrink-0 select-none hover:scale-105 active:scale-95 transition-transform">
+                    <input
+                      type="checkbox"
+                      className="sr-only peer"
+                      checked={enableIdentityAndBirthCert}
+                      onChange={(e) => setEnableIdentityAndBirthCert(e.target.checked)}
                     />
                     <div
                       className="w-12 h-7 bg-slate-300 dark:bg-slate-700 border-2 border-slate-400 dark:border-slate-500 rounded-full peer peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[var(--color-primary)]/40 peer-checked:bg-[var(--color-primary)] peer-checked:border-[var(--color-primary)] shadow-inner transition-all duration-200 hover:border-slate-500 dark:hover:border-slate-400 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-slate-300 dark:after:border-slate-400 after:rounded-full after:h-5 after:w-5 after:shadow-md after:transition-all peer-checked:after:translate-x-5 peer-checked:after:border-white"
@@ -823,20 +871,13 @@ export default function SiteSettingsPage() {
                   <label className="block text-sm font-bold text-slate-800 dark:text-white mb-2">
                     {isRTL ? "انتخاب فونت پیش‌فرض سامانه" : "Select System Font"}
                   </label>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
                     {[
                       { name: 'Vazirmatn', labelFa: 'وزیرمتن (دیفالت)', labelEn: 'Vazirmatn (Default)' },
-                      { name: 'Sahel', labelFa: 'ساحل', labelEn: 'Sahel' },
-                      { name: 'Samim', labelFa: 'صمیم', labelEn: 'Samim' },
-                      { name: 'Shabnam', labelFa: 'شبنم', labelEn: 'Shabnam' },
-                      { name: 'Tanha', labelFa: 'تنها', labelEn: 'Tanha' },
-                      { name: 'Parastoo', labelFa: 'پرستو', labelEn: 'Parastoo' },
-                      { name: 'Yekan Bakh', labelFa: 'یکان بخ', labelEn: 'Yekan Bakh' },
-                      { name: 'IRANSans', labelFa: 'ایران‌سنس', labelEn: 'IRANSans' },
-                      { name: 'Dana', labelFa: 'دانا', labelEn: 'Dana' },
-                      { name: 'Estedad', labelFa: 'استعداد', labelEn: 'Estedad' },
-                      { name: 'Gandom', labelFa: 'گندم', labelEn: 'Gandom' },
                       { name: 'Tahoma', labelFa: 'تاهوماه (سیستمی)', labelEn: 'Tahoma (System)' },
+                      { name: 'Segoe UI', labelFa: 'سگو یوآی (سیستمی)', labelEn: 'Segoe UI (System)' },
+                      { name: 'Noto Sans Arabic', labelFa: 'نوتو سنس (گوگل)', labelEn: 'Noto Sans Arabic (Google)' },
+                      { name: 'Rubik', labelFa: 'روبیک (گوگل)', labelEn: 'Rubik (Google)' },
                     ].map((fontItem) => {
                       const isSelected = fontFamily === fontItem.name;
                       return (

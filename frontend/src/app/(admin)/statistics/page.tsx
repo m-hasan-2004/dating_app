@@ -17,6 +17,7 @@ import { useAuth } from '@/hooks/use-auth';
 import { useTranslation } from '@/context/LanguageContext';
 import { useRouter } from 'next/navigation';
 import { toPersianDigits } from '@/utils/formatters';
+import IranChoroplethMap from '@/components/statistics/IranChoroplethMap';
 
 type GenderFilter = 'all' | 'man' | 'woman';
 
@@ -547,6 +548,12 @@ export default function StatisticsPage() {
           )}
         </div>
       </div>
+
+      {/* Row 5: Province Distribution Map (Iran Choropleth Map & Top 5) */}
+      <IranChoroplethMap
+        locationBreakdown={stats?.location_breakdown || {}}
+        totalCandidates={stats?.cohort_count || stats?.total_users || 0}
+      />
 
     </div>
   );
