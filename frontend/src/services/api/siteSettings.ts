@@ -16,6 +16,8 @@ export interface SiteSettings {
   canvas_dark_color?: string;
   logo_url?: string;
   favicon_url?: string;
+  font_family?: string;
+  custom_font_data?: string;
   updated_at?: string;
   updated_by?: number | null;
   updated_by_username?: string | null;
@@ -36,6 +38,8 @@ export interface RegistrationConfig {
   canvas_dark_color?: string;
   logo_url?: string;
   favicon_url?: string;
+  font_family?: string;
+  custom_font_data?: string;
 }
 
 /**

@@ -91,6 +91,9 @@ interface BrandingContextType {
   enableLanguageSwitcher: boolean;
   logoUrl: string;
   faviconUrl: string;
+  fontFamily: string;
+  customFontData: string;
+  setFontFamily: (font: string, customData?: string) => void;
   setColorPalette: (palette: ColorPalette, customHex?: string, customSecHex?: string) => void;
   setCanvasColors: (light?: string, dark?: string) => void;
   setBranding: (data: {
@@ -106,6 +109,8 @@ interface BrandingContextType {
     enableLanguageSwitcher?: boolean;
     logoUrl?: string;
     faviconUrl?: string;
+    fontFamily?: string;
+    customFontData?: string;
   }) => void;
   refreshBranding: () => Promise<void>;
   restoreDefaults: () => Promise<void>;
@@ -124,12 +129,15 @@ const DEFAULT_BRANDING = {
   enableLanguageSwitcher: true,
   logoUrl: '',
   faviconUrl: '',
+  fontFamily: 'Vazirmatn',
+  customFontData: '',
 };
 
 const BrandingContext = createContext<BrandingContextType>({
   ...DEFAULT_BRANDING,
   siteName: DEFAULT_BRANDING.siteNameFa,
   siteTagline: DEFAULT_BRANDING.siteTaglineFa,
+  setFontFamily: () => {},
   setColorPalette: () => {},
   setCanvasColors: () => {},
   setBranding: () => {},
@@ -151,6 +159,54 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [enableLanguageSwitcher, setEnableLanguageSwitcher] = useState(DEFAULT_BRANDING.enableLanguageSwitcher);
   const [logoUrl, setLogoUrl] = useState('');
   const [faviconUrl, setFaviconUrl] = useState('');
+  const [fontFamily, setFontFamilyState] = useState(DEFAULT_BRANDING.fontFamily);
+  const [customFontData, setCustomFontDataState] = useState(DEFAULT_BRANDING.customFontData);
+
+  // Apply font family globally to documentElement
+  const applyFontFamily = useCallback((font: string, customData?: string) => {
+    if (typeof document === 'undefined') return;
+    const styleId = 'custom-site-font-style';
+    let styleEl = document.getElementById(styleId) as HTMLStyleElement | null;
+
+    if (font === 'custom' && customData) {
+      if (!styleEl) {
+        styleEl = document.createElement('style');
+        styleEl.id = styleId;
+        document.head.appendChild(styleEl);
+      }
+      styleEl.textContent = `
+        @font-face {
+          font-family: 'CustomUploadedFont';
+          src: url('${customData}');
+          font-display: swap;
+        }
+        :root, html, body, [dir="rtl"] body {
+          --font-custom: 'CustomUploadedFont', var(--font-outfit), Vazirmatn, Tahoma, sans-serif !important;
+          font-family: 'CustomUploadedFont', var(--font-outfit), Vazirmatn, Tahoma, sans-serif !important;
+        }
+      `;
+      document.documentElement.style.setProperty('--font-active', "'CustomUploadedFont', var(--font-outfit), Vazirmatn, Tahoma, sans-serif");
+    } else {
+      if (styleEl) {
+        styleEl.remove();
+      }
+      const activeFont = font || 'Vazirmatn';
+      const fontStack = `'${activeFont}', var(--font-outfit), Vazirmatn, Tahoma, sans-serif`;
+      document.documentElement.style.setProperty('--font-active', fontStack);
+      document.body.style.fontFamily = fontStack;
+    }
+  }, []);
+
+  const setFontFamily = useCallback((font: string, customData?: string) => {
+    setFontFamilyState(font);
+    if (customData !== undefined) setCustomFontDataState(customData);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('branding_font_family', font);
+      if (customData) localStorage.setItem('branding_custom_font_data', customData);
+      else if (font !== 'custom') localStorage.removeItem('branding_custom_font_data');
+    }
+    applyFontFamily(font, customData !== undefined ? customData : customFontData);
+  }, [applyFontFamily, customFontData]);
 
   // Dynamically update browser tab favicon icon
   const updateTabFavicon = useCallback((url: string) => {
@@ -286,6 +342,8 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     enableLanguageSwitcher?: boolean;
     logoUrl?: string;
     faviconUrl?: string;
+    fontFamily?: string;
+    customFontData?: string;
   }) => {
     if (data.siteNameFa !== undefined) setSiteNameFa(data.siteNameFa);
     if (data.siteNameEn !== undefined) setSiteNameEn(data.siteNameEn);
@@ -321,13 +379,29 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       applyPalette(data.colorPalette, data.customPrimaryColor || customPrimaryColor, data.customSecondaryColor || customSecondaryColor);
     }
     if (data.logoUrl !== undefined) setLogoUrl(data.logoUrl);
+    if (data.fontFamily !== undefined) {
+      setFontFamilyState(data.fontFamily);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('branding_font_family', data.fontFamily);
+      }
+    }
+    if (data.customFontData !== undefined) {
+      setCustomFontDataState(data.customFontData);
+      if (typeof window !== 'undefined') {
+        if (data.customFontData) localStorage.setItem('branding_custom_font_data', data.customFontData);
+        else localStorage.removeItem('branding_custom_font_data');
+      }
+    }
+    if (data.fontFamily !== undefined || data.customFontData !== undefined) {
+      applyFontFamily(data.fontFamily ?? fontFamily, data.customFontData ?? customFontData);
+    }
     if (data.faviconUrl !== undefined) {
       setFaviconUrl(data.faviconUrl);
       updateTabFavicon(data.faviconUrl || data.logoUrl || '');
     } else if (data.logoUrl !== undefined) {
       updateTabFavicon(data.logoUrl);
     }
-  }, [applyCanvasColors, applyPalette, canvasDarkColor, canvasLightColor, customPrimaryColor, customSecondaryColor, updateTabFavicon]);
+  }, [applyCanvasColors, applyPalette, applyFontFamily, canvasDarkColor, canvasLightColor, customPrimaryColor, customSecondaryColor, fontFamily, customFontData, updateTabFavicon]);
 
   const refreshBranding = useCallback(async () => {
     try {
@@ -354,6 +428,11 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         setColorPaletteState(pal);
         applyPalette(pal, config.custom_primary_color, config.custom_secondary_color);
       }
+      if (config.font_family) {
+        setFontFamilyState(config.font_family);
+        if (config.custom_font_data !== undefined) setCustomFontDataState(config.custom_font_data);
+        applyFontFamily(config.font_family, config.custom_font_data);
+      }
       if (config.logo_url !== undefined) setLogoUrl(config.logo_url);
       if (config.favicon_url !== undefined) {
         setFaviconUrl(config.favicon_url);
@@ -364,7 +443,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     } catch {
       // Fallback gracefully
     }
-  }, [applyCanvasColors, applyPalette, updateTabFavicon]);
+  }, [applyCanvasColors, applyPalette, applyFontFamily, updateTabFavicon]);
 
   const restoreDefaults = useCallback(async () => {
     setSiteNameFa(DEFAULT_BRANDING.siteNameFa);
@@ -379,8 +458,11 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setEnableLanguageSwitcher(true);
     setLogoUrl('');
     setFaviconUrl('');
+    setFontFamilyState(DEFAULT_BRANDING.fontFamily);
+    setCustomFontDataState(DEFAULT_BRANDING.customFontData);
     applyPalette('default');
     applyCanvasColors('', '');
+    applyFontFamily(DEFAULT_BRANDING.fontFamily, '');
     updateTabFavicon('/favicon.ico');
     if (typeof window !== 'undefined') {
       localStorage.removeItem('branding_color_palette');
@@ -389,8 +471,10 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       localStorage.removeItem('branding_canvas_light');
       localStorage.removeItem('branding_canvas_dark');
       localStorage.removeItem('branding_enable_language_switcher');
+      localStorage.removeItem('branding_font_family');
+      localStorage.removeItem('branding_custom_font_data');
     }
-  }, [applyCanvasColors, applyPalette, updateTabFavicon]);
+  }, [applyCanvasColors, applyPalette, applyFontFamily, updateTabFavicon]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -400,11 +484,19 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       const cachedCanvasLight = localStorage.getItem('branding_canvas_light') || '';
       const cachedCanvasDark = localStorage.getItem('branding_canvas_dark') || '';
       const cachedEnableLang = localStorage.getItem('branding_enable_language_switcher');
+      const cachedFont = localStorage.getItem('branding_font_family') || 'Vazirmatn';
+      const cachedCustomFont = localStorage.getItem('branding_custom_font_data') || '';
+
       if (cachedPrimary) setCustomPrimaryColor(cachedPrimary);
       if (cachedSecondary) setCustomSecondaryColor(cachedSecondary);
       if (cachedCanvasLight) setCanvasLightColor(cachedCanvasLight);
       if (cachedCanvasDark) setCanvasDarkColor(cachedCanvasDark);
       if (cachedEnableLang !== null) setEnableLanguageSwitcher(cachedEnableLang === 'true');
+      if (cachedFont) {
+        setFontFamilyState(cachedFont);
+        if (cachedCustomFont) setCustomFontDataState(cachedCustomFont);
+        applyFontFamily(cachedFont, cachedCustomFont);
+      }
       if (cachedCanvasLight || cachedCanvasDark) {
         applyCanvasColors(cachedCanvasLight, cachedCanvasDark);
       }
@@ -414,7 +506,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       }
     }
     refreshBranding();
-  }, [applyCanvasColors, applyPalette, refreshBranding]);
+  }, [applyCanvasColors, applyPalette, applyFontFamily, refreshBranding]);
 
   const siteName = language === 'fa' ? siteNameFa : siteNameEn;
   const siteTagline = language === 'fa' ? (siteTaglineFa || t('Matchmaking Portal')) : (siteTaglineEn || 'Matchmaking Portal');
@@ -436,6 +528,9 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         enableLanguageSwitcher,
         logoUrl,
         faviconUrl,
+        fontFamily,
+        customFontData,
+        setFontFamily,
         setColorPalette,
         setCanvasColors,
         setBranding,

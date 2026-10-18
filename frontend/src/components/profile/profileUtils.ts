@@ -20,8 +20,11 @@ export function formatMultiValue(val: any, options?: { value: string; label: str
   if (arr.length === 0) return '';
   const translate = t || ((k: string) => k);
   if (options && options.length > 0) {
-    const optionMap = new Map(options.map((o) => [o.value, o.label]));
-    return arr.map((v) => translate(optionMap.get(v) ?? v)).join('، ');
+    const findOption = (v: string) => {
+      const match = options.find((o) => o.value.toLowerCase() === String(v).toLowerCase());
+      return match ? translate(match.label) : translate(v);
+    };
+    return arr.map(findOption).join('، ');
   }
   return arr.map((v) => translate(v)).join('، ');
 }

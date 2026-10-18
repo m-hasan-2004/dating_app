@@ -163,6 +163,11 @@ const PREF_EXP_OPTIONS = [
   { value: 'Spouse Died', labelFa: 'همسر فوت شده', labelEn: 'Spouse Deceased' },
 ];
 
+const VIRGINITY_OPTIONS = [
+  { value: 'virgin', labelFa: 'دوشیزه / باکره (پسر / دختر)', labelEn: 'Virgin (Boy / Girl)' },
+  { value: 'not_virgin', labelFa: 'غیر باکره (مرد / زن / جدایی)', labelEn: 'Non-Virgin (Man / Woman / Separated)' },
+];
+
 const AGE_PRESETS = [
   { labelFa: '۱۸-۲۵', labelEn: '18-25', min: 18, max: 25 },
   { labelFa: '۲۵-۳۰', labelEn: '25-30', min: 25, max: 30 },
@@ -324,6 +329,7 @@ export default function CandidateSearchPage() {
   const [job, setJob] = useState('');
 
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
+  const [selectedVirginity, setSelectedVirginity] = useState<string[]>([]);
   const [selectedEducations, setSelectedEducations] = useState<string[]>([]);
   const [selectedMaritals, setSelectedMaritals] = useState<string[]>([]);
   const [selectedIncomes, setSelectedIncomes] = useState<string[]>([]);
@@ -391,6 +397,7 @@ export default function CandidateSearchPage() {
     if (minWeight || maxWeight) count++;
     if (job.trim()) count++;
     count += selectedLocations.length;
+    count += selectedVirginity.length;
     count += selectedEducations.length;
     count += selectedMaritals.length;
     count += selectedIncomes.length;
@@ -407,7 +414,7 @@ export default function CandidateSearchPage() {
     return count;
   }, [
     keyword, minAge, maxAge, minHeight, maxHeight, minWeight, maxWeight, job,
-    selectedLocations, selectedEducations, selectedMaritals, selectedIncomes,
+    selectedLocations, selectedVirginity, selectedEducations, selectedMaritals, selectedIncomes,
     selectedOwnerships, selectedResidences, selectedCapitals, selectedDowries,
     selectedWorships, selectedFastings, selectedCovers, selectedVelayats,
     selectedSkins, selectedPrefExps
@@ -423,6 +430,7 @@ export default function CandidateSearchPage() {
     setMaxWeight('');
     setJob('');
     setSelectedLocations([]);
+    setSelectedVirginity([]);
     setSelectedEducations([]);
     setSelectedMaritals([]);
     setSelectedIncomes([]);
@@ -460,6 +468,10 @@ export default function CandidateSearchPage() {
       if (maxWeight) params.maxWeight = Number(maxWeight);
       if (job.trim()) params.job = job.trim();
 
+      if (selectedVirginity.length === 1) {
+        params.virginity = selectedVirginity[0] as 'virgin' | 'not_virgin';
+      }
+
       if (selectedLocations.length > 0) params.province = selectedLocations.join(',');
       if (selectedEducations.length > 0) params.educationLevel = selectedEducations.join(',');
       if (selectedMaritals.length > 0) params.maritalExperience = selectedMaritals.join(',');
@@ -485,7 +497,7 @@ export default function CandidateSearchPage() {
   }, [
     page, pageSize, ordering, keyword, isAdmin, genderFilter,
     minAge, maxAge, minHeight, maxHeight, minWeight, maxWeight, job,
-    selectedLocations, selectedEducations, selectedMaritals, selectedIncomes,
+    selectedLocations, selectedVirginity, selectedEducations, selectedMaritals, selectedIncomes,
     selectedOwnerships, selectedResidences, selectedCapitals, selectedDowries,
     selectedWorships, selectedFastings, selectedCovers, selectedVelayats,
     selectedSkins, selectedPrefExps,
@@ -739,6 +751,11 @@ export default function CandidateSearchPage() {
                     {t(loc)}
                   </span>
                 ))}
+                {selectedVirginity.map((v) => (
+                  <span key={v} className="px-2 py-0.5 rounded-lg bg-teal-50 text-teal-700 dark:bg-teal-950/40 dark:text-teal-300 font-semibold">
+                    {v === 'virgin' ? (isRTL ? 'دوشیزه / باکره' : 'Virgin') : (isRTL ? 'غیر باکره' : 'Non-Virgin')}
+                  </span>
+                ))}
                 {selectedEducations.map((edu) => (
                   <span key={edu} className="px-2 py-0.5 rounded-lg bg-brand-50 text-brand-700 dark:bg-brand-950/40 dark:text-brand-300">
                     {t(edu)}
@@ -854,6 +871,16 @@ export default function CandidateSearchPage() {
                         </div>
 
                         <div className="flex flex-wrap gap-1.5 pt-1">
+                          {cand.is_virgin === true && (
+                            <span className="px-2 py-0.5 text-[11px] font-semibold rounded-lg bg-teal-50 text-teal-700 dark:bg-teal-950/40 dark:text-teal-400">
+                              {t("Virgin / Unmarried")}
+                            </span>
+                          )}
+                          {cand.is_virgin === false && (
+                            <span className="px-2 py-0.5 text-[11px] font-semibold rounded-lg bg-purple-50 text-purple-700 dark:bg-purple-950/40 dark:text-purple-400">
+                              {t("Non-Virgin / Experienced")}
+                            </span>
+                          )}
                           {mar === 'no' && (
                             <span className="px-2 py-0.5 text-[11px] font-semibold rounded-lg bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400">
                               {t("Never Married")}
@@ -987,6 +1014,11 @@ export default function CandidateSearchPage() {
                                 <span className="font-semibold text-gray-900 dark:text-white text-xs">
                                   @{cand.username}
                                 </span>
+                                {cand.is_virgin === true && (
+                                  <span className="px-1.5 py-0.5 text-[9px] font-bold rounded-md bg-teal-50 text-teal-700 dark:bg-teal-950/40 dark:text-teal-300">
+                                    {isRTL ? 'دوشیزه' : 'Virgin'}
+                                  </span>
+                                )}
                               </div>
                             </td>
                             <td className="px-3 py-3.5 text-xs text-gray-600 dark:text-gray-300">
@@ -1339,6 +1371,14 @@ export default function CandidateSearchPage() {
                 options={EDUCATION_OPTIONS}
                 selected={selectedEducations}
                 onToggle={(val) => toggleArrayItem(selectedEducations, setSelectedEducations, val)}
+                defaultExpanded={true}
+              />
+
+              <FilterPillGroup
+                title="Virginity Status"
+                options={VIRGINITY_OPTIONS}
+                selected={selectedVirginity}
+                onToggle={(val) => toggleArrayItem(selectedVirginity, setSelectedVirginity, val)}
                 defaultExpanded={true}
               />
 

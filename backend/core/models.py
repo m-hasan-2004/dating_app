@@ -103,6 +103,19 @@ class SiteSetting(models.Model):
         default="",
         help_text=_("Custom favicon URL or base64 icon string."),
     )
+    font_family = models.CharField(
+        _("Site Font Family"),
+        max_length=100,
+        default="Vazirmatn",
+        blank=True,
+        help_text=_("Active font family name (e.g. Vazirmatn, Sahel, Shabnam, Yekan Bakh, etc. or custom)."),
+    )
+    custom_font_data = models.TextField(
+        _("Custom Uploaded Font Data (Base64)"),
+        blank=True,
+        default="",
+        help_text=_("Base64 data or data URL for user-uploaded custom font file."),
+    )
     updated_at = models.DateTimeField(_("Updated at"), auto_now=True)
     updated_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,

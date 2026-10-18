@@ -20,11 +20,12 @@ import { formatDate } from "@/utils/formatters";
 export default function SiteSettingsPage() {
   const { user, loading: authLoading } = useAuth();
   const { t, isRTL } = useLanguage();
-  const { setBranding, restoreDefaults, setCanvasColors, setColorPalette: setContextColorPalette, canvasLightColor: currentCanvasLight, canvasDarkColor: currentCanvasDark } = useBranding();
+  const { setBranding, restoreDefaults, setCanvasColors, setColorPalette: setContextColorPalette, canvasLightColor: currentCanvasLight, canvasDarkColor: currentCanvasDark, setFontFamily: setContextFontFamily, fontFamily: currentFontFamily, customFontData: currentCustomFontData } = useBranding();
   const router = useRouter();
 
   const logoFileInputRef = useRef<HTMLInputElement>(null);
   const faviconFileInputRef = useRef<HTMLInputElement>(null);
+  const fontFileInputRef = useRef<HTMLInputElement>(null);
 
   const isSuperUser = Boolean((user as any)?.is_superuser);
   const siteSettingEnabled =
@@ -49,6 +50,9 @@ export default function SiteSettingsPage() {
   const [canvasDarkColor, setCanvasDarkColor] = useState<string>(currentCanvasDark || "#131127");
   const [logoUrl, setLogoUrl] = useState<string>("");
   const [faviconUrl, setFaviconUrl] = useState<string>("");
+  const [fontFamily, setFontFamily] = useState<string>(currentFontFamily || "Vazirmatn");
+  const [customFontData, setCustomFontData] = useState<string>(currentCustomFontData || "");
+  const [uploadedFontFileName, setUploadedFontFileName] = useState<string>("");
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isSaving, setIsSaving] = useState<boolean>(false);
@@ -84,6 +88,8 @@ export default function SiteSettingsPage() {
       if (data.canvas_dark_color) setCanvasDarkColor(data.canvas_dark_color);
       if (data.logo_url) setLogoUrl(data.logo_url);
       if (data.favicon_url) setFaviconUrl(data.favicon_url);
+      if (data.font_family) setFontFamily(data.font_family);
+      if (data.custom_font_data) setCustomFontData(data.custom_font_data);
     } catch (err: any) {
       setError(err.message || t("Failed to load site settings."));
     } finally {
@@ -118,6 +124,30 @@ export default function SiteSettingsPage() {
     reader.readAsDataURL(file);
   };
 
+  const handleFontFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 8 * 1024 * 1024) {
+      setError(t("Font file size exceeds 8MB limit."));
+      return;
+    }
+
+    setUploadedFontFileName(file.name);
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const result = event.target?.result as string;
+      if (result) {
+        setCustomFontData(result);
+        setFontFamily("custom");
+        setContextFontFamily("custom", result);
+        setSuccessMessage(isRTL ? "فونت سفارشی با موفقیت بارگذاری شد و روی سایت اعمال گردید. برای ثبت نهایی روی ذخیره تنظیمات کلیک کنید." : "Custom font loaded and applied successfully! Click Save Settings to persist.");
+        setTimeout(() => setSuccessMessage(null), 4000);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleRestoreDefaults = async () => {
     if (!confirm(t("Are you sure you want to restore all branding and appearance settings to factory defaults?"))) return;
 
@@ -137,6 +167,8 @@ export default function SiteSettingsPage() {
         canvas_dark_color: "",
         logo_url: "",
         favicon_url: "",
+        font_family: "Vazirmatn",
+        custom_font_data: "",
       };
 
       const updated = await updateSiteSettingsApi(defaults);
@@ -153,6 +185,9 @@ export default function SiteSettingsPage() {
       setCanvasDarkColor("#131127");
       setLogoUrl("");
       setFaviconUrl("");
+      setFontFamily("Vazirmatn");
+      setCustomFontData("");
+      setUploadedFontFileName("");
 
       await restoreDefaults();
       setSuccessMessage(t("Branding restored to defaults successfully!"));
@@ -186,6 +221,8 @@ export default function SiteSettingsPage() {
         canvas_dark_color: canvasDarkColor,
         logo_url: logoUrl,
         favicon_url: faviconUrl,
+        font_family: fontFamily,
+        custom_font_data: customFontData,
       });
 
       setSettings(updated);
@@ -203,6 +240,8 @@ export default function SiteSettingsPage() {
       if (updated.canvas_dark_color !== undefined) setCanvasDarkColor(updated.canvas_dark_color || "#131127");
       if (updated.logo_url !== undefined) setLogoUrl(updated.logo_url);
       if (updated.favicon_url !== undefined) setFaviconUrl(updated.favicon_url);
+      if (updated.font_family !== undefined) setFontFamily(updated.font_family || "Vazirmatn");
+      if (updated.custom_font_data !== undefined) setCustomFontData(updated.custom_font_data || "");
 
       // Sync active branding site-wide instantly
       setBranding({
@@ -218,6 +257,8 @@ export default function SiteSettingsPage() {
         canvasDarkColor: updated.canvas_dark_color,
         logoUrl: updated.logo_url,
         faviconUrl: updated.favicon_url,
+        fontFamily: updated.font_family,
+        customFontData: updated.custom_font_data,
       });
 
       setSuccessMessage(t("Site settings updated successfully."));
@@ -761,6 +802,161 @@ export default function SiteSettingsPage() {
                       {isRTL
                         ? "این آیکون در تب مرورگر (کنار نام سایت در برگه مرورگر) قرار می‌گیرد."
                         : "Applies to the browser tab icon next to the title."}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </ComponentCard>
+
+            {/* Typography & Font Settings Card */}
+            <ComponentCard
+              title={isRTL ? "مدیریت قلم و تایپوگرافی سامانه" : "Typography & Font Management"}
+              desc={
+                isRTL
+                  ? "تغییر فونت کلیه بخش‌های سامانه از لیست فونت‌های استاندارد فارسی یا بارگذاری فایل فونت اختصاصی (TTF / WOFF / WOFF2) و اعمال سراسری بر کل سایت."
+                  : "Change the active font across the entire site from a curated list of Persian/Arabic fonts, or upload your own custom font file (TTF / WOFF / WOFF2)."
+              }
+            >
+              <div className="space-y-6">
+                {/* Predefined Fonts List */}
+                <div>
+                  <label className="block text-sm font-bold text-slate-800 dark:text-white mb-2">
+                    {isRTL ? "انتخاب فونت پیش‌فرض سامانه" : "Select System Font"}
+                  </label>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                    {[
+                      { name: 'Vazirmatn', labelFa: 'وزیرمتن (دیفالت)', labelEn: 'Vazirmatn (Default)' },
+                      { name: 'Sahel', labelFa: 'ساحل', labelEn: 'Sahel' },
+                      { name: 'Samim', labelFa: 'صمیم', labelEn: 'Samim' },
+                      { name: 'Shabnam', labelFa: 'شبنم', labelEn: 'Shabnam' },
+                      { name: 'Tanha', labelFa: 'تنها', labelEn: 'Tanha' },
+                      { name: 'Parastoo', labelFa: 'پرستو', labelEn: 'Parastoo' },
+                      { name: 'Yekan Bakh', labelFa: 'یکان بخ', labelEn: 'Yekan Bakh' },
+                      { name: 'IRANSans', labelFa: 'ایران‌سنس', labelEn: 'IRANSans' },
+                      { name: 'Dana', labelFa: 'دانا', labelEn: 'Dana' },
+                      { name: 'Estedad', labelFa: 'استعداد', labelEn: 'Estedad' },
+                      { name: 'Gandom', labelFa: 'گندم', labelEn: 'Gandom' },
+                      { name: 'Tahoma', labelFa: 'تاهوماه (سیستمی)', labelEn: 'Tahoma (System)' },
+                    ].map((fontItem) => {
+                      const isSelected = fontFamily === fontItem.name;
+                      return (
+                        <button
+                          key={fontItem.name}
+                          type="button"
+                          onClick={() => {
+                            setFontFamily(fontItem.name);
+                            setContextFontFamily(fontItem.name, '');
+                          }}
+                          className={`flex flex-col items-center justify-center p-3.5 rounded-2xl border-[1.5px] transition-all cursor-pointer text-center ${
+                            isSelected
+                              ? 'bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] text-white border-transparent shadow-md hover:shadow-lg'
+                              : 'bg-white dark:bg-gray-800 text-slate-800 dark:text-slate-200 border-slate-300 dark:border-slate-700 hover:border-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 shadow-2xs'
+                          }`}
+                        >
+                          <span className="text-sm font-bold mb-1" style={{ fontFamily: `'${fontItem.name}', var(--font-outfit), sans-serif` }}>
+                            {isRTL ? "نمونه خط" : "Sample Text"}
+                          </span>
+                          <span className="text-[11px] font-medium opacity-90 truncate max-w-full">
+                            {isRTL ? fontItem.labelFa : fontItem.labelEn}
+                          </span>
+                          {isSelected && <span className="mt-1 text-xs font-bold">✓</span>}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Upload Custom Font File */}
+                <div className="p-5 rounded-2xl border border-slate-200/80 dark:border-gray-800 bg-slate-50/70 dark:bg-white/[0.02] space-y-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                      <h4 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <span>🔤</span>
+                        <span>{isRTL ? "بارگذاری فونت سفارشی دلخواه" : "Upload Custom Font File"}</span>
+                      </h4>
+                      <p className="text-xs text-slate-600 dark:text-slate-300 font-medium mt-0.5">
+                        {isRTL
+                          ? "فایل فونت با پسوند woff2، woff یا ttf را از سیستم خود انتخاب کنید تا سریعاً به عنوان فونت فعال کل سامانه اعمال شود."
+                          : "Upload a font file (.woff2, .woff, or .ttf) from your computer to apply it across all site pages."}
+                      </p>
+                    </div>
+
+                    <div className="flex items-center gap-2 shrink-0">
+                      <input
+                        type="file"
+                        ref={fontFileInputRef}
+                        accept=".woff2,.woff,.ttf,.otf"
+                        className="hidden"
+                        onChange={handleFontFileUpload}
+                      />
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => fontFileInputRef.current?.click()}
+                        className="text-xs"
+                      >
+                        📁 {isRTL ? "انتخاب فایل فونت" : t("Browse File")}
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Active Custom Font Status */}
+                  {customFontData && (
+                    <div className="flex items-center justify-between p-3.5 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 rounded-xl text-xs">
+                      <div className="flex items-center gap-2 text-emerald-800 dark:text-emerald-300 font-medium">
+                        <span className="font-bold text-sm">✓</span>
+                        <span>
+                          {isRTL
+                            ? `فونت سفارشی فعال است ${uploadedFontFileName ? `(${uploadedFontFileName})` : ''}`
+                            : `Custom font is active ${uploadedFontFileName ? `(${uploadedFontFileName})` : ''}`}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setFontFamily("custom");
+                            setContextFontFamily("custom", customFontData);
+                          }}
+                          className={`px-3 py-1 text-xs rounded-lg font-bold transition-all cursor-pointer ${
+                            fontFamily === 'custom'
+                              ? 'bg-emerald-600 text-white shadow-xs'
+                              : 'bg-white dark:bg-gray-800 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700'
+                          }`}
+                        >
+                          {fontFamily === 'custom' ? (isRTL ? "فعال است" : "Active") : (isRTL ? "فعال‌سازی این فونت" : "Use this font")}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setCustomFontData("");
+                            setUploadedFontFileName("");
+                            if (fontFamily === 'custom') {
+                              setFontFamily("Vazirmatn");
+                              setContextFontFamily("Vazirmatn", "");
+                            }
+                          }}
+                          className="text-red-500 hover:text-red-700 text-xs font-semibold underline ml-1 cursor-pointer"
+                        >
+                          {t("Remove")}
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Font Live Preview Box */}
+                  <div className="p-4 rounded-xl border border-slate-200 bg-white dark:bg-gray-900 dark:border-gray-800 space-y-2">
+                    <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
+                      {isRTL ? "پیش‌نمایش زنده متن با فونت انتخابی:" : "Live Font Preview:"}
+                    </span>
+                    <p className="text-base text-slate-900 dark:text-white font-medium leading-relaxed">
+                      {isRTL
+                        ? "سامانه همسان‌گزینی و ازدواج دائم؛ جامعه‌ای امن، آرامش‌بخش و متعهد برای ساختن آینده‌ای پایدار و عاشقانه."
+                        : "Matrimonial & Matchmaking Portal — A secure, dignified, and values-aligned platform for finding your life partner."}
+                    </p>
+                    <p className="text-xs text-slate-500 dark:text-gray-400">
+                      ۱۲۳۴۵۶۷۸۹۰ - 1234567890 • abcdefghijklmnopqrstuvwxyz • ابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی
                     </p>
                   </div>
                 </div>

@@ -29,6 +29,8 @@ class SiteSettingSerializer(serializers.ModelSerializer):
             "canvas_dark_color",
             "logo_url",
             "favicon_url",
+            "font_family",
+            "custom_font_data",
             "updated_at",
             "updated_by",
             "updated_by_username",
@@ -55,4 +57,6 @@ class PublicRegistrationConfigSerializer(serializers.Serializer):
     canvas_dark_color = serializers.CharField(default="", allow_blank=True)
     logo_url = serializers.CharField(default="", allow_blank=True, allow_null=True)
     favicon_url = serializers.CharField(default="", allow_blank=True, allow_null=True)
+    font_family = serializers.CharField(default="Vazirmatn", allow_blank=True)
+    custom_font_data = serializers.CharField(default="", allow_blank=True)
 

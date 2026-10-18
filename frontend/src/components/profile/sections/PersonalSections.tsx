@@ -31,6 +31,9 @@ import {
 const GENDER_OPTIONS: SelectOption[] = [
   { value: 'Man', label: 'Man' },
   { value: 'Woman', label: 'Woman' },
+  { value: 'boy', label: 'Boy' },
+  { value: 'girl', label: 'Girl' },
+  { value: 'seperated', label: 'Seperated' },
 ];
 
 const EDUCATION_OPTIONS: SelectOption[] = [
@@ -136,9 +139,21 @@ const USAGE_CASES_OPTIONS: SelectOption[] = [
 
 /* ─── default form values ────────────────────────────────────────────── */
 
+function normalizeGender(val: any): GenderEnum {
+  const raw = Array.isArray(val) ? val[0] : val;
+  if (!raw) return '' as GenderEnum;
+  const s = String(raw).trim().toLowerCase();
+  if (s === 'man') return 'Man' as GenderEnum;
+  if (s === 'woman') return 'Woman' as GenderEnum;
+  if (s === 'boy') return 'boy' as GenderEnum;
+  if (s === 'girl') return 'girl' as GenderEnum;
+  if (s === 'seperated' || s === 'separated') return 'seperated' as GenderEnum;
+  return raw as GenderEnum;
+}
+
 function defaultPersonalForm(data: PersonalInformation | null) {
   return {
-    gender: ((Array.isArray(data?.gender) ? data?.gender[0] : data?.gender) ?? '') as GenderEnum,
+    gender: normalizeGender(data?.gender),
     sadat: data?.sadat ?? false,
     birth_date: data?.birth_date ?? '',
     birth_location: data?.birth_location ?? '',

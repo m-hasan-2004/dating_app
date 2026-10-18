@@ -1,6 +1,6 @@
 import { apiClient } from '@/services/api/client';
 
-export type GenderEnum = 'man' | 'woman' | 'boy' | 'girl' | 'separated' | 'deceased';
+export type GenderEnum = 'Man' | 'Woman' | 'boy' | 'girl' | 'seperated' | 'separated' | 'man' | 'woman' | 'deceased' | (string & {});
 export type EducationEnum = 'Unlettered' | 'Under Diploma' | 'Diploma' | 'Associate Degree' | "Bachelor's Degree" | "Master's Degree" | 'Ph.D.' | 'Hoze (Islamic Seminary) LVL 1' | 'Hoze (Islamic Seminary) LVL 2' | 'Hoze (Islamic Seminary) LVL 3' | 'Hoze (Islamic Seminary) LVL 4' | 'School & Quranic';
 export type MilitaryStatusEnum = 'exemption' | 'mother_sponsorship' | 'father_sponsorship' | 'educational_exemption' | 'medical_exemption' | 'end_of_service' | 'no_service' | 'woman';
 export type IncomeEnum = 'no_income' | '-10' | '10-20' | '20-30' | '30-40' | '40-50' | '50-100' | '+100';
@@ -618,6 +618,8 @@ export interface CandidateProfile {
   first_name?: string | null;
   last_name?: string | null;
   gender: 'man' | 'woman' | 'male' | 'female' | 'other' | null;
+  raw_gender?: string | string[] | null;
+  is_virgin?: boolean | null;
   age?: number | null;
   birth_date?: string | null;
   birth_location?: string | null;
@@ -663,6 +665,8 @@ export interface CandidateSearchParams {
   search?: string;
   keyword?: string;
   gender?: string;
+  virginity?: string;
+  is_virgin?: string | boolean;
   min_age?: number | string;
   max_age?: number | string;
   minAge?: number | string;
@@ -719,6 +723,7 @@ export async function searchCandidates(
   if (params) {
     if (params.keyword || params.q || params.search) queryParams.q = params.keyword || params.q || params.search;
     if (params.gender) queryParams.gender = params.gender;
+    if (params.virginity !== undefined || params.is_virgin !== undefined) queryParams.virginity = params.virginity ?? params.is_virgin;
     if (params.minAge !== undefined || params.min_age !== undefined) queryParams.min_age = params.minAge ?? params.min_age;
     if (params.maxAge !== undefined || params.max_age !== undefined) queryParams.max_age = params.maxAge ?? params.max_age;
     if (params.educationLevel || params.education) queryParams.education = params.educationLevel || params.education;

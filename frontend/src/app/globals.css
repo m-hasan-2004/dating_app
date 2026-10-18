@@ -920,8 +920,12 @@ span.flatpickr-weekday,
 
 /* RTL Typography Support */
 html[dir="rtl"] body {
-  font-family: var(--font-outfit), Vazirmatn, Tahoma, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-active, var(--font-outfit), Vazirmatn, Tahoma, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
   letter-spacing: normal;
+}
+
+body {
+  font-family: var(--font-active, var(--font-outfit), Vazirmatn, Tahoma, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
 }
 
 /* Modern sleek custom scrollbars */

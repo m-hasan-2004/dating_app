@@ -157,7 +157,24 @@ export default function PublicCandidateProfilePage() {
   };
 
   const age = computeAge(personal?.birth_date || birth?.birth_date);
-  const isFemale = personal?.gender === 'woman' || personal?.gender === 'female' || personal?.gender === 'girl';
+
+  const computeVirginity = (genderVal: any): boolean | null => {
+    if (!genderVal) return null;
+    const rawStr = (Array.isArray(genderVal) ? genderVal.join(' ') : String(genderVal)).toLowerCase();
+    const hasVirgin = rawStr.includes('boy') || rawStr.includes('girl') || rawStr.includes('پسر') || rawStr.includes('دختر');
+    const hasNonVirgin = rawStr.includes('man') || rawStr.includes('woman') || rawStr.includes('seperated') || rawStr.includes('separated') || rawStr.includes('مرد') || rawStr.includes('زن') || rawStr.includes('جدایی') || rawStr.includes('deceased');
+    if (hasVirgin && !hasNonVirgin) return true;
+    if (hasNonVirgin) return false;
+    return null;
+  };
+
+  const isVirgin = computeVirginity(personal?.gender);
+
+  const isFemale = Boolean(
+    personal?.gender === 'woman' || personal?.gender === 'female' || personal?.gender === 'girl' ||
+    personal?.gender === 'زن' || personal?.gender === 'دختر' || personal?.gender === 'خانم' ||
+    (Array.isArray(personal?.gender) && personal?.gender.some((g: string) => ['woman', 'girl', 'female', 'زن', 'دختر'].includes(String(g).toLowerCase())))
+  );
 
   const DetailRow = ({ label, value, badge }: { label: string; value?: any; badge?: boolean }) => {
     let display: React.ReactNode = value;
@@ -317,6 +334,16 @@ export default function PublicCandidateProfilePage() {
           </div>
 
           <div className="flex flex-wrap justify-center sm:justify-end gap-2 text-xs">
+            {isVirgin === true && (
+              <span className="px-3 py-1 rounded-xl bg-teal-50 text-teal-700 dark:bg-teal-950/40 dark:text-teal-400 font-semibold border border-teal-200 dark:border-teal-800">
+                {t("Virgin / Unmarried")}
+              </span>
+            )}
+            {isVirgin === false && (
+              <span className="px-3 py-1 rounded-xl bg-purple-50 text-purple-700 dark:bg-purple-950/40 dark:text-purple-400 font-semibold border border-purple-200 dark:border-purple-800">
+                {t("Non-Virgin / Experienced")}
+              </span>
+            )}
             {personal?.education && (
               <span className="px-3 py-1 rounded-xl bg-slate-100 dark:bg-gray-800 text-slate-700 dark:text-gray-300 font-semibold border border-slate-200/60 dark:border-gray-700">
                 🎓 {t(personal.education)}
@@ -415,6 +442,17 @@ export default function PublicCandidateProfilePage() {
               <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-gray-800">
                 <span>👤</span> {t("Personal Information")}
               </h3>
+              <DetailRow
+                label="Virginity Status"
+                value={
+                  isVirgin === true
+                    ? (isRTL ? 'دوشیزه / باکره (بدون سابقه رابطه یا ازدواج)' : 'Virgin (No prior marriage / intercourse)')
+                    : isVirgin === false
+                    ? (isRTL ? 'غیر باکره (دارای سابقه ازدواج، رابطه یا جدایی)' : 'Non-Virgin (Has experience / Separated)')
+                    : '—'
+                }
+                badge
+              />
               <DetailRow label="Birth Location / City" value={personal?.birth_location} />
               <DetailRow label="Age" value={age ? `${isRTL ? toPersianDigits(age) : age} ${t("Years")}` : '—'} />
               <DetailRow label="Education Degree" value={personal?.education} badge />
@@ -429,13 +467,13 @@ export default function PublicCandidateProfilePage() {
               <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-gray-800">
                 <span>🕌</span> {t("Religious & Intellectual Outlook")}
               </h3>
-              <DetailRow label="Prayer & Worship" value={intellectual?.worship_and_prayer || intellectual?.worship_prayer} badge />
+              <DetailRow label="Prayer & Worship" value={intellectual?.worship_prayer || intellectual?.worship_and_prayer} badge />
               <DetailRow label="Fasting (روزه)" value={intellectual?.fasting} />
               <DetailRow label="Society Cover / Hijab" value={intellectual?.cover_type_society} badge />
               <DetailRow label="Velayat Faqih View" value={intellectual?.opinion_velayat_faqih || intellectual?.opinion_about_velayat_faqih} />
-              <DetailRow label="Religious Gatherings" value={intellectual?.participating_in_religious_meetings || intellectual?.participating_prayer_quran_meetings} />
+              <DetailRow label="Religious Gatherings" value={intellectual?.participating_prayer_quran_meetings || intellectual?.participating_in_religious_meetings} />
               <DetailRow label="Music & Assemblies" value={intellectual?.music} />
-              <DetailRow label="Marriage Goals" value={intellectual?.marriage_goals_purposes} />
+              <DetailRow label="Marriage Goals" value={intellectual?.marriage_goals || intellectual?.marriage_goals_purposes} />
             </div>
 
             <div className="rounded-3xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-xs space-y-3">
@@ -446,9 +484,9 @@ export default function PublicCandidateProfilePage() {
               <DetailRow label="Housing Ownership" value={financial?.ownership_status} />
               <DetailRow label="Current Residence" value={financial?.current_residence_status} />
               <DetailRow label="Assets & Capital" value={financial?.capital} />
-              <DetailRow label="Expected Dowry Types" value={financial?.future_spouse_dowry_type} />
-              <DetailRow label="Dowry Amount" value={financial?.future_spose_dowry_amount} />
-              <DetailRow label="Jahiziyeh" value={financial?.future_spose_jahiziyeh} />
+              <DetailRow label="Expected Dowry Types" value={financial?.dowry_type || financial?.future_spouse_dowry_type} />
+              <DetailRow label="Dowry Amount" value={financial?.dowry_amount || financial?.future_spose_dowry_amount} />
+              <DetailRow label="Jahiziyeh" value={financial?.jahiziyeh || financial?.future_spose_jahiziyeh} />
             </div>
 
             <div className="rounded-3xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] p-6 shadow-xs space-y-3">
@@ -458,10 +496,10 @@ export default function PublicCandidateProfilePage() {
               <DetailRow label="Desired Appearance" value={prefIntellectual?.appearance_type} />
               <DetailRow label="Acceptable Age Difference" value={prefIntellectual?.age_difference} />
               <DetailRow label="Prior Marriage Experience" value={prefIntellectual?.marriage_with_someone_with_marriage_experience} />
-              <DetailRow label="Education Requirement" value={prefPersonal?.education_level} />
+              <DetailRow label="Education Requirement" value={prefPersonal?.education || prefPersonal?.education_level} />
               <DetailRow label="Spouse Career Preference" value={prefPersonal?.future_spouse_job} />
               <DetailRow label="Location After Marriage" value={prefPersonal?.after_marriage_residence_location} />
-              <DetailRow label="Most Important Moral Feature" value={prefIntellectual?.most_important_moral_feature || prefIntellectual?.most_important_moral_feature_of_future_spouse} />
+              <DetailRow label="Most Important Moral Feature" value={prefIntellectual?.most_important_moral_feature_of_future_spouse || prefIntellectual?.most_important_moral_feature} />
             </div>
           </div>
         )}
@@ -473,6 +511,17 @@ export default function PublicCandidateProfilePage() {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1">
               <DetailRow label="Gender" value={personal?.gender} />
+              <DetailRow
+                label="Virginity Status"
+                value={
+                  isVirgin === true
+                    ? (isRTL ? 'دوشیزه / باکره' : 'Virgin')
+                    : isVirgin === false
+                    ? (isRTL ? 'غیر باکره' : 'Non-Virgin')
+                    : '—'
+                }
+                badge
+              />
               <DetailRow label="Age" value={age ? `${isRTL ? toPersianDigits(age) : age} ${t("Years")}` : '—'} />
               <DetailRow label="Birth Location / City" value={personal?.birth_location} />
               <DetailRow label="Sadat Lineage (سید)" value={personal?.sadat} />
@@ -488,7 +537,7 @@ export default function PublicCandidateProfilePage() {
               <DetailRow label="Leisure Types" value={personal?.leisure_type} />
               <DetailRow label="Usage Cases (Tobacco/Hookah)" value={personal?.usage_cases} />
               <DetailRow label="Usage Cases Description" value={personal?.usage_case_description} />
-              <DetailRow label="Tattoo or Body Art" value={personal?.tatto} />
+              <DetailRow label="Tattoo or Body Art" value={personal?.tatto !== undefined ? personal?.tatto : personal?.tatoo} />
               <DetailRow label="Tattoo Description" value={personal?.tatto_description} />
               <DetailRow label="Conviction or Arrest History" value={personal?.conviction_or_arrest_history} />
               <DetailRow label="Conviction Reason" value={personal?.conviction_reason} />
@@ -511,7 +560,7 @@ export default function PublicCandidateProfilePage() {
               <DetailRow label="Glasses" value={physical?.glasses} />
               <DetailRow label="Glasses Size" value={physical?.glasses_size} />
               <DetailRow label="Body & Face Appearance" value={physical?.body_and_face} />
-              <DetailRow label="Disease / Surgery History" value={physical?.disease_or_surgery_history} />
+              <DetailRow label="Disease / Surgery History" value={physical?.disease_or_surgery_history !== undefined ? physical?.disease_or_surgery_history : physical?.disease_or_surgery} />
               <DetailRow label="Medication / Disease Description" value={physical?.medication_surgery_disease_type} />
             </div>
           </div>
@@ -523,29 +572,29 @@ export default function PublicCandidateProfilePage() {
               {t("Religious, Intellectual & Lifestyle Values")}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1">
-              <DetailRow label="Prayer & Worship" value={intellectual?.worship_and_prayer || intellectual?.worship_prayer} badge />
+              <DetailRow label="Prayer & Worship" value={intellectual?.worship_prayer || intellectual?.worship_and_prayer} badge />
               <DetailRow label="Fasting (روزه)" value={intellectual?.fasting} />
               <DetailRow label="Fasting Explanation" value={intellectual?.fasting_explanation} />
               <DetailRow label="Cover Type at Home" value={intellectual?.cover_type_house} />
               <DetailRow label="Cover Type in Society" value={intellectual?.cover_type_society} badge />
-              <DetailRow label="Religious Meetings" value={intellectual?.participating_in_religious_meetings || intellectual?.participating_prayer_quran_meetings} />
+              <DetailRow label="Religious Meetings" value={intellectual?.participating_prayer_quran_meetings || intellectual?.participating_in_religious_meetings} />
               <DetailRow label="Music & Assemblies" value={intellectual?.music} />
               <DetailRow label="Dance / Singing Assemblies" value={intellectual?.dance_singing_assemblies} />
-              <DetailRow label="Opinion on Innocent Contact (Non-Mahram)" value={intellectual?.opinion_about_innocent_contact} />
+              <DetailRow label="Opinion on Innocent Contact (Non-Mahram)" value={intellectual?.opinion_innocent_contact || intellectual?.opinion_about_innocent_contact} />
               <DetailRow label="Cover for Innocent Contact" value={intellectual?.cover_type_innocent_contact} />
               <DetailRow label="Velayat Faqih View" value={intellectual?.opinion_velayat_faqih || intellectual?.opinion_about_velayat_faqih} />
               <DetailRow label="Political Orientation" value={intellectual?.political_orientation} />
               <DetailRow label="Child Quantity Preference" value={intellectual?.opinion_child_quantity || intellectual?.opinion_about_child_quantity} />
-              <DetailRow label="Opinion on Woman Working" value={intellectual?.opinion_about_womans_job} />
-              <DetailRow label="Opinion on Woman Education" value={intellectual?.opinion_about_womans_education} />
+              <DetailRow label="Opinion on Woman Working" value={intellectual?.opinion_woman_job || intellectual?.opinion_about_womans_job} />
+              <DetailRow label="Opinion on Woman Education" value={intellectual?.opinion_woman_edu || intellectual?.opinion_about_womans_education} />
               <DetailRow label="Positive Traits / Pros" value={intellectual?.pros_of_yourself} />
               <DetailRow label="Weaknesses / Cons" value={intellectual?.cons_of_yourself} />
-              <DetailRow label="Friend Connection Quality" value={intellectual?.type_of_connection_with_friends} />
+              <DetailRow label="Friend Connection Quality" value={intellectual?.type_connection_friends || intellectual?.type_of_connection_with_friends} />
               <DetailRow label="Friend Connection Reason" value={intellectual?.friends_connection_reason} />
               <DetailRow label="Contract Ceremony" value={intellectual?.contract_how} />
               <DetailRow label="Wedding Ceremony" value={intellectual?.wedding_how} />
               <DetailRow label="Decision Making in Choosing Spouse" value={intellectual?.decision_making_choosing_spouse} />
-              <DetailRow label="Marriage Goals" value={intellectual?.marriage_goals_purposes} />
+              <DetailRow label="Marriage Goals" value={intellectual?.marriage_goals || intellectual?.marriage_goals_purposes} />
             </div>
           </div>
         )}
@@ -626,7 +675,7 @@ export default function PublicCandidateProfilePage() {
                     <div className="space-y-2">
                       {grooms.map((g, idx) => (
                         <div key={g.id || idx} className="p-3 rounded-2xl bg-slate-50 dark:bg-gray-800/40 text-xs flex justify-between items-center border border-slate-100 dark:border-gray-800">
-                          <span className="text-slate-700 dark:text-gray-300">#{idx + 1} {g.groom_or ? t(g.groom_or) : t('Groom')}: {g.education ? t(g.education) : '—'}</span>
+                          <span className="text-slate-700 dark:text-gray-300">#{idx + 1} {g.groom_or === 'zan_dadash' ? (isRTL ? 'زن داداش' : 'Sister-in-law') : (isRTL ? 'داماد / شوهر خواهر' : 'Groom / Brother-in-law')}: {g.education ? t(g.education) : '—'}</span>
                           <span className="font-semibold text-slate-900 dark:text-white">{g.job ? t(g.job) : '—'}</span>
                         </div>
                       ))}
@@ -642,7 +691,7 @@ export default function PublicCandidateProfilePage() {
                     <div className="space-y-2">
                       {brides.map((b, idx) => (
                         <div key={b.id || idx} className="p-3 rounded-2xl bg-slate-50 dark:bg-gray-800/40 text-xs flex justify-between items-center border border-slate-100 dark:border-gray-800">
-                          <span className="text-slate-700 dark:text-gray-300">#{idx + 1} {b.bride_or ? t(b.bride_or) : t('Bride')}: {b.education ? t(b.education) : '—'}</span>
+                          <span className="text-slate-700 dark:text-gray-300">#{idx + 1} {b.bride_or === 'shohar_khahar' ? (isRTL ? 'شوهر خواهر' : 'Brother-in-law') : (isRTL ? 'عروس / زن داداش' : 'Bride / Sister-in-law')}: {b.education ? t(b.education) : '—'}</span>
                           <span className="font-semibold text-slate-900 dark:text-white">{b.job ? t(b.job) : '—'}</span>
                         </div>
                       ))}
@@ -666,15 +715,15 @@ export default function PublicCandidateProfilePage() {
               <DetailRow label="Monthly Rent Amount" value={financial?.rent_amount} />
               <DetailRow label="Mortgage Deposit" value={financial?.mortgage_amount} />
               <DetailRow label="Capital Assets" value={financial?.capital} />
-              <DetailRow label="Other Capital / Notes" value={financial?.other_capital} />
+              <DetailRow label="Other Capital / Notes" value={financial?.other_capital || financial?.other_captial} />
               <DetailRow label="Location After Marriage" value={financial?.after_marriage_residence_status} />
               <DetailRow label="Ex-Spouse Financial Status" value={financial?.ex_spouse_financial_status} />
               <DetailRow label="Ex-Spouse Financial Pay Status" value={financial?.ex_spouse_financial_pay_status} />
               <DetailRow label="Ex-Spouse Financial Amount" value={financial?.ex_spouse_financial_amount} />
-              <DetailRow label="Future Spouse Dowry Types" value={financial?.future_spouse_dowry_type} />
-              <DetailRow label="Dowry Amount" value={financial?.future_spose_dowry_amount} />
-              <DetailRow label="Jahiziyeh" value={financial?.future_spose_jahiziyeh} />
-              <DetailRow label="Jahiziyeh Explanation" value={financial?.future_spose_jahiziyeh_explanation} />
+              <DetailRow label="Future Spouse Dowry Types" value={financial?.dowry_type || financial?.future_spouse_dowry_type} />
+              <DetailRow label="Dowry Amount" value={financial?.dowry_amount || financial?.future_spose_dowry_amount} />
+              <DetailRow label="Jahiziyeh" value={financial?.jahiziyeh || financial?.future_spose_jahiziyeh} />
+              <DetailRow label="Jahiziyeh Explanation" value={financial?.jahiziyeh_explantion || financial?.future_spose_jahiziyeh_explanation} />
             </div>
           </div>
         )}
@@ -738,13 +787,13 @@ export default function PublicCandidateProfilePage() {
               <DetailRow label="Family Religious Status Importance" value={prefIntellectual?.future_spouse_family_religious_status_importance} />
               <DetailRow label="Family Financial Status Importance" value={prefIntellectual?.future_spouse_family_financial_status_importance} />
               <DetailRow label="Prior Marriage Experience Acceptance" value={prefIntellectual?.marriage_with_someone_with_marriage_experience} badge />
-              <DetailRow label="Marriage Experience Explanation" value={prefIntellectual?.marriage_with_someone_explanation} />
-              <DetailRow label="Most Important Moral Feature" value={prefIntellectual?.most_important_moral_feature || prefIntellectual?.most_important_moral_feature_of_future_spouse} />
-              <DetailRow label="Marriage with Disabled Person" value={prefIntellectual?.marriage_with_disabled_person} />
-              <DetailRow label="Marriage with Veteran" value={prefIntellectual?.marriage_with_veteran_person} />
-              <DetailRow label="Disabled / Veteran Explanation" value={prefIntellectual?.marriage_disabled_veteran_explanation} />
+              <DetailRow label="Marriage Experience Explanation" value={prefIntellectual?.additional_explnation_marriage_with_someone || prefIntellectual?.marriage_with_someone_explanation} />
+              <DetailRow label="Most Important Moral Feature" value={prefIntellectual?.most_important_moral_feature_of_future_spouse || prefIntellectual?.most_important_moral_feature} />
+              <DetailRow label="Marriage with Disabled Person" value={prefIntellectual?.marriage_with_disabled || prefIntellectual?.marriage_with_disabled_person} />
+              <DetailRow label="Marriage with Veteran" value={prefIntellectual?.marriage_with_veteran || prefIntellectual?.marriage_with_veteran_person} />
+              <DetailRow label="Disabled / Veteran Explanation" value={prefIntellectual?.marriage_with_veteran_disabled_explanation || prefIntellectual?.marriage_disabled_veteran_explanation} />
               <DetailRow label="Red Flags / Don'ts" value={prefIntellectual?.red_flags} />
-              <DetailRow label="Education Expectation" value={prefPersonal?.education_level} />
+              <DetailRow label="Education Expectation" value={prefPersonal?.education || prefPersonal?.education_level} />
               <DetailRow label="Field of Study" value={prefPersonal?.field_of_study} />
               <DetailRow label="Desired Career" value={prefPersonal?.future_spouse_job} />
               <DetailRow label="Current Residence Location Preference" value={prefPersonal?.current_residence_location} />
@@ -770,7 +819,7 @@ export default function PublicCandidateProfilePage() {
                 label="Preferred Ethnicities / Originalities"
                 value={
                   prefOriginalities.length > 0
-                    ? prefOriginalities.map((o) => o.future_spouse_ethnicity)
+                    ? prefOriginalities.map((o) => o.future_spouse_originality || o.future_spouse_ethnicity)
                     : '—'
                 }
               />

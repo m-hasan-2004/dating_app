@@ -662,6 +662,25 @@ class UserViewSet(viewsets.ModelViewSet):
                 q_mar |= Q(id__in=BirthCertificateInformation.objects.filter(marriage_experince="engagement_only").values_list("user_id", flat=True))
             users_qs = users_qs.filter(q_mar)
 
+        # Virginity filter (based on gender: boy/girl vs man/woman/seperated/deceased)
+        virginity = request.query_params.get("virginity") or request.query_params.get("is_virgin")
+        if virginity in ["virgin", "1", "true", "True", "yes"]:
+            matching_virgin_ids = set()
+            for p in PersonalInformation.objects.all():
+                g_str = " ".join(p.gender if isinstance(p.gender, list) else [str(p.gender)]).lower()
+                is_v = ("boy" in g_str or "girl" in g_str) and ("man" not in g_str and "woman" not in g_str and "seperated" not in g_str and "separated" not in g_str and "deceased" not in g_str)
+                if is_v:
+                    matching_virgin_ids.add(p.user_id)
+            users_qs = users_qs.filter(id__in=matching_virgin_ids)
+        elif virginity in ["not_virgin", "0", "false", "False", "no"]:
+            matching_not_virgin_ids = set()
+            for p in PersonalInformation.objects.all():
+                g_str = " ".join(p.gender if isinstance(p.gender, list) else [str(p.gender)]).lower()
+                is_v = ("boy" in g_str or "girl" in g_str) and ("man" not in g_str and "woman" not in g_str and "seperated" not in g_str and "separated" not in g_str and "deceased" not in g_str)
+                if not is_v:
+                    matching_not_virgin_ids.add(p.user_id)
+            users_qs = users_qs.filter(id__in=matching_not_virgin_ids)
+
         # Financial: income (multiselect), ownership_status (multiselect), job
         incomes = get_list_param("income", "incomeTier")
         if incomes:
@@ -831,9 +850,13 @@ class UserViewSet(viewsets.ModelViewSet):
 
             cand_age = None
             cand_gender = None
+            is_virgin = None
+            raw_gender = None
             if p_info:
                 g_raw = " ".join(p_info.gender if isinstance(p_info.gender, list) else [str(p_info.gender)]).lower()
+                raw_gender = p_info.gender
                 cand_gender = "woman" if ("woman" in g_raw or "girl" in g_raw) else ("man" if ("man" in g_raw or "boy" in g_raw) else "other")
+                is_virgin = ("boy" in g_raw or "girl" in g_raw) and ("man" not in g_raw and "woman" not in g_raw and "seperated" not in g_raw and "separated" not in g_raw and "deceased" not in g_raw)
                 if p_info.birth_date:
                     cand_age = today.year - p_info.birth_date.year - ((today.month, today.day) < (p_info.birth_date.month, p_info.birth_date.day))
 
@@ -843,6 +866,8 @@ class UserViewSet(viewsets.ModelViewSet):
                 "first_name": ident_info.first_name if ident_info else None,
                 "last_name": ident_info.last_name if ident_info else None,
                 "gender": cand_gender,
+                "raw_gender": raw_gender,
+                "is_virgin": is_virgin,
                 "age": cand_age,
                 "birth_date": str(p_info.birth_date) if (p_info and p_info.birth_date) else None,
                 "birth_location": p_info.birth_location if p_info else None,
@@ -902,9 +927,13 @@ class UserViewSet(viewsets.ModelViewSet):
 
             cand_age = None
             cand_gender = None
+            is_virgin = None
+            raw_gender = None
             if p_info:
                 g_raw = " ".join(p_info.gender if isinstance(p_info.gender, list) else [str(p_info.gender)]).lower()
+                raw_gender = p_info.gender
                 cand_gender = "woman" if ("woman" in g_raw or "girl" in g_raw) else ("man" if ("man" in g_raw or "boy" in g_raw) else "other")
+                is_virgin = ("boy" in g_raw or "girl" in g_raw) and ("man" not in g_raw and "woman" not in g_raw and "seperated" not in g_raw and "separated" not in g_raw and "deceased" not in g_raw)
                 if p_info.birth_date:
                     cand_age = today.year - p_info.birth_date.year - ((today.month, today.day) < (p_info.birth_date.month, p_info.birth_date.day))
 
@@ -914,6 +943,8 @@ class UserViewSet(viewsets.ModelViewSet):
                 "first_name": ident_info.first_name if ident_info else None,
                 "last_name": ident_info.last_name if ident_info else None,
                 "gender": cand_gender,
+                "raw_gender": raw_gender,
+                "is_virgin": is_virgin,
                 "age": cand_age,
                 "birth_date": str(p_info.birth_date) if (p_info and p_info.birth_date) else None,
                 "birth_location": p_info.birth_location if p_info else None,
