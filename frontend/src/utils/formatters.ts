@@ -9,6 +9,13 @@ export function toPersianDigits(n: number | string | null | undefined): string {
   return str.replace(/[0-9]/g, (w) => persianDigits[parseInt(w, 10)]);
 }
 
+export function toEnglishDigits(str: string | null | undefined): string {
+  if (!str) return '';
+  return String(str)
+    .replace(/[۰-۹]/g, (d) => String('۰۱۲۳۴۵۶۷۸۹'.indexOf(d)))
+    .replace(/[٠-٩]/g, (d) => String('٠١٢٣٤٥٦٧٨٩'.indexOf(d)));
+}
+
 export function formatNumber(
   val: number | string | null | undefined,
   isRTL: boolean = true

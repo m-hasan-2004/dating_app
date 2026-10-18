@@ -20,7 +20,7 @@ import {
   GridIcon,
   ListIcon,
 } from '@/icons';
-import { formatHeight, formatWeight, toPersianDigits } from '@/utils/formatters';
+import { formatHeight, formatWeight, toPersianDigits, toEnglishDigits } from '@/utils/formatters';
 
 const LOCATION_OPTIONS = [
   { value: 'Tehran', labelFa: 'تهران', labelEn: 'Tehran' },
@@ -147,11 +147,23 @@ const VELAYAT_OPTIONS = [
 ];
 
 const SKIN_OPTIONS = [
-  { value: 'White', labelFa: 'سفید / بسیار روشن', labelEn: 'White / Very Bright' },
-  { value: 'Fair', labelFa: 'روشن / گندمی روشن', labelEn: 'Fair / Bright' },
+  { value: 'Very Bright', labelFa: 'خیلی سفید و بور', labelEn: 'Very Bright' },
+  { value: 'Bor', labelFa: 'بور', labelEn: 'Bor' },
+  { value: 'Fair', labelFa: 'سفید روشن', labelEn: 'Fair' },
+  { value: 'White', labelFa: 'سفید', labelEn: 'White' },
   { value: 'Wheat', labelFa: 'گندمی', labelEn: 'Wheat' },
+  { value: 'Greenish', labelFa: 'سبزه روشن', labelEn: 'Greenish' },
   { value: 'Olive', labelFa: 'سبزه', labelEn: 'Olive' },
-  { value: 'Darken', labelFa: 'سبزه تیره / گندمی تیره', labelEn: 'Dark / Brown' },
+  { value: 'Darken', labelFa: 'تیره', labelEn: 'Darken' },
+  { value: 'Black', labelFa: 'سبزه تیره / مشکی', labelEn: 'Black' },
+  { value: 'Bright Brown', labelFa: 'قهوه‌ای روشن', labelEn: 'Bright Brown' },
+  { value: 'Darken Brown', labelFa: 'قهوه‌ای تیره', labelEn: 'Darken Brown' },
+  { value: 'Bright', labelFa: 'روشن', labelEn: 'Bright' },
+  { value: 'Yellow', labelFa: 'زرد', labelEn: 'Yellow' },
+  { value: 'Whitish White', labelFa: 'سفید مهتابی', labelEn: 'Whitish White' },
+  { value: 'Red & White', labelFa: 'سفید و گلگون', labelEn: 'Red & White' },
+  { value: 'Bright Greenish', labelFa: 'سبزه خیلی روشن', labelEn: 'Bright Greenish' },
+  { value: 'other', labelFa: 'سایر موارد', labelEn: 'Other' },
 ];
 
 const PREF_EXP_OPTIONS = [
@@ -1167,12 +1179,15 @@ export default function CandidateSearchPage() {
                 </span>
                 <div className="flex items-center gap-2">
                   <input
-                    type="number"
-                    min="18"
-                    max="100"
+                    type="text"
+                    inputMode="numeric"
                     placeholder={isRTL ? "حداقل" : "Min"}
-                    value={minAge}
-                    onChange={(e) => { setMinAge(e.target.value); setPage(1); }}
+                    value={isRTL ? toPersianDigits(minAge) : minAge}
+                    onChange={(e) => {
+                      const engVal = toEnglishDigits(e.target.value).replace(/\D/g, '');
+                      setMinAge(engVal);
+                      setPage(1);
+                    }}
                     className={`w-full px-2.5 py-1 text-xs border rounded-lg bg-white dark:bg-gray-800 dark:text-white transition-all ${
                       (minAge && Number(minAge) < 18)
                         ? 'border-red-500 ring-1 ring-red-500 bg-red-50/20 text-red-900 dark:text-red-200'
@@ -1181,12 +1196,15 @@ export default function CandidateSearchPage() {
                   />
                   <span className="text-slate-400 font-bold">-</span>
                   <input
-                    type="number"
-                    min="18"
-                    max="100"
+                    type="text"
+                    inputMode="numeric"
                     placeholder={isRTL ? "حداکثر" : "Max"}
-                    value={maxAge}
-                    onChange={(e) => { setMaxAge(e.target.value); setPage(1); }}
+                    value={isRTL ? toPersianDigits(maxAge) : maxAge}
+                    onChange={(e) => {
+                      const engVal = toEnglishDigits(e.target.value).replace(/\D/g, '');
+                      setMaxAge(engVal);
+                      setPage(1);
+                    }}
                     className={`w-full px-2.5 py-1 text-xs border rounded-lg bg-white dark:bg-gray-800 dark:text-white transition-all ${
                       (maxAge && Number(maxAge) < 18)
                         ? 'border-red-500 ring-1 ring-red-500 bg-red-50/20 text-red-900 dark:text-red-200'
@@ -1237,20 +1255,30 @@ export default function CandidateSearchPage() {
                 </span>
                 <div className="flex items-center gap-2">
                   <input
-                    type="number"
+                    type="text"
+                    inputMode="numeric"
                     placeholder={isRTL ? "حداقل قد" : "Min cm"}
-                    value={minHeight}
-                    onChange={(e) => { setMinHeight(e.target.value); setPage(1); }}
+                    value={isRTL ? toPersianDigits(minHeight) : minHeight}
+                    onChange={(e) => {
+                      const engVal = toEnglishDigits(e.target.value).replace(/\D/g, '');
+                      setMinHeight(engVal);
+                      setPage(1);
+                    }}
                     className={`w-full px-2.5 py-1 text-xs border rounded-lg bg-white dark:bg-gray-800 dark:text-white transition-all ${
                       minHeight ? 'border-[var(--color-primary)] ring-1 ring-[var(--color-primary)] font-bold bg-[var(--color-primary)]/10 text-slate-900 dark:text-white' : 'border-slate-300 dark:border-gray-700'
                     }`}
                   />
                   <span className="text-slate-400 font-bold">-</span>
                   <input
-                    type="number"
+                    type="text"
+                    inputMode="numeric"
                     placeholder={isRTL ? "حداکثر قد" : "Max cm"}
-                    value={maxHeight}
-                    onChange={(e) => { setMaxHeight(e.target.value); setPage(1); }}
+                    value={isRTL ? toPersianDigits(maxHeight) : maxHeight}
+                    onChange={(e) => {
+                      const engVal = toEnglishDigits(e.target.value).replace(/\D/g, '');
+                      setMaxHeight(engVal);
+                      setPage(1);
+                    }}
                     className={`w-full px-2.5 py-1 text-xs border rounded-lg bg-white dark:bg-gray-800 dark:text-white transition-all ${
                       maxHeight ? 'border-[var(--color-primary)] ring-1 ring-[var(--color-primary)] font-bold bg-[var(--color-primary)]/10 text-slate-900 dark:text-white' : 'border-slate-300 dark:border-gray-700'
                     }`}
@@ -1293,20 +1321,30 @@ export default function CandidateSearchPage() {
                 </span>
                 <div className="flex items-center gap-2">
                   <input
-                    type="number"
+                    type="text"
+                    inputMode="numeric"
                     placeholder={isRTL ? "حداقل وزن" : "Min kg"}
-                    value={minWeight}
-                    onChange={(e) => { setMinWeight(e.target.value); setPage(1); }}
+                    value={isRTL ? toPersianDigits(minWeight) : minWeight}
+                    onChange={(e) => {
+                      const engVal = toEnglishDigits(e.target.value).replace(/\D/g, '');
+                      setMinWeight(engVal);
+                      setPage(1);
+                    }}
                     className={`w-full px-2.5 py-1 text-xs border rounded-lg bg-white dark:bg-gray-800 dark:text-white transition-all ${
                       minWeight ? 'border-[var(--color-primary)] ring-1 ring-[var(--color-primary)] font-bold bg-[var(--color-primary)]/10 text-slate-900 dark:text-white' : 'border-slate-300 dark:border-gray-700'
                     }`}
                   />
                   <span className="text-slate-400 font-bold">-</span>
                   <input
-                    type="number"
+                    type="text"
+                    inputMode="numeric"
                     placeholder={isRTL ? "حداکثر وزن" : "Max kg"}
-                    value={maxWeight}
-                    onChange={(e) => { setMaxWeight(e.target.value); setPage(1); }}
+                    value={isRTL ? toPersianDigits(maxWeight) : maxWeight}
+                    onChange={(e) => {
+                      const engVal = toEnglishDigits(e.target.value).replace(/\D/g, '');
+                      setMaxWeight(engVal);
+                      setPage(1);
+                    }}
                     className={`w-full px-2.5 py-1 text-xs border rounded-lg bg-white dark:bg-gray-800 dark:text-white transition-all ${
                       maxWeight ? 'border-[var(--color-primary)] ring-1 ring-[var(--color-primary)] font-bold bg-[var(--color-primary)]/10 text-slate-900 dark:text-white' : 'border-slate-300 dark:border-gray-700'
                     }`}
