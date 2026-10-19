@@ -39,20 +39,20 @@
   --color-white: #ffffff;
   --color-black: #101828;
 
-  --color-brand-25: #f2f7ff;
-  --color-brand-50: #ecf3ff;
-  --color-brand-100: #dde9ff;
-  --color-brand-200: #c2d6ff;
-  --color-brand-300: #9cb9ff;
-  --color-brand-400: #7592ff;
-  --color-brand-500: #465fff;
-  --color-brand-600: #3641f5;
-  --color-brand-700: #2a31d8;
-  --color-brand-800: #252dae;
-  --color-brand-900: #262e89;
-  --color-brand-950: #161950;
-  --color-primary: var(--color-primary);
-  --color-accent: var(--color-accent);
+  --color-brand-25: #f2fbf2;
+  --color-brand-50: #e8f7e9;
+  --color-brand-100: #d0efd1;
+  --color-brand-200: #a2dfa5;
+  --color-brand-300: #6cca70;
+  --color-brand-400: #3db341;
+  --color-brand-500: #289333;
+  --color-brand-600: #1e7026;
+  --color-brand-700: #175a1e;
+  --color-brand-800: #124617;
+  --color-brand-900: #0d3410;
+  --color-brand-950: #071f09;
+  --color-primary: #289333;
+  --color-accent: #1e7026;
 
   --color-blue-light-25: #f5fbff;
   --color-blue-light-50: #f0f9ff;
@@ -1039,4 +1039,10 @@ html:not(.dark) textarea:focus {
   box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.2) !important;
   outline: none !important;
 }
+
+/* Default font typography: Vazirmatn is primary for both RTL and LTR, preventing font jumps */
+:root, html, body, [dir="rtl"] body {
+  font-family: var(--font-active, 'Vazirmatn', var(--font-outfit), Tahoma, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+}
+
 

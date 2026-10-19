@@ -140,7 +140,7 @@ const DEFAULT_BRANDING = {
   customSecondaryColor: '#289333',
   canvasLightColor: '#f8fafc',
   canvasDarkColor: '#131127',
-  enableLanguageSwitcher: true,
+  enableLanguageSwitcher: false,
   enableIdentityAndBirthCert: true,
   enableNextjsToolbar: true,
   logoUrl: '/media/site_branding/logos/logo.png',
@@ -163,22 +163,118 @@ const BrandingContext = createContext<BrandingContextType>({
 
 export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { language, t } = useTranslation();
-  const [siteNameFa, setSiteNameFa] = useState(DEFAULT_BRANDING.siteNameFa);
-  const [siteNameEn, setSiteNameEn] = useState(DEFAULT_BRANDING.siteNameEn);
-  const [siteTaglineFa, setSiteTaglineFa] = useState(DEFAULT_BRANDING.siteTaglineFa);
-  const [siteTaglineEn, setSiteTaglineEn] = useState(DEFAULT_BRANDING.siteTaglineEn);
-  const [colorPalette, setColorPaletteState] = useState<ColorPalette>(DEFAULT_BRANDING.colorPalette);
-  const [customPrimaryColor, setCustomPrimaryColor] = useState(DEFAULT_BRANDING.customPrimaryColor);
-  const [customSecondaryColor, setCustomSecondaryColor] = useState(DEFAULT_BRANDING.customSecondaryColor);
-  const [canvasLightColor, setCanvasLightColor] = useState(DEFAULT_BRANDING.canvasLightColor);
-  const [canvasDarkColor, setCanvasDarkColor] = useState(DEFAULT_BRANDING.canvasDarkColor);
-  const [enableLanguageSwitcher, setEnableLanguageSwitcher] = useState(DEFAULT_BRANDING.enableLanguageSwitcher);
-  const [enableIdentityAndBirthCert, setEnableIdentityAndBirthCert] = useState(DEFAULT_BRANDING.enableIdentityAndBirthCert);
-  const [enableNextjsToolbar, setEnableNextjsToolbar] = useState(DEFAULT_BRANDING.enableNextjsToolbar);
-  const [logoUrl, setLogoUrl] = useState(DEFAULT_BRANDING.logoUrl);
-  const [faviconUrl, setFaviconUrl] = useState(DEFAULT_BRANDING.faviconUrl);
-  const [fontFamily, setFontFamilyState] = useState(DEFAULT_BRANDING.fontFamily);
-  const [customFontData, setCustomFontDataState] = useState(DEFAULT_BRANDING.customFontData);
+  const [siteNameFa, setSiteNameFa] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const cached = localStorage.getItem('branding_site_name_fa');
+      if (cached) return cached;
+    }
+    return DEFAULT_BRANDING.siteNameFa;
+  });
+  const [siteNameEn, setSiteNameEn] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const cached = localStorage.getItem('branding_site_name_en');
+      if (cached) return cached;
+    }
+    return DEFAULT_BRANDING.siteNameEn;
+  });
+  const [siteTaglineFa, setSiteTaglineFa] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const cached = localStorage.getItem('branding_site_tagline_fa');
+      if (cached) return cached;
+    }
+    return DEFAULT_BRANDING.siteTaglineFa;
+  });
+  const [siteTaglineEn, setSiteTaglineEn] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const cached = localStorage.getItem('branding_site_tagline_en');
+      if (cached) return cached;
+    }
+    return DEFAULT_BRANDING.siteTaglineEn;
+  });
+  const [colorPalette, setColorPaletteState] = useState<ColorPalette>(() => {
+    if (typeof window !== 'undefined') {
+      const cached = localStorage.getItem('branding_color_palette') as ColorPalette;
+      if (cached) return cached;
+    }
+    return DEFAULT_BRANDING.colorPalette;
+  });
+  const [customPrimaryColor, setCustomPrimaryColor] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const cached = localStorage.getItem('branding_custom_primary');
+      if (cached) return cached;
+    }
+    return DEFAULT_BRANDING.customPrimaryColor;
+  });
+  const [customSecondaryColor, setCustomSecondaryColor] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const cached = localStorage.getItem('branding_custom_secondary');
+      if (cached) return cached;
+    }
+    return DEFAULT_BRANDING.customSecondaryColor;
+  });
+  const [canvasLightColor, setCanvasLightColor] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const cached = localStorage.getItem('branding_canvas_light');
+      if (cached) return cached;
+    }
+    return DEFAULT_BRANDING.canvasLightColor;
+  });
+  const [canvasDarkColor, setCanvasDarkColor] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const cached = localStorage.getItem('branding_canvas_dark');
+      if (cached) return cached;
+    }
+    return DEFAULT_BRANDING.canvasDarkColor;
+  });
+  const [enableLanguageSwitcher, setEnableLanguageSwitcher] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      const cached = localStorage.getItem('branding_enable_language_switcher');
+      if (cached !== null) return cached === 'true';
+    }
+    return DEFAULT_BRANDING.enableLanguageSwitcher;
+  });
+  const [enableIdentityAndBirthCert, setEnableIdentityAndBirthCert] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      const cached = localStorage.getItem('branding_enable_identity_birth_cert');
+      if (cached !== null) return cached === 'true';
+    }
+    return DEFAULT_BRANDING.enableIdentityAndBirthCert;
+  });
+  const [enableNextjsToolbar, setEnableNextjsToolbar] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      const cached = localStorage.getItem('branding_enable_nextjs_toolbar');
+      if (cached !== null) return cached === 'true';
+    }
+    return DEFAULT_BRANDING.enableNextjsToolbar;
+  });
+  const [logoUrl, setLogoUrl] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const cached = localStorage.getItem('branding_logo_url');
+      if (cached) return cached;
+    }
+    return resolveMediaUrl(DEFAULT_BRANDING.logoUrl);
+  });
+  const [faviconUrl, setFaviconUrl] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const cached = localStorage.getItem('branding_favicon_url');
+      if (cached) return cached;
+    }
+    return resolveMediaUrl(DEFAULT_BRANDING.faviconUrl);
+  });
+  const [fontFamily, setFontFamilyState] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const cached = localStorage.getItem('branding_font_family');
+      if (cached) return cached;
+    }
+    return DEFAULT_BRANDING.fontFamily;
+  });
+  const [customFontData, setCustomFontDataState] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const cached = localStorage.getItem('branding_custom_font_data');
+      if (cached) return cached;
+    }
+    return DEFAULT_BRANDING.customFontData;
+  });
 
   // Apply or suppress Next.js dev toolbar
   const applyNextjsToolbar = useCallback((enable: boolean) => {
@@ -207,7 +303,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       `;
     } else {
       if (styleEl) {
-        styleEl.remove();
+        styleEl.textContent = '';
       }
     }
   }, []);
@@ -242,7 +338,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       document.documentElement.style.setProperty('--font-active', "'CustomUploadedFont', var(--font-outfit), Vazirmatn, Tahoma, sans-serif");
     } else {
       if (styleEl) {
-        styleEl.remove();
+        styleEl.textContent = '';
       }
       const activeFont = font || 'Vazirmatn';
       const fontStack = `'${activeFont}', var(--font-outfit), Vazirmatn, Tahoma, sans-serif`;
@@ -262,11 +358,11 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     applyFontFamily(font, customData !== undefined ? customData : customFontData);
   }, [applyFontFamily, customFontData]);
 
-  // Dynamically update browser tab favicon icon
+  // Dynamically update browser tab favicon icon without destroying React-managed nodes
   const updateTabFavicon = useCallback((url: string) => {
     if (typeof document === 'undefined') return;
     try {
-      const activeIcon = url || '/favicon.ico';
+      const activeIcon = url || '/media/site_branding/favicons/favicon.png';
       const baseUrl =
         activeIcon.startsWith('/') && !activeIcon.startsWith('/favicon.ico') && typeof window !== 'undefined'
           ? `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}${activeIcon}`
@@ -276,19 +372,14 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         ? baseUrl
         : `${baseUrl}${baseUrl.includes('?') ? '&' : '?'}v=${Date.now()}`;
 
-      const existingLinks = document.querySelectorAll<HTMLLinkElement>(
-        "link[rel='icon'], link[rel='shortcut icon'], link[rel='apple-touch-icon'], link[rel*='icon']"
-      );
-      existingLinks.forEach((el) => el.remove());
-
-      const rels = ['icon', 'shortcut icon', 'apple-touch-icon'];
-      rels.forEach((rel) => {
-        const link = document.createElement('link');
-        link.rel = rel;
-        link.type = resolvedUrl.includes('.svg') ? 'image/svg+xml' : 'image/png';
-        link.href = resolvedUrl;
-        document.head.appendChild(link);
-      });
+      let dynamicFavicon = document.getElementById('app-dynamic-favicon') as HTMLLinkElement | null;
+      if (!dynamicFavicon) {
+        dynamicFavicon = document.createElement('link');
+        dynamicFavicon.id = 'app-dynamic-favicon';
+        dynamicFavicon.rel = 'icon';
+        document.head.appendChild(dynamicFavicon);
+      }
+      dynamicFavicon.href = resolvedUrl;
     } catch {
       // Ignore in non-browser env
     }
@@ -492,6 +583,25 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const refreshBranding = useCallback(async () => {
     try {
       const config = await getRegistrationConfigApi();
+      if (typeof window !== 'undefined') {
+        if (config.site_name_fa) localStorage.setItem('branding_site_name_fa', config.site_name_fa);
+        if (config.site_name_en) localStorage.setItem('branding_site_name_en', config.site_name_en);
+        if (config.site_tagline_fa) localStorage.setItem('branding_site_tagline_fa', config.site_tagline_fa);
+        if (config.site_tagline_en) localStorage.setItem('branding_site_tagline_en', config.site_tagline_en);
+        if (config.custom_primary_color !== undefined) localStorage.setItem('branding_custom_primary', config.custom_primary_color);
+        if (config.custom_secondary_color !== undefined) localStorage.setItem('branding_custom_secondary', config.custom_secondary_color);
+        if (config.canvas_light_color !== undefined) localStorage.setItem('branding_canvas_light', config.canvas_light_color);
+        if (config.canvas_dark_color !== undefined) localStorage.setItem('branding_canvas_dark', config.canvas_dark_color);
+        if (config.enable_language_switcher !== undefined) localStorage.setItem('branding_enable_language_switcher', String(config.enable_language_switcher));
+        if (config.enable_identity_and_birth_cert !== undefined) localStorage.setItem('branding_enable_identity_birth_cert', String(config.enable_identity_and_birth_cert));
+        if (config.enable_nextjs_toolbar !== undefined) localStorage.setItem('branding_enable_nextjs_toolbar', String(config.enable_nextjs_toolbar));
+        if (config.color_palette) localStorage.setItem('branding_color_palette', config.color_palette);
+        if (config.font_family) localStorage.setItem('branding_font_family', config.font_family);
+        if (config.custom_font_data !== undefined) localStorage.setItem('branding_custom_font_data', config.custom_font_data);
+        if (config.logo_url !== undefined) localStorage.setItem('branding_logo_url', resolveMediaUrl(config.logo_url));
+        if (config.favicon_url !== undefined) localStorage.setItem('branding_favicon_url', resolveMediaUrl(config.favicon_url));
+      }
+
       if (config.site_name_fa) setSiteNameFa(config.site_name_fa);
       if (config.site_name_en) setSiteNameEn(config.site_name_en);
       if (config.site_tagline_fa) setSiteTaglineFa(config.site_tagline_fa);

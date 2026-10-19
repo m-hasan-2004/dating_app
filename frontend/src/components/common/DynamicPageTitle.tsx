@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useBranding } from '@/context/BrandingContext';
 import { useLanguage } from '@/context/LanguageContext';
@@ -70,9 +70,6 @@ export default function DynamicPageTitle() {
   const { siteName, faviconUrl, logoUrl } = useBranding();
   const { language } = useLanguage();
 
-  // Keep latest desired title in a ref so MutationObserver closure always reads fresh value
-  const desiredTitleRef = useRef<string>('امین وصال');
-
   useEffect(() => {
     if (typeof document === 'undefined') return;
 
@@ -84,54 +81,28 @@ export default function DynamicPageTitle() {
         ? currentSiteName
         : `${currentSiteName} - ${pageLabel}`;
 
-    // Store in ref so observer closure always uses latest value
-    desiredTitleRef.current = newTitle;
-
-    // Set immediately
+    // Set document.title safely without DOM-level mutation fighting
     document.title = newTitle;
 
-    // Use MutationObserver to detect any title change by Next.js router/metadata
-    // and immediately override it back to our desired title.
-    const head = document.querySelector('head');
-    if (!head) return;
-
-    const observer = new MutationObserver(() => {
-      if (document.title !== desiredTitleRef.current) {
-        document.title = desiredTitleRef.current;
-      }
-    });
-
-    observer.observe(head, {
-      subtree: true,
-      childList: true,
-      characterData: true,
-    });
-
-    // Favicon enforcement
-    const activeIcon = faviconUrl || logoUrl || '/favicon.ico';
+    // Safely update favicon without removing React-managed DOM elements
+    // (Never call .remove() on <link> elements to avoid React removeChild TypeError)
+    const activeIcon = faviconUrl || logoUrl || '/media/site_branding/favicons/favicon.png';
     const backendBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
     const baseUrl =
       activeIcon.startsWith('/') && !activeIcon.startsWith('/favicon.ico')
         ? `${backendBase}${activeIcon}`
         : activeIcon;
 
-    // Remove all existing icon links and replace
-    document
-      .querySelectorAll<HTMLLinkElement>("link[rel*='icon'], link[rel='apple-touch-icon']")
-      .forEach((el) => el.remove());
+    const resolvedHref = `${baseUrl}${baseUrl.includes('?') ? '&' : '?'}v=${Date.now()}`;
 
-    const iconRels = ['icon', 'shortcut icon', 'apple-touch-icon'];
-    iconRels.forEach((rel) => {
-      const link = document.createElement('link');
-      link.rel = rel;
-      link.type = baseUrl.includes('.svg') ? 'image/svg+xml' : 'image/png';
-      link.href = `${baseUrl}${baseUrl.includes('?') ? '&' : '?'}v=${Date.now()}`;
-      document.head.appendChild(link);
-    });
-
-    return () => {
-      observer.disconnect();
-    };
+    let dynamicFavicon = document.getElementById('app-dynamic-favicon') as HTMLLinkElement | null;
+    if (!dynamicFavicon) {
+      dynamicFavicon = document.createElement('link');
+      dynamicFavicon.id = 'app-dynamic-favicon';
+      dynamicFavicon.rel = 'icon';
+      document.head.appendChild(dynamicFavicon);
+    }
+    dynamicFavicon.href = resolvedHref;
   }, [pathname, siteName, faviconUrl, logoUrl, language]);
 
   return null;

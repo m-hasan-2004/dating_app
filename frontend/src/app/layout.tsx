@@ -17,9 +17,9 @@ export const metadata: Metadata = {
   },
   description: 'مرکز همسان‌گزینی و ازدواج دائم امین وصال قم',
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
-    apple: '/favicon.ico',
+    icon: '/media/site_branding/favicons/favicon.png',
+    shortcut: '/media/site_branding/favicons/favicon.png',
+    apple: '/media/site_branding/favicons/favicon.png',
   },
 };
 

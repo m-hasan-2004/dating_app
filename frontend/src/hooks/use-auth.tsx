@@ -26,15 +26,29 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const cached = localStorage.getItem("auth_user");
+        if (cached) return JSON.parse(cached);
+      } catch {}
+    }
+    return null;
+  });
   const [loading, setLoading] = useState<boolean>(true);
 
   const refreshUser = async () => {
     try {
       const userData = await getMeApi();
       setUser(userData);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("auth_user", JSON.stringify(userData));
+      }
     } catch {
       setUser(null);
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("auth_user");
+      }
     } finally {
       setLoading(false);
     }
@@ -50,6 +64,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const res = await loginApi(credentials);
       if (res.user) {
         setUser(res.user);
+        if (typeof window !== "undefined") {
+          localStorage.setItem("auth_user", JSON.stringify(res.user));
+        }
       } else {
         await refreshUser();
       }
@@ -66,6 +83,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Ignore errors on logout
     } finally {
       setUser(null);
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("auth_user");
+      }
       setLoading(false);
     }
   };
@@ -77,6 +97,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const updateUser = async (payload: Partial<User>) => {
     const updated = await updateMeApi(payload);
     setUser(updated);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("auth_user", JSON.stringify(updated));
+    }
     return updated;
   };
 
