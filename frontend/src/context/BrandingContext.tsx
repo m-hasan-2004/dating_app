@@ -131,20 +131,20 @@ interface BrandingContextType {
 }
 
 const DEFAULT_BRANDING = {
-  siteNameFa: 'سامانه همسان‌گزینی و ازدواج دائم',
-  siteNameEn: 'TailAdmin Matchmaking',
-  siteTaglineFa: 'پورتال همسان‌گزینی',
+  siteNameFa: 'امین وصال',
+  siteNameEn: 'Amine vesal',
+  siteTaglineFa: 'سامانه همسان‌گزینی',
   siteTaglineEn: 'Matchmaking Portal',
-  colorPalette: 'default' as ColorPalette,
-  customPrimaryColor: '',
-  customSecondaryColor: '',
-  canvasLightColor: '',
-  canvasDarkColor: '',
+  colorPalette: 'custom' as ColorPalette,
+  customPrimaryColor: '#289333',
+  customSecondaryColor: '#289333',
+  canvasLightColor: '#f8fafc',
+  canvasDarkColor: '#131127',
   enableLanguageSwitcher: true,
   enableIdentityAndBirthCert: true,
   enableNextjsToolbar: true,
-  logoUrl: '',
-  faviconUrl: '',
+  logoUrl: '/media/site_branding/logos/logo.png',
+  faviconUrl: '/media/site_branding/favicons/favicon.png',
   fontFamily: 'Vazirmatn',
   customFontData: '',
 };
@@ -175,8 +175,8 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [enableLanguageSwitcher, setEnableLanguageSwitcher] = useState(DEFAULT_BRANDING.enableLanguageSwitcher);
   const [enableIdentityAndBirthCert, setEnableIdentityAndBirthCert] = useState(DEFAULT_BRANDING.enableIdentityAndBirthCert);
   const [enableNextjsToolbar, setEnableNextjsToolbar] = useState(DEFAULT_BRANDING.enableNextjsToolbar);
-  const [logoUrl, setLogoUrl] = useState('');
-  const [faviconUrl, setFaviconUrl] = useState('');
+  const [logoUrl, setLogoUrl] = useState(DEFAULT_BRANDING.logoUrl);
+  const [faviconUrl, setFaviconUrl] = useState(DEFAULT_BRANDING.faviconUrl);
   const [fontFamily, setFontFamilyState] = useState(DEFAULT_BRANDING.fontFamily);
   const [customFontData, setCustomFontDataState] = useState(DEFAULT_BRANDING.customFontData);
 
@@ -544,23 +544,23 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setSiteNameEn(DEFAULT_BRANDING.siteNameEn);
     setSiteTaglineFa(DEFAULT_BRANDING.siteTaglineFa);
     setSiteTaglineEn(DEFAULT_BRANDING.siteTaglineEn);
-    setColorPaletteState('default');
-    setCustomPrimaryColor('');
-    setCustomSecondaryColor('');
-    setCanvasLightColor('');
-    setCanvasDarkColor('');
-    setEnableLanguageSwitcher(true);
-    setEnableIdentityAndBirthCert(true);
-    setEnableNextjsToolbar(true);
-    setLogoUrl('');
-    setFaviconUrl('');
+    setColorPaletteState(DEFAULT_BRANDING.colorPalette);
+    setCustomPrimaryColor(DEFAULT_BRANDING.customPrimaryColor);
+    setCustomSecondaryColor(DEFAULT_BRANDING.customSecondaryColor);
+    setCanvasLightColor(DEFAULT_BRANDING.canvasLightColor);
+    setCanvasDarkColor(DEFAULT_BRANDING.canvasDarkColor);
+    setEnableLanguageSwitcher(DEFAULT_BRANDING.enableLanguageSwitcher);
+    setEnableIdentityAndBirthCert(DEFAULT_BRANDING.enableIdentityAndBirthCert);
+    setEnableNextjsToolbar(DEFAULT_BRANDING.enableNextjsToolbar);
+    setLogoUrl(resolveMediaUrl(DEFAULT_BRANDING.logoUrl));
+    setFaviconUrl(resolveMediaUrl(DEFAULT_BRANDING.faviconUrl));
     setFontFamilyState(DEFAULT_BRANDING.fontFamily);
     setCustomFontDataState(DEFAULT_BRANDING.customFontData);
-    applyPalette('default');
-    applyCanvasColors('', '');
+    applyPalette(DEFAULT_BRANDING.colorPalette, DEFAULT_BRANDING.customPrimaryColor, DEFAULT_BRANDING.customSecondaryColor);
+    applyCanvasColors(DEFAULT_BRANDING.canvasLightColor, DEFAULT_BRANDING.canvasDarkColor);
     applyFontFamily(DEFAULT_BRANDING.fontFamily, '');
-    applyNextjsToolbar(true);
-    updateTabFavicon('/favicon.ico');
+    applyNextjsToolbar(DEFAULT_BRANDING.enableNextjsToolbar);
+    updateTabFavicon(resolveMediaUrl(DEFAULT_BRANDING.faviconUrl));
     if (typeof window !== 'undefined') {
       localStorage.removeItem('branding_color_palette');
       localStorage.removeItem('branding_custom_primary');
@@ -577,6 +577,12 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      // Apply Amine Vesal defaults immediately — before cache read and async refresh
+      // This prevents any blue/purple flash from browser defaults
+      applyPalette(DEFAULT_BRANDING.colorPalette, DEFAULT_BRANDING.customPrimaryColor, DEFAULT_BRANDING.customSecondaryColor);
+      applyCanvasColors(DEFAULT_BRANDING.canvasLightColor, DEFAULT_BRANDING.canvasDarkColor);
+      applyFontFamily(DEFAULT_BRANDING.fontFamily, '');
+
       const cachedPalette = localStorage.getItem('branding_color_palette') as ColorPalette;
       const cachedPrimary = localStorage.getItem('branding_custom_primary') || '';
       const cachedSecondary = localStorage.getItem('branding_custom_secondary') || '';

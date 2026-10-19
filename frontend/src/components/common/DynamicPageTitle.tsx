@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { useBranding } from '@/context/BrandingContext';
 import { useLanguage } from '@/context/LanguageContext';
@@ -29,69 +29,108 @@ const ROUTE_TITLES: Record<string, RouteTitle> = {
   '/calendar': { fa: 'تقویم', en: 'Calendar' },
   '/blank': { fa: 'صفحه خالی', en: 'Blank Page' },
   '/error-404': { fa: 'صفحه پیدا نشد', en: 'Page Not Found' },
+  '/bar-chart': { fa: 'نمودار میله‌ای', en: 'Bar Chart' },
+  '/line-chart': { fa: 'نمودار خطی', en: 'Line Chart' },
+  '/form-elements': { fa: 'فرم‌ها', en: 'Form Elements' },
+  '/basic-tables': { fa: 'جداول', en: 'Basic Tables' },
+  '/alerts': { fa: 'هشدارها', en: 'Alerts' },
+  '/avatars': { fa: 'آواتارها', en: 'Avatars' },
+  '/badge': { fa: 'نشان‌ها', en: 'Badges' },
+  '/buttons': { fa: 'دکمه‌ها', en: 'Buttons' },
+  '/images': { fa: 'تصاویر', en: 'Images' },
+  '/modals': { fa: 'مودال‌ها', en: 'Modals' },
+  '/videos': { fa: 'ویدیوها', en: 'Videos' },
 };
+
+function getPageLabel(pathname: string, language: string): string {
+  const cleanPath = pathname?.replace(/\/$/, '') || '/';
+
+  if (ROUTE_TITLES[cleanPath]) {
+    return language === 'fa' ? ROUTE_TITLES[cleanPath].fa : ROUTE_TITLES[cleanPath].en;
+  }
+  if (cleanPath.startsWith('/candidates/')) {
+    return language === 'fa' ? 'مشاهده کاندیدا' : 'Candidate Details';
+  }
+  if (cleanPath.startsWith('/users/') && cleanPath.endsWith('/profile')) {
+    return language === 'fa' ? 'پروفایل متقاضی' : 'User Profile';
+  }
+  if (cleanPath.startsWith('/users/')) {
+    return language === 'fa' ? 'جزییات کاربر' : 'User Details';
+  }
+  // Generic fallback from last path segment
+  const segment = cleanPath.split('/').filter(Boolean).pop() || '';
+  if (segment) {
+    return segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' ');
+  }
+  return '';
+}
 
 export default function DynamicPageTitle() {
   const pathname = usePathname();
   const { siteName, faviconUrl, logoUrl } = useBranding();
   const { language } = useLanguage();
 
+  // Keep latest desired title in a ref so MutationObserver closure always reads fresh value
+  const desiredTitleRef = useRef<string>('امین وصال');
+
   useEffect(() => {
     if (typeof document === 'undefined') return;
 
-    // 1. Determine matching title
-    let pageLabel = '';
     const cleanPath = pathname?.replace(/\/$/, '') || '/';
-
-    if (ROUTE_TITLES[cleanPath]) {
-      pageLabel = language === 'fa' ? ROUTE_TITLES[cleanPath].fa : ROUTE_TITLES[cleanPath].en;
-    } else if (cleanPath.startsWith('/candidates/')) {
-      pageLabel = language === 'fa' ? 'مشاهده کاندیدا' : 'Candidate Details';
-    } else if (cleanPath.startsWith('/users/') && cleanPath.endsWith('/profile')) {
-      pageLabel = language === 'fa' ? 'پروفایل متقاضی' : 'User Profile';
-    } else if (cleanPath.startsWith('/users/')) {
-      pageLabel = language === 'fa' ? 'جزییات کاربر' : 'User Details';
-    } else {
-      // General path title fallback
-      const segment = cleanPath.split('/').filter(Boolean).pop() || '';
-      if (segment) {
-        pageLabel = segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' ');
-      }
-    }
-
     const currentSiteName = siteName || (language === 'fa' ? 'امین وصال' : 'Amine vesal');
-    const newTitle = cleanPath === '/' || !pageLabel ? currentSiteName : `${currentSiteName} - ${pageLabel}`;
+    const pageLabel = getPageLabel(cleanPath, language);
+    const newTitle =
+      cleanPath === '/' || !pageLabel
+        ? currentSiteName
+        : `${currentSiteName} - ${pageLabel}`;
 
-    // Immediately and reliably set document.title
+    // Store in ref so observer closure always uses latest value
+    desiredTitleRef.current = newTitle;
+
+    // Set immediately
     document.title = newTitle;
 
-    // Use requestAnimationFrame / timeout to guard against Next.js router resetting title on client route change
-    const frameId = requestAnimationFrame(() => {
-      if (document.title !== newTitle) {
-        document.title = newTitle;
+    // Use MutationObserver to detect any title change by Next.js router/metadata
+    // and immediately override it back to our desired title.
+    const head = document.querySelector('head');
+    if (!head) return;
+
+    const observer = new MutationObserver(() => {
+      if (document.title !== desiredTitleRef.current) {
+        document.title = desiredTitleRef.current;
       }
     });
 
-    // 2. Enforce Favicon without breaking tab state during client navigation
+    observer.observe(head, {
+      subtree: true,
+      childList: true,
+      characterData: true,
+    });
+
+    // Favicon enforcement
     const activeIcon = faviconUrl || logoUrl || '/favicon.ico';
+    const backendBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
     const baseUrl =
-      activeIcon.startsWith('/') && !activeIcon.startsWith('/favicon.ico') && typeof window !== 'undefined'
-        ? `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}${activeIcon}`
+      activeIcon.startsWith('/') && !activeIcon.startsWith('/favicon.ico')
+        ? `${backendBase}${activeIcon}`
         : activeIcon;
 
-    let iconLink = document.querySelector<HTMLLinkElement>("link[rel*='icon']");
-    if (!iconLink) {
-      iconLink = document.createElement('link');
-      iconLink.rel = 'shortcut icon';
-      document.head.appendChild(iconLink);
-    }
+    // Remove all existing icon links and replace
+    document
+      .querySelectorAll<HTMLLinkElement>("link[rel*='icon'], link[rel='apple-touch-icon']")
+      .forEach((el) => el.remove());
 
-    if (iconLink.href !== baseUrl) {
-      iconLink.href = baseUrl;
-    }
+    const iconRels = ['icon', 'shortcut icon', 'apple-touch-icon'];
+    iconRels.forEach((rel) => {
+      const link = document.createElement('link');
+      link.rel = rel;
+      link.type = baseUrl.includes('.svg') ? 'image/svg+xml' : 'image/png';
+      link.href = `${baseUrl}${baseUrl.includes('?') ? '&' : '?'}v=${Date.now()}`;
+      document.head.appendChild(link);
+    });
 
     return () => {
-      cancelAnimationFrame(frameId);
+      observer.disconnect();
     };
   }, [pathname, siteName, faviconUrl, logoUrl, language]);
 

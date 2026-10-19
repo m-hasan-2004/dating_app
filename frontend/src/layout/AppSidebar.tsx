@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useSidebar } from "../context/SidebarContext";
 import { useAuth } from "@/hooks/use-auth";
 import { useLanguage } from "@/context/LanguageContext";
@@ -78,12 +78,13 @@ const SYSTEM_NAV_ITEMS: NavItem[] = [
 ];
 
 const AppSidebar: React.FC = () => {
-  const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
+  const { isExpanded, isMobileOpen, isHovered, setIsHovered, toggleMobileSidebar } = useSidebar();
   const { user } = useAuth();
   const { isRTL, t } = useLanguage();
   const { siteName, logoUrl, siteTagline } = useBranding();
   const pathname = usePathname();
 
+  const router = useRouter();
   const isSuperUser = Boolean((user as any)?.is_superuser);
   const siteSettingEnabled =
     String(
@@ -95,6 +96,12 @@ const AppSidebar: React.FC = () => {
   const isAdmin = Boolean(user?.is_staff || isSuperUser);
 
   const coreNavItems = CORE_NAV_ITEMS;
+
+  const handleNavClick = (path: string) => {
+    if (isMobileOpen) {
+      toggleMobileSidebar();
+    }
+  };
 
   const systemNavItems = SYSTEM_NAV_ITEMS.filter((item) => !item.adminOnly || isAdmin).map((item) => {
     if (item.name === "Management" && item.subItems) {
@@ -186,6 +193,7 @@ const AppSidebar: React.FC = () => {
             nav.path && (
               <Link
                 href={nav.path}
+                onClick={() => handleNavClick(nav.path!)}
                 className={`menu-item group ${
                   isActive(nav.path) ? "menu-item-active" : "menu-item-inactive"
                 }`}
@@ -223,6 +231,7 @@ const AppSidebar: React.FC = () => {
                   <li key={subItem.name}>
                     <Link
                       href={subItem.path}
+                      onClick={() => handleNavClick(subItem.path)}
                       className={`menu-dropdown-item ${
                         isActive(subItem.path)
                           ? "menu-dropdown-item-active"

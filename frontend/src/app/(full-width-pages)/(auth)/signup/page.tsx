@@ -2,9 +2,8 @@ import SignUpForm from "@/components/auth/SignUpForm";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Next.js SignUp Page | TailAdmin - Next.js Dashboard Template",
-  description: "This is Next.js SignUp Page TailAdmin Dashboard Template",
-  // other metadata
+  title: "امین وصال - ثبت‌نام متقاضی",
+  description: "ثبت‌نام در مرکز همسان‌گزینی و ازدواج دائم امین وصال",
 };
 
 export default function SignUp() {

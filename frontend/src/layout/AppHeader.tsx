@@ -135,7 +135,7 @@ const AppHeader: React.FC = () => {
             <ThemeToggleButton />
             {/* <!-- External Site Link --> */}
             <a
-              href="http://localhost:3001/"
+              href="/"
               target="_blank"
               rel="noopener noreferrer"
               title={t("سایت")}

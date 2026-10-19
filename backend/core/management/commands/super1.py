@@ -32,3 +32,34 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS(f'Phone Number: {phone_number}'))
         except Exception as e:
             raise CommandError(f'Error creating superuser: {str(e)}')
+
+        # Ensure default SiteSetting singleton is initialized with Amine Vesal branding
+        try:
+            from core.models import SiteSetting
+            s = SiteSetting.get_settings()
+            updated = False
+            if not s.site_name_fa or s.site_name_fa in ("همسان‌گزینی", "سامانه همسان‌گزینی و ازدواج دائم"):
+                s.site_name_fa = "امین وصال"
+                updated = True
+            if not s.site_name_en or s.site_name_en == "TailAdmin Matchmaking":
+                s.site_name_en = "Amine vesal"
+                updated = True
+            if not s.site_tagline_fa:
+                s.site_tagline_fa = "سامانه همسان‌گزینی"
+                updated = True
+            if not s.custom_primary_color:
+                s.color_palette = "custom"
+                s.custom_primary_color = "#289333"
+                s.custom_secondary_color = "#289333"
+                updated = True
+            if not s.logo_url:
+                s.logo_url = "/media/site_branding/logos/logo.png"
+                updated = True
+            if not s.favicon_url:
+                s.favicon_url = "/media/site_branding/favicons/favicon.png"
+                updated = True
+            if updated:
+                s.save()
+                self.stdout.write(self.style.SUCCESS("Initialized Amine Vesal site settings automatically."))
+        except Exception as e:
+            self.stdout.write(self.style.WARNING(f"SiteSetting check notice: {str(e)}"))

@@ -21,7 +21,29 @@ import { formatDate } from "@/utils/formatters";
 export default function SiteSettingsPage() {
   const { user, loading: authLoading } = useAuth();
   const { t, isRTL } = useLanguage();
-  const { setBranding, restoreDefaults, setCanvasColors, setColorPalette: setContextColorPalette, canvasLightColor: currentCanvasLight, canvasDarkColor: currentCanvasDark, setFontFamily: setContextFontFamily, fontFamily: currentFontFamily, customFontData: currentCustomFontData } = useBranding();
+  const {
+    siteNameFa: currentSiteNameFa,
+    siteNameEn: currentSiteNameEn,
+    siteTaglineFa: currentSiteTaglineFa,
+    siteTaglineEn: currentSiteTaglineEn,
+    colorPalette: currentPalette,
+    customPrimaryColor: currentPrimary,
+    customSecondaryColor: currentSecondary,
+    canvasLightColor: currentCanvasLight,
+    canvasDarkColor: currentCanvasDark,
+    logoUrl: currentLogoUrl,
+    faviconUrl: currentFaviconUrl,
+    enableLanguageSwitcher: currentEnableLang,
+    enableIdentityAndBirthCert: currentEnableIdentity,
+    enableNextjsToolbar: currentEnableToolbar,
+    fontFamily: currentFontFamily,
+    customFontData: currentCustomFontData,
+    setBranding,
+    restoreDefaults,
+    setCanvasColors,
+    setColorPalette: setContextColorPalette,
+    setFontFamily: setContextFontFamily,
+  } = useBranding();
   const router = useRouter();
 
   const logoFileInputRef = useRef<HTMLInputElement>(null);
@@ -37,22 +59,22 @@ export default function SiteSettingsPage() {
     ).toLowerCase() === "true";
 
   const [settings, setSettings] = useState<SiteSettings | null>(null);
-  const [requireAccessCode, setRequireAccessCode] = useState<boolean>(true);
-  const [requireEmail, setRequireEmail] = useState<boolean>(true);
-  const [enableLanguageSwitcher, setEnableLanguageSwitcher] = useState<boolean>(true);
-  const [enableIdentityAndBirthCert, setEnableIdentityAndBirthCert] = useState<boolean>(true);
-  const [enableNextjsToolbar, setEnableNextjsToolbar] = useState<boolean>(true);
-  const [siteNameFa, setSiteNameFa] = useState<string>("سامانه همسان‌گزینی و ازدواج دائم");
-  const [siteNameEn, setSiteNameEn] = useState<string>("TailAdmin Matchmaking");
-  const [siteTaglineFa, setSiteTaglineFa] = useState<string>("پورتال همسان‌گزینی");
-  const [siteTaglineEn, setSiteTaglineEn] = useState<string>("Matchmaking Portal");
-  const [colorPalette, setColorPalette] = useState<ColorPalette>("default");
-  const [customPrimaryColor, setCustomPrimaryColor] = useState<string>("#465fff");
-  const [customSecondaryColor, setCustomSecondaryColor] = useState<string>("#3641f5");
+  const [requireAccessCode, setRequireAccessCode] = useState<boolean>(false);
+  const [requireEmail, setRequireEmail] = useState<boolean>(false);
+  const [enableLanguageSwitcher, setEnableLanguageSwitcher] = useState<boolean>(currentEnableLang ?? false);
+  const [enableIdentityAndBirthCert, setEnableIdentityAndBirthCert] = useState<boolean>(currentEnableIdentity ?? false);
+  const [enableNextjsToolbar, setEnableNextjsToolbar] = useState<boolean>(currentEnableToolbar ?? false);
+  const [siteNameFa, setSiteNameFa] = useState<string>(currentSiteNameFa || "امین وصال");
+  const [siteNameEn, setSiteNameEn] = useState<string>(currentSiteNameEn || "Amine vesal");
+  const [siteTaglineFa, setSiteTaglineFa] = useState<string>(currentSiteTaglineFa || "سامانه همسان‌گزینی");
+  const [siteTaglineEn, setSiteTaglineEn] = useState<string>(currentSiteTaglineEn || "Matchmaking Portal");
+  const [colorPalette, setColorPalette] = useState<ColorPalette>(currentPalette || "custom");
+  const [customPrimaryColor, setCustomPrimaryColor] = useState<string>(currentPrimary || "#289333");
+  const [customSecondaryColor, setCustomSecondaryColor] = useState<string>(currentSecondary || "#289333");
   const [canvasLightColor, setCanvasLightColor] = useState<string>(currentCanvasLight || "#f8fafc");
   const [canvasDarkColor, setCanvasDarkColor] = useState<string>(currentCanvasDark || "#131127");
-  const [logoUrl, setLogoUrl] = useState<string>("");
-  const [faviconUrl, setFaviconUrl] = useState<string>("");
+  const [logoUrl, setLogoUrl] = useState<string>(currentLogoUrl || "/media/site_branding/logos/logo.png");
+  const [faviconUrl, setFaviconUrl] = useState<string>(currentFaviconUrl || "/media/site_branding/favicons/favicon.png");
   const [fontFamily, setFontFamily] = useState<string>(currentFontFamily || "Vazirmatn");
   const [customFontData, setCustomFontData] = useState<string>(currentCustomFontData || "");
   const [uploadedFontFileName, setUploadedFontFileName] = useState<string>("");
@@ -210,40 +232,40 @@ export default function SiteSettingsPage() {
     setError(null);
     try {
       const defaults = {
-        enable_language_switcher: true,
-        enable_identity_and_birth_cert: true,
-        enable_nextjs_toolbar: true,
-        site_name_fa: "سامانه همسان‌گزینی و ازدواج دائم",
-        site_name_en: "TailAdmin Matchmaking",
-        site_tagline_fa: "پورتال همسان‌گزینی",
+        enable_language_switcher: false,
+        enable_identity_and_birth_cert: false,
+        enable_nextjs_toolbar: false,
+        site_name_fa: "امین وصال",
+        site_name_en: "Amine vesal",
+        site_tagline_fa: "سامانه همسان‌گزینی",
         site_tagline_en: "Matchmaking Portal",
-        color_palette: "default",
-        custom_primary_color: "",
-        custom_secondary_color: "",
-        canvas_light_color: "",
-        canvas_dark_color: "",
-        logo_url: "",
-        favicon_url: "",
+        color_palette: "custom",
+        custom_primary_color: "#289333",
+        custom_secondary_color: "#289333",
+        canvas_light_color: "#f8fafc",
+        canvas_dark_color: "#131127",
+        logo_url: "/media/site_branding/logos/logo.png",
+        favicon_url: "/media/site_branding/favicons/favicon.png",
         font_family: "Vazirmatn",
         custom_font_data: "",
       };
 
       const updated = await updateSiteSettingsApi(defaults);
       setSettings(updated);
-      setEnableLanguageSwitcher(true);
-      setEnableIdentityAndBirthCert(true);
-      setEnableNextjsToolbar(true);
+      setEnableLanguageSwitcher(defaults.enable_language_switcher);
+      setEnableIdentityAndBirthCert(defaults.enable_identity_and_birth_cert);
+      setEnableNextjsToolbar(defaults.enable_nextjs_toolbar);
       setSiteNameFa(defaults.site_name_fa);
       setSiteNameEn(defaults.site_name_en);
       setSiteTaglineFa(defaults.site_tagline_fa);
       setSiteTaglineEn(defaults.site_tagline_en);
-      setColorPalette("default");
-      setCustomPrimaryColor("#465fff");
-      setCustomSecondaryColor("#3641f5");
-      setCanvasLightColor("#f1f5f9");
+      setColorPalette("custom");
+      setCustomPrimaryColor("#289333");
+      setCustomSecondaryColor("#289333");
+      setCanvasLightColor("#f8fafc");
       setCanvasDarkColor("#131127");
-      setLogoUrl("");
-      setFaviconUrl("");
+      setLogoUrl(defaults.logo_url);
+      setFaviconUrl(defaults.favicon_url);
       setFontFamily("Vazirmatn");
       setCustomFontData("");
       setUploadedFontFileName("");
