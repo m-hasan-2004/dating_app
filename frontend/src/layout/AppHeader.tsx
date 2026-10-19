@@ -133,6 +133,29 @@ const AppHeader: React.FC = () => {
           <div className="flex items-center gap-2 sm:gap-3">
             {/* <!-- Dark Mode Toggler --> */}
             <ThemeToggleButton />
+            {/* <!-- External Site Link --> */}
+            <a
+              href="http://localhost:3001/"
+              target="_blank"
+              rel="noopener noreferrer"
+              title={t("سایت")}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs sm:text-sm font-semibold text-slate-800 bg-white border-[1.5px] border-slate-300 rounded-full hover:border-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 hover:text-[var(--color-primary)] shadow-sm hover:shadow-md hover:-translate-y-0.5 dark:border-slate-700/80 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-[var(--color-primary)] dark:hover:bg-[var(--color-primary)]/20 transition-all cursor-pointer"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-1.5 0c0 2.485-3.358 4.5-7.5 4.5s-7.5-2.015-7.5-4.5 3.358-4.5 7.5-4.5 7.5 2.015 7.5 4.5zM12 3c-2.5 2.5-3.75 5.5-3.75 9s1.25 6.5 3.75 9m0-18c2.5 2.5 3.75 5.5 3.75 9s-1.25 6.5-3.75 9"
+                />
+              </svg>
+              <span className="hidden sm:inline font-bold text-slate-900 dark:text-white">{t("سایت")}</span>
+            </a>
             {/* <!-- User Area: Profile & Sign Out --> */}
             <UserDropdown />
           </div>

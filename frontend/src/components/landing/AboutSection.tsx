@@ -3,6 +3,7 @@
 import React from 'react';
 import { useTranslation } from '@/context/LanguageContext';
 import { useBranding } from '@/context/BrandingContext';
+import { CENTER_INFO } from '@/config/centerInfo';
 
 export default function AboutSection() {
   const { t } = useTranslation();
@@ -82,17 +83,17 @@ export default function AboutSection() {
               <div className="flex items-center gap-4 mb-6">
                 {/* Director Avatar Placeholder */}
                 <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-tr from-brand-600 to-indigo-600 flex items-center justify-center text-white text-2xl font-black shadow-lg shadow-brand-500/20 shrink-0">
-                  <span>MR</span>
+                  <span>{CENTER_INFO.director.initials}</span>
                 </div>
                 <div>
                   <span className="inline-block text-[11px] font-extrabold uppercase tracking-wider text-brand-600 dark:text-brand-400 mb-1">
-                    {t('Executive Director')}
+                    {t(CENTER_INFO.director.title)}
                   </span>
                   <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
-                    {t('Hojjat al-Islam Dr. M. Rezaei')}
+                    {t(CENTER_INFO.director.name)}
                   </h3>
                   <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                    {t('Specialist in Family Ethics & Counseling')}
+                    {t('مشاور خانواده و پیش از ازدواج')}
                   </p>
                 </div>
               </div>
@@ -110,7 +111,7 @@ export default function AboutSection() {
               <svg className="w-4 h-4 text-brand-500 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
-              <span>{t('Qom Seminary & University Faculty')}</span>
+              <span>{t(CENTER_INFO.fullName)}</span>
             </div>
 
           </div>

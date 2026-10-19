@@ -7,3 +7,6 @@
 
 پشتیبان‌ها خودکار هر دقیقه توسط Cron Job در کانتینر ایجاد می‌شوند (نگهداری ۲۴ ساعت اخیر).
 - فونت فارسی وزیر یا ؟؟؟
+- the calendar section -> add new ability for admin to add events for users -> needs backend/frontend logic (also the user can only read the admin created eveents but can create personal events him/herself)
+- the http://localhost:3001/users should have other features like change password
+- change password page
