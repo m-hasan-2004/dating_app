@@ -76,6 +76,16 @@ export function generatePaletteFromHex(hex: string): Record<string, string> {
   };
 }
 
+export function resolveMediaUrl(url: string | undefined | null): string {
+  if (!url) return '';
+  if (url.startsWith('data:') || url.startsWith('http://') || url.startsWith('https://')) {
+    return url;
+  }
+  const backendBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+  const cleanPath = url.startsWith('/') ? url : `/${url}`;
+  return `${backendBase}${cleanPath}`;
+}
+
 interface BrandingContextType {
   siteNameFa: string;
   siteNameEn: string;
@@ -90,6 +100,7 @@ interface BrandingContextType {
   canvasDarkColor: string;
   enableLanguageSwitcher: boolean;
   enableIdentityAndBirthCert: boolean;
+  enableNextjsToolbar: boolean;
   logoUrl: string;
   faviconUrl: string;
   fontFamily: string;
@@ -109,6 +120,7 @@ interface BrandingContextType {
     canvasDarkColor?: string;
     enableLanguageSwitcher?: boolean;
     enableIdentityAndBirthCert?: boolean;
+    enableNextjsToolbar?: boolean;
     logoUrl?: string;
     faviconUrl?: string;
     fontFamily?: string;
@@ -130,6 +142,7 @@ const DEFAULT_BRANDING = {
   canvasDarkColor: '',
   enableLanguageSwitcher: true,
   enableIdentityAndBirthCert: true,
+  enableNextjsToolbar: true,
   logoUrl: '',
   faviconUrl: '',
   fontFamily: 'Vazirmatn',
@@ -161,10 +174,43 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [canvasDarkColor, setCanvasDarkColor] = useState(DEFAULT_BRANDING.canvasDarkColor);
   const [enableLanguageSwitcher, setEnableLanguageSwitcher] = useState(DEFAULT_BRANDING.enableLanguageSwitcher);
   const [enableIdentityAndBirthCert, setEnableIdentityAndBirthCert] = useState(DEFAULT_BRANDING.enableIdentityAndBirthCert);
+  const [enableNextjsToolbar, setEnableNextjsToolbar] = useState(DEFAULT_BRANDING.enableNextjsToolbar);
   const [logoUrl, setLogoUrl] = useState('');
   const [faviconUrl, setFaviconUrl] = useState('');
   const [fontFamily, setFontFamilyState] = useState(DEFAULT_BRANDING.fontFamily);
   const [customFontData, setCustomFontDataState] = useState(DEFAULT_BRANDING.customFontData);
+
+  // Apply or suppress Next.js dev toolbar
+  const applyNextjsToolbar = useCallback((enable: boolean) => {
+    if (typeof document === 'undefined') return;
+    const styleId = 'nextjs-dev-toolbar-toggle-style';
+    let styleEl = document.getElementById(styleId) as HTMLStyleElement | null;
+
+    if (!enable) {
+      if (!styleEl) {
+        styleEl = document.createElement('style');
+        styleEl.id = styleId;
+        document.head.appendChild(styleEl);
+      }
+      styleEl.textContent = `
+        nextjs-portal,
+        [data-nextjs-toast],
+        #nextjs-dev-tools,
+        div[data-nextjs-dev-tools-button],
+        .nextjs-toast-errors-parent,
+        [data-nextjs-dialog-overlay] {
+          display: none !important;
+          visibility: hidden !important;
+          opacity: 0 !important;
+          pointer-events: none !important;
+        }
+      `;
+    } else {
+      if (styleEl) {
+        styleEl.remove();
+      }
+    }
+  }, []);
 
   // Apply font family globally to documentElement
   const applyFontFamily = useCallback((font: string, customData?: string) => {
@@ -178,10 +224,14 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         styleEl.id = styleId;
         document.head.appendChild(styleEl);
       }
+      const fontUrl = customData.startsWith('/') && typeof window !== 'undefined'
+        ? `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}${customData}`
+        : customData;
+
       styleEl.textContent = `
         @font-face {
           font-family: 'CustomUploadedFont';
-          src: url('${customData}');
+          src: url('${fontUrl}');
           font-display: swap;
         }
         :root, html, body, [dir="rtl"] body {
@@ -216,13 +266,29 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const updateTabFavicon = useCallback((url: string) => {
     if (typeof document === 'undefined') return;
     try {
-      let link: HTMLLinkElement | null = document.querySelector("link[rel*='icon']");
-      if (!link) {
-        link = document.createElement('link');
-        link.rel = 'shortcut icon';
-        document.getElementsByTagName('head')[0].appendChild(link);
-      }
-      link.href = url || '/favicon.ico';
+      const activeIcon = url || '/favicon.ico';
+      const baseUrl =
+        activeIcon.startsWith('/') && !activeIcon.startsWith('/favicon.ico') && typeof window !== 'undefined'
+          ? `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}${activeIcon}`
+          : activeIcon;
+
+      const resolvedUrl = baseUrl.startsWith('data:')
+        ? baseUrl
+        : `${baseUrl}${baseUrl.includes('?') ? '&' : '?'}v=${Date.now()}`;
+
+      const existingLinks = document.querySelectorAll<HTMLLinkElement>(
+        "link[rel='icon'], link[rel='shortcut icon'], link[rel='apple-touch-icon'], link[rel*='icon']"
+      );
+      existingLinks.forEach((el) => el.remove());
+
+      const rels = ['icon', 'shortcut icon', 'apple-touch-icon'];
+      rels.forEach((rel) => {
+        const link = document.createElement('link');
+        link.rel = rel;
+        link.type = resolvedUrl.includes('.svg') ? 'image/svg+xml' : 'image/png';
+        link.href = resolvedUrl;
+        document.head.appendChild(link);
+      });
     } catch {
       // Ignore in non-browser env
     }
@@ -345,6 +411,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     canvasDarkColor?: string;
     enableLanguageSwitcher?: boolean;
     enableIdentityAndBirthCert?: boolean;
+    enableNextjsToolbar?: boolean;
     logoUrl?: string;
     faviconUrl?: string;
     fontFamily?: string;
@@ -385,11 +452,18 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         localStorage.setItem('branding_enable_identity_birth_cert', String(data.enableIdentityAndBirthCert));
       }
     }
+    if (data.enableNextjsToolbar !== undefined) {
+      setEnableNextjsToolbar(data.enableNextjsToolbar);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('branding_enable_nextjs_toolbar', String(data.enableNextjsToolbar));
+      }
+      applyNextjsToolbar(data.enableNextjsToolbar);
+    }
     if (data.colorPalette !== undefined) {
       setColorPaletteState(data.colorPalette);
       applyPalette(data.colorPalette, data.customPrimaryColor || customPrimaryColor, data.customSecondaryColor || customSecondaryColor);
     }
-    if (data.logoUrl !== undefined) setLogoUrl(data.logoUrl);
+    if (data.logoUrl !== undefined) setLogoUrl(resolveMediaUrl(data.logoUrl));
     if (data.fontFamily !== undefined) {
       setFontFamilyState(data.fontFamily);
       if (typeof window !== 'undefined') {
@@ -407,12 +481,13 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       applyFontFamily(data.fontFamily ?? fontFamily, data.customFontData ?? customFontData);
     }
     if (data.faviconUrl !== undefined) {
-      setFaviconUrl(data.faviconUrl);
-      updateTabFavicon(data.faviconUrl || data.logoUrl || '');
+      const resolvedFav = resolveMediaUrl(data.faviconUrl);
+      setFaviconUrl(resolvedFav);
+      updateTabFavicon(resolvedFav || resolveMediaUrl(data.logoUrl) || '');
     } else if (data.logoUrl !== undefined) {
-      updateTabFavicon(data.logoUrl);
+      updateTabFavicon(resolveMediaUrl(data.logoUrl));
     }
-  }, [applyCanvasColors, applyPalette, applyFontFamily, canvasDarkColor, canvasLightColor, customPrimaryColor, customSecondaryColor, fontFamily, customFontData, updateTabFavicon]);
+  }, [applyCanvasColors, applyPalette, applyFontFamily, applyNextjsToolbar, canvasDarkColor, canvasLightColor, customPrimaryColor, customSecondaryColor, fontFamily, customFontData, updateTabFavicon]);
 
   const refreshBranding = useCallback(async () => {
     try {
@@ -437,6 +512,10 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       if (config.enable_identity_and_birth_cert !== undefined) {
         setEnableIdentityAndBirthCert(config.enable_identity_and_birth_cert);
       }
+      if (config.enable_nextjs_toolbar !== undefined) {
+        setEnableNextjsToolbar(config.enable_nextjs_toolbar);
+        applyNextjsToolbar(config.enable_nextjs_toolbar);
+      }
       if (config.color_palette) {
         const pal = config.color_palette as ColorPalette;
         setColorPaletteState(pal);
@@ -447,17 +526,18 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         if (config.custom_font_data !== undefined) setCustomFontDataState(config.custom_font_data);
         applyFontFamily(config.font_family, config.custom_font_data);
       }
-      if (config.logo_url !== undefined) setLogoUrl(config.logo_url);
+      if (config.logo_url !== undefined) setLogoUrl(resolveMediaUrl(config.logo_url));
       if (config.favicon_url !== undefined) {
-        setFaviconUrl(config.favicon_url);
-        updateTabFavicon(config.favicon_url || config.logo_url || '');
+        const resolvedFav = resolveMediaUrl(config.favicon_url);
+        setFaviconUrl(resolvedFav);
+        updateTabFavicon(resolvedFav || resolveMediaUrl(config.logo_url) || '');
       } else if (config.logo_url) {
-        updateTabFavicon(config.logo_url);
+        updateTabFavicon(resolveMediaUrl(config.logo_url));
       }
     } catch {
       // Fallback gracefully
     }
-  }, [applyCanvasColors, applyPalette, applyFontFamily, updateTabFavicon]);
+  }, [applyCanvasColors, applyPalette, applyFontFamily, applyNextjsToolbar, updateTabFavicon]);
 
   const restoreDefaults = useCallback(async () => {
     setSiteNameFa(DEFAULT_BRANDING.siteNameFa);
@@ -470,6 +550,8 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setCanvasLightColor('');
     setCanvasDarkColor('');
     setEnableLanguageSwitcher(true);
+    setEnableIdentityAndBirthCert(true);
+    setEnableNextjsToolbar(true);
     setLogoUrl('');
     setFaviconUrl('');
     setFontFamilyState(DEFAULT_BRANDING.fontFamily);
@@ -477,6 +559,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     applyPalette('default');
     applyCanvasColors('', '');
     applyFontFamily(DEFAULT_BRANDING.fontFamily, '');
+    applyNextjsToolbar(true);
     updateTabFavicon('/favicon.ico');
     if (typeof window !== 'undefined') {
       localStorage.removeItem('branding_color_palette');
@@ -485,10 +568,12 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       localStorage.removeItem('branding_canvas_light');
       localStorage.removeItem('branding_canvas_dark');
       localStorage.removeItem('branding_enable_language_switcher');
+      localStorage.removeItem('branding_enable_identity_birth_cert');
+      localStorage.removeItem('branding_enable_nextjs_toolbar');
       localStorage.removeItem('branding_font_family');
       localStorage.removeItem('branding_custom_font_data');
     }
-  }, [applyCanvasColors, applyPalette, applyFontFamily, updateTabFavicon]);
+  }, [applyCanvasColors, applyPalette, applyFontFamily, applyNextjsToolbar, updateTabFavicon]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -499,6 +584,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       const cachedCanvasDark = localStorage.getItem('branding_canvas_dark') || '';
       const cachedEnableLang = localStorage.getItem('branding_enable_language_switcher');
       const cachedEnableIdentity = localStorage.getItem('branding_enable_identity_birth_cert');
+      const cachedEnableToolbar = localStorage.getItem('branding_enable_nextjs_toolbar');
       const cachedFont = localStorage.getItem('branding_font_family') || 'Vazirmatn';
       const cachedCustomFont = localStorage.getItem('branding_custom_font_data') || '';
 
@@ -508,6 +594,11 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       if (cachedCanvasDark) setCanvasDarkColor(cachedCanvasDark);
       if (cachedEnableLang !== null) setEnableLanguageSwitcher(cachedEnableLang === 'true');
       if (cachedEnableIdentity !== null) setEnableIdentityAndBirthCert(cachedEnableIdentity === 'true');
+      if (cachedEnableToolbar !== null) {
+        const isToolbarEnabled = cachedEnableToolbar === 'true';
+        setEnableNextjsToolbar(isToolbarEnabled);
+        applyNextjsToolbar(isToolbarEnabled);
+      }
       if (cachedFont) {
         setFontFamilyState(cachedFont);
         if (cachedCustomFont) setCustomFontDataState(cachedCustomFont);
@@ -522,7 +613,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       }
     }
     refreshBranding();
-  }, [applyCanvasColors, applyPalette, applyFontFamily, refreshBranding]);
+  }, [applyCanvasColors, applyPalette, applyFontFamily, applyNextjsToolbar, refreshBranding]);
 
   const siteName = language === 'fa' ? siteNameFa : siteNameEn;
   const siteTagline = language === 'fa' ? (siteTaglineFa || t('Matchmaking Portal')) : (siteTaglineEn || 'Matchmaking Portal');
@@ -543,6 +634,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         canvasDarkColor,
         enableLanguageSwitcher,
         enableIdentityAndBirthCert,
+        enableNextjsToolbar,
         logoUrl,
         faviconUrl,
         fontFamily,

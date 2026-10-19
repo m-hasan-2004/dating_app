@@ -6,6 +6,7 @@ export interface SiteSettings {
   require_email: boolean;
   enable_language_switcher?: boolean;
   enable_identity_and_birth_cert?: boolean;
+  enable_nextjs_toolbar?: boolean;
   site_name_fa?: string;
   site_name_en?: string;
   site_tagline_fa?: string;
@@ -29,6 +30,7 @@ export interface RegistrationConfig {
   require_email: boolean;
   enable_language_switcher?: boolean;
   enable_identity_and_birth_cert?: boolean;
+  enable_nextjs_toolbar?: boolean;
   site_name_fa?: string;
   site_name_en?: string;
   site_tagline_fa?: string;
@@ -66,6 +68,32 @@ export async function updateSiteSettingsApi(
 }
 
 /**
+ * Upload a static site asset (logo, favicon, or font file) directly to backend server media storage.
+ */
+export async function uploadSiteAssetApi(
+  file: File,
+  assetType: "logo" | "favicon" | "font",
+  autoApply: boolean = true
+): Promise<{
+  message: string;
+  asset_type: string;
+  file_name: string;
+  file_path: string;
+  url: string;
+  full_url: string;
+}> {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("asset_type", assetType);
+  formData.append("auto_apply", String(autoApply));
+
+  return apiClient("/api/site-settings/upload/", {
+    method: "POST",
+    body: formData,
+  });
+}
+
+/**
  * Fetch public registration requirements (access code / email neediness).
  */
 export async function getRegistrationConfigApi(): Promise<RegistrationConfig> {
@@ -73,3 +101,4 @@ export async function getRegistrationConfigApi(): Promise<RegistrationConfig> {
     method: "GET",
   });
 }
+

@@ -10,6 +10,15 @@ const nextConfig: NextConfig = {
       process.env.NEXT_PUBLIC_SITE_SETTING ??
       "true",
   },
+  async rewrites() {
+    const backendUrl = process.env.INTERNAL_API_URL || process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+    return [
+      {
+        source: "/media/:path*",
+        destination: `${backendUrl}/media/:path*`,
+      },
+    ];
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,

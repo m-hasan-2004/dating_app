@@ -8,10 +8,11 @@ import Button from "@/components/ui/button/Button";
 import Badge from "@/components/ui/badge/Badge";
 import { useAuth } from "@/hooks/use-auth";
 import { useLanguage } from "@/context/LanguageContext";
-import { useBranding, ColorPalette } from "@/context/BrandingContext";
+import { useBranding, ColorPalette, resolveMediaUrl } from "@/context/BrandingContext";
 import {
   getSiteSettingsApi,
   updateSiteSettingsApi,
+  uploadSiteAssetApi,
   SiteSettings,
 } from "@/services/api/siteSettings";
 import { formatDate } from "@/utils/formatters";
@@ -40,6 +41,7 @@ export default function SiteSettingsPage() {
   const [requireEmail, setRequireEmail] = useState<boolean>(true);
   const [enableLanguageSwitcher, setEnableLanguageSwitcher] = useState<boolean>(true);
   const [enableIdentityAndBirthCert, setEnableIdentityAndBirthCert] = useState<boolean>(true);
+  const [enableNextjsToolbar, setEnableNextjsToolbar] = useState<boolean>(true);
   const [siteNameFa, setSiteNameFa] = useState<string>("سامانه همسان‌گزینی و ازدواج دائم");
   const [siteNameEn, setSiteNameEn] = useState<string>("TailAdmin Matchmaking");
   const [siteTaglineFa, setSiteTaglineFa] = useState<string>("پورتال همسان‌گزینی");
@@ -79,6 +81,7 @@ export default function SiteSettingsPage() {
       setRequireEmail(data.require_email);
       if (data.enable_language_switcher !== undefined) setEnableLanguageSwitcher(data.enable_language_switcher);
       if (data.enable_identity_and_birth_cert !== undefined) setEnableIdentityAndBirthCert(data.enable_identity_and_birth_cert);
+      if (data.enable_nextjs_toolbar !== undefined) setEnableNextjsToolbar(data.enable_nextjs_toolbar);
       if (data.site_name_fa) setSiteNameFa(data.site_name_fa);
       if (data.site_name_en) setSiteNameEn(data.site_name_en);
       if (data.site_tagline_fa) setSiteTaglineFa(data.site_tagline_fa);
@@ -105,49 +108,99 @@ export default function SiteSettingsPage() {
     }
   }, [isSuperUser, siteSettingEnabled, loadSettings]);
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>, setter: (val: string) => void) => {
+  const [uploadingAsset, setUploadingAsset] = useState<string | null>(null);
+
+  const handleFileUpload = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    assetType: "logo" | "favicon",
+    setter: (val: string) => void
+  ) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 2 * 1024 * 1024) {
-      setError(t("File size exceeds 2MB limit."));
+    if (file.size > 5 * 1024 * 1024) {
+      setError(t("File size exceeds 5MB limit."));
       return;
     }
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const result = event.target?.result as string;
-      if (result) {
-        setter(result);
-        setSuccessMessage(t("Local file loaded successfully. Remember to click Save Settings."));
-        setTimeout(() => setSuccessMessage(null), 4000);
-      }
-    };
-    reader.readAsDataURL(file);
+    setUploadingAsset(assetType);
+    setError(null);
+    try {
+      // Real backend media upload and persistence
+      const result = await uploadSiteAssetApi(file, assetType, false);
+      setter(result.url);
+      setSuccessMessage(
+        isRTL
+          ? `فایل با موفقیت روی سرور ذخیره شد (${result.file_name}). برای ثبت نهایی تغییرات، روی «ذخیره تنظیمات» کلیک کنید.`
+          : `Asset uploaded to backend storage successfully (${result.file_name}). Click Save Settings to persist.`
+      );
+      setTimeout(() => setSuccessMessage(null), 4000);
+    } catch (err: any) {
+      // Fallback to base64 data URL if network/server storage fails
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const fallbackResult = event.target?.result as string;
+        if (fallbackResult) {
+          setter(fallbackResult);
+          setSuccessMessage(t("Local file loaded successfully. Remember to click Save Settings."));
+          setTimeout(() => setSuccessMessage(null), 4000);
+        }
+      };
+      reader.readAsDataURL(file);
+    } finally {
+      setUploadingAsset(null);
+      // Reset input value so re-selecting same file works
+      e.target.value = "";
+    }
   };
 
-  const handleFontFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFontFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 8 * 1024 * 1024) {
-      setError(t("Font file size exceeds 8MB limit."));
+    if (file.size > 10 * 1024 * 1024) {
+      setError(t("Font file size exceeds 10MB limit."));
       return;
     }
 
     setUploadedFontFileName(file.name);
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const result = event.target?.result as string;
-      if (result) {
-        setCustomFontData(result);
-        setFontFamily("custom");
-        setContextFontFamily("custom", result);
-        setSuccessMessage(isRTL ? "فونت سفارشی با موفقیت بارگذاری شد و روی سایت اعمال گردید. برای ثبت نهایی روی ذخیره تنظیمات کلیک کنید." : "Custom font loaded and applied successfully! Click Save Settings to persist.");
-        setTimeout(() => setSuccessMessage(null), 4000);
-      }
-    };
-    reader.readAsDataURL(file);
+    setUploadingAsset("font");
+    setError(null);
+
+    try {
+      // Real backend font storage upload
+      const result = await uploadSiteAssetApi(file, "font", false);
+      setCustomFontData(result.url);
+      setFontFamily("custom");
+      setContextFontFamily("custom", result.url);
+      setSuccessMessage(
+        isRTL
+          ? `فایل فونت در پوشه رسانه سرور ذخیره و روی سامانه اعمال شد (${file.name}). برای اعمال دائمی، روی «ذخیره تنظیمات» کلیک کنید.`
+          : `Custom font uploaded to backend media storage and activated! Click Save Settings to persist.`
+      );
+      setTimeout(() => setSuccessMessage(null), 4000);
+    } catch (err: any) {
+      // Fallback to base64 data URL
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const fallbackResult = event.target?.result as string;
+        if (fallbackResult) {
+          setCustomFontData(fallbackResult);
+          setFontFamily("custom");
+          setContextFontFamily("custom", fallbackResult);
+          setSuccessMessage(
+            isRTL
+              ? "فونت سفارشی بارگذاری شد و روی سایت اعمال گردید. برای ثبت نهایی روی ذخیره تنظیمات کلیک کنید."
+              : "Custom font loaded and applied successfully! Click Save Settings to persist."
+          );
+          setTimeout(() => setSuccessMessage(null), 4000);
+        }
+      };
+      reader.readAsDataURL(file);
+    } finally {
+      setUploadingAsset(null);
+      e.target.value = "";
+    }
   };
 
   const handleRestoreDefaults = async () => {
@@ -158,6 +211,8 @@ export default function SiteSettingsPage() {
     try {
       const defaults = {
         enable_language_switcher: true,
+        enable_identity_and_birth_cert: true,
+        enable_nextjs_toolbar: true,
         site_name_fa: "سامانه همسان‌گزینی و ازدواج دائم",
         site_name_en: "TailAdmin Matchmaking",
         site_tagline_fa: "پورتال همسان‌گزینی",
@@ -176,6 +231,8 @@ export default function SiteSettingsPage() {
       const updated = await updateSiteSettingsApi(defaults);
       setSettings(updated);
       setEnableLanguageSwitcher(true);
+      setEnableIdentityAndBirthCert(true);
+      setEnableNextjsToolbar(true);
       setSiteNameFa(defaults.site_name_fa);
       setSiteNameEn(defaults.site_name_en);
       setSiteTaglineFa(defaults.site_tagline_fa);
@@ -213,6 +270,7 @@ export default function SiteSettingsPage() {
         require_email: requireEmail,
         enable_language_switcher: enableLanguageSwitcher,
         enable_identity_and_birth_cert: enableIdentityAndBirthCert,
+        enable_nextjs_toolbar: enableNextjsToolbar,
         site_name_fa: siteNameFa,
         site_name_en: siteNameEn,
         site_tagline_fa: siteTaglineFa,
@@ -233,6 +291,7 @@ export default function SiteSettingsPage() {
       setRequireEmail(updated.require_email);
       if (updated.enable_language_switcher !== undefined) setEnableLanguageSwitcher(updated.enable_language_switcher);
       if (updated.enable_identity_and_birth_cert !== undefined) setEnableIdentityAndBirthCert(updated.enable_identity_and_birth_cert);
+      if (updated.enable_nextjs_toolbar !== undefined) setEnableNextjsToolbar(updated.enable_nextjs_toolbar);
       if (updated.site_name_fa) setSiteNameFa(updated.site_name_fa);
       if (updated.site_name_en) setSiteNameEn(updated.site_name_en);
       if (updated.site_tagline_fa) setSiteTaglineFa(updated.site_tagline_fa);
@@ -251,6 +310,7 @@ export default function SiteSettingsPage() {
       setBranding({
         enableLanguageSwitcher: updated.enable_language_switcher,
         enableIdentityAndBirthCert: updated.enable_identity_and_birth_cert,
+        enableNextjsToolbar: updated.enable_nextjs_toolbar,
         siteNameFa: updated.site_name_fa,
         siteNameEn: updated.site_name_en,
         siteTaglineFa: updated.site_tagline_fa,
@@ -474,6 +534,49 @@ export default function SiteSettingsPage() {
                       className="sr-only peer"
                       checked={enableIdentityAndBirthCert}
                       onChange={(e) => setEnableIdentityAndBirthCert(e.target.checked)}
+                    />
+                    <div
+                      className="w-12 h-7 bg-slate-300 dark:bg-slate-700 border-2 border-slate-400 dark:border-slate-500 rounded-full peer peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[var(--color-primary)]/40 peer-checked:bg-[var(--color-primary)] peer-checked:border-[var(--color-primary)] shadow-inner transition-all duration-200 hover:border-slate-500 dark:hover:border-slate-400 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-slate-300 dark:after:border-slate-400 after:rounded-full after:h-5 after:w-5 after:shadow-md after:transition-all peer-checked:after:translate-x-5 peer-checked:after:border-white"
+                    ></div>
+                  </label>
+                </div>
+
+                {/* Setting 5: Next.js Dev Toolbar / Debug Indicator */}
+                <div
+                  className={`flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 border-[1.5px] rounded-2xl transition-all gap-4 shadow-xs ${
+                    enableNextjsToolbar
+                      ? "border-[var(--color-primary)]/60 bg-[var(--color-primary)]/[0.03] dark:border-[var(--color-primary)]/50 dark:bg-[var(--color-primary)]/[0.04]"
+                      : "border-slate-300 dark:border-slate-700/80 bg-white dark:bg-white/[0.02]"
+                  }`}
+                >
+                  <div className="space-y-1 max-w-2xl">
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-base font-semibold text-slate-800 dark:text-white">
+                        {isRTL ? "فعالسازی آیکون دیباگ نکست‌جی‌اس (Next.js Toolbar)" : t("Enable Next.js Dev Toolbar")}
+                      </h3>
+                      {enableNextjsToolbar ? (
+                        <Badge variant="solid" color="success" size="sm">
+                          {t("Enabled")}
+                        </Badge>
+                      ) : (
+                        <Badge variant="solid" color="warning" size="sm">
+                          {t("Disabled")}
+                        </Badge>
+                      )}
+                    </div>
+                    <p className="text-sm text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
+                      {isRTL
+                        ? "روشن و خاموش کردن آیکون گرد دیباگ و ابزارهای توسعه نکست‌جی‌اس (علامت N در گوشه پایین صفحه). در صورت غیرفعال بودن، این آیکون به طور کامل مخفی خواهد شد."
+                        : "Toggle visibility of the circular Next.js developer toolbar / debug indicator at the bottom corner of the screen. When disabled, it is completely hidden."}
+                    </p>
+                  </div>
+
+                  <label className="relative inline-flex items-center cursor-pointer shrink-0 select-none hover:scale-105 active:scale-95 transition-transform">
+                    <input
+                      type="checkbox"
+                      className="sr-only peer"
+                      checked={enableNextjsToolbar}
+                      onChange={(e) => setEnableNextjsToolbar(e.target.checked)}
                     />
                     <div
                       className="w-12 h-7 bg-slate-300 dark:bg-slate-700 border-2 border-slate-400 dark:border-slate-500 rounded-full peer peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-[var(--color-primary)]/40 peer-checked:bg-[var(--color-primary)] peer-checked:border-[var(--color-primary)] shadow-inner transition-all duration-200 hover:border-slate-500 dark:hover:border-slate-400 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-slate-300 dark:after:border-slate-400 after:rounded-full after:h-5 after:w-5 after:shadow-md after:transition-all peer-checked:after:translate-x-5 peer-checked:after:border-white"
@@ -751,16 +854,17 @@ export default function SiteSettingsPage() {
                         ref={logoFileInputRef}
                         accept="image/*,.png,.svg,.jpg,.webp"
                         className="hidden"
-                        onChange={(e) => handleFileUpload(e, setLogoUrl)}
+                        onChange={(e) => handleFileUpload(e, "logo", setLogoUrl)}
                       />
                       <Button
                         type="button"
                         variant="outline"
                         size="sm"
+                        disabled={uploadingAsset === "logo"}
                         onClick={() => logoFileInputRef.current?.click()}
                         className="text-xs"
                       >
-                        📁 {t("Browse File")}
+                        {uploadingAsset === "logo" ? "⏳ ..." : `📁 ${t("Browse File")}`}
                       </Button>
                     </div>
 
@@ -768,7 +872,7 @@ export default function SiteSettingsPage() {
                       type="text"
                       value={logoUrl}
                       onChange={(e) => setLogoUrl(e.target.value)}
-                      placeholder="https://example.com/logo.png or Base64 / Local Path"
+                      placeholder="https://example.com/logo.png or /media/site_branding/logos/..."
                       className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] font-mono"
                     />
 
@@ -776,7 +880,7 @@ export default function SiteSettingsPage() {
                       <div className="flex items-center gap-3 p-2 bg-slate-50 dark:bg-gray-800/60 rounded-xl border border-slate-200/80 dark:border-gray-700">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                          src={logoUrl}
+                          src={resolveMediaUrl(logoUrl)}
                           alt="Logo Preview"
                           className="h-10 w-auto max-w-[150px] object-contain rounded-md"
                         />
@@ -791,8 +895,8 @@ export default function SiteSettingsPage() {
                     )}
                     <p className="text-xs text-slate-600 dark:text-slate-300 font-medium">
                       {isRTL
-                        ? "می‌توانید مستقیماً فایلی از سیستم انتخاب کنید یا آدرس آن را وارد نمایید."
-                        : "Browse a local image file or enter an external image URL."}
+                        ? "می‌توانید فایلی از سیستم خود انتخاب کنید تا مستقیم در فضای سرور آپلود و ذخیره شود."
+                        : "Browse a local image file to upload directly to backend storage, or paste a URL."}
                     </p>
                   </div>
 
@@ -807,16 +911,17 @@ export default function SiteSettingsPage() {
                         ref={faviconFileInputRef}
                         accept="image/*,.ico,.png,.svg"
                         className="hidden"
-                        onChange={(e) => handleFileUpload(e, setFaviconUrl)}
+                        onChange={(e) => handleFileUpload(e, "favicon", setFaviconUrl)}
                       />
                       <Button
                         type="button"
                         variant="outline"
                         size="sm"
+                        disabled={uploadingAsset === "favicon"}
                         onClick={() => faviconFileInputRef.current?.click()}
                         className="text-xs"
                       >
-                        📁 {t("Browse File")}
+                        {uploadingAsset === "favicon" ? "⏳ ..." : `📁 ${t("Browse File")}`}
                       </Button>
                     </div>
 
@@ -824,7 +929,7 @@ export default function SiteSettingsPage() {
                       type="text"
                       value={faviconUrl}
                       onChange={(e) => setFaviconUrl(e.target.value)}
-                      placeholder="https://example.com/favicon.ico or Base64 / Local Path"
+                      placeholder="https://example.com/favicon.ico or /media/site_branding/favicons/..."
                       className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] font-mono"
                     />
 
@@ -832,7 +937,7 @@ export default function SiteSettingsPage() {
                       <div className="flex items-center gap-3 p-2 bg-slate-50 dark:bg-gray-800/60 rounded-xl border border-slate-200/80 dark:border-gray-700">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                          src={faviconUrl}
+                          src={resolveMediaUrl(faviconUrl)}
                           alt="Favicon Preview"
                           className="w-8 h-8 object-contain rounded-md"
                         />
@@ -934,10 +1039,11 @@ export default function SiteSettingsPage() {
                         type="button"
                         variant="outline"
                         size="sm"
+                        disabled={uploadingAsset === "font"}
                         onClick={() => fontFileInputRef.current?.click()}
                         className="text-xs"
                       >
-                        📁 {isRTL ? "انتخاب فایل فونت" : t("Browse File")}
+                        {uploadingAsset === "font" ? "⏳ ..." : (isRTL ? "📁 انتخاب فایل فونت" : t("Browse File"))}
                       </Button>
                     </div>
                   </div>

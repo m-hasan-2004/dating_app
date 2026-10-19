@@ -7,6 +7,18 @@ import { AuthProvider } from '@/hooks/use-auth';
 import { LanguageProvider } from '@/context/LanguageContext';
 import { BrandingProvider } from '@/context/BrandingContext';
 import { LanguageToggleButton } from '@/components/common/LanguageToggleButton';
+import DynamicPageTitle from '@/components/common/DynamicPageTitle';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'امین وصال',
+  description: 'مرکز همسان‌گزینی و ازدواج دائم امین وصال قم',
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
+};
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -25,6 +37,7 @@ export default function RootLayout({
             <ThemeProvider>
               <AuthProvider>
                 <SidebarProvider>
+                  <DynamicPageTitle />
                   {children}
                   <LanguageToggleButton />
                 </SidebarProvider>

@@ -38,6 +38,13 @@ class SiteSetting(models.Model):
             "When disabled, birth certificate and identity sections are removed from profile and not required."
         ),
     )
+    enable_nextjs_toolbar = models.BooleanField(
+        _("Enable Next.js Dev Toolbar"),
+        default=True,
+        help_text=_(
+            "When disabled, the Next.js development toolbar indicator (N circle) is hidden from the page in development mode."
+        ),
+    )
     site_name_fa = models.CharField(
         _("Site Name (Persian)"),
         max_length=150,

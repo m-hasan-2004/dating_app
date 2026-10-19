@@ -19,6 +19,7 @@ class SiteSettingSerializer(serializers.ModelSerializer):
             "require_email",
             "enable_language_switcher",
             "enable_identity_and_birth_cert",
+            "enable_nextjs_toolbar",
             "site_name_fa",
             "site_name_en",
             "site_tagline_fa",
@@ -48,6 +49,7 @@ class PublicRegistrationConfigSerializer(serializers.Serializer):
     require_email = serializers.BooleanField()
     enable_language_switcher = serializers.BooleanField(default=True)
     enable_identity_and_birth_cert = serializers.BooleanField(default=True)
+    enable_nextjs_toolbar = serializers.BooleanField(default=True)
     site_name_fa = serializers.CharField(default="سامانه همسان‌گزینی و ازدواج دائم")
     site_name_en = serializers.CharField(default="TailAdmin Matchmaking")
     site_tagline_fa = serializers.CharField(default="پورتال همسان‌گزینی", allow_blank=True)
