@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTranslation } from '@/context/LanguageContext';
 import { useBranding } from '@/context/BrandingContext';
@@ -13,6 +13,11 @@ export default function LandingHeader() {
   const { theme, toggleTheme } = useTheme();
   const { isAuthenticated } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const navLinks = [
     { href: '/', label: t('Home') },
@@ -97,7 +102,9 @@ export default function LandingHeader() {
             )}
 
             {/* Auth Buttons */}
-            {isAuthenticated ? (
+            {!mounted ? (
+              <div className="w-[140px] h-9" />
+            ) : isAuthenticated ? (
               <Link
                 href="/dashboard"
                 className="px-4 py-2 text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] rounded-xl hover:brightness-105 active:scale-95 transition-all shadow-md shadow-brand-500/20"
@@ -185,7 +192,7 @@ export default function LandingHeader() {
                 </button>
               )}
 
-              {isAuthenticated ? (
+              {!mounted ? null : isAuthenticated ? (
                 <Link
                   href="/dashboard"
                   onClick={() => setMobileMenuOpen(false)}

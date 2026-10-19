@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTranslation } from '@/context/LanguageContext';
 import { useBranding } from '@/context/BrandingContext';
@@ -10,6 +10,11 @@ export default function HeroSection() {
   const { t, isRTL } = useTranslation();
   const { siteName, siteTagline } = useBranding();
   const { isAuthenticated } = useAuth();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const trustBadges = [
     {
@@ -70,7 +75,9 @@ export default function HeroSection() {
 
           {/* Call-to-action buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-            {isAuthenticated ? (
+            {!mounted ? (
+              <div className="w-full sm:w-[220px] h-[58px]" />
+            ) : isAuthenticated ? (
               <Link
                 href="/dashboard"
                 className="w-full sm:w-auto px-8 py-4 text-base font-extrabold rounded-2xl text-white bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] hover:brightness-105 active:scale-95 transition-all shadow-xl shadow-brand-500/25 flex items-center justify-center gap-2"
