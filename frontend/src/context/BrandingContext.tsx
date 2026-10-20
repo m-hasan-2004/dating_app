@@ -105,6 +105,7 @@ interface BrandingContextType {
   faviconUrl: string;
   fontFamily: string;
   customFontData: string;
+  isLoaded: boolean;
   setFontFamily: (font: string, customData?: string) => void;
   setColorPalette: (palette: ColorPalette, customHex?: string, customSecHex?: string) => void;
   setCanvasColors: (light?: string, dark?: string) => void;
@@ -147,6 +148,7 @@ const DEFAULT_BRANDING = {
   faviconUrl: '/media/site_branding/favicons/favicon.png',
   fontFamily: 'Vazirmatn',
   customFontData: '',
+  isLoaded: false,
 };
 
 const BrandingContext = createContext<BrandingContextType>({
@@ -179,6 +181,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [faviconUrl, setFaviconUrl] = useState<string>(resolveMediaUrl(DEFAULT_BRANDING.faviconUrl));
   const [fontFamily, setFontFamilyState] = useState<string>(DEFAULT_BRANDING.fontFamily);
   const [customFontData, setCustomFontDataState] = useState<string>(DEFAULT_BRANDING.customFontData);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
   // Apply or suppress Next.js dev toolbar
   const applyNextjsToolbar = useCallback((enable: boolean) => {
@@ -644,7 +647,8 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         applyPalette(cachedPalette, cachedPrimary, cachedSecondary);
       }
     }
-    refreshBranding();
+    setIsLoaded(true);
+    refreshBranding().finally(() => setIsLoaded(true));
   }, [applyCanvasColors, applyPalette, applyFontFamily, applyNextjsToolbar, refreshBranding]);
 
   const siteName = language === 'fa' ? siteNameFa : siteNameEn;
@@ -671,6 +675,7 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         faviconUrl,
         fontFamily,
         customFontData,
+        isLoaded,
         setFontFamily,
         setColorPalette,
         setCanvasColors,

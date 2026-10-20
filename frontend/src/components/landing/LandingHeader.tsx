@@ -102,9 +102,7 @@ export default function LandingHeader() {
             )}
 
             {/* Auth Buttons */}
-            {!mounted ? (
-              <div className="w-[140px] h-9" />
-            ) : isAuthenticated ? (
+            {mounted && isAuthenticated ? (
               <Link
                 href="/dashboard"
                 className="px-4 py-2 text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] rounded-xl hover:brightness-105 active:scale-95 transition-all shadow-md shadow-brand-500/20"
@@ -192,7 +190,7 @@ export default function LandingHeader() {
                 </button>
               )}
 
-              {!mounted ? null : isAuthenticated ? (
+              {mounted && isAuthenticated ? (
                 <Link
                   href="/dashboard"
                   onClick={() => setMobileMenuOpen(false)}

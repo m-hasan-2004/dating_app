@@ -8,7 +8,7 @@ import { useAuth } from '@/hooks/use-auth';
 
 export default function HeroSection() {
   const { t, isRTL } = useTranslation();
-  const { siteName, siteTagline } = useBranding();
+  const { siteName, siteTagline, isLoaded } = useBranding();
   const { isAuthenticated } = useAuth();
   const [mounted, setMounted] = useState(false);
 
@@ -57,13 +57,15 @@ export default function HeroSection() {
           {/* Subtle Tagline / Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] dark:bg-[var(--color-primary)]/20 text-xs sm:text-sm font-bold mb-6 border border-[var(--color-primary)]/20 shadow-xs">
             <span className="inline-block w-2 h-2 rounded-full bg-[var(--color-primary)] animate-pulse" />
-            <span>{siteTagline || t('Secure & Honorable Matchmaking Platform')}</span>
+            <span className={`transition-opacity duration-150 ${isLoaded ? 'opacity-100' : 'opacity-90'}`}>
+              {siteTagline || t('Secure & Honorable Matchmaking Platform')}
+            </span>
           </div>
 
           {/* Main Headline */}
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.2] sm:leading-[1.15] mb-6">
             <span className="block mb-2">{t('Secure & Honorable Matchmaking Platform')}</span>
-            <span className="bg-gradient-to-r from-[var(--color-primary)] via-brand-500 to-[var(--color-accent)] bg-clip-text text-transparent">
+            <span className={`bg-gradient-to-r from-[var(--color-primary)] via-brand-500 to-[var(--color-accent)] bg-clip-text text-transparent transition-opacity duration-150 ${isLoaded ? 'opacity-100' : 'opacity-90'}`}>
               {siteName}
             </span>
           </h1>
@@ -74,10 +76,8 @@ export default function HeroSection() {
           </p>
 
           {/* Call-to-action buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-            {!mounted ? (
-              <div className="w-full sm:w-[220px] h-[58px]" />
-            ) : isAuthenticated ? (
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 min-h-[58px]">
+            {mounted && isAuthenticated ? (
               <Link
                 href="/dashboard"
                 className="w-full sm:w-auto px-8 py-4 text-base font-extrabold rounded-2xl text-white bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] hover:brightness-105 active:scale-95 transition-all shadow-xl shadow-brand-500/25 flex items-center justify-center gap-2"
