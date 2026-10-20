@@ -353,46 +353,78 @@ docker-compose exec db psql -U hasan -d dating_app
 
 ## Backup and Restore
 
-### Automated Backups
+### Manual Backup (Using `pg_dump`)
 
-Backups are created automatically every minute via cron jobs inside the container.
+#### Option A: Direct via Docker (Recommended)
+Runs `pg_dump` inside `dating_app_db` container without requiring host PostgreSQL tools:
 
-### Manual Backup
+- **Linux / macOS / Git Bash:**
+  ```bash
+  # Plain SQL dump
+  docker exec -t dating_app_db pg_dump -U hasan -d dating_app > backup.sql
 
+  # Custom binary format dump (.dump)
+  docker exec -t dating_app_db pg_dump -U hasan -F c -d dating_app > backup.dump
+
+  # Gzip-compressed SQL dump
+  docker exec -t dating_app_db pg_dump -U hasan -d dating_app | gzip > backup.sql.gz
+  ```
+
+- **Windows PowerShell:**
+  ```powershell
+  # Plain SQL dump (UTF-8 encoded)
+  docker exec -i dating_app_db pg_dump -U hasan -d dating_app | Out-File -Encoding utf8 backup.sql
+
+  # Or dump inside container and copy out:
+  docker exec -it dating_app_db sh -c "pg_dump -U hasan -d dating_app > /backups/backup.sql"
+  docker cp dating_app_db:/backups/backup.sql ./backup.sql
+  ```
+
+#### Option B: From Host (Port 5432)
 ```bash
-# Create backup
-docker-compose exec web /usr/local/bin/backup_db.sh
+# Linux / macOS
+PGPASSWORD=Welcome pg_dump -h localhost -p 5432 -U hasan -d dating_app -f backup.sql
 
-# List backups
-docker-compose exec web ls -la /backups/
-
-# Copy backup to host
-docker cp dating_app_web:/backups/dating_app_20231201_120000.sql.gz ./
+# Windows PowerShell
+$env:PGPASSWORD="Welcome"; pg_dump -h localhost -p 5432 -U hasan -d dating_app -f backup.sql
 ```
 
-### Restore from Backup
+---
 
-#### First Drop Using Pgadmin
+### Restore from Backup (Using `psql` / `pg_restore`)
 
+#### Step 1: Clean Recreate Database (Recommended)
 ```bash
-# Copy backup to container
-docker cp ./backup.sql.gz dating_app_web:/backups/
-
-# Restore database
-docker-compose exec web bash -c "gunzip -c /backups/backup.sql.gz | psql -h db -U hasan -d dating_app"
+docker exec -i dating_app_db psql -U hasan -d postgres -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'dating_app' AND pid <> pg_backend_pid();"
+docker exec -i dating_app_db psql -U hasan -d postgres -c "DROP DATABASE IF EXISTS dating_app;"
+docker exec -i dating_app_db psql -U hasan -d postgres -c "CREATE DATABASE dating_app OWNER hasan ENCODING 'UTF8';"
 ```
 
-#### Uncomperresed Sql file
+#### Step 2: Restore Data
 
-```bash
-psql -h db -U hasan -d dating_app < backup.sql 
-```
+- **Stream into Container (Linux / macOS / Git Bash):**
+  ```bash
+  docker exec -i dating_app_db psql -U hasan -d dating_app < backup.sql
+  ```
 
-### Backup Locations
+- **Stream into Container (Windows PowerShell):**
+  ```powershell
+  Get-Content backup.sql | docker exec -i dating_app_db psql -U hasan -d dating_app
+  ```
 
-- **Container Path**: `/backups/`
-- **Host Volume**: `dating_app_backups` Docker volume
-- **Retention**: Last 24 hours of backups (1440 minutes)
+- **Via Docker Copy:**
+  ```bash
+  docker cp ./backup.sql dating_app_db:/tmp/backup.sql
+  docker exec -it dating_app_db psql -U hasan -d dating_app -f /tmp/backup.sql
+  docker exec -it dating_app_db rm /tmp/backup.sql
+  ```
+
+- **Custom Format (.dump) with `pg_restore`:**
+  ```bash
+  docker cp ./backup.dump dating_app_db:/tmp/backup.dump
+  docker exec -it dating_app_db pg_restore -U hasan -d dating_app --clean --if-exists /tmp/backup.dump
+  docker exec -it dating_app_db rm /tmp/backup.dump
+  ```
 
 ## Troubleshooting
 
