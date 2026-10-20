@@ -1,8 +1,16 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { Modal } from "@/components/ui/modal";
 import { useTranslation } from "@/context/LanguageContext";
+import { useAuth } from "@/hooks/use-auth";
+import {
+  CalendarEventItem,
+  fetchCalendarEvents,
+  createCalendarEvent,
+  updateCalendarEvent,
+  deleteCalendarEvent,
+} from "@/services/api/calendarService";
 import {
   gregorianToJalali,
   jalaliToGregorian,
@@ -22,67 +30,69 @@ import {
   CalenderIcon,
 } from "@/icons";
 
-export interface CalendarEvent {
-  id: string;
-  title: string;
-  start: string; // YYYY-MM-DD (Gregorian)
-  end?: string;
-  category: "danger" | "success" | "primary" | "warning";
-}
-
-const COLOR_CLASSES: Record<string, { bg: string; text: string; dot: string }> = {
+const COLOR_CLASSES: Record<string, { bg: string; text: string; dot: string; labelFa: string; labelEn: string }> = {
   danger: {
     bg: "bg-red-100 dark:bg-red-950/50 text-red-700 dark:text-red-300 border-red-200 dark:border-red-800",
     text: "text-red-600 dark:text-red-400",
     dot: "bg-red-500",
+    labelFa: "مهم / خطر",
+    labelEn: "Danger",
   },
   success: {
     bg: "bg-green-100 dark:bg-green-950/50 text-green-700 dark:text-green-300 border-green-200 dark:border-green-800",
     text: "text-green-600 dark:text-green-400",
     dot: "bg-green-500",
+    labelFa: "موفق",
+    labelEn: "Success",
   },
   primary: {
     bg: "bg-[var(--color-primary)]/15 dark:bg-[var(--color-primary)]/20 text-[var(--color-primary)] border-[var(--color-primary)]/30 dark:border-[var(--color-primary)]/40",
     text: "text-[var(--color-primary)]",
     dot: "bg-[var(--color-primary)]",
+    labelFa: "اصلی",
+    labelEn: "Primary",
   },
   warning: {
     bg: "bg-amber-100 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800",
     text: "text-amber-600 dark:text-amber-400",
     dot: "bg-amber-500",
+    labelFa: "هشدار",
+    labelEn: "Warning",
   },
 };
 
 export const Calendar: React.FC = () => {
   const { t, isRTL } = useTranslation();
+  const { user } = useAuth();
+  const isAdmin = Boolean(user?.is_staff || (user as any)?.is_superuser);
+
   const [mounted, setMounted] = useState(false);
+  const [events, setEvents] = useState<CalendarEventItem[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Initial Events
-  const [events, setEvents] = useState<CalendarEvent[]>([
-    {
-      id: "1",
-      title: isRTL ? "جلسه هماهنگی معرفی" : "Event Conf.",
-      start: new Date().toISOString().split("T")[0],
-      category: "danger",
-    },
-    {
-      id: "2",
-      title: isRTL ? "ملاقات حضوری کاندیدا" : "Meeting",
-      start: new Date(Date.now() + 86400000).toISOString().split("T")[0],
-      category: "success",
-    },
-    {
-      id: "3",
-      title: isRTL ? "کارگاه مشاوره ازدواج" : "Workshop",
-      start: new Date(Date.now() + 172800000).toISOString().split("T")[0],
-      end: new Date(Date.now() + 259200000).toISOString().split("T")[0],
-      category: "primary",
-    },
-  ]);
+  const loadEvents = useCallback(async () => {
+    try {
+      setLoading(true);
+      const data = await fetchCalendarEvents();
+      setEvents(data);
+    } catch (err: any) {
+      console.error("Failed to load calendar events", err);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (mounted) {
+      loadEvents();
+    }
+  }, [mounted, loadEvents]);
 
   // Current view date
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
@@ -96,8 +106,9 @@ export const Calendar: React.FC = () => {
 
   // Modal states
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<CalendarEventItem | null>(null);
   const [modalTitle, setModalTitle] = useState("");
+  const [modalDescription, setModalDescription] = useState("");
   const [modalCategory, setModalCategory] = useState<"danger" | "success" | "primary" | "warning">("primary");
   const [modalStartDate, setModalStartDate] = useState("");
   const [modalEndDate, setModalEndDate] = useState("");
@@ -140,57 +151,93 @@ export const Calendar: React.FC = () => {
   const handleDayClick = (gregorianDateStr: string) => {
     setSelectedEvent(null);
     setModalTitle("");
+    setModalDescription("");
     setModalCategory("primary");
     setModalStartDate(gregorianDateStr);
     setModalEndDate(gregorianDateStr);
+    setErrorMsg("");
     setIsModalOpen(true);
   };
 
-  const handleEventClick = (e: React.MouseEvent, event: CalendarEvent) => {
+  const handleEventClick = (e: React.MouseEvent, event: CalendarEventItem) => {
     e.stopPropagation();
     setSelectedEvent(event);
     setModalTitle(event.title);
-    setModalCategory(event.category);
-    setModalStartDate(event.start);
-    setModalEndDate(event.end || event.start);
+    setModalDescription(event.description || "");
+    setModalCategory((event.category as any) || "primary");
+    setModalStartDate(event.start_date);
+    setModalEndDate(event.end_date || event.start_date);
+    setErrorMsg("");
     setIsModalOpen(true);
   };
 
-  const handleSaveEvent = (e: React.FormEvent) => {
+  const handleSaveEvent = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!modalTitle.trim()) return;
 
-    if (selectedEvent) {
-      setEvents((prev) =>
-        prev.map((ev) =>
-          ev.id === selectedEvent.id
-            ? {
-                ...ev,
-                title: modalTitle,
-                category: modalCategory,
-                start: modalStartDate,
-                end: modalEndDate,
-              }
-            : ev
-        )
-      );
-    } else {
-      const newEv: CalendarEvent = {
-        id: Date.now().toString(),
-        title: modalTitle,
-        category: modalCategory,
-        start: modalStartDate,
-        end: modalEndDate,
-      };
-      setEvents((prev) => [...prev, newEv]);
+    try {
+      setSaving(true);
+      setErrorMsg("");
+
+      if (selectedEvent) {
+        // Can only edit if admin or user-created
+        if (selectedEvent.is_admin_created && !isAdmin) {
+          setErrorMsg(isRTL ? "شما اجازه ویرایش رویدادهای ثبت‌شده توسط مدیر را ندارید." : "You cannot edit admin-created events.");
+          return;
+        }
+
+        await updateCalendarEvent(selectedEvent.id, {
+          title: modalTitle.trim(),
+          description: modalDescription.trim(),
+          category: modalCategory,
+          start_date: modalStartDate,
+          end_date: modalEndDate || null,
+        });
+      } else {
+        await createCalendarEvent({
+          title: modalTitle.trim(),
+          description: modalDescription.trim(),
+          category: modalCategory,
+          start_date: modalStartDate,
+          end_date: modalEndDate || null,
+        });
+      }
+
+      await loadEvents();
+      setIsModalOpen(false);
+    } catch (err: any) {
+      console.error("Failed to save event", err);
+      setErrorMsg(err?.message || (isRTL ? "خطا در ثبت رویداد" : "Failed to save event"));
+    } finally {
+      setSaving(false);
     }
-    setIsModalOpen(false);
   };
 
-  const handleDeleteEvent = () => {
+  const handleDeleteEvent = async () => {
     if (!selectedEvent) return;
-    setEvents((prev) => prev.filter((ev) => ev.id !== selectedEvent.id));
-    setIsModalOpen(false);
+
+    if (selectedEvent.is_admin_created && !isAdmin) {
+      setErrorMsg(isRTL ? "شما اجازه حذف رویدادهای ثبت‌شده توسط مدیر را ندارید." : "You cannot delete admin-created events.");
+      return;
+    }
+
+    const confirmMsg = isRTL
+      ? "آیا از حذف این رویداد اطمینان دارید؟"
+      : "Are you sure you want to delete this event?";
+    if (!window.confirm(confirmMsg)) return;
+
+    try {
+      setSaving(true);
+      setErrorMsg("");
+      await deleteCalendarEvent(selectedEvent.id);
+      await loadEvents();
+      setIsModalOpen(false);
+    } catch (err: any) {
+      console.error("Failed to delete event", err);
+      setErrorMsg(err?.message || (isRTL ? "خطا در حذف رویداد" : "Failed to delete event"));
+    } finally {
+      setSaving(false);
+    }
   };
 
   // ─────────────────────────────────────────────────────────────
@@ -398,8 +445,8 @@ export const Calendar: React.FC = () => {
           // Find matching events for this cell's date
           const cellEvents = events.filter(
             (ev) =>
-              ev.start === cell.gregorianStr ||
-              (ev.end && cell.gregorianStr >= ev.start && cell.gregorianStr <= ev.end)
+              ev.start_date === cell.gregorianStr ||
+              (ev.end_date && cell.gregorianStr >= ev.start_date && cell.gregorianStr <= ev.end_date)
           );
 
           return (
@@ -441,11 +488,18 @@ export const Calendar: React.FC = () => {
                     <div
                       key={ev.id}
                       onClick={(e) => handleEventClick(e, ev)}
-                      className={`px-1.5 py-0.5 rounded text-[11px] font-medium border truncate flex items-center gap-1 hover:opacity-85 transition-opacity ${style.bg}`}
+                      className={`px-1.5 py-0.5 rounded text-[11px] font-medium border truncate flex items-center justify-between gap-1 hover:opacity-85 transition-opacity ${style.bg}`}
                       title={ev.title}
                     >
-                      <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${style.dot}`} />
-                      <span className="truncate">{ev.title}</span>
+                      <div className="flex items-center gap-1 truncate min-w-0">
+                        <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${style.dot}`} />
+                        <span className="truncate">{ev.title}</span>
+                      </div>
+                      {ev.is_admin_created && (
+                        <span className="text-[9px] font-extrabold px-1 rounded bg-indigo-200/80 dark:bg-indigo-900/80 text-indigo-900 dark:text-indigo-200 shrink-0">
+                          {isRTL ? "مدیر" : "Admin"}
+                        </span>
+                      )}
                     </div>
                   );
                 })}
@@ -455,25 +509,36 @@ export const Calendar: React.FC = () => {
         })}
       </div>
 
-      {/* ── ADD / EDIT EVENT MODAL ───────────────────────────────────── */}
+      {/* ── ADD / EDIT / VIEW EVENT MODAL ────────────────────────────── */}
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} className="max-w-lg w-full" showCloseButton={false}>
         <div className="p-6 w-full" dir={isRTL ? "rtl" : "ltr"}>
+          {errorMsg && (
+            <div className="p-3 mb-4 rounded-xl text-xs font-semibold bg-rose-50 text-rose-700 dark:bg-rose-950/50 dark:text-rose-300 border border-rose-200 dark:border-rose-900">
+              {errorMsg}
+            </div>
+          )}
+
           <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-100 dark:border-gray-800">
             <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
               <CalenderIcon className="w-5 h-5 text-[var(--color-primary)]" />
               {selectedEvent
-                ? isRTL
+                ? selectedEvent.is_admin_created && !isAdmin
+                  ? isRTL
+                    ? "مشاهده رویداد (ثبت مدیریت)"
+                    : "View Event (Admin Created)"
+                  : isRTL
                   ? "ویرایش رویداد"
                   : "Edit Event"
                 : isRTL
                 ? "ثبت رویداد جدید"
                 : "Add New Event"}
             </h3>
-            {selectedEvent && (
+            {selectedEvent && (!selectedEvent.is_admin_created || isAdmin) && (
               <button
                 type="button"
                 onClick={handleDeleteEvent}
-                className="p-1.5 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-lg transition-colors cursor-pointer"
+                disabled={saving}
+                className="p-1.5 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-lg transition-colors cursor-pointer disabled:opacity-50"
                 title={isRTL ? "حذف رویداد" : "Delete Event"}
               >
                 <TrashBinIcon className="w-4 h-4" />
@@ -481,97 +546,187 @@ export const Calendar: React.FC = () => {
             )}
           </div>
 
-          <form onSubmit={handleSaveEvent} className="space-y-4">
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1">
-                {isRTL ? "عنوان رویداد" : "Event Title"}
-              </label>
-              <input
-                type="text"
-                required
-                value={modalTitle}
-                onChange={(e) => setModalTitle(e.target.value)}
-                placeholder={isRTL ? "مثلا: جلسه خواستگاری و معرفی" : "e.g. Intro Meeting"}
-                className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl bg-white text-slate-800 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]"
-              />
-            </div>
+          {/* READ-ONLY VIEW for regular users viewing admin-created event */}
+          {selectedEvent && selectedEvent.is_admin_created && !isAdmin ? (
+            <div className="space-y-4">
+              <div className="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900 text-xs text-indigo-800 dark:text-indigo-300 flex items-center gap-2">
+                <span className="font-extrabold text-[11px] px-2 py-0.5 rounded-full bg-indigo-200 dark:bg-indigo-900 text-indigo-900 dark:text-indigo-200">
+                  {isRTL ? "ثبت‌شده توسط مدیریت" : "Admin Created"}
+                </span>
+                <span>
+                  {isRTL
+                    ? "این رویداد توسط مدیریت سامانه ثبت شده و غیرقابل ویرایش است."
+                    : "This event was registered by management and is read-only."}
+                </span>
+              </div>
 
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1">
-                {isRTL ? "نوع و رنگ رویداد" : "Event Category / Color"}
-              </label>
-              <div className="grid grid-cols-4 gap-2">
-                {[
-                  { key: "primary", label: isRTL ? "اصلی" : "Primary", color: "bg-[var(--color-primary)]" },
-                  { key: "success", label: isRTL ? "موفق" : "Success", color: "bg-green-500" },
-                  { key: "warning", label: isRTL ? "هشدار" : "Warning", color: "bg-amber-500" },
-                  { key: "danger", label: isRTL ? "مهم" : "Danger", color: "bg-red-500" },
-                ].map((item) => (
-                  <button
-                    key={item.key}
-                    type="button"
-                    onClick={() => setModalCategory(item.key as any)}
-                    className={`flex items-center justify-center gap-1.5 py-2 px-2 rounded-xl text-xs font-medium border transition-all cursor-pointer ${
-                      modalCategory === item.key
-                        ? "border-[var(--color-primary)] bg-[var(--color-primary)]/10 dark:bg-[var(--color-primary)]/20 text-[var(--color-primary)] ring-2 ring-[var(--color-primary)]/20"
-                        : "border-slate-200/80 dark:border-gray-700 hover:bg-slate-50 dark:hover:bg-gray-800 text-slate-700 dark:text-gray-300"
-                    }`}
-                  >
-                    <span className={`w-2.5 h-2.5 rounded-full ${item.color}`} />
-                    {item.label}
-                  </button>
-                ))}
+              <div>
+                <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 block mb-1">
+                  {isRTL ? "عنوان رویداد:" : "Title:"}
+                </span>
+                <p className="text-base font-bold text-slate-900 dark:text-white">
+                  {selectedEvent.title}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-gray-800/60 border border-slate-100 dark:border-gray-800">
+                  <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block mb-0.5">
+                    {isRTL ? "تاریخ شروع:" : "Start Date:"}
+                  </span>
+                  <span className="text-xs font-bold text-slate-800 dark:text-slate-200 font-mono">
+                    {selectedEvent.start_date}
+                  </span>
+                </div>
+                {selectedEvent.end_date && (
+                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-gray-800/60 border border-slate-100 dark:border-gray-800">
+                    <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block mb-0.5">
+                      {isRTL ? "تاریخ پایان:" : "End Date:"}
+                    </span>
+                    <span className="text-xs font-bold text-slate-800 dark:text-slate-200 font-mono">
+                      {selectedEvent.end_date}
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {selectedEvent.description ? (
+                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-gray-800/60 border border-slate-200/80 dark:border-gray-700">
+                  <span className="text-xs font-bold text-slate-700 dark:text-slate-200 block mb-1.5">
+                    {isRTL ? "توضیحات و راهنمایی رویداد (Explanation):" : "Explanation / Details:"}
+                  </span>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 whitespace-pre-line leading-relaxed">
+                    {selectedEvent.description}
+                  </p>
+                </div>
+              ) : (
+                <p className="text-xs text-slate-400 italic">
+                  {isRTL ? "توضیحاتی برای این رویداد ثبت نشده است." : "No additional explanation provided."}
+                </p>
+              )}
+
+              <div className="flex justify-end pt-4 border-t border-slate-100 dark:border-gray-800">
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="px-5 py-2 text-xs font-bold rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-slate-700 dark:text-slate-300 transition-colors cursor-pointer"
+                >
+                  {isRTL ? "بستن" : "Close"}
+                </button>
               </div>
             </div>
-
-            <div className="grid grid-cols-2 gap-3">
+          ) : (
+            /* EDIT / ADD FORM */
+            <form onSubmit={handleSaveEvent} className="space-y-4">
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1">
-                  {isRTL ? "تاریخ شروع" : "Start Date"}
+                  {isRTL ? "عنوان رویداد *" : "Event Title *"}
                 </label>
                 <input
-                  type="date"
+                  type="text"
                   required
-                  value={modalStartDate}
-                  onChange={(e) => setModalStartDate(e.target.value)}
-                  className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl bg-white text-slate-800 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]"
+                  value={modalTitle}
+                  onChange={(e) => setModalTitle(e.target.value)}
+                  placeholder={isRTL ? "مثلا: جلسه خواستگاری و هماهنگی" : "e.g. Intro Meeting"}
+                  className="w-full px-3 py-2 text-sm border border-slate-300 rounded-xl bg-white text-slate-800 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]"
                 />
               </div>
+
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1">
-                  {isRTL ? "تاریخ پایان" : "End Date"}
+                  {isRTL ? "نوع و رنگ رویداد" : "Event Category / Color"}
                 </label>
-                <input
-                  type="date"
-                  value={modalEndDate}
-                  onChange={(e) => setModalEndDate(e.target.value)}
-                  className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl bg-white text-slate-800 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]"
+                <div className="grid grid-cols-4 gap-2">
+                  {Object.entries(COLOR_CLASSES).map(([catKey, style]) => (
+                    <button
+                      key={catKey}
+                      type="button"
+                      onClick={() => setModalCategory(catKey as any)}
+                      className={`flex items-center justify-center gap-1.5 py-2 px-2 rounded-xl text-xs font-medium border transition-all cursor-pointer ${
+                        modalCategory === catKey
+                          ? "border-[var(--color-primary)] bg-[var(--color-primary)]/10 dark:bg-[var(--color-primary)]/20 text-[var(--color-primary)] ring-2 ring-[var(--color-primary)]/20"
+                          : "border-slate-200/80 dark:border-gray-700 hover:bg-slate-50 dark:hover:bg-gray-800 text-slate-700 dark:text-gray-300"
+                      }`}
+                    >
+                      <span className={`w-2.5 h-2.5 rounded-full ${style.dot}`} />
+                      <span>{isRTL ? style.labelFa : style.labelEn}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1">
+                    {isRTL ? "تاریخ شروع *" : "Start Date *"}
+                  </label>
+                  <input
+                    type="date"
+                    required
+                    value={modalStartDate}
+                    onChange={(e) => setModalStartDate(e.target.value)}
+                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl bg-white text-slate-800 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1">
+                    {isRTL ? "تاریخ پایان" : "End Date"}
+                  </label>
+                  <input
+                    type="date"
+                    value={modalEndDate}
+                    onChange={(e) => setModalEndDate(e.target.value)}
+                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl bg-white text-slate-800 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]"
+                  />
+                </div>
+              </div>
+
+              {/* Explanation / Description Textarea */}
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1">
+                  {isRTL ? "توضیحات و جزییات رویداد (Explanation)" : "Event Explanation & Notes"}
+                </label>
+                <textarea
+                  rows={3}
+                  value={modalDescription}
+                  onChange={(e) => setModalDescription(e.target.value)}
+                  placeholder={
+                    isRTL
+                      ? "جزییات مکان، مدارک لازم، یادداشت‌های تکمیلی یا شروط جلسه..."
+                      : "Meeting details, required documents, notes..."
+                  }
+                  className="w-full px-3 py-2 text-xs sm:text-sm border border-slate-300 rounded-xl bg-white text-slate-800 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]"
                 />
               </div>
-            </div>
 
-            <div className="flex items-center justify-end gap-2 pt-4 border-t border-slate-100 dark:border-gray-800">
-              <button
-                type="button"
-                onClick={() => setIsModalOpen(false)}
-                className="px-4 py-2 text-xs font-semibold rounded-xl border border-slate-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-slate-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-700 transition-colors shadow-2xs cursor-pointer"
-              >
-                {t("Cancel")}
-              </button>
-              <button
-                type="submit"
-                className="px-4 py-2 text-xs font-semibold rounded-xl bg-[var(--color-primary)] hover:brightness-95 text-white shadow-xs transition-colors cursor-pointer"
-              >
-                {selectedEvent
-                  ? isRTL
-                    ? "ذخیره تغییرات"
-                    : "Save Changes"
-                  : isRTL
-                  ? "افزودن رویداد"
-                  : "Add Event"}
-              </button>
-            </div>
-          </form>
+              <div className="flex items-center justify-end gap-2 pt-4 border-t border-slate-100 dark:border-gray-800">
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  disabled={saving}
+                  className="px-4 py-2 text-xs font-semibold rounded-xl border border-slate-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-slate-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-700 transition-colors shadow-2xs cursor-pointer"
+                >
+                  {t("Cancel")}
+                </button>
+                <button
+                  type="submit"
+                  disabled={saving}
+                  className="px-5 py-2 text-xs font-semibold rounded-xl bg-[var(--color-primary)] hover:brightness-95 text-white shadow-xs transition-colors cursor-pointer flex items-center gap-1.5 disabled:opacity-50"
+                >
+                  {saving && <span className="w-3.5 h-3.5 rounded-full border-2 border-white border-t-transparent animate-spin" />}
+                  <span>
+                    {selectedEvent
+                      ? isRTL
+                        ? "ذخیره تغییرات"
+                        : "Save Changes"
+                      : isRTL
+                      ? "افزودن رویداد"
+                      : "Add Event"}
+                  </span>
+                </button>
+              </div>
+            </form>
+          )}
         </div>
       </Modal>
     </div>

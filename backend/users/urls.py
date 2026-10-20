@@ -49,6 +49,7 @@ from .views import (
     FutureSposeOriginalityViewSet,
     PreferredWifeExtraInformationViewSet,
     UserBookmarkViewSet,
+    CalendarEventViewSet,
 )
 
 # User router for all user-related ViewSets
@@ -159,6 +160,11 @@ user_router.register(
     r"bookmarks",
     UserBookmarkViewSet,
     basename="bookmark",
+)
+user_router.register(
+    r"calendar-events",
+    CalendarEventViewSet,
+    basename="calendar-event",
 )
 
 # Auth routes are explicit (cookie-based JWT flow, not part of the router).

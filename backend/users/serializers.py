@@ -949,3 +949,40 @@ class UserBookmarkSerializer(serializers.ModelSerializer):
             "bookmark_id": obj.id,
             "created_at": obj.created_at.isoformat() if obj.created_at else None,
         }
+
+
+class CalendarEventSerializer(serializers.ModelSerializer):
+    """Serializer for user Calendar Events."""
+
+    user_username = serializers.CharField(source="user.username", read_only=True)
+    created_by_username = serializers.CharField(
+        source="created_by.username", read_only=True
+    )
+
+    class Meta:
+        from users.user_related_models import CalendarEvent
+
+        model = CalendarEvent
+        fields = (
+            "id",
+            "user",
+            "user_username",
+            "created_by",
+            "created_by_username",
+            "is_admin_created",
+            "title",
+            "description",
+            "start_date",
+            "end_date",
+            "category",
+            "created_at",
+            "updated_at",
+        )
+        read_only_fields = (
+            "created_by",
+            "created_by_username",
+            "is_admin_created",
+            "created_at",
+            "updated_at",
+        )
+

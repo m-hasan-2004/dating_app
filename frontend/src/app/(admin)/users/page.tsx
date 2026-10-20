@@ -17,7 +17,9 @@ import {
   CheckCircleIcon,
   AlertIcon,
   LockIcon,
+  CalenderIcon,
 } from '@/icons';
+import UserCalendarEventsModal from '@/components/users/UserCalendarEventsModal';
 import { useAuth } from '@/hooks/use-auth';
 import { useTranslation } from '@/context/LanguageContext';
 import { formatDate, formatIranianPhoneNumber, formatNumber, toPersianDigits } from '@/utils/formatters';
@@ -59,6 +61,15 @@ export default function UsersListPage() {
   const [batchActionLoading, setBatchActionLoading] = useState(false);
   const [selectedBatchAction, setSelectedBatchAction] = useState<string>('');
   const [completionMap, setCompletionMap] = useState<Record<string, ProfileCompletionResult>>({});
+
+  // Calendar Events Modal for Admin
+  const [calendarModalUser, setCalendarModalUser] = useState<User | null>(null);
+  const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
+
+  const handleOpenCalendarEvents = (targetUser: User) => {
+    setCalendarModalUser(targetUser);
+    setIsCalendarModalOpen(true);
+  };
 
   const loadStats = useCallback(async () => {
     try {
@@ -578,6 +589,15 @@ export default function UsersListPage() {
                           </Link>
                           <button
                             type="button"
+                            onClick={() => handleOpenCalendarEvents(user)}
+                            className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-lg text-indigo-700 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/40 dark:text-indigo-300 transition-colors cursor-pointer"
+                            title={isRTL ? 'رویدادها و قرارهای تقویم' : 'Calendar Events'}
+                          >
+                            <CalenderIcon className="w-3.5 h-3.5" />
+                            {isRTL ? 'رویدادها' : 'Events'}
+                          </button>
+                          <button
+                            type="button"
                             onClick={() => handleToggleActive(user)}
                             className={`px-2.5 py-1 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
                               user.is_active
@@ -641,6 +661,16 @@ export default function UsersListPage() {
           </div>
         </div>
       </div>
+
+      {/* User Calendar Events Admin Modal */}
+      <UserCalendarEventsModal
+        isOpen={isCalendarModalOpen}
+        onClose={() => {
+          setIsCalendarModalOpen(false);
+          setCalendarModalUser(null);
+        }}
+        user={calendarModalUser}
+      />
     </div>
   );
 }

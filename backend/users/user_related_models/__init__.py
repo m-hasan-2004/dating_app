@@ -7,3 +7,4 @@ from .family_information_model import *
 from .financial_information import *
 from .intellectual_information_model import *
 from .bookmark_model import *
+from .calendar_event_model import *

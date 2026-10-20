@@ -1551,3 +1551,70 @@ class UserBookmarkViewSet(viewsets.ModelViewSet):
                 "candidate_id": str(candidate.id),
                 "message": "Bookmark added",
             })
+
+
+class CalendarEventViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for managing Calendar Events.
+    - Regular users can view all events assigned to them.
+    - Regular users can create personal events for themselves.
+    - Regular users can ONLY edit/delete their own personal events.
+    - Regular users CANNOT edit or delete events registered by admins.
+    - Admins can list, add, edit, or delete any event for any user.
+    """
+    from users.serializers import CalendarEventSerializer
+    from users.user_related_models import CalendarEvent
+
+    serializer_class = CalendarEventSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        from users.user_related_models import CalendarEvent
+
+        user = self.request.user
+        queryset = CalendarEvent.objects.all().select_related("user", "created_by").order_by("start_date", "created_at")
+
+        target_user_id = self.request.query_params.get("user_id") or self.request.query_params.get("user")
+
+        if user.is_staff or user.is_superuser:
+            if target_user_id:
+                return queryset.filter(user_id=target_user_id)
+            return queryset
+
+        return queryset.filter(user=user)
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        if user.is_staff or user.is_superuser:
+            target_user = serializer.validated_data.get("user") or user
+            serializer.save(
+                user=target_user,
+                created_by=user,
+                is_admin_created=True,
+            )
+        else:
+            serializer.save(
+                user=user,
+                created_by=user,
+                is_admin_created=False,
+            )
+
+    def perform_update(self, serializer):
+        instance = self.get_object()
+        user = self.request.user
+        if not (user.is_staff or user.is_superuser):
+            if instance.is_admin_created or instance.created_by != user or instance.user != user:
+                raise permissions.exceptions.PermissionDenied(
+                    "شما اجازه ویرایش رویدادهای ثبت‌شده توسط مدیریت را ندارید."
+                )
+        serializer.save()
+
+    def perform_destroy(self, instance):
+        user = self.request.user
+        if not (user.is_staff or user.is_superuser):
+            if instance.is_admin_created or instance.created_by != user or instance.user != user:
+                raise permissions.exceptions.PermissionDenied(
+                    "شما اجازه حذف رویدادهای ثبت‌شده توسط مدیریت را ندارید."
+                )
+        instance.delete()
+

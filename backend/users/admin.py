@@ -440,3 +440,17 @@ class AccessCodeAdmin(admin.ModelAdmin):
 
 admin.site.register(User, UserAdmin)
 admin.site.register(AccessCode, AccessCodeAdmin)
+
+
+class CalendarEventAdmin(admin.ModelAdmin):
+    from users.user_related_models import CalendarEvent
+    model = CalendarEvent
+    list_display = ("title", "user", "start_date", "end_date", "category", "is_admin_created", "created_by", "created_at")
+    search_fields = ("title", "description", "user__username")
+    list_filter = ("category", "is_admin_created", "start_date")
+    ordering = ("-start_date", "-created_at")
+
+
+from users.user_related_models import CalendarEvent
+admin.site.register(CalendarEvent, CalendarEventAdmin)
+
