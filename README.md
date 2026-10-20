@@ -380,138 +380,58 @@ Frontend translations are managed in JSON dictionaries under `frontend/src/local
 
 ---
 
-## Backup and Restore
+## Backup and Restore (Export & Import)
 
-### 1. Web Portal Export & Import (GUI)
-Superusers can manage database dumps directly from the Admin Dashboard (**تنظیمات سامانه** / **Site Settings** at `/site-settings`):
-- **Export Database**: Download an immediate live dump as `backup.sql`.
-- **Import Database**: Upload and restore `backup.sql` or `backup.sql.gz` directly into PostgreSQL with confirmation dialogs.
-- **Server Backups Explorer**: Inspect and download automated backup files stored in `/backups/`.
+### Method 1: Terminal / Docker CLI (Recommended)
+
+#### Export (Backup)
+```bash
+# Export full database dump to host as backup.dump
+docker exec -t dating_app_db pg_dump -U hasan -F c dating_app > backup.dump
+```
+
+#### Import (Restore)
+```bash
+# 1. Copy backup file to database container
+docker cp backup.dump dating_app_db:/tmp/backup.dump
+
+# 2. Recreate empty database to prevent duplicate key conflicts
+docker exec -i dating_app_db psql -U hasan -d postgres -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'dating_app' AND pid <> pg_backend_pid(); DROP DATABASE IF EXISTS dating_app; CREATE DATABASE dating_app OWNER hasan ENCODING 'UTF8';"
+
+# 3. Restore data
+docker exec -i dating_app_db pg_restore -U hasan -d dating_app /tmp/backup.dump
+
+# 4. Apply migrations (applies any new columns or tables)
+docker exec -i dating_app_web python manage.py migrate
+
+# 5. Fix sequence counters
+docker exec -i dating_app_db psql -U hasan -d dating_app -c "DO \$\$ DECLARE seq RECORD; BEGIN FOR seq IN SELECT c.relname AS seq_name, t.relname AS table_name, a.attname AS col_name FROM pg_class c JOIN pg_depend d ON d.objid = c.oid JOIN pg_class t ON t.oid = d.refobjid JOIN pg_attribute a ON a.attrelid = t.oid AND a.attnum = d.refobjsubid WHERE c.relkind = 'S' AND t.relkind = 'r' LOOP EXECUTE format('SELECT setval(%L, COALESCE((SELECT MAX(%I) FROM %I), 1))', seq.seq_name, seq.col_name, seq.table_name); END LOOP; END \$\$;"
+```
 
 ---
 
-### 2. Manual Backup (Using `pg_dump`)
+### Method 2: pgAdmin 4 (Web GUI)
 
-#### Option A: Dump directly via Docker (Recommended)
-This runs `pg_dump` directly inside the PostgreSQL container (`dating_app_db`) without needing PostgreSQL client tools installed on your host machine:
+1. Open **[http://localhost:5050](http://localhost:5050)** (Login: `admin@example.com` / `admin`).
+2. If server is not connected, register server:
+   - **General**: Name `Dating App DB`
+   - **Connection**: Host `db`, Port `5432`, Maintenance DB `dating_app`, Username `hasan`, Password `Welcome`
 
-- **Linux / macOS / Git Bash:**
-  ```bash
-  # Plain SQL dump
-  docker exec -t dating_app_db pg_dump -U hasan -d dating_app > backup.sql
+#### Export (Backup)
+1. Right-click database `dating_app` > **Backup...**
+2. Enter Filename (e.g. `backup.dump`).
+3. Set **Format** to `Custom`.
+4. Click **Backup**.
 
-  # Compressed custom format dump (.dump)
-  docker exec -t dating_app_db pg_dump -U hasan -F c -d dating_app > backup.dump
-
-  # Gzip-compressed SQL dump
-  docker exec -t dating_app_db pg_dump -U hasan -d dating_app | gzip > backup.sql.gz
-  ```
-
-- **Windows PowerShell:**
-  ```powershell
-  # Plain SQL dump (UTF-8 encoded)
-  docker exec -i dating_app_db pg_dump -U hasan -d dating_app | Out-File -Encoding utf8 backup.sql
-
-  # Or dump inside the container volume and copy to host:
-  docker exec -it dating_app_db sh -c "pg_dump -U hasan -d dating_app > /backups/backup.sql"
-  docker cp dating_app_db:/backups/backup.sql ./backup.sql
-  ```
-
-#### Option B: Dump from Host (Direct Connection)
-If PostgreSQL client tools are installed locally on your host machine (port `5432` is mapped to host):
-
-- **Linux / macOS:**
-  ```bash
-  PGPASSWORD=Welcome pg_dump -h localhost -p 5432 -U hasan -d dating_app -f backup.sql
-  ```
-
-- **Windows PowerShell:**
-  ```powershell
-  $env:PGPASSWORD="Welcome"; pg_dump -h localhost -p 5432 -U hasan -d dating_app -f backup.sql
-  ```
-
----
-
-### 3. Restore from Backup (Using `psql` / `pg_restore`)
-
-#### Step 1: Clean Reset / Recreate Database (Recommended before full restore)
-To avoid duplicate key errors, foreign key constraints, or leftover table conflicts, cleanly recreate the database before restoring:
-
-```bash
-# Terminate existing connections to dating_app
-docker exec -i dating_app_db psql -U hasan -d postgres -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'dating_app' AND pid <> pg_backend_pid();"
-
-# Drop and recreate dating_app database
-docker exec -i dating_app_db psql -U hasan -d postgres -c "DROP DATABASE IF EXISTS dating_app;"
-docker exec -i dating_app_db psql -U hasan -d postgres -c "CREATE DATABASE dating_app OWNER hasan ENCODING 'UTF8';"
-```
-
-#### Step 2: Restore the Dump
-
-##### Method A: Stream directly into Docker container
-
-- **Linux / macOS / Git Bash:**
-  ```bash
-  # Plain SQL file
-  docker exec -i dating_app_db psql -U hasan -d dating_app < backup.sql
-
-  # Gzip-compressed SQL file (.sql.gz)
-  gunzip -c backup.sql.gz | docker exec -i dating_app_db psql -U hasan -d dating_app
-  ```
-
-- **Windows PowerShell:**
-  ```powershell
-  # Plain SQL file
-  Get-Content backup.sql | docker exec -i dating_app_db psql -U hasan -d dating_app
-  ```
-
-##### Method B: Copy into container and execute
-
-```bash
-# 1. Copy the backup file into the container
-docker cp ./backup.sql dating_app_db:/tmp/backup.sql
-
-# 2. Execute restore with psql
-docker exec -it dating_app_db psql -U hasan -d dating_app -f /tmp/backup.sql
-
-# 3. Clean up temporary file
-docker exec -it dating_app_db rm /tmp/backup.sql
-```
-
-##### Method C: Custom Binary Format (`.dump`) using `pg_restore`
-
-```bash
-docker cp ./backup.dump dating_app_db:/tmp/backup.dump
-docker exec -it dating_app_db pg_restore -U hasan -d dating_app --clean --if-exists /tmp/backup.dump
-docker exec -it dating_app_db rm /tmp/backup.dump
-```
-
-##### Method D: From Host via local `psql`
-
-- **Linux / macOS:**
-  ```bash
-  PGPASSWORD=Welcome psql -h localhost -p 5432 -U hasan -d dating_app -f backup.sql
-  ```
-
-- **Windows PowerShell:**
-  ```powershell
-  $env:PGPASSWORD="Welcome"; psql -h localhost -p 5432 -U hasan -d dating_app -f backup.sql
-  ```
-
----
-
-### 4. Database Connection Details
-
-| Parameter | Value | Description |
-|---|---|---|
-| **Host (from Host OS)** | `localhost` / `127.0.0.1` | Port `5432` mapped to host |
-| **Host (inside Docker)** | `db` | Docker internal network service name |
-| **Port** | `5432` | Standard PostgreSQL port |
-| **Database Name** | `dating_app` | Default database |
-| **Username** | `hasan` | Default database user |
-| **Password** | `Welcome` | Defined in `docker-compose.yml` / `.env` |
-| **Container Name** | `dating_app_db` | PostgreSQL 15 container |
-| **Shared Backups Volume** | `/backups/` | Volume `dating_app_backups` |
+#### Import (Restore)
+1. Right-click database `dating_app` > **Disconnect Database...**
+2. Right-click `dating_app` > **Delete/Drop**.
+3. Right-click **Databases** > **Create** > **Database...** > Name: `dating_app`, Owner: `hasan`, click **Save**.
+4. Right-click `dating_app` > **Restore...** > choose your backup file, Format: `Custom`, click **Restore**.
+5. In terminal, run pending migrations:
+   ```bash
+   docker compose exec web python manage.py migrate
+   ```
 
 ---
 
