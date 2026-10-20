@@ -610,7 +610,7 @@ export const Calendar: React.FC = () => {
               {selectedEvent.description ? (
                 <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-gray-800/60 border border-slate-200/80 dark:border-gray-700">
                   <span className="text-xs font-bold text-slate-700 dark:text-slate-200 block mb-1.5">
-                    {isRTL ? "توضیحات و راهنمایی رویداد (Explanation):" : "Explanation / Details:"}
+                    {isRTL ? "توضیحات و راهنمایی رویداد:" : "Explanation / Details:"}
                   </span>
                   <p className="text-xs text-slate-600 dark:text-slate-300 whitespace-pre-line leading-relaxed">
                     {selectedEvent.description}
@@ -699,7 +699,7 @@ export const Calendar: React.FC = () => {
               {/* Explanation / Description Textarea */}
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1">
-                  {isRTL ? "توضیحات و جزییات رویداد (Explanation)" : "Event Explanation & Notes"}
+                  {isRTL ? "توضیحات و جزییات رویداد" : "Event Explanation & Notes"}
                 </label>
                 <textarea
                   rows={3}

@@ -499,7 +499,7 @@ export default function UserCalendarEventsModal({
             {/* Explanation / Description Field */}
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1">
-                {isRTL ? 'توضیحات و یادداشت تکمیلی (Explanation)' : 'Explanation & Notes'}
+                {isRTL ? 'توضیحات و یادداشت تکمیلی' : 'Explanation & Notes'}
               </label>
               <textarea
                 rows={3}
