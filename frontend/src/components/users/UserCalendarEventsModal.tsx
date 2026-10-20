@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import Modal from '@/components/ui/modal';
+import ModernDatePicker from '@/components/ui/ModernDatePicker';
 import { CalenderIcon, TrashBinIcon } from '@/icons';
 import { useTranslation } from '@/context/LanguageContext';
 import {
@@ -12,6 +13,7 @@ import {
   deleteCalendarEvent,
 } from '@/services/api/calendarService';
 import { formatDate } from '@/utils/formatters';
+import { gregorianToJalali, toPersianDigits } from '@/utils/jalali';
 
 interface UserCalendarEventsModalProps {
   isOpen: boolean;
@@ -81,6 +83,22 @@ export default function UserCalendarEventsModal({
 
   // Filter in list
   const [searchFilter, setSearchFilter] = useState('');
+
+  const formatDateBadge = (dateStr?: string) => {
+    if (!dateStr) return '';
+    if (!isRTL) return dateStr;
+    const parts = dateStr.split('-');
+    if (parts.length === 3) {
+      const y = parseInt(parts[0], 10);
+      const m = parseInt(parts[1], 10);
+      const d = parseInt(parts[2], 10);
+      if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+        const j = gregorianToJalali(new Date(y, m - 1, d));
+        return `${toPersianDigits(j.year)}/${toPersianDigits(String(j.month).padStart(2, '0'))}/${toPersianDigits(String(j.day).padStart(2, '0'))}`;
+      }
+    }
+    return dateStr;
+  };
 
   const loadEvents = useCallback(async () => {
     if (!user?.id) return;
@@ -341,8 +359,8 @@ export default function UserCalendarEventsModal({
                             <div className="flex flex-wrap items-center gap-2 mt-1">
                               {/* Date badge */}
                               <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-gray-800 px-2 py-0.5 rounded-lg">
-                                {ev.start_date}
-                                {ev.end_date && ev.end_date !== ev.start_date ? ` تا ${ev.end_date}` : ''}
+                                {formatDateBadge(ev.start_date)}
+                                {ev.end_date && ev.end_date !== ev.start_date ? ` ${isRTL ? 'تا' : 'to'} ${formatDateBadge(ev.end_date)}` : ''}
                               </span>
 
                               {/* Creator Tag */}
@@ -454,28 +472,26 @@ export default function UserCalendarEventsModal({
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1">
                   {isRTL ? 'تاریخ شروع *' : 'Start Date *'}
                 </label>
-                <input
-                  type="date"
-                  required
+                <ModernDatePicker
                   value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl bg-white text-slate-800 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                  onChange={(val) => setStartDate(val)}
+                  placeholder={isRTL ? 'انتخاب تاریخ شروع' : 'Select start date'}
+                  required
                 />
               </div>
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1">
                   {isRTL ? 'تاریخ پایان (اختیاری)' : 'End Date (Optional)'}
                 </label>
-                <input
-                  type="date"
+                <ModernDatePicker
                   value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
-                  className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl bg-white text-slate-800 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                  onChange={(val) => setEndDate(val)}
+                  placeholder={isRTL ? 'انتخاب تاریخ پایان' : 'Select end date'}
                 />
               </div>
             </div>

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { Modal } from "@/components/ui/modal";
+import ModernDatePicker from "@/components/ui/ModernDatePicker";
 import { useTranslation } from "@/context/LanguageContext";
 import { useAuth } from "@/hooks/use-auth";
 import {
@@ -112,6 +113,22 @@ export const Calendar: React.FC = () => {
   const [modalCategory, setModalCategory] = useState<"danger" | "success" | "primary" | "warning">("primary");
   const [modalStartDate, setModalStartDate] = useState("");
   const [modalEndDate, setModalEndDate] = useState("");
+
+  const formatDateBadge = (dateStr?: string) => {
+    if (!dateStr) return "";
+    if (!isRTL) return dateStr;
+    const parts = dateStr.split("-");
+    if (parts.length === 3) {
+      const y = parseInt(parts[0], 10);
+      const m = parseInt(parts[1], 10);
+      const d = parseInt(parts[2], 10);
+      if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+        const j = gregorianToJalali(new Date(y, m - 1, d));
+        return `${toPersianDigits(j.year)}/${toPersianDigits(String(j.month).padStart(2, "0"))}/${toPersianDigits(String(j.day).padStart(2, "0"))}`;
+      }
+    }
+    return dateStr;
+  };
 
   // Sync view dates
   const handlePrevMonth = () => {
@@ -575,7 +592,7 @@ export const Calendar: React.FC = () => {
                     {isRTL ? "تاریخ شروع:" : "Start Date:"}
                   </span>
                   <span className="text-xs font-bold text-slate-800 dark:text-slate-200 font-mono">
-                    {selectedEvent.start_date}
+                    {formatDateBadge(selectedEvent.start_date)}
                   </span>
                 </div>
                 {selectedEvent.end_date && (
@@ -584,7 +601,7 @@ export const Calendar: React.FC = () => {
                       {isRTL ? "تاریخ پایان:" : "End Date:"}
                     </span>
                     <span className="text-xs font-bold text-slate-800 dark:text-slate-200 font-mono">
-                      {selectedEvent.end_date}
+                      {formatDateBadge(selectedEvent.end_date)}
                     </span>
                   </div>
                 )}
@@ -655,28 +672,26 @@ export const Calendar: React.FC = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1">
                     {isRTL ? "تاریخ شروع *" : "Start Date *"}
                   </label>
-                  <input
-                    type="date"
-                    required
+                  <ModernDatePicker
                     value={modalStartDate}
-                    onChange={(e) => setModalStartDate(e.target.value)}
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl bg-white text-slate-800 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]"
+                    onChange={(val) => setModalStartDate(val)}
+                    placeholder={isRTL ? "انتخاب تاریخ شروع" : "Select start date"}
+                    required
                   />
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-slate-700 dark:text-gray-300 mb-1">
-                    {isRTL ? "تاریخ پایان" : "End Date"}
+                    {isRTL ? "تاریخ پایان (اختیاری)" : "End Date (Optional)"}
                   </label>
-                  <input
-                    type="date"
+                  <ModernDatePicker
                     value={modalEndDate}
-                    onChange={(e) => setModalEndDate(e.target.value)}
-                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl bg-white text-slate-800 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]"
+                    onChange={(val) => setModalEndDate(val)}
+                    placeholder={isRTL ? "انتخاب تاریخ پایان" : "Select end date"}
                   />
                 </div>
               </div>

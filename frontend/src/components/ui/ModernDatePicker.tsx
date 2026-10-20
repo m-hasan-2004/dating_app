@@ -23,6 +23,7 @@ interface ModernDatePickerProps {
   name?: string;
   id?: string;
   disabled?: boolean;
+  className?: string;
 }
 
 export default function ModernDatePicker({
@@ -34,6 +35,7 @@ export default function ModernDatePicker({
   name,
   id,
   disabled,
+  className,
 }: ModernDatePickerProps) {
   const { t, isRTL } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
@@ -44,19 +46,35 @@ export default function ModernDatePicker({
     setMounted(true);
   }, []);
 
+  // Timezone-safe date parser to avoid UTC midnight shifts across timezones
+  const parseSafeDate = (val: string): Date | null => {
+    if (!val) return null;
+    const parts = val.split('-');
+    if (parts.length === 3) {
+      const y = parseInt(parts[0], 10);
+      const m = parseInt(parts[1], 10);
+      const d = parseInt(parts[2], 10);
+      if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+        return new Date(y, m - 1, d);
+      }
+    }
+    const d = new Date(val);
+    return isNaN(d.getTime()) ? null : d;
+  };
+
   // Parse initial date
-  const parsedDate = value ? new Date(value) : null;
-  const isValidDate = parsedDate && !isNaN(parsedDate.getTime());
+  const parsedDate = parseSafeDate(value);
+  const isValidDate = parsedDate !== null;
 
   // Jalali state
   const todayJalali = gregorianToJalali(new Date());
-  const initialJalali = isValidDate ? gregorianToJalali(parsedDate) : todayJalali;
+  const initialJalali = isValidDate && parsedDate ? gregorianToJalali(parsedDate) : todayJalali;
 
   const [currentYear, setCurrentYear] = useState<number>(initialJalali.year);
   const [currentMonth, setCurrentMonth] = useState<number>(initialJalali.month);
 
   useEffect(() => {
-    if (isValidDate) {
+    if (isValidDate && parsedDate) {
       const j = gregorianToJalali(parsedDate);
       setCurrentYear(j.year);
       setCurrentMonth(j.month);
@@ -160,7 +178,7 @@ export default function ModernDatePicker({
   const selectedJalali = isValidDate ? gregorianToJalali(parsedDate) : null;
 
   return (
-    <div className="relative w-full" ref={containerRef}>
+    <div className={`relative w-full ${className || ''}`} ref={containerRef}>
       <div className="relative flex items-center">
         <input
           type="text"
