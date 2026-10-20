@@ -55,6 +55,11 @@ const COLOR_CLASSES: Record<string, { bg: string; text: string; dot: string }> =
 
 export const Calendar: React.FC = () => {
   const { t, isRTL } = useTranslation();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Initial Events
   const [events, setEvents] = useState<CalendarEvent[]>([
@@ -316,6 +321,14 @@ export const Calendar: React.FC = () => {
   const weekDayHeaders = isRTL
     ? PERSIAN_WEEKDAY_NAMES
     : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  if (!mounted) {
+    return (
+      <div className="rounded-2xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] shadow-xs p-12 flex items-center justify-center min-h-[500px]">
+        <div className="w-8 h-8 rounded-full border-2 border-[var(--color-primary)] border-t-transparent animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="rounded-2xl border border-slate-200/80 bg-white dark:border-gray-800 dark:bg-white/[0.03] shadow-xs overflow-hidden">

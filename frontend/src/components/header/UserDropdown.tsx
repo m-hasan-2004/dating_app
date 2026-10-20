@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { useLanguage } from "@/context/LanguageContext";
 import { useRouter } from "next/navigation";
@@ -9,6 +9,11 @@ export default function UserDropdown() {
   const { user, logout, isAuthenticated } = useAuth();
   const { t } = useLanguage();
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleLogout = async () => {
     await logout();
@@ -28,13 +33,15 @@ export default function UserDropdown() {
         title={t("Profile")}
       >
         <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold text-slate-700 dark:text-slate-200 group-hover:bg-[var(--color-primary)] group-hover:text-white transition-colors">
-          {user?.username ? user.username.charAt(0).toUpperCase() : "U"}
+          {mounted && user?.username ? user.username.charAt(0).toUpperCase() : "U"}
         </span>
         <span className="font-bold text-slate-900 dark:text-white">{t("Profile")}</span>
       </Link>
 
       {/* Sign Out Button (Placed at extreme edge: Left in RTL, Right in LTR) */}
-      {isAuthenticated ? (
+      {!mounted ? (
+        <div className="w-20 h-8" />
+      ) : isAuthenticated ? (
         <button
           type="button"
           onClick={handleLogout}

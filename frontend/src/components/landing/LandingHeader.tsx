@@ -88,7 +88,7 @@ export default function LandingHeader() {
             </button>
 
             {/* Language Switcher */}
-            {enableLanguageSwitcher && (
+            {mounted && enableLanguageSwitcher && (
               <button
                 type="button"
                 onClick={toggleLanguage}
@@ -182,7 +182,7 @@ export default function LandingHeader() {
             ))}
 
             <div className="pt-3 border-t border-slate-200/60 dark:border-gray-800/60 flex flex-col gap-2">
-              {enableLanguageSwitcher && (
+              {mounted && enableLanguageSwitcher && (
                 <button
                   type="button"
                   onClick={toggleLanguage}

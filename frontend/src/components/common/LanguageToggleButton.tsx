@@ -1,14 +1,19 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { useBranding } from "@/context/BrandingContext";
 
 export const LanguageToggleButton: React.FC = () => {
   const { language, toggleLanguage, isRTL } = useLanguage();
   const { enableLanguageSwitcher } = useBranding();
+  const [mounted, setMounted] = useState(false);
 
-  if (!enableLanguageSwitcher) {
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted || !enableLanguageSwitcher) {
     return null;
   }
 

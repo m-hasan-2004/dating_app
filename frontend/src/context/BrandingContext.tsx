@@ -163,118 +163,22 @@ const BrandingContext = createContext<BrandingContextType>({
 
 export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { language, t } = useTranslation();
-  const [siteNameFa, setSiteNameFa] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      const cached = localStorage.getItem('branding_site_name_fa');
-      if (cached) return cached;
-    }
-    return DEFAULT_BRANDING.siteNameFa;
-  });
-  const [siteNameEn, setSiteNameEn] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      const cached = localStorage.getItem('branding_site_name_en');
-      if (cached) return cached;
-    }
-    return DEFAULT_BRANDING.siteNameEn;
-  });
-  const [siteTaglineFa, setSiteTaglineFa] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      const cached = localStorage.getItem('branding_site_tagline_fa');
-      if (cached) return cached;
-    }
-    return DEFAULT_BRANDING.siteTaglineFa;
-  });
-  const [siteTaglineEn, setSiteTaglineEn] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      const cached = localStorage.getItem('branding_site_tagline_en');
-      if (cached) return cached;
-    }
-    return DEFAULT_BRANDING.siteTaglineEn;
-  });
-  const [colorPalette, setColorPaletteState] = useState<ColorPalette>(() => {
-    if (typeof window !== 'undefined') {
-      const cached = localStorage.getItem('branding_color_palette') as ColorPalette;
-      if (cached) return cached;
-    }
-    return DEFAULT_BRANDING.colorPalette;
-  });
-  const [customPrimaryColor, setCustomPrimaryColor] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      const cached = localStorage.getItem('branding_custom_primary');
-      if (cached) return cached;
-    }
-    return DEFAULT_BRANDING.customPrimaryColor;
-  });
-  const [customSecondaryColor, setCustomSecondaryColor] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      const cached = localStorage.getItem('branding_custom_secondary');
-      if (cached) return cached;
-    }
-    return DEFAULT_BRANDING.customSecondaryColor;
-  });
-  const [canvasLightColor, setCanvasLightColor] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      const cached = localStorage.getItem('branding_canvas_light');
-      if (cached) return cached;
-    }
-    return DEFAULT_BRANDING.canvasLightColor;
-  });
-  const [canvasDarkColor, setCanvasDarkColor] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      const cached = localStorage.getItem('branding_canvas_dark');
-      if (cached) return cached;
-    }
-    return DEFAULT_BRANDING.canvasDarkColor;
-  });
-  const [enableLanguageSwitcher, setEnableLanguageSwitcher] = useState<boolean>(() => {
-    if (typeof window !== 'undefined') {
-      const cached = localStorage.getItem('branding_enable_language_switcher');
-      if (cached !== null) return cached === 'true';
-    }
-    return DEFAULT_BRANDING.enableLanguageSwitcher;
-  });
-  const [enableIdentityAndBirthCert, setEnableIdentityAndBirthCert] = useState<boolean>(() => {
-    if (typeof window !== 'undefined') {
-      const cached = localStorage.getItem('branding_enable_identity_birth_cert');
-      if (cached !== null) return cached === 'true';
-    }
-    return DEFAULT_BRANDING.enableIdentityAndBirthCert;
-  });
-  const [enableNextjsToolbar, setEnableNextjsToolbar] = useState<boolean>(() => {
-    if (typeof window !== 'undefined') {
-      const cached = localStorage.getItem('branding_enable_nextjs_toolbar');
-      if (cached !== null) return cached === 'true';
-    }
-    return DEFAULT_BRANDING.enableNextjsToolbar;
-  });
-  const [logoUrl, setLogoUrl] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      const cached = localStorage.getItem('branding_logo_url');
-      if (cached) return cached;
-    }
-    return resolveMediaUrl(DEFAULT_BRANDING.logoUrl);
-  });
-  const [faviconUrl, setFaviconUrl] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      const cached = localStorage.getItem('branding_favicon_url');
-      if (cached) return cached;
-    }
-    return resolveMediaUrl(DEFAULT_BRANDING.faviconUrl);
-  });
-  const [fontFamily, setFontFamilyState] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      const cached = localStorage.getItem('branding_font_family');
-      if (cached) return cached;
-    }
-    return DEFAULT_BRANDING.fontFamily;
-  });
-  const [customFontData, setCustomFontDataState] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      const cached = localStorage.getItem('branding_custom_font_data');
-      if (cached) return cached;
-    }
-    return DEFAULT_BRANDING.customFontData;
-  });
+  const [siteNameFa, setSiteNameFa] = useState<string>(DEFAULT_BRANDING.siteNameFa);
+  const [siteNameEn, setSiteNameEn] = useState<string>(DEFAULT_BRANDING.siteNameEn);
+  const [siteTaglineFa, setSiteTaglineFa] = useState<string>(DEFAULT_BRANDING.siteTaglineFa);
+  const [siteTaglineEn, setSiteTaglineEn] = useState<string>(DEFAULT_BRANDING.siteTaglineEn);
+  const [colorPalette, setColorPaletteState] = useState<ColorPalette>(DEFAULT_BRANDING.colorPalette);
+  const [customPrimaryColor, setCustomPrimaryColor] = useState<string>(DEFAULT_BRANDING.customPrimaryColor);
+  const [customSecondaryColor, setCustomSecondaryColor] = useState<string>(DEFAULT_BRANDING.customSecondaryColor);
+  const [canvasLightColor, setCanvasLightColor] = useState<string>(DEFAULT_BRANDING.canvasLightColor);
+  const [canvasDarkColor, setCanvasDarkColor] = useState<string>(DEFAULT_BRANDING.canvasDarkColor);
+  const [enableLanguageSwitcher, setEnableLanguageSwitcher] = useState<boolean>(DEFAULT_BRANDING.enableLanguageSwitcher);
+  const [enableIdentityAndBirthCert, setEnableIdentityAndBirthCert] = useState<boolean>(DEFAULT_BRANDING.enableIdentityAndBirthCert);
+  const [enableNextjsToolbar, setEnableNextjsToolbar] = useState<boolean>(DEFAULT_BRANDING.enableNextjsToolbar);
+  const [logoUrl, setLogoUrl] = useState<string>(resolveMediaUrl(DEFAULT_BRANDING.logoUrl));
+  const [faviconUrl, setFaviconUrl] = useState<string>(resolveMediaUrl(DEFAULT_BRANDING.faviconUrl));
+  const [fontFamily, setFontFamilyState] = useState<string>(DEFAULT_BRANDING.fontFamily);
+  const [customFontData, setCustomFontDataState] = useState<string>(DEFAULT_BRANDING.customFontData);
 
   // Apply or suppress Next.js dev toolbar
   const applyNextjsToolbar = useCallback((enable: boolean) => {
@@ -693,6 +597,12 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       applyCanvasColors(DEFAULT_BRANDING.canvasLightColor, DEFAULT_BRANDING.canvasDarkColor);
       applyFontFamily(DEFAULT_BRANDING.fontFamily, '');
 
+      const cachedSiteNameFa = localStorage.getItem('branding_site_name_fa');
+      const cachedSiteNameEn = localStorage.getItem('branding_site_name_en');
+      const cachedTaglineFa = localStorage.getItem('branding_site_tagline_fa');
+      const cachedTaglineEn = localStorage.getItem('branding_site_tagline_en');
+      const cachedLogo = localStorage.getItem('branding_logo_url');
+      const cachedFavicon = localStorage.getItem('branding_favicon_url');
       const cachedPalette = localStorage.getItem('branding_color_palette') as ColorPalette;
       const cachedPrimary = localStorage.getItem('branding_custom_primary') || '';
       const cachedSecondary = localStorage.getItem('branding_custom_secondary') || '';
@@ -704,6 +614,12 @@ export const BrandingProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       const cachedFont = localStorage.getItem('branding_font_family') || 'Vazirmatn';
       const cachedCustomFont = localStorage.getItem('branding_custom_font_data') || '';
 
+      if (cachedSiteNameFa) setSiteNameFa(cachedSiteNameFa);
+      if (cachedSiteNameEn) setSiteNameEn(cachedSiteNameEn);
+      if (cachedTaglineFa) setSiteTaglineFa(cachedTaglineFa);
+      if (cachedTaglineEn) setSiteTaglineEn(cachedTaglineEn);
+      if (cachedLogo) setLogoUrl(cachedLogo);
+      if (cachedFavicon) setFaviconUrl(cachedFavicon);
       if (cachedPrimary) setCustomPrimaryColor(cachedPrimary);
       if (cachedSecondary) setCustomSecondaryColor(cachedSecondary);
       if (cachedCanvasLight) setCanvasLightColor(cachedCanvasLight);
