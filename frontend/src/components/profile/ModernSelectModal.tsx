@@ -72,6 +72,14 @@ export const ModernSelectModal: React.FC<ModernSelectModalProps> = ({
     });
   }, [options, search, t]);
 
+  const showNoneOption = useMemo(() => {
+    if (required) return false;
+    if (!search.trim()) return true;
+    const q = search.trim().toLowerCase();
+    const noneLabel = t('-- Without Selection / None --').toLowerCase();
+    return noneLabel.includes(q) || 'none'.includes(q) || 'without'.includes(q);
+  }, [required, search, t]);
+
   const triggerClass = `w-full px-3.5 py-2.5 text-sm rounded-xl border flex items-center justify-between text-start transition-all cursor-pointer ${
     disabled ? 'opacity-60 cursor-not-allowed bg-slate-100 dark:bg-gray-800' : ''
   } ${
@@ -119,7 +127,7 @@ export const ModernSelectModal: React.FC<ModernSelectModalProps> = ({
       </div>
 
       {/* Modern Picker Modal */}
-      <Modal isOpen={isOpen} onClose={closeModal} className="max-w-lg w-full">
+      <Modal isOpen={isOpen} onClose={closeModal} showCloseButton={false} className="max-w-lg w-full">
         <div className="p-5 sm:p-6 flex flex-col max-h-[85vh]">
           {/* Header */}
           <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-gray-800 mb-4">
@@ -134,7 +142,9 @@ export const ModernSelectModal: React.FC<ModernSelectModalProps> = ({
             <button
               type="button"
               onClick={closeModal}
-              className="text-slate-400 hover:text-slate-600 dark:hover:text-gray-200 p-1 rounded-lg"
+              title={t('Close')}
+              aria-label={t('Close')}
+              className="text-slate-400 hover:text-slate-600 dark:hover:text-gray-200 p-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-gray-800 transition-colors"
             >
               <svg className="w-5 h-5 fill-current" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -150,9 +160,11 @@ export const ModernSelectModal: React.FC<ModernSelectModalProps> = ({
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder={t('Search...')}
-                className="w-full px-3.5 py-2 pl-9 text-sm border border-slate-300 dark:border-gray-700 rounded-xl bg-slate-50 dark:bg-gray-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)]"
+                className={`w-full py-2 text-sm border border-slate-300 dark:border-gray-700 rounded-xl bg-slate-50 dark:bg-gray-800 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] ${
+                  isRTL ? 'pr-9 pl-8' : 'pl-9 pr-8'
+                }`}
               />
-              <div className="absolute top-2.5 left-3 text-slate-400 pointer-events-none">
+              <div className={`absolute top-2.5 ${isRTL ? 'right-3' : 'left-3'} text-slate-400 pointer-events-none`}>
                 <svg className="w-4 h-4 fill-none stroke-current" strokeWidth="2" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
@@ -161,7 +173,9 @@ export const ModernSelectModal: React.FC<ModernSelectModalProps> = ({
                 <button
                   type="button"
                   onClick={() => setSearch('')}
-                  className="absolute top-2.5 right-3 text-slate-400 hover:text-slate-600 dark:hover:text-gray-200"
+                  title={t('Clear')}
+                  aria-label={t('Clear')}
+                  className={`absolute top-2.5 ${isRTL ? 'left-3' : 'right-3'} text-slate-400 hover:text-slate-600 dark:hover:text-gray-200 p-0.5`}
                 >
                   <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -174,7 +188,7 @@ export const ModernSelectModal: React.FC<ModernSelectModalProps> = ({
           {/* Options List */}
           <div className="overflow-y-auto space-y-1.5 flex-1 pr-1 -mr-1 py-1">
             {/* None / Clear Option */}
-            {!required && (
+            {showNoneOption && (
               <div
                 role="button"
                 tabIndex={0}
