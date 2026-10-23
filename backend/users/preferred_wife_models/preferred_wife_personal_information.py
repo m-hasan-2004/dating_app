@@ -15,7 +15,9 @@ class PreferredWifePersonalInformation(models.Model):
         max_length=50,
         error_messages=PersonalInfoErrorMessages.EDUCATION,
         help_text=PersonalInfoHelpText.EDUCATION,
-        validators=[PreferredWifePersonalInformationValidator.education_validator],
+        blank=True,
+        null=True,
+        default="",
     )
     field_of_study = models.CharField(
         _("Field of Study"),

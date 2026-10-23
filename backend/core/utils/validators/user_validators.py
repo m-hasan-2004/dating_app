@@ -48,11 +48,11 @@ class PhysicalInformationValidator(PreferredWifePhysicalInformationValidator):
         message=_("Glasses size must be a valid number"),
     )
 
+    @staticmethod
     def validate_disease_info(disease_or_surgery, medication_type):
-        if disease_or_surgery and not medication_type:
-            raise ValidationError(_("Please provide medication/surgery/disease type"))
-        if not disease_or_surgery and medication_type:
-            raise ValidationError(_("Cannot provide medication type without disease history"))
+        if disease_or_surgery:
+            if not medication_type or not str(medication_type).strip() or str(medication_type).strip() == "None":
+                raise ValidationError(_("Please provide medication/surgery/disease type"))
 
 
 class IntroducedSubjectsValidator:
@@ -165,13 +165,13 @@ class IntellectualInformationValidator:
     @staticmethod
     def validate_pros_cons(value):
         """Validate pros and cons fields."""
-        if len(value.strip()) > 1000:
+        if value and len(str(value).strip()) > 1000:
             raise ValidationError(_("Description must not exceed 1000 characters"))
 
     @staticmethod
     def validate_friends_connection_reason(value):
         """Validate friends connection reason field."""
-        if len(value.strip()) > 100:
+        if value and len(str(value).strip()) > 100:
             raise ValidationError(_("Friends connection reason must not exceed 100 characters"))
 
     @staticmethod
@@ -217,13 +217,7 @@ class IntellectualInformationValidator:
             if worship_prayer == 'five_times' and fasting in ['disagree', 'not_obligated']:
                 errors['religious_consistency'] = _("Prayer and fasting habits appear inconsistent")
 
-        # Validate political orientation and velayat faqih opinion consistency
-        political_orientation = data.get('political_orientation')
-        opinion_velayat_faqih = data.get('opinion_velayat_faqih')
-
-        if political_orientation and opinion_velayat_faqih:
-            if political_orientation and opinion_velayat_faqih == 'no_opinion':
-                errors['political_consistency'] = _("Political orientation and Velayat Faqih opinion appear inconsistent")
+        # Political orientation consistency validation removed
 
         # Validate religious activities consistency
         participating_prayer_quran = data.get('participating_prayer_quran_meetings')

@@ -9,6 +9,7 @@ import MultiRecordSection from '@/components/profile/MultiRecordSection';
 import DisplayRow from '@/components/profile/DisplayRow';
 import FormField, { useFormState, SelectOption } from '@/components/profile/FormField';
 import { toArray, formatMultiValue } from '@/components/profile/profileUtils';
+import { toPersianDigits } from '@/utils/formatters';
 import { formatApiError, bottomErrorMessage } from '@/utils/errorFormatter';
 import type {
   PreferredWifeIntellectualInformation,
@@ -63,11 +64,11 @@ const AGE_DIFF_OPTIONS: SelectOption[] = [
 ];
 
 const IMPORTANCE_OPTIONS: SelectOption[] = [
-  { value: 'too_much', label: 'Too Much' },
-  { value: 'much', label: 'Much' },
-  { value: 'any', label: 'Any / Average' },
-  { value: 'low', label: 'Low' },
-  { value: 'doesnt_matter', label: "Doesn't Matter" },
+  { value: 'Too Much', label: 'Too Much' },
+  { value: 'Much', label: 'Much' },
+  { value: 'Any', label: 'Any / Average' },
+  { value: 'Low', label: 'Low' },
+  { value: "Doesn't Matter", label: "Doesn't Matter" },
 ];
 
 const MARRIAGE_EXP_OPTIONS: SelectOption[] = [
@@ -101,7 +102,7 @@ const SPOUSE_RESIDENCE_LOCATIONS: SelectOption[] = [
 ].map((v) => ({ value: v, label: v }));
 
 const SKIN_COLOR_OPTIONS: SelectOption[] = [
-  'Very Bright', 'Bor', 'Fair', 'White', 'Wheat', 'Greenish', 'Olive',
+  'Very Bright', 'Bor', 'Fair', 'White', 'Wheat', 'Normal', 'Greenish', 'Olive',
   'Darken', 'Black', 'Bright Brown', 'Darken Brown', 'Bright', 'Yellow',
   'Whitish White', 'Red & White', 'Bright Greenish',
 ].map((v) => ({ value: v, label: v })).concat([
@@ -297,17 +298,36 @@ export function FutureSpouseOriginalitiesSection({
 /* ─── 2. PreferredWifeIntellectualSection ──────────────────────────────── */
 
 function defaultPrefIntellectualForm(data: PreferredWifeIntellectualInformation | null) {
+  const normImp = (v: any) => {
+    if (!v) return '';
+    const s = String(v).toLowerCase();
+    if (s === 'too_much') return 'Too Much';
+    if (s === 'much') return 'Much';
+    if (s === 'any' || s === 'avg' || s === 'average') return 'Any';
+    if (s === 'low') return 'Low';
+    if (s === 'doesnt_matter') return "Doesn't Matter";
+    return v;
+  };
+  const normDv = (v: any) => {
+    if (!v) return '';
+    const s = String(v).toLowerCase();
+    if (s === 'yes') return 'Yes';
+    if (s === 'no') return 'No';
+    if (s === 'depends') return 'Depends';
+    return v;
+  };
+
   return {
     appearance_type: toArray(data?.appearance_type) as AppearanceTypeEnum[],
     age_difference: toArray(data?.age_difference) as AgeDifferenceEnum[],
-    future_spouse_family_religious_status_importance: data?.future_spouse_family_religious_status_importance ?? ('' as ImportanceEnum),
-    future_spouse_family_financial_status_importance: data?.future_spouse_family_financial_status_importance ?? ('' as ImportanceEnum),
+    future_spouse_family_religious_status_importance: normImp(data?.future_spouse_family_religious_status_importance) as ImportanceEnum,
+    future_spouse_family_financial_status_importance: normImp(data?.future_spouse_family_financial_status_importance) as ImportanceEnum,
     marriage_with_someone_with_marriage_experience: toArray(data?.marriage_with_someone_with_marriage_experience) as MarriageWithExperienceEnum[],
-    marriage_with_someone_explanation: data?.marriage_with_someone_explanation ?? '',
-    most_important_moral_feature: data?.most_important_moral_feature ?? '',
-    marriage_with_disabled_person: data?.marriage_with_disabled_person ?? ('' as DisabledVeteranEnum),
-    marriage_with_veteran_person: data?.marriage_with_veteran_person ?? ('' as DisabledVeteranEnum),
-    marriage_disabled_veteran_explanation: data?.marriage_disabled_veteran_explanation ?? '',
+    marriage_with_someone_explanation: data?.marriage_with_someone_explanation ?? (data as any)?.additional_explnation_marriage_with_someone ?? '',
+    most_important_moral_feature: data?.most_important_moral_feature ?? (data as any)?.most_important_moral_feature_of_future_spouse ?? '',
+    marriage_with_disabled_person: normDv(data?.marriage_with_disabled_person ?? (data as any)?.marriage_with_disabled) as DisabledVeteranEnum,
+    marriage_with_veteran_person: normDv(data?.marriage_with_veteran_person ?? (data as any)?.marriage_with_veteran) as DisabledVeteranEnum,
+    marriage_disabled_veteran_explanation: data?.marriage_disabled_veteran_explanation ?? (data as any)?.marriage_with_veteran_disabled_explanation ?? '',
     red_flags: data?.red_flags ?? '',
   };
 }
@@ -345,8 +365,16 @@ export function PreferredWifeIntellectualSection({
         ...state,
         future_spouse_family_religious_status_importance: state.future_spouse_family_religious_status_importance || null,
         future_spouse_family_financial_status_importance: state.future_spouse_family_financial_status_importance || null,
+        marriage_with_disabled: state.marriage_with_disabled_person || null,
         marriage_with_disabled_person: state.marriage_with_disabled_person || null,
+        marriage_with_veteran: state.marriage_with_veteran_person || null,
         marriage_with_veteran_person: state.marriage_with_veteran_person || null,
+        most_important_moral_feature: state.most_important_moral_feature || '',
+        most_important_moral_feature_of_future_spouse: state.most_important_moral_feature || '',
+        additional_explnation_marriage_with_someone: state.marriage_with_someone_explanation || '',
+        marriage_with_someone_explanation: state.marriage_with_someone_explanation || '',
+        marriage_with_veteran_disabled_explanation: state.marriage_disabled_veteran_explanation || '',
+        marriage_disabled_veteran_explanation: state.marriage_disabled_veteran_explanation || '',
       };
       if (data?.id) {
         await updatePreferredWifeIntellectualInformation(data.id, payload as any);
@@ -369,13 +397,13 @@ export function PreferredWifeIntellectualSection({
       <ProfileSection title="Preferred Wife Intellectual Information" onEdit={openModal} isEmpty={!data} isCollapsed={isCollapsed} onToggleCollapse={onToggleCollapse}>
         <DisplayRow label="Appearance Type" value={formatMultiValue(data?.appearance_type, APPEARANCE_OPTIONS, t)} />
         <DisplayRow label="Age Difference" value={formatMultiValue(data?.age_difference, AGE_DIFF_OPTIONS, t)} />
-        <DisplayRow label="Family Religious Status Importance" value={data?.future_spouse_family_religious_status_importance} />
-        <DisplayRow label="Family Financial Status Importance" value={data?.future_spouse_family_financial_status_importance} />
+        <DisplayRow label="Family Religious Status Importance" value={formatMultiValue(data?.future_spouse_family_religious_status_importance, IMPORTANCE_OPTIONS, t)} />
+        <DisplayRow label="Family Financial Status Importance" value={formatMultiValue(data?.future_spouse_family_financial_status_importance, IMPORTANCE_OPTIONS, t)} />
         <DisplayRow label="Marriage with Experienced" value={formatMultiValue(data?.marriage_with_someone_with_marriage_experience, MARRIAGE_EXP_OPTIONS, t)} />
         <DisplayRow label="Marriage Experience Explanation" value={data?.marriage_with_someone_explanation} />
-        <DisplayRow label="Most Important Moral Feature" value={data?.most_important_moral_feature} />
-        <DisplayRow label="Marriage with Disabled Person" value={data?.marriage_with_disabled_person} />
-        <DisplayRow label="Marriage with Veteran" value={data?.marriage_with_veteran_person} />
+        <DisplayRow label="Most Important Moral Feature" value={data?.most_important_moral_feature || (data as any)?.most_important_moral_feature_of_future_spouse} />
+        <DisplayRow label="Marriage with Disabled Person" value={formatMultiValue(data?.marriage_with_disabled_person ?? (data as any)?.marriage_with_disabled, DISABLED_VETERAN_OPTIONS, t)} />
+        <DisplayRow label="Marriage with Veteran" value={formatMultiValue(data?.marriage_with_veteran_person ?? (data as any)?.marriage_with_veteran, DISABLED_VETERAN_OPTIONS, t)} />
         <DisplayRow label="Disabled / Veteran Explanation" value={data?.marriage_disabled_veteran_explanation} />
         <DisplayRow label="Red Flags / Don'ts" value={data?.red_flags} />
       </ProfileSection>
@@ -413,11 +441,11 @@ export function PreferredWifeIntellectualSection({
 
 function defaultPrefPersonalForm(data: PreferredWifePersonalInformation | null) {
   return {
-    education_level: data?.education_level ?? '',
+    education_level: data?.education_level ?? (data as any)?.education ?? '',
     field_of_study: data?.field_of_study ?? '',
     future_spouse_job: toArray(data?.future_spouse_job) as FutureSpouseJobEnum[],
     current_residence_location: data?.current_residence_location ?? '',
-    after_marriage_residence_location: data?.after_marriage_residence_location ?? ('' as AfterMarriageResidenceLocationEnum),
+    after_marriage_residence_location: toArray(data?.after_marriage_residence_location) as AfterMarriageResidenceLocationEnum[],
   };
 }
 
@@ -490,7 +518,7 @@ export function PreferredWifePersonalSection({
             <FormField label="Field of Study" name="field_of_study" type="text" value={state.field_of_study} onChange={handleChange} error={fieldErrors.field_of_study} />
             <FormField label="Future Spouse Job" name="future_spouse_job" type="multiselect" value={state.future_spouse_job} onChange={handleChange} options={SPOUSE_JOB_OPTIONS} error={fieldErrors.future_spouse_job} />
             <FormField label="Current Residence Location" name="current_residence_location" type="text" value={state.current_residence_location} onChange={handleChange} error={fieldErrors.current_residence_location} />
-            <FormField label="After Marriage Residence Location" name="after_marriage_residence_location" type="select" value={state.after_marriage_residence_location} onChange={handleChange} options={SPOUSE_RESIDENCE_LOCATIONS} error={fieldErrors.after_marriage_residence_location} />
+            <FormField label="After Marriage Residence Location" name="after_marriage_residence_location" type="multiselect" value={state.after_marriage_residence_location} onChange={handleChange} options={SPOUSE_RESIDENCE_LOCATIONS} error={fieldErrors.after_marriage_residence_location} />
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
@@ -544,12 +572,22 @@ export function PreferredWifePhysicalSection({
     setError('');
     setFieldErrors({});
     try {
+      const hMin = state.height_min ? Number(state.height_min) : null;
+      const hMax = state.height_max ? Number(state.height_max) : null;
+      const wMin = state.weight_min ? Number(state.weight_min) : null;
+      const wMax = state.weight_max ? Number(state.weight_max) : null;
+
+      const hVal = hMin && hMax ? (hMin + hMax) / 2.0 : (hMin || hMax || 165.0);
+      const wVal = wMin && wMax ? (wMin + wMax) / 2.0 : (wMin || wMax || 60.0);
+
       const payload = {
         ...state,
-        height_min: state.height_min ? Number(state.height_min) : null,
-        height_max: state.height_max ? Number(state.height_max) : null,
-        weight_min: state.weight_min ? Number(state.weight_min) : null,
-        weight_max: state.weight_max ? Number(state.weight_max) : null,
+        height: hVal,
+        weight: wVal,
+        height_min: hMin,
+        height_max: hMax,
+        weight_min: wMin,
+        weight_max: wMax,
       };
       if (data?.id) {
         await updatePreferredWifePhysicalInformation(data.id, payload as any);
@@ -573,16 +611,16 @@ export function PreferredWifePhysicalSection({
         <DisplayRow
           label="Height Range"
           value={
-            data?.height_min || data?.height_max
-              ? `${data.height_min ?? '—'} ${isRTL ? 'تا' : 'to'} ${data.height_max ?? '—'} ${isRTL ? 'سانتی‌متر' : 'cm'}`
+            data?.height_min || data?.height_max || data?.height
+              ? `${isRTL ? toPersianDigits(data.height_min ?? data.height ?? '—') : (data.height_min ?? data.height ?? '—')} ${isRTL ? 'تا' : 'to'} ${isRTL ? toPersianDigits(data.height_max ?? data.height ?? '—') : (data.height_max ?? data.height ?? '—')} ${isRTL ? 'سانتی‌متر' : 'cm'}`
               : null
           }
         />
         <DisplayRow
           label="Weight Range"
           value={
-            data?.weight_min || data?.weight_max
-              ? `${data.weight_min ?? '—'} ${isRTL ? 'تا' : 'to'} ${data.weight_max ?? '—'} ${isRTL ? 'کیلوگرم' : 'kg'}`
+            data?.weight_min || data?.weight_max || data?.weight
+              ? `${isRTL ? toPersianDigits(data.weight_min ?? data.weight ?? '—') : (data.weight_min ?? data.weight ?? '—')} ${isRTL ? 'تا' : 'to'} ${isRTL ? toPersianDigits(data.weight_max ?? data.weight ?? '—') : (data.weight_max ?? data.weight ?? '—')} ${isRTL ? 'کیلوگرم' : 'kg'}`
               : null
           }
         />
@@ -605,7 +643,7 @@ export function PreferredWifePhysicalSection({
                   const active = String(state.height_min || '') === p.min && String(state.height_max || '') === p.max;
                   return (
                     <button
-                      key={p.label}
+                      key={isRTL ? toPersianDigits(p.label).replace("<", "کمتر از ").replace("+", " به بالا") : p.label}
                       type="button"
                       onClick={() => {
                         if (active) {
@@ -622,7 +660,7 @@ export function PreferredWifePhysicalSection({
                           : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-transparent hover:bg-gray-200 dark:hover:bg-gray-700'
                       }`}
                     >
-                      {p.label}
+                      {isRTL ? toPersianDigits(p.label).replace("<", "کمتر از ").replace("+", " به بالا") : p.label}
                     </button>
                   );
                 })}
@@ -639,7 +677,7 @@ export function PreferredWifePhysicalSection({
                   const active = String(state.weight_min || '') === p.min && String(state.weight_max || '') === p.max;
                   return (
                     <button
-                      key={p.label}
+                      key={isRTL ? toPersianDigits(p.label).replace("<", "کمتر از ").replace("+", " به بالا") : p.label}
                       type="button"
                       onClick={() => {
                         if (active) {
@@ -656,7 +694,7 @@ export function PreferredWifePhysicalSection({
                           : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-transparent hover:bg-gray-200 dark:hover:bg-gray-700'
                       }`}
                     >
-                      {p.label}
+                      {isRTL ? toPersianDigits(p.label).replace("<", "کمتر از ").replace("+", " به بالا") : p.label}
                     </button>
                   );
                 })}

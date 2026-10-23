@@ -33,18 +33,27 @@ class IntellectualInformation(models.Model):
         help_text=IntellectualInfoHelpText.PROS_OF_YOURSELF,
         error_messages=IntellectualInfoErrorMessages.PROS_OF_YOURSELF,
         validators=[IntellectualInformationValidator.validate_pros_cons],
+        blank=True,
+        null=True,
+        default="",
     )
     cons_of_yourself = models.TextField(
         _("Cons Of Yourself"),
         help_text=IntellectualInfoHelpText.CONS_OF_YOURSELF,
         error_messages=IntellectualInfoErrorMessages.CONS_OF_YOURSELF,
         validators=[IntellectualInformationValidator.validate_pros_cons],
+        blank=True,
+        null=True,
+        default="",
     )
     type_connection_friends = models.CharField(
         _("Type of Connection With Friends"),
         choices=IntellectualInformationChoices.FRIENDS_CONNECTION_TYPE,
         help_text=IntellectualInfoHelpText.TYPE_CONNECTION_FRIENDS,
         error_messages=IntellectualInfoErrorMessages.TYPE_CONNECTION_FRIENDS,
+        blank=True,
+        null=True,
+        default="",
     )
     friends_connection_reason = models.CharField(
         _("Friends Connection Reason"),
@@ -52,11 +61,17 @@ class IntellectualInformation(models.Model):
         help_text=IntellectualInfoHelpText.FRIENDS_CONNECTION_REASON,
         error_messages=IntellectualInfoErrorMessages.FRIENDS_CONNECTION_REASON,
         validators=[IntellectualInformationValidator.validate_friends_connection_reason],
+        blank=True,
+        null=True,
+        default="",
     )
     political_orientation = models.BooleanField(
         _("Political Orientation"),
         help_text=IntellectualInfoHelpText.POLITICAL_ORIENTATION,
         error_messages=IntellectualInfoErrorMessages.POLITICAL_ORIENTATION,
+        default=False,
+        blank=True,
+        null=True,
     )
     opinion_velayat_faqih = models.CharField(
         _("Opinion About Velayat Faqih"),
@@ -65,23 +80,26 @@ class IntellectualInformation(models.Model):
         error_messages=IntellectualInfoErrorMessages.OPINION_VELAYAT_FAQIH,
         db_index=True,
     )
-    opinion_child_quantity = models.CharField(
+    opinion_child_quantity = MultiSelectField(
         _("Opinion About Child Quantity"),
         choices=IntellectualInformationChoices.CHILD_QUANTITY_OPTIONS,
         help_text=IntellectualInfoHelpText.OPINION_CHILD_QUANTITY,
         error_messages=IntellectualInfoErrorMessages.OPINION_CHILD_QUANTITY,
+        blank=True,
     )
-    contract_how = models.CharField(
+    contract_how = MultiSelectField(
         _("Contract How & What"),
         choices=IntellectualInformationChoices.CONTRACT_HOW_OPTIONS,
         help_text=IntellectualInfoHelpText.CONTRACT_HOW,
         error_messages=IntellectualInfoErrorMessages.CONTRACT_HOW,
+        blank=True,
     )
-    wedding_how = models.CharField(
+    wedding_how = MultiSelectField(
         _("Wedding How & What"),
         choices=IntellectualInformationChoices.WEDDING_HOW_OPTIONS,
         help_text=IntellectualInfoHelpText.WEDDING_HOW,
         error_messages=IntellectualInfoErrorMessages.WEDDING_HOW,
+        blank=True,
     )
     worship_prayer = models.CharField(
         _("Worship and Prayer"),
@@ -135,11 +153,12 @@ class IntellectualInformation(models.Model):
         help_text=IntellectualInfoHelpText.DANCE_SINGING_ASSEMBLIES,
         error_messages=IntellectualInfoErrorMessages.DANCE_SINGING_ASSEMBLIES,
     )
-    opinion_innocent_contact = models.CharField(
+    opinion_innocent_contact = MultiSelectField(
         _("Opinion About Innocent Contact"),
         choices=IntellectualInformationChoices.OPINION_INNOCENT_CONTACT_OPTIONS,
         help_text=IntellectualInfoHelpText.OPINION_INNOCENT_CONTACT,
         error_messages=IntellectualInfoErrorMessages.OPINION_INNOCENT_CONTACT,
+        blank=True,
     )
     cover_type_innocent_contact = MultiSelectField(
         _("Cover Type in Contact of Innocent"),

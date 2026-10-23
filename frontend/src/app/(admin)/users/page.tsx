@@ -22,8 +22,8 @@ import {
 import UserCalendarEventsModal from '@/components/users/UserCalendarEventsModal';
 import { useAuth } from '@/hooks/use-auth';
 import { useTranslation } from '@/context/LanguageContext';
-import { formatDate, formatIranianPhoneNumber, formatNumber, toPersianDigits } from '@/utils/formatters';
-import { fetchUserProfileCompletion, ProfileCompletionResult } from '@/utils/profileCompletion';
+import { formatDate, formatIranianPhoneNumber, formatNumber, toPersianDigits, toEnglishDigits } from '@/utils/formatters';
+import { fetchBatchProfileCompletion, ProfileCompletionResult } from '@/utils/profileCompletion';
 import { useRouter } from 'next/navigation';
 
 const PAGE_SIZE_OPTIONS = [5, 10, 20, 50, 100];
@@ -89,7 +89,7 @@ export default function UsersListPage() {
         page_size: pageSize,
       };
       if (searchQuery.trim()) {
-        params.search = searchQuery.trim();
+        params.search = toEnglishDigits(searchQuery.trim());
       }
       if (statusFilter === 'active') {
         params.is_active = 'true';
@@ -114,21 +114,13 @@ export default function UsersListPage() {
         setTotalCount(res.count ?? 0);
       }
 
-      // Fetch profile completion for each user on current page in background
+      // Fetch profile completion for each user on current page in single batch
       if (loadedUsers.length > 0) {
-        Promise.all(
-          loadedUsers.map(async (u) => {
-            const comp = await fetchUserProfileCompletion(u.id);
-            return { id: u.id, comp };
-          })
-        ).then((results) => {
-          setCompletionMap((prev) => {
-            const next = { ...prev };
-            results.forEach((r) => {
-              next[r.id] = r.comp;
-            });
-            return next;
-          });
+        fetchBatchProfileCompletion(loadedUsers.map((u) => u.id)).then((batchMap) => {
+          setCompletionMap((prev) => ({
+            ...prev,
+            ...batchMap,
+          }));
         });
       }
     } catch (e: any) {

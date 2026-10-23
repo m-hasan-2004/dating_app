@@ -115,20 +115,24 @@ class EngagementOrWeddingStatus(models.Model):
         _("Contract Length"),
         max_length=50,
         help_text=FamilyInfoHelpText.CONTRACT_LENGTH,
-        default=0,
+        default="",
+        blank=True,
+        null=True,
     )
     living_length = models.CharField(
         _("Living Length"),
         max_length=50,
         help_text=FamilyInfoHelpText.LIVING_LENGTH,
-        default=0,
+        default="",
+        blank=True,
+        null=True,
     )
     death_date = models.DateField(
-        _("Death Date"), blank=True, null=True, help_text=FamilyInfoHelpText.DEATH_DATE
+        _("Death Date"), blank=True, null=True, default=None, help_text=FamilyInfoHelpText.DEATH_DATE
     )
     divorce_date = models.DateField(
         _("Divorce Date"),
-        default=timezone.localtime,
+        default=None,
         blank=True,
         null=True,
         help_text=FamilyInfoHelpText.DIVORCE_DATE,
@@ -136,8 +140,9 @@ class EngagementOrWeddingStatus(models.Model):
     reason_for_divorce_or_death = models.CharField(
         _("Reason for Divorce or Death"),
         max_length=100,
-        blank=False,
+        blank=True,
         null=True,
+        default="",
         help_text=FamilyInfoHelpText.REASON_FOR_DIVORCE_OR_DEATH,
     )
     user = models.OneToOneField(

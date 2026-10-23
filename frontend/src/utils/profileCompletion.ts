@@ -212,7 +212,52 @@ export function computeProfileCompletion(raw: {
   };
 }
 
+import { apiClient } from '@/services/api/client';
+
+const profileCompletionCache = new Map<string, ProfileCompletionResult>();
+
+export async function fetchBatchProfileCompletion(userIds: string[]): Promise<Record<string, ProfileCompletionResult>> {
+  const result: Record<string, ProfileCompletionResult> = {};
+  const missingIds: string[] = [];
+  for (const id of userIds) {
+    if (profileCompletionCache.has(id)) {
+      result[id] = profileCompletionCache.get(id)!;
+    } else {
+      missingIds.push(id);
+    }
+  }
+  if (missingIds.length === 0) return result;
+
+  try {
+    const res = await apiClient<Record<string, ProfileCompletionResult>>('/api/users/batch_completion/', {
+      method: 'POST',
+      body: JSON.stringify({ user_ids: missingIds }),
+    });
+    if (res && typeof res === 'object') {
+      for (const [id, comp] of Object.entries(res)) {
+        const c = comp as ProfileCompletionResult;
+        profileCompletionCache.set(id, c);
+        result[id] = c;
+      }
+      return result;
+    }
+  } catch (err) {
+    // Fallback to individual calls
+  }
+
+  await Promise.all(
+    missingIds.map(async (id) => {
+      const comp = await fetchUserProfileCompletion(id);
+      result[id] = comp;
+    })
+  );
+  return result;
+}
+
 export async function fetchUserProfileCompletion(userId: string): Promise<ProfileCompletionResult> {
+  if (profileCompletionCache.has(userId)) {
+    return profileCompletionCache.get(userId)!;
+  }
   try {
     const [
       personalRes,
@@ -240,7 +285,7 @@ export async function fetchUserProfileCompletion(userId: string): Promise<Profil
       fetchFutureSpouseOriginalities({ user: userId } as any).catch(() => []),
     ]);
 
-    return computeProfileCompletion({
+    const res = computeProfileCompletion({
       personalInfo: extractFirst(personalRes as any),
       physicalInfo: extractFirst(physicalRes as any),
       familyInfo: extractFirst(familyRes as any),
@@ -253,6 +298,8 @@ export async function fetchUserProfileCompletion(userId: string): Promise<Profil
       prefWifePhysical: extractFirst(prefWifePhyRes as any),
       futureSpouseOriginalities: Array.isArray(spouseOrigRes) ? spouseOrigRes : (spouseOrigRes as any)?.results ?? [],
     });
+    profileCompletionCache.set(userId, res);
+    return res;
   } catch (err) {
     console.warn(`Failed to compute profile completion for user ${userId}:`, err);
     return {

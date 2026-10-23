@@ -152,6 +152,7 @@ const SKIN_OPTIONS = [
   { value: 'Fair', labelFa: 'سفید روشن', labelEn: 'Fair' },
   { value: 'White', labelFa: 'سفید', labelEn: 'White' },
   { value: 'Wheat', labelFa: 'گندمی', labelEn: 'Wheat' },
+  { value: 'Normal', labelFa: 'معمولی', labelEn: 'Normal' },
   { value: 'Greenish', labelFa: 'سبزه روشن', labelEn: 'Greenish' },
   { value: 'Olive', labelFa: 'سبزه', labelEn: 'Olive' },
   { value: 'Darken', labelFa: 'تیره', labelEn: 'Darken' },

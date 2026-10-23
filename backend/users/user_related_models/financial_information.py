@@ -111,7 +111,9 @@ class FinancialInformation(models.Model):
         max_length=50,
         error_messages=FinancialInformationErrorMessages.DOWRY_AMOUNT_ERROR_MESSAGES,
         help_text=FinancialInfoHelpText.DOWRY_AMOUNT,
-        validators=[FinancialInformationValidator.amount_validator],
+        blank=True,
+        null=True,
+        default="",
     )
     jahiziyeh = models.CharField(
         _("Future Spose Jahiziyeh"),

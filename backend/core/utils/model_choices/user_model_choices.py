@@ -134,6 +134,7 @@ class Choices:
         ("Fair", _("Fair")),
         ("White", _("White")),
         ("Wheat", _("Wheat")),
+        ("Normal", _("Normal")),
         ("Greenish", _("Greenish")),
         ("Olive", _("Olive")),
         ("Darken", _("Darken")),

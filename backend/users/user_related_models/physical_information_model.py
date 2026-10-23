@@ -85,14 +85,17 @@ class PhysicalInformation(models.Model):
         _("Disease or Surgery History"),
         error_messages=PhysicalInfoErrorMessages.DISEASE_OR_SURGERY,
         help_text=PhysicalInfoHelpText.DISEASE_OR_SURGERY,
-
+        default=False,
+        blank=True,
     )
     medication_surgery_disease_type = models.CharField(
         _("Medication/Surgery/Disease Type"),
         max_length=100,
         error_messages=PhysicalInfoErrorMessages.MEDICATION_SURGERY_DISEASE_TYPE,
         help_text=PhysicalInfoHelpText.MEDICATION_SURGERY_DISEASE_TYPE,
-        default="None",
+        default="",
+        blank=True,
+        null=True,
     )
 
     user = models.OneToOneField(

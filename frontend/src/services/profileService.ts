@@ -8,7 +8,7 @@ export type DepositEnum = 'no_deposit' | '-50' | '50-100' | '100-200' | '200-500
 export type InsuranceTypeEnum = 'tamin' | 'takmili' | 'darmani' | 'niroo_mosalah' | 'ommr' | 'iran' | 'asia' | 'dana' | 'moalem' | 'parsian' | 'pasargad' | 'saman' | 'melat' | 'ma' | 'alborz' | 'kosar' | 'karafarin' | 'novin' | 'day' | 'sarmad' | 'razi' | 'taavon' | 'hafez' | 'etkayii_iranian' | 'tejarat_no' | 'khavermiane' | 'hekmat_saba' | 'tosehe' | 'other';
 export type LeisureTypeEnum = 'park' | 'trip' | 'working_from_home' | 'mobile' | 'reading' | 'shrine' | 'jankaran' | 'cinema' | 'visiting_family' | 'sport' | 'poem' | 'garden';
 export type UsageCasesEnum = 'alcoholic_drinks' | 'drugs' | 'cigarettes' | 'hookah' | 'none';
-export type SkinColorEnum = 'Very Bright' | 'Bor' | 'Fair' | 'White' | 'Wheat' | 'Greenish' | 'Olive' | 'Darken' | 'Black' | 'Bright Brown' | 'Darken Brown' | 'Bright' | 'Yellow' | 'Whitish White' | 'Red & White' | 'Bright Greenish' | 'Other';
+export type SkinColorEnum = 'Very Bright' | 'Bor' | 'Fair' | 'White' | 'Wheat' | 'Normal' | 'Greenish' | 'Olive' | 'Darken' | 'Black' | 'Bright Brown' | 'Darken Brown' | 'Bright' | 'Yellow' | 'Whitish White' | 'Red & White' | 'Bright Greenish' | 'Other';
 export type EyesColorEnum = 'Green' | 'Light Blue' | 'Hazel' | 'Darken Blue' | 'Grey' | 'Honey' | 'Purple' | 'Light Brown' | 'Deep Brown' | 'Black';
 export type BloodTypeEnum = 'O+' | 'O-' | 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-';
 export type CharacterAndTemperamentEnum = 'Safravi' | 'Damvi' | 'Sodavi' | 'Balghami';
@@ -245,24 +245,24 @@ export interface IntellectualInformation {
   political_orientation: boolean;
   opinion_velayat_faqih?: VelayatFaqihEnum | null;
   opinion_about_velayat_faqih?: VelayatFaqihEnum | null;
-  opinion_child_quantity?: ChildQuantityEnum | null;
-  opinion_about_child_quantity?: ChildQuantityEnum | null;
-  contract_how?: ContractHowEnum | null;
-  wedding_how?: WeddingHowEnum | null;
+  opinion_child_quantity?: ChildQuantityEnum[] | ChildQuantityEnum | null;
+  opinion_about_child_quantity?: ChildQuantityEnum[] | ChildQuantityEnum | null;
+  contract_how?: ContractHowEnum[] | ContractHowEnum | null;
+  wedding_how?: WeddingHowEnum[] | WeddingHowEnum | null;
   worship_prayer?: WorshipAndPrayerEnum | null;
   worship_and_prayer?: WorshipAndPrayerEnum | null;
   fasting?: FastingEnum | null;
   fasting_explanation?: string | null;
-  cover_type_house?: CoverTypeHouseEnum | null;
-  cover_type_society?: CoverTypeSocietyEnum | null;
+  cover_type_house?: CoverTypeHouseEnum[] | CoverTypeHouseEnum | null;
+  cover_type_society?: CoverTypeSocietyEnum[] | CoverTypeSocietyEnum | null;
   participating_prayer_quran_meetings?: ParticipationEnum | null;
   participating_in_religious_meetings?: ParticipationEnum | null;
   music?: MusicEnum | null;
   dance_singing_assemblies?: DanceSingingEnum | null;
-  opinion_innocent_contact?: InnocentContactEnum | null;
-  opinion_about_innocent_contact?: InnocentContactEnum | null;
-  cover_type_innocent_contact?: CoverTypeInnocentContactEnum | null;
-  decision_making_choosing_spouse?: DecisionMakingEnum | null;
+  opinion_innocent_contact?: InnocentContactEnum[] | InnocentContactEnum | null;
+  opinion_about_innocent_contact?: InnocentContactEnum[] | InnocentContactEnum | null;
+  cover_type_innocent_contact?: CoverTypeInnocentContactEnum[] | CoverTypeInnocentContactEnum | null;
+  decision_making_choosing_spouse?: DecisionMakingEnum[] | DecisionMakingEnum | null;
   user: string;
 }
 

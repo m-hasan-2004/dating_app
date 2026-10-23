@@ -217,7 +217,51 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ["is_active", "is_staff", "is_superuser"]
-    search_fields = ["username", "email", "phone_number", "middle_man_code"]
+    search_fields = ["username", "email", "phone_number", "middle_man_code", "first_name", "last_name"]
+
+    def filter_queryset(self, queryset):
+        search_query = self.request.query_params.get("search", "").strip()
+        if search_query:
+            persian_digits = "۰۱۲۳۴۵۶۷۸۹"
+            arabic_digits = "٠١٢٣٤٥٦٧٨٩"
+            ascii_digits = "0123456789"
+            normalized_query = search_query
+            for p, a, d in zip(persian_digits, arabic_digits, ascii_digits):
+                normalized_query = normalized_query.replace(p, d).replace(a, d)
+
+            from django.db.models import Q
+            q_filter = (
+                Q(username__icontains=normalized_query)
+                | Q(username__icontains=search_query)
+                | Q(email__icontains=normalized_query)
+                | Q(first_name__icontains=normalized_query)
+                | Q(last_name__icontains=normalized_query)
+                | Q(middle_man_code__icontains=normalized_query)
+                | Q(phone_number__icontains=normalized_query)
+            )
+            clean_digits = re.sub(r"\D", "", normalized_query)
+            if clean_digits:
+                q_filter |= Q(phone_number__icontains=clean_digits)
+                q_filter |= Q(username__icontains=clean_digits)
+                if clean_digits.startswith("0") and len(clean_digits) == 11:
+                    q_filter |= Q(phone_number__icontains=clean_digits[1:])
+                    q_filter |= Q(phone_number__icontains="+98" + clean_digits[1:])
+                elif clean_digits.startswith("98") and len(clean_digits) == 12:
+                    q_filter |= Q(phone_number__icontains="0" + clean_digits[2:])
+                elif len(clean_digits) == 10 and clean_digits.startswith("9"):
+                    q_filter |= Q(phone_number__icontains="0" + clean_digits)
+                    q_filter |= Q(phone_number__icontains="+98" + clean_digits)
+
+            other_filters = {}
+            for field in self.filterset_fields:
+                val = self.request.query_params.get(field)
+                if val is not None:
+                    if str(val).lower() in ("true", "1"):
+                        other_filters[field] = True
+                    elif str(val).lower() in ("false", "0"):
+                        other_filters[field] = False
+            return queryset.filter(q_filter, **other_filters).distinct()
+        return super().filter_queryset(queryset)
     ordering_fields = ["date_joined", "username"]
 
     def get_permissions(self):
@@ -260,6 +304,77 @@ class UserViewSet(viewsets.ModelViewSet):
                 return get_object_or_404(self.get_queryset(), username=str(val))
         return super().get_object()
 
+    @action(detail=False, methods=["post"], permission_classes=[IsAuthenticated])
+    def batch_completion(self, request):
+        """Return completion percentage and readiness for a list of user IDs in a single query."""
+        user_ids = request.data.get("user_ids", [])
+        if not user_ids or not isinstance(user_ids, list):
+            return Response({}, status=status.HTTP_200_OK)
+
+        from users.user_related_models import (
+            PersonalInformation, PhysicalInformation, FamilyInformation,
+            Mother, Father, FinancialInformation, IntellectualInformation
+        )
+        from users.preferred_wife_models import (
+            PreferredWifeIntellectualInformation,
+            PreferredWifePersonalInformation,
+            PreferredWifePhysicalInformation,
+        )
+
+        has_personal = set(PersonalInformation.objects.filter(user_id__in=user_ids).values_list("user_id", flat=True))
+        has_physical = set(PhysicalInformation.objects.filter(user_id__in=user_ids).values_list("user_id", flat=True))
+        has_family = set(FamilyInformation.objects.filter(user_id__in=user_ids).values_list("user_id", flat=True))
+        has_mother = set(Mother.objects.filter(user_id__in=user_ids).values_list("user_id", flat=True))
+        has_father = set(Father.objects.filter(user_id__in=user_ids).values_list("user_id", flat=True))
+        has_financial = set(FinancialInformation.objects.filter(user_id__in=user_ids).values_list("user_id", flat=True))
+        has_intellectual = set(IntellectualInformation.objects.filter(user_id__in=user_ids).values_list("user_id", flat=True))
+        has_pw_intel = set(PreferredWifeIntellectualInformation.objects.filter(user_id__in=user_ids).values_list("user_id", flat=True))
+        has_pw_personal = set(PreferredWifePersonalInformation.objects.filter(user_id__in=user_ids).values_list("user_id", flat=True))
+        has_pw_physical = set(PreferredWifePhysicalInformation.objects.filter(user_id__in=user_ids).values_list("user_id", flat=True))
+
+        weights = {
+            "personalInfo": 20,
+            "physicalInfo": 10,
+            "familyInfo": 10,
+            "mother": 5,
+            "father": 5,
+            "financialInfo": 15,
+            "intellectualInfo": 15,
+            "prefWifeIntellectual": 10,
+            "prefWifePersonal": 5,
+            "prefWifePhysical": 5,
+        }
+
+        result = {}
+        for uid in user_ids:
+            uid_str = str(uid)
+            pct = 0
+            u_val = uid
+            try:
+                import uuid as _uuid
+                u_val = _uuid.UUID(str(uid))
+            except Exception:
+                pass
+
+            if u_val in has_personal or uid_str in has_personal: pct += weights["personalInfo"]
+            if u_val in has_physical or uid_str in has_physical: pct += weights["physicalInfo"]
+            if u_val in has_family or uid_str in has_family: pct += weights["familyInfo"]
+            if u_val in has_mother or uid_str in has_mother: pct += weights["mother"]
+            if u_val in has_father or uid_str in has_father: pct += weights["father"]
+            if u_val in has_financial or uid_str in has_financial: pct += weights["financialInfo"]
+            if u_val in has_intellectual or uid_str in has_intellectual: pct += weights["intellectualInfo"]
+            if u_val in has_pw_intel or uid_str in has_pw_intel: pct += weights["prefWifeIntellectual"]
+            if u_val in has_pw_personal or uid_str in has_pw_personal: pct += weights["prefWifePersonal"]
+            if u_val in has_pw_physical or uid_str in has_pw_physical: pct += weights["prefWifePhysical"]
+
+            pct = min(100, pct)
+            result[uid_str] = {
+                "percentage": pct,
+                "isReady": pct >= 80,
+                "missingSections": []
+            }
+        return Response(result, status=status.HTTP_200_OK)
+
     @action(detail=False, methods=["get"], permission_classes=[IsAuthenticated])
     def stats(self, request):
         """Return system-wide statistics for the admin dashboard and user management header."""
@@ -278,15 +393,15 @@ class UserViewSet(viewsets.ModelViewSet):
         active_codes = AccessCode.objects.filter(active=True).count()
         used_codes = total_codes - active_codes
 
-        # Categorize candidates strictly into Men vs Women
+        # Categorize candidates strictly into Men vs Women (optimized values_list)
         men_user_ids = set()
         women_user_ids = set()
-        for p in PersonalInformation.objects.all():
-            g_str = " ".join(p.gender if isinstance(p.gender, list) else [str(p.gender)]).lower()
+        for uid, g in PersonalInformation.objects.values_list("user_id", "gender"):
+            g_str = " ".join(g if isinstance(g, list) else [str(g)]).lower()
             if "woman" in g_str or "girl" in g_str:
-                women_user_ids.add(p.user_id)
+                women_user_ids.add(uid)
             elif "man" in g_str or "boy" in g_str:
-                men_user_ids.add(p.user_id)
+                men_user_ids.add(uid)
 
         men_count = len(men_user_ids)
         women_count = len(women_user_ids)

@@ -3,6 +3,7 @@ import React from 'react';
 import { toArray } from './profileUtils';
 import { useTranslation } from '@/context/LanguageContext';
 import ModernDatePicker from '@/components/ui/ModernDatePicker';
+import ModernSelectModal from './ModernSelectModal';
 
 export type FieldType = 'text' | 'number' | 'date' | 'textarea' | 'select' | 'multiselect' | 'boolean';
 
@@ -101,20 +102,16 @@ const FormField: React.FC<FormFieldProps> = ({
         );
       case 'select':
         return (
-          <select
+          <ModernSelectModal
+            label={label}
             name={name}
             value={value ?? ''}
-            onChange={(e) => onChange(name, e.target.value)}
-            className={inputBaseClass}
+            onChange={onChange}
+            options={options}
+            placeholder={placeholder}
+            error={error}
             required={required}
-          >
-            <option value="">{t('-- Select --')}</option>
-            {options?.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {t(opt.label)}
-              </option>
-            ))}
-          </select>
+          />
         );
       case 'multiselect':
         const selectedValues = toArray(value);

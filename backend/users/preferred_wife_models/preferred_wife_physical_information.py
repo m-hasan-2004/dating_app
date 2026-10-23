@@ -17,10 +17,9 @@ class PreferredWifePhysicalInformation(models.Model):
         error_messages=PhysicalInfoErrorMessages.HEIGHT,
         help_text=PhysicalInfoHelpText.HEIGHT,
         db_index=True,
-        validators=[
-            PreferredWifePhysicalInformationValidator.height_validator,
-            PreferredWifePhysicalInformationValidator.max_height_validator,
-        ],
+        null=True,
+        blank=True,
+        default=None,
     )
     weight = models.DecimalField(
         _("Weight"),
@@ -29,10 +28,9 @@ class PreferredWifePhysicalInformation(models.Model):
         error_messages=PhysicalInfoErrorMessages.WEIGHT,
         help_text=PhysicalInfoHelpText.WEIGHT,
         db_index=True,
-        validators=[
-            PreferredWifePhysicalInformationValidator.weight_validator,
-            PreferredWifePhysicalInformationValidator.max_weight_validator,
-        ],
+        null=True,
+        blank=True,
+        default=None,
     )
     skin_color = MultiSelectField(
         _("Skin Color"),

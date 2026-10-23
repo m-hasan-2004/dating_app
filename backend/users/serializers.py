@@ -713,6 +713,42 @@ class PhysicalInformationSerializer(serializers.ModelSerializer):
         model = PhysicalInformation
         fields = "__all__"
         read_only_fields = ("user",)
+        extra_kwargs = {
+            "disease_or_surgery": {"required": False},
+            "medication_surgery_disease_type": {"required": False, "allow_blank": True, "allow_null": True},
+        }
+
+    def to_internal_value(self, data):
+        data = data.copy() if hasattr(data, "copy") else dict(data)
+        # Support alias disease_or_surgery_history
+        if "disease_or_surgery" not in data and "disease_or_surgery_history" in data:
+            data["disease_or_surgery"] = data["disease_or_surgery_history"]
+        if not data.get("disease_or_surgery"):
+            data["medication_surgery_disease_type"] = ""
+        return super().to_internal_value(data)
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret["disease_or_surgery_history"] = ret.get("disease_or_surgery", False)
+        return ret
+        extra_kwargs = {
+            "disease_or_surgery": {"required": False},
+            "medication_surgery_disease_type": {"required": False, "allow_blank": True, "allow_null": True},
+        }
+
+    def to_internal_value(self, data):
+        data = data.copy() if hasattr(data, "copy") else dict(data)
+        # Support alias disease_or_surgery_history
+        if "disease_or_surgery" not in data and "disease_or_surgery_history" in data:
+            data["disease_or_surgery"] = data["disease_or_surgery_history"]
+        if not data.get("disease_or_surgery"):
+            data["medication_surgery_disease_type"] = ""
+        return super().to_internal_value(data)
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret["disease_or_surgery_history"] = ret.get("disease_or_surgery", False)
+        return ret
 
 
 # ---------------------------------------------------------------------------
@@ -736,6 +772,44 @@ class EngagementOrWeddingStatusSerializer(serializers.ModelSerializer):
         model = EngagementOrWeddingStatus
         fields = "__all__"
         read_only_fields = ("user",)
+        extra_kwargs = {
+            "contract_length": {"required": False, "allow_blank": True, "allow_null": True},
+            "living_length": {"required": False, "allow_blank": True, "allow_null": True},
+            "death_date": {"required": False, "allow_null": True},
+            "divorce_date": {"required": False, "allow_null": True},
+            "reason_for_divorce_or_death": {"required": False, "allow_blank": True, "allow_null": True},
+        }
+
+    def to_internal_value(self, data):
+        data = data.copy() if hasattr(data, "copy") else dict(data)
+        st = data.get("status")
+        # If status is None (بدون سابقه), clear all child fields safely
+        if st in ("None", ["None"], ["none"], "none"):
+            data["contract_length"] = ""
+            data["living_length"] = ""
+            data["death_date"] = None
+            data["divorce_date"] = None
+            data["reason_for_divorce_or_death"] = ""
+        return super().to_internal_value(data)
+        extra_kwargs = {
+            "contract_length": {"required": False, "allow_blank": True, "allow_null": True},
+            "living_length": {"required": False, "allow_blank": True, "allow_null": True},
+            "death_date": {"required": False, "allow_null": True},
+            "divorce_date": {"required": False, "allow_null": True},
+            "reason_for_divorce_or_death": {"required": False, "allow_blank": True, "allow_null": True},
+        }
+
+    def to_internal_value(self, data):
+        data = data.copy() if hasattr(data, "copy") else dict(data)
+        st = data.get("status")
+        # If status is None (بدون سابقه), clear all child fields safely
+        if st in ("None", ["None"], ["none"], "none"):
+            data["contract_length"] = ""
+            data["living_length"] = ""
+            data["death_date"] = None
+            data["divorce_date"] = None
+            data["reason_for_divorce_or_death"] = ""
+        return super().to_internal_value(data)
 
 
 class ExHusbandChildStatusSerializer(serializers.ModelSerializer):
@@ -813,6 +887,84 @@ class FinancialInformationSerializer(serializers.ModelSerializer):
         model = FinancialInformation
         fields = "__all__"
         read_only_fields = ("user",)
+        extra_kwargs = {
+            "dowry_amount": {"required": False, "allow_blank": True, "allow_null": True},
+            "other_captial": {"required": False, "allow_blank": True, "allow_null": True},
+            "ex_spouse_financial_amount": {"required": False, "allow_blank": True, "allow_null": True},
+            "mortgage_amount": {"required": False, "allow_blank": True, "allow_null": True},
+            "rent_amount": {"required": False, "allow_blank": True, "allow_null": True},
+            "jahiziyeh": {"required": False, "allow_blank": True, "allow_null": True},
+            "jahiziyeh_explantion": {"required": False, "allow_blank": True, "allow_null": True},
+        }
+
+    def to_internal_value(self, data):
+        data = data.copy() if hasattr(data, "copy") else dict(data)
+        # Convert integer or numeric amounts to string (limit 50 chars) to prevent type errors
+        for key in ("dowry_amount", "future_spose_dowry_amount", "ex_spouse_financial_amount", "mortgage_amount", "rent_amount"):
+            if key in data and data[key] is not None:
+                data[key] = str(data[key])[:50]
+
+        # Aliases mapping
+        if "other_captial" not in data and "other_capital" in data:
+            data["other_captial"] = data["other_capital"]
+        if "dowry_amount" not in data and "future_spose_dowry_amount" in data:
+            data["dowry_amount"] = data["future_spose_dowry_amount"]
+        if "dowry_type" not in data and "future_spouse_dowry_type" in data:
+            data["dowry_type"] = data["future_spouse_dowry_type"]
+        if "jahiziyeh" not in data and "future_spose_jahiziyeh" in data:
+            data["jahiziyeh"] = data["future_spose_jahiziyeh"]
+        if "jahiziyeh_explantion" not in data and "future_spose_jahiziyeh_explanation" in data:
+            data["jahiziyeh_explantion"] = data["future_spose_jahiziyeh_explanation"]
+        return super().to_internal_value(data)
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        # Expose both canonical and alias names for reliable frontend display
+        ret["other_capital"] = ret.get("other_captial")
+        ret["future_spose_dowry_amount"] = ret.get("dowry_amount")
+        ret["future_spouse_dowry_type"] = ret.get("dowry_type")
+        ret["future_spose_jahiziyeh"] = ret.get("jahiziyeh")
+        ret["future_spose_jahiziyeh_explanation"] = ret.get("jahiziyeh_explantion")
+        return ret
+        extra_kwargs = {
+            "dowry_amount": {"required": False, "allow_blank": True, "allow_null": True},
+            "other_captial": {"required": False, "allow_blank": True, "allow_null": True},
+            "ex_spouse_financial_amount": {"required": False, "allow_blank": True, "allow_null": True},
+            "mortgage_amount": {"required": False, "allow_blank": True, "allow_null": True},
+            "rent_amount": {"required": False, "allow_blank": True, "allow_null": True},
+            "jahiziyeh": {"required": False, "allow_blank": True, "allow_null": True},
+            "jahiziyeh_explantion": {"required": False, "allow_blank": True, "allow_null": True},
+        }
+
+    def to_internal_value(self, data):
+        data = data.copy() if hasattr(data, "copy") else dict(data)
+        # Convert integer or numeric amounts to string (limit 50 chars) to prevent type errors
+        for key in ("dowry_amount", "future_spose_dowry_amount", "ex_spouse_financial_amount", "mortgage_amount", "rent_amount"):
+            if key in data and data[key] is not None:
+                data[key] = str(data[key])[:50]
+
+        # Aliases mapping
+        if "other_captial" not in data and "other_capital" in data:
+            data["other_captial"] = data["other_capital"]
+        if "dowry_amount" not in data and "future_spose_dowry_amount" in data:
+            data["dowry_amount"] = data["future_spose_dowry_amount"]
+        if "dowry_type" not in data and "future_spouse_dowry_type" in data:
+            data["dowry_type"] = data["future_spouse_dowry_type"]
+        if "jahiziyeh" not in data and "future_spose_jahiziyeh" in data:
+            data["jahiziyeh"] = data["future_spose_jahiziyeh"]
+        if "jahiziyeh_explantion" not in data and "future_spose_jahiziyeh_explanation" in data:
+            data["jahiziyeh_explantion"] = data["future_spose_jahiziyeh_explanation"]
+        return super().to_internal_value(data)
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        # Expose both canonical and alias names for reliable frontend display
+        ret["other_capital"] = ret.get("other_captial")
+        ret["future_spose_dowry_amount"] = ret.get("dowry_amount")
+        ret["future_spouse_dowry_type"] = ret.get("dowry_type")
+        ret["future_spose_jahiziyeh"] = ret.get("jahiziyeh")
+        ret["future_spose_jahiziyeh_explanation"] = ret.get("jahiziyeh_explantion")
+        return ret
 
 
 class IntellectualInformationSerializer(serializers.ModelSerializer):
@@ -822,6 +974,66 @@ class IntellectualInformationSerializer(serializers.ModelSerializer):
         model = IntellectualInformation
         fields = "__all__"
         read_only_fields = ("user",)
+        extra_kwargs = {
+            "pros_of_yourself": {"required": False, "allow_blank": True, "allow_null": True},
+            "cons_of_yourself": {"required": False, "allow_blank": True, "allow_null": True},
+            "type_connection_friends": {"required": False, "allow_blank": True, "allow_null": True},
+            "friends_connection_reason": {"required": False, "allow_blank": True, "allow_null": True},
+            "political_orientation": {"required": False},
+            "contract_how": {"required": False},
+            "wedding_how": {"required": False},
+            "opinion_child_quantity": {"required": False},
+            "opinion_innocent_contact": {"required": False},
+            "cover_type_house": {"required": False},
+            "cover_type_society": {"required": False},
+            "cover_type_innocent_contact": {"required": False},
+            "decision_making_choosing_spouse": {"required": False},
+        }
+
+    def to_internal_value(self, data):
+        data = data.copy() if hasattr(data, "copy") else dict(data)
+        # Alias opinion_about_child_quantity -> opinion_child_quantity
+        if "opinion_child_quantity" not in data and "opinion_about_child_quantity" in data:
+            data["opinion_child_quantity"] = data["opinion_about_child_quantity"]
+        if "opinion_about_velayat_faqih" in data and "opinion_velayat_faqih" not in data:
+            data["opinion_velayat_faqih"] = data["opinion_about_velayat_faqih"]
+        return super().to_internal_value(data)
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret["opinion_about_child_quantity"] = ret.get("opinion_child_quantity")
+        ret["opinion_about_velayat_faqih"] = ret.get("opinion_velayat_faqih")
+        return ret
+        extra_kwargs = {
+            "pros_of_yourself": {"required": False, "allow_blank": True, "allow_null": True},
+            "cons_of_yourself": {"required": False, "allow_blank": True, "allow_null": True},
+            "type_connection_friends": {"required": False, "allow_blank": True, "allow_null": True},
+            "friends_connection_reason": {"required": False, "allow_blank": True, "allow_null": True},
+            "political_orientation": {"required": False},
+            "contract_how": {"required": False},
+            "wedding_how": {"required": False},
+            "opinion_child_quantity": {"required": False},
+            "opinion_innocent_contact": {"required": False},
+            "cover_type_house": {"required": False},
+            "cover_type_society": {"required": False},
+            "cover_type_innocent_contact": {"required": False},
+            "decision_making_choosing_spouse": {"required": False},
+        }
+
+    def to_internal_value(self, data):
+        data = data.copy() if hasattr(data, "copy") else dict(data)
+        # Alias opinion_about_child_quantity -> opinion_child_quantity
+        if "opinion_child_quantity" not in data and "opinion_about_child_quantity" in data:
+            data["opinion_child_quantity"] = data["opinion_about_child_quantity"]
+        if "opinion_about_velayat_faqih" in data and "opinion_velayat_faqih" not in data:
+            data["opinion_velayat_faqih"] = data["opinion_about_velayat_faqih"]
+        return super().to_internal_value(data)
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret["opinion_about_child_quantity"] = ret.get("opinion_child_quantity")
+        ret["opinion_about_velayat_faqih"] = ret.get("opinion_velayat_faqih")
+        return ret
 
 
 # ---------------------------------------------------------------------------
@@ -850,15 +1062,119 @@ class PreferredWifePersonalInformationSerializer(serializers.ModelSerializer):
         model = PreferredWifePersonalInformation
         fields = "__all__"
         read_only_fields = ("user",)
+        extra_kwargs = {
+            "education": {"required": False, "allow_blank": True, "allow_null": True},
+            "field_of_study": {"required": False, "allow_blank": True, "allow_null": True},
+            "current_residence_location": {"required": False, "allow_blank": True, "allow_null": True},
+            "after_marriage_residence_location": {"required": False},
+            "future_spouse_job": {"required": False},
+        }
+
+    def to_internal_value(self, data):
+        data = data.copy() if hasattr(data, "copy") else dict(data)
+        if "education" not in data and "education_level" in data:
+            data["education"] = data["education_level"]
+        return super().to_internal_value(data)
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret["education_level"] = ret.get("education")
+        return ret
+        extra_kwargs = {
+            "education": {"required": False, "allow_blank": True, "allow_null": True},
+            "field_of_study": {"required": False, "allow_blank": True, "allow_null": True},
+            "current_residence_location": {"required": False, "allow_blank": True, "allow_null": True},
+            "after_marriage_residence_location": {"required": False},
+            "future_spouse_job": {"required": False},
+        }
+
+    def to_internal_value(self, data):
+        data = data.copy() if hasattr(data, "copy") else dict(data)
+        if "education" not in data and "education_level" in data:
+            data["education"] = data["education_level"]
+        return super().to_internal_value(data)
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret["education_level"] = ret.get("education")
+        return ret
 
 
 class PreferredWifePhysicalInformationSerializer(serializers.ModelSerializer):
     """Serializer for :class:`PreferredWifePhysicalInformation` (all fields)."""
 
+    height_min = serializers.FloatField(required=False, write_only=True, allow_null=True)
+    height_max = serializers.FloatField(required=False, write_only=True, allow_null=True)
+    weight_min = serializers.FloatField(required=False, write_only=True, allow_null=True)
+    weight_max = serializers.FloatField(required=False, write_only=True, allow_null=True)
+
     class Meta:
         model = PreferredWifePhysicalInformation
         fields = "__all__"
         read_only_fields = ("user",)
+        extra_kwargs = {
+            "height": {"required": False, "allow_null": True},
+            "weight": {"required": False, "allow_null": True},
+            "skin_color": {"required": False},
+        }
+
+    def to_internal_value(self, data):
+        data = data.copy() if hasattr(data, "copy") else dict(data)
+        # Compute height if not provided
+        if not data.get("height"):
+            h_min = data.get("height_min")
+            h_max = data.get("height_max")
+            if h_min and h_max:
+                try:
+                    data["height"] = round((float(h_min) + float(h_max)) / 2.0, 1)
+                except (ValueError, TypeError):
+                    pass
+            elif h_min:
+                try:
+                    data["height"] = float(h_min)
+                except (ValueError, TypeError):
+                    pass
+            elif h_max:
+                try:
+                    data["height"] = float(h_max)
+                except (ValueError, TypeError):
+                    pass
+            else:
+                data["height"] = 165.0
+
+        # Compute weight if not provided
+        if not data.get("weight"):
+            w_min = data.get("weight_min")
+            w_max = data.get("weight_max")
+            if w_min and w_max:
+                try:
+                    data["weight"] = round((float(w_min) + float(w_max)) / 2.0, 1)
+                except (ValueError, TypeError):
+                    pass
+            elif w_min:
+                try:
+                    data["weight"] = float(w_min)
+                except (ValueError, TypeError):
+                    pass
+            elif w_max:
+                try:
+                    data["weight"] = float(w_max)
+                except (ValueError, TypeError):
+                    pass
+            else:
+                data["weight"] = 60.0
+
+        return super().to_internal_value(data)
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        h = ret.get("height")
+        w = ret.get("weight")
+        ret["height_min"] = h
+        ret["height_max"] = h
+        ret["weight_min"] = w
+        ret["weight_max"] = w
+        return ret
 
 
 class PreferredWifeIntellectualInformationSerializer(serializers.ModelSerializer):
@@ -868,6 +1184,136 @@ class PreferredWifeIntellectualInformationSerializer(serializers.ModelSerializer
         model = PreferredWifeIntellectualInformation
         fields = "__all__"
         read_only_fields = ("user",)
+        extra_kwargs = {
+            "future_spouse_family_religious_status_importance": {"required": False, "allow_blank": True, "allow_null": True},
+            "future_spouse_family_financial_status_importance": {"required": False, "allow_blank": True, "allow_null": True},
+            "most_important_moral_feature_of_future_spouse": {"required": False, "allow_blank": True, "allow_null": True},
+            "marriage_with_disabled": {"required": False, "allow_blank": True, "allow_null": True},
+            "marriage_with_veteran": {"required": False, "allow_blank": True, "allow_null": True},
+            "additional_explnation_marriage_with_someone": {"required": False, "allow_blank": True, "allow_null": True},
+            "marriage_with_veteran_disabled_explanation": {"required": False, "allow_blank": True, "allow_null": True},
+            "appearance_type": {"required": False},
+            "age_difference": {"required": False},
+            "marriage_with_someone_with_marriage_experience": {"required": False},
+            "red_flags": {"required": False, "allow_blank": True, "allow_null": True},
+        }
+
+    def to_internal_value(self, data):
+        data = data.copy() if hasattr(data, "copy") else dict(data)
+        # Normalize importance choices (case-insensitive / alias mapping)
+        importance_map = {
+            "too_much": "Too Much", "too much": "Too Much",
+            "much": "Much",
+            "any": "Any", "average": "Any", "avg": "Any",
+            "low": "Low",
+            "doesnt_matter": "Doesn't Matter", "doesn't matter": "Doesn't Matter",
+        }
+        for k in ("future_spouse_family_religious_status_importance", "future_spouse_family_financial_status_importance"):
+            if k in data and data[k]:
+                v = str(data[k]).strip().lower()
+                if v in importance_map:
+                    data[k] = importance_map[v]
+
+        # Disabled and veteran choices normalization
+        dv_map = {"yes": "Yes", "no": "No", "depends": "Depends"}
+        if "marriage_with_disabled" not in data and "marriage_with_disabled_person" in data:
+            data["marriage_with_disabled"] = data["marriage_with_disabled_person"]
+        if "marriage_with_veteran" not in data and "marriage_with_veteran_person" in data:
+            data["marriage_with_veteran"] = data["marriage_with_veteran_person"]
+
+        if "marriage_with_disabled" in data and data["marriage_with_disabled"]:
+            v = str(data["marriage_with_disabled"]).strip().lower()
+            if v in dv_map:
+                data["marriage_with_disabled"] = dv_map[v]
+
+        if "marriage_with_veteran" in data and data["marriage_with_veteran"]:
+            v = str(data["marriage_with_veteran"]).strip().lower()
+            if v in dv_map:
+                data["marriage_with_veteran"] = dv_map[v]
+
+        # Field alias mapping
+        if "most_important_moral_feature_of_future_spouse" not in data and "most_important_moral_feature" in data:
+            data["most_important_moral_feature_of_future_spouse"] = data["most_important_moral_feature"]
+        if "additional_explnation_marriage_with_someone" not in data and "marriage_with_someone_explanation" in data:
+            data["additional_explnation_marriage_with_someone"] = data["marriage_with_someone_explanation"]
+        if "marriage_with_veteran_disabled_explanation" not in data and "marriage_disabled_veteran_explanation" in data:
+            data["marriage_with_veteran_disabled_explanation"] = data["marriage_disabled_veteran_explanation"]
+
+        return super().to_internal_value(data)
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret["most_important_moral_feature"] = ret.get("most_important_moral_feature_of_future_spouse")
+        ret["marriage_with_disabled_person"] = ret.get("marriage_with_disabled")
+        ret["marriage_with_veteran_person"] = ret.get("marriage_with_veteran")
+        ret["marriage_with_someone_explanation"] = ret.get("additional_explnation_marriage_with_someone")
+        ret["marriage_disabled_veteran_explanation"] = ret.get("marriage_with_veteran_disabled_explanation")
+        return ret
+        extra_kwargs = {
+            "future_spouse_family_religious_status_importance": {"required": False, "allow_blank": True, "allow_null": True},
+            "future_spouse_family_financial_status_importance": {"required": False, "allow_blank": True, "allow_null": True},
+            "most_important_moral_feature_of_future_spouse": {"required": False, "allow_blank": True, "allow_null": True},
+            "marriage_with_disabled": {"required": False, "allow_blank": True, "allow_null": True},
+            "marriage_with_veteran": {"required": False, "allow_blank": True, "allow_null": True},
+            "additional_explnation_marriage_with_someone": {"required": False, "allow_blank": True, "allow_null": True},
+            "marriage_with_veteran_disabled_explanation": {"required": False, "allow_blank": True, "allow_null": True},
+            "appearance_type": {"required": False},
+            "age_difference": {"required": False},
+            "marriage_with_someone_with_marriage_experience": {"required": False},
+            "red_flags": {"required": False, "allow_blank": True, "allow_null": True},
+        }
+
+    def to_internal_value(self, data):
+        data = data.copy() if hasattr(data, "copy") else dict(data)
+        # Normalize importance choices (case-insensitive / alias mapping)
+        importance_map = {
+            "too_much": "Too Much", "too much": "Too Much",
+            "much": "Much",
+            "any": "Any", "average": "Any", "avg": "Any",
+            "low": "Low",
+            "doesnt_matter": "Doesn't Matter", "doesn't matter": "Doesn't Matter",
+        }
+        for k in ("future_spouse_family_religious_status_importance", "future_spouse_family_financial_status_importance"):
+            if k in data and data[k]:
+                v = str(data[k]).strip().lower()
+                if v in importance_map:
+                    data[k] = importance_map[v]
+
+        # Disabled and veteran choices normalization
+        dv_map = {"yes": "Yes", "no": "No", "depends": "Depends"}
+        if "marriage_with_disabled" not in data and "marriage_with_disabled_person" in data:
+            data["marriage_with_disabled"] = data["marriage_with_disabled_person"]
+        if "marriage_with_veteran" not in data and "marriage_with_veteran_person" in data:
+            data["marriage_with_veteran"] = data["marriage_with_veteran_person"]
+
+        if "marriage_with_disabled" in data and data["marriage_with_disabled"]:
+            v = str(data["marriage_with_disabled"]).strip().lower()
+            if v in dv_map:
+                data["marriage_with_disabled"] = dv_map[v]
+
+        if "marriage_with_veteran" in data and data["marriage_with_veteran"]:
+            v = str(data["marriage_with_veteran"]).strip().lower()
+            if v in dv_map:
+                data["marriage_with_veteran"] = dv_map[v]
+
+        # Field alias mapping
+        if "most_important_moral_feature_of_future_spouse" not in data and "most_important_moral_feature" in data:
+            data["most_important_moral_feature_of_future_spouse"] = data["most_important_moral_feature"]
+        if "additional_explnation_marriage_with_someone" not in data and "marriage_with_someone_explanation" in data:
+            data["additional_explnation_marriage_with_someone"] = data["marriage_with_someone_explanation"]
+        if "marriage_with_veteran_disabled_explanation" not in data and "marriage_disabled_veteran_explanation" in data:
+            data["marriage_with_veteran_disabled_explanation"] = data["marriage_disabled_veteran_explanation"]
+
+        return super().to_internal_value(data)
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret["most_important_moral_feature"] = ret.get("most_important_moral_feature_of_future_spouse")
+        ret["marriage_with_disabled_person"] = ret.get("marriage_with_disabled")
+        ret["marriage_with_veteran_person"] = ret.get("marriage_with_veteran")
+        ret["marriage_with_someone_explanation"] = ret.get("additional_explnation_marriage_with_someone")
+        ret["marriage_disabled_veteran_explanation"] = ret.get("marriage_with_veteran_disabled_explanation")
+        return ret
 
 
 class FutureSposeOriginalitySerializer(serializers.ModelSerializer):

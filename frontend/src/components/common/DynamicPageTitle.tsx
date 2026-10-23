@@ -17,7 +17,6 @@ const ROUTE_TITLES: Record<string, RouteTitle> = {
   '/users': { fa: 'مدیریت کاربران', en: 'Users Management' },
   '/access-codes': { fa: 'کدهای دسترسی', en: 'Access Codes' },
   '/site-settings': { fa: 'تنظیمات سامانه', en: 'Site Settings' },
-  '/database-backup': { fa: 'پشتیبان‌گیری پایگاه داده', en: 'Database Backup' },
   '/statistics': { fa: 'آمار و گزارشات', en: 'Statistics' },
   '/about': { fa: 'درباره ما', en: 'About Us' },
   '/contact': { fa: 'تماس با ما', en: 'Contact Us' },

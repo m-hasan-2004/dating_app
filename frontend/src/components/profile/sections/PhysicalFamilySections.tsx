@@ -35,7 +35,7 @@ import {
 /* ─── Options ─────────────────────────────────────────────────────────── */
 
 const SKIN_COLOR_OPTIONS: SelectOption[] = [
-  'Very Bright', 'Bor', 'Fair', 'White', 'Wheat', 'Greenish', 'Olive',
+  'Very Bright', 'Bor', 'Fair', 'White', 'Wheat', 'Normal', 'Greenish', 'Olive',
   'Darken', 'Black', 'Bright Brown', 'Darken Brown', 'Bright', 'Yellow',
   'Whitish White', 'Red & White', 'Bright Greenish', 'Other',
 ].map((v) => ({ value: v, label: v }));
@@ -97,7 +97,7 @@ function defaultPhysicalForm(data: PhysicalInformation | null) {
     glasses: data?.glasses ?? false,
     glasses_size: data?.glasses_size ?? '',
     body_and_face: toArray(data?.body_and_face) as BodyAndFaceEnum[],
-    disease_or_surgery_history: data?.disease_or_surgery_history ?? false,
+    disease_or_surgery_history: Boolean((data as any)?.disease_or_surgery ?? data?.disease_or_surgery_history ?? false),
     medication_surgery_disease_type: data?.medication_surgery_disease_type ?? '',
   };
 }
@@ -140,7 +140,9 @@ export function PhysicalInformationSection({
         blood_type: state.blood_type || null,
         character_and_temperament: state.character_and_temperament || null,
         glasses_size: state.glasses ? state.glasses_size : null,
-        medication_surgery_disease_type: state.disease_or_surgery_history ? state.medication_surgery_disease_type : null,
+        disease_or_surgery: !!state.disease_or_surgery_history,
+        disease_or_surgery_history: !!state.disease_or_surgery_history,
+        medication_surgery_disease_type: state.disease_or_surgery_history ? (state.medication_surgery_disease_type || '') : '',
       };
       if (data?.id) {
         await updatePhysicalInformation(data.id, payload as any);
@@ -362,10 +364,14 @@ export function EngagementStatusSection({
     setError('');
     setFieldErrors({});
     try {
+      const isNone = state.status === 'None';
       const payload = {
         ...state,
-        death_date: state.death_date || null,
-        divorce_date: state.divorce_date || null,
+        contract_length: isNone ? '' : (state.contract_length || ''),
+        living_length: isNone ? '' : (state.living_length || ''),
+        death_date: isNone ? null : (state.death_date || null),
+        divorce_date: isNone ? null : (state.divorce_date || null),
+        reason_for_divorce_or_death: isNone ? '' : (state.reason_for_divorce_or_death || ''),
       };
       if (data?.id) {
         await updateEngagementOrWeddingStatus(data.id, payload as any);
@@ -386,12 +392,16 @@ export function EngagementStatusSection({
   return (
     <>
       <ProfileSection title="Engagements or Weddings Statuses" onEdit={openModal} isEmpty={!data} isCollapsed={isCollapsed} onToggleCollapse={onToggleCollapse}>
-        <DisplayRow label="Status" value={data?.status} />
-        <DisplayRow label="Contract Length" value={data?.contract_length} />
-        <DisplayRow label="Living Length" value={data?.living_length} />
-        <DisplayRow label="Death Date" value={data?.death_date ? formatDate(data.death_date, isRTL) : null} />
-        <DisplayRow label="Divorce Date" value={data?.divorce_date ? formatDate(data.divorce_date, isRTL) : null} />
-        <DisplayRow label="Reason for Divorce or Death" value={data?.reason_for_divorce_or_death} />
+        <DisplayRow label="Status" value={formatMultiValue(data?.status, ENGAGEMENT_OPTIONS, t)} />
+        {data?.status && data.status !== 'None' && (
+          <>
+            <DisplayRow label="Contract Length" value={data?.contract_length} />
+            <DisplayRow label="Living Length" value={data?.living_length} />
+            <DisplayRow label="Death Date" value={data?.death_date ? formatDate(data.death_date, isRTL) : null} />
+            <DisplayRow label="Divorce Date" value={data?.divorce_date ? formatDate(data.divorce_date, isRTL) : null} />
+            <DisplayRow label="Reason for Divorce or Death" value={data?.reason_for_divorce_or_death} />
+          </>
+        )}
       </ProfileSection>
 
       <Modal isOpen={open} onClose={() => setOpen(false)} className="max-w-2xl w-full">
@@ -401,11 +411,15 @@ export function EngagementStatusSection({
           </h2>
           <div className="space-y-4">
             <FormField label="Status" name="status" type="select" value={state.status} onChange={handleChange} options={ENGAGEMENT_OPTIONS} required error={fieldErrors.status} />
-            <FormField label="Contract Length" name="contract_length" type="text" value={state.contract_length} onChange={handleChange} error={fieldErrors.contract_length} />
-            <FormField label="Living Length" name="living_length" type="text" value={state.living_length} onChange={handleChange} error={fieldErrors.living_length} />
-            <FormField label="Death Date" name="death_date" type="date" value={state.death_date} onChange={handleChange} error={fieldErrors.death_date} />
-            <FormField label="Divorce Date" name="divorce_date" type="date" value={state.divorce_date} onChange={handleChange} error={fieldErrors.divorce_date} />
-            <FormField label="Reason for Divorce or Death" name="reason_for_divorce_or_death" type="textarea" value={state.reason_for_divorce_or_death} onChange={handleChange} error={fieldErrors.reason_for_divorce_or_death} />
+            {state.status && state.status !== 'None' && (
+              <>
+                <FormField label="Contract Length" name="contract_length" type="text" value={state.contract_length} onChange={handleChange} error={fieldErrors.contract_length} />
+                <FormField label="Living Length" name="living_length" type="text" value={state.living_length} onChange={handleChange} error={fieldErrors.living_length} />
+                <FormField label="Death Date" name="death_date" type="date" value={state.death_date} onChange={handleChange} error={fieldErrors.death_date} />
+                <FormField label="Divorce Date" name="divorce_date" type="date" value={state.divorce_date} onChange={handleChange} error={fieldErrors.divorce_date} />
+                <FormField label="Reason for Divorce or Death" name="reason_for_divorce_or_death" type="textarea" value={state.reason_for_divorce_or_death} onChange={handleChange} error={fieldErrors.reason_for_divorce_or_death} />
+              </>
+            )}
           </div>
           {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
           <div className="flex justify-end gap-3 mt-6">
