@@ -8,8 +8,7 @@
 - فونت فارسی وزیر یا ؟؟؟
 
 
-- [x] the calendar section -> add new ability for admin to add events for users -> needs backend/frontend logic (also the user can only read the admin created eveents but can create personal events him/herself) [DONE]
-
 
 - the http://localhost:3001/users should have other features like change password
 - change password page
+- fix فعالسازی آیکون دیباگ نکست‌جی‌اس (Next.js Toolbar)

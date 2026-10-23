@@ -8,7 +8,6 @@ frontend/.next/
 out/
 build/
 dist/
-*.tar.gz
 
 # Environment files
 .env

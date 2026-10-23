@@ -392,81 +392,21 @@ docker exec -t dating_app_db pg_dump -U hasan -F c dating_app > backup.dump
 
 #### Import (Restore)
 ```bash
-# 1. Copy backup file to database container
-docker cp backup.dump dating_app_db:/tmp/backup.dump
+# 1. Copy backup file to container
+docker cp backup_inserts_on_conflict.sql dating_app_db:/tmp/backup_inserts_on_conflict.sql
 
-# 2. Recreate empty database to prevent duplicate key conflicts
-docker exec -i dating_app_db psql -U hasan -d postgres -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'dating_app' AND pid <> pg_backend_pid(); DROP DATABASE IF EXISTS dating_app; CREATE DATABASE dating_app OWNER hasan ENCODING 'UTF8';"
+# 2. Terminate connections, drop, and recreate database (separate -c flags avoid transaction block error)
+docker exec -i dating_app_db psql -U hasan -d postgres \
+  -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'dating_app' AND pid <> pg_backend_pid();" \
+  -c "DROP DATABASE IF EXISTS dating_app;" \
+  -c "CREATE DATABASE dating_app OWNER hasan ENCODING 'UTF8';"
 
-# 3. Restore data
-docker exec -i dating_app_db pg_restore -U hasan -d dating_app /tmp/backup.dump
+# 3. Restore data (MSYS_NO_PATHCONV=1 prevents Git Bash from rewriting /tmp/ to Windows temp path)
+MSYS_NO_PATHCONV=1 docker exec -i dating_app_db psql -U hasan -d dating_app -f /tmp/backup_inserts_on_conflict.sql
 
-# 4. Apply migrations (applies any new columns or tables)
+# 4. Run migrations
 docker exec -i dating_app_web python manage.py migrate
 
-# 5. Fix sequence counters
+# 5. Fix auto-increment sequences
 docker exec -i dating_app_db psql -U hasan -d dating_app -c "DO \$\$ DECLARE seq RECORD; BEGIN FOR seq IN SELECT c.relname AS seq_name, t.relname AS table_name, a.attname AS col_name FROM pg_class c JOIN pg_depend d ON d.objid = c.oid JOIN pg_class t ON t.oid = d.refobjid JOIN pg_attribute a ON a.attrelid = t.oid AND a.attnum = d.refobjsubid WHERE c.relkind = 'S' AND t.relkind = 'r' LOOP EXECUTE format('SELECT setval(%L, COALESCE((SELECT MAX(%I) FROM %I), 1))', seq.seq_name, seq.col_name, seq.table_name); END LOOP; END \$\$;"
-```
-
----
-
-### Method 2: pgAdmin 4 (Web GUI)
-
-1. Open **[http://localhost:5050](http://localhost:5050)** (Login: `admin@example.com` / `admin`).
-2. If server is not connected, register server:
-   - **General**: Name `Dating App DB`
-   - **Connection**: Host `db`, Port `5432`, Maintenance DB `dating_app`, Username `hasan`, Password `Welcome`
-
-#### Export (Backup)
-1. Right-click database `dating_app` > **Backup...**
-2. Enter Filename (e.g. `backup.dump`).
-3. Set **Format** to `Custom`.
-4. Click **Backup**.
-
-#### Import (Restore)
-1. Right-click database `dating_app` > **Disconnect Database...**
-2. Right-click `dating_app` > **Delete/Drop**.
-3. Right-click **Databases** > **Create** > **Database...** > Name: `dating_app`, Owner: `hasan`, click **Save**.
-4. Right-click `dating_app` > **Restore...** > choose your backup file, Format: `Custom`, click **Restore**.
-5. In terminal, run pending migrations:
-   ```bash
-   docker compose exec web python manage.py migrate
-   ```
-
----
-
-## Troubleshooting
-
-### 1. Port 3000 or 8000 Already in Use
-Check which process is using the port:
-- **Windows (PowerShell)**:
-  ```powershell
-  Get-NetTCPConnection -LocalPort 3000
-  ```
-- **Linux**:
-  ```bash
-  sudo lsof -i :3000
-  ```
-To map the frontend to another port (e.g., 3002), specify `FRONTEND_PORT` when running:
-```bash
-FRONTEND_PORT=3002 docker compose up -d
-```
-
-### 2. Container Name or Network Conflict
-If you encounter `container name conflict` or want a clean restart:
-```bash
-docker compose down
-docker compose up -d
-```
-
-### 3. Inspect Container Logs
-```bash
-# Frontend logs
-docker logs -f dating-app-frontend
-
-# Backend web logs
-docker logs -f dating_app_web
-
-# Database logs
-docker logs -f dating_app_db
 ```
